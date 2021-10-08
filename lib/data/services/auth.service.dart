@@ -1,9 +1,14 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:bungie_api/enums/bungie_membership_type.dart';
+import 'package:bungie_api/models/destiny_profile_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:localstorage/localstorage.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -21,6 +26,12 @@ class AuthService {
   late GroupUserInfoCard? _currentMembership;
   late UserMembershipData? _membershipData;
   bool waitingAuthCode = false;
+  final Map<String, String> headers = {
+    "Accept": "application/json",
+    "Access-Control-Allow-Origin": "*"
+  };
+
+  final bungieUrl = "https://www.bungie.net/Platform/";
 
   late StreamSubscription<String?> linkStreamSub;
 
@@ -52,6 +63,7 @@ class AuthService {
   }
 
   Future<void> _saveToken(BungieNetToken token) async {
+    inspect(token);
     if (token.accessToken == null) {
       return;
     }
@@ -85,9 +97,11 @@ class AuthService {
   }
 
   Future<BungieNetToken> requestToken(String code) async {
-    BungieNetToken token = await BungieApiService().requestToken(code);
-    await _saveToken(token);
-    return token;
+    var token = await http.post(Uri.parse(bungieUrl + "/App/OAuth/token/"),
+        headers: headers);
+    final response = jsonDecode(token.body);
+    await _saveToken(response);
+    return response;
   }
 
   Future<String?> checkAuthorizationCode() async {
@@ -121,14 +135,11 @@ class AuthService {
     Stream<String?> _stream = linkStream;
     Completer<String> completer = Completer();
 
-    linkStreamSub.cancel();
-
     linkStreamSub = _stream.listen((link) {
       Uri uri = Uri.parse(link!);
       if (uri.queryParameters.containsKey("code") ||
           uri.queryParameters.containsKey("error")) {
         closeWebView();
-        linkStreamSub.cancel();
       }
       if (uri.queryParameters.containsKey("code")) {
         String? code = uri.queryParameters["code"];
@@ -158,6 +169,11 @@ class AuthService {
   Future<UserMembershipData?> getMembershipData() async {
     return _membershipData ?? await _getStoredMembershipData();
   }
+
+  // Future<DestinyProfileResponse> loadFromCache() async {
+  //   final LocalStorage storage = LocalStorage('token');
+  //   if (storage.getItem('key') == null) {}
+  // }
 
   Future<UserMembershipData?> _getStoredMembershipData() async {
     var storage = StorageService.account();

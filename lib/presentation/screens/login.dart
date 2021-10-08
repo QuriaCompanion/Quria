@@ -1,8 +1,12 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:bungie_api/helpers/bungie_net_token.dart';
 import 'package:bungie_api/helpers/oauth.dart';
+import 'package:bungie_api/models/group_user_info_card.dart';
+import 'package:bungie_api/models/user_membership_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quria/data/services/auth.service.dart';
@@ -34,10 +38,29 @@ class LoginWidgetState extends State<LoginWidget> {
     super.initState();
   }
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("QuriaCompanion"),
+      ),
+      body: Center(
+        child: InkWell(
+          onTap: () {
+            authorizeClick(context);
+          },
+          child: Button(
+            value: 'logan',
+          ),
+        ),
+      ),
+    );
+  }
+
   void authorizeClick(BuildContext context) async {
     try {
-      String code = await widget.auth.authorize(widget.forceReauth);
-      widget.onLogin!(code);
+      // String code = await widget.auth.authorize(widget.forceReauth);
+      authCode("a602a655e2149347b21dc84da9e8d305");
     } on OAuthException catch (e) {
       bool isIOS = Platform.isIOS;
       String platformMessage =
@@ -79,22 +102,51 @@ class LoginWidgetState extends State<LoginWidget> {
         statusBarBrightness: Brightness.dark));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("QuriaCompanion"),
-      ),
-      body: Center(
-        child: InkWell(
-          onTap: () {
-            authorizeClick(context);
-          },
-          child: Button(
-            value: 'logian',
-          ),
-        ),
-      ),
-    );
+  authCode(String code) async {
+    try {
+      print("ba");
+      BungieNetToken token = await widget.auth.requestToken(code);
+      print("da");
+      print(token.accessToken);
+    } catch (e, stackTrace) {
+      print("dooup");
+      inspect(e);
+    }
   }
+
+  // checkMembership() async {
+  //   GroupUserInfoCard? membership = await widget.auth.getMembership();
+  //   if (membership == null) {
+  //     return showSelectMembership();
+  //   }
+  //   return loadProfile();
+  // }
+
+  // loadProfile() async {
+  //   await widget.auth.loadFromCache();
+  // }
+
+  // showSelectMembership() async {
+  //   UserMembershipData membershipData =
+  //       await this.widget.apiService.getMemberships();
+
+  //   if (membershipData?.destinyMemberships?.length == 1) {
+  //     await this.widget.auth.saveMembership(
+  //         membershipData, membershipData?.destinyMemberships[0].membershipId);
+  //     await loadProfile();
+  //     return;
+  //   }
+
+  //   SelectPlatformWidget widget = SelectPlatformWidget(
+  //       membershipData: membershipData,
+  //       onSelect: (String membershipId) async {
+  //         if (membershipId == null) {
+  //           this.showLogin();
+  //           return;
+  //         }
+  //         await this.widget.auth.saveMembership(membershipData, membershipId);
+  //         await loadProfile();
+  //       });
+  //   this.changeContent(widget, widget.title);
+  // }
 }

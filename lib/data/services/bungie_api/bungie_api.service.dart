@@ -67,6 +67,8 @@ class BungieApiService {
   }
 
   Future<BungieNetToken> requestToken(String code) {
+    print("APIserv70");
+    print(code);
     return OAuth.getToken(Client(), clientId!, clientSecret!, code);
   }
 

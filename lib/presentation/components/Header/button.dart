@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
   final String value;
-
   Button({Key? key, required this.value}) : super(key: key);
 
   @override
