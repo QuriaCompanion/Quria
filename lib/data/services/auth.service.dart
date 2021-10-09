@@ -97,8 +97,16 @@ class AuthService {
   }
 
   Future<BungieNetToken> requestToken(String code) async {
-    var token = await http.post(Uri.parse(bungieUrl + "/App/OAuth/token/"),
-        headers: headers);
+    final client_id = BungieApiService.clientId;
+    final apiKey = BungieApiService.apiKey!;
+    final requestHeader = {
+      "Content-Type": "application/x-www-form-urlencoded",
+      "Authorization": "Basic $apiKey"
+    };
+    var token = await http.post(Uri.parse(bungieUrl + "App/OAuth/token"),
+        headers: requestHeader,
+        body: "client_id=$client_id&grant_type=authorization_code&code=$code");
+    inspect(token);
     final response = jsonDecode(token.body);
     await _saveToken(response);
     return response;
@@ -140,6 +148,7 @@ class AuthService {
       if (uri.queryParameters.containsKey("code") ||
           uri.queryParameters.containsKey("error")) {
         closeWebView();
+        linkStreamSub.cancel();
       }
       if (uri.queryParameters.containsKey("code")) {
         String? code = uri.queryParameters["code"];
