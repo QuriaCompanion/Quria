@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/Header/button.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -108,46 +109,32 @@ class LoginWidgetState extends State<LoginWidget> {
       print("ba");
       BungieNetToken token = await widget.auth.requestToken(code);
       print("da");
-      print(token.accessToken);
+      inspect(StorageService.getMembership());
     } catch (e, stackTrace) {
       print("dooup");
       inspect(e);
     }
   }
 
-  // checkMembership() async {
-  //   GroupUserInfoCard? membership = await widget.auth.getMembership();
-  //   if (membership == null) {
-  //     return showSelectMembership();
-  //   }
-  //   return loadProfile();
-  // }
+  void checkMembership() async {
+    GroupUserInfoCard? membership = await widget.auth.getMembership();
+    if (membership == null) {
+      showSelectMembership();
+    }
+    loadProfile();
+  }
 
-  // loadProfile() async {
-  //   await widget.auth.loadFromCache();
-  // }
+  loadProfile() async {
+    await widget.auth.loadFromCache();
+  }
 
-  // showSelectMembership() async {
-  //   UserMembershipData membershipData =
-  //       await this.widget.apiService.getMemberships();
+  void showSelectMembership() async {
+    UserMembershipData? membershipData = await widget.api.getMemberships();
 
-  //   if (membershipData?.destinyMemberships?.length == 1) {
-  //     await this.widget.auth.saveMembership(
-  //         membershipData, membershipData?.destinyMemberships[0].membershipId);
-  //     await loadProfile();
-  //     return;
-  //   }
-
-  //   SelectPlatformWidget widget = SelectPlatformWidget(
-  //       membershipData: membershipData,
-  //       onSelect: (String membershipId) async {
-  //         if (membershipId == null) {
-  //           this.showLogin();
-  //           return;
-  //         }
-  //         await this.widget.auth.saveMembership(membershipData, membershipId);
-  //         await loadProfile();
-  //       });
-  //   this.changeContent(widget, widget.title);
-  // }
+    if (membershipData?.destinyMemberships?.length == 1) {
+      await widget.auth.saveMembership(
+          membershipData!, membershipData.destinyMemberships![0].membershipId!);
+      await loadProfile();
+    }
+  }
 }

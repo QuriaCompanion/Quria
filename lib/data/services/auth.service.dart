@@ -99,16 +99,22 @@ class AuthService {
   Future<BungieNetToken> requestToken(String code) async {
     final client_id = BungieApiService.clientId;
     final apiKey = BungieApiService.apiKey!;
-    final requestHeader = {
-      "Content-Type": "application/x-www-form-urlencoded",
-      "Authorization": "Basic $apiKey"
-    };
-    var token = await http.post(Uri.parse(bungieUrl + "App/OAuth/token"),
+    final requestHeader = {"Content-Type": "application/x-www-form-urlencoded"};
+    var token = await http.post(Uri.parse(bungieUrl + "App/OAuth/token/"),
         headers: requestHeader,
-        body: "client_id=$client_id&grant_type=authorization_code&code=$code");
+        encoding: Encoding.getByName('utf-8'),
+        body: {
+          "client_id": client_id,
+          "client_secret": "RVWOYmsG93EwUFekyNcVsMc-WoQIRM11AdMyQ-HoT0o",
+          "grant_type": "authorization_code",
+          "code": code
+        });
+    // body: "client_id=$client_id&grant_type=authorization_code&code=$code");
     inspect(token);
-    final response = jsonDecode(token.body);
+
+    BungieNetToken response = BungieNetToken.fromJson(jsonDecode(token.body));
     await _saveToken(response);
+    inspect(response);
     return response;
   }
 

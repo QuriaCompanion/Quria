@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/router.dart';
 
 void main() async {
@@ -16,6 +17,7 @@ class QuriaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    StorageService.init();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: router.generateRoute,
