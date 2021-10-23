@@ -297,6 +297,7 @@ class StorageService {
       await _prefs.remove(StorageKeys.selectedAccountId.path);
       return;
     }
+    setMembership(accountId);
     await _prefs.setString(StorageKeys.selectedAccountId.path, accountId);
     var accounts = getAccounts();
     if (!accounts.contains(accountId)) {

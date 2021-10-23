@@ -23,7 +23,7 @@ bool initialLinkHandled = false;
 
 class AuthService {
   late BungieNetToken? _currentToken;
-  late GroupUserInfoCard? _currentMembership;
+  GroupUserInfoCard? _currentMembership;
   late UserMembershipData? _membershipData;
   bool waitingAuthCode = false;
   final Map<String, String> headers = {
@@ -97,24 +97,21 @@ class AuthService {
   }
 
   Future<BungieNetToken> requestToken(String code) async {
-    final client_id = BungieApiService.clientId;
-    final apiKey = BungieApiService.apiKey!;
+    final clientId = BungieApiService.clientId;
+    final clientSecret = BungieApiService.clientSecret;
     final requestHeader = {"Content-Type": "application/x-www-form-urlencoded"};
     var token = await http.post(Uri.parse(bungieUrl + "App/OAuth/token/"),
         headers: requestHeader,
         encoding: Encoding.getByName('utf-8'),
         body: {
-          "client_id": client_id,
-          "client_secret": "RVWOYmsG93EwUFekyNcVsMc-WoQIRM11AdMyQ-HoT0o",
+          "client_id": clientId,
+          "client_secret": clientSecret,
           "grant_type": "authorization_code",
           "code": code
         });
-    // body: "client_id=$client_id&grant_type=authorization_code&code=$code");
-    inspect(token);
 
     BungieNetToken response = BungieNetToken.fromJson(jsonDecode(token.body));
     await _saveToken(response);
-    inspect(response);
     return response;
   }
 
@@ -143,7 +140,6 @@ class AuthService {
   }
 
   Future<String> authorize([bool forceReauth = true]) async {
-    // String? currentLanguage = StorageService.getLanguage();
     var browser = BungieAuthBrowser();
     OAuth.openOAuth(browser, BungieApiService.clientId!, "fr", forceReauth);
     Stream<String?> _stream = linkStream;
@@ -184,11 +180,6 @@ class AuthService {
   Future<UserMembershipData?> getMembershipData() async {
     return _membershipData ?? await _getStoredMembershipData();
   }
-
-  // Future<DestinyProfileResponse> loadFromCache() async {
-  //   final LocalStorage storage = LocalStorage('token');
-  //   if (storage.getItem('key') == null) {}
-  // }
 
   Future<UserMembershipData?> _getStoredMembershipData() async {
     var storage = StorageService.account();

@@ -1,6 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io' as io;
 
 import 'package:bungie_api/api/destiny2.dart';
@@ -67,8 +68,6 @@ class BungieApiService {
   }
 
   Future<BungieNetToken> requestToken(String code) {
-    print("APIserv70");
-    print(code);
     return OAuth.getToken(Client(), clientId!, clientSecret!, code);
   }
 
@@ -116,6 +115,7 @@ class BungieApiService {
     BungieNetToken? token = await auth.getToken();
     UserMembershipDataResponse response =
         await User.getMembershipDataForCurrentUser(Client(token: token));
+    inspect(response);
     return response.response;
   }
 
