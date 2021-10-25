@@ -1,7 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'dart:developer';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import 'package:bungie_api/helpers/bungie_net_token.dart';
 import 'package:bungie_api/helpers/oauth.dart';
@@ -46,6 +46,15 @@ class LoginWidgetState extends State<LoginWidget> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("QuriaCompanion"),
+        actions: [
+          InkWell(
+            onTap: () => Navigator.pushNamed(context, "logged"),
+            child: const Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Center(child: Text("home")),
+            ),
+          ),
+        ],
       ),
       body: Center(
         child: InkWell(

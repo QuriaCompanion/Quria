@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import 'package:bungie_api/enums/bungie_membership_type.dart';
 import 'package:bungie_api/models/destiny_profile_response.dart';

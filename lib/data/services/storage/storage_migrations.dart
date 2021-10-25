@@ -5,9 +5,7 @@ import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:path_provider/path_provider.dart';
 
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:bungie_api/helpers/bungie_net_token.dart';
-// ignore: import_of_legacy_library_into_null_safe
 import 'package:bungie_api/models/user_membership_data.dart';
 
 class StorageMigrations {
