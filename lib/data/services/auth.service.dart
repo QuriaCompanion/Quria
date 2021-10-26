@@ -4,11 +4,9 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:bungie_api/enums/bungie_membership_type.dart';
-import 'package:bungie_api/models/destiny_profile_response.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:localstorage/localstorage.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';

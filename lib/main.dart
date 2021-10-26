@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/data/services/test.service.dart';
 import 'package:quria/presentation/router.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
+
   runApp(QuriaApp(
     router: AppRouter(),
   ));
