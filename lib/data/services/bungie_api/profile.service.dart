@@ -267,10 +267,10 @@ class ProfileService {
       }
     }
 
-    // DestinyProfileResponse? response = await fetchProfileData();
-    // print('loaded profile from server');
-    // inspect(response);
-    // return response;
+    DestinyProfileResponse? response = await fetchProfileData();
+    print('loaded profile from server');
+    inspect(response);
+    return response;
   }
 
   DestinyItemInstanceComponent getInstanceInfo(String instanceId) {
