@@ -1,7 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'dart:developer';
-import 'dart:io';
+import 'package:universal_io/io.dart';
 
 import 'package:bungie_api/helpers/bungie_net_token.dart';
 import 'package:bungie_api/helpers/oauth.dart';
@@ -43,11 +43,25 @@ class LoginWidgetState extends State<LoginWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: InkWell(
-          onTap: () {
-            authorizeClick(context);
-          },
-          child: const Button(value: 'Se connecter', width: 250.0, height: 60),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            InkWell(
+              onTap: () {
+                authorizeClick(context);
+              },
+              child:
+                  const Button(value: 'Se connecter', width: 250.0, height: 60),
+            ),
+            const SizedBox(
+              height: 50.0,
+            ),
+            InkWell(
+              onTap: () => Navigator.pushNamed(context, "/logged"),
+              child:
+                  const Button(value: 'Go to home', width: 250.0, height: 60),
+            ),
+          ],
         ),
       ),
     );

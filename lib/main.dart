@@ -7,6 +7,7 @@ import 'package:quria/presentation/var/routes.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
+
   runApp(QuriaApp(
     router: AppRouter(),
   ));

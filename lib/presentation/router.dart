@@ -9,7 +9,7 @@ class AppRouter {
       case "/":
         return MaterialPageRoute(builder: (_) => LoginWidget());
       case "/logged":
-        return MaterialPageRoute(builder: (_) => const HomeWidget());
+        return MaterialPageRoute(builder: (_) => HomeWidget());
       default:
         return MaterialPageRoute(builder: (_) => LoginWidget());
     }

@@ -5,6 +5,8 @@
                      android:maxSdkVersion="30" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"
                      android:maxSdkVersion="30" />
+     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <!-- Needed only if your app looks for Bluetooth devices.
          If your app doesn't use Bluetooth scan results to derive physical
