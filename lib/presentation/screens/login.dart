@@ -48,7 +48,7 @@ class LoginWidgetState extends State<LoginWidget> {
         title: const Text("QuriaCompanion"),
         actions: [
           InkWell(
-            onTap: () => Navigator.pushNamed(context, "logged"),
+            onTap: () => Navigator.pushNamed(context, "/logged"),
             child: const Padding(
               padding: EdgeInsets.all(10.0),
               child: Center(child: Text("home")),

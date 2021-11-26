@@ -32,15 +32,16 @@ dependencies:
   cubit: ^0.1.2
   universal_io: ^2.0.4
   cupertino_icons: ^1.0.2
-  drift: ^1.0.1
   flutter:
     sdk: flutter
   flutter_bloc: ^7.3.0
   flutter_dotenv: ^5.0.2
   http: ^0.13.4
   localstorage: ^4.0.0+1
-  moor: ^4.6.1
   path_provider: ^2.0.5
+  sembast: ^3.1.1
+  sembast_web: ^2.0.1
+  flutter_archive: ^3.0.0
   undo: ^1.4.0
   shared_preferences: ^2.0.8
   shared_preferences_web: ^2.0.2
@@ -50,9 +51,8 @@ dependencies:
   archive: ^3.1.6
 
 dev_dependencies:
-  drift_dev: ^1.0.2
-  moor_generator: ^4.5.1
-  build_runner: ^2.1.1
+  hive_generator: ^1.1.1
+  build_runner: ^2.1.5
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
