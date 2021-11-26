@@ -12,9 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
-import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:quria/presentation/components/Header/button.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:quria/presentation/components/button.dart';
 
 typedef LoginCallback = void Function(String code);
 typedef SkipCallback = void Function();
@@ -44,17 +42,12 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("QuriaCompanion"),
-      ),
       body: Center(
         child: InkWell(
           onTap: () {
             authorizeClick(context);
           },
-          child: Button(
-            value: 'logan',
-          ),
+          child: const Button(value: 'Se connecter', width: 250.0, height: 60),
         ),
       ),
     );
