@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io' as io;
+import 'package:http/http.dart' as http;
 
 import 'package:bungie_api/api/destiny2.dart';
 import 'package:bungie_api/api/settings.dart';
@@ -115,7 +115,6 @@ class BungieApiService {
     BungieNetToken? token = await auth.getToken();
     UserMembershipDataResponse response =
         await User.getMembershipDataForCurrentUser(Client(token: token));
-    inspect(response);
     return response.response;
   }
 
@@ -222,12 +221,12 @@ class Client implements HttpClient {
   }
 
   Future<HttpResponse> _request(HttpClientConfig config) async {
-    Map<String, String?> headers = {
-      'X-API-Key': BungieApiService.apiKey,
+    Map<String, String> headers = {
+      'X-API-Key': BungieApiService.apiKey!,
       'Accept': 'application/json'
     };
     if (config.bodyContentType != null) {
-      headers['Content-Type'] = config.bodyContentType;
+      headers['Content-Type'] = config.bodyContentType!;
     }
     if (token != null) {
       headers['Authorization'] = "Bearer ${token!.accessToken}";
@@ -254,44 +253,27 @@ class Client implements HttpClient {
       });
     }
 
-    io.HttpClientResponse response;
-    io.HttpClient client = io.HttpClient();
+    final http.Response response;
 
     if (config.method == 'GET') {
-      var req = await client.getUrl(
-          Uri.parse("${BungieApiService.apiUrl}${config.url}$paramsString"));
-      headers.forEach((name, value) {
-        req.headers.add(name, value!);
-      });
-      response = await req.close().timeout(const Duration(seconds: 12));
+      response = await http.get(
+          Uri.parse("${BungieApiService.apiUrl}${config.url}$paramsString"),
+          headers: headers);
     } else {
       String body = config.bodyContentType == 'application/json'
           ? jsonEncode(config.body)
           : config.body;
-      var req = await client.postUrl(
-          Uri.parse("${BungieApiService.apiUrl}${config.url}$paramsString"));
-      headers.forEach((name, value) {
-        req.headers.add(name, value!);
-      });
-      req.write(body);
-      response = await req.close().timeout(const Duration(seconds: 12));
+      response = await http.post(
+          Uri.parse("${BungieApiService.apiUrl}${config.url}$paramsString"),
+          headers: headers,
+          body: body);
     }
 
     if (response.statusCode == 401 && autoRefreshToken!) {
       token = await AuthService().refreshToken(token!);
       return _request(config);
     }
-    dynamic json;
-    try {
-      var stream = response.transform(const Utf8Decoder());
-      var text = "";
-      await for (var t in stream) {
-        text += t;
-      }
-      json = jsonDecode(text);
-    } catch (e) {
-      json = {};
-    }
+    dynamic json = jsonDecode(response.body);
 
     if (response.statusCode != 200) {
       throw response;

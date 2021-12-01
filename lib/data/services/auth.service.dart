@@ -61,7 +61,10 @@ class AuthService {
   }
 
   Future<void> _saveToken(BungieNetToken token) async {
+    print('token');
     inspect(token);
+    print(token.accessToken);
+    print(token.refreshToken);
     if (token.accessToken == null) {
       return;
     }
@@ -95,22 +98,9 @@ class AuthService {
   }
 
   Future<BungieNetToken> requestToken(String code) async {
-    final clientId = BungieApiService.clientId;
-    final clientSecret = BungieApiService.clientSecret;
-    final requestHeader = {"Content-Type": "application/x-www-form-urlencoded"};
-    var token = await http.post(Uri.parse(bungieUrl + "App/OAuth/token/"),
-        headers: requestHeader,
-        encoding: Encoding.getByName('utf-8'),
-        body: {
-          "client_id": clientId,
-          "client_secret": clientSecret,
-          "grant_type": "authorization_code",
-          "code": code
-        });
-
-    BungieNetToken response = BungieNetToken.fromJson(jsonDecode(token.body));
-    await _saveToken(response);
-    return response;
+    BungieNetToken token = await BungieApiService().requestToken(code);
+    await _saveToken(token);
+    return token;
   }
 
   Future<String?> checkAuthorizationCode() async {
@@ -181,6 +171,8 @@ class AuthService {
 
   Future<UserMembershipData?> _getStoredMembershipData() async {
     var storage = StorageService.account();
+    print("getting membership data");
+    inspect(await storage.getJson(StorageKeys.membershipData));
     var json = await storage.getJson(StorageKeys.membershipData);
     if (json == null) {
       return null;
@@ -199,6 +191,8 @@ class AuthService {
     if (_currentMembership == null) {
       var _membershipData = await _getStoredMembershipData();
       var _membershipId = StorageService.getMembership();
+      print(_membershipId);
+      print(_membershipData);
       _currentMembership = getMembershipById(_membershipData, _membershipId!);
     }
     if (_currentMembership?.membershipType ==

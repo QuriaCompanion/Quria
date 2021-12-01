@@ -1,7 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:quria/data/services/storage/storage_migrations.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast/sembast_io.dart';
+import 'package:sembast_web/sembast_web.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum StorageKeys {
@@ -88,7 +92,10 @@ extension StorageKeysExtension on StorageKeys {
 }
 
 class StorageService {
+  static var _db;
+  static var store = StoreRef.main();
   static late SharedPreferences _prefs;
+
   static init() async {
     _prefs = await SharedPreferences.getInstance();
     await StorageMigrations().run();
@@ -303,6 +310,28 @@ class StorageService {
     if (!accounts.contains(accountId)) {
       accounts.add(accountId);
       await _prefs.setStringList(StorageKeys.accountIds.path, accounts);
+    }
+  }
+
+  static storeToDB(key, value) async {
+    openDb();
+    await store.record(key).put(_db, value);
+  }
+
+  getFromDb(key) async {
+    openDb();
+    return await store.record(key).get(_db);
+  }
+
+  static openDb() async {
+    if (_db != null) return _db;
+    if (kIsWeb) {
+      DatabaseFactory dbFactory = databaseFactoryWeb;
+      return _db = await dbFactory.openDatabase("quria");
+    } else {
+      DatabaseFactory dbFactory = databaseFactoryIo;
+      return _db = await dbFactory
+          .openDatabase("/data/user/0/com.example.quria/app_flutter/quria.db");
     }
   }
 

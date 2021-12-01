@@ -1,21 +1,21 @@
+import 'dart:convert';
 import 'dart:developer';
-
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:archive/archive.dart';
 import 'package:bungie_api/models/destiny_manifest.dart';
 import 'package:bungie_api/responses/destiny_manifest_response.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
-import 'package:quria/data/services/storage/db_web.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:quria/data/services/storage/db_mobile.service.dart';
+import 'package:sembast/sembast.dart';
+import 'package:sembast_web/sembast_web.dart';
+import 'package:sembast/sembast_io.dart';
 
 typedef DownloadProgress = void Function(int downloaded, int total);
 
 class ManifestService {
+  var store = StoreRef.main();
+  var _db;
   final BungieApiService api = BungieApiService();
   DestinyManifest? _manifestInfo;
 
@@ -32,32 +32,39 @@ class ManifestService {
   //   return directory.path;
   // }
 
-  // Future<DestinyManifest> loadManifestInfo() async {
-  //   if (_manifestInfo != null) {
-  //     return _manifestInfo!;
-  //   }
-  //   print('Loading manifest info');
-  //   DestinyManifestResponse response = await api.getManifest();
-  //   _manifestInfo = response.response;
-  //   return _manifestInfo!;
-  // }
+  Future<DestinyManifest> loadManifestInfo() async {
+    if (_manifestInfo != null) {
+      return _manifestInfo!;
+    }
+    print('Loading manifest info');
+    DestinyManifestResponse response = await api.getManifest();
+    _manifestInfo = response.response;
+    return _manifestInfo!;
+  }
 
+  //TODO: optimize this shit
   Future<bool> download({DownloadProgress? onProgress}) async {
     // DestinyManifest info = await loadManifestInfo();
     // String language = "fr";
-    // String path = info.jsonWorldContentPaths![language]!;
-    // String? url = BungieApiService.url(path);
+    // Map path = info.jsonWorldComponentContentPaths![language]!;
+    await openDb();
+    print('opened DB');
+    // for (String key in path.keys) {
+    //   String url = path[key]!;
+    //   url = 'https://bungie.net' + url;
+    store.record('manifest').delete(_db);
     http.Response res = await http.get(Uri.parse(
-        "https://www.bungie.net/common/destiny2_content/json/fr/DestinyInventoryItemDefinition-518fc4dd-cf15-4276-954d-4a16992d2eaa.json"));
-    final manifest = res.body;
-    inspect(manifest);
-    // check if is web
-    if (kIsWeb) {
-      DbWeb().openDb(manifest);
-    } else {
-      DbMobile().openDb(manifest);
-    }
-
+        'https://www.bungie.net/common/destiny2_content/json/fr/DestinyInventoryItemDefinition-518fc4dd-cf15-4276-954d-4a16992d2eaa.json'));
+    print('downloaded');
+    final jsonManifest = await compute(_parseManifest, res.body);
+    print("parsed");
+    await compute(_storeManifest, jsonManifest);
+    //   print('Downloaded $key');
+    // }
+    final manifestStored =
+        await store.record("DestinyInventoryItemDefinition").get(_db) as Map;
+    print('stored');
+    inspect(manifestStored);
     // bool success = await test();
     // if (!success) return false;
 
@@ -66,24 +73,32 @@ class ManifestService {
     return true;
   }
 
+  _storeManifest(manifest) async {
+    await store.record('manifest').put(_db, manifest);
+  }
+
+  _parseManifest(String text) {
+    return json.decode(text);
+  }
+
   // Future<bool> test() async {
   //   var def = await getDefinition<DestinyInventoryItemDefinition>(3628991658);
   //   return def?.displayProperties?.name != null;
   // }
 
-  static List<int> _extractFromZip(dynamic zipFile) {
-    List<int> unzippedData;
-    List<int> bytes = zipFile.readAsBytesSync();
-    ZipDecoder decoder = ZipDecoder();
-    Archive archive = decoder.decodeBytes(bytes);
-    for (ArchiveFile file in archive) {
-      if (file.isFile) {
-        unzippedData = file.content;
-        return unzippedData;
-      }
-    }
-    return [];
-  }
+  // static List<int> _extractFromZip(dynamic zipFile) {
+  //   List<int> unzippedData;
+  //   List<int> bytes = zipFile.readAsBytesSync();
+  //   ZipDecoder decoder = ZipDecoder();
+  //   Archive archive = decoder.decodeBytes(bytes);
+  //   for (ArchiveFile file in archive) {
+  //     if (file.isFile) {
+  //       unzippedData = file.content;
+  //       return unzippedData;
+  //     }
+  //   }
+  //   return [];
+  // }
 
   // Future<Map<int, T>?> getDefinitions<T>(Iterable<int> hashes,
   //     [dynamic Function(Map<String, dynamic> json)? identity]) async {
@@ -176,4 +191,17 @@ class ManifestService {
   //   }
   //   return null;
   // }
+  openDb() async {
+    if (_db != null) return _db;
+    if (kIsWeb) {
+      DatabaseFactory dbFactory = databaseFactoryWeb;
+      print('"ho"');
+      return _db = await dbFactory.openDatabase("manifest");
+    } else {
+      DatabaseFactory dbFactory = databaseFactoryIo;
+      print('"hey"');
+      return _db = await dbFactory.openDatabase(
+          "/data/user/0/com.example.quria/app_flutter/manifest.db");
+    }
+  }
 }
