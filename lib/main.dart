@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:quria/data/services/test.service.dart';
+import 'package:quria/presentation/components/app.dart';
 import 'package:quria/presentation/router.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -22,7 +23,12 @@ class QuriaApp extends StatelessWidget {
     StorageService.init();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      onGenerateRoute: router.generateRoute,
+      onGenerateRoute: AppRouter.generateRoute,
+      builder: (_, child) => AppView(
+        child: child!,
+      ),
+      initialRoute: routeLogin,
+      navigatorKey: navKey,
     );
   }
 }

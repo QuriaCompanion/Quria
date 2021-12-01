@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/components/Header/button.dart';
 import 'package:quria/data/services/home.service.dart';
+import 'package:quria/presentation/components/button.dart';
 
 class HomeWidget extends StatelessWidget {
   final ManifestService manifest = ManifestService();
@@ -11,17 +11,13 @@ class HomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("QuriaCompanion"),
-      ),
       body: Center(
         child: InkWell(
           onTap: () {
             download(context);
           },
-          child: Button(
-            value: 'download Manifest',
-          ),
+          child: const Button(
+              value: 'Download Manifest', width: 250.0, height: 60),
         ),
       ),
     );
