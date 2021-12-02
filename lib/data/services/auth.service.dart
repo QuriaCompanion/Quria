@@ -56,11 +56,11 @@ class AuthService {
   Future<BungieNetToken> refreshToken(BungieNetToken token) async {
     BungieNetToken bNetToken =
         await BungieApiService().refreshToken(token.refreshToken);
-    _saveToken(bNetToken);
+    saveToken(bNetToken);
     return bNetToken;
   }
 
-  Future<void> _saveToken(BungieNetToken token) async {
+  Future<void> saveToken(BungieNetToken token) async {
     print('token');
     inspect(token);
     print(token.accessToken);
@@ -99,7 +99,7 @@ class AuthService {
 
   Future<BungieNetToken> requestToken(String code) async {
     BungieNetToken token = await BungieApiService().requestToken(code);
-    await _saveToken(token);
+    await saveToken(token);
     return token;
   }
 
