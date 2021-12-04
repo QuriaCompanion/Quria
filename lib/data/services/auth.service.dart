@@ -57,7 +57,7 @@ class AuthService {
 
   Future<BungieNetToken> refreshToken(BungieNetToken token) async {
     BungieNetToken bNetToken =
-        await BungieApiService().refreshToken(token.refreshToken);
+        await BungieApiService().refreshToken(token.refreshToken!);
     saveToken(bNetToken);
     return bNetToken;
   }
@@ -66,7 +66,7 @@ class AuthService {
     if (token.accessToken == null) {
       return;
     }
-    await accountService.setCurrentMembershipId(token.membershipId);
+    await accountService.setCurrentMembershipId(token.membershipId!);
     await _setStoredToken(token);
     await Future.delayed(const Duration(milliseconds: 1));
     _currentToken = token;
@@ -80,9 +80,9 @@ class AuthService {
     }
     DateTime now = DateTime.now();
     DateTime? savedDate = await storageService.getLocalStorage('last_refresh');
-    DateTime expire = savedDate!.add(Duration(seconds: token!.expiresIn));
+    DateTime expire = savedDate!.add(Duration(seconds: token!.expiresIn!));
     DateTime refreshExpire =
-        savedDate.add(Duration(seconds: token.refreshExpiresIn));
+        savedDate.add(Duration(seconds: token.refreshExpiresIn!));
     if (refreshExpire.isBefore(now)) {
       return null;
     }

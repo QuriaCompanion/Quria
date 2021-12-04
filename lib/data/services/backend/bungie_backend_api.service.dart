@@ -26,7 +26,7 @@ class BackendService {
       [BungieNetToken? token]) async {
     final response = await http.get(
         Uri.parse('/inventory/$membershipType/$membershipId'),
-        headers: {"Authorization": 'Bearer ' + token!.accessToken});
+        headers: {"Authorization": 'Bearer ' + token!.accessToken!});
     final responseJson = json.decode(response.body);
     await storageService.setDatabase("manifest", responseJson.manifest);
 
