@@ -1,6 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'dart:developer';
+import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:bungie_api/helpers/bungie_net_token.dart';
@@ -21,6 +22,7 @@ class LoginWidget extends StatefulWidget {
   final String title = "Login";
   final BungieApiService api = BungieApiService();
   final AuthService auth = AuthService();
+  final AccountService account = AccountService();
   final ProfileService profile = ProfileService();
   final LoginCallback? onLogin;
   final SkipCallback? onSkip;
@@ -123,7 +125,7 @@ class LoginWidgetState extends State<LoginWidget> {
   }
 
   void checkMembership() async {
-    GroupUserInfoCard? membership = await widget.auth.getMembership();
+    GroupUserInfoCard? membership = await widget.account.getMembership();
     if (membership == null) {
       showSelectMembership();
     }
@@ -138,7 +140,7 @@ class LoginWidgetState extends State<LoginWidget> {
     UserMembershipData? membershipData = await widget.api.getMemberships();
 
     if (membershipData?.destinyMemberships?.length == 1) {
-      await widget.auth.saveMembership(
+      await widget.account.saveMembership(
           membershipData!, membershipData.destinyMemberships![0].membershipId!);
       await loadProfile();
     }

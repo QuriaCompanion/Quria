@@ -92,7 +92,7 @@ class ProfileComponentGroups {
 
 class ProfileService {
   static final ProfileService _singleton = ProfileService._internal();
-
+  static final StorageService storageService = StorageService();
   late DateTime lastUpdated;
   factory ProfileService() {
     return _singleton;
@@ -116,7 +116,6 @@ class ProfileService {
 
   Future<DestinyProfileResponse?> fetchProfileData(
       {List<DestinyComponentType>? components, bool skipUpdate = false}) async {
-    print("heyyy");
     try {
       DestinyProfileResponse? res = await _updateProfileData(updateComponents);
       inspect(res);
@@ -150,13 +149,9 @@ class ProfileService {
 
   Future<DestinyProfileResponse?> _updateProfileData(
       List<DestinyComponentType> components) async {
-    var membership = StorageService.getMembership();
     DestinyProfileResponse? response;
     response = await _api.getCurrentProfile(components);
 
-    if (membership != StorageService.getMembership()) {
-      return _profile;
-    }
     lastUpdated = DateTime.now();
 
     if (response == null) {
@@ -244,14 +239,12 @@ class ProfileService {
   }
 
   _cacheProfile(DestinyProfileResponse profile) async {
-    StorageService storage = StorageService.membership();
-    storage.setJson(StorageKeys.cachedProfile, profile.toJson());
+    storageService.setLocalStorage('cachedProfile', profile.toJson());
     print('saved to cache');
   }
 
   Future<DestinyProfileResponse?> loadFromCache() async {
-    StorageService storage = StorageService.membership();
-    var json = await storage.getJson(StorageKeys.cachedProfile);
+    var json = await storageService.getLocalStorage('cachedProfile');
     if (json != null) {
       try {
         DestinyProfileResponse response = DestinyProfileResponse.fromJson(json);

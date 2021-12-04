@@ -13,6 +13,7 @@ import 'package:quria/data/services/storage/storage.service.dart';
 class BackendService {
   static const String baseUrl = 'http://localhost:3001';
   static const String apiUrl = baseUrl;
+  static final StorageService storageService = StorageService();
 
   static final BackendService _singleton = BackendService._internal();
 
@@ -27,7 +28,7 @@ class BackendService {
         Uri.parse('/inventory/$membershipType/$membershipId'),
         headers: {"Authorization": 'Bearer ' + token!.accessToken});
     final responseJson = json.decode(response.body);
-    await StorageService.storeToDB("manifest", responseJson.manifest);
+    await storageService.setDatabase("manifest", responseJson.manifest);
 
     return responseJson.response;
   }

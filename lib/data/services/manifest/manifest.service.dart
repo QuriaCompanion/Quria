@@ -149,11 +149,6 @@ class ManifestService {
   //   return defs.cast<int, T>();
   // }
 
-  Future<void> saveManifestVersion(String version) async {
-    StorageService _prefs = StorageService.language();
-    _prefs.setString(StorageKeys.manifestVersion, version);
-  }
-
   // Future<T?> getDefinition<T>(int hash,
   //     [dynamic Function(Map<String, dynamic> json)? identity]) async {
   //   if (hash == null) return null;
