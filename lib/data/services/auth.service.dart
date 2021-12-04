@@ -51,7 +51,8 @@ class AuthService {
 
   Future<void> _setStoredToken(BungieNetToken token) async {
     await storageService.setLocalStorage('bungie_token', token);
-    await storageService.setLocalStorage('last_refresh', DateTime.now());
+    await storageService.setLocalStorage(
+        'last_refresh', DateTime.now().toString());
   }
 
   Future<BungieNetToken> refreshToken(BungieNetToken token) async {
