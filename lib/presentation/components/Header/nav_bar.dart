@@ -23,6 +23,10 @@ class _NavigationBarState extends State<NavigationBar> {
             routeName: routeHome,
           ),
           NavigationItem(
+            title: 'Profile',
+            routeName: '/profile',
+          ),
+          NavigationItem(
             title: 'Settings',
             routeName: "/",
           ),
