@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:bungie_api/helpers/bungie_net_token.dart';
 import 'package:bungie_api/helpers/http.dart';
+import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 
@@ -30,7 +31,15 @@ class BackendService {
     final responseJson = json.decode(response.body);
     await storageService.setDatabase("manifest", responseJson.manifest);
 
-    return responseJson.response;
+    return responseJson.items;
+  }
+
+  Future<BuildResponse> getBuilds() async {
+    final response = await http.get(Uri.parse('http://localhost:3001/builder'));
+    final responseJson = json.decode(response.body);
+    final buildResponse = BuildResponse.fromJson(responseJson);
+    inspect(buildResponse);
+    return buildResponse;
   }
 
   AuthService get auth => AuthService();
