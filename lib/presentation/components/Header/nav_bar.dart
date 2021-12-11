@@ -30,6 +30,10 @@ class _NavigationBarState extends State<NavigationBar> {
             title: 'Builder',
             routeName: routeBuilder,
           ),
+          NavigationItem(
+            title: 'Exotic',
+            routeName: routeExotic,
+          ),
         ],
       ),
     );
