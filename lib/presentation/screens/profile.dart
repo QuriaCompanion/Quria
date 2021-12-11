@@ -2,7 +2,9 @@
 
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
+import 'package:quria/cubit/character_cubit.dart';
 
 class ProfileWidget extends StatelessWidget {
   const ProfileWidget({
@@ -11,19 +13,26 @@ class ProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ProfileTitleWidget(),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ProfileNodeWidget(),
-            SizedBox(width: 10),
-            Visibility(visible: true, child: DetailsItemWidget()),
-          ],
-        )
-      ],
+    return BlocProvider(
+      create: (_) => CharacterCubit(),
+      child: BlocBuilder<CharacterCubit, CharacterState>(
+        builder: (context, state) {
+          return Stack(
+            children: [
+              ProfileTitleWidget(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ProfileNodeWidget(),
+                  SizedBox(width: 10),
+                  if (state is ShowDetailsState) DetailsItemWidget()
+                ],
+              )
+            ],
+          );
+        },
+      ),
     );
   }
 }
@@ -67,51 +76,11 @@ class ArmorSectionWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          child: Image(
-            image: NetworkImage(
-                'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-            width: 70,
-            height: 70,
-          ),
-          margin: const EdgeInsets.only(top: 40, bottom: 10),
-        ),
-        Container(
-          child: Image(
-            image: NetworkImage(
-                'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-            width: 70,
-            height: 70,
-          ),
-          margin: const EdgeInsets.only(top: 10, bottom: 10),
-        ),
-        Container(
-          child: Image(
-            image: NetworkImage(
-                'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-            width: 70,
-            height: 70,
-          ),
-          margin: const EdgeInsets.only(top: 10, bottom: 10),
-        ),
-        Container(
-          child: Image(
-            image: NetworkImage(
-                'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-            width: 70,
-            height: 70,
-          ),
-          margin: const EdgeInsets.only(top: 10, bottom: 10),
-        ),
-        Container(
-          child: Image(
-            image: NetworkImage(
-                'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-            width: 70,
-            height: 70,
-          ),
-          margin: const EdgeInsets.only(top: 10, bottom: 10),
-        ),
+        Item(),
+        Item(),
+        Item(),
+        Item(),
+        Item(),
       ],
     );
   }
@@ -213,9 +182,12 @@ class CharacterWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
-            child: Image(
-              image: NetworkImage(
-                  'https://ae01.alicdn.com/kf/Hf7c8a7d685e848bd84384b6112618286A/Mcfarlane-figurine-Destiny-LORD-SALADIN-figurine-de-luxe-10-pouces-S-Bungie-le-mod-le-de.jpg_q50.jpg'),
+            child: InkWell(
+              onTap: () => context.read<CharacterCubit>().hideDetails(),
+              child: Image(
+                image: NetworkImage(
+                    'https://ae01.alicdn.com/kf/Hf7c8a7d685e848bd84384b6112618286A/Mcfarlane-figurine-Destiny-LORD-SALADIN-figurine-de-luxe-10-pouces-S-Bungie-le-mod-le-de.jpg_q50.jpg'),
+              ),
             ),
             margin: const EdgeInsets.only(left: 25, right: 25),
             width: 300,
@@ -247,43 +219,33 @@ class WeaponSectionWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Container(
-            child: Image(
-              image: NetworkImage(
-                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-              width: 70,
-              height: 70,
-            ),
-            margin: const EdgeInsets.only(top: 40, bottom: 10),
-          ),
-          Container(
-            child: Image(
-              image: NetworkImage(
-                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-              width: 70,
-              height: 70,
-            ),
-            margin: const EdgeInsets.only(top: 10, bottom: 10),
-          ),
-          Container(
-            child: Image(
-              image: NetworkImage(
-                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-              width: 70,
-              height: 70,
-            ),
-            margin: const EdgeInsets.only(top: 10, bottom: 10),
-          ),
-          Container(
-            child: Image(
-              image: NetworkImage(
-                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-              width: 70,
-              height: 70,
-            ),
-            margin: const EdgeInsets.only(top: 10, bottom: 10),
-          ),
+          Item(),
+          Item(),
+          Item(),
+          Item(),
         ]);
+  }
+}
+
+class Item extends StatelessWidget {
+  const Item({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: InkWell(
+        onTap: () => context.read<CharacterCubit>().showDetails(),
+        child: Image(
+          image: NetworkImage(
+              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+          width: 70,
+          height: 70,
+        ),
+      ),
+      margin: const EdgeInsets.only(top: 10, bottom: 10),
+    );
   }
 }
 
