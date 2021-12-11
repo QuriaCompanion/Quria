@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:sembast/sembast.dart';
@@ -25,24 +23,24 @@ class StorageService {
 
   // sets a value in the LocalStorage
   Future<void> setLocalStorage(String key, dynamic value) async {
-    _storage.setItem(key, value);
+    await _storage.setItem(key, value);
     return;
   }
 
   // gets a value from the LocalStorage
   Future<dynamic> getLocalStorage(String key) async {
-    return _storage.getItem(key);
+    return await _storage.getItem(key);
   }
 
   // removes a value from the LocalStorage
   Future<void> removeLocalStorage(String key) async {
-    _storage.deleteItem(key);
+    await _storage.deleteItem(key);
     return;
   }
 
   // clears all values from the LocalStorage
   Future<void> purgeLocalStorage() async {
-    _storage.clear();
+    await _storage.clear();
     return;
   }
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:bungie_api/models/user_membership_data.dart';
@@ -38,6 +39,7 @@ class AccountService {
 
   Future<UserMembershipData?> _getStoredMembershipData() async {
     var json = await storageService.getLocalStorage('membershipData');
+    print(json);
     if (json == null) {
       return null;
     }
@@ -53,6 +55,7 @@ class AccountService {
   Future<GroupUserInfoCard?> getMembership() async {
     if (_currentMembership == null) {
       var _membershipData = await _getStoredMembershipData();
+      _membershipData ??= await updateMembershipData();
       var _membershipId = await getCurrentMembershipId();
       _currentMembership = getMembershipById(_membershipData, _membershipId!);
     }
@@ -69,7 +72,9 @@ class AccountService {
   Future<void> saveMembership(
       UserMembershipData membershipData, String membershipId) async {
     _currentMembership = getMembershipById(membershipData, membershipId);
-    storageService.setLocalStorage('membershipData', membershipData.toJson());
-    storageService.setLocalStorage('membershipId', membershipId);
+    inspect(membershipData);
+    await storageService.setLocalStorage(
+        'membershipData', membershipData.toJson());
+    await storageService.setLocalStorage('membershipId', membershipId);
   }
 }
