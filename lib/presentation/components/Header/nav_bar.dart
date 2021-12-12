@@ -23,6 +23,10 @@ class _NavBarWidgetState extends State<NavBarWidget> {
             routeName: routeHome,
           ),
           NavigationItem(
+            title: 'Profile',
+            routeName: '/profile',
+          ),
+          NavigationItem(
             title: 'Settings',
             routeName: "/",
           ),
