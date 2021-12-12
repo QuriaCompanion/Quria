@@ -247,11 +247,11 @@ class ProfileService {
     if (json != null) {
       try {
         DestinyProfileResponse response = DestinyProfileResponse.fromJson(json);
-        inspect(response);
         if ((response.characters?.data?.length ?? 0) > 0) {
           _profile = response;
           _lastLoadedFrom = LastLoadedFrom.cache;
           print('loaded profile from cache');
+          inspect(response);
           return response;
         }
       } catch (e) {

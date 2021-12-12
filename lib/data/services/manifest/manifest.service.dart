@@ -16,7 +16,6 @@ class ManifestService {
   final BungieApiService api = BungieApiService();
   DestinyManifest? _manifestInfo;
   final StorageService storage = StorageService();
-  final Map<String, dynamic> _cached = {};
   static final ManifestService _singleton = ManifestService._internal();
 
   factory ManifestService() {
@@ -39,23 +38,37 @@ class ManifestService {
     return _manifestInfo!;
   }
 
-  //TODO: optimize this shit
-  Future<bool> download({DownloadProgress? onProgress}) async {
-    DestinyManifest info = await loadManifestInfo();
-    String language = "fr";
-    http.Response res = await http.get(
-      Uri.parse('https://www.bungie.net' +
-          info.jsonWorldComponentContentPaths![language]![
-              'DestinyInventoryItemDefinition']!),
-    );
-    print('downloaded');
-    await storage.setDatabase('DestinyInventoryItemDefinition', res.body);
-    // await compute(_getManifest, 'bruh');
-    return true;
+  Future<Map<int, DestinyInventoryItemDefinition>> getManifest() async {
+    final bool = await isManifestSaved();
+    print(bool);
+    if (bool == true) {
+      return await compute(
+          _parsedDestinyInventoryItemDefinition, await getManifestLocal());
+    } else {
+      return await compute(
+          _parsedDestinyInventoryItemDefinition, await getManifestRemote());
+    }
   }
 
-  Map<int, DestinyInventoryItemDefinition> _parseDestinyInventoryItemDefinition(
-      String text) {
+  Future<String> getManifestLocal() async {
+    return await storage.getDatabase('DestinyInventoryItemDefinition');
+  }
+
+  Future<String> getManifestRemote({DownloadProgress? onProgress}) async {
+    DestinyManifest info = await loadManifestInfo();
+    String language = "fr";
+    for (final entry in info.jsonWorldComponentContentPaths!['fr']!.entries) {
+      http.Response res =
+          await http.get(Uri.parse('https://www.bungie.net' + entry.value));
+      print('downloaded ${entry.key}');
+      await storage.setDatabase(entry.key, res.body);
+    }
+    await storage.setLocalStorage('manifestSaved', true);
+    return await getManifestLocal();
+  }
+
+  Map<int, DestinyInventoryItemDefinition>
+      _parsedDestinyInventoryItemDefinition(String text) {
     Map<int, DestinyInventoryItemDefinition> items = {};
     Map decoded = json.decode(text);
     for (final entry in decoded.entries) {
@@ -63,6 +76,10 @@ class ManifestService {
           DestinyInventoryItemDefinition.fromJson(entry.value);
     }
     return items;
+  }
+
+  Future<bool?> isManifestSaved() async {
+    return await storage.getLocalStorage('manifestSaved');
   }
 
   // Future<bool> test() async {

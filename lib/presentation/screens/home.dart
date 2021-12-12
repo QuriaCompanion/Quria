@@ -24,7 +24,7 @@ class HomeWidget extends StatelessWidget {
   }
 
   void download(BuildContext context) async {
-    final bool test = await manifest.download();
-    print(test);
+    // final bool test = await manifest.download();
+    // print(test);
   }
 }

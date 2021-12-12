@@ -43,12 +43,11 @@ class StorageService {
   Future<void> setDatabase(String key, String value) async {
     final box = await Hive.openBox(key);
     await box.add(value);
-    print('done');
     return;
   }
 
   // get a value in the database
-  Future<Map<dynamic, dynamic>> getDatabase(String key) async {
+  Future<String> getDatabase(String key) async {
     final box = await Hive.openBox(key);
     return box.getAt(0);
   }

@@ -1,50 +1,96 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables
 
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:math';
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:quria/cubit/character_cubit.dart';
+import 'package:quria/data/services/bungie_api/account.service.dart';
+import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/statisticDisplay.dart';
+
+Map<int, DestinyInventoryItemDefinition> _manifestParsed = {};
 
 class ProfileWidget extends StatelessWidget {
-  const ProfileWidget({
+  final manifest = ManifestService();
+  final storage = StorageService();
+  final account = AccountService();
+  final profile = ProfileService();
+  ProfileWidget({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => CharacterCubit(),
-      child: BlocBuilder<CharacterCubit, CharacterState>(
-        builder: (context, state) {
-          return Stack(
-            children: [
-              ProfileTitleWidget(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  ProfileNodeWidget(),
-                  SizedBox(width: 10),
-                  if (state is ShowDetailsState) DetailsItemWidget()
-                ],
-              )
-            ],
-          );
-        },
-      ),
-    );
+    return FutureBuilder(
+        future: getProfileData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            return BlocProvider(
+              create: (_) => CharacterCubit(),
+              child: BlocBuilder<CharacterCubit, CharacterState>(
+                builder: (context, state) {
+                  return Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                            width: 561,
+                            child: ProfileTitleWidget(data: snapshot.data)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            ProfileNodeWidget(data: snapshot.data),
+                            SizedBox(width: 10),
+                            if (state is ShowDetailsState) DetailsItemWidget()
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
+            );
+          } else {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
+  }
+
+  getProfileData() async {
+    _manifestParsed = await manifest.getManifest();
+    final characters = profile.getCharacters();
+    final Map<String, dynamic> data = {
+      'profile': await account.getMembership(),
+      'character': characters[0],
+      'characterEquipement':
+          profile.getCharacterEquipment(characters[0].characterId!)
+    };
+    return data;
   }
 }
 
 class ProfileNodeWidget extends StatelessWidget {
+  final data;
   const ProfileNodeWidget({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
+    return Center(
       child: Align(
         alignment: Alignment.center,
         child: Container(
@@ -54,10 +100,10 @@ class ProfileNodeWidget extends StatelessWidget {
                   MainAxisAlignment.start, // change ici pr le mode detail
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                WeaponSectionWidget(),
+                WeaponSectionWidget(data: data),
                 CharacterWidget(),
                 CharacterStatsWidget(),
-                ArmorSectionWidget()
+                ArmorSectionWidget(data: data)
               ]),
         ),
       ),
@@ -66,8 +112,10 @@ class ProfileNodeWidget extends StatelessWidget {
 }
 
 class ArmorSectionWidget extends StatelessWidget {
+  final data;
   const ArmorSectionWidget({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -76,11 +124,11 @@ class ArmorSectionWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Item(),
-        Item(),
-        Item(),
-        Item(),
-        Item(),
+        Item(item: data['characterEquipement'][3]),
+        Item(item: data['characterEquipement'][4]),
+        Item(item: data['characterEquipement'][5]),
+        Item(item: data['characterEquipement'][6]),
+        Item(item: data['characterEquipement'][7]),
       ],
     );
   }
@@ -101,7 +149,7 @@ class CharacterStatsWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Text('51'),
+              Text('55'),
               Image(
                   image: NetworkImage(
                       'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
@@ -111,26 +159,10 @@ class CharacterStatsWidget extends StatelessWidget {
           ),
           SizedBox(height: 10),
           Row(
-            children: [
-              Text('51'),
-              Image(
-                  image: NetworkImage(
-                      'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                  width: 20,
-                  height: 20)
-            ],
+            children: [],
           ),
           SizedBox(height: 10),
-          Row(
-            children: [
-              Text('51'),
-              Image(
-                  image: NetworkImage(
-                      'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                  width: 20,
-                  height: 20)
-            ],
-          ),
+          // StatisticDisplay(value: widdata.value, i: i),
           SizedBox(height: 10),
           Row(
             children: [
@@ -209,8 +241,10 @@ class CharacterWidget extends StatelessWidget {
 }
 
 class WeaponSectionWidget extends StatelessWidget {
+  final data;
   const WeaponSectionWidget({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
@@ -219,27 +253,29 @@ class WeaponSectionWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Item(),
-          Item(),
-          Item(),
-          Item(),
+          Item(item: data['characterEquipement'][0]),
+          Item(item: data['characterEquipement'][1]),
+          Item(item: data['characterEquipement'][2]),
         ]);
   }
 }
 
 class Item extends StatelessWidget {
+  final DestinyItemComponent item;
   const Item({
     Key? key,
+    required this.item,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    inspect(item);
     return Container(
       child: InkWell(
         onTap: () => context.read<CharacterCubit>().showDetails(),
         child: Image(
-          image: NetworkImage(
-              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+          image: NetworkImage('https://www.bungie.net' +
+              _manifestParsed[item.itemHash]!.displayProperties!.icon!),
           width: 70,
           height: 70,
         ),
@@ -249,37 +285,41 @@ class Item extends StatelessWidget {
   }
 }
 
-class ProfileTitleWidget extends StatelessWidget {
+class ProfileTitleWidget extends StatefulWidget {
+  final data;
+
   const ProfileTitleWidget({
     Key? key,
+    required this.data,
   }) : super(key: key);
 
   @override
+  _ProfileTitleState createState() => _ProfileTitleState();
+}
+
+class _ProfileTitleState extends State<ProfileTitleWidget> {
+  @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 10,
-      left: 20,
+    return Align(
+      alignment: Alignment.topLeft,
       child: Container(
           alignment: Alignment.topLeft,
           child: Row(
             children: [
               Container(
-                child: Image(
-                  image: NetworkImage(
-                      'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                  width: 30,
-                  height: 30,
-                ),
-                margin: const EdgeInsets.only(right: 5, left: 0),
+                margin: const EdgeInsets.only(right: 33, left: 0),
               ),
               Text('Arcaniste',
                   style: TextStyle(color: Colors.white, fontSize: 20)),
               Spacer(),
-              Text('1334', style: TextStyle(color: Colors.yellow, fontSize: 20))
+              Text('${widget.data['character'].stats['1935470627']}',
+                  style: TextStyle(color: Colors.yellow, fontSize: 20))
             ],
           ),
           decoration: BoxDecoration(
-              color: Colors.blueGrey, border: Border.all(color: Colors.red)),
+              image: DecorationImage(
+                  image: NetworkImage('https://www.bungie.net' +
+                      widget.data['character'].emblemBackgroundPath))),
           width: 200,
           height: 50,
           padding: const EdgeInsets.all(8.0)),

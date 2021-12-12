@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/backend/bungie_backend_api.service.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/presentation/components/statisticDisplay.dart';
 
 //TODO: better split into smaller widget and define global variable for style
 class BuilderWidget extends StatelessWidget {
@@ -41,7 +42,7 @@ class BuilderWidget extends StatelessWidget {
     ];
     List<Widget> listStats = <Widget>[];
     for (var i = 0; i < 6; i++) {
-      listStats.add(statisticDisplay(context, values[i], i));
+      listStats.add(StatisticDisplay(value: values[i], i: i));
     }
     List<Widget> listArmor = <Widget>[];
     for (var i = 0; i < data.equipement.length; i++) {
@@ -71,39 +72,6 @@ class BuilderWidget extends StatelessWidget {
         padding: EdgeInsets.all(16),
         width: 600,
       ),
-    );
-  }
-
-  Widget statisticDisplay(BuildContext context, int value, int i) {
-    String link =
-        "https://www.bungie.net/common/destiny2_content/icons/e26e0e93a9daf4fdd21bf64eb9246340.png";
-    switch (i) {
-      case 1:
-        link =
-            "https://www.bungie.net/common/destiny2_content/icons/202ecc1c6febeb6b97dafc856e863140.png";
-        break;
-      case 2:
-        link =
-            "https://www.bungie.net/common/destiny2_content/icons/128eee4ee7fc127851ab32eac6ca91cf.png";
-        break;
-      case 3:
-        link =
-            "https://www.bungie.net/common/destiny2_content/icons/ca62128071dc254fe75891211b98b237.png";
-        break;
-      case 4:
-        link =
-            "https://www.bungie.net/common/destiny2_content/icons/59732534ce7060dba681d1ba84c055a6.png";
-        break;
-      case 5:
-        link =
-            "https://www.bungie.net/common/destiny2_content/icons/c7eefc8abbaa586eeab79e962a79d6ad.png";
-        break;
-    }
-    return Row(
-      children: [
-        Image.network(link, width: 40, height: 40),
-        Text('$value', style: TextStyle(color: Colors.white, fontSize: 25))
-      ],
     );
   }
 }
