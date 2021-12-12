@@ -29,7 +29,6 @@ class BackendService {
         Uri.parse('/inventory/$membershipType/$membershipId'),
         headers: {"Authorization": 'Bearer ' + token!.accessToken!});
     final responseJson = json.decode(response.body);
-    await storageService.setDatabase("manifest", responseJson.manifest);
 
     return responseJson.items;
   }

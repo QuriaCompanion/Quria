@@ -1,24 +1,19 @@
+import 'dart:collection';
+import 'dart:developer';
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:localstorage/localstorage.dart';
-import 'package:sembast/sembast.dart';
-import 'package:sembast/sembast_io.dart';
-import 'package:sembast_web/sembast_web.dart';
+// import 'package:sembast/sembast.dart';
+// import 'package:sembast/sembast_io.dart';
+// import 'package:sembast_web/sembast_web.dart';
 
 class StorageService {
-  static late final Database _db;
-  static final _store = StoreRef.main();
   static late final LocalStorage _storage;
-
   static init() async {
     _storage = LocalStorage('Quria');
-    if (kIsWeb) {
-      DatabaseFactory dbFactory = databaseFactoryWeb;
-      _db = await dbFactory.openDatabase("quria");
-    } else {
-      DatabaseFactory dbFactory = databaseFactoryIo;
-      _db = await dbFactory
-          .openDatabase("/data/user/0/com.example.quria/app_flutter/quria.db");
-    }
+    await Hive.initFlutter();
   }
 
   // sets a value in the LocalStorage
@@ -45,19 +40,21 @@ class StorageService {
   }
 
   // sets a value in the database
-  Future<void> setDatabase(String key, dynamic value) async {
-    await _store.record(key).put(_db, value);
+  Future<void> setDatabase(String key, String value) async {
+    final box = await Hive.openBox(key);
+    await box.add(value);
+    print('done');
     return;
   }
 
   // get a value in the database
-  Future<void> getDatabase(String key) async {
-    final value = await _store.record(key).get(_db);
-    return value;
+  Future<Map<dynamic, dynamic>> getDatabase(String key) async {
+    final box = await Hive.openBox(key);
+    return box.getAt(0);
   }
 
-  // removes a value in the database
-  Future<void> removeDatabase(String key) async {
-    await _store.record(key).delete(_db);
-  }
+  // // removes a value in the database
+  // Future<void> removeDatabase(String key) async {
+  //   await _store.record(key).delete(_db);
+  // }
 }
