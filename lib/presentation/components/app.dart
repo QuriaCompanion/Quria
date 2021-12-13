@@ -12,7 +12,7 @@ class AppView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
-        children: [NavigationBar(), Expanded(child: child)],
+        children: [NavBarWidget(), Expanded(child: child)],
       ),
     );
   }

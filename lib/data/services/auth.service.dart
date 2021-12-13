@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:universal_io/io.dart';
 
@@ -80,9 +81,9 @@ class AuthService {
       return null;
     }
     DateTime now = DateTime.now();
-    DateTime? savedDate =
-        await storageService.getLocalStorage('last_refresh') as DateTime?;
-    DateTime expire = savedDate!.add(Duration(seconds: token!.expiresIn!));
+    String? savedString = await storageService.getLocalStorage('last_refresh');
+    DateTime savedDate = DateTime.parse(savedString!);
+    DateTime expire = savedDate.add(Duration(seconds: token!.expiresIn!));
     DateTime refreshExpire =
         savedDate.add(Duration(seconds: token.refreshExpiresIn!));
     if (refreshExpire.isBefore(now)) {

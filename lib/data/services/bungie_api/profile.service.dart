@@ -118,7 +118,7 @@ class ProfileService {
       {List<DestinyComponentType>? components, bool skipUpdate = false}) async {
     try {
       DestinyProfileResponse? res = await _updateProfileData(updateComponents);
-      inspect(res);
+      print(res);
       _lastLoadedFrom = LastLoadedFrom.server;
       _cacheProfile(_profile!);
       return res;
@@ -151,7 +151,6 @@ class ProfileService {
       List<DestinyComponentType> components) async {
     DestinyProfileResponse? response;
     response = await _api.getCurrentProfile(components);
-
     lastUpdated = DateTime.now();
 
     if (response == null) {
@@ -248,11 +247,11 @@ class ProfileService {
     if (json != null) {
       try {
         DestinyProfileResponse response = DestinyProfileResponse.fromJson(json);
-        inspect(response);
         if ((response.characters?.data?.length ?? 0) > 0) {
           _profile = response;
           _lastLoadedFrom = LastLoadedFrom.cache;
           print('loaded profile from cache');
+          inspect(response);
           return response;
         }
       } catch (e) {

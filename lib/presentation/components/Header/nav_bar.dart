@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:quria/presentation/var/routes.dart';
 import 'components/nav_item.dart';
 
-class NavigationBar extends StatefulWidget {
+class NavBarWidget extends StatefulWidget {
   @override
-  _NavigationBarState createState() => _NavigationBarState();
+  _NavBarWidgetState createState() => _NavBarWidgetState();
 }
 
-class _NavigationBarState extends State<NavigationBar> {
+class _NavBarWidgetState extends State<NavBarWidget> {
   int index = 0;
 
   @override
@@ -21,6 +21,10 @@ class _NavigationBarState extends State<NavigationBar> {
           NavigationItem(
             title: 'Home',
             routeName: routeHome,
+          ),
+          NavigationItem(
+            title: 'Profile',
+            routeName: '/profile',
           ),
           NavigationItem(
             title: 'Settings',

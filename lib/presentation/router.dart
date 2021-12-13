@@ -4,6 +4,7 @@ import 'package:quria/presentation/screens/builder.dart';
 import 'package:quria/presentation/screens/builder/exotic.dart';
 import 'package:quria/presentation/screens/home.dart';
 import 'package:quria/presentation/screens/login.dart';
+import 'package:quria/presentation/screens/profile.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 class AppRouter {
@@ -13,6 +14,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => LoginWidget());
       case routeHome:
         return MaterialPageRoute(builder: (_) => HomeWidget());
+      case "/profile":
+        return MaterialPageRoute(builder: (_) => ProfileWidget());
       case routeBuilder:
         return MaterialPageRoute(builder: (_) => BuilderWidget());
       case routeExotic:

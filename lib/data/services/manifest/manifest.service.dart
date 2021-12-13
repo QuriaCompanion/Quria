@@ -1,25 +1,21 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:bungie_api/models/destiny_manifest.dart';
 import 'package:bungie_api/responses/destiny_manifest_response.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
+import 'package:quria/data/services/bungie_api/enums/definition_table_names.enum.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:sembast/sembast.dart';
-import 'package:sembast_web/sembast_web.dart';
-import 'package:sembast/sembast_io.dart';
 
 typedef DownloadProgress = void Function(int downloaded, int total);
 
 class ManifestService {
-  var store = StoreRef.main();
-  var _db;
   final BungieApiService api = BungieApiService();
   DestinyManifest? _manifestInfo;
-
-  final Map<String, dynamic> _cached = {};
+  final StorageService storage = StorageService();
   static final ManifestService _singleton = ManifestService._internal();
 
   factory ManifestService() {
@@ -42,43 +38,48 @@ class ManifestService {
     return _manifestInfo!;
   }
 
-  //TODO: optimize this shit
-  Future<bool> download({DownloadProgress? onProgress}) async {
-    // DestinyManifest info = await loadManifestInfo();
-    // String language = "fr";
-    // Map path = info.jsonWorldComponentContentPaths![language]!;
-    await openDb();
-    print('opened DB');
-    // for (String key in path.keys) {
-    //   String url = path[key]!;
-    //   url = 'https://bungie.net' + url;
-    store.record('manifest').delete(_db);
-    http.Response res = await http.get(Uri.parse(
-        'https://www.bungie.net/common/destiny2_content/json/fr/DestinyInventoryItemDefinition-518fc4dd-cf15-4276-954d-4a16992d2eaa.json'));
-    print('downloaded');
-    final jsonManifest = await compute(_parseManifest, res.body);
-    print("parsed");
-    await compute(_storeManifest, jsonManifest);
-    //   print('Downloaded $key');
-    // }
-    final manifestStored =
-        await store.record("DestinyInventoryItemDefinition").get(_db) as Map;
-    print('stored');
-    inspect(manifestStored);
-    // bool success = await test();
-    // if (!success) return false;
-
-    // await saveManifestVersion(path);
-    // return success;
-    return true;
+  Future<Map<int, DestinyInventoryItemDefinition>> getManifest() async {
+    final bool = await isManifestSaved();
+    print(bool);
+    if (bool == true) {
+      return await compute(
+          _parsedDestinyInventoryItemDefinition, await getManifestLocal());
+    } else {
+      return await compute(
+          _parsedDestinyInventoryItemDefinition, await getManifestRemote());
+    }
   }
 
-  _storeManifest(manifest) async {
-    await store.record('manifest').put(_db, manifest);
+  Future<String> getManifestLocal() async {
+    return await storage.getDatabase('DestinyInventoryItemDefinition');
   }
 
-  _parseManifest(String text) {
-    return json.decode(text);
+  Future<String> getManifestRemote({DownloadProgress? onProgress}) async {
+    DestinyManifest info = await loadManifestInfo();
+    String language = "fr";
+    for (final entry in info.jsonWorldComponentContentPaths!['fr']!.entries) {
+      http.Response res =
+          await http.get(Uri.parse('https://www.bungie.net' + entry.value));
+      print('downloaded ${entry.key}');
+      await storage.setDatabase(entry.key, res.body);
+    }
+    await storage.setLocalStorage('manifestSaved', true);
+    return await getManifestLocal();
+  }
+
+  Map<int, DestinyInventoryItemDefinition>
+      _parsedDestinyInventoryItemDefinition(String text) {
+    Map<int, DestinyInventoryItemDefinition> items = {};
+    Map decoded = json.decode(text);
+    for (final entry in decoded.entries) {
+      items[int.parse(entry.key)] =
+          DestinyInventoryItemDefinition.fromJson(entry.value);
+    }
+    return items;
+  }
+
+  Future<bool?> isManifestSaved() async {
+    return await storage.getLocalStorage('manifestSaved');
   }
 
   // Future<bool> test() async {
@@ -186,17 +187,4 @@ class ManifestService {
   //   }
   //   return null;
   // }
-  openDb() async {
-    if (_db != null) return _db;
-    if (kIsWeb) {
-      DatabaseFactory dbFactory = databaseFactoryWeb;
-      print('"ho"');
-      return _db = await dbFactory.openDatabase("manifest");
-    } else {
-      DatabaseFactory dbFactory = databaseFactoryIo;
-      print('"hey"');
-      return _db = await dbFactory.openDatabase(
-          "/data/user/0/com.example.quria/app_flutter/manifest.db");
-    }
-  }
 }
