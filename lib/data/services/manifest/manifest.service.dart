@@ -40,7 +40,6 @@ class ManifestService {
 
   Future<Map<int, DestinyInventoryItemDefinition>> getManifest() async {
     final bool = await isManifestSaved();
-    print(bool);
     if (bool == true) {
       return await compute(
           _parsedDestinyInventoryItemDefinition, await getManifestLocal());
@@ -57,12 +56,13 @@ class ManifestService {
   Future<String> getManifestRemote({DownloadProgress? onProgress}) async {
     DestinyManifest info = await loadManifestInfo();
     String language = "fr";
-    for (final entry in info.jsonWorldComponentContentPaths!['fr']!.entries) {
-      http.Response res =
-          await http.get(Uri.parse('https://www.bungie.net' + entry.value));
-      print('downloaded ${entry.key}');
-      await storage.setDatabase(entry.key, res.body);
-    }
+    http.Response res = await http.get(Uri.parse('https://www.bungie.net' +
+        info.jsonWorldComponentContentPaths!['fr']![
+            'DestinyInventoryItemDefinition']!));
+    print('downloaded DestinyInventoryItemDefinition');
+    await storage.setDatabase('DestinyInventoryItemDefinition', res.body);
+    // for (final entry in info.jsonWorldComponentContentPaths!['fr']!.entries) {
+    // }
     await storage.setLocalStorage('manifestSaved', true);
     return await getManifestLocal();
   }
