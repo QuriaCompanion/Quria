@@ -37,12 +37,16 @@ class _StatisticDisplayState extends State<StatisticDisplay> {
             "https://www.bungie.net/common/destiny2_content/icons/c7eefc8abbaa586eeab79e962a79d6ad.png";
         break;
     }
-    return Row(
-      children: [
-        Image.network(link, width: 40, height: 40),
-        Text('${widget.value}',
-            style: TextStyle(color: Colors.white, fontSize: 25))
-      ],
+    return SizedBox(
+      width: 85,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Image.network(link, width: 40, height: 40),
+          Text('${widget.value}',
+              style: TextStyle(color: Colors.white, fontSize: 25))
+        ],
+      ),
     );
   }
 }

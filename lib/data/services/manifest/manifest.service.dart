@@ -57,6 +57,8 @@ class ManifestService {
   Future<String> getManifestRemote({DownloadProgress? onProgress}) async {
     DestinyManifest info = await loadManifestInfo();
     String language = "fr";
+    info.jsonWorldComponentContentPaths!['fr']![
+        'DestinyInventoryItemDefinition'];
     for (final entry in info.jsonWorldComponentContentPaths!['fr']!.entries) {
       http.Response res =
           await http.get(Uri.parse('https://www.bungie.net' + entry.value));

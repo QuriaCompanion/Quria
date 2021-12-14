@@ -38,23 +38,33 @@ class ProfileWidget extends StatelessWidget {
               child: BlocBuilder<CharacterCubit, CharacterState>(
                 builder: (context, state) {
                   return Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                            width: 561,
-                            child: ProfileTitleWidget(data: snapshot.data)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ProfileNodeWidget(data: snapshot.data),
-                            SizedBox(width: 10),
-                            if (state is ShowDetailsState) DetailsItemWidget()
-                          ],
-                        )
-                      ],
+                    child: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage('https://www.bungie.net' +
+                                  _manifestParsed[snapshot
+                                          .data['characterEquipement'][5]
+                                          .itemHash!]!
+                                      .screenshot!),
+                              fit: BoxFit.cover)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                              width: 561,
+                              child: ProfileTitleWidget(data: snapshot.data)),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ProfileNodeWidget(data: snapshot.data),
+                              SizedBox(width: 10),
+                              if (state is ShowDetailsState) DetailsItemWidget()
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -101,8 +111,8 @@ class ProfileNodeWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 WeaponSectionWidget(data: data),
-                CharacterWidget(),
-                CharacterStatsWidget(),
+                SizedBox(width: 300),
+                CharacterStatsWidget(data: data),
                 ArmorSectionWidget(data: data)
               ]),
         ),
@@ -135,8 +145,10 @@ class ArmorSectionWidget extends StatelessWidget {
 }
 
 class CharacterStatsWidget extends StatelessWidget {
+  final data;
   const CharacterStatsWidget({
     Key? key,
+    this.data,
   }) : super(key: key);
 
   @override
@@ -147,55 +159,17 @@ class CharacterStatsWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              Text('55'),
-              Image(
-                  image: NetworkImage(
-                      'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                  width: 20,
-                  height: 20)
-            ],
-          ),
+          StatisticDisplay(value: data['character'].stats['2996146975'], i: 0),
           SizedBox(height: 10),
-          Row(
-            children: [],
-          ),
+          StatisticDisplay(value: data['character'].stats['392767087'], i: 1),
           SizedBox(height: 10),
-          // StatisticDisplay(value: widdata.value, i: i),
+          StatisticDisplay(value: data['character'].stats['1943323491'], i: 2),
           SizedBox(height: 10),
-          Row(
-            children: [
-              Text('51'),
-              Image(
-                  image: NetworkImage(
-                      'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                  width: 20,
-                  height: 20)
-            ],
-          ),
+          StatisticDisplay(value: data['character'].stats['1735777505'], i: 3),
           SizedBox(height: 10),
-          Row(
-            children: [
-              Text('51'),
-              Image(
-                  image: NetworkImage(
-                      'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                  width: 20,
-                  height: 20)
-            ],
-          ),
+          StatisticDisplay(value: data['character'].stats['144602215'], i: 4),
           SizedBox(height: 10),
-          Row(
-            children: [
-              Text('51'),
-              Image(
-                  image: NetworkImage(
-                      'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-                  width: 20,
-                  height: 20)
-            ],
-          ),
+          StatisticDisplay(value: data['character'].stats['4244567218'], i: 5),
         ],
       ),
     );
@@ -336,8 +310,7 @@ class DetailsItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Offstage(
       offstage: false,
-      child: Positioned(
-          child: Align(
+      child: Align(
         alignment: Alignment.centerRight,
         child: Container(
             width: 400,
@@ -553,7 +526,7 @@ class DetailsItemWidget extends StatelessWidget {
                 ],
               ),
             )),
-      )),
+      ),
     );
   }
 }
