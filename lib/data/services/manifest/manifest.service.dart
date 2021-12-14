@@ -63,6 +63,7 @@ class ManifestService {
     await storage.setDatabase('DestinyInventoryItemDefinition', res.body);
     // for (final entry in info.jsonWorldComponentContentPaths!['fr']!.entries) {
     // }
+
     await storage.setLocalStorage('manifestSaved', true);
     return await getManifestLocal();
   }
