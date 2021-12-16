@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables
 
+import 'dart:convert';
 import 'dart:developer';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -57,7 +58,8 @@ class ProfileWidget extends StatelessWidget {
                             children: [
                               ProfileNodeWidget(data: snapshot.data),
                               SizedBox(width: 10),
-                              if (state is ShowDetailsState) DetailsItemWidget()
+                              if (state is ShowDetailsState)
+                                DetailsItemWidget(item: state.item)
                             ],
                           )
                         ],
@@ -240,15 +242,29 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    inspect(item);
     return Container(
       child: InkWell(
-        onTap: () => context.read<CharacterCubit>().showDetails(),
-        child: Image(
-          image: NetworkImage('https://www.bungie.net' +
-              _manifestParsed[item.itemHash]!.displayProperties!.icon!),
-          width: 70,
-          height: 70,
+        onTap: () => context
+            .read<CharacterCubit>()
+            .showDetails(_manifestParsed[item.itemHash]),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade700,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Image(
+            image: NetworkImage('https://www.bungie.net' +
+                _manifestParsed[item.itemHash]!.displayProperties!.icon!),
+            width: 70,
+            height: 70,
+          ),
         ),
       ),
       margin: const EdgeInsets.only(top: 10, bottom: 10),
@@ -299,12 +315,15 @@ class _ProfileTitleState extends State<ProfileTitleWidget> {
 }
 
 class DetailsItemWidget extends StatelessWidget {
-  const DetailsItemWidget({
+  DestinyInventoryItemDefinition item;
+  DetailsItemWidget({
+    required this.item,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    inspect(item.stats?.stats);
     return Offstage(
       offstage: false,
       child: Align(
@@ -326,47 +345,62 @@ class DetailsItemWidget extends StatelessWidget {
                       SizedBox(
                         height: 70,
                         width: 70,
-                        child: Image(
-                          image: NetworkImage(
-                              'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade700,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.5),
+                                spreadRadius: 5,
+                                blurRadius: 7,
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          child: Image(
+                            image: NetworkImage('https://www.bungie.net' +
+                                item.displayProperties!.icon!),
+                          ),
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(left: 5),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'nom de l\'arme',
+                              utf8.decode(
+                                  item.displayProperties!.name!.runes.toList()),
                               style: TextStyle(fontSize: 20),
                             ),
-                            Column(
-                              children: <Widget>[],
-                            ),
                             SizedBox(
-                              width: 125,
+                              width: 200,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('data 1',
+                                  Text(
+                                      'Chargeur : ${item.stats?.stats!['3871231066']?.value}',
                                       style: TextStyle(fontSize: 10)),
                                   Text(
-                                    'data 2',
+                                    'Zoom : ${item.stats?.stats!['3555269338']?.value}',
                                     style: TextStyle(fontSize: 10),
                                   )
                                 ],
                               ),
                             ),
                             SizedBox(
-                              width: 125,
+                              width: 200,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text('data 1',
+                                  Text(
+                                      'Coup par minute : ${item.stats?.stats!['4284893193']?.value}',
                                       style: TextStyle(fontSize: 10)),
                                   Text(
-                                    'data 2',
+                                    'Direction du recul : ${item.stats?.stats!['2715839340']?.value}',
                                     style: TextStyle(fontSize: 10),
                                   ),
                                 ],
@@ -385,59 +419,78 @@ class DetailsItemWidget extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('d'),
+                            Text(
+                              'Impact: ${item.stats?.stats!['4043523819']?.value}',
+                            ),
                             SizedBox(height: 4.5),
-                            Text('datafdsfdsfsd'),
+                            Text(
+                                'Portée: ${item.stats?.stats!['1240592695']?.value}'),
                             SizedBox(height: 4.5),
-                            Text('data'),
+                            Text(
+                                'Stabilité: ${item.stats?.stats!['155624089']?.value}'),
                             SizedBox(height: 4.5),
-                            Text('da'),
+                            Text(
+                                'Maniement: ${item.stats?.stats!['943549884']?.value}'),
                             SizedBox(height: 4.5),
-                            Text('datafds'),
+                            Text(
+                                'Rechargement: ${item.stats?.stats!['4188031367']?.value}'),
                             SizedBox(height: 4.5),
-                            Text('datafdsfsdffdsfdsfds'),
+                            Text(
+                                'Aide à la visée: ${item.stats?.stats!['1345609583']?.value}'),
                           ],
                         ),
                       ),
                       Column(
                         children: [
                           LinearPercentIndicator(
-                            percent: 0.5,
+                            percent:
+                                (item.stats!.stats!['4043523819']?.value!)! /
+                                    100,
                             progressColor: Colors.white,
                             lineHeight: 12,
                             width: 175,
                           ),
                           SizedBox(height: 8),
                           LinearPercentIndicator(
-                            percent: 0.5,
+                            percent:
+                                (item.stats!.stats!['1240592695']?.value!)! /
+                                    100,
                             progressColor: Colors.white,
                             lineHeight: 12,
                             width: 175,
                           ),
                           SizedBox(height: 8),
                           LinearPercentIndicator(
-                            percent: 0.5,
+                            percent:
+                                (item.stats!.stats!['155624089']?.value!)! /
+                                    100,
                             progressColor: Colors.white,
                             lineHeight: 12,
                             width: 175,
                           ),
                           SizedBox(height: 8),
                           LinearPercentIndicator(
-                            percent: 0.5,
+                            percent:
+                                (item.stats!.stats!['943549884']?.value!)! /
+                                    100,
                             progressColor: Colors.white,
                             lineHeight: 12,
                             width: 175,
                           ),
                           SizedBox(height: 8),
                           LinearPercentIndicator(
-                            percent: 0.5,
+                            percent:
+                                (item.stats!.stats!['4188031367']?.value!)! /
+                                    100,
                             progressColor: Colors.white,
                             lineHeight: 12,
                             width: 175,
                           ),
                           SizedBox(height: 8),
                           LinearPercentIndicator(
-                            percent: 0.5,
+                            percent:
+                                (item.stats!.stats!['1345609583']?.value!)! /
+                                    100,
                             progressColor: Colors.white,
                             lineHeight: 12,
                             width: 175,
@@ -455,32 +508,52 @@ class DetailsItemWidget extends StatelessWidget {
                             height: 40,
                             width: 40,
                             child: Image(
-                              image: NetworkImage(
-                                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                              image: NetworkImage('https://www.bungie.net' +
+                                  _manifestParsed[item
+                                          .sockets!
+                                          .socketEntries![1]
+                                          .singleInitialItemHash!]!
+                                      .displayProperties!
+                                      .icon!),
                             )),
                         SizedBox(width: 15),
                         SizedBox(
                             height: 40,
                             width: 40,
                             child: Image(
-                              image: NetworkImage(
-                                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                              image: NetworkImage('https://www.bungie.net' +
+                                  _manifestParsed[item
+                                          .sockets!
+                                          .socketEntries![2]
+                                          .singleInitialItemHash!]!
+                                      .displayProperties!
+                                      .icon!),
                             )),
                         SizedBox(width: 15),
                         SizedBox(
                             height: 40,
                             width: 40,
                             child: Image(
-                              image: NetworkImage(
-                                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                              image: NetworkImage('https://www.bungie.net' +
+                                  _manifestParsed[item
+                                          .sockets!
+                                          .socketEntries![3]
+                                          .singleInitialItemHash!]!
+                                      .displayProperties!
+                                      .icon!),
                             )),
                         SizedBox(width: 15),
                         SizedBox(
                             height: 40,
                             width: 40,
                             child: Image(
-                              image: NetworkImage(
-                                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                              image: NetworkImage('https://www.bungie.net' +
+                                  _manifestParsed[item
+                                          .sockets!
+                                          .socketEntries![4]
+                                          .singleInitialItemHash!]!
+                                      .displayProperties!
+                                      .icon!),
                             )),
                       ],
                     ),
@@ -494,8 +567,13 @@ class DetailsItemWidget extends StatelessWidget {
                             height: 40,
                             width: 40,
                             child: Image(
-                              image: NetworkImage(
-                                  'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                              image: NetworkImage('https://www.bungie.net' +
+                                  _manifestParsed[item
+                                          .sockets!
+                                          .socketEntries![0]
+                                          .singleInitialItemHash!]!
+                                      .displayProperties!
+                                      .icon!),
                             )),
                         SizedBox(
                           width: 10,
@@ -506,12 +584,26 @@ class DetailsItemWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'titre dsdsds',
+                                utf8.decode(_manifestParsed[item
+                                        .sockets!
+                                        .socketEntries![0]
+                                        .singleInitialItemHash!]!
+                                    .displayProperties!
+                                    .name!
+                                    .runes
+                                    .toList()),
                                 textAlign: TextAlign.left,
                               ),
                               SizedBox(height: 3),
                               Text(
-                                ' It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.',
+                                utf8.decode(_manifestParsed[item
+                                        .sockets!
+                                        .socketEntries![0]
+                                        .singleInitialItemHash!]!
+                                    .displayProperties!
+                                    .description!
+                                    .runes
+                                    .toList()),
                                 style: TextStyle(fontSize: 10),
                               )
                             ],

@@ -4,4 +4,7 @@ abstract class CharacterState {}
 
 class CharacterInitial extends CharacterState {}
 
-class ShowDetailsState extends CharacterState {}
+class ShowDetailsState extends CharacterState {
+  final DestinyInventoryItemDefinition item;
+  ShowDetailsState({required this.item});
+}
