@@ -58,27 +58,28 @@ class ExoticWidget extends StatelessWidget {
                       width: 20,
                     ),
                     Expanded(
-                        child: FutureBuilder(
-                            future: display.getExotics(),
-                            builder: (context, AsyncSnapshot snapshot) {
-                              if (snapshot.hasData) {
-                                List<Widget> list = <Widget>[];
-                                for (var i = 0; i < snapshot.data.length; i++) {
-                                  list.add(item(context, snapshot.data[i]));
-                                }
-                                return Container(
-                                  child: Wrap(
-                                    children: list,
-                                  ),
-                                  padding: const EdgeInsets.all(60),
-                                );
-                              } else {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
+                      flex: 60,
+                      child: FutureBuilder(
+                          future: display.getExotics(),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            if (snapshot.hasData) {
+                              List<Widget> list = <Widget>[];
+                              for (var i = 0; i < snapshot.data.length; i++) {
+                                list.add(item(context, snapshot.data[i]));
                               }
-                            }),
-                        flex: 60),
+                              return Container(
+                                child: Wrap(
+                                  children: list,
+                                ),
+                                padding: const EdgeInsets.all(60),
+                              );
+                            } else {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                          }),
+                    ),
                   ],
                 ),
               )
@@ -117,13 +118,11 @@ class ExoticWidget extends StatelessWidget {
                   fit: BoxFit.fill),
               Padding(
                 padding: EdgeInsets.all(15.0),
-                child: Flexible(
-                    child: Text(
-                        utf8.decode(
-                            data.displayProperties!.name!.runes.toList()),
-                        textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 18, color: Colors.white),
-                        overflow: TextOverflow.clip)),
+                child: Text(
+                    utf8.decode(data.displayProperties!.name!.runes.toList()),
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, color: Colors.white),
+                    overflow: TextOverflow.clip),
               ),
             ],
           ),
