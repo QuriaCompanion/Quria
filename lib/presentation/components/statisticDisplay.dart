@@ -3,7 +3,18 @@ import 'package:flutter/material.dart';
 class StatisticDisplay extends StatefulWidget {
   final int value;
   final int i;
-  const StatisticDisplay({Key? key, required this.value, required this.i})
+  final double? width;
+  final double? height;
+  final double? fontsize;
+  final double? paddingLeft;
+  const StatisticDisplay(
+      {Key? key,
+      required this.value,
+      required this.i,
+      this.width = 40,
+      this.height = 40,
+      this.fontsize = 25,
+      this.paddingLeft = 0})
       : super(key: key);
 
   @override
@@ -38,13 +49,16 @@ class _StatisticDisplayState extends State<StatisticDisplay> {
         break;
     }
     return SizedBox(
-      width: 85,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Image.network(link, width: 40, height: 40),
-          Text('${widget.value}',
-              style: TextStyle(color: Colors.white, fontSize: 25))
+          Image.network(link, width: widget.width, height: widget.height),
+          Padding(
+            padding: EdgeInsets.only(left: widget.paddingLeft!),
+            child: Text('${widget.value}',
+                style: TextStyle(
+                    color: Colors.white70, fontSize: widget.fontsize)),
+          )
         ],
       ),
     );

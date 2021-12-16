@@ -94,13 +94,17 @@ class BuilderWidget extends StatelessWidget {
                       children: [
                         Text('Base: ${data.stats.base}',
                             style:
-                                TextStyle(color: Colors.white, fontSize: 25)),
+                                TextStyle(color: Colors.white70, fontSize: 25)),
                         Text('Final: ${data.stats.max}',
-                            style: TextStyle(color: Colors.white, fontSize: 25))
+                            style:
+                                TextStyle(color: Colors.white70, fontSize: 25))
                       ]),
-                  Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: listStats),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: listStats),
+                  ),
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: listArmor),
@@ -148,7 +152,7 @@ class _ExtendedDataState extends State<ExtendedData> {
           },
           child: Icon(
             icon,
-            color: Colors.white,
+            color: Colors.white70,
             size: 45.0,
           ),
         ),
@@ -161,10 +165,11 @@ class _ExtendedDataState extends State<ExtendedData> {
                     Padding(
                       padding: EdgeInsets.all(16.0),
                       child: Text('Mods à équiper',
-                          style: TextStyle(color: Colors.white, fontSize: 15)),
+                          style:
+                              TextStyle(color: Colors.white70, fontSize: 15)),
                     ),
                     Text('Matériaux nécessaire',
-                        style: TextStyle(color: Colors.white, fontSize: 15)),
+                        style: TextStyle(color: Colors.white70, fontSize: 15)),
                   ]),
               Row(
                   textDirection: TextDirection.ltr,
@@ -203,8 +208,8 @@ class _ExtendedDataState extends State<ExtendedData> {
           textDirection: TextDirection.ltr,
           children: [
             Image.network(mod.icon),
-            Text(mod.name, style: TextStyle(color: Colors.white)),
-            Text('${mod.number}', style: TextStyle(color: Colors.white))
+            Text(mod.name, style: TextStyle(color: Colors.white70)),
+            Text('${mod.number}', style: TextStyle(color: Colors.white70))
           ]),
     );
   }

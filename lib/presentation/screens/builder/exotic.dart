@@ -41,11 +41,13 @@ class ExoticWidget extends StatelessWidget {
               IntrinsicHeight(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Expanded(
                       flex: 30,
                       child: Padding(
-                        padding: EdgeInsets.only(left: 60.0, right: 60),
+                        padding:
+                            EdgeInsets.only(left: 60.0, right: 60, top: 100),
                         child: Text(
                             "Prêt à construire votre armure de rêve?\nÇa commence maintenant!\nCommencez par choisir une armure exotique qui sera la pièrce maitresse de votre équipement.",
                             style:

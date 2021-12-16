@@ -46,21 +46,34 @@ class ProfileWidget extends StatelessWidget {
                                       .screenshot!),
                               fit: BoxFit.cover)),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SizedBox(
-                              width: 561,
-                              child: ProfileTitleWidget(data: snapshot.data)),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ProfileNodeWidget(data: snapshot.data),
-                              SizedBox(width: 10),
-                              if (state is ShowDetailsState)
-                                DetailsItemWidget(item: state.item)
-                            ],
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 150.0, top: 50),
+                            child: SizedBox(
+                                width: 561,
+                                child: ProfileTitleWidget(data: snapshot.data)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 120.0),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ProfileNodeWidget(data: snapshot.data),
+                                    SizedBox(width: 10),
+                                    if (state is ShowDetailsState)
+                                      DetailsItemWidget(item: state.item)
+                                  ],
+                                ),
+                              ],
+                            ),
                           )
                         ],
                       ),
@@ -110,9 +123,18 @@ class ProfileNodeWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 WeaponSectionWidget(data: data),
-                SizedBox(width: 300),
-                CharacterStatsWidget(data: data),
-                ArmorSectionWidget(data: data)
+                SizedBox(width: 400),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        CharacterStatsWidget(data: data),
+                        ArmorSectionWidget(data: data)
+                      ],
+                    ),
+                  ],
+                ),
               ]),
         ),
       ),
@@ -152,23 +174,69 @@ class CharacterStatsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const double fontsize = 30;
+    const double width = 50;
+    const double height = 50;
     return Container(
-      margin: const EdgeInsets.only(right: 15),
+      // TODO : Refactoring SizedBox value
+      margin: const EdgeInsets.only(right: 50),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          StatisticDisplay(value: data['character'].stats['2996146975'], i: 0),
-          SizedBox(height: 10),
-          StatisticDisplay(value: data['character'].stats['392767087'], i: 1),
-          SizedBox(height: 10),
-          StatisticDisplay(value: data['character'].stats['1943323491'], i: 2),
-          SizedBox(height: 10),
-          StatisticDisplay(value: data['character'].stats['1735777505'], i: 3),
-          SizedBox(height: 10),
-          StatisticDisplay(value: data['character'].stats['144602215'], i: 4),
-          SizedBox(height: 10),
-          StatisticDisplay(value: data['character'].stats['4244567218'], i: 5),
+          StatisticDisplay(
+            value: data['character'].stats['2996146975'],
+            i: 0,
+            width: width,
+            height: height,
+            fontsize: fontsize,
+            paddingLeft: 8.0,
+          ),
+          SizedBox(height: 50),
+          StatisticDisplay(
+            value: data['character'].stats['392767087'],
+            i: 1,
+            width: width,
+            height: height,
+            fontsize: fontsize,
+            paddingLeft: 8.0,
+          ),
+          SizedBox(height: 50),
+          StatisticDisplay(
+            value: data['character'].stats['1943323491'],
+            i: 2,
+            width: width,
+            height: height,
+            fontsize: fontsize,
+            paddingLeft: 8.0,
+          ),
+          SizedBox(height: 50),
+          StatisticDisplay(
+            value: data['character'].stats['1735777505'],
+            i: 3,
+            width: width,
+            height: height,
+            fontsize: fontsize,
+            paddingLeft: 8.0,
+          ),
+          SizedBox(height: 50),
+          StatisticDisplay(
+            value: data['character'].stats['144602215'],
+            i: 4,
+            width: width,
+            height: height,
+            fontsize: fontsize,
+            paddingLeft: 8.0,
+          ),
+          SizedBox(height: 50),
+          StatisticDisplay(
+            value: data['character'].stats['4244567218'],
+            i: 5,
+            width: width,
+            height: height,
+            fontsize: fontsize,
+            paddingLeft: 8.0,
+          ),
         ],
       ),
     );
@@ -262,8 +330,9 @@ class Item extends StatelessWidget {
           child: Image(
             image: NetworkImage('https://www.bungie.net' +
                 _manifestParsed[item.itemHash]!.displayProperties!.icon!),
-            width: 70,
-            height: 70,
+            fit: BoxFit.fill,
+            width: 150,
+            height: 150,
           ),
         ),
       ),
@@ -290,25 +359,33 @@ class _ProfileTitleState extends State<ProfileTitleWidget> {
     return Align(
       alignment: Alignment.topLeft,
       child: Container(
+          width: 500,
+          height: 125,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: NetworkImage('https://www.bungie.net' +
+                    widget.data['character'].emblemBackgroundPath),
+                fit: BoxFit.fill),
+          ),
           alignment: Alignment.topLeft,
           child: Row(
             children: [
               Container(
                 margin: const EdgeInsets.only(right: 33, left: 0),
               ),
-              Text('Arcaniste',
-                  style: TextStyle(color: Colors.white, fontSize: 20)),
+              Padding(
+                padding: const EdgeInsets.only(left: 75.0),
+                child: Text('Arcaniste',
+                    style: TextStyle(
+                      color: Colors.white70,
+                      fontSize: 50,
+                    )),
+              ),
               Spacer(),
               Text('${widget.data['character'].stats['1935470627']}',
-                  style: TextStyle(color: Colors.yellow, fontSize: 20))
+                  style: TextStyle(color: Colors.yellow, fontSize: 50))
             ],
           ),
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage('https://www.bungie.net' +
-                      widget.data['character'].emblemBackgroundPath))),
-          width: 200,
-          height: 50,
           padding: const EdgeInsets.all(8.0)),
     );
   }
@@ -329,10 +406,10 @@ class DetailsItemWidget extends StatelessWidget {
       child: Align(
         alignment: Alignment.centerRight,
         child: Container(
-            width: 400,
-            height: 400,
-            padding: const EdgeInsets.all(10),
-            margin: const EdgeInsets.only(right: 40),
+            width: 800,
+            height: 800,
+            padding: const EdgeInsets.all(20),
+            margin: const EdgeInsets.only(right: 80),
             decoration: BoxDecoration(
               color: Colors.black54,
               boxShadow: [
@@ -345,7 +422,7 @@ class DetailsItemWidget extends StatelessWidget {
               ],
             ),
             child: Container(
-              margin: const EdgeInsets.only(left: 7),
+              margin: const EdgeInsets.only(left: 14),
               child: Column(
                 children: [
                   Row(
@@ -353,8 +430,8 @@ class DetailsItemWidget extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       SizedBox(
-                        height: 70,
-                        width: 70,
+                        height: 140,
+                        width: 140,
                         child: Container(
                           decoration: BoxDecoration(
                             color: Colors.grey.shade700,
@@ -371,11 +448,12 @@ class DetailsItemWidget extends StatelessWidget {
                           child: Image(
                             image: NetworkImage('https://www.bungie.net' +
                                 item.displayProperties!.icon!),
+                            fit: BoxFit.fill,
                           ),
                         ),
                       ),
                       Container(
-                        margin: const EdgeInsets.only(left: 5),
+                        margin: const EdgeInsets.only(left: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -383,10 +461,10 @@ class DetailsItemWidget extends StatelessWidget {
                               utf8.decode(
                                   item.displayProperties!.name!.runes.toList()),
                               style:
-                                  TextStyle(fontSize: 20, color: Colors.white),
+                                  TextStyle(fontSize: 40, color: Colors.white),
                             ),
                             SizedBox(
-                              width: 200,
+                              width: 400,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -394,17 +472,17 @@ class DetailsItemWidget extends StatelessWidget {
                                   Text(
                                       'Chargeur : ${item.stats?.stats!['3871231066']?.value}',
                                       style: TextStyle(
-                                          fontSize: 10, color: Colors.white)),
+                                          fontSize: 20, color: Colors.white)),
                                   Text(
                                     'Zoom : ${item.stats?.stats!['3555269338']?.value}',
                                     style: TextStyle(
-                                        fontSize: 10, color: Colors.white),
+                                        fontSize: 20, color: Colors.white),
                                   )
                                 ],
                               ),
                             ),
                             SizedBox(
-                              width: 200,
+                              width: 400,
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
@@ -412,11 +490,11 @@ class DetailsItemWidget extends StatelessWidget {
                                   Text(
                                       'Coup par minute : ${item.stats?.stats!['4284893193']?.value}',
                                       style: TextStyle(
-                                          fontSize: 10, color: Colors.white)),
+                                          fontSize: 20, color: Colors.white)),
                                   Text(
                                     'Direction du recul : ${item.stats?.stats!['2715839340']?.value}',
                                     style: TextStyle(
-                                        fontSize: 10, color: Colors.white),
+                                        fontSize: 20, color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -426,109 +504,118 @@ class DetailsItemWidget extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  SizedBox(height: 20),
                   Row(
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(left: 5),
+                        margin: const EdgeInsets.only(left: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Impact: ${item.stats?.stats!['4043523819']?.value}',
-                              style: TextStyle(color: Colors.white),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 28),
                             ),
-                            SizedBox(height: 4.5),
+                            SizedBox(height: 9),
                             Text(
                               'Portée: ${item.stats?.stats!['1240592695']?.value}',
-                              style: TextStyle(color: Colors.white),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 28),
                             ),
-                            SizedBox(height: 4.5),
+                            SizedBox(height: 9),
                             Text(
                                 'Stabilité: ${item.stats?.stats!['155624089']?.value}',
-                                style: TextStyle(color: Colors.white)),
-                            SizedBox(height: 4.5),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 28)),
+                            SizedBox(height: 9),
                             Text(
                                 'Maniement: ${item.stats?.stats!['943549884']?.value}',
-                                style: TextStyle(color: Colors.white)),
-                            SizedBox(height: 4.5),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 28)),
+                            SizedBox(height: 9),
                             Text(
                                 'Rechargement: ${item.stats?.stats!['4188031367']?.value}',
-                                style: TextStyle(color: Colors.white)),
-                            SizedBox(height: 4.5),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 28)),
+                            SizedBox(height: 9),
                             Text(
                                 'Aide à la visée: ${item.stats?.stats!['1345609583']?.value}',
-                                style: TextStyle(color: Colors.white)),
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 28)),
                           ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          LinearPercentIndicator(
-                            percent:
-                                (item.stats!.stats!['4043523819']?.value!)! /
-                                    100,
-                            progressColor: Colors.white,
-                            lineHeight: 12,
-                            width: 175,
-                          ),
-                          SizedBox(height: 8),
-                          LinearPercentIndicator(
-                            percent:
-                                (item.stats!.stats!['1240592695']?.value!)! /
-                                    100,
-                            progressColor: Colors.white,
-                            lineHeight: 12,
-                            width: 175,
-                          ),
-                          SizedBox(height: 8),
-                          LinearPercentIndicator(
-                            percent:
-                                (item.stats!.stats!['155624089']?.value!)! /
-                                    100,
-                            progressColor: Colors.white,
-                            lineHeight: 12,
-                            width: 175,
-                          ),
-                          SizedBox(height: 8),
-                          LinearPercentIndicator(
-                            percent:
-                                (item.stats!.stats!['943549884']?.value!)! /
-                                    100,
-                            progressColor: Colors.white,
-                            lineHeight: 12,
-                            width: 175,
-                          ),
-                          SizedBox(height: 8),
-                          LinearPercentIndicator(
-                            percent:
-                                (item.stats!.stats!['4188031367']?.value!)! /
-                                    100,
-                            progressColor: Colors.white,
-                            lineHeight: 12,
-                            width: 175,
-                          ),
-                          SizedBox(height: 8),
-                          LinearPercentIndicator(
-                            percent:
-                                (item.stats!.stats!['1345609583']?.value!)! /
-                                    100,
-                            progressColor: Colors.white,
-                            lineHeight: 12,
-                            width: 175,
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Column(
+                          children: [
+                            LinearPercentIndicator(
+                              percent:
+                                  (item.stats!.stats!['4043523819']?.value!)! /
+                                      100,
+                              progressColor: Colors.white,
+                              lineHeight: 24,
+                              width: 350,
+                            ),
+                            SizedBox(height: 16),
+                            LinearPercentIndicator(
+                              percent:
+                                  (item.stats!.stats!['1240592695']?.value!)! /
+                                      100,
+                              progressColor: Colors.white,
+                              lineHeight: 24,
+                              width: 350,
+                            ),
+                            SizedBox(height: 16),
+                            LinearPercentIndicator(
+                              percent:
+                                  (item.stats!.stats!['155624089']?.value!)! /
+                                      100,
+                              progressColor: Colors.white,
+                              lineHeight: 24,
+                              width: 350,
+                            ),
+                            SizedBox(height: 16),
+                            LinearPercentIndicator(
+                              percent:
+                                  (item.stats!.stats!['943549884']?.value!)! /
+                                      100,
+                              progressColor: Colors.white,
+                              lineHeight: 24,
+                              width: 350,
+                            ),
+                            SizedBox(height: 16),
+                            LinearPercentIndicator(
+                              percent:
+                                  (item.stats!.stats!['4188031367']?.value!)! /
+                                      100,
+                              progressColor: Colors.white,
+                              lineHeight: 24,
+                              width: 350,
+                            ),
+                            SizedBox(height: 16),
+                            LinearPercentIndicator(
+                              percent:
+                                  (item.stats!.stats!['1345609583']?.value!)! /
+                                      100,
+                              progressColor: Colors.white,
+                              lineHeight: 24,
+                              width: 350,
+                            ),
+                          ],
+                        ),
                       )
                     ],
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 30),
                   Container(
-                    margin: const EdgeInsets.only(left: 5),
+                    margin: const EdgeInsets.only(left: 10),
                     child: Row(
                       children: [
                         SizedBox(
-                            height: 40,
-                            width: 40,
+                            height: 80,
+                            width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
                                   _manifestParsed[item
@@ -537,11 +624,12 @@ class DetailsItemWidget extends StatelessWidget {
                                           .singleInitialItemHash!]!
                                       .displayProperties!
                                       .icon!),
+                              fit: BoxFit.fill,
                             )),
-                        SizedBox(width: 15),
+                        SizedBox(width: 30),
                         SizedBox(
-                            height: 40,
-                            width: 40,
+                            height: 80,
+                            width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
                                   _manifestParsed[item
@@ -550,11 +638,12 @@ class DetailsItemWidget extends StatelessWidget {
                                           .singleInitialItemHash!]!
                                       .displayProperties!
                                       .icon!),
+                              fit: BoxFit.fill,
                             )),
-                        SizedBox(width: 15),
+                        SizedBox(width: 30),
                         SizedBox(
-                            height: 40,
-                            width: 40,
+                            height: 80,
+                            width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
                                   _manifestParsed[item
@@ -563,11 +652,12 @@ class DetailsItemWidget extends StatelessWidget {
                                           .singleInitialItemHash!]!
                                       .displayProperties!
                                       .icon!),
+                              fit: BoxFit.fill,
                             )),
                         SizedBox(width: 15),
                         SizedBox(
-                            height: 40,
-                            width: 40,
+                            height: 80,
+                            width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
                                   _manifestParsed[item
@@ -576,18 +666,19 @@ class DetailsItemWidget extends StatelessWidget {
                                           .singleInitialItemHash!]!
                                       .displayProperties!
                                       .icon!),
+                              fit: BoxFit.fill,
                             )),
                       ],
                     ),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 30),
                   Container(
-                    margin: const EdgeInsets.only(left: 5),
+                    margin: const EdgeInsets.only(left: 10),
                     child: Row(
                       children: [
                         SizedBox(
-                            height: 40,
-                            width: 40,
+                            height: 80,
+                            width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
                                   _manifestParsed[item
@@ -596,12 +687,13 @@ class DetailsItemWidget extends StatelessWidget {
                                           .singleInitialItemHash!]!
                                       .displayProperties!
                                       .icon!),
+                              fit: BoxFit.fill,
                             )),
                         SizedBox(
-                          width: 10,
+                          width: 20,
                         ),
                         SizedBox(
-                          width: 300,
+                          width: 600,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -615,10 +707,10 @@ class DetailsItemWidget extends StatelessWidget {
                                     .runes
                                     .toList()),
                                 style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
+                                    fontSize: 20, color: Colors.white),
                                 textAlign: TextAlign.left,
                               ),
-                              SizedBox(height: 3),
+                              SizedBox(height: 6),
                               Text(
                                 utf8.decode(_manifestParsed[item
                                         .sockets!
@@ -629,7 +721,7 @@ class DetailsItemWidget extends StatelessWidget {
                                     .runes
                                     .toList()),
                                 style: TextStyle(
-                                    fontSize: 10, color: Colors.white),
+                                    fontSize: 20, color: Colors.white),
                               )
                             ],
                           ),
