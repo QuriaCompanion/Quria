@@ -24,6 +24,7 @@ class BuilderWidget extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot snapshot) {
             if (snapshot.hasData) {
               List<Widget> list = <Widget>[];
+              list.add(const SizedBox(height: 25));
               for (var i = 0; i < snapshot.data.builds.length; i++) {
                 list.add(singleBuild(context, snapshot.data.builds[i]));
               }
@@ -54,31 +55,61 @@ class BuilderWidget extends StatelessWidget {
     }
     List<Widget> listArmor = <Widget>[];
     for (var i = 0; i < data.equipement.length; i++) {
-      listArmor.add(Image.network(data.equipement[i].icon));
+      listArmor.add(Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.3),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Image.network(data.equipement[i].icon)));
     }
-    return Center(
-      child: Container(
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                Text('Base: ${data.stats.base}',
-                    style: TextStyle(color: Colors.white, fontSize: 25)),
-                Text('Final: ${data.stats.max}',
-                    style: TextStyle(color: Colors.white, fontSize: 25))
-              ]),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: listStats),
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: listArmor),
-              ExtendedData(build: data),
-            ]),
-        padding: EdgeInsets.all(16),
-        width: 600,
-      ),
+    return Column(
+      children: [
+        Center(
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.grey.withOpacity(0.3),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
+            padding: EdgeInsets.all(16),
+            width: 600,
+            child: Column(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text('Base: ${data.stats.base}',
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 25)),
+                        Text('Final: ${data.stats.max}',
+                            style: TextStyle(color: Colors.white, fontSize: 25))
+                      ]),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: listStats),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: listArmor),
+                  ExtendedData(build: data),
+                ]),
+          ),
+        ),
+        const SizedBox(height: 25)
+      ],
     );
   }
 }
@@ -129,9 +160,11 @@ class _ExtendedDataState extends State<ExtendedData> {
                   children: const [
                     Padding(
                       padding: EdgeInsets.all(16.0),
-                      child: Text('Mods à équiper'),
+                      child: Text('Mods à équiper',
+                          style: TextStyle(color: Colors.white, fontSize: 15)),
                     ),
-                    Text('Matériaux nécessaire'),
+                    Text('Matériaux nécessaire',
+                        style: TextStyle(color: Colors.white, fontSize: 15)),
                   ]),
               Row(
                   textDirection: TextDirection.ltr,
@@ -170,8 +203,8 @@ class _ExtendedDataState extends State<ExtendedData> {
           textDirection: TextDirection.ltr,
           children: [
             Image.network(mod.icon),
-            Text(mod.name),
-            Text('${mod.number}')
+            Text(mod.name, style: TextStyle(color: Colors.white)),
+            Text('${mod.number}', style: TextStyle(color: Colors.white))
           ]),
     );
   }

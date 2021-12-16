@@ -333,7 +333,17 @@ class DetailsItemWidget extends StatelessWidget {
             height: 400,
             padding: const EdgeInsets.all(10),
             margin: const EdgeInsets.only(right: 40),
-            decoration: BoxDecoration(color: Colors.grey),
+            decoration: BoxDecoration(
+              color: Colors.black54,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.5),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: const Offset(0, 3), // changes position of shadow
+                ),
+              ],
+            ),
             child: Container(
               margin: const EdgeInsets.only(left: 7),
               child: Column(
@@ -372,7 +382,8 @@ class DetailsItemWidget extends StatelessWidget {
                             Text(
                               utf8.decode(
                                   item.displayProperties!.name!.runes.toList()),
-                              style: TextStyle(fontSize: 20),
+                              style:
+                                  TextStyle(fontSize: 20, color: Colors.white),
                             ),
                             SizedBox(
                               width: 200,
@@ -382,10 +393,12 @@ class DetailsItemWidget extends StatelessWidget {
                                 children: [
                                   Text(
                                       'Chargeur : ${item.stats?.stats!['3871231066']?.value}',
-                                      style: TextStyle(fontSize: 10)),
+                                      style: TextStyle(
+                                          fontSize: 10, color: Colors.white)),
                                   Text(
                                     'Zoom : ${item.stats?.stats!['3555269338']?.value}',
-                                    style: TextStyle(fontSize: 10),
+                                    style: TextStyle(
+                                        fontSize: 10, color: Colors.white),
                                   )
                                 ],
                               ),
@@ -398,10 +411,12 @@ class DetailsItemWidget extends StatelessWidget {
                                 children: [
                                   Text(
                                       'Coup par minute : ${item.stats?.stats!['4284893193']?.value}',
-                                      style: TextStyle(fontSize: 10)),
+                                      style: TextStyle(
+                                          fontSize: 10, color: Colors.white)),
                                   Text(
                                     'Direction du recul : ${item.stats?.stats!['2715839340']?.value}',
-                                    style: TextStyle(fontSize: 10),
+                                    style: TextStyle(
+                                        fontSize: 10, color: Colors.white),
                                   ),
                                 ],
                               ),
@@ -421,22 +436,29 @@ class DetailsItemWidget extends StatelessWidget {
                           children: [
                             Text(
                               'Impact: ${item.stats?.stats!['4043523819']?.value}',
+                              style: TextStyle(color: Colors.white),
                             ),
                             SizedBox(height: 4.5),
                             Text(
-                                'Portée: ${item.stats?.stats!['1240592695']?.value}'),
+                              'Portée: ${item.stats?.stats!['1240592695']?.value}',
+                              style: TextStyle(color: Colors.white),
+                            ),
                             SizedBox(height: 4.5),
                             Text(
-                                'Stabilité: ${item.stats?.stats!['155624089']?.value}'),
+                                'Stabilité: ${item.stats?.stats!['155624089']?.value}',
+                                style: TextStyle(color: Colors.white)),
                             SizedBox(height: 4.5),
                             Text(
-                                'Maniement: ${item.stats?.stats!['943549884']?.value}'),
+                                'Maniement: ${item.stats?.stats!['943549884']?.value}',
+                                style: TextStyle(color: Colors.white)),
                             SizedBox(height: 4.5),
                             Text(
-                                'Rechargement: ${item.stats?.stats!['4188031367']?.value}'),
+                                'Rechargement: ${item.stats?.stats!['4188031367']?.value}',
+                                style: TextStyle(color: Colors.white)),
                             SizedBox(height: 4.5),
                             Text(
-                                'Aide à la visée: ${item.stats?.stats!['1345609583']?.value}'),
+                                'Aide à la visée: ${item.stats?.stats!['1345609583']?.value}',
+                                style: TextStyle(color: Colors.white)),
                           ],
                         ),
                       ),
@@ -592,6 +614,8 @@ class DetailsItemWidget extends StatelessWidget {
                                     .name!
                                     .runes
                                     .toList()),
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white),
                                 textAlign: TextAlign.left,
                               ),
                               SizedBox(height: 3),
@@ -604,7 +628,8 @@ class DetailsItemWidget extends StatelessWidget {
                                     .description!
                                     .runes
                                     .toList()),
-                                style: TextStyle(fontSize: 10),
+                                style: TextStyle(
+                                    fontSize: 10, color: Colors.white),
                               )
                             ],
                           ),
