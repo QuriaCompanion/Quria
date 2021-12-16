@@ -29,7 +29,7 @@ void main() async {
   await auth.saveToken(token);
   await account.getMembership();
   await profile.loadFromCache();
-
+  manifest.getManifest();
   runApp(QuriaApp(
     router: AppRouter(),
   ));

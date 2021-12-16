@@ -20,22 +20,14 @@ class _NavBarWidgetState extends State<NavBarWidget> {
         children: const [
           NavigationItem(
             title: 'Home',
-            routeName: routeHome,
+            routeName: routeLogin,
           ),
           NavigationItem(
             title: 'Profile',
             routeName: '/profile',
           ),
           NavigationItem(
-            title: 'Settings',
-            routeName: "/",
-          ),
-          NavigationItem(
             title: 'Builder',
-            routeName: routeBuilder,
-          ),
-          NavigationItem(
-            title: 'Exotic',
             routeName: routeExotic,
           ),
         ],

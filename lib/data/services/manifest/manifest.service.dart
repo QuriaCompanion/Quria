@@ -15,6 +15,7 @@ typedef DownloadProgress = void Function(int downloaded, int total);
 class ManifestService {
   final BungieApiService api = BungieApiService();
   DestinyManifest? _manifestInfo;
+  Map<int, DestinyInventoryItemDefinition> _manifestParsed = {};
   final StorageService storage = StorageService();
   static final ManifestService _singleton = ManifestService._internal();
 
@@ -39,17 +40,24 @@ class ManifestService {
   }
 
   Future<Map<int, DestinyInventoryItemDefinition>> getManifest() async {
+    if (_manifestParsed.isNotEmpty) {
+      print('ma boi');
+      return _manifestParsed;
+    }
     final bool = await isManifestSaved();
     if (bool == true) {
-      return await compute(
+      _manifestParsed = await compute(
           _parsedDestinyInventoryItemDefinition, await getManifestLocal());
+      return _manifestParsed;
     } else {
-      return await compute(
+      _manifestParsed = await compute(
           _parsedDestinyInventoryItemDefinition, await getManifestRemote());
+      return _manifestParsed;
     }
   }
 
   Future<String> getManifestLocal() async {
+    print('bruh');
     return await storage.getDatabase('DestinyInventoryItemDefinition');
   }
 
@@ -66,17 +74,6 @@ class ManifestService {
 
     await storage.setLocalStorage('manifestSaved', true);
     return await getManifestLocal();
-  }
-
-  Map<int, DestinyInventoryItemDefinition>
-      _parsedDestinyInventoryItemDefinition(String text) {
-    Map<int, DestinyInventoryItemDefinition> items = {};
-    Map decoded = json.decode(text);
-    for (final entry in decoded.entries) {
-      items[int.parse(entry.key)] =
-          DestinyInventoryItemDefinition.fromJson(entry.value);
-    }
-    return items;
   }
 
   Future<bool?> isManifestSaved() async {
@@ -188,4 +185,15 @@ class ManifestService {
   //   }
   //   return null;
   // }
+}
+
+Map<int, DestinyInventoryItemDefinition> _parsedDestinyInventoryItemDefinition(
+    String text) {
+  Map<int, DestinyInventoryItemDefinition> items = {};
+  Map<String, dynamic> decoded = json.decode(text);
+  for (final entry in decoded.entries) {
+    items[int.parse(entry.key)] =
+        DestinyInventoryItemDefinition.fromJson(entry.value);
+  }
+  return items;
 }

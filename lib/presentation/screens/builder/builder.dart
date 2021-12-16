@@ -12,23 +12,31 @@ class BuilderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var future = _backendService.getBuilds();
-    return FutureBuilder(
-        future: future,
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            List<Widget> list = <Widget>[];
-            for (var i = 0; i < snapshot.data.builds.length; i++) {
-              list.add(singleBuild(context, snapshot.data.builds[i]));
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.fitWidth,
+              image: NetworkImage(
+                  "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg"))),
+      child: FutureBuilder(
+          future: future,
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              List<Widget> list = <Widget>[];
+              for (var i = 0; i < snapshot.data.builds.length; i++) {
+                list.add(singleBuild(context, snapshot.data.builds[i]));
+              }
+              return ListView(
+                children: list,
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             }
-            return ListView(
-              children: list,
-            );
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
+          }),
+    );
   }
 
   Widget singleBuild(BuildContext context, Build data) {
@@ -50,7 +58,6 @@ class BuilderWidget extends StatelessWidget {
     }
     return Center(
       child: Container(
-        color: Colors.grey[500],
         child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,

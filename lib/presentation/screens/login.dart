@@ -43,8 +43,13 @@ class LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
+    return Container(
+      decoration: const BoxDecoration(
+          image: DecorationImage(
+              fit: BoxFit.fitWidth,
+              image: NetworkImage(
+                  "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg"))),
+      child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
