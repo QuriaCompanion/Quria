@@ -35,15 +35,15 @@ class ProfileWidget extends StatelessWidget {
               create: (_) => CharacterCubit(),
               child: BlocBuilder<CharacterCubit, CharacterState>(
                 builder: (context, state) {
+                  int displayHash = snapshot.data['characterEquipement'][5]
+                          .overrideStyleItemHash ??
+                      snapshot.data['characterEquipement'][5].itemHash;
                   return Center(
                     child: Container(
                       decoration: BoxDecoration(
                           image: DecorationImage(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[snapshot
-                                          .data['characterEquipement'][5]
-                                          .itemHash!]!
-                                      .screenshot!),
+                                  _manifestParsed[displayHash]!.screenshot!),
                               fit: BoxFit.cover)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -69,7 +69,7 @@ class ProfileWidget extends StatelessWidget {
                                     ProfileNodeWidget(data: snapshot.data),
                                     SizedBox(width: 10),
                                     if (state is ShowDetailsState)
-                                      DetailsItemWidget(item: state.item)
+                                      DetailsWeaponWidget(item: state.item)
                                   ],
                                 ),
                               ],
@@ -310,11 +310,10 @@ class Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final displayHash = item.overrideStyleItemHash ?? item.itemHash;
     return Container(
       child: InkWell(
-        onTap: () => context
-            .read<CharacterCubit>()
-            .showDetails(_manifestParsed[item.itemHash]),
+        onTap: () => context.read<CharacterCubit>().showDetails(item),
         child: Container(
           decoration: BoxDecoration(
             color: Colors.grey.shade700,
@@ -329,7 +328,7 @@ class Item extends StatelessWidget {
           ),
           child: Image(
             image: NetworkImage('https://www.bungie.net' +
-                _manifestParsed[item.itemHash]!.displayProperties!.icon!),
+                _manifestParsed[displayHash]!.displayProperties!.icon!),
             fit: BoxFit.fill,
             width: 150,
             height: 150,
@@ -391,16 +390,18 @@ class _ProfileTitleState extends State<ProfileTitleWidget> {
   }
 }
 
-class DetailsItemWidget extends StatelessWidget {
-  DestinyInventoryItemDefinition item;
-  DetailsItemWidget({
+class DetailsWeaponWidget extends StatelessWidget {
+  final profile = ProfileService();
+  DestinyItemComponent item;
+  DetailsWeaponWidget({
     required this.item,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    inspect(item.stats?.stats);
+    final sockets = profile.getItemSockets(item.itemInstanceId!);
+    final stats = profile.getPrecalculatedStats(item.itemInstanceId!);
     return Offstage(
       offstage: false,
       child: Align(
@@ -447,7 +448,9 @@ class DetailsItemWidget extends StatelessWidget {
                           ),
                           child: Image(
                             image: NetworkImage('https://www.bungie.net' +
-                                item.displayProperties!.icon!),
+                                _manifestParsed[item.itemHash]!
+                                    .displayProperties!
+                                    .icon!),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -458,47 +461,52 @@ class DetailsItemWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              utf8.decode(
-                                  item.displayProperties!.name!.runes.toList()),
+                              utf8.decode(_manifestParsed[item.itemHash]!
+                                  .displayProperties!
+                                  .name!
+                                  .runes
+                                  .toList()),
                               style:
                                   TextStyle(fontSize: 40, color: Colors.white),
                             ),
-                            SizedBox(
-                              width: 400,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                      'Chargeur : ${item.stats?.stats!['3871231066']?.value}',
+                            if (stats!['3871231066']?.value != null)
+                              SizedBox(
+                                width: 400,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        'Chargeur : ${stats['3871231066']?.value}',
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.white)),
+                                    Text(
+                                      'Zoom : ${_manifestParsed[item.itemHash]!.stats?.stats!['3555269338']?.value}',
                                       style: TextStyle(
-                                          fontSize: 20, color: Colors.white)),
-                                  Text(
-                                    'Zoom : ${item.stats?.stats!['3555269338']?.value}',
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.white),
-                                  )
-                                ],
+                                          fontSize: 20, color: Colors.white),
+                                    )
+                                  ],
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 400,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                      'Coup par minute : ${item.stats?.stats!['4284893193']?.value}',
+                            if (stats['3871231066']?.value != null)
+                              SizedBox(
+                                width: 400,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                        'Coup par minute : ${stats['4284893193']?.value}',
+                                        style: TextStyle(
+                                            fontSize: 20, color: Colors.white)),
+                                    Text(
+                                      'Direction du recul : ${_manifestParsed[item.itemHash]!.stats?.stats!['2715839340']?.value}',
                                       style: TextStyle(
-                                          fontSize: 20, color: Colors.white)),
-                                  Text(
-                                    'Direction du recul : ${item.stats?.stats!['2715839340']?.value}',
-                                    style: TextStyle(
-                                        fontSize: 20, color: Colors.white),
-                                  ),
-                                ],
-                              ),
-                            )
+                                          fontSize: 20, color: Colors.white),
+                                    ),
+                                  ],
+                                ),
+                              )
                           ],
                         ),
                       ),
@@ -512,37 +520,98 @@ class DetailsItemWidget extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              'Impact: ${item.stats?.stats!['4043523819']?.value}',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 28),
-                            ),
-                            SizedBox(height: 9),
-                            Text(
-                              'Portée: ${item.stats?.stats!['1240592695']?.value}',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 28),
-                            ),
-                            SizedBox(height: 9),
-                            Text(
-                                'Stabilité: ${item.stats?.stats!['155624089']?.value}',
+                            if (stats['2996146975']?.value != null)
+                              Text(
+                                'Mobilité : ${stats['2996146975']?.value}',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 28)),
-                            SizedBox(height: 9),
-                            Text(
-                                'Maniement: ${item.stats?.stats!['943549884']?.value}',
+                                    fontSize: 28, color: Colors.white),
+                              ),
+                            if (stats['392767087']?.value != null)
+                              Text(
+                                'Résistance : ${stats['392767087']?.value}',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 28)),
-                            SizedBox(height: 9),
-                            Text(
-                                'Rechargement: ${item.stats?.stats!['4188031367']?.value}',
+                                    fontSize: 28, color: Colors.white),
+                              ),
+                            if (stats['1943323491']?.value != null)
+                              Text(
+                                'Récupération : ${stats['1943323491']?.value}',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 28)),
-                            SizedBox(height: 9),
-                            Text(
-                                'Aide à la visée: ${item.stats?.stats!['1345609583']?.value}',
+                                    fontSize: 28, color: Colors.white),
+                              ),
+                            if (stats['1735777505']?.value != null)
+                              Text(
+                                'Discipline : ${stats['1735777505']?.value}',
                                 style: TextStyle(
-                                    color: Colors.white, fontSize: 28)),
+                                    fontSize: 28, color: Colors.white),
+                              ),
+                            if (stats['144602215']?.value != null)
+                              Text(
+                                'Intelligence : ${stats['144602215']?.value}',
+                                style: TextStyle(
+                                    fontSize: 28, color: Colors.white),
+                              ),
+                            if (stats['4244567218']?.value != null)
+                              Text(
+                                'Force : ${stats['4244567218']?.value}',
+                                style: TextStyle(
+                                    fontSize: 28, color: Colors.white),
+                              ),
+                            if (stats['3614673599']?.value != null)
+                              Text(
+                                'Rayon de souffle : ${stats['3614673599']?.value}',
+                                style: TextStyle(
+                                    fontSize: 28, color: Colors.white),
+                              ),
+                            if (stats['3614673599']?.value != null)
+                              SizedBox(height: 9),
+                            if (stats['2523465841']?.value != null)
+                              Text(
+                                'Vélocité : ${stats['2523465841']?.value}',
+                                style: TextStyle(
+                                    fontSize: 28, color: Colors.white),
+                              ),
+                            if (stats['2523465841']?.value != null)
+                              SizedBox(height: 9),
+                            if (stats['4043523819']?.value != null)
+                              Text(
+                                'Impact: ${stats['4043523819']?.value}',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 28),
+                              ),
+                            if (stats['4043523819']?.value != null)
+                              SizedBox(height: 9),
+                            if (stats['1240592695']?.value != null)
+                              Text(
+                                'Portée: ${stats['1240592695']?.value}',
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 28),
+                              ),
+                            if (stats['1240592695']?.value != null)
+                              SizedBox(height: 9),
+                            if (stats['155624089']?.value != null)
+                              Text('Stabilité: ${stats['155624089']?.value}',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 28)),
+                            if (stats['155624089']?.value != null)
+                              SizedBox(height: 9),
+                            if (stats['943549884']?.value != null)
+                              Text('Maniement: ${stats['943549884']?.value}',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 28)),
+                            if (stats['943549884']?.value != null)
+                              SizedBox(height: 9),
+                            if (stats['4188031367']?.value != null)
+                              Text(
+                                  'Rechargement: ${stats['4188031367']?.value}',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 28)),
+                            if (stats['4188031367']?.value != null)
+                              SizedBox(height: 9),
+                            if (stats['1345609583']?.value != null)
+                              Text(
+                                  'Aide à la visée: ${stats['1345609583']?.value}',
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 28)),
                           ],
                         ),
                       ),
@@ -550,59 +619,137 @@ class DetailsItemWidget extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 20.0),
                         child: Column(
                           children: [
-                            LinearPercentIndicator(
-                              percent:
-                                  (item.stats!.stats!['4043523819']?.value!)! /
-                                      100,
-                              progressColor: Colors.white,
-                              lineHeight: 24,
-                              width: 350,
-                            ),
-                            SizedBox(height: 16),
-                            LinearPercentIndicator(
-                              percent:
-                                  (item.stats!.stats!['1240592695']?.value!)! /
-                                      100,
-                              progressColor: Colors.white,
-                              lineHeight: 24,
-                              width: 350,
-                            ),
-                            SizedBox(height: 16),
-                            LinearPercentIndicator(
-                              percent:
-                                  (item.stats!.stats!['155624089']?.value!)! /
-                                      100,
-                              progressColor: Colors.white,
-                              lineHeight: 24,
-                              width: 350,
-                            ),
-                            SizedBox(height: 16),
-                            LinearPercentIndicator(
-                              percent:
-                                  (item.stats!.stats!['943549884']?.value!)! /
-                                      100,
-                              progressColor: Colors.white,
-                              lineHeight: 24,
-                              width: 350,
-                            ),
-                            SizedBox(height: 16),
-                            LinearPercentIndicator(
-                              percent:
-                                  (item.stats!.stats!['4188031367']?.value!)! /
-                                      100,
-                              progressColor: Colors.white,
-                              lineHeight: 24,
-                              width: 350,
-                            ),
-                            SizedBox(height: 16),
-                            LinearPercentIndicator(
-                              percent:
-                                  (item.stats!.stats!['1345609583']?.value!)! /
-                                      100,
-                              progressColor: Colors.white,
-                              lineHeight: 24,
-                              width: 350,
-                            ),
+                            // mobility
+                            if (stats['2996146975']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['2996146975']?.value!)! / 42,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['2996146975']?.value != null)
+                              SizedBox(height: 16),
+                            // resistance
+                            if (stats['392767087']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['392767087']?.value!)! / 42,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['392767087']?.value != null)
+                              SizedBox(height: 16),
+                            // recovery
+                            if (stats['1943323491']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['1943323491']?.value!)! / 42,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['1943323491']?.value != null)
+                              SizedBox(height: 16),
+                            // discipline
+                            if (stats['1735777505']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['1735777505']?.value!)! / 42,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['1735777505']?.value != null)
+                              SizedBox(height: 16),
+                            // intelligence
+                            if (stats['144602215']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['144602215']?.value!)! / 42,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['144602215']?.value != null)
+                              SizedBox(height: 16),
+                            // force
+                            if (stats['4244567218']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['4244567218']?.value!)! / 42,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['4244567218']?.value != null)
+                              SizedBox(height: 16),
+                            // stop
+                            if (stats['3614673599']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['3614673599']?.value!)! / 100,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['3614673599']?.value != null)
+                              SizedBox(height: 16),
+                            if (stats['2523465841']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['2523465841']?.value!)! / 100,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['2523465841']?.value != null)
+                              SizedBox(height: 16),
+                            if (stats['4043523819']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['4043523819']?.value!)! / 100,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['4043523819']?.value != null)
+                              SizedBox(height: 16),
+                            if (stats['1240592695']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['1240592695']?.value!)! / 100,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['1240592695']?.value != null)
+                              SizedBox(height: 16),
+                            if (stats['155624089']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['155624089']?.value!)! / 100,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['155624089']?.value != null)
+                              SizedBox(height: 16),
+                            if (stats['943549884']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['943549884']?.value!)! / 100,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['943549884']?.value != null)
+                              SizedBox(height: 16),
+                            if (stats['4188031367']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['4188031367']?.value!)! / 100,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
+                            if (stats['4188031367']?.value != null)
+                              SizedBox(height: 16),
+                            if (stats['1345609583']?.value != null)
+                              LinearPercentIndicator(
+                                percent: (stats['1345609583']?.value!)! / 100,
+                                progressColor: Colors.white,
+                                lineHeight: 24,
+                                width: 350,
+                              ),
                           ],
                         ),
                       )
@@ -618,10 +765,7 @@ class DetailsItemWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[item
-                                          .sockets!
-                                          .socketEntries![1]
-                                          .singleInitialItemHash!]!
+                                  _manifestParsed[sockets![1].plugHash]!
                                       .displayProperties!
                                       .icon!),
                               fit: BoxFit.fill,
@@ -632,10 +776,7 @@ class DetailsItemWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[item
-                                          .sockets!
-                                          .socketEntries![2]
-                                          .singleInitialItemHash!]!
+                                  _manifestParsed[sockets[2].plugHash]!
                                       .displayProperties!
                                       .icon!),
                               fit: BoxFit.fill,
@@ -646,10 +787,7 @@ class DetailsItemWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[item
-                                          .sockets!
-                                          .socketEntries![3]
-                                          .singleInitialItemHash!]!
+                                  _manifestParsed[sockets[3].plugHash]!
                                       .displayProperties!
                                       .icon!),
                               fit: BoxFit.fill,
@@ -660,10 +798,7 @@ class DetailsItemWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[item
-                                          .sockets!
-                                          .socketEntries![4]
-                                          .singleInitialItemHash!]!
+                                  _manifestParsed[sockets[4].plugHash]!
                                       .displayProperties!
                                       .icon!),
                               fit: BoxFit.fill,
@@ -681,10 +816,7 @@ class DetailsItemWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[item
-                                          .sockets!
-                                          .socketEntries![0]
-                                          .singleInitialItemHash!]!
+                                  _manifestParsed[sockets[0].plugHash]!
                                       .displayProperties!
                                       .icon!),
                               fit: BoxFit.fill,
@@ -698,28 +830,24 @@ class DetailsItemWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                utf8.decode(_manifestParsed[item
-                                        .sockets!
-                                        .socketEntries![0]
-                                        .singleInitialItemHash!]!
-                                    .displayProperties!
-                                    .name!
-                                    .runes
-                                    .toList()),
+                                utf8.decode(
+                                    _manifestParsed[sockets[0].plugHash]!
+                                        .displayProperties!
+                                        .name!
+                                        .runes
+                                        .toList()),
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.white),
                                 textAlign: TextAlign.left,
                               ),
                               SizedBox(height: 6),
                               Text(
-                                utf8.decode(_manifestParsed[item
-                                        .sockets!
-                                        .socketEntries![0]
-                                        .singleInitialItemHash!]!
-                                    .displayProperties!
-                                    .description!
-                                    .runes
-                                    .toList()),
+                                utf8.decode(
+                                    _manifestParsed[sockets[0].plugHash]!
+                                        .displayProperties!
+                                        .description!
+                                        .runes
+                                        .toList()),
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.white),
                               )
