@@ -95,9 +95,9 @@ class ProfileWidget extends StatelessWidget {
     final characters = profile.getCharacters();
     final Map<String, dynamic> data = {
       'profile': await account.getMembership(),
-      'character': characters[0],
+      'character': characters[2],
       'characterEquipement':
-          profile.getCharacterEquipment(characters[0].characterId!)
+          profile.getCharacterEquipment(characters[2].characterId!)
     };
     return data;
   }
@@ -622,7 +622,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                             // mobility
                             if (stats['2996146975']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['2996146975']?.value!)! / 42,
+                                percent: stats['2996146975']!.value! / 42,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -632,7 +632,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                             // resistance
                             if (stats['392767087']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['392767087']?.value!)! / 42,
+                                percent: stats['392767087']!.value! / 42,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -642,7 +642,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                             // recovery
                             if (stats['1943323491']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['1943323491']?.value!)! / 42,
+                                percent: stats['1943323491']!.value! / 42,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -652,7 +652,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                             // discipline
                             if (stats['1735777505']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['1735777505']?.value!)! / 42,
+                                percent: stats['1735777505']!.value! / 42,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -662,7 +662,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                             // intelligence
                             if (stats['144602215']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['144602215']?.value!)! / 42,
+                                percent: stats['144602215']!.value! / 42,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -672,7 +672,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                             // force
                             if (stats['4244567218']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['4244567218']?.value!)! / 42,
+                                percent: stats['4244567218']!.value! / 42,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -682,7 +682,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                             // stop
                             if (stats['3614673599']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['3614673599']?.value!)! / 100,
+                                percent: stats['3614673599']!.value! / 100,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -691,7 +691,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                               SizedBox(height: 16),
                             if (stats['2523465841']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['2523465841']?.value!)! / 100,
+                                percent: stats['2523465841']!.value! / 100,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -700,7 +700,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                               SizedBox(height: 16),
                             if (stats['4043523819']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['4043523819']?.value!)! / 100,
+                                percent: stats['4043523819']!.value! / 100,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -709,7 +709,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                               SizedBox(height: 16),
                             if (stats['1240592695']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['1240592695']?.value!)! / 100,
+                                percent: stats['1240592695']!.value! / 100,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -718,7 +718,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                               SizedBox(height: 16),
                             if (stats['155624089']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['155624089']?.value!)! / 100,
+                                percent: stats['155624089']!.value! / 100,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -727,7 +727,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                               SizedBox(height: 16),
                             if (stats['943549884']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['943549884']?.value!)! / 100,
+                                percent: stats['943549884']!.value! / 100,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -736,7 +736,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                               SizedBox(height: 16),
                             if (stats['4188031367']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['4188031367']?.value!)! / 100,
+                                percent: stats['4188031367']!.value! / 100,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
@@ -745,7 +745,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                               SizedBox(height: 16),
                             if (stats['1345609583']?.value != null)
                               LinearPercentIndicator(
-                                percent: (stats['1345609583']?.value!)! / 100,
+                                percent: stats['1345609583']!.value! / 100,
                                 progressColor: Colors.white,
                                 lineHeight: 24,
                                 width: 350,
