@@ -70,9 +70,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   });
                                 },
                                 child: SizedBox(
-                                    width: 561,
+                                    width: index == 0 ? 400 : 561,
                                     child: ProfileTitleWidget(
-                                        data: snapshot.data)),
+                                        data: snapshot.data['characters'][0])),
                               ),
                               InkWell(
                                 onTap: () {
@@ -81,9 +81,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   });
                                 },
                                 child: SizedBox(
-                                    width: 561,
+                                    width: index == 1 ? 400 : 561,
                                     child: ProfileTitleWidget(
-                                        data: snapshot.data)),
+                                        data: snapshot.data['characters'][1])),
                               ),
                               InkWell(
                                 onTap: () {
@@ -92,9 +92,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   });
                                 },
                                 child: SizedBox(
-                                    width: 561,
+                                    width: index == 2 ? 400 : 561,
                                     child: ProfileTitleWidget(
-                                        data: snapshot.data)),
+                                        data: snapshot.data['characters'][2])),
                               ),
                             ]),
                           ),
@@ -139,6 +139,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     final characters = profile.getCharacters();
     final Map<String, dynamic> data = {
       'profile': await account.getMembership(),
+      'characters': characters,
       'character': characters[index],
       'characterEquipement':
           profile.getCharacterEquipment(characters[index].characterId!)
@@ -407,7 +408,7 @@ class _ProfileTitleState extends State<ProfileTitleWidget> {
           decoration: BoxDecoration(
             image: DecorationImage(
                 image: NetworkImage('https://www.bungie.net' +
-                    widget.data['character'].emblemBackgroundPath),
+                    widget.data.emblemBackgroundPath),
                 fit: BoxFit.fill),
           ),
           alignment: Alignment.topLeft,
@@ -425,7 +426,7 @@ class _ProfileTitleState extends State<ProfileTitleWidget> {
                     )),
               ),
               Spacer(),
-              Text('${widget.data['character'].stats['1935470627']}',
+              Text('${widget.data.stats['1935470627']}',
                   style: TextStyle(color: Colors.yellow, fontSize: 50))
             ],
           ),
