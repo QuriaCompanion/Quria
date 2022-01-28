@@ -1,17 +1,30 @@
 import 'dart:developer';
 
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/backend/bungie_backend_api.service.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/statisticDisplay.dart';
+
+Map<int, DestinyInventoryItemDefinition> _manifestParsed = {};
 
 //TODO: better split into smaller widget and define global variable for style
 class BuilderWidget extends StatelessWidget {
   final BackendService _backendService = BackendService();
+  final manifest = ManifestService();
+
+  Future<BuildResponse?> promise() async {
+    // var manifestResponse = await manifest.getManifest();
+    BuildResponse? response = await _backendService.getBuilds();
+    // _manifestParsed = manifestResponse;
+    return response;
+  }
+
   BuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    var future = _backendService.getBuilds();
+    Future<BuildResponse?> future = promise();
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: const BoxDecoration(
@@ -66,7 +79,10 @@ class BuilderWidget extends StatelessWidget {
               ),
             ],
           ),
-          child: Image.network(data.equipement[i].icon)));
+          child: Image.network('https://www.bungie.net' +
+              _manifestParsed[data.equipement[i].hash]!
+                  .displayProperties!
+                  .icon!)));
     }
     return Column(
       children: [
@@ -137,8 +153,8 @@ class _ExtendedDataState extends State<ExtendedData> {
     }
     List<Widget> listMaterial = <Widget>[];
     if (widget.build.material != null) {
-      for (var i = 0; i < widget.build.material!.length; i++) {
-        listMaterial.add(miscComponent(context, widget.build.material![i]));
+      for (var i = 0; i < widget.build.material.length; i++) {
+        listMaterial.add(miscComponent(context, widget.build.material[i]));
       }
     }
     return Column(

@@ -1,4 +1,6 @@
 import 'package:bungie_api/helpers/bungie_net_token.dart';
+import 'package:bungie_api/models/destiny_class_definition.dart';
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:quria/data/services/auth.service.dart';
@@ -29,7 +31,7 @@ void main() async {
   await auth.saveToken(token);
   await account.getMembership();
   await profile.loadFromCache();
-  manifest.getManifest();
+  manifest.getManifest<DestinyClassDefinition>();
   runApp(QuriaApp(
     router: AppRouter(),
   ));

@@ -14,9 +14,14 @@ class DisplayService {
   static init() async {}
 
   getExotics() async {
+    print("lets start");
     final items = profile.getAllItems();
     if (_manifestData.isEmpty) {
-      _manifestData = await manifest.getManifest();
+      print("manifest is empty");
+      _manifestData =
+          await manifest.getManifest<DestinyInventoryItemDefinition>();
+
+      print("manifest is loaded");
     }
     final exoticItems = compute(exoticLoop, items);
 
@@ -25,7 +30,8 @@ class DisplayService {
 
   getProfileData() async {
     if (_manifestData.isEmpty) {
-      _manifestData = await manifest.getManifest();
+      _manifestData =
+          await manifest.getManifest<DestinyInventoryItemDefinition>();
     }
     final characters = profile.getCharacters();
     final Map<String, dynamic> data = {

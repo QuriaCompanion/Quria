@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/display/display.service.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 class ExoticWidget extends StatelessWidget {
   DisplayService display = DisplayService();
+  StorageService storage = StorageService();
   ExoticWidget({Key? key}) : super(key: key);
 
   @override
@@ -95,7 +97,10 @@ class ExoticWidget extends StatelessWidget {
 
   Widget item(BuildContext context, DestinyInventoryItemDefinition data) {
     return InkWell(
-      onTap: () => Navigator.pushNamed(context, routeBuilder),
+      onTap: () => {
+        storage.setLocalStorage("exotic", data.hash),
+        Navigator.pushNamed(context, routeBuilder)
+      },
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Container(

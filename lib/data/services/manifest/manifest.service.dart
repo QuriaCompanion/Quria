@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:bungie_api/models/destiny_manifest.dart';
 import 'package:bungie_api/responses/destiny_manifest_response.dart';
@@ -15,7 +15,6 @@ typedef DownloadProgress = void Function(int downloaded, int total);
 class ManifestService {
   final BungieApiService api = BungieApiService();
   DestinyManifest? _manifestInfo;
-  Map<int, DestinyInventoryItemDefinition> _manifestParsed = {};
   final StorageService storage = StorageService();
   static final ManifestService _singleton = ManifestService._internal();
 
@@ -29,55 +28,72 @@ class ManifestService {
   //   return directory.path;
   // }
 
-  Future<DestinyManifest> loadManifestInfo() async {
+  Future<DestinyManifest> loadManifestInfo<T>() async {
     if (_manifestInfo != null) {
       return _manifestInfo!;
     }
     print('Loading manifest info');
-    DestinyManifestResponse response = await api.getManifest();
+    DestinyManifestResponse response = await api.getManifestInfo();
     _manifestInfo = response.response;
     return _manifestInfo!;
   }
 
-  Future<Map<int, DestinyInventoryItemDefinition>> getManifest() async {
-    if (_manifestParsed.isNotEmpty) {
-      print('ma boi');
-      return _manifestParsed;
-    }
-    final bool = await isManifestSaved();
-    if (bool == true) {
-      _manifestParsed = await compute(
-          _parsedDestinyInventoryItemDefinition, await getManifestLocal());
-      return _manifestParsed;
-    } else {
-      _manifestParsed = await compute(
-          _parsedDestinyInventoryItemDefinition, await getManifestRemote());
-      return _manifestParsed;
+  Future<Map<int, T>> getManifest<T>() async {
+    Map<int, T> items = {};
+    final type = DefinitionTableNames.identities[T];
+    Box myBox = await storage.openBox(T.toString());
+    try {
+      if (await isManifestSaved(T.toString())) {
+        print('manifest from cache');
+        Map<String, dynamic> decoded = await getManifestLocal<T>(myBox);
+      } else {
+        print('manifest from remote');
+        Map<String, dynamic> decoded =
+            await compute(_parseJson, await getManifestRemote<T>());
+        print('manifest parsed');
+        // await storage.setDatabase(myBox, decoded);
+        for (final entry in decoded.entries) {
+          items[int.parse(entry.key)] = type!(entry.value);
+        }
+        print('manifest changed to original type');
+        // manifestSaved(T.toString());
+      }
+      print('manifest loaded');
+      storage.closeBox(myBox);
+      return items;
+    } catch (e) {
+      print(e);
+      return items;
     }
   }
 
-  Future<String> getManifestLocal() async {
-    print('bruh');
-    return await storage.getDatabase('DestinyInventoryItemDefinition');
+  Future<Map<String, dynamic>> getManifestLocal<T>(myBox) async {
+    return await storage.getDatabase(myBox);
   }
 
-  Future<String> getManifestRemote({DownloadProgress? onProgress}) async {
+  // Future<DestinyInventoryItemDefinition?> getDefinition<T>(int hash) async {
+  //   return await storage.getDatabaseItem(T.toString(), hash);
+  // }
+
+  storeManifest<T>(Map<int, T> manifest) {}
+
+  Future<String> getManifestRemote<T>({DownloadProgress? onProgress}) async {
     DestinyManifest info = await loadManifestInfo();
     String language = "fr";
     http.Response res = await http.get(Uri.parse('https://www.bungie.net' +
-        info.jsonWorldComponentContentPaths!['fr']![
-            'DestinyInventoryItemDefinition']!));
-    print('downloaded DestinyInventoryItemDefinition');
-    await storage.setDatabase('DestinyInventoryItemDefinition', res.body);
-    // for (final entry in info.jsonWorldComponentContentPaths!['fr']!.entries) {
-    // }
+        info.jsonWorldComponentContentPaths![language]![T.toString()]!));
 
-    await storage.setLocalStorage('manifestSaved', true);
-    return await getManifestLocal();
+    print('manifest downloaded');
+    return res.body;
   }
 
-  Future<bool?> isManifestSaved() async {
-    return await storage.getLocalStorage('manifestSaved');
+  Future<bool> isManifestSaved(String manifestName) async {
+    return await storage.getLocalStorage('manifestSaved_{$manifestName}') ??
+        false;
+  }
+
+  Future<void> manifestSaved(String manifestName) async {
+    return await storage.setLocalStorage('manifestSaved_{$manifestName}', true);
   }
 
   // Future<bool> test() async {
@@ -185,15 +201,22 @@ class ManifestService {
   //   }
   //   return null;
   // }
+  Future<Map<String, T>> getDefinitions<T>(Iterable<String?> hashes) async {
+    Box myBox = await storage.openBox(T.toString());
+    print('loading definitions');
+    Map<String, T> definitions = {};
+    for (String? hash in hashes) {
+      print(hash);
+      if (hash == null) {
+        continue;
+      }
+      definitions[hash] = await storage.getDatabaseItem<T>(myBox, hash);
+      print(definitions);
+    }
+    return definitions;
+  }
 }
 
-Map<int, DestinyInventoryItemDefinition> _parsedDestinyInventoryItemDefinition(
-    String text) {
-  Map<int, DestinyInventoryItemDefinition> items = {};
-  Map<String, dynamic> decoded = json.decode(text);
-  for (final entry in decoded.entries) {
-    items[int.parse(entry.key)] =
-        DestinyInventoryItemDefinition.fromJson(entry.value);
-  }
-  return items;
+Map<String, dynamic> _parseJson(String text) {
+  return json.decode(text) as Map<String, dynamic>;
 }
