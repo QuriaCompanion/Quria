@@ -242,7 +242,7 @@ class ProfileService {
     print('saved to cache');
   }
 
-  Future<DestinyProfileResponse?> loadFromCache() async {
+  Future<DestinyProfileResponse?> loadProfile() async {
     var json = await storageService.getLocalStorage('cachedProfile');
     if (json != null) {
       try {

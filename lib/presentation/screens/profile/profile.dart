@@ -1,16 +1,19 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'dart:convert';
+import 'dart:developer';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:quria/cubit/character_cubit.dart';
+import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/stat_progress_bar.dart';
 import 'package:quria/presentation/components/statisticDisplay.dart';
 
 Map<int, DestinyInventoryItemDefinition> _manifestParsed = {};
@@ -35,116 +38,123 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   var index = 0;
 
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: getProfileData(index: index),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            return BlocProvider(
-              create: (_) => CharacterCubit(),
-              child: BlocBuilder<CharacterCubit, CharacterState>(
-                builder: (context, state) {
-                  int displayHash = snapshot.data['characterEquipement'][5]
-                          .overrideStyleItemHash ??
-                      snapshot.data['characterEquipement'][5].itemHash;
-                  return Center(
-                    child: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[displayHash]!.screenshot!),
-                              fit: BoxFit.cover)),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(left: 150.0, top: 50),
-                            child: Column(children: [
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    index = 0;
-                                  });
-                                },
-                                child: SizedBox(
-                                    width: index == 0 ? 400 : 561,
-                                    child: ProfileTitleWidget(
-                                        data: snapshot.data['characters'][0])),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    index = 1;
-                                  });
-                                },
-                                child: SizedBox(
-                                    width: index == 1 ? 400 : 561,
-                                    child: ProfileTitleWidget(
-                                        data: snapshot.data['characters'][1])),
-                              ),
-                              InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    index = 2;
-                                  });
-                                },
-                                child: SizedBox(
-                                    width: index == 2 ? 400 : 561,
-                                    child: ProfileTitleWidget(
-                                        data: snapshot.data['characters'][2])),
-                              ),
-                            ]),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 120.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    ProfileNodeWidget(data: snapshot.data),
-                                    SizedBox(width: 10),
-                                    if (state is ShowDetailsState)
-                                      DetailsWeaponWidget(item: state.item)
-                                  ],
-                                ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        });
-  }
-
-  getProfileData({index: 0}) async {
-    _manifestParsed =
-        await manifest.getManifest<DestinyInventoryItemDefinition>();
+  Future<ProfileHelper> getProfileData() async {
+    // _manifestParsed =
+    //     await manifest.getManifest<DestinyInventoryItemDefinition>();
 
     final characters = profile.getCharacters();
     final Map<String, dynamic> data = {
       'profile': await account.getMembership(),
       'characters': characters,
-      'character': characters[index],
       'characterEquipement':
           profile.getCharacterEquipment(characters[index].characterId!)
     };
-    return data;
+    ProfileHelper returned = ProfileHelper.fromJson(data);
+    inspect(returned);
+    return returned;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: FutureBuilder(
+          future: getProfileData(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.hasData) {
+              return BlocProvider(
+                create: (_) => CharacterCubit(),
+                child: BlocBuilder<CharacterCubit, CharacterState>(
+                  builder: (context, state) {
+                    int displayHash = snapshot.data['characterEquipement'][5]
+                            .overrideStyleItemHash ??
+                        snapshot.data['characterEquipement'][5].itemHash;
+                    return Center(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: NetworkImage('https://www.bungie.net' +
+                                    _manifestParsed[displayHash]!.screenshot!),
+                                fit: BoxFit.cover)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 150.0, top: 50),
+                              child: Column(children: [
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      index = 0;
+                                    });
+                                  },
+                                  child: SizedBox(
+                                      width: index == 0 ? 400 : 561,
+                                      child: ProfileTitleWidget(
+                                          data: snapshot.data['characters']
+                                              [0])),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      index = 1;
+                                    });
+                                  },
+                                  child: SizedBox(
+                                      width: index == 1 ? 400 : 561,
+                                      child: ProfileTitleWidget(
+                                          data: snapshot.data['characters']
+                                              [1])),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      index = 2;
+                                    });
+                                  },
+                                  child: SizedBox(
+                                      width: index == 2 ? 400 : 561,
+                                      child: ProfileTitleWidget(
+                                          data: snapshot.data['characters']
+                                              [2])),
+                                ),
+                              ]),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 120.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      ProfileNodeWidget(data: snapshot.data),
+                                      SizedBox(width: 10),
+                                      if (state is ShowDetailsState)
+                                        DetailsWeaponWidget(item: state.item)
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              );
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
+    );
   }
 }
 

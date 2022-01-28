@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,7 @@ typedef DownloadProgress = void Function(int downloaded, int total);
 class ManifestService {
   final BungieApiService api = BungieApiService();
   DestinyManifest? _manifestInfo;
+  final Map<String, dynamic> _manifest = {};
   final StorageService storage = StorageService();
   static final ManifestService _singleton = ManifestService._internal();
 
@@ -39,6 +41,7 @@ class ManifestService {
   }
 
   Future<Map<int, T>> getManifest<T>() async {
+    if (_manifest[T.toString()] != null) return _manifest[T.toString()];
     Map<int, T> items = {};
     final type = DefinitionTableNames.identities[T];
     Box myBox = await storage.openBox(T.toString());
@@ -51,10 +54,11 @@ class ManifestService {
         Map<String, dynamic> decoded =
             await compute(_parseJson, await getManifestRemote<T>());
         print('manifest parsed');
-        // await storage.setDatabase(myBox, decoded);
+        await storage.setDatabase(myBox, decoded);
         for (final entry in decoded.entries) {
           items[int.parse(entry.key)] = type!(entry.value);
         }
+        _manifest[T.toString()] = items;
         print('manifest changed to original type');
         // manifestSaved(T.toString());
       }

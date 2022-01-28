@@ -28,10 +28,10 @@ void main() async {
     'refresh_expires_in': 3600,
     'membership_id': '11319478',
   });
-  await auth.saveToken(token);
+  if (await auth.getToken() == null) await auth.saveToken(token);
   await account.getMembership();
-  await profile.loadFromCache();
-  manifest.getManifest<DestinyClassDefinition>();
+  await profile.loadProfile();
+  manifest.getManifest<DestinyInventoryItemDefinition>();
   runApp(QuriaApp(
     router: AppRouter(),
   ));

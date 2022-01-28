@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:localstorage/localstorage.dart';
 
+// TODO: add proper commentaries
 class StorageService {
   static late final LocalStorage _storage;
   static init() async {
@@ -10,18 +11,18 @@ class StorageService {
     await Hive.initFlutter();
   }
 
-  // sets a value in the LocalStorage
+  /// Given a storage [key] and a [value], stores the [value] in localStorage.
   Future<void> setLocalStorage(String key, dynamic value) async {
     await _storage.setItem(key, value);
     return;
   }
 
-  // gets a value from the LocalStorage
+  /// Given a storage [key] , return the value from localStorage.
   Future<dynamic> getLocalStorage(String key) async {
     return await _storage.getItem(key);
   }
 
-  // removes a value from the LocalStorage
+  /// Given a storage [key] , removes localStorage.
   Future<void> removeLocalStorage(String key) async {
     await _storage.deleteItem(key);
     return;
