@@ -15,19 +15,30 @@ import 'package:quria/presentation/components/statisticDisplay.dart';
 
 Map<int, DestinyInventoryItemDefinition> _manifestParsed = {};
 
-class ProfileWidget extends StatelessWidget {
-  final manifest = ManifestService();
-  final storage = StorageService();
-  final account = AccountService();
-  final profile = ProfileService();
+class ProfileWidget extends StatefulWidget {
   ProfileWidget({
     Key? key,
   }) : super(key: key);
 
   @override
+  State<ProfileWidget> createState() => _ProfileWidgetState();
+}
+
+class _ProfileWidgetState extends State<ProfileWidget> {
+  final manifest = ManifestService();
+
+  final storage = StorageService();
+
+  final account = AccountService();
+
+  final profile = ProfileService();
+
+  var index = 0;
+
+  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: getProfileData(),
+        future: getProfileData(index: index),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             return BlocProvider(
@@ -51,9 +62,41 @@ class ProfileWidget extends StatelessWidget {
                           Padding(
                             padding:
                                 const EdgeInsets.only(left: 150.0, top: 50),
-                            child: SizedBox(
-                                width: 561,
-                                child: ProfileTitleWidget(data: snapshot.data)),
+                            child: Column(children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    index = 0;
+                                  });
+                                },
+                                child: SizedBox(
+                                    width: 561,
+                                    child: ProfileTitleWidget(
+                                        data: snapshot.data)),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    index = 1;
+                                  });
+                                },
+                                child: SizedBox(
+                                    width: 561,
+                                    child: ProfileTitleWidget(
+                                        data: snapshot.data)),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    index = 2;
+                                  });
+                                },
+                                child: SizedBox(
+                                    width: 561,
+                                    child: ProfileTitleWidget(
+                                        data: snapshot.data)),
+                              ),
+                            ]),
                           ),
                           Padding(
                             padding: const EdgeInsets.only(top: 120.0),
@@ -89,15 +132,16 @@ class ProfileWidget extends StatelessWidget {
         });
   }
 
-  getProfileData() async {
+  getProfileData({index: 0}) async {
     _manifestParsed =
         await manifest.getManifest<DestinyInventoryItemDefinition>();
+
     final characters = profile.getCharacters();
     final Map<String, dynamic> data = {
       'profile': await account.getMembership(),
-      'character': characters[2],
+      'character': characters[index],
       'characterEquipement':
-          profile.getCharacterEquipment(characters[2].characterId!)
+          profile.getCharacterEquipment(characters[index].characterId!)
     };
     return data;
   }
