@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:quria/cubit/character_cubit.dart';
+import 'package:quria/cubit/weapon_details_cubit.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -788,116 +789,149 @@ class DetailsWeaponWidget extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 30),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            onTap: () => socketId = 0,
-                            child: SizedBox(
-                                height: imgSize,
-                                width: imgSize,
-                                child: Image(
-                                  image: NetworkImage('https://www.bungie.net' +
-                                      _manifestParsed[sockets![0].plugHash]!
-                                          .displayProperties!
-                                          .icon!),
-                                  fit: BoxFit.fill,
-                                )),
-                          ),
-                          SizedBox(width: 30),
-                          InkWell(
-                            onTap: () => socketId = 1,
-                            child: SizedBox(
-                                height: imgSize,
-                                width: imgSize,
-                                child: Image(
-                                  image: NetworkImage('https://www.bungie.net' +
-                                      _manifestParsed[sockets[1].plugHash]!
-                                          .displayProperties!
-                                          .icon!),
-                                  fit: BoxFit.fill,
-                                )),
-                          ),
-                          SizedBox(width: 30),
-                          SizedBox(
-                              height: imgSize,
-                              width: imgSize,
-                              child: Image(
-                                image: NetworkImage('https://www.bungie.net' +
-                                    _manifestParsed[sockets[2].plugHash]!
-                                        .displayProperties!
-                                        .icon!),
-                                fit: BoxFit.fill,
-                              )),
-                          SizedBox(width: 30),
-                          SizedBox(
-                              height: imgSize,
-                              width: imgSize,
-                              child: Image(
-                                image: NetworkImage('https://www.bungie.net' +
-                                    _manifestParsed[sockets[3].plugHash]!
-                                        .displayProperties!
-                                        .icon!),
-                                fit: BoxFit.fill,
-                              )),
-                          SizedBox(width: 15),
-                          SizedBox(
-                              height: imgSize,
-                              width: imgSize,
-                              child: Image(
-                                image: NetworkImage('https://www.bungie.net' +
-                                    _manifestParsed[sockets[4].plugHash]!
-                                        .displayProperties!
-                                        .icon!),
-                                fit: BoxFit.fill,
-                              )),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 30),
-                    Container(
-                      margin: const EdgeInsets.only(left: 10),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: 600,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  utf8.decode(_manifestParsed[
-                                          sockets[socketId].plugHash]!
-                                      .displayProperties!
-                                      .name!
-                                      .runes
-                                      .toList()),
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white),
-                                  textAlign: TextAlign.left,
-                                ),
-                                SizedBox(height: 6),
-                                Text(
-                                  utf8.decode(_manifestParsed[
-                                          sockets[socketId].plugHash]!
-                                      .displayProperties!
-                                      .description!
-                                      .runes
-                                      .toList()),
-                                  style: TextStyle(
-                                      fontSize: 20, color: Colors.white),
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    )
+                    BlocProvider(
+                        create: (_) => WeaponDetailsCubit(),
+                        child:
+                            BlocBuilder<WeaponDetailsCubit, WeaponDetailsState>(
+                                builder: (context, state) {
+                          if (state is WeaponDetailsIdState) {
+                            return WeaponAttributsWidget(
+                                item: item, socketId: state.id);
+                          } else {
+                            return WeaponAttributsWidget(
+                                item: item, socketId: 0);
+                          }
+                        }))
                   ],
                 ),
               )),
         ),
       ),
+    );
+  }
+}
+
+class WeaponAttributsWidget extends StatelessWidget {
+  final int socketId;
+  final profile = ProfileService();
+  DestinyItemComponent item;
+  WeaponAttributsWidget({
+    required this.item,
+    required this.socketId,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print(this.socketId);
+    final sockets = profile.getItemSockets(item.itemInstanceId!);
+    const double imgSize = 80;
+    int socketId = 0;
+
+    return Column(
+      children: [
+        Container(
+          margin: const EdgeInsets.only(left: 10),
+          child: Row(
+            children: [
+              InkWell(
+                onTap: () => context.read<WeaponDetailsCubit>().changeId(0),
+                child: SizedBox(
+                    height: imgSize,
+                    width: imgSize,
+                    child: Image(
+                      image: NetworkImage('https://www.bungie.net' +
+                          _manifestParsed[sockets![0].plugHash]!
+                              .displayProperties!
+                              .icon!),
+                      fit: BoxFit.fill,
+                    )),
+              ),
+              const SizedBox(width: 30),
+              InkWell(
+                onTap: () => context.read<WeaponDetailsCubit>().changeId(1),
+                child: SizedBox(
+                    height: imgSize,
+                    width: imgSize,
+                    child: Image(
+                      image: NetworkImage('https://www.bungie.net' +
+                          _manifestParsed[sockets[1].plugHash]!
+                              .displayProperties!
+                              .icon!),
+                      fit: BoxFit.fill,
+                    )),
+              ),
+              const SizedBox(width: 30),
+              SizedBox(
+                  height: imgSize,
+                  width: imgSize,
+                  child: Image(
+                    image: NetworkImage('https://www.bungie.net' +
+                        _manifestParsed[sockets[2].plugHash]!
+                            .displayProperties!
+                            .icon!),
+                    fit: BoxFit.fill,
+                  )),
+              const SizedBox(width: 30),
+              SizedBox(
+                  height: imgSize,
+                  width: imgSize,
+                  child: Image(
+                    image: NetworkImage('https://www.bungie.net' +
+                        _manifestParsed[sockets[3].plugHash]!
+                            .displayProperties!
+                            .icon!),
+                    fit: BoxFit.fill,
+                  )),
+              const SizedBox(width: 15),
+              SizedBox(
+                  height: imgSize,
+                  width: imgSize,
+                  child: Image(
+                    image: NetworkImage('https://www.bungie.net' +
+                        _manifestParsed[sockets[4].plugHash]!
+                            .displayProperties!
+                            .icon!),
+                    fit: BoxFit.fill,
+                  )),
+            ],
+          ),
+        ),
+        const SizedBox(height: 30),
+        Container(
+          margin: const EdgeInsets.only(left: 10),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 600,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      utf8.decode(_manifestParsed[sockets[socketId].plugHash]!
+                          .displayProperties!
+                          .name!
+                          .runes
+                          .toList()),
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                      textAlign: TextAlign.left,
+                    ),
+                    const SizedBox(height: 6),
+                    Text(
+                      utf8.decode(_manifestParsed[sockets[socketId].plugHash]!
+                          .displayProperties!
+                          .description!
+                          .runes
+                          .toList()),
+                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                    )
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

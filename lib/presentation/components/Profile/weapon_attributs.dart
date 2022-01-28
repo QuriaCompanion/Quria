@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/src/provider.dart';
+import 'package:quria/cubit/weapon_details_cubit.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
-import 'package:quria/presentation/var/routes.dart';
 
 Map<int, DestinyInventoryItemDefinition> _manifestParsed = {};
 
@@ -20,6 +21,7 @@ class WeaponAttributsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(this.socketId);
     final sockets = profile.getItemSockets(item.itemInstanceId!);
     const double imgSize = 80;
     int socketId = 0;
@@ -31,7 +33,7 @@ class WeaponAttributsWidget extends StatelessWidget {
           child: Row(
             children: [
               InkWell(
-                onTap: () => socketId = 0,
+                onTap: () => context.read<WeaponDetailsCubit>().changeId(0),
                 child: SizedBox(
                     height: imgSize,
                     width: imgSize,
@@ -45,7 +47,7 @@ class WeaponAttributsWidget extends StatelessWidget {
               ),
               const SizedBox(width: 30),
               InkWell(
-                onTap: () => socketId = 1,
+                onTap: () => context.read<WeaponDetailsCubit>().changeId(1),
                 child: SizedBox(
                     height: imgSize,
                     width: imgSize,
