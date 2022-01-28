@@ -17,7 +17,7 @@ import 'bungie_api/bungie_api.service.dart';
 bool initialLinkHandled = false;
 
 class AuthService {
-  late BungieNetToken? _currentToken;
+  BungieNetToken? _currentToken;
   GroupUserInfoCard? _currentMembership;
   static final StorageService storageService = StorageService();
   static final AccountService accountService = AccountService();

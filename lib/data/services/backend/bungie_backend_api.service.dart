@@ -3,18 +3,23 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:bungie_api/enums/bungie_membership_type.dart';
+import 'package:bungie_api/models/group_user_info_card.dart';
+import 'package:bungie_api/models/user_membership_data.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:bungie_api/helpers/bungie_net_token.dart';
 import 'package:bungie_api/helpers/http.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/auth.service.dart';
+import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 
 class BackendService {
   static const String baseUrl = 'http://localhost:3001';
   static const String apiUrl = baseUrl;
   static final StorageService storageService = StorageService();
+  static final AccountService accountService = AccountService();
+  static final AuthService authService = AuthService();
 
   static final BackendService _singleton = BackendService._internal();
 
@@ -33,12 +38,32 @@ class BackendService {
     return responseJson.items;
   }
 
-  Future<BuildResponse> getBuilds() async {
-    final response = await http.get(Uri.parse('http://localhost:3001/builder'));
-    final responseJson = json.decode(response.body);
-    final buildResponse = BuildResponse.fromJson(responseJson);
-    inspect(buildResponse);
-    return buildResponse;
+  Future<BuildResponse?> getBuilds() async {
+    try {
+      final exoticHash = await storageService.getLocalStorage("exotic");
+      GroupUserInfoCard? membership = await accountService.getMembership();
+      BungieNetToken? token = await authService.getToken();
+      print(exoticHash);
+      print(membership!.membershipType!.index.toString());
+
+      print(membership.membershipId);
+      final uri = Uri.parse('http://localhost:3001/builder/' +
+          membership.membershipType!.index.toString() +
+          '/' +
+          membership.membershipId! +
+          '/' +
+          exoticHash.toString() +
+          '/');
+      final response =
+          await http.get(uri, headers: {"Authorization": token!.accessToken!});
+      print('ho');
+      final responseJson = json.decode(response.body);
+      inspect(responseJson);
+      final buildResponse = BuildResponse.fromJson(responseJson);
+      return buildResponse;
+    } catch (e) {
+      print(e);
+    }
   }
 
   AuthService get auth => AuthService();

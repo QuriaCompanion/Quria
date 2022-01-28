@@ -12,12 +12,12 @@ class BuildResponse {
 class Build {
   late Stats stats;
   late List<Mod> mod;
-  List<Material>? material;
+  late List<Material> material;
   late List<Armor> equipement;
   Build({
     required this.stats,
     required this.mod,
-    this.material,
+    required this.material,
     required this.equipement,
   });
 
@@ -25,26 +25,30 @@ class Build {
     stats = Stats.fromJson(json['stats']);
 
     mod = <Mod>[];
-    json['mods'].forEach((v) {
-      mod.add(Mod.fromJson(v));
-    });
+    if (json['mod'] != null) {
+      json['mod'].forEach((v) {
+        mod.add(Mod.fromJson(v));
+      });
+    }
     material = <Material>[];
-    json['materials'].forEach((v) {
-      material!.add(Material.fromJson(v));
-    });
+    if (json['materials'] != null) {
+      json['materials'].forEach((v) {
+        material.add(Material.fromJson(v));
+      });
+    }
     equipement = <Armor>[];
-    json['equipment'].forEach((v) {
-      equipement.add(Armor.fromJson(v));
-    });
+    if (json['equipement'] != null) {
+      json['equipement'].forEach((v) {
+        equipement.add(Armor.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['stats'] = stats.toJson();
     data['mods'] = mod.map((v) => v.toJson()).toList();
-    if (material != null) {
-      data['materials'] = material!.map((v) => v.toJson()).toList();
-    }
+    data['materials'] = material.map((v) => v.toJson()).toList();
     data['equipment'] = equipement.map((v) => v.toJson()).toList();
     return data;
   }
@@ -103,12 +107,14 @@ class Mod {
   Mod({required this.name, required this.icon, required this.number});
 
   Mod.fromJson(Map<String, dynamic> json) {
+    print("euuhh");
     name = json['name'];
     icon = json['icon'];
     number = json['number'];
   }
 
   Map<String, dynamic> toJson() {
+    print("euuhh");
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['icon'] = icon;
@@ -125,6 +131,7 @@ class Material {
   Material({required this.name, required this.icon, required this.number});
 
   Material.fromJson(Map<String, dynamic> json) {
+    print("euuhh");
     name = json['name'];
     icon = json['icon'];
     number = json['number'];
@@ -140,34 +147,23 @@ class Material {
 }
 
 class Armor {
-  late String name;
-  late String icon;
-  late String element;
+  late int hash;
+  late String itemInstanceId;
   late String type;
-  late Stats stats;
 
-  Armor(
-      {required this.name,
-      required this.icon,
-      required this.element,
-      required this.type,
-      required this.stats});
+  Armor({required this.hash, required this.itemInstanceId, required this.type});
 
   Armor.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    icon = json['icon'];
-    element = json['element'];
+    hash = json['hash'];
+    itemInstanceId = json['itemInstanceId'];
     type = json['type'];
-    stats = Stats.fromJson(json['stats']);
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['icon'] = icon;
-    data['element'] = element;
+    data['hash'] = hash;
+    data['itemInstanceId'] = itemInstanceId;
     data['type'] = type;
-    data['stats'] = stats.toJson();
     return data;
   }
 }

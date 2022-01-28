@@ -1,13 +1,7 @@
-import 'dart:collection';
 import 'dart:developer';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
-import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
+
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:localstorage/localstorage.dart';
-// import 'package:sembast/sembast.dart';
-// import 'package:sembast/sembast_io.dart';
-// import 'package:sembast_web/sembast_web.dart';
 
 class StorageService {
   static late final LocalStorage _storage;
@@ -40,20 +34,28 @@ class StorageService {
   }
 
   // sets a value in the database
-  Future<void> setDatabase(String key, String value) async {
-    final box = await Hive.openBox(key);
-    await box.add(value);
+  Future<void> setDatabase(Box box, Map manifest) async {
+    await box.putAll(manifest);
+    print('Saved');
     return;
   }
 
-  // get a value in the database
-  Future<String> getDatabase(String key) async {
-    final box = await Hive.openBox(key);
-    return box.getAt(0);
+  Future<Box> openBox(String database) async {
+    final box = await Hive.openBox(database);
+    return box;
   }
 
-  // // removes a value in the database
-  // Future<void> removeDatabase(String key) async {
-  //   await _store.record(key).delete(_db);
-  // }
+  closeBox(Box box) async {
+    await box.close();
+  }
+
+  // get a value in the database
+  Future<T> getDatabaseItem<T>(Box box, String hash) async {
+    return await box.get(hash);
+  }
+
+  ///   Gets a list of all the items in the database
+  Future<Map<String, dynamic>> getDatabase<T>(Box box) async {
+    return Map<String, dynamic>.from(box.toMap());
+  }
 }

@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables
 
 import 'dart:convert';
-import 'dart:developer';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +90,8 @@ class ProfileWidget extends StatelessWidget {
   }
 
   getProfileData() async {
-    _manifestParsed = await manifest.getManifest();
+    _manifestParsed =
+        await manifest.getManifest<DestinyInventoryItemDefinition>();
     final characters = profile.getCharacters();
     final Map<String, dynamic> data = {
       'profile': await account.getMembership(),
