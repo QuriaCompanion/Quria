@@ -9,7 +9,6 @@ import 'bungie_api.service.dart';
 class AccountService {
   GroupUserInfoCard? _currentMembership;
   UserMembershipData? _membershipData;
-  static final StorageService storageService = StorageService();
 
   static final AccountService _singleton = AccountService._internal();
 
@@ -19,17 +18,17 @@ class AccountService {
   AccountService._internal();
 
   Future<void> setCurrentMembershipId(String membershipId) async {
-    await storageService.setLocalStorage('currentMembership', membershipId);
+    await StorageService.setLocalStorage('currentMembership', membershipId);
   }
 
   Future<String?> getCurrentMembershipId() async {
-    return await storageService.getLocalStorage('currentMembership');
+    return await StorageService.getLocalStorage('currentMembership');
   }
 
   Future<UserMembershipData?> updateMembershipData() async {
     UserMembershipData? membershipData =
         await BungieApiService().getMemberships();
-    await storageService.setLocalStorage('membershipData', membershipData);
+    await StorageService.setLocalStorage('membershipData', membershipData);
     return membershipData;
   }
 
@@ -38,7 +37,7 @@ class AccountService {
   }
 
   Future<UserMembershipData?> _getStoredMembershipData() async {
-    var json = await storageService.getLocalStorage('membershipData');
+    var json = await StorageService.getLocalStorage('membershipData');
     if (json == null) {
       return null;
     }
@@ -72,8 +71,8 @@ class AccountService {
       UserMembershipData membershipData, String membershipId) async {
     _currentMembership = getMembershipById(membershipData, membershipId);
     inspect(membershipData);
-    await storageService.setLocalStorage(
+    await StorageService.setLocalStorage(
         'membershipData', membershipData.toJson());
-    await storageService.setLocalStorage('membershipId', membershipId);
+    await StorageService.setLocalStorage('membershipId', membershipId);
   }
 }

@@ -7,7 +7,6 @@ import 'package:quria/presentation/var/routes.dart';
 
 class ExoticWidget extends StatelessWidget {
   DisplayService display = DisplayService();
-  StorageService storage = StorageService();
   ExoticWidget({Key? key}) : super(key: key);
 
   @override
@@ -98,7 +97,7 @@ class ExoticWidget extends StatelessWidget {
   Widget item(BuildContext context, DestinyInventoryItemDefinition data) {
     return InkWell(
       onTap: () => {
-        storage.setLocalStorage("exotic", data.hash),
+        StorageService.setLocalStorage("exotic", data.hash),
         Navigator.pushNamed(context, routeBuilder)
       },
       child: Padding(

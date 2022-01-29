@@ -19,7 +19,6 @@ bool initialLinkHandled = false;
 class AuthService {
   BungieNetToken? _currentToken;
   GroupUserInfoCard? _currentMembership;
-  static final StorageService storageService = StorageService();
   static final AccountService accountService = AccountService();
 
   bool waitingAuthCode = false;
@@ -40,7 +39,7 @@ class AuthService {
   AuthService._internal();
 
   Future<BungieNetToken?> _getStoredToken() async {
-    var json = await storageService.getLocalStorage('bungie_token');
+    var json = await StorageService.getLocalStorage('bungie_token');
     try {
       return BungieNetToken.fromJson(json);
     } catch (e) {
@@ -52,8 +51,8 @@ class AuthService {
 
   Future<void> _setStoredToken(BungieNetToken token) async {
     print(token.accessToken);
-    await storageService.setLocalStorage('bungie_token', token);
-    await storageService.setLocalStorage(
+    await StorageService.setLocalStorage('bungie_token', token);
+    await StorageService.setLocalStorage(
         'last_refresh', DateTime.now().toString());
   }
 
@@ -81,7 +80,7 @@ class AuthService {
       return null;
     }
     DateTime now = DateTime.now();
-    String? savedString = await storageService.getLocalStorage('last_refresh');
+    String? savedString = await StorageService.getLocalStorage('last_refresh');
     DateTime savedDate = DateTime.parse(savedString!);
     DateTime expire = savedDate.add(Duration(seconds: token!.expiresIn!));
     DateTime refreshExpire =

@@ -92,7 +92,6 @@ class ProfileComponentGroups {
 
 class ProfileService {
   static final ProfileService _singleton = ProfileService._internal();
-  static final StorageService storageService = StorageService();
   late DateTime lastUpdated;
   factory ProfileService() {
     return _singleton;
@@ -238,12 +237,12 @@ class ProfileService {
   }
 
   _cacheProfile(DestinyProfileResponse profile) async {
-    storageService.setLocalStorage('cachedProfile', profile.toJson());
+    StorageService.setLocalStorage('cachedProfile', profile.toJson());
     print('saved to cache');
   }
 
   Future<DestinyProfileResponse?> loadProfile() async {
-    var json = await storageService.getLocalStorage('cachedProfile');
+    var json = await StorageService.getLocalStorage('cachedProfile');
     if (json != null) {
       try {
         DestinyProfileResponse response = DestinyProfileResponse.fromJson(json);
