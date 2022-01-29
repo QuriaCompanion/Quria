@@ -13,7 +13,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/header_weapon_details.dart';
 import 'package:quria/presentation/components/statisticDisplay.dart';
-import 'package:quria/presentation/components/weapon_details.dart';
+import 'package:quria/presentation/components/weapon_details_bis.dart';
 
 Map<int, DestinyInventoryItemDefinition> _manifestParsed = {};
 
@@ -863,7 +863,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  WeaponDetails(
+                  WeaponDetailsBis(
                       charger: stats!['3871231066']!.value,
                       zoom: _manifestParsed[item.itemHash]!
                           .stats!

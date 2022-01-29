@@ -2,12 +2,12 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 
-class WeaponDetails extends StatelessWidget {
+class WeaponDetailsBis extends StatelessWidget {
   final dynamic charger;
   final dynamic zoom;
   final dynamic strokesMinutes;
   final dynamic retreatDirection;
-  const WeaponDetails({
+  const WeaponDetailsBis({
     Key? key,
     required this.charger,
     required this.zoom,
