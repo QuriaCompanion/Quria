@@ -544,7 +544,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            if (stats['2996146975']?.value != null)
+                            if (stats!['2996146975']?.value != null)
                               Text(
                                 'Mobilité : ${stats['2996146975']?.value}',
                                 style: TextStyle(

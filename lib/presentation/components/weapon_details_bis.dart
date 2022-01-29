@@ -25,12 +25,14 @@ class WeaponDetailsBis extends StatelessWidget {
           Row(
             children: [
               Text('Chargeur : $charger'),
+              const Spacer(),
               Text(' Zoom : $zoom'),
             ],
           ),
           Row(
             children: [
               Text('Coup par minute : $strokesMinutes'),
+              const Spacer(),
               Text('Direction du recul : $retreatDirection'),
             ],
           ),
