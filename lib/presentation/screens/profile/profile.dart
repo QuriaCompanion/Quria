@@ -894,16 +894,18 @@ class DetailsWeaponWidget extends StatelessWidget {
                     ),
                   ),
                   WeaponDetailsBis(
-                      charger: stats!['3871231066']!.value,
-                      zoom: _manifestParsed[item.itemHash]!
-                          .stats!
-                          .stats!['3555269338']!
-                          .value,
+                      charger: stats!['3871231066']?.value,
+                      zoom: _manifestParsed
+                          .destinyInventoryItemDefinition![item.itemHash]!
+                          .stats
+                          ?.stats!['3555269338']
+                          ?.value,
                       strokesMinutes: stats['4284893193']?.value,
-                      retreatDirection: _manifestParsed[item.itemHash]!
-                          .stats!
-                          .stats!['2715839340']!
-                          .value)
+                      retreatDirection: _manifestParsed
+                          .destinyInventoryItemDefinition![item.itemHash]!
+                          .stats
+                          ?.stats!['2715839340']
+                          ?.value)
                 ],
               ),
             )),
