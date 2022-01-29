@@ -1,61 +1,90 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:path_provider/path_provider.dart';
 
+/// StorageService is to be called using static methods.
+///
+/// It uses the Hive Flutter package to store data in the indexedDB.
+///
+/// It uses the LocalStorage package to store data in the local storage.
 class StorageService {
   static late final LocalStorage _storage;
+
   static init() async {
     _storage = LocalStorage('Quria');
-    await Hive.initFlutter();
+    Hive.initFlutter();
   }
 
-  // sets a value in the LocalStorage
-  Future<void> setLocalStorage(String key, dynamic value) async {
+  static isolateInit() async {
+    if (!kIsWeb) {
+      final directory = await getApplicationDocumentsDirectory();
+      Hive.init(directory.path + 'Quria');
+    }
+  }
+
+  /// Given a storage [key] and a [value], stores the [value] in localStorage.
+  static Future<void> setLocalStorage(String key, dynamic value) async {
     await _storage.setItem(key, value);
     return;
   }
 
-  // gets a value from the LocalStorage
-  Future<dynamic> getLocalStorage(String key) async {
+  /// Given a storage [key] , return the value from localStorage.
+  static Future<dynamic> getLocalStorage(String key) async {
     return await _storage.getItem(key);
   }
 
-  // removes a value from the LocalStorage
-  Future<void> removeLocalStorage(String key) async {
+  /// Given a storage [key] , removes localStorage entry
+  static Future<void> removeLocalStorage(String key) async {
     await _storage.deleteItem(key);
     return;
   }
 
-  // clears all values from the LocalStorage
-  Future<void> purgeLocalStorage() async {
+  /// clears all values from the LocalStorage
+  static Future<void> purgeLocalStorage() async {
     await _storage.clear();
     return;
   }
 
-  // sets a value in the database
-  Future<void> setDatabase(Box box, Map manifest) async {
-    await box.putAll(manifest);
-    print('Saved');
+  /// Given a [box] and [Map] as [values], stores every [values] in the [box].
+  static Future<void> setDatabase<T>(Box box, values) async {
+    await box.putAll(values);
     return;
   }
 
-  Future<Box> openBox(String database) async {
-    final box = await Hive.openBox(database);
-    return box;
+  /// Given a [box], a [key] and a [value], stores the [value] in the [box].
+  ///
+  /// can be awaited if necessary.
+  static Future<void> setDatabaseItem<T>(Box box, String key, value) async {
+    await box.put(key, value);
+    return;
   }
 
-  closeBox(Box box) async {
+  /// Given a type [T] returns a Box named after the type.
+  ///
+  /// If the Box does not exist, it creates it.
+  static Future<Box> openBox<T>() async {
+    return Hive.openBox(T.toString());
+  }
+
+  /// Given a [box] it closes said box.
+  ///
+  /// helps avoid unnecessary memory leaks.
+  static closeBox(Box box) async {
     await box.close();
   }
 
-  // get a value in the database
-  Future<T> getDatabaseItem<T>(Box box, String hash) async {
-    return await box.get(hash);
+  /// Given a [box] and a [key] returns the manifest as a [String]
+  ///
+  /// The String still need to be parsed to be used.
+  static String getDatabaseItem(Box box, String key) {
+    return box.get(key);
   }
 
-  ///   Gets a list of all the items in the database
-  Future<Map<String, dynamic>> getDatabase<T>(Box box) async {
-    return Map<String, dynamic>.from(box.toMap());
+  /// Given a [box] returns every item in the [box].
+  static Map<dynamic, dynamic> getDatabase(Box box) {
+    return box.toMap();
   }
 }

@@ -1,10 +1,11 @@
+import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/foundation.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
-Map<int, DestinyInventoryItemDefinition> _manifestData = {};
+Map<dynamic, DestinyClassDefinition> _manifestData = {};
 
 class DisplayService {
   ProfileService profile = ProfileService();
@@ -18,8 +19,7 @@ class DisplayService {
     final items = profile.getAllItems();
     if (_manifestData.isEmpty) {
       print("manifest is empty");
-      _manifestData =
-          await manifest.getManifest<DestinyInventoryItemDefinition>();
+      _manifestData = await manifest.getManifest<DestinyClassDefinition>();
 
       print("manifest is loaded");
     }
@@ -30,8 +30,8 @@ class DisplayService {
 
   getProfileData() async {
     if (_manifestData.isEmpty) {
-      _manifestData =
-          await manifest.getManifest<DestinyInventoryItemDefinition>();
+      // _manifestData =
+      //     await manifest.getManifest<DestinyInventoryItemDefinition>();
     }
     final characters = profile.getCharacters();
     final Map<String, dynamic> data = {
@@ -46,12 +46,12 @@ class DisplayService {
 
 exoticLoop(items) {
   final exoticItems = [];
-  for (var element in items) {
-    if (_manifestData[element.itemHash]!.summaryItemHash == 715326750 &&
-        !exoticItems.contains(_manifestData[element.itemHash]) &&
-        _manifestData[element.itemHash]!.classType!.index == 2) {
-      exoticItems.add(_manifestData[element.itemHash]);
-    }
-  }
+  // for (var element in items) {
+  //   if (_manifestData[element.itemHash]!.summaryItemHash == 715326750 &&
+  //       !exoticItems.contains(_manifestData[element.itemHash]) &&
+  //       _manifestData[element.itemHash]!.classType!.index == 2) {
+  //     exoticItems.add(_manifestData[element.itemHash]);
+  //   }
+  // }
   return exoticItems;
 }
