@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:developer';
+import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_energy_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -41,8 +42,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     try {
       _manifestParsed['DestinyInventoryItemDefinition'] =
           await manifest.getManifest<DestinyInventoryItemDefinition>();
-      _manifestParsed['DestinyEnergyTypeDefinition'] =
-          await manifest.getManifest<DestinyEnergyTypeDefinition>();
+      _manifestParsed['DestinyDamageTypeDefinition'] =
+          await manifest.getManifest<DestinyDamageTypeDefinition>();
 
       final characters = profile.getCharacters();
       ProfileHelper returned = ProfileHelper(
