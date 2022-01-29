@@ -11,7 +11,9 @@ import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/header_weapon_details.dart';
 import 'package:quria/presentation/components/statisticDisplay.dart';
+import 'package:quria/presentation/components/weapon_details.dart';
 
 Map<int, DestinyInventoryItemDefinition> _manifestParsed = {};
 
@@ -500,61 +502,20 @@ class DetailsWeaponWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              utf8.decode(_manifestParsed[item.itemHash]!
-                                  .displayProperties!
-                                  .name!
-                                  .runes
-                                  .toList()),
-                              style:
-                                  TextStyle(fontSize: 40, color: Colors.white),
-                            ),
-                            if (stats!['3871231066']?.value != null)
-                              SizedBox(
-                                width: 400,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                        'Chargeur : ${stats['3871231066']?.value}',
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white)),
-                                    Text(
-                                      'Zoom : ${_manifestParsed[item.itemHash]!.stats?.stats!['3555269338']?.value}',
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.white),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            if (stats['3871231066']?.value != null)
-                              SizedBox(
-                                width: 400,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                        'Coup par minute : ${stats['4284893193']?.value}',
-                                        style: TextStyle(
-                                            fontSize: 20, color: Colors.white)),
-                                    Text(
-                                      'Direction du recul : ${_manifestParsed[item.itemHash]!.stats?.stats!['2715839340']?.value}',
-                                      style: TextStyle(
-                                          fontSize: 20, color: Colors.white),
-                                    ),
-                                  ],
-                                ),
-                              )
-                          ],
-                        ),
-                      ),
+                      // HeaderWeaponDetails(
+                      //     name: utf8.decode(_manifestParsed[item.itemHash]!
+                      //             .displayProperties!
+                      //             .name!
+                      //             .runes
+                      //             .toList()),
+                      //     typeOfAmmo: 'typeOfAmmo',
+                      //     typeOfAmmoImg:
+                      //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
+                      //     typeOfWeapon: 'typeOfWeapon',
+                      //     type: 'type',
+                      //     typeImg:
+                      //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
+                      //     value: 100),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -901,7 +862,18 @@ class DetailsWeaponWidget extends StatelessWidget {
                         )
                       ],
                     ),
-                  )
+                  ),
+                  WeaponDetails(
+                      charger: stats!['3871231066']!.value,
+                      zoom: _manifestParsed[item.itemHash]!
+                          .stats!
+                          .stats!['3555269338']!
+                          .value,
+                      strokesMinutes: stats['4284893193']?.value,
+                      retreatDirection: _manifestParsed[item.itemHash]!
+                          .stats!
+                          .stats!['2715839340']!
+                          .value)
                 ],
               ),
             )),
