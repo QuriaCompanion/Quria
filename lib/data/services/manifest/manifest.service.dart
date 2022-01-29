@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
@@ -15,7 +14,7 @@ typedef DownloadProgress = void Function(int downloaded, int total);
 class ManifestService {
   final BungieApiService api = BungieApiService();
   DestinyManifest? _manifestInfo;
-  final Map<String, dynamic> _manifest = {};
+  static final Map<String, dynamic> _manifest = {};
   final StorageService storage = StorageService();
   static final ManifestService _singleton = ManifestService._internal();
 
@@ -39,40 +38,33 @@ class ManifestService {
     return _manifestInfo!;
   }
 
+  /// Given  a type [T] returns corresponding manifests defintion based on the [DefinitionTableNames] enum
+  ///
+  /// The data can come from [_manifest]
+  ///
+  /// or from the [Hive] database
+  ///
+  /// or from the [BungieApiService]
   Future<Map<dynamic, T>> getManifest<T>() async {
-    print('called get manifest');
-    if (_manifest[T.toString()] != null) return _manifest[T.toString()];
-    Map<dynamic, T> items = {};
-    Box myBox = await StorageService.openBox<T>();
-
     try {
-      if (await isManifestSaved(T.toString())) {
-        print('manifest from cache');
-        final decoded = getManifestLocal<T>(myBox);
-        inspect(decoded);
-        items = await compute<String, Map<int, T>>(_parseJsonDb, decoded);
-      } else {
-        print('manifest from remote');
-        final items = await compute<String, Map<int, T>>(
-            _parseJson, await getManifestRemote<T>());
-        print('saved');
-        // items = await compute<Map<String, dynamic>, Map<int, T>>(
-        //     _parseJson, decoded);
-        print('manifest changed to original type');
-        _manifest[T.toString()] = items;
-        print('manifest stored in _manifest');
-        manifestSaved(T.toString());
+      if (_manifest[T.toString()] == null) {
+        if (await isManifestSaved(T.toString())) {
+          _manifest[T.toString()] =
+              await compute<String, Map<int, T>>(_parseJsonDb, T.toString());
+        } else {
+          _manifest[T.toString()] = await compute<String, Map<int, T>>(
+              _parseJson, await getManifestRemote<T>());
+          manifestSaved(T.toString());
+        }
       }
-      print('manifest loaded');
-      return items;
-    } catch (e, s) {
-      print(e);
-      return items;
+      return _manifest[T.toString()];
+    } catch (e) {
+      rethrow;
     }
   }
 
   getManifestLocal<T>(myBox) {
-    return StorageService.getDatabaseItem<T>(myBox);
+    return StorageService.getDatabaseItem(myBox, T.toString());
   }
 
   // Future<DestinyInventoryItemDefinition?> getDefinition<T>(int hash) async {
@@ -97,48 +89,51 @@ class ManifestService {
         false;
   }
 
+  /// Given a [manifestName] sets corresponding manifestSaved value to true
   Future<void> manifestSaved(String manifestName) async {
     return await StorageService.setLocalStorage(
         'manifestSaved_$manifestName', true);
   }
 }
 
-Future<Map<int, T>> _parseJson<T>(String text) async {
+/// Given a [manifest] and type [T]
+///
+/// Stores the data in the [Hive] database
+///
+/// the data returned is typed and ready to be used
+Future<Map<int, T>> _parseJson<T>(String manifest) async {
   // Storing the data in a box
   StorageService.isolateInit();
   Box box = await StorageService.openBox<T>();
-  await StorageService.setDatabaseItem(box, T.toString(), text);
+  await StorageService.setDatabaseItem(box, T.toString(), manifest);
   StorageService.closeBox(box);
 
   Map<int, T> items = {};
-  print('parsing json');
   final type = DefinitionTableNames.identities[T];
-  inspect(type);
-  Map<String, dynamic> decoded = jsonDecode(text) as Map<String, dynamic>;
-  print('parsed json');
+  Map<String, dynamic> decoded = jsonDecode(manifest) as Map<String, dynamic>;
   for (final entry in decoded.entries) {
     items[int.parse(entry.key)] = type!(entry.value);
   }
-  print('Objectified');
   return items;
 }
 
-Future<Map<int, T>> _parseJsonDb<T>(String text) async {
+/// Given a [manifestName] and type [T]
+///
+/// returns the corresponding manifest from the [Hive] database
+///
+/// the data returned is typed and ready to be used
+Future<Map<int, T>> _parseJsonDb<T>(String manifestName) async {
+  StorageService.isolateInit();
+  Box box = await StorageService.openBox<T>();
+  String manifest = StorageService.getDatabaseItem(box, manifestName);
+
   Map<int, T> items = {};
-  print('parsing json');
   final type = DefinitionTableNames.identities[T];
-  inspect(type);
-  Map<String, dynamic> decoded = jsonDecode(text) as Map<String, dynamic>;
-  print('parsed json');
+  Map<String, dynamic> decoded = jsonDecode(manifest) as Map<String, dynamic>;
   for (final entry in decoded.entries) {
     items[int.parse(entry.key)] = type!(entry.value);
   }
-  print('Objectified');
   return items;
-}
-
-Map<String, dynamic> _decode(String text) {
-  return jsonDecode(text) as Map<String, dynamic>;
 }
 
 // Future<bool> test() async {

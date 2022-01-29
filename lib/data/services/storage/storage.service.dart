@@ -5,7 +5,11 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path_provider/path_provider.dart';
 
-// TODO: add proper commentaries
+/// StorageService is to be called using static methods.
+///
+/// It uses the Hive Flutter package to store data in the indexedDB.
+///
+/// It uses the LocalStorage package to store data in the local storage.
 class StorageService {
   static late final LocalStorage _storage;
 
@@ -32,44 +36,55 @@ class StorageService {
     return await _storage.getItem(key);
   }
 
-  /// Given a storage [key] , removes localStorage.
+  /// Given a storage [key] , removes localStorage entry
   static Future<void> removeLocalStorage(String key) async {
     await _storage.deleteItem(key);
     return;
   }
 
-  // clears all values from the LocalStorage
+  /// clears all values from the LocalStorage
   static Future<void> purgeLocalStorage() async {
     await _storage.clear();
     return;
   }
 
-  // sets a value in the database
-  static Future<void> setDatabase<T>(Box box, manifest) async {
-    await box.putAll(manifest);
+  /// Given a [box] and [Map] as [values], stores every [values] in the [box].
+  static Future<void> setDatabase<T>(Box box, values) async {
+    await box.putAll(values);
     return;
   }
 
-  static Future<void> setDatabaseItem<T>(Box box, String key, manifest) async {
-    await box.put(key, manifest);
+  /// Given a [box], a [key] and a [value], stores the [value] in the [box].
+  ///
+  /// can be awaited if necessary.
+  static Future<void> setDatabaseItem<T>(Box box, String key, value) async {
+    await box.put(key, value);
     return;
   }
 
+  /// Given a type [T] returns a Box named after the type.
+  ///
+  /// If the Box does not exist, it creates it.
   static Future<Box> openBox<T>() async {
     return Hive.openBox(T.toString());
   }
 
+  /// Given a [box] it closes said box.
+  ///
+  /// helps avoid unnecessary memory leaks.
   static closeBox(Box box) async {
     await box.close();
   }
 
-  // get a value in the database
-  static getDatabaseItem<T>(Box box) {
-    return box.get(T.toString());
+  /// Given a [box] and a [key] returns the manifest as a [String]
+  ///
+  /// The String still need to be parsed to be used.
+  static String getDatabaseItem(Box box, String key) {
+    return box.get(key);
   }
 
-  // ///   Gets a list of all the items in the database
-  static Map<dynamic, dynamic> getDatabase<T>(Box box) {
+  /// Given a [box] returns every item in the [box].
+  static Map<dynamic, dynamic> getDatabase(Box box) {
     return box.toMap();
   }
 }
