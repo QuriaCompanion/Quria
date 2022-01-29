@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:quria/cubit/character_cubit.dart';
+import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
@@ -17,7 +18,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/statisticDisplay.dart';
 
-Map<String, dynamic> _manifestParsed = {};
+AllDestinyManifestComponents _manifestParsed = AllDestinyManifestComponents();
 int index = 0;
 
 class ProfileWidget extends StatefulWidget {
@@ -40,9 +41,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   Future<ProfileHelper> getProfileData() async {
     try {
-      _manifestParsed['DestinyInventoryItemDefinition'] =
+      _manifestParsed.destinyInventoryItemDefinition =
           await manifest.getManifest<DestinyInventoryItemDefinition>();
-      _manifestParsed['DestinyDamageTypeDefinition'] =
+      _manifestParsed.destinyDamageTypeDefinition =
           await manifest.getManifest<DestinyDamageTypeDefinition>();
 
       final characters = profile.getCharacters();
@@ -77,9 +78,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         decoration: BoxDecoration(
                             image: DecorationImage(
                                 image: NetworkImage('https://www.bungie.net' +
-                                    _manifestParsed[
-                                                'DestinyInventoryItemDefinition']
-                                            [displayHash]!
+                                    _manifestParsed
+                                        .destinyInventoryItemDefinition![
+                                            displayHash]!
                                         .screenshot!),
                                 fit: BoxFit.cover)),
                         child: Column(
@@ -387,9 +388,8 @@ class Item extends StatelessWidget {
           ),
           child: Image(
             image: NetworkImage('https://www.bungie.net' +
-                _manifestParsed['DestinyInventoryItemDefinition'][displayHash]!
-                    .displayProperties!
-                    .icon!),
+                _manifestParsed.destinyInventoryItemDefinition![displayHash]!
+                    .displayProperties!.icon!),
             fit: BoxFit.fill,
             width: 150,
             height: 150,
@@ -509,9 +509,9 @@ class DetailsWeaponWidget extends StatelessWidget {
                           ),
                           child: Image(
                             image: NetworkImage('https://www.bungie.net' +
-                                _manifestParsed[
-                                            'DestinyInventoryItemDefinition']
-                                        [item.itemHash]!
+                                _manifestParsed
+                                    .destinyInventoryItemDefinition![
+                                        item.itemHash]!
                                     .displayProperties!
                                     .icon!),
                             fit: BoxFit.fill,
@@ -524,9 +524,9 @@ class DetailsWeaponWidget extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              utf8.decode(_manifestParsed[
-                                          'DestinyInventoryItemDefinition']
-                                      [item.itemHash]!
+                              utf8.decode(_manifestParsed
+                                  .destinyInventoryItemDefinition![
+                                      item.itemHash]!
                                   .displayProperties!
                                   .name!
                                   .runes
@@ -546,7 +546,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                                         style: TextStyle(
                                             fontSize: 20, color: Colors.white)),
                                     Text(
-                                      'Zoom : ${_manifestParsed['DestinyInventoryItemDefinition'][item.itemHash]!.stats?.stats!['3555269338']?.value}',
+                                      'Zoom : ${_manifestParsed.destinyInventoryItemDefinition![item.itemHash]!.stats?.stats!['3555269338']?.value}',
                                       style: TextStyle(
                                           fontSize: 20, color: Colors.white),
                                     )
@@ -565,7 +565,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                                         style: TextStyle(
                                             fontSize: 20, color: Colors.white)),
                                     Text(
-                                      'Direction du recul : ${_manifestParsed['DestinyInventoryItemDefinition'][item.itemHash]!.stats?.stats!['2715839340']?.value}',
+                                      'Direction du recul : ${_manifestParsed.destinyInventoryItemDefinition![item.itemHash]!.stats?.stats!['2715839340']?.value}',
                                       style: TextStyle(
                                           fontSize: 20, color: Colors.white),
                                     ),
@@ -830,9 +830,9 @@ class DetailsWeaponWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[
-                                              'DestinyInventoryItemDefinition']
-                                          [sockets![1].plugHash]!
+                                  _manifestParsed
+                                      .destinyInventoryItemDefinition![
+                                          sockets![1].plugHash]!
                                       .displayProperties!
                                       .icon!),
                               fit: BoxFit.fill,
@@ -843,9 +843,9 @@ class DetailsWeaponWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[
-                                              'DestinyInventoryItemDefinition']
-                                          [sockets[2].plugHash]!
+                                  _manifestParsed
+                                      .destinyInventoryItemDefinition![
+                                          sockets[2].plugHash]!
                                       .displayProperties!
                                       .icon!),
                               fit: BoxFit.fill,
@@ -856,9 +856,9 @@ class DetailsWeaponWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[
-                                              'DestinyInventoryItemDefinition']
-                                          [sockets[3].plugHash]!
+                                  _manifestParsed
+                                      .destinyInventoryItemDefinition![
+                                          sockets[3].plugHash]!
                                       .displayProperties!
                                       .icon!),
                               fit: BoxFit.fill,
@@ -869,9 +869,9 @@ class DetailsWeaponWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[
-                                              'DestinyInventoryItemDefinition']
-                                          [sockets[4].plugHash]!
+                                  _manifestParsed
+                                      .destinyInventoryItemDefinition![
+                                          sockets[4].plugHash]!
                                       .displayProperties!
                                       .icon!),
                               fit: BoxFit.fill,
@@ -889,9 +889,9 @@ class DetailsWeaponWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed[
-                                              'DestinyInventoryItemDefinition']
-                                          [sockets[0].plugHash]!
+                                  _manifestParsed
+                                      .destinyInventoryItemDefinition![
+                                          sockets[0].plugHash]!
                                       .displayProperties!
                                       .icon!),
                               fit: BoxFit.fill,
@@ -905,9 +905,9 @@ class DetailsWeaponWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                utf8.decode(_manifestParsed[
-                                            'DestinyInventoryItemDefinition']
-                                        [sockets[0].plugHash]!
+                                utf8.decode(_manifestParsed
+                                    .destinyInventoryItemDefinition![
+                                        sockets[0].plugHash]!
                                     .displayProperties!
                                     .name!
                                     .runes
@@ -918,9 +918,9 @@ class DetailsWeaponWidget extends StatelessWidget {
                               ),
                               SizedBox(height: 6),
                               Text(
-                                utf8.decode(_manifestParsed[
-                                            'DestinyInventoryItemDefinition']
-                                        [sockets[0].plugHash]!
+                                utf8.decode(_manifestParsed
+                                    .destinyInventoryItemDefinition![
+                                        sockets[0].plugHash]!
                                     .displayProperties!
                                     .description!
                                     .runes
