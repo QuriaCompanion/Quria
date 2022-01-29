@@ -45,7 +45,7 @@ class ManifestService {
   /// or from the [Hive] database
   ///
   /// or from the [BungieApiService]
-  Future<Map<dynamic, T>> getManifest<T>() async {
+  Future<Map<int, T>> getManifest<T>() async {
     try {
       if (_manifest[T.toString()] == null) {
         if (await isManifestSaved(T.toString())) {

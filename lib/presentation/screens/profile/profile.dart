@@ -13,10 +13,10 @@ import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:quria/presentation/components/stat_progress_bar.dart';
 import 'package:quria/presentation/components/statisticDisplay.dart';
 
 Map<int, DestinyInventoryItemDefinition> _manifestParsed = {};
+int index = 0;
 
 class ProfileWidget extends StatefulWidget {
   ProfileWidget({
@@ -36,22 +36,21 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   final profile = ProfileService();
 
-  var index = 0;
-
   Future<ProfileHelper> getProfileData() async {
-    // _manifestParsed =
-    //     await manifest.getManifest<DestinyInventoryItemDefinition>();
+    try {
+      _manifestParsed =
+          await manifest.getManifest<DestinyInventoryItemDefinition>();
 
-    final characters = profile.getCharacters();
-    final Map<String, dynamic> data = {
-      'profile': await account.getMembership(),
-      'characters': characters,
-      'characterEquipement':
-          profile.getCharacterEquipment(characters[index].characterId!)
-    };
-    ProfileHelper returned = ProfileHelper.fromJson(data);
-    inspect(returned);
-    return returned;
+      final characters = profile.getCharacters();
+      ProfileHelper returned = ProfileHelper(
+          (await account.getMembership())!,
+          characters,
+          profile.getCharacterEquipment(characters[index].characterId!));
+      return returned;
+    } catch (e) {
+      print(e);
+      rethrow;
+    }
   }
 
   @override
@@ -59,15 +58,16 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     return SingleChildScrollView(
       child: FutureBuilder(
           future: getProfileData(),
-          builder: (BuildContext context, AsyncSnapshot snapshot) {
+          builder:
+              (BuildContext context, AsyncSnapshot<ProfileHelper> snapshot) {
             if (snapshot.hasData) {
               return BlocProvider(
                 create: (_) => CharacterCubit(),
                 child: BlocBuilder<CharacterCubit, CharacterState>(
                   builder: (context, state) {
-                    int displayHash = snapshot.data['characterEquipement'][5]
+                    int displayHash = snapshot.data!.characterEquipement[5]
                             .overrideStyleItemHash ??
-                        snapshot.data['characterEquipement'][5].itemHash;
+                        snapshot.data!.characterEquipement[5].itemHash!;
                     return Center(
                       child: Container(
                         decoration: BoxDecoration(
@@ -92,8 +92,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   child: SizedBox(
                                       width: index == 0 ? 400 : 561,
                                       child: ProfileTitleWidget(
-                                          data: snapshot.data['characters']
-                                              [0])),
+                                          data: snapshot.data!.characters[0])),
                                 ),
                                 InkWell(
                                   onTap: () {
@@ -104,8 +103,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   child: SizedBox(
                                       width: index == 1 ? 400 : 561,
                                       child: ProfileTitleWidget(
-                                          data: snapshot.data['characters']
-                                              [1])),
+                                          data: snapshot.data!.characters[1])),
                                 ),
                                 InkWell(
                                   onTap: () {
@@ -116,8 +114,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                   child: SizedBox(
                                       width: index == 2 ? 400 : 561,
                                       child: ProfileTitleWidget(
-                                          data: snapshot.data['characters']
-                                              [2])),
+                                          data: snapshot.data!.characters[2])),
                                 ),
                               ]),
                             ),
@@ -198,7 +195,7 @@ class ProfileNodeWidget extends StatelessWidget {
 }
 
 class ArmorSectionWidget extends StatelessWidget {
-  final data;
+  final ProfileHelper data;
   const ArmorSectionWidget({
     Key? key,
     required this.data,
@@ -210,11 +207,11 @@ class ArmorSectionWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Item(item: data['characterEquipement'][3]),
-        Item(item: data['characterEquipement'][4]),
-        Item(item: data['characterEquipement'][5]),
-        Item(item: data['characterEquipement'][6]),
-        Item(item: data['characterEquipement'][7]),
+        Item(item: data.characterEquipement[3]),
+        Item(item: data.characterEquipement[4]),
+        Item(item: data.characterEquipement[5]),
+        Item(item: data.characterEquipement[6]),
+        Item(item: data.characterEquipement[7]),
       ],
     );
   }
@@ -240,7 +237,7 @@ class CharacterStatsWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           StatisticDisplay(
-            value: data['character'].stats['2996146975'],
+            value: data.characters![index].stats['2996146975'],
             i: 0,
             width: width,
             height: height,
@@ -249,7 +246,7 @@ class CharacterStatsWidget extends StatelessWidget {
           ),
           SizedBox(height: 50),
           StatisticDisplay(
-            value: data['character'].stats['392767087'],
+            value: data.characters![index].stats['392767087'],
             i: 1,
             width: width,
             height: height,
@@ -258,7 +255,7 @@ class CharacterStatsWidget extends StatelessWidget {
           ),
           SizedBox(height: 50),
           StatisticDisplay(
-            value: data['character'].stats['1943323491'],
+            value: data.characters![index].stats['1943323491'],
             i: 2,
             width: width,
             height: height,
@@ -267,7 +264,7 @@ class CharacterStatsWidget extends StatelessWidget {
           ),
           SizedBox(height: 50),
           StatisticDisplay(
-            value: data['character'].stats['1735777505'],
+            value: data.characters![index].stats['1735777505'],
             i: 3,
             width: width,
             height: height,
@@ -276,7 +273,7 @@ class CharacterStatsWidget extends StatelessWidget {
           ),
           SizedBox(height: 50),
           StatisticDisplay(
-            value: data['character'].stats['144602215'],
+            value: data.characters![index].stats['144602215'],
             i: 4,
             width: width,
             height: height,
@@ -285,7 +282,7 @@ class CharacterStatsWidget extends StatelessWidget {
           ),
           SizedBox(height: 50),
           StatisticDisplay(
-            value: data['character'].stats['4244567218'],
+            value: data.characters![index].stats['4244567218'],
             i: 5,
             width: width,
             height: height,
@@ -349,9 +346,9 @@ class WeaponSectionWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Item(item: data['characterEquipement'][0]),
-          Item(item: data['characterEquipement'][1]),
-          Item(item: data['characterEquipement'][2]),
+          Item(item: data.characterEquipement[0]),
+          Item(item: data.characterEquipement[1]),
+          Item(item: data.characterEquipement[2]),
         ]);
   }
 }

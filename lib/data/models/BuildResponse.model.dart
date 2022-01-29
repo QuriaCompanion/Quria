@@ -107,14 +107,12 @@ class Mod {
   Mod({required this.name, required this.icon, required this.number});
 
   Mod.fromJson(Map<String, dynamic> json) {
-    print("euuhh");
     name = json['name'];
     icon = json['icon'];
     number = json['number'];
   }
 
   Map<String, dynamic> toJson() {
-    print("euuhh");
     final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['icon'] = icon;
@@ -131,7 +129,6 @@ class Material {
   Material({required this.name, required this.icon, required this.number});
 
   Material.fromJson(Map<String, dynamic> json) {
-    print("euuhh");
     name = json['name'];
     icon = json['icon'];
     number = json['number'];
