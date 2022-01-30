@@ -10,6 +10,7 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_stat_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
@@ -18,6 +19,7 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/attributs_details.dart';
 import 'package:quria/presentation/components/loader.dart';
 import 'package:quria/presentation/components/stat_progress_bar.dart';
 import 'package:quria/presentation/components/header_weapon_details.dart';
@@ -471,126 +473,17 @@ class DetailsWeaponWidget extends StatelessWidget {
                         ]),
                   ),
                   SizedBox(height: 30),
-                  Container(
-                    margin: const EdgeInsets.only(left: 10),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                            height: 80,
-                            width: 80,
-                            child: Image(
-                              image: NetworkImage('https://www.bungie.net' +
-                                  ManifestService
-                                      .manifestParsed
-                                      .destinyInventoryItemDefinition![
-                                          sockets![1].plugHash]!
-                                      .displayProperties!
-                                      .icon!),
-                              fit: BoxFit.fill,
-                            )),
-                        SizedBox(width: 30),
-                        SizedBox(
-                            height: 80,
-                            width: 80,
-                            child: Image(
-                              image: NetworkImage('https://www.bungie.net' +
-                                  ManifestService
-                                      .manifestParsed
-                                      .destinyInventoryItemDefinition![
-                                          sockets[2].plugHash]!
-                                      .displayProperties!
-                                      .icon!),
-                              fit: BoxFit.fill,
-                            )),
-                        SizedBox(width: 30),
-                        SizedBox(
-                            height: 80,
-                            width: 80,
-                            child: Image(
-                              image: NetworkImage('https://www.bungie.net' +
-                                  ManifestService
-                                      .manifestParsed
-                                      .destinyInventoryItemDefinition![
-                                          sockets[3].plugHash]!
-                                      .displayProperties!
-                                      .icon!),
-                              fit: BoxFit.fill,
-                            )),
-                        SizedBox(width: 15),
-                        SizedBox(
-                            height: 80,
-                            width: 80,
-                            child: Image(
-                              image: NetworkImage('https://www.bungie.net' +
-                                  ManifestService
-                                      .manifestParsed
-                                      .destinyInventoryItemDefinition![
-                                          sockets[4].plugHash]!
-                                      .displayProperties!
-                                      .icon!),
-                              fit: BoxFit.fill,
-                            )),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: 30),
-                  Container(
-                    margin: const EdgeInsets.only(left: 10),
-                    child: Row(
-                      children: [
-                        SizedBox(
-                            height: 80,
-                            width: 80,
-                            child: Image(
-                              image: NetworkImage('https://www.bungie.net' +
-                                  ManifestService
-                                      .manifestParsed
-                                      .destinyInventoryItemDefinition![
-                                          sockets[0].plugHash]!
-                                      .displayProperties!
-                                      .icon!),
-                              fit: BoxFit.fill,
-                            )),
-                        SizedBox(
-                          width: 20,
-                        ),
-                        SizedBox(
-                          width: 600,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                utf8.decode(ManifestService
-                                    .manifestParsed
-                                    .destinyInventoryItemDefinition![
-                                        sockets[0].plugHash]!
-                                    .displayProperties!
-                                    .name!
-                                    .runes
-                                    .toList()),
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                                textAlign: TextAlign.left,
-                              ),
-                              SizedBox(height: 6),
-                              Text(
-                                utf8.decode(ManifestService
-                                    .manifestParsed
-                                    .destinyInventoryItemDefinition![
-                                        sockets[0].plugHash]!
-                                    .displayProperties!
-                                    .description!
-                                    .runes
-                                    .toList()),
-                                style: TextStyle(
-                                    fontSize: 20, color: Colors.white),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                  BlocProvider(
+                      create: (_) => AttributsDetailsCubit(),
+                      child: BlocBuilder<AttributsDetailsCubit,
+                          AttributsDetailsState>(builder: (context, state) {
+                        if (state is AttributsDetailsIdState) {
+                          return AttributsDetails(
+                              item: item, socketId: state.id);
+                        } else {
+                          return AttributsDetails(item: item);
+                        }
+                      })),
                   WeaponDetailsBis(
                       charger: stats!['3871231066']?.value,
                       zoom: ManifestService
