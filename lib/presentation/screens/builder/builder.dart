@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/data/services/backend/bungie_backend_api.service.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/loader.dart';
 import 'package:quria/presentation/screens/builder/components/singleBuild.dart';
 
 class BuilderWidget extends StatelessWidget {
@@ -38,9 +39,9 @@ class BuilderWidget extends StatelessWidget {
                 children: list,
               );
             } else {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
+              return const Loader(
+                  waitingMessage:
+                      'Veuillez patienter nous recherchons les meilleurs builds pour vous!');
             }
           }),
     );

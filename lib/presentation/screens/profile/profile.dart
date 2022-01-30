@@ -16,6 +16,7 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/loader.dart';
 import 'package:quria/presentation/components/stat_progress_bar.dart';
 import 'package:quria/presentation/components/header_weapon_details.dart';
 import 'package:quria/presentation/components/statisticDisplay.dart';
@@ -162,9 +163,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   ),
                 );
               } else {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+                return const Loader();
               }
             }),
       ),
