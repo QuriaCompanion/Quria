@@ -17,6 +17,7 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/stat_progress_bar.dart';
 import 'package:quria/presentation/components/statisticDisplay.dart';
 
 AllDestinyManifestComponents _manifestParsed = AllDestinyManifestComponents();
@@ -540,247 +541,31 @@ class DetailsWeaponWidget extends StatelessWidget {
                     ],
                   ),
                   SizedBox(height: 20),
-                  Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            if (stats['2996146975']?.value != null)
-                              Text(
-                                'Mobilité : ${stats['2996146975']?.value}',
-                                style: TextStyle(
-                                    fontSize: 28, color: Colors.white),
-                              ),
-                            if (stats['392767087']?.value != null)
-                              Text(
-                                'Résistance : ${stats['392767087']?.value}',
-                                style: TextStyle(
-                                    fontSize: 28, color: Colors.white),
-                              ),
-                            if (stats['1943323491']?.value != null)
-                              Text(
-                                'Récupération : ${stats['1943323491']?.value}',
-                                style: TextStyle(
-                                    fontSize: 28, color: Colors.white),
-                              ),
-                            if (stats['1735777505']?.value != null)
-                              Text(
-                                'Discipline : ${stats['1735777505']?.value}',
-                                style: TextStyle(
-                                    fontSize: 28, color: Colors.white),
-                              ),
-                            if (stats['144602215']?.value != null)
-                              Text(
-                                'Intelligence : ${stats['144602215']?.value}',
-                                style: TextStyle(
-                                    fontSize: 28, color: Colors.white),
-                              ),
-                            if (stats['4244567218']?.value != null)
-                              Text(
-                                'Force : ${stats['4244567218']?.value}',
-                                style: TextStyle(
-                                    fontSize: 28, color: Colors.white),
-                              ),
-                            if (stats['3614673599']?.value != null)
-                              Text(
-                                'Rayon de souffle : ${stats['3614673599']?.value}',
-                                style: TextStyle(
-                                    fontSize: 28, color: Colors.white),
-                              ),
-                            if (stats['3614673599']?.value != null)
-                              SizedBox(height: 9),
-                            if (stats['2523465841']?.value != null)
-                              Text(
-                                'Vélocité : ${stats['2523465841']?.value}',
-                                style: TextStyle(
-                                    fontSize: 28, color: Colors.white),
-                              ),
-                            if (stats['2523465841']?.value != null)
-                              SizedBox(height: 9),
-                            if (stats['4043523819']?.value != null)
-                              Text(
-                                'Impact: ${stats['4043523819']?.value}',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 28),
-                              ),
-                            if (stats['4043523819']?.value != null)
-                              SizedBox(height: 9),
-                            if (stats['1240592695']?.value != null)
-                              Text(
-                                'Portée: ${stats['1240592695']?.value}',
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 28),
-                              ),
-                            if (stats['1240592695']?.value != null)
-                              SizedBox(height: 9),
-                            if (stats['155624089']?.value != null)
-                              Text('Stabilité: ${stats['155624089']?.value}',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 28)),
-                            if (stats['155624089']?.value != null)
-                              SizedBox(height: 9),
-                            if (stats['943549884']?.value != null)
-                              Text('Maniement: ${stats['943549884']?.value}',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 28)),
-                            if (stats['943549884']?.value != null)
-                              SizedBox(height: 9),
-                            if (stats['4188031367']?.value != null)
-                              Text(
-                                  'Rechargement: ${stats['4188031367']?.value}',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 28)),
-                            if (stats['4188031367']?.value != null)
-                              SizedBox(height: 9),
-                            if (stats['1345609583']?.value != null)
-                              Text(
-                                  'Aide à la visée: ${stats['1345609583']?.value}',
-                                  style: TextStyle(
-                                      color: Colors.white, fontSize: 28)),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0),
-                        child: Column(
-                          children: [
-                            // mobility
-                            if (stats['2996146975']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['2996146975']!.value! / 42,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['2996146975']?.value != null)
-                              SizedBox(height: 16),
-                            // resistance
-                            if (stats['392767087']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['392767087']!.value! / 42,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['392767087']?.value != null)
-                              SizedBox(height: 16),
-                            // recovery
-                            if (stats['1943323491']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['1943323491']!.value! / 42,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['1943323491']?.value != null)
-                              SizedBox(height: 16),
-                            // discipline
-                            if (stats['1735777505']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['1735777505']!.value! / 42,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['1735777505']?.value != null)
-                              SizedBox(height: 16),
-                            // intelligence
-                            if (stats['144602215']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['144602215']!.value! / 42,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['144602215']?.value != null)
-                              SizedBox(height: 16),
-                            // force
-                            if (stats['4244567218']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['4244567218']!.value! / 42,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['4244567218']?.value != null)
-                              SizedBox(height: 16),
-                            // stop
-                            if (stats['3614673599']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['3614673599']!.value! / 100,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['3614673599']?.value != null)
-                              SizedBox(height: 16),
-                            if (stats['2523465841']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['2523465841']!.value! / 100,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['2523465841']?.value != null)
-                              SizedBox(height: 16),
-                            if (stats['4043523819']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['4043523819']!.value! / 100,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['4043523819']?.value != null)
-                              SizedBox(height: 16),
-                            if (stats['1240592695']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['1240592695']!.value! / 100,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['1240592695']?.value != null)
-                              SizedBox(height: 16),
-                            if (stats['155624089']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['155624089']!.value! / 100,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['155624089']?.value != null)
-                              SizedBox(height: 16),
-                            if (stats['943549884']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['943549884']!.value! / 100,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['943549884']?.value != null)
-                              SizedBox(height: 16),
-                            if (stats['4188031367']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['4188031367']!.value! / 100,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                            if (stats['4188031367']?.value != null)
-                              SizedBox(height: 16),
-                            if (stats['1345609583']?.value != null)
-                              LinearPercentIndicator(
-                                percent: stats['1345609583']!.value! / 100,
-                                progressColor: Colors.white,
-                                lineHeight: 24,
-                                width: 350,
-                              ),
-                          ],
-                        ),
-                      )
-                    ],
+                  Container(
+                    margin: const EdgeInsets.only(left: 10),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (int statHash in DestinyData.linearStatBySubType[
+                              _manifestParsed
+                                  .destinyInventoryItemDefinition![
+                                      item.itemHash]!
+                                  .itemSubType!]!)
+                            StatProgressBar(
+                                name: _manifestParsed
+                                        .destinyStatDefinition![statHash]!
+                                        .displayProperties!
+                                        .name ??
+                                    'error',
+                                value: stats[statHash.toString()]?.value ??
+                                    _manifestParsed
+                                        .destinyInventoryItemDefinition![
+                                            item.itemHash]!
+                                        .stats
+                                        ?.stats![statHash.toString()]
+                                        ?.value ??
+                                    0),
+                        ]),
                   ),
                   SizedBox(height: 30),
                   Container(

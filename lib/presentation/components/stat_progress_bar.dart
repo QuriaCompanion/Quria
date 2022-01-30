@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -7,33 +8,34 @@ class StatProgressBar extends StatelessWidget {
   final String name;
   final int value;
   final int scale;
-  final double? width;
-  final double? height;
-  final double? font;
+  final double width;
+  final double font;
 
   const StatProgressBar(
       {Key? key,
       required this.name,
       required this.value,
-      this.width = 350,
-      this.height,
+      this.width = 600,
       this.scale = 100,
       this.font = 12})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Text(
-        '$name : $value',
-        style: TextStyle(fontSize: font, color: Colors.black),
-      ),
-      LinearPercentIndicator(
-        percent: value / scale,
-        progressColor: Colors.white,
-        lineHeight: 24,
-        width: width,
-      ),
-    ]);
+    return SizedBox(
+      width: width,
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text(
+          '${utf8.decode(name.runes.toList())} : $value',
+          style: TextStyle(fontSize: font, color: Colors.white),
+        ),
+        LinearPercentIndicator(
+          percent: value / scale,
+          progressColor: Colors.white,
+          lineHeight: 24,
+          width: (width / 100) * 60,
+        ),
+      ]),
+    );
   }
 }

@@ -47,6 +47,36 @@ class RaidPhases {
   static const int sotpInsurrectionPrimeChallenge = 4140089399;
 }
 
+class StatsHash {
+  static const int mobility = 2996146975;
+  static const int resilience = 392767087;
+  static const int recovery = 1943323491;
+  static const int intellect = 144602215;
+  static const int discipline = 1735777505;
+  static const int strength = 4244567218;
+  static const int impact = 4043523819;
+  static const int range = 1240592695;
+  static const int stability = 155624089;
+  static const int handling = 943549884;
+  static const int reloadSpeed = 4188031367;
+  static const int aimAssist = 1345609583;
+  static const int blastRadius = 3614673599;
+  static const int velocity = 2523465841;
+  static const int chargeTime = 2961396640;
+  static const int zoom = 3555269338;
+  static const int magazine = 3871231066;
+  static const int recoil = 2715839340;
+  static const int rpm = 4284893193;
+  static const int swingSpeed = 2837207746;
+  static const int guardResist = 209426660;
+  static const int guardEffiency = 2762071195;
+  static const int guardEndurance = 3736848092;
+  static const int chargeRate = 3022301683;
+  static const int ammunition = 925767036;
+  static const int shootingSpeed = 447667954;
+  static const int precision = 1591432999;
+}
+
 class DestinyData {
   static const Map<DamageType, int> damageTypeHashes = {
     DamageType.Kinetic: 3373582085,
@@ -123,6 +153,206 @@ class DestinyData {
     DestinyItemSubType.ClassArmor: 49,
     DestinyItemSubType.Bow: 3317538576,
   };
+  static const Map<DestinyItemSubType, List> linearStatBySubType = {
+    //Auto rifle
+    DestinyItemSubType.AutoRifle: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    //shotgun
+    DestinyItemSubType.Shotgun: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    // machinegun
+    DestinyItemSubType.Machinegun: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    //hand cannon
+    DestinyItemSubType.HandCannon: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    //rocket launcher
+    DestinyItemSubType.RocketLauncher: [
+      StatsHash.blastRadius,
+      StatsHash.velocity,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    //fusion rifle
+    DestinyItemSubType.FusionRifle: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    //sniper rifle
+    DestinyItemSubType.SniperRifle: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    //pulse rifle
+    DestinyItemSubType.PulseRifle: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    //scout rifle
+    DestinyItemSubType.ScoutRifle: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    // sidearm
+    DestinyItemSubType.Sidearm: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    // sword
+    DestinyItemSubType.Sword: [
+      StatsHash.swingSpeed,
+      StatsHash.impact,
+      StatsHash.guardEffiency,
+      StatsHash.guardResist,
+      StatsHash.chargeRate,
+      StatsHash.guardEndurance,
+    ],
+    //mask
+    DestinyItemSubType.Mask: [
+      StatsHash.mobility,
+      StatsHash.resilience,
+      StatsHash.recovery,
+      StatsHash.discipline,
+      StatsHash.intellect,
+      StatsHash.strength
+    ],
+    // linear fusion rifle
+    DestinyItemSubType.FusionRifleLine: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    // grenade launcher
+    DestinyItemSubType.GrenadeLauncher: [
+      StatsHash.blastRadius,
+      StatsHash.velocity,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    // submachine gun
+    DestinyItemSubType.SubmachineGun: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    // trace rifle
+    DestinyItemSubType.TraceRifle: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    // helmet armor
+    DestinyItemSubType.HelmetArmor: [
+      StatsHash.mobility,
+      StatsHash.resilience,
+      StatsHash.recovery,
+      StatsHash.discipline,
+      StatsHash.intellect,
+      StatsHash.strength
+    ],
+    // gauntlets armor
+    DestinyItemSubType.GauntletsArmor: [
+      StatsHash.mobility,
+      StatsHash.resilience,
+      StatsHash.recovery,
+      StatsHash.discipline,
+      StatsHash.intellect,
+      StatsHash.strength
+    ],
+    // chest armor
+    DestinyItemSubType.ChestArmor: [
+      StatsHash.mobility,
+      StatsHash.resilience,
+      StatsHash.recovery,
+      StatsHash.discipline,
+      StatsHash.intellect,
+      StatsHash.strength
+    ],
+    // leg armor
+    DestinyItemSubType.LegArmor: [
+      StatsHash.mobility,
+      StatsHash.resilience,
+      StatsHash.recovery,
+      StatsHash.discipline,
+      StatsHash.intellect,
+      StatsHash.strength
+    ],
+    // class armor
+    DestinyItemSubType.ClassArmor: [
+      StatsHash.mobility,
+      StatsHash.resilience,
+      StatsHash.recovery,
+      StatsHash.discipline,
+      StatsHash.intellect,
+      StatsHash.strength
+    ],
+    // bow
+    DestinyItemSubType.Bow: [
+      StatsHash.impact,
+      StatsHash.precision,
+      StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+  };
 
   static const Color positiveFeedback = Color.fromRGBO(67, 205, 57, 1);
   static const Color negativeFeedback = Color.fromRGBO(204, 58, 56, 1);
@@ -150,7 +380,6 @@ class DestinyData {
     "144602215", // Intellect
     "4244567218", // Strength
   ];
-
   static const List<String> statsIcon = [
     "/common/destiny2_content/icons/e26e0e93a9daf4fdd21bf64eb9246340.png", // Mobility
     "/common/destiny2_content/icons/202ecc1c6febeb6b97dafc856e863140.png", // Resilience
