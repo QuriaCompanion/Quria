@@ -3,9 +3,9 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
-import 'package:bungie_api/models/destiny_energy_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:bungie_api/models/destiny_stat_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:percent_indicator/percent_indicator.dart';
@@ -13,6 +13,7 @@ import 'package:quria/cubit/character_cubit.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
@@ -45,6 +46,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           await manifest.getManifest<DestinyInventoryItemDefinition>();
       _manifestParsed.destinyDamageTypeDefinition =
           await manifest.getManifest<DestinyDamageTypeDefinition>();
+      _manifestParsed.destinyStatDefinition =
+          await manifest.getManifest<DestinyStatDefinition>();
 
       final characters = profile.getCharacters();
       ProfileHelper returned = ProfileHelper(
@@ -164,7 +167,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 }
 
 class ProfileNodeWidget extends StatelessWidget {
-  final data;
+  final ProfileHelper? data;
   const ProfileNodeWidget({
     Key? key,
     required this.data,
@@ -203,7 +206,7 @@ class ProfileNodeWidget extends StatelessWidget {
 }
 
 class ArmorSectionWidget extends StatelessWidget {
-  final ProfileHelper data;
+  final ProfileHelper? data;
   const ArmorSectionWidget({
     Key? key,
     required this.data,
@@ -215,89 +218,47 @@ class ArmorSectionWidget extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Item(item: data.characterEquipement[3]),
-        Item(item: data.characterEquipement[4]),
-        Item(item: data.characterEquipement[5]),
-        Item(item: data.characterEquipement[6]),
-        Item(item: data.characterEquipement[7]),
+        Item(item: data!.characterEquipement[3]),
+        Item(item: data!.characterEquipement[4]),
+        Item(item: data!.characterEquipement[5]),
+        Item(item: data!.characterEquipement[6]),
+        Item(item: data!.characterEquipement[7]),
       ],
     );
   }
 }
 
 class CharacterStatsWidget extends StatelessWidget {
-  final data;
+  final ProfileHelper? data;
   const CharacterStatsWidget({
     Key? key,
-    this.data,
+    required this.data,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     const double fontsize = 30;
-    const double width = 50;
+    const double width = 110;
     const double height = 50;
     return Container(
-      // TODO : Refactoring SizedBox value
       margin: const EdgeInsets.only(right: 50),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          StatisticDisplay(
-            value: data.characters![index].stats['2996146975'],
-            i: 0,
-            width: width,
-            height: height,
-            fontsize: fontsize,
-            paddingLeft: 8.0,
-          ),
-          SizedBox(height: 50),
-          StatisticDisplay(
-            value: data.characters![index].stats['392767087'],
-            i: 1,
-            width: width,
-            height: height,
-            fontsize: fontsize,
-            paddingLeft: 8.0,
-          ),
-          SizedBox(height: 50),
-          StatisticDisplay(
-            value: data.characters![index].stats['1943323491'],
-            i: 2,
-            width: width,
-            height: height,
-            fontsize: fontsize,
-            paddingLeft: 8.0,
-          ),
-          SizedBox(height: 50),
-          StatisticDisplay(
-            value: data.characters![index].stats['1735777505'],
-            i: 3,
-            width: width,
-            height: height,
-            fontsize: fontsize,
-            paddingLeft: 8.0,
-          ),
-          SizedBox(height: 50),
-          StatisticDisplay(
-            value: data.characters![index].stats['144602215'],
-            i: 4,
-            width: width,
-            height: height,
-            fontsize: fontsize,
-            paddingLeft: 8.0,
-          ),
-          SizedBox(height: 50),
-          StatisticDisplay(
-            value: data.characters![index].stats['4244567218'],
-            i: 5,
-            width: width,
-            height: height,
-            fontsize: fontsize,
-            paddingLeft: 8.0,
-          ),
-        ],
+      child: SizedBox(
+        width: width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (int i = 0; i < 6; i++)
+              StatisticDisplay(
+                value:
+                    data!.characters[index].stats![DestinyData.armorStats[i]]!,
+                icon: DestinyData.statsIcon[i],
+                width: width,
+                height: height,
+                fontsize: fontsize,
+                padding: 8.0,
+              ),
+          ],
+        ),
       ),
     );
   }
@@ -342,7 +303,7 @@ class CharacterWidget extends StatelessWidget {
 }
 
 class WeaponSectionWidget extends StatelessWidget {
-  final data;
+  final ProfileHelper? data;
   const WeaponSectionWidget({
     Key? key,
     required this.data,
@@ -354,9 +315,9 @@ class WeaponSectionWidget extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Item(item: data.characterEquipement[0]),
-          Item(item: data.characterEquipement[1]),
-          Item(item: data.characterEquipement[2]),
+          Item(item: data!.characterEquipement[0]),
+          Item(item: data!.characterEquipement[1]),
+          Item(item: data!.characterEquipement[2]),
         ]);
   }
 }
@@ -451,9 +412,10 @@ class _ProfileTitleState extends State<ProfileTitleWidget> {
   }
 }
 
+@immutable
 class DetailsWeaponWidget extends StatelessWidget {
   final profile = ProfileService();
-  DestinyItemComponent item;
+  final DestinyItemComponent item;
   DetailsWeaponWidget({
     required this.item,
     Key? key,

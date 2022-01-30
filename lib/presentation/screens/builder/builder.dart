@@ -4,6 +4,7 @@ import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/backend/bungie_backend_api.service.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/statisticDisplay.dart';
 
@@ -64,7 +65,8 @@ class BuilderWidget extends StatelessWidget {
     ];
     List<Widget> listStats = <Widget>[];
     for (var i = 0; i < 6; i++) {
-      listStats.add(StatisticDisplay(value: values[i], i: i));
+      listStats.add(
+          StatisticDisplay(value: values[i], icon: DestinyData.statsIcon[i]));
     }
     List<Widget> listArmor = <Widget>[];
     for (var i = 0; i < data.equipement.length; i++) {
@@ -79,7 +81,7 @@ class BuilderWidget extends StatelessWidget {
               ),
             ],
           ),
-          child: Image.network('https://www.bungie.net' +
+          child: Image.network(DestinyData.bungieLink +
               _manifestParsed[data.equipement[i].hash]!
                   .displayProperties!
                   .icon!)));
