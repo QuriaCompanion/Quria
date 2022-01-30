@@ -1,12 +1,9 @@
 import 'package:bungie_api/helpers/bungie_net_token.dart';
-import 'package:bungie_api/models/destiny_class_definition.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
-import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/app.dart';
 import 'package:quria/presentation/router.dart';
@@ -30,7 +27,6 @@ void main() async {
   if (await auth.getToken() == null) await auth.saveToken(token);
   await account.getMembership();
   await profile.loadProfile();
-  ManifestService.getManifest<DestinyInventoryItemDefinition>();
   runApp(QuriaApp(
     router: AppRouter(),
   ));
@@ -49,7 +45,7 @@ class QuriaApp extends StatelessWidget {
       builder: (_, child) => AppView(
         child: child!,
       ),
-      initialRoute: routeLogin,
+      initialRoute: routeProfile,
       navigatorKey: navKey,
     );
   }
