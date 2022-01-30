@@ -564,7 +564,11 @@ class DetailsWeaponWidget extends StatelessWidget {
                                         .stats
                                         ?.stats![statHash.toString()]
                                         ?.value ??
-                                    0),
+                                    0,
+                                type: _manifestParsed
+                                    .destinyInventoryItemDefinition![
+                                        item.itemHash]!
+                                    .itemType!),
                         ]),
                   ),
                   SizedBox(height: 30),
