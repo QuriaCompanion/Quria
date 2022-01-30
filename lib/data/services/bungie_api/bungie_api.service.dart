@@ -64,7 +64,7 @@ class BungieApiService {
     return dotenv.env['client_id'];
   }
 
-  Future<DestinyManifestResponse> getManifestInfo() {
+  static Future<DestinyManifestResponse> getManifestInfo() {
     return Destiny2.getDestinyManifest(Client());
   }
 

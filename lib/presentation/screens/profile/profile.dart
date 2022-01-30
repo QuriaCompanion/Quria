@@ -8,7 +8,6 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_stat_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
@@ -22,7 +21,6 @@ import 'package:quria/presentation/components/header_weapon_details.dart';
 import 'package:quria/presentation/components/statisticDisplay.dart';
 import 'package:quria/presentation/components/weapon_details_bis.dart';
 
-AllDestinyManifestComponents _manifestParsed = AllDestinyManifestComponents();
 int index = 0;
 
 class ProfileWidget extends StatefulWidget {
@@ -35,8 +33,6 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
-  final manifest = ManifestService();
-
   final storage = StorageService();
 
   final account = AccountService();
@@ -45,12 +41,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   Future<ProfileHelper> getProfileData() async {
     try {
-      _manifestParsed.destinyInventoryItemDefinition =
-          await manifest.getManifest<DestinyInventoryItemDefinition>();
-      _manifestParsed.destinyDamageTypeDefinition =
-          await manifest.getManifest<DestinyDamageTypeDefinition>();
-      _manifestParsed.destinyStatDefinition =
-          await manifest.getManifest<DestinyStatDefinition>();
+      await ManifestService.getManifest<DestinyInventoryItemDefinition>();
+      await ManifestService.getManifest<DestinyDamageTypeDefinition>();
+      await ManifestService.getManifest<DestinyStatDefinition>();
 
       final characters = profile.getCharacters();
       ProfileHelper returned = ProfileHelper(
@@ -66,105 +59,115 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: FutureBuilder(
-          future: getProfileData(),
-          builder:
-              (BuildContext context, AsyncSnapshot<ProfileHelper> snapshot) {
-            if (snapshot.hasData) {
-              return BlocProvider(
-                create: (_) => CharacterCubit(),
-                child: BlocBuilder<CharacterCubit, CharacterState>(
-                  builder: (context, state) {
-                    int displayHash = snapshot.data!.characterEquipement[5]
-                            .overrideStyleItemHash ??
-                        snapshot.data!.characterEquipement[5].itemHash!;
-                    return Center(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: NetworkImage('https://www.bungie.net' +
-                                    _manifestParsed
-                                        .destinyInventoryItemDefinition![
-                                            displayHash]!
-                                        .screenshot!),
-                                fit: BoxFit.cover)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 150.0, top: 50),
-                              child: Column(children: [
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      index = 0;
-                                    });
-                                  },
-                                  child: SizedBox(
-                                      width: index == 0 ? 400 : 561,
-                                      child: ProfileTitleWidget(
-                                          data: snapshot.data!.characters[0])),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      index = 1;
-                                    });
-                                  },
-                                  child: SizedBox(
-                                      width: index == 1 ? 400 : 561,
-                                      child: ProfileTitleWidget(
-                                          data: snapshot.data!.characters[1])),
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      index = 2;
-                                    });
-                                  },
-                                  child: SizedBox(
-                                      width: index == 2 ? 400 : 561,
-                                      child: ProfileTitleWidget(
-                                          data: snapshot.data!.characters[2])),
-                                ),
-                              ]),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 120.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ProfileNodeWidget(data: snapshot.data),
-                                      SizedBox(width: 10),
-                                      if (state is ShowDetailsState)
-                                        DetailsWeaponWidget(item: state.item)
-                                    ],
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.black,
+      ),
+      child: SingleChildScrollView(
+        child: FutureBuilder(
+            future: getProfileData(),
+            builder:
+                (BuildContext context, AsyncSnapshot<ProfileHelper> snapshot) {
+              if (snapshot.hasData) {
+                return BlocProvider(
+                  create: (_) => CharacterCubit(),
+                  child: BlocBuilder<CharacterCubit, CharacterState>(
+                    builder: (context, state) {
+                      int displayHash = snapshot.data!.characterEquipement[5]
+                              .overrideStyleItemHash ??
+                          snapshot.data!.characterEquipement[5].itemHash!;
+                      return Center(
+                        child: Container(
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: NetworkImage('https://www.bungie.net' +
+                                      ManifestService
+                                          .manifestParsed
+                                          .destinyInventoryItemDefinition![
+                                              displayHash]!
+                                          .screenshot!),
+                                  fit: BoxFit.cover)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(left: 150.0, top: 50),
+                                child: Column(children: [
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        index = 0;
+                                      });
+                                    },
+                                    child: SizedBox(
+                                        width: index == 0 ? 400 : 561,
+                                        child: ProfileTitleWidget(
+                                            data:
+                                                snapshot.data!.characters[0])),
                                   ),
-                                ],
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        index = 1;
+                                      });
+                                    },
+                                    child: SizedBox(
+                                        width: index == 1 ? 400 : 561,
+                                        child: ProfileTitleWidget(
+                                            data:
+                                                snapshot.data!.characters[1])),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        index = 2;
+                                      });
+                                    },
+                                    child: SizedBox(
+                                        width: index == 2 ? 400 : 561,
+                                        child: ProfileTitleWidget(
+                                            data:
+                                                snapshot.data!.characters[2])),
+                                  ),
+                                ]),
                               ),
-                            )
-                          ],
+                              Padding(
+                                padding: const EdgeInsets.only(top: 120.0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        ProfileNodeWidget(data: snapshot.data),
+                                        SizedBox(width: 10),
+                                        if (state is ShowDetailsState)
+                                          DetailsWeaponWidget(item: state.item)
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                ),
-              );
-            } else {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-          }),
+                      );
+                    },
+                  ),
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }),
+      ),
     );
   }
 }
@@ -352,8 +355,11 @@ class Item extends StatelessWidget {
           ),
           child: Image(
             image: NetworkImage('https://www.bungie.net' +
-                _manifestParsed.destinyInventoryItemDefinition![displayHash]!
-                    .displayProperties!.icon!),
+                ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition![displayHash]!
+                    .displayProperties!
+                    .icon!),
             fit: BoxFit.fill,
             width: 150,
             height: 150,
@@ -474,7 +480,8 @@ class DetailsWeaponWidget extends StatelessWidget {
                           ),
                           child: Image(
                             image: NetworkImage('https://www.bungie.net' +
-                                _manifestParsed
+                                ManifestService
+                                    .manifestParsed
                                     .destinyInventoryItemDefinition![
                                         item.itemHash]!
                                     .displayProperties!
@@ -483,21 +490,21 @@ class DetailsWeaponWidget extends StatelessWidget {
                           ),
                         ),
                       ),
-                      HeaderWeaponDetails(
-                          name: utf8.decode(_manifestParsed
-                              .destinyInventoryItemDefinition![item.itemHash]!
-                              .displayProperties!
-                              .name!
-                              .runes
-                              .toList()),
-                          typeOfAmmo: 'typeOfAmmo',
-                          typeOfAmmoImg:
-                              'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
-                          typeOfWeapon: 'typeOfWeapon',
-                          type: 'type',
-                          typeImg:
-                              'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
-                          value: 100),
+                      // HeaderWeaponDetails(
+                      //     name: utf8.decode(ManifestService.manifestParsed
+                      //         .destinyInventoryItemDefinition![item.itemHash]!
+                      //         .displayProperties!
+                      //         .name!
+                      //         .runes
+                      //         .toList()),
+                      //     typeOfAmmo: 'typeOfAmmo',
+                      //     typeOfAmmoImg:
+                      //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
+                      //     typeOfWeapon: 'typeOfWeapon',
+                      //     type: 'type',
+                      //     typeImg:
+                      //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
+                      //     value: 100),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -507,25 +514,29 @@ class DetailsWeaponWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           for (int statHash in DestinyData.linearStatBySubType[
-                              _manifestParsed
+                              ManifestService
+                                  .manifestParsed
                                   .destinyInventoryItemDefinition![
                                       item.itemHash]!
                                   .itemSubType!]!)
                             StatProgressBar(
-                                name: _manifestParsed
+                                name: ManifestService
+                                        .manifestParsed
                                         .destinyStatDefinition![statHash]!
                                         .displayProperties!
                                         .name ??
                                     'error',
                                 value: stats![statHash.toString()]?.value ??
-                                    _manifestParsed
+                                    ManifestService
+                                        .manifestParsed
                                         .destinyInventoryItemDefinition![
                                             item.itemHash]!
                                         .stats
                                         ?.stats![statHash.toString()]
                                         ?.value ??
                                     0,
-                                type: _manifestParsed
+                                type: ManifestService
+                                    .manifestParsed
                                     .destinyInventoryItemDefinition![
                                         item.itemHash]!
                                     .itemType!),
@@ -541,7 +552,8 @@ class DetailsWeaponWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed
+                                  ManifestService
+                                      .manifestParsed
                                       .destinyInventoryItemDefinition![
                                           sockets![1].plugHash]!
                                       .displayProperties!
@@ -554,7 +566,8 @@ class DetailsWeaponWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed
+                                  ManifestService
+                                      .manifestParsed
                                       .destinyInventoryItemDefinition![
                                           sockets[2].plugHash]!
                                       .displayProperties!
@@ -567,7 +580,8 @@ class DetailsWeaponWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed
+                                  ManifestService
+                                      .manifestParsed
                                       .destinyInventoryItemDefinition![
                                           sockets[3].plugHash]!
                                       .displayProperties!
@@ -580,7 +594,8 @@ class DetailsWeaponWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed
+                                  ManifestService
+                                      .manifestParsed
                                       .destinyInventoryItemDefinition![
                                           sockets[4].plugHash]!
                                       .displayProperties!
@@ -600,7 +615,8 @@ class DetailsWeaponWidget extends StatelessWidget {
                             width: 80,
                             child: Image(
                               image: NetworkImage('https://www.bungie.net' +
-                                  _manifestParsed
+                                  ManifestService
+                                      .manifestParsed
                                       .destinyInventoryItemDefinition![
                                           sockets[0].plugHash]!
                                       .displayProperties!
@@ -616,7 +632,8 @@ class DetailsWeaponWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                utf8.decode(_manifestParsed
+                                utf8.decode(ManifestService
+                                    .manifestParsed
                                     .destinyInventoryItemDefinition![
                                         sockets[0].plugHash]!
                                     .displayProperties!
@@ -629,7 +646,8 @@ class DetailsWeaponWidget extends StatelessWidget {
                               ),
                               SizedBox(height: 6),
                               Text(
-                                utf8.decode(_manifestParsed
+                                utf8.decode(ManifestService
+                                    .manifestParsed
                                     .destinyInventoryItemDefinition![
                                         sockets[0].plugHash]!
                                     .displayProperties!
@@ -647,13 +665,15 @@ class DetailsWeaponWidget extends StatelessWidget {
                   ),
                   WeaponDetailsBis(
                       charger: stats!['3871231066']?.value,
-                      zoom: _manifestParsed
+                      zoom: ManifestService
+                          .manifestParsed
                           .destinyInventoryItemDefinition![item.itemHash]!
                           .stats
                           ?.stats!['3555269338']
                           ?.value,
                       strokesMinutes: stats['4284893193']?.value,
-                      retreatDirection: _manifestParsed
+                      retreatDirection: ManifestService
+                          .manifestParsed
                           .destinyInventoryItemDefinition![item.itemHash]!
                           .stats
                           ?.stats!['2715839340']

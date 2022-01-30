@@ -5,6 +5,7 @@ import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:bungie_api/models/destiny_manifest.dart';
 import 'package:bungie_api/responses/destiny_manifest_response.dart';
+import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/definition_table_names.enum.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
@@ -13,8 +14,9 @@ typedef DownloadProgress = void Function(int downloaded, int total);
 
 class ManifestService {
   final BungieApiService api = BungieApiService();
-  DestinyManifest? _manifestInfo;
-  static final Map<String, dynamic> _manifest = {};
+  static DestinyManifest? _manifestInfo;
+  static final AllDestinyManifestComponents manifestParsed =
+      AllDestinyManifestComponents();
   final StorageService storage = StorageService();
   static final ManifestService _singleton = ManifestService._internal();
 
@@ -28,36 +30,39 @@ class ManifestService {
   //   return directory.path;
   // }
 
-  Future<DestinyManifest> loadManifestInfo<T>() async {
+  static Future<DestinyManifest> loadManifestInfo<T>() async {
     if (_manifestInfo != null) {
       return _manifestInfo!;
     }
     print('Loading manifest info');
-    DestinyManifestResponse response = await api.getManifestInfo();
+    DestinyManifestResponse response = await BungieApiService.getManifestInfo();
     _manifestInfo = response.response;
     return _manifestInfo!;
   }
 
-  /// Given  a type [T] returns corresponding manifests defintion based on the [DefinitionTableNames] enum
+  /// Given  a type [T] stores give type manifest in [manifestParsed]
   ///
   /// The data can come from [_manifest]
   ///
   /// or from the [Hive] database
   ///
   /// or from the [BungieApiService]
-  Future<Map<int, T>> getManifest<T>() async {
+  ///
+  /// returns true once the manifest is loaded
+  static Future<bool> getManifest<T>() async {
     try {
-      if (_manifest[T.toString()] == null) {
+      if (AllDestinyManifestComponents.getValue<T>() == null) {
         if (await isManifestSaved(T.toString())) {
-          _manifest[T.toString()] =
-              await compute<String, Map<int, T>>(_parseJsonDb, T.toString());
+          AllDestinyManifestComponents.setValue<T>(
+              await compute<String, Map<int, T>>(_parseJsonDb, T.toString()));
         } else {
-          _manifest[T.toString()] = await compute<String, Map<int, T>>(
-              _parseJson, await getManifestRemote<T>());
+          AllDestinyManifestComponents.setValue<T>(
+              await compute<String, Map<int, T>>(
+                  _parseJson, await getManifestRemote<T>()));
           manifestSaved(T.toString());
         }
       }
-      return _manifest[T.toString()];
+      return true;
     } catch (e) {
       rethrow;
     }
@@ -73,7 +78,8 @@ class ManifestService {
 
   storeManifest<T>(Map<int, T> manifest) {}
 
-  Future<String> getManifestRemote<T>({DownloadProgress? onProgress}) async {
+  static Future<String> getManifestRemote<T>(
+      {DownloadProgress? onProgress}) async {
     DestinyManifest info = await loadManifestInfo();
     String language = "fr";
     http.Response res = await http.get(Uri.parse('https://www.bungie.net' +
@@ -83,14 +89,14 @@ class ManifestService {
     return res.body;
   }
 
-  Future<bool> isManifestSaved(String manifestName) async {
+  static Future<bool> isManifestSaved(String manifestName) async {
     return await StorageService.getLocalStorage(
             'manifestSaved_$manifestName') ??
         false;
   }
 
   /// Given a [manifestName] sets corresponding manifestSaved value to true
-  Future<void> manifestSaved(String manifestName) async {
+  static Future<void> manifestSaved(String manifestName) async {
     return await StorageService.setLocalStorage(
         'manifestSaved_$manifestName', true);
   }
