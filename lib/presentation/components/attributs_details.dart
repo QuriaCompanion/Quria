@@ -1,4 +1,4 @@
-// Quentin tu le fais
+// Quentin tu le fais -> coucou je lai fait
 import 'dart:convert';
 
 import 'package:bungie_api/models/destiny_item_component.dart';
