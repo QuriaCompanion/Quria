@@ -36,7 +36,7 @@ class BackendService {
     return responseJson.items;
   }
 
-  Future<BuildResponse?> getBuilds() async {
+  Future<BuildResponse> getBuilds() async {
     try {
       final exoticHash = await StorageService.getLocalStorage("exotic");
       GroupUserInfoCard? membership = await accountService.getMembership();
@@ -60,7 +60,7 @@ class BackendService {
       final buildResponse = BuildResponse.fromJson(responseJson);
       return buildResponse;
     } catch (e) {
-      print(e);
+      rethrow;
     }
   }
 

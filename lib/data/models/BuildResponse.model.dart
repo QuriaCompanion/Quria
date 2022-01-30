@@ -11,8 +11,8 @@ class BuildResponse {
 
 class Build {
   late Stats stats;
-  late List<Mod> mod;
-  late List<Material> material;
+  late List<Misc> mod;
+  late List<Misc> material;
   late List<Armor> equipement;
   Build({
     required this.stats,
@@ -24,16 +24,16 @@ class Build {
   Build.fromJson(Map<String, dynamic> json) {
     stats = Stats.fromJson(json['stats']);
 
-    mod = <Mod>[];
+    mod = <Misc>[];
     if (json['mod'] != null) {
       json['mod'].forEach((v) {
-        mod.add(Mod.fromJson(v));
+        mod.add(Misc.fromJson(v));
       });
     }
-    material = <Material>[];
+    material = <Misc>[];
     if (json['materials'] != null) {
       json['materials'].forEach((v) {
-        material.add(Material.fromJson(v));
+        material.add(Misc.fromJson(v));
       });
     }
     equipement = <Armor>[];
@@ -99,36 +99,14 @@ class Stats {
   }
 }
 
-class Mod {
+class Misc {
   late String name;
   late String icon;
   late int number;
 
-  Mod({required this.name, required this.icon, required this.number});
+  Misc({required this.name, required this.icon, required this.number});
 
-  Mod.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    icon = json['icon'];
-    number = json['number'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['icon'] = icon;
-    data['number'] = number;
-    return data;
-  }
-}
-
-class Material {
-  late String name;
-  late String icon;
-  late int number;
-
-  Material({required this.name, required this.icon, required this.number});
-
-  Material.fromJson(Map<String, dynamic> json) {
+  Misc.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     icon = json['icon'];
     number = json['number'];
