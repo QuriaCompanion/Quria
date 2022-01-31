@@ -1,5 +1,6 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
@@ -24,7 +25,10 @@ class ProfileItemCard extends StatelessWidget {
         displayedItem.overrideStyleItemHash ?? displayedItem.itemHash;
     return Container(
       child: InkWell(
-        onTap: () => context.read<CharacterCubit>().showDetails(displayedItem),
+        onTap: () {
+          context.read<AttributsDetailsCubit>().changeId(0);
+          context.read<CharacterCubit>().showDetails(displayedItem);
+        },
         child: Container(
           decoration: BoxDecoration(
             color: Colors.grey.shade700,

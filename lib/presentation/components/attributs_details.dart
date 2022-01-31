@@ -1,6 +1,7 @@
 // Quentin tu le fais -> coucou je lai fait
 import 'dart:convert';
 
+import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,90 +32,31 @@ class AttributsDetails extends StatelessWidget {
           margin: const EdgeInsets.only(left: 10),
           child: Row(
             children: [
-              InkWell(
-                onTap: () => context.read<AttributsDetailsCubit>().changeId(0),
-                child: SizedBox(
-                    height: imgSize,
-                    width: imgSize,
-                    child: Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          ManifestService
-                              .manifestParsed
-                              .destinyInventoryItemDefinition![
-                                  sockets![0].plugHash]!
-                              .displayProperties!
-                              .icon!),
-                      fit: BoxFit.fill,
-                    )),
-              ),
-              const SizedBox(width: 30),
-              InkWell(
-                onTap: () => context.read<AttributsDetailsCubit>().changeId(1),
-                child: SizedBox(
-                    height: imgSize,
-                    width: imgSize,
-                    child: Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          ManifestService
-                              .manifestParsed
-                              .destinyInventoryItemDefinition![
-                                  sockets[1].plugHash]!
-                              .displayProperties!
-                              .icon!),
-                      fit: BoxFit.fill,
-                    )),
-              ),
-              const SizedBox(width: 30),
-              InkWell(
-                onTap: () => context.read<AttributsDetailsCubit>().changeId(2),
-                child: SizedBox(
-                    height: imgSize,
-                    width: imgSize,
-                    child: Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          ManifestService
-                              .manifestParsed
-                              .destinyInventoryItemDefinition![
-                                  sockets[2].plugHash]!
-                              .displayProperties!
-                              .icon!),
-                      fit: BoxFit.fill,
-                    )),
-              ),
-              const SizedBox(width: 30),
-              InkWell(
-                onTap: () => context.read<AttributsDetailsCubit>().changeId(3),
-                child: SizedBox(
-                    height: imgSize,
-                    width: imgSize,
-                    child: Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          ManifestService
-                              .manifestParsed
-                              .destinyInventoryItemDefinition![
-                                  sockets[3].plugHash]!
-                              .displayProperties!
-                              .icon!),
-                      fit: BoxFit.fill,
-                    )),
-              ),
-              const SizedBox(width: 15),
-              InkWell(
-                onTap: () => context.read<AttributsDetailsCubit>().changeId(4),
-                child: SizedBox(
-                    height: imgSize,
-                    width: imgSize,
-                    child: Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          ManifestService
-                              .manifestParsed
-                              .destinyInventoryItemDefinition![
-                                  sockets[4].plugHash]!
-                              .displayProperties!
-                              .icon!),
-                      fit: BoxFit.fill,
-                    )),
-              ),
+              for (var index = 0; index < sockets!.length; index++)
+                if (ManifestService
+                            .manifestParsed
+                            .destinyInventoryItemDefinition![
+                                sockets[index].plugHash]
+                            ?.itemSubType ==
+                        DestinyItemSubType.None &&
+                    sockets[index].isVisible == true)
+                  InkWell(
+                    onTap: () =>
+                        context.read<AttributsDetailsCubit>().changeId(index),
+                    child: SizedBox(
+                        height: imgSize,
+                        width: imgSize,
+                        child: Image(
+                          image: NetworkImage(DestinyData.bungieLink +
+                              ManifestService
+                                  .manifestParsed
+                                  .destinyInventoryItemDefinition![
+                                      sockets[index].plugHash]!
+                                  .displayProperties!
+                                  .icon!),
+                          fit: BoxFit.fill,
+                        )),
+                  ),
             ],
           ),
         ),
@@ -137,7 +79,7 @@ class AttributsDetails extends StatelessWidget {
                           .name!
                           .runes
                           .toList()),
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                       textAlign: TextAlign.left,
                     ),
                     const SizedBox(height: 6),
@@ -150,7 +92,7 @@ class AttributsDetails extends StatelessWidget {
                           .description!
                           .runes
                           .toList()),
-                      style: const TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: 20, color: Colors.white),
                     )
                   ],
                 ),

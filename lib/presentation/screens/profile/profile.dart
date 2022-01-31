@@ -5,6 +5,7 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_stat_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
@@ -17,7 +18,6 @@ import 'package:quria/presentation/components/attributs_details.dart';
 import 'package:quria/presentation/components/loader.dart';
 import 'package:quria/presentation/components/stat_progress_bar.dart';
 import 'package:quria/presentation/components/header_weapon_details.dart';
-import 'package:quria/presentation/components/statisticDisplay.dart';
 import 'package:quria/presentation/components/weapon_details_bis.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner.dart';
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
@@ -75,69 +75,93 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               child: BlocProvider(
                 create: (_) => CharacterCubit(),
                 child: BlocBuilder<CharacterCubit, CharacterState>(
-                  builder: (context, state) {
+                  builder: (context, characterState) {
                     int displayHash = snapshot.data!.characterEquipement[5]
                             .overrideStyleItemHash ??
                         snapshot.data!.characterEquipement[5].itemHash!;
-                    return Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(DestinyData.bungieLink +
-                                  ManifestService
-                                      .manifestParsed
-                                      .destinyInventoryItemDefinition![
-                                          displayHash]!
-                                      .screenshot!),
-                              fit: BoxFit.cover)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                left: bannerLeftSpacing, top: bannerTopSpacing),
+                    return BlocProvider(
+                      create: (context) => AttributsDetailsCubit(),
+                      child: BlocBuilder<AttributsDetailsCubit,
+                          AttributsDetailsState>(
+                        builder: (context, attributeState) {
+                          return Container(
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: NetworkImage(DestinyData.bungieLink +
+                                        ManifestService
+                                            .manifestParsed
+                                            .destinyInventoryItemDefinition![
+                                                displayHash]!
+                                            .screenshot!),
+                                    fit: BoxFit.cover)),
                             child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  for (int i = 0;
-                                      i < snapshot.data!.characters.length;
-                                      i++)
-                                    InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          index = i;
-                                          context
-                                              .read<CharacterCubit>()
-                                              .hideDetails();
-                                        });
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: bannerSpacing / 2,
-                                            bottom: bannerSpacing / 2),
-                                        child: CharacterBanner(
-                                            width: index == i
-                                                ? bannerSelectedWidth
-                                                : bannerUnselectedWidth,
-                                            fontSize: index == i
-                                                ? bannerSelectedFont
-                                                : bannerUnselectedFont,
-                                            character:
-                                                snapshot.data!.characters[i]),
-                                      ),
-                                    ),
-                                ]),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              ProfileMainNodeWidget(data: snapshot.data!),
-                              if (state is ShowDetailsState)
-                                DetailsWeaponWidget(item: state.item)
-                            ],
-                          ),
-                        ],
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: bannerLeftSpacing,
+                                      top: bannerTopSpacing),
+                                  child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        for (int i = 0;
+                                            i <
+                                                snapshot
+                                                    .data!.characters.length;
+                                            i++)
+                                          InkWell(
+                                            onTap: () {
+                                              setState(() {
+                                                index = i;
+                                                context
+                                                    .read<CharacterCubit>()
+                                                    .hideDetails();
+                                              });
+                                            },
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  top: bannerSpacing / 2,
+                                                  bottom: bannerSpacing / 2),
+                                              child: CharacterBanner(
+                                                  width: index == i
+                                                      ? bannerSelectedWidth
+                                                      : bannerUnselectedWidth,
+                                                  fontSize: index == i
+                                                      ? bannerSelectedFont
+                                                      : bannerUnselectedFont,
+                                                  character: snapshot
+                                                      .data!.characters[i]),
+                                            ),
+                                          ),
+                                      ]),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    ProfileMainNodeWidget(
+                                        characterIndex: index,
+                                        data: snapshot.data!),
+                                    if (characterState is ShowDetailsState)
+                                      if (attributeState
+                                          is AttributsDetailsIdState)
+                                        DetailsWeaponWidget(
+                                            attributeSocketId:
+                                                attributeState.id,
+                                            item: characterState.item)
+                                      else
+                                        DetailsWeaponWidget(
+                                            item: characterState.item)
+                                  ],
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     );
                   },
@@ -146,55 +170,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             );
           } else {
             return Container(
-                decoration:
-                    BoxDecoration(color: Color.fromARGB(255, 109, 102, 92)),
+                decoration: const BoxDecoration(color: backgroundColor),
                 child: const Loader());
           }
         });
   }
 }
 
-class CharacterStatsWidget extends StatelessWidget {
-  final ProfileHelper? data;
-  const CharacterStatsWidget({
-    Key? key,
-    required this.data,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    const double fontsize = 30;
-    const double width = 110;
-    const double height = 50;
-    return Container(
-      margin: const EdgeInsets.only(right: 50),
-      child: SizedBox(
-        width: width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            for (int i = 0; i < 6; i++)
-              StatisticDisplay(
-                value:
-                    data!.characters[index].stats![DestinyData.armorStats[i]]!,
-                icon: DestinyData.statsIcon[i],
-                width: width,
-                height: height,
-                fontsize: fontsize,
-                padding: 8.0,
-              ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 @immutable
 class DetailsWeaponWidget extends StatelessWidget {
   final profile = ProfileService();
+  final int attributeSocketId;
   final DestinyItemComponent item;
   DetailsWeaponWidget({
+    this.attributeSocketId = 0,
     required this.item,
     Key? key,
   }) : super(key: key);
@@ -270,7 +259,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                 //     value: 100),
               ],
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 30),
             Container(
               margin: const EdgeInsets.only(left: 10),
               child: Column(
@@ -304,17 +293,7 @@ class DetailsWeaponWidget extends StatelessWidget {
                   ]),
             ),
             SizedBox(height: 30),
-            BlocProvider(
-                create: (_) => AttributsDetailsCubit(),
-                child:
-                    BlocBuilder<AttributsDetailsCubit, AttributsDetailsState>(
-                        builder: (context, state) {
-                  if (state is AttributsDetailsIdState) {
-                    return AttributsDetails(item: item, socketId: state.id);
-                  } else {
-                    return AttributsDetails(item: item);
-                  }
-                })),
+            AttributsDetails(item: item, socketId: attributeSocketId),
             WeaponDetailsBis(
                 charger: stats!['3871231066']?.value,
                 zoom: ManifestService

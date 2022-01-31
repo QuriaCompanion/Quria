@@ -1,17 +1,21 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/widgets.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
+import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
 import 'package:quria/presentation/screens/profile/components/profile_item_section.dart';
-import 'package:quria/presentation/screens/profile/profile.dart';
 
 class ProfileMainNodeWidget extends StatelessWidget {
   final ProfileHelper data;
   final double middleSpace;
+  final double statArmorSpace;
+  final int characterIndex;
 
   const ProfileMainNodeWidget({
     Key? key,
     required this.data,
+    required this.characterIndex,
     this.middleSpace = 400,
+    this.statArmorSpace = 50,
   }) : super(key: key);
 
   @override
@@ -29,7 +33,11 @@ class ProfileMainNodeWidget extends StatelessWidget {
               SizedBox(width: middleSpace),
               Row(
                 children: [
-                  CharacterStatsWidget(data: data),
+                  CharacterStatsListingWidget(
+                    data: data,
+                    characterIndex: characterIndex,
+                  ),
+                  SizedBox(width: statArmorSpace),
                   ProfileItemSectionWidget(
                       itemType: DestinyItemType.Armor, data: data)
                 ],

@@ -24,11 +24,9 @@ class StatProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late final double percentage;
-    if (type == DestinyItemType.Weapon) {
-      percentage = value / 100;
-    } else {
-      percentage = value / 42;
-    }
+    type == DestinyItemType.Weapon
+        ? percentage = value / 100
+        : percentage = value / 42;
     return SizedBox(
       width: width,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
