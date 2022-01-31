@@ -326,8 +326,9 @@ class ProfileService {
       var objectives = _profile!.characterProgressions?.data?[characterId]
           ?.uninstancedItemObjectives?["$hash"];
       return objectives;
-    } catch (e) {}
-    return null;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Map<String, DestinyPresentationNodeComponent>? getProfilePresentationNodes() {

@@ -3,6 +3,7 @@ import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/exotic_item.dart';
 import 'package:quria/presentation/components/loader.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -69,7 +70,7 @@ class ExoticWidget extends StatelessWidget {
                             if (snapshot.hasData) {
                               List<Widget> list = <Widget>[];
                               for (var i = 0; i < snapshot.data.length; i++) {
-                                list.add(item(context, snapshot.data[i]));
+                                list.add(ExoticItem(value: snapshot.data[i]));
                               }
                               return Container(
                                 child: Wrap(

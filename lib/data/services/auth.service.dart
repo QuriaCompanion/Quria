@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:universal_io/io.dart';
 

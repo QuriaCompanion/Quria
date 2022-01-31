@@ -1,8 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors, prefer_const_constructors_in_immutables
-
-import 'dart:convert';
-import 'dart:developer';
-import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
@@ -10,6 +5,7 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_stat_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
@@ -17,6 +13,7 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/attributs_details.dart';
 import 'package:quria/presentation/components/loader.dart';
 import 'package:quria/presentation/components/stat_progress_bar.dart';
 import 'package:quria/presentation/components/header_weapon_details.dart';
@@ -27,8 +24,9 @@ import 'package:quria/presentation/screens/profile/components/profile_main_node.
 
 int index = 0;
 
+@immutable
 class ProfileWidget extends StatefulWidget {
-  ProfileWidget({
+  const ProfileWidget({
     Key? key,
   }) : super(key: key);
 
@@ -203,244 +201,138 @@ class DetailsWeaponWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sockets = profile.getItemSockets(item.itemInstanceId!);
+    final int displayHash = item.overrideStyleItemHash ?? item.itemHash!;
     final stats = profile.getPrecalculatedStats(item.itemInstanceId!);
     return Container(
-        width: 800,
-        height: 800,
-        padding: const EdgeInsets.all(20),
-        decoration: BoxDecoration(
-          color: Colors.black54,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.5),
-              spreadRadius: 5,
-              blurRadius: 7,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Container(
-          margin: const EdgeInsets.only(left: 14),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: 140,
-                    width: 140,
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade700,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.5),
-                            spreadRadius: 5,
-                            blurRadius: 7,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                      ),
-                      child: Image(
-                        image: NetworkImage(DestinyData.bungieLink +
-                            ManifestService
-                                .manifestParsed
-                                .destinyInventoryItemDefinition![item.itemHash]!
-                                .displayProperties!
-                                .icon!),
-                        fit: BoxFit.fill,
-                      ),
+      width: 800,
+      height: 800,
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.black54,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.5),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: const Offset(0, 3), // changes position of shadow
+          ),
+        ],
+      ),
+      child: Container(
+        margin: const EdgeInsets.only(left: 14),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 140,
+                  width: 140,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey.shade700,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.5),
+                          spreadRadius: 5,
+                          blurRadius: 7,
+                          offset:
+                              const Offset(0, 3), // changes position of shadow
+                        ),
+                      ],
                     ),
-                  ),
-                  // HeaderWeaponDetails(
-                  //     name: utf8.decode(ManifestService.manifestParsed
-                  //         .destinyInventoryItemDefinition![item.itemHash]!
-                  //         .displayProperties!
-                  //         .name!
-                  //         .runes
-                  //         .toList()),
-                  //     typeOfAmmo: 'typeOfAmmo',
-                  //     typeOfAmmoImg:
-                  //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
-                  //     typeOfWeapon: 'typeOfWeapon',
-                  //     type: 'type',
-                  //     typeImg:
-                  //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
-                  //     value: 100),
-                ],
-              ),
-              SizedBox(height: 20),
-              Container(
-                margin: const EdgeInsets.only(left: 10),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      for (int statHash in DestinyData.linearStatBySubType[
+                    child: Image(
+                      image: NetworkImage(DestinyData.bungieLink +
                           ManifestService
                               .manifestParsed
-                              .destinyInventoryItemDefinition![item.itemHash]!
-                              .itemSubType!]!)
-                        StatProgressBar(
-                            name: ManifestService
-                                    .manifestParsed
-                                    .destinyStatDefinition![statHash]!
-                                    .displayProperties!
-                                    .name ??
-                                'error',
-                            value: stats![statHash.toString()]?.value ??
-                                ManifestService
-                                    .manifestParsed
-                                    .destinyInventoryItemDefinition![
-                                        item.itemHash]!
-                                    .stats
-                                    ?.stats![statHash.toString()]
-                                    ?.value ??
-                                0,
-                            type: ManifestService
-                                .manifestParsed
-                                .destinyInventoryItemDefinition![item.itemHash]!
-                                .itemType!),
-                    ]),
-              ),
-              SizedBox(height: 30),
-              Container(
-                margin: const EdgeInsets.only(left: 10),
-                child: Row(
-                  children: [
-                    SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Image(
-                          image: NetworkImage('https://www.bungie.net' +
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      sockets![1].plugHash]!
-                                  .displayProperties!
-                                  .icon!),
-                          fit: BoxFit.fill,
-                        )),
-                    SizedBox(width: 30),
-                    SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Image(
-                          image: NetworkImage('https://www.bungie.net' +
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      sockets[2].plugHash]!
-                                  .displayProperties!
-                                  .icon!),
-                          fit: BoxFit.fill,
-                        )),
-                    SizedBox(width: 30),
-                    SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Image(
-                          image: NetworkImage(DestinyData.bungieLink +
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      sockets[3].plugHash]!
-                                  .displayProperties!
-                                  .icon!),
-                          fit: BoxFit.fill,
-                        )),
-                    SizedBox(width: 15),
-                    SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Image(
-                          image: NetworkImage(DestinyData.bungieLink +
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      sockets[4].plugHash]!
-                                  .displayProperties!
-                                  .icon!),
-                          fit: BoxFit.fill,
-                        )),
-                  ],
-                ),
-              ),
-              SizedBox(height: 30),
-              Container(
-                margin: const EdgeInsets.only(left: 10),
-                child: Row(
-                  children: [
-                    SizedBox(
-                        height: 80,
-                        width: 80,
-                        child: Image(
-                          image: NetworkImage(DestinyData.bungieLink +
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      sockets[0].plugHash]!
-                                  .displayProperties!
-                                  .icon!),
-                          fit: BoxFit.fill,
-                        )),
-                    SizedBox(
-                      width: 20,
+                              .destinyInventoryItemDefinition![displayHash]!
+                              .displayProperties!
+                              .icon!),
+                      fit: BoxFit.fill,
                     ),
-                    SizedBox(
-                      width: 600,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            utf8.decode(ManifestService
-                                .manifestParsed
-                                .destinyInventoryItemDefinition![
-                                    sockets[0].plugHash]!
-                                .displayProperties!
-                                .name!
-                                .runes
-                                .toList()),
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                            textAlign: TextAlign.left,
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            utf8.decode(ManifestService
-                                .manifestParsed
-                                .destinyInventoryItemDefinition![
-                                    sockets[0].plugHash]!
-                                .displayProperties!
-                                .description!
-                                .runes
-                                .toList()),
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          )
-                        ],
-                      ),
-                    )
-                  ],
+                  ),
                 ),
-              ),
-              WeaponDetailsBis(
-                  charger: stats!['3871231066']?.value,
-                  zoom: ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition![item.itemHash]!
-                      .stats
-                      ?.stats!['3555269338']
-                      ?.value,
-                  strokesMinutes: stats['4284893193']?.value,
-                  retreatDirection: ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition![item.itemHash]!
-                      .stats
-                      ?.stats!['2715839340']
-                      ?.value)
-            ],
-          ),
-        ));
+                // HeaderWeaponDetails(
+                //     name: utf8.decode(ManifestService.manifestParsed
+                //         .destinyInventoryItemDefinition![item.itemHash]!
+                //         .displayProperties!
+                //         .name!
+                //         .runes
+                //         .toList()),
+                //     typeOfAmmo: 'typeOfAmmo',
+                //     typeOfAmmoImg:
+                //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
+                //     typeOfWeapon: 'typeOfWeapon',
+                //     type: 'type',
+                //     typeImg:
+                //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
+                //     value: 100),
+              ],
+            ),
+            SizedBox(height: 20),
+            Container(
+              margin: const EdgeInsets.only(left: 10),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    for (int statHash in DestinyData.linearStatBySubType[
+                        ManifestService
+                            .manifestParsed
+                            .destinyInventoryItemDefinition![item.itemHash]!
+                            .itemSubType!]!)
+                      StatProgressBar(
+                          name: ManifestService
+                                  .manifestParsed
+                                  .destinyStatDefinition![statHash]!
+                                  .displayProperties!
+                                  .name ??
+                              'error',
+                          value: stats![statHash.toString()]?.value ??
+                              ManifestService
+                                  .manifestParsed
+                                  .destinyInventoryItemDefinition![
+                                      item.itemHash]!
+                                  .stats
+                                  ?.stats![statHash.toString()]
+                                  ?.value ??
+                              0,
+                          type: ManifestService
+                              .manifestParsed
+                              .destinyInventoryItemDefinition![item.itemHash]!
+                              .itemType!),
+                  ]),
+            ),
+            SizedBox(height: 30),
+            BlocProvider(
+                create: (_) => AttributsDetailsCubit(),
+                child:
+                    BlocBuilder<AttributsDetailsCubit, AttributsDetailsState>(
+                        builder: (context, state) {
+                  if (state is AttributsDetailsIdState) {
+                    return AttributsDetails(item: item, socketId: state.id);
+                  } else {
+                    return AttributsDetails(item: item);
+                  }
+                })),
+            WeaponDetailsBis(
+                charger: stats!['3871231066']?.value,
+                zoom: ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition![item.itemHash]!
+                    .stats
+                    ?.stats!['3555269338']
+                    ?.value,
+                strokesMinutes: stats['4284893193']?.value,
+                retreatDirection: ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition![item.itemHash]!
+                    .stats
+                    ?.stats!['2715839340']
+                    ?.value),
+          ],
+        ),
+      ),
+    );
   }
 }
