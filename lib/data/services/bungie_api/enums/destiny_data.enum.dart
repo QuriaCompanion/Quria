@@ -75,6 +75,7 @@ class StatsHash {
   static const int ammunition = 925767036;
   static const int shootingSpeed = 447667954;
   static const int precision = 1591432999;
+  static const int power = 1935470627;
 }
 
 class DestinyData {

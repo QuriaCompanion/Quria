@@ -1,7 +1,4 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 import 'package:bungie_api/api/destiny2.dart';

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bungie_api/enums/destiny_collectible_state.dart';
+import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_artifact_profile_scoped.dart';
 import 'package:bungie_api/models/destiny_character_activities_component.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
@@ -380,6 +381,14 @@ class ProfileService {
 
   DestinyCharacterComponent? getCharacter(String characterId) {
     return _profile!.characters?.data![characterId];
+  }
+
+  Iterable<DestinyItemComponent> getArmors(String charcterId) {
+    return _profile!.characterEquipment!.data![charcterId]!.items!.where(
+        (element) =>
+            ManifestService.manifestParsed
+                .destinyInventoryItemDefinition![element.itemHash]!.itemType ==
+            DestinyItemType.Armor);
   }
 
   DestinyCharacterActivitiesComponent? getCharacterActivities(
