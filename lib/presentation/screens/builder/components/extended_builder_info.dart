@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
-import 'package:quria/presentation/screens/builder/components/extendedBuilderMisc.dart';
+import 'package:quria/presentation/screens/builder/components/extended_builder_misc.dart';
 
-class ExtendedData extends StatefulWidget {
+class ExtendedBuilderInfo extends StatefulWidget {
   final Build buildInfo;
-  const ExtendedData({required this.buildInfo, Key? key}) : super(key: key);
+  final double fontSize;
+  final double padding;
+  const ExtendedBuilderInfo(
+      {required this.buildInfo,
+      this.fontSize = 25,
+      this.padding = 15,
+      Key? key})
+      : super(key: key);
 
   @override
-  _ExtendedDataState createState() => _ExtendedDataState();
+  _ExtendedBuilderInfoState createState() => _ExtendedBuilderInfoState();
 }
 
-class _ExtendedDataState extends State<ExtendedData> {
+class _ExtendedBuilderInfoState extends State<ExtendedBuilderInfo> {
   bool isVisible = false;
   IconData icon = Icons.arrow_downward_outlined;
   @override
@@ -42,18 +49,20 @@ class _ExtendedDataState extends State<ExtendedData> {
         if (isVisible)
           Column(
             children: [
-              Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: const [
-                    Padding(
-                      padding: EdgeInsets.all(16.0),
-                      child: Text('Mods à équiper',
-                          style:
-                              TextStyle(color: Colors.white70, fontSize: 15)),
-                    ),
-                    Text('Matériaux nécessaire',
-                        style: TextStyle(color: Colors.white70, fontSize: 15)),
-                  ]),
+              const Divider(
+                color: Colors.white,
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+                Padding(
+                  padding: EdgeInsets.all(widget.padding),
+                  child: Text('Mods à équiper',
+                      style: TextStyle(
+                          color: Colors.white70, fontSize: widget.fontSize)),
+                ),
+                Text('Matériaux nécessaire',
+                    style: TextStyle(
+                        color: Colors.white70, fontSize: widget.fontSize)),
+              ]),
               Row(
                   textDirection: TextDirection.ltr,
                   crossAxisAlignment: CrossAxisAlignment.start,

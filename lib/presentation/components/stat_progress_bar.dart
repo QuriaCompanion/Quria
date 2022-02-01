@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
@@ -10,16 +9,19 @@ class StatProgressBar extends StatelessWidget {
   final int value;
   final DestinyItemType? type;
   final double width;
-  final double font;
-
-  const StatProgressBar(
-      {Key? key,
-      required this.name,
-      required this.value,
-      this.width = 600,
-      this.type = DestinyItemType.Weapon,
-      this.font = 12})
-      : super(key: key);
+  final double fontSize;
+  final double padding;
+  final double height;
+  const StatProgressBar({
+    Key? key,
+    required this.name,
+    required this.value,
+    required this.fontSize,
+    this.width = 600,
+    this.type = DestinyItemType.Weapon,
+    this.padding = 8,
+    this.height = 20,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,17 +29,19 @@ class StatProgressBar extends StatelessWidget {
     type == DestinyItemType.Weapon
         ? percentage = value / 100
         : percentage = value / 42;
-    return SizedBox(
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: padding),
       width: width,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Text(
-          '${utf8.decode(name.runes.toList())} : $value',
-          style: TextStyle(fontSize: font, color: Colors.white),
+          '${utf8.decode(name.runes.toList())}: $value',
+          style: TextStyle(fontSize: fontSize, color: Colors.white),
         ),
         LinearPercentIndicator(
           percent: percentage,
+          linearStrokeCap: LinearStrokeCap.butt,
           progressColor: Colors.white,
-          lineHeight: 24,
+          lineHeight: height,
           width: (width / 100) * 60,
         ),
       ]),

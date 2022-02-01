@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -44,7 +44,7 @@ class ExoticItem extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: [
               Image.network(
-                  "https://www.bungie.net" + value.displayProperties!.icon!,
+                  DestinyData.bungieLink + value.displayProperties!.icon!,
                   width: width,
                   fit: BoxFit.fill),
               Padding(

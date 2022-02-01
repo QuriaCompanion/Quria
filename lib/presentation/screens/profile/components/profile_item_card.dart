@@ -1,5 +1,6 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,17 +31,7 @@ class ProfileItemCard extends StatelessWidget {
           context.read<CharacterCubit>().showDetails(displayedItem);
         },
         child: Container(
-          decoration: BoxDecoration(
-            color: Colors.grey.shade700,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: const Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
+          decoration: regularShadow,
           child: Image(
             image: NetworkImage(DestinyData.bungieLink +
                 ManifestService

@@ -7,10 +7,10 @@
 // import 'package:quria/data/services/bungie_api/profile.service.dart';
 // import 'package:quria/presentation/components/stat_progress_bar.dart';
 
-// class DetailsWeaponWidget extends StatelessWidget {
+// class ItemDetailsWidget extends StatelessWidget {
 //   final profile = ProfileService();
 //   DestinyItemComponent item;
-//   DetailsWeaponWidget({
+//   ItemDetailsWidget({
 //     required this.item,
 //     Key? key,
 //   }) : super(key: key);

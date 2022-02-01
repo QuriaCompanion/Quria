@@ -78,6 +78,37 @@ class StatsHash {
   static const int power = 1935470627;
 }
 
+class StatsStringHash {
+  static const String mobility = "2996146975";
+  static const String resilience = "392767087";
+  static const String recovery = "1943323491";
+  static const String intellect = "144602215";
+  static const String discipline = "1735777505";
+  static const String strength = "4244567218";
+  static const String impact = "4043523819";
+  static const String range = "1240592695";
+  static const String stability = "155624089";
+  static const String handling = "943549884";
+  static const String reloadSpeed = "4188031367";
+  static const String aimAssist = "1345609583";
+  static const String blastRadius = "3614673599";
+  static const String velocity = "2523465841";
+  static const String chargeTime = "2961396640";
+  static const String zoom = "3555269338";
+  static const String magazine = "3871231066";
+  static const String recoil = "2715839340";
+  static const String rpm = "4284893193";
+  static const String swingSpeed = "2837207746";
+  static const String guardResist = "209426660";
+  static const String guardEffiency = "2762071195";
+  static const String guardEndurance = "3736848092";
+  static const String chargeRate = "3022301683";
+  static const String ammunition = "925767036";
+  static const String shootingSpeed = "447667954";
+  static const String precision = "1591432999";
+  static const String power = "1935470627";
+}
+
 class DestinyData {
   static const Map<DamageType, int> damageTypeHashes = {
     DamageType.Kinetic: 3373582085,
@@ -154,6 +185,207 @@ class DestinyData {
     DestinyItemSubType.ClassArmor: 49,
     DestinyItemSubType.Bow: 3317538576,
   };
+  static const Map<DestinyItemSubType, List> linearStringStatBySubType = {
+    //Auto rifle
+    DestinyItemSubType.AutoRifle: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    //shotgun
+    DestinyItemSubType.Shotgun: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    // machinegun
+    DestinyItemSubType.Machinegun: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    //hand cannon
+    DestinyItemSubType.HandCannon: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    //rocket launcher
+    DestinyItemSubType.RocketLauncher: [
+      StatsStringHash.blastRadius,
+      StatsStringHash.velocity,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    //fusion rifle
+    DestinyItemSubType.FusionRifle: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    //sniper rifle
+    DestinyItemSubType.SniperRifle: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    //pulse rifle
+    DestinyItemSubType.PulseRifle: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    //scout rifle
+    DestinyItemSubType.ScoutRifle: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    // sidearm
+    DestinyItemSubType.Sidearm: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    // sword
+    DestinyItemSubType.Sword: [
+      StatsStringHash.swingSpeed,
+      StatsStringHash.impact,
+      StatsStringHash.guardEffiency,
+      StatsStringHash.guardResist,
+      StatsStringHash.chargeRate,
+      StatsStringHash.guardEndurance,
+    ],
+    //mask
+    DestinyItemSubType.Mask: [
+      StatsStringHash.mobility,
+      StatsStringHash.resilience,
+      StatsStringHash.recovery,
+      StatsStringHash.discipline,
+      StatsStringHash.intellect,
+      StatsStringHash.strength
+    ],
+    // linear fusion rifle
+    DestinyItemSubType.FusionRifleLine: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    // grenade launcher
+    DestinyItemSubType.GrenadeLauncher: [
+      StatsStringHash.blastRadius,
+      StatsStringHash.velocity,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    // submachine gun
+    DestinyItemSubType.SubmachineGun: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    // trace rifle
+    DestinyItemSubType.TraceRifle: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+    // helmet armor
+    DestinyItemSubType.HelmetArmor: [
+      StatsStringHash.mobility,
+      StatsStringHash.resilience,
+      StatsStringHash.recovery,
+      StatsStringHash.discipline,
+      StatsStringHash.intellect,
+      StatsStringHash.strength
+    ],
+    // gauntlets armor
+    DestinyItemSubType.GauntletsArmor: [
+      StatsStringHash.mobility,
+      StatsStringHash.resilience,
+      StatsStringHash.recovery,
+      StatsStringHash.discipline,
+      StatsStringHash.intellect,
+      StatsStringHash.strength
+    ],
+    // chest armor
+    DestinyItemSubType.ChestArmor: [
+      StatsStringHash.mobility,
+      StatsStringHash.resilience,
+      StatsStringHash.recovery,
+      StatsStringHash.discipline,
+      StatsStringHash.intellect,
+      StatsStringHash.strength
+    ],
+    // leg armor
+    DestinyItemSubType.LegArmor: [
+      StatsStringHash.mobility,
+      StatsStringHash.resilience,
+      StatsStringHash.recovery,
+      StatsStringHash.discipline,
+      StatsStringHash.intellect,
+      StatsStringHash.strength
+    ],
+    // class armor
+    DestinyItemSubType.ClassArmor: [
+      StatsStringHash.mobility,
+      StatsStringHash.resilience,
+      StatsStringHash.recovery,
+      StatsStringHash.discipline,
+      StatsStringHash.intellect,
+      StatsStringHash.strength
+    ],
+    // bow
+    DestinyItemSubType.Bow: [
+      StatsStringHash.impact,
+      StatsStringHash.precision,
+      StatsStringHash.stability,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
+  };
+
   static const Map<DestinyItemSubType, List> linearStatBySubType = {
     //Auto rifle
     DestinyItemSubType.AutoRifle: [

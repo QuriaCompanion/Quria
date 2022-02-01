@@ -1,7 +1,6 @@
 import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
-import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_stat_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,11 +13,8 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:quria/presentation/components/attributs_details.dart';
+import 'package:quria/presentation/components/item_details_card.dart';
 import 'package:quria/presentation/components/loader.dart';
-import 'package:quria/presentation/components/stat_progress_bar.dart';
-import 'package:quria/presentation/components/header_weapon_details.dart';
-import 'package:quria/presentation/components/weapon_details_bis.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner.dart';
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
 
@@ -149,12 +145,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     if (characterState is ShowDetailsState)
                                       if (attributeState
                                           is AttributsDetailsIdState)
-                                        DetailsWeaponWidget(
+                                        ItemDetailsWidget(
                                             attributeSocketId:
                                                 attributeState.id,
                                             item: characterState.item)
                                       else
-                                        DetailsWeaponWidget(
+                                        ItemDetailsWidget(
                                             item: characterState.item)
                                   ],
                                 ),
@@ -174,144 +170,5 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 child: const Loader());
           }
         });
-  }
-}
-
-@immutable
-class DetailsWeaponWidget extends StatelessWidget {
-  final profile = ProfileService();
-  final int attributeSocketId;
-  final DestinyItemComponent item;
-  DetailsWeaponWidget({
-    this.attributeSocketId = 0,
-    required this.item,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final int displayHash = item.overrideStyleItemHash ?? item.itemHash!;
-    final stats = profile.getPrecalculatedStats(item.itemInstanceId!);
-    return Container(
-      width: 800,
-      height: 800,
-      padding: const EdgeInsets.all(20),
-      decoration: BoxDecoration(
-        color: Colors.black54,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: Container(
-        margin: const EdgeInsets.only(left: 14),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  height: 140,
-                  width: 140,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.grey.shade700,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          ManifestService
-                              .manifestParsed
-                              .destinyInventoryItemDefinition![displayHash]!
-                              .displayProperties!
-                              .icon!),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-                // HeaderWeaponDetails(
-                //     name: utf8.decode(ManifestService.manifestParsed
-                //         .destinyInventoryItemDefinition![item.itemHash]!
-                //         .displayProperties!
-                //         .name!
-                //         .runes
-                //         .toList()),
-                //     typeOfAmmo: 'typeOfAmmo',
-                //     typeOfAmmoImg:
-                //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
-                //     typeOfWeapon: 'typeOfWeapon',
-                //     type: 'type',
-                //     typeImg:
-                //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
-                //     value: 100),
-              ],
-            ),
-            SizedBox(height: 30),
-            Container(
-              margin: const EdgeInsets.only(left: 10),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (int statHash in DestinyData.linearStatBySubType[
-                        ManifestService
-                            .manifestParsed
-                            .destinyInventoryItemDefinition![item.itemHash]!
-                            .itemSubType!]!)
-                      StatProgressBar(
-                          name: ManifestService
-                                  .manifestParsed
-                                  .destinyStatDefinition![statHash]!
-                                  .displayProperties!
-                                  .name ??
-                              'error',
-                          value: stats![statHash.toString()]?.value ??
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      item.itemHash]!
-                                  .stats
-                                  ?.stats![statHash.toString()]
-                                  ?.value ??
-                              0,
-                          type: ManifestService
-                              .manifestParsed
-                              .destinyInventoryItemDefinition![item.itemHash]!
-                              .itemType!),
-                  ]),
-            ),
-            SizedBox(height: 30),
-            AttributsDetails(item: item, socketId: attributeSocketId),
-            WeaponDetailsBis(
-                charger: stats!['3871231066']?.value,
-                zoom: ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition![item.itemHash]!
-                    .stats
-                    ?.stats!['3555269338']
-                    ?.value,
-                strokesMinutes: stats['4284893193']?.value,
-                retreatDirection: ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition![item.itemHash]!
-                    .stats
-                    ?.stats!['2715839340']
-                    ?.value),
-          ],
-        ),
-      ),
-    );
   }
 }

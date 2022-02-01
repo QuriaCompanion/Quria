@@ -12,7 +12,7 @@ class AppRouter {
       case routeLogin:
         return MaterialPageRoute(builder: (_) => HomeWidget());
       case routeProfile:
-        return MaterialPageRoute(builder: (_) => ProfileWidget());
+        return MaterialPageRoute(builder: (_) => const ProfileWidget());
       case routeBuilder:
         return MaterialPageRoute(builder: (_) => BuilderWidget());
       case routeExotic:

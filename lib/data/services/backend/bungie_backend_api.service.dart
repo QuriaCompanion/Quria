@@ -41,12 +41,9 @@ class BackendService {
       final exoticHash = await StorageService.getLocalStorage("exotic");
       GroupUserInfoCard? membership = await accountService.getMembership();
       BungieNetToken? token = await authService.getToken();
-      print(exoticHash);
-      print(membership!.membershipType!.index.toString());
 
-      print(membership.membershipId);
       final uri = Uri.parse('http://localhost:3001/builder/' +
-          membership.membershipType!.index.toString() +
+          membership!.membershipType!.index.toString() +
           '/' +
           membership.membershipId! +
           '/' +
@@ -54,7 +51,6 @@ class BackendService {
           '/');
       final response =
           await http.get(uri, headers: {"Authorization": token!.accessToken!});
-      print('ho');
       final responseJson = json.decode(response.body);
       inspect(responseJson);
       final buildResponse = BuildResponse.fromJson(responseJson);

@@ -34,7 +34,6 @@ class ManifestService {
     if (_manifestInfo != null) {
       return _manifestInfo!;
     }
-    print('Loading manifest info');
     DestinyManifestResponse response = await BungieApiService.getManifestInfo();
     _manifestInfo = response.response;
     return _manifestInfo!;
@@ -42,7 +41,7 @@ class ManifestService {
 
   /// Given  a type [T] stores give type manifest in [manifestParsed]
   ///
-  /// The data can come from [_manifest]
+  /// The data can come from [manifestParsed]
   ///
   /// or from the [Hive] database
   ///
@@ -84,8 +83,6 @@ class ManifestService {
     String language = "fr";
     http.Response res = await http.get(Uri.parse('https://www.bungie.net' +
         info.jsonWorldComponentContentPaths![language]![T.toString()]!));
-
-    print('manifest downloaded');
     return res.body;
   }
 

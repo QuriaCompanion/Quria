@@ -43,9 +43,8 @@ class AuthService {
       return BungieNetToken.fromJson(json);
     } catch (e) {
       print("failed retrieving token ");
-      print(e);
+      return null;
     }
-    return null;
   }
 
   Future<void> _setStoredToken(BungieNetToken token) async {
@@ -107,7 +106,6 @@ class AuthService {
     }
 
     if (uri?.queryParameters == null) return null;
-    print("initialURI: $uri");
     if (uri!.queryParameters.containsKey("code") ||
         uri.queryParameters.containsKey("error")) {
       closeWebView();

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -6,7 +5,8 @@ class NavigationItem extends StatelessWidget {
   final String title;
   final String routeName;
 
-  const NavigationItem({required this.title, required this.routeName});
+  const NavigationItem({required this.title, required this.routeName, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {

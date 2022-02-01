@@ -1,6 +1,7 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'dart:developer';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:universal_io/io.dart';
 
@@ -43,11 +44,7 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.fitWidth,
-              image: NetworkImage(
-                  "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg"))),
+      decoration: ghostBackground,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

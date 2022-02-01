@@ -15,9 +15,15 @@ class AttributsDetails extends StatelessWidget {
   final int socketId;
   final profile = ProfileService();
   final DestinyItemComponent item;
+  final double width;
+  final double fontSize;
+  final double padding;
   AttributsDetails({
     required this.item,
+    required this.fontSize,
+    this.width = 800,
     this.socketId = 0,
+    this.padding = 8,
     Key? key,
   }) : super(key: key);
 
@@ -26,11 +32,15 @@ class AttributsDetails extends StatelessWidget {
     final sockets = profile.getItemSockets(item.itemInstanceId!);
     const double imgSize = 80;
 
-    return Column(
-      children: [
-        Container(
-          margin: const EdgeInsets.only(left: 10),
-          child: Row(
+    return Container(
+      margin: EdgeInsets.symmetric(
+        vertical: padding,
+      ),
+      child: Column(
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               for (var index = 0; index < sockets!.length; index++)
                 if (ManifestService
@@ -43,7 +53,11 @@ class AttributsDetails extends StatelessWidget {
                   InkWell(
                     onTap: () =>
                         context.read<AttributsDetailsCubit>().changeId(index),
-                    child: SizedBox(
+                    child: Container(
+                        color: index == socketId
+                            ? Colors.grey.withOpacity(0.3)
+                            : Colors.transparent,
+                        margin: EdgeInsets.symmetric(horizontal: padding / 2),
                         height: imgSize,
                         width: imgSize,
                         child: Image(
@@ -59,14 +73,11 @@ class AttributsDetails extends StatelessWidget {
                   ),
             ],
           ),
-        ),
-        const SizedBox(height: 30),
-        Container(
-          margin: const EdgeInsets.only(left: 10),
-          child: Row(
+          SizedBox(height: padding),
+          Row(
             children: [
               SizedBox(
-                width: 600,
+                width: width,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -79,10 +90,10 @@ class AttributsDetails extends StatelessWidget {
                           .name!
                           .runes
                           .toList()),
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: fontSize, color: Colors.white),
                       textAlign: TextAlign.left,
                     ),
-                    const SizedBox(height: 6),
+                    SizedBox(height: padding),
                     Text(
                       utf8.decode(ManifestService
                           .manifestParsed
@@ -92,15 +103,15 @@ class AttributsDetails extends StatelessWidget {
                           .description!
                           .runes
                           .toList()),
-                      style: TextStyle(fontSize: 20, color: Colors.white),
+                      style: TextStyle(fontSize: fontSize, color: Colors.white),
                     )
                   ],
                 ),
               )
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
