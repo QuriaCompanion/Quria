@@ -1,4 +1,3 @@
-// Quentin tu le fais -> coucou je lai fait
 import 'dart:convert';
 
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';

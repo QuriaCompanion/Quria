@@ -1,7 +1,10 @@
+import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:bungie_api/models/destiny_sandbox_perk_definition.dart';
 import 'package:bungie_api/models/destiny_stat_definition.dart';
+import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/constants/styles.dart';
@@ -15,6 +18,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/item_details_card.dart';
 import 'package:quria/presentation/components/loader.dart';
+import 'package:quria/presentation/components/subclass_details_card.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner.dart';
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
 
@@ -49,6 +53,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       await ManifestService.getManifest<DestinyDamageTypeDefinition>();
       await ManifestService.getManifest<DestinyStatDefinition>();
       await ManifestService.getManifest<DestinyClassDefinition>();
+      await ManifestService.getManifest<DestinySandboxPerkDefinition>();
+      await ManifestService.getManifest<DestinyTalentGridDefinition>();
 
       final characters = profile.getCharacters();
       ProfileHelper returned = ProfileHelper(
@@ -145,10 +151,24 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                     if (characterState is ShowDetailsState)
                                       if (attributeState
                                           is AttributsDetailsIdState)
-                                        ItemDetailsWidget(
-                                            attributeSocketId:
-                                                attributeState.id,
-                                            item: characterState.item)
+                                        if (ManifestService
+                                                .manifestParsed
+                                                .destinyInventoryItemDefinition![
+                                                    characterState
+                                                        .item.itemHash]!
+                                                .itemType ==
+                                            DestinyItemType.Subclass)
+                                          SubclassDetailCardWidget(
+                                              characterId: snapshot
+                                                  .data!
+                                                  .characters[index]
+                                                  .characterId!,
+                                              subclass: characterState.item)
+                                        else
+                                          ItemDetailsWidget(
+                                              attributeSocketId:
+                                                  attributeState.id,
+                                              item: characterState.item)
                                       else
                                         ItemDetailsWidget(
                                             item: characterState.item)

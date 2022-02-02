@@ -1,3 +1,4 @@
+import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -31,7 +32,11 @@ class ProfileItemCard extends StatelessWidget {
           context.read<CharacterCubit>().showDetails(displayedItem);
         },
         child: Container(
-          decoration: regularShadow,
+          decoration: ManifestService.manifestParsed
+                      .destinyInventoryItemDefinition![displayHash]!.itemType !=
+                  DestinyItemType.Subclass
+              ? regularShadow
+              : const BoxDecoration(),
           child: Image(
             image: NetworkImage(DestinyData.bungieLink +
                 ManifestService

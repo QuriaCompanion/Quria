@@ -16,10 +16,20 @@ class ProfileItemSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isWeaponSide = itemType == DestinyItemType.Weapon;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        if (isWeaponSide)
+          for (DestinyItemComponent equipement in data!.characterEquipement
+              .where((element) =>
+                  ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition![element.itemHash]!
+                      .itemType ==
+                  DestinyItemType.Subclass))
+            ProfileItemCard(displayedItem: equipement),
         for (DestinyItemComponent equipement in data!.characterEquipement.where(
             (element) =>
                 ManifestService
