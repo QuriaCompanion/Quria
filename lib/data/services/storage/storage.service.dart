@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:localstorage/localstorage.dart';
-import 'package:path_provider/path_provider.dart';
 
 /// StorageService is to be called using static methods.
 ///
@@ -18,8 +17,8 @@ class StorageService {
 
   static isolateInit() async {
     if (!kIsWeb) {
-      final directory = await getApplicationDocumentsDirectory();
-      Hive.init(directory.path + 'Quria');
+      // final directory = await getApplicationDocumentsDirectory();
+      Hive.init('Quria');
     }
   }
 

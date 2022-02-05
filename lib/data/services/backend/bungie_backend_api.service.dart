@@ -30,7 +30,7 @@ class BackendService {
       [BungieNetToken? token]) async {
     final response = await http.get(
         Uri.parse('/inventory/$membershipType/$membershipId'),
-        headers: {"Authorization": 'Bearer ' + token!.accessToken!});
+        headers: {"Authorization": 'Bearer ' + token!.accessToken});
     final responseJson = json.decode(response.body);
 
     return responseJson.items;
@@ -50,7 +50,7 @@ class BackendService {
           exoticHash.toString() +
           '/');
       final response =
-          await http.get(uri, headers: {"Authorization": token!.accessToken!});
+          await http.get(uri, headers: {"Authorization": token!.accessToken});
       final responseJson = json.decode(response.body);
       inspect(responseJson);
       final buildResponse = BuildResponse.fromJson(responseJson);

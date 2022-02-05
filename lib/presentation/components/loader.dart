@@ -31,7 +31,8 @@ class Loader extends StatelessWidget {
         SizedBox(
           height: spacing,
         ),
-        CircularProgressIndicator(color: animationColor),
+        RepaintBoundary(
+            child: CircularProgressIndicator(color: animationColor)),
       ],
     );
   }
