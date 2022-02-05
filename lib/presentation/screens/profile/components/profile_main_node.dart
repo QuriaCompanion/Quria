@@ -9,14 +9,22 @@ class ProfileMainNodeWidget extends StatelessWidget {
   final double middleSpace;
   final double statArmorSpace;
   final int characterIndex;
+  final double verticalStatWidth;
+  final double imageSize;
+  final double itemSectionSpacing;
+  final double statsFontSize;
 
-  const ProfileMainNodeWidget({
-    Key? key,
-    required this.data,
-    required this.characterIndex,
-    this.middleSpace = 400,
-    this.statArmorSpace = 50,
-  }) : super(key: key);
+  const ProfileMainNodeWidget(
+      {Key? key,
+      required this.data,
+      required this.characterIndex,
+      this.middleSpace = 400,
+      this.statArmorSpace = 50,
+      this.verticalStatWidth = 110,
+      this.imageSize = 150,
+      this.itemSectionSpacing = 20,
+      this.statsFontSize = 30})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,22 +32,29 @@ class ProfileMainNodeWidget extends StatelessWidget {
       child: Align(
         alignment: Alignment.center,
         child: Row(
-            mainAxisAlignment:
-                MainAxisAlignment.start, // change ici pr le mode detail
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               ProfileItemSectionWidget(
-                  itemType: DestinyItemType.Weapon, data: data),
+                  sizes: imageSize,
+                  itemSectionSpacing: itemSectionSpacing,
+                  itemType: DestinyItemType.Weapon,
+                  data: data),
               SizedBox(width: middleSpace),
               Row(
                 children: [
                   VerticalCharacterStatsListingWidget(
+                    fontSize: statsFontSize,
+                    width: verticalStatWidth,
                     data: data,
                     characterIndex: characterIndex,
                   ),
                   SizedBox(width: statArmorSpace),
                   ProfileItemSectionWidget(
-                      itemType: DestinyItemType.Armor, data: data)
+                      sizes: imageSize,
+                      itemSectionSpacing: itemSectionSpacing,
+                      itemType: DestinyItemType.Armor,
+                      data: data)
                 ],
               ),
             ]),

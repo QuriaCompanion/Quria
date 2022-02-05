@@ -6,15 +6,17 @@ import 'package:quria/presentation/components/statistic_display.dart';
 class VerticalCharacterStatsListingWidget extends StatelessWidget {
   final ProfileHelper? data;
   final int characterIndex;
+  final double fontSize;
+  final double width;
   const VerticalCharacterStatsListingWidget({
     Key? key,
     required this.data,
     required this.characterIndex,
+    this.fontSize = 30,
+    this.width = 110,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    const double fontsize = 30;
-    const double width = 110;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -26,7 +28,7 @@ class VerticalCharacterStatsListingWidget extends StatelessWidget {
               icon: DestinyData.statsIcon[i],
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               width: width,
-              fontsize: fontsize),
+              fontsize: fontSize),
       ],
     );
   }

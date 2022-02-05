@@ -41,11 +41,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   static const double bannerSpacing = 10;
   static const double bannerLeftSpacing = 150;
-  static const double bannerTopSpacing = 150;
-  static const double bannerSelectedWidth = 600;
-  static const double bannerUnselectedWidth = (bannerSelectedWidth / 100) * 66;
-  static const double bannerSelectedFont = 50;
-  static const double bannerUnselectedFont = (bannerSelectedFont / 100) * 66;
+  static const double statArmorSpace = 40;
+  static const double itemSectionSpace = 20;
+  static const double itemDetailsSidePadding = 25;
+  static const double itemDetailsChildPadding = 10;
 
   Future<ProfileHelper> getProfileData() async {
     try {
@@ -69,6 +68,37 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
+    double bannerTopSpacing = 150;
+    double fontSize = 20;
+    double statsFontSize = 30;
+    double bannerSelectedFont = 50;
+    double itemDetailsWidth = MediaQuery.of(context).size.width * 0.45;
+    double middleSpace = MediaQuery.of(context).size.width * 0.2;
+    double imageSize = MediaQuery.of(context).size.width * 0.075;
+    double iconSize = imageSize * 0.66;
+    double verticalStatWidth = MediaQuery.of(context).size.width * 0.06;
+    double bannerSelectedWidth = MediaQuery.of(context).size.width * 0.28;
+    if (MediaQuery.of(context).size.width < 1920) {
+      fontSize = 15;
+      statsFontSize = 25;
+      bannerSelectedFont = 40;
+      bannerTopSpacing = 100;
+    }
+    if (MediaQuery.of(context).size.width < 1575) {
+      fontSize = 15;
+      statsFontSize = 20;
+      bannerSelectedFont = 30;
+      bannerTopSpacing = 80;
+    }
+    if (MediaQuery.of(context).size.width < 1250) {
+      fontSize = 15;
+      statsFontSize = 15;
+      bannerSelectedWidth = 350;
+      bannerTopSpacing = 50;
+    }
+
+    final double bannerUnselectedWidth = (bannerSelectedWidth / 100) * 66;
+    final double bannerUnselectedFont = (bannerSelectedFont / 100) * 66;
     return FutureBuilder(
         future: getProfileData(),
         builder: (BuildContext context, AsyncSnapshot<ProfileHelper> snapshot) {
@@ -86,95 +116,129 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       child: BlocBuilder<AttributsDetailsCubit,
                           AttributsDetailsState>(
                         builder: (context, attributeState) {
-                          return Container(
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: NetworkImage(DestinyData.bungieLink +
-                                        ManifestService
-                                            .manifestParsed
-                                            .destinyInventoryItemDefinition![
-                                                displayHash]!
-                                            .screenshot!),
-                                    fit: BoxFit.cover)),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: bannerLeftSpacing,
-                                      top: bannerTopSpacing),
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        for (int i = 0;
-                                            i <
-                                                snapshot
-                                                    .data!.characters.length;
-                                            i++)
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                index = i;
-                                                context
-                                                    .read<CharacterCubit>()
-                                                    .hideDetails();
-                                              });
-                                            },
-                                            child: Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: bannerSpacing / 2,
-                                                  bottom: bannerSpacing / 2),
-                                              child: CharacterBanner(
-                                                  width: index == i
-                                                      ? bannerSelectedWidth
-                                                      : bannerUnselectedWidth,
-                                                  fontSize: index == i
-                                                      ? bannerSelectedFont
-                                                      : bannerUnselectedFont,
-                                                  character: snapshot
-                                                      .data!.characters[i]),
+                          return RepaintBoundary(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: NetworkImage(DestinyData
+                                              .bungieLink +
+                                          ManifestService
+                                              .manifestParsed
+                                              .destinyInventoryItemDefinition![
+                                                  displayHash]!
+                                              .screenshot!),
+                                      fit: BoxFit.cover)),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        left: bannerLeftSpacing,
+                                        top: bannerTopSpacing),
+                                    child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          for (int i = 0;
+                                              i <
+                                                  snapshot
+                                                      .data!.characters.length;
+                                              i++)
+                                            InkWell(
+                                              onTap: () {
+                                                setState(() {
+                                                  index = i;
+                                                  context
+                                                      .read<CharacterCubit>()
+                                                      .hideDetails();
+                                                });
+                                              },
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: bannerSpacing / 2,
+                                                    bottom: bannerSpacing / 2),
+                                                child: CharacterBanner(
+                                                    width: index == i
+                                                        ? bannerSelectedWidth
+                                                        : bannerUnselectedWidth,
+                                                    fontSize: index == i
+                                                        ? bannerSelectedFont
+                                                        : bannerUnselectedFont,
+                                                    character: snapshot
+                                                        .data!.characters[i]),
+                                              ),
                                             ),
-                                          ),
-                                      ]),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    ProfileMainNodeWidget(
-                                        characterIndex: index,
-                                        data: snapshot.data!),
-                                    if (characterState is ShowDetailsState)
-                                      if (attributeState
-                                          is AttributsDetailsIdState)
-                                        if (ManifestService
-                                                .manifestParsed
-                                                .destinyInventoryItemDefinition![
-                                                    characterState
-                                                        .item.itemHash]!
-                                                .itemType ==
-                                            DestinyItemType.Subclass)
-                                          SubclassDetailCardWidget(
-                                              characterId: snapshot
-                                                  .data!
-                                                  .characters[index]
-                                                  .characterId!,
-                                              subclass: characterState.item)
+                                        ]),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      ProfileMainNodeWidget(
+                                          imageSize: imageSize,
+                                          itemSectionSpacing: itemSectionSpace,
+                                          verticalStatWidth: verticalStatWidth,
+                                          middleSpace: middleSpace,
+                                          statArmorSpace: statArmorSpace,
+                                          statsFontSize: statsFontSize,
+                                          characterIndex: index,
+                                          data: snapshot.data!),
+                                      if (characterState is ShowDetailsState)
+                                        if (attributeState
+                                            is AttributsDetailsIdState)
+                                          if (ManifestService
+                                                  .manifestParsed
+                                                  .destinyInventoryItemDefinition![
+                                                      characterState
+                                                          .item.itemHash]!
+                                                  .itemType ==
+                                              DestinyItemType.Subclass)
+                                            SubclassDetailCardWidget(
+                                                width: itemDetailsWidth,
+                                                fontSize: fontSize,
+                                                imageSize: imageSize,
+                                                iconSize: iconSize,
+                                                sidePadding:
+                                                    itemDetailsSidePadding,
+                                                childPadding:
+                                                    itemDetailsChildPadding,
+                                                characterId: snapshot
+                                                    .data!
+                                                    .characters[index]
+                                                    .characterId!,
+                                                subclass: characterState.item)
+                                          else
+                                            ItemDetailsWidget(
+                                                width: itemDetailsWidth,
+                                                fontSize: fontSize,
+                                                imageSize: imageSize,
+                                                iconSize: iconSize,
+                                                sidePadding:
+                                                    itemDetailsSidePadding,
+                                                childPadding:
+                                                    itemDetailsChildPadding,
+                                                attributeSocketId:
+                                                    attributeState.id,
+                                                item: characterState.item)
                                         else
                                           ItemDetailsWidget(
-                                              attributeSocketId:
-                                                  attributeState.id,
+                                              width: itemDetailsWidth,
+                                              fontSize: fontSize,
+                                              imageSize: imageSize,
+                                              sidePadding:
+                                                  itemDetailsSidePadding,
+                                              iconSize: iconSize,
+                                              childPadding:
+                                                  itemDetailsChildPadding,
                                               item: characterState.item)
-                                      else
-                                        ItemDetailsWidget(
-                                            item: characterState.item)
-                                  ],
-                                ),
-                              ],
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           );
                         },

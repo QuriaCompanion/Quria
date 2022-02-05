@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bungie_api/models/destiny_node_step_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
@@ -38,7 +39,10 @@ class TalentGridDisplay extends StatelessWidget {
             Tooltip(
               message: utf8.decode(
                   nodeDef.displayProperties!.description!.runes.toList()),
-              textStyle: TextStyle(fontSize: fontSize, color: Colors.white),
+              textStyle: TextStyle(
+                fontSize: fontSize,
+                color: Colors.white,
+              ),
               child: CircleAvatar(
                 radius: iconSize / 2,
                 child: Image(
@@ -48,9 +52,13 @@ class TalentGridDisplay extends StatelessWidget {
               ),
             ),
             SizedBox(width: sidePadding),
-            Text(
-              utf8.decode(nodeDef.displayProperties!.name!.runes.toList()),
-              style: TextStyle(fontSize: fontSize, color: Colors.white),
+            SizedBox(
+              width: (width - childPadding * 2) - iconSize - sidePadding,
+              child: AutoSizeText(
+                utf8.decode(nodeDef.displayProperties!.name!.runes.toList()),
+                style: TextStyle(fontSize: fontSize, color: Colors.white),
+                maxLines: 2,
+              ),
             ),
           ],
         ),

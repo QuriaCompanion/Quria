@@ -8,10 +8,14 @@ import 'package:quria/presentation/screens/profile/components/profile_item_card.
 class ProfileItemSectionWidget extends StatelessWidget {
   final DestinyItemType itemType;
   final ProfileHelper? data;
+  final double sizes;
+  final double itemSectionSpacing;
   const ProfileItemSectionWidget({
     Key? key,
     required this.itemType,
     required this.data,
+    this.sizes = 150,
+    this.itemSectionSpacing = 20,
   }) : super(key: key);
 
   @override
@@ -29,7 +33,10 @@ class ProfileItemSectionWidget extends StatelessWidget {
                       .destinyInventoryItemDefinition![element.itemHash]!
                       .itemType ==
                   DestinyItemType.Subclass))
-            ProfileItemCard(displayedItem: equipement),
+            ProfileItemCard(
+                margin: itemSectionSpacing,
+                sizes: sizes,
+                displayedItem: equipement),
         for (DestinyItemComponent equipement in data!.characterEquipement.where(
             (element) =>
                 ManifestService
@@ -37,7 +44,10 @@ class ProfileItemSectionWidget extends StatelessWidget {
                     .destinyInventoryItemDefinition![element.itemHash]!
                     .itemType ==
                 itemType))
-          ProfileItemCard(displayedItem: equipement),
+          ProfileItemCard(
+              margin: itemSectionSpacing,
+              sizes: sizes,
+              displayedItem: equipement),
       ],
     );
   }

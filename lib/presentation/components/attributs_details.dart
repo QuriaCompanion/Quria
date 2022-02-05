@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/cubit/attributs_details_cubit.dart';
@@ -16,11 +18,13 @@ class AttributsDetails extends StatelessWidget {
   final DestinyItemComponent item;
   final double width;
   final double fontSize;
+  final double iconSize;
   final double padding;
   AttributsDetails({
     required this.item,
     required this.fontSize,
     this.width = 800,
+    this.iconSize = 100,
     this.socketId = 0,
     this.padding = 8,
     Key? key,
@@ -28,9 +32,37 @@ class AttributsDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sockets = profile.getItemSockets(item.itemInstanceId!);
-    const double imgSize = 80;
-
+    List<DestinyItemSocketState> sockets =
+        profile.getItemSockets(item.itemInstanceId!)!;
+    sockets = sockets
+        .where((socket) => (ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition![socket.plugHash]
+                    ?.itemSubType ==
+                DestinyItemSubType.None &&
+            socket.isVisible == true))
+        .toList();
+    List<DestinyItemSocketState> socketsPerk = sockets
+        .where((socket) =>
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition![socket.plugHash]
+                    ?.plug
+                    ?.plugCategoryHash !=
+                1392237582 &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition![socket.plugHash]
+                    ?.plug
+                    ?.plugCategoryHash !=
+                510594033 &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition![socket.plugHash]
+                    ?.plug
+                    ?.plugCategoryHash !=
+                2947756142)
+        .toList();
     return Container(
       margin: EdgeInsets.symmetric(
         vertical: padding,
@@ -41,35 +73,32 @@ class AttributsDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              for (var index = 0; index < sockets!.length; index++)
-                if (ManifestService
-                            .manifestParsed
-                            .destinyInventoryItemDefinition![
-                                sockets[index].plugHash]
-                            ?.itemSubType ==
-                        DestinyItemSubType.None &&
-                    sockets[index].isVisible == true)
-                  InkWell(
-                    onTap: () =>
-                        context.read<AttributsDetailsCubit>().changeId(index),
-                    child: Container(
-                        color: index == socketId
-                            ? Colors.grey.withOpacity(0.3)
-                            : Colors.transparent,
-                        margin: EdgeInsets.symmetric(horizontal: padding / 2),
-                        height: imgSize,
-                        width: imgSize,
-                        child: Image(
-                          image: NetworkImage(DestinyData.bungieLink +
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      sockets[index].plugHash]!
-                                  .displayProperties!
-                                  .icon!),
-                          fit: BoxFit.fill,
-                        )),
-                  ),
+              for (var index = 0; index < socketsPerk.length; index++)
+                InkWell(
+                  onTap: () {
+                    context.read<AttributsDetailsCubit>().changeId(index);
+                    inspect(ManifestService
+                            .manifestParsed.destinyInventoryItemDefinition![
+                        socketsPerk[index].plugHash]);
+                  },
+                  child: Container(
+                      color: index == socketId
+                          ? Colors.grey.withOpacity(0.3)
+                          : Colors.transparent,
+                      margin: EdgeInsets.symmetric(horizontal: padding / 2),
+                      height: iconSize,
+                      width: iconSize,
+                      child: Image(
+                        image: NetworkImage(DestinyData.bungieLink +
+                            ManifestService
+                                .manifestParsed
+                                .destinyInventoryItemDefinition![
+                                    socketsPerk[index].plugHash]!
+                                .displayProperties!
+                                .icon!),
+                        fit: BoxFit.fill,
+                      )),
+                ),
             ],
           ),
           SizedBox(height: padding),
@@ -84,7 +113,7 @@ class AttributsDetails extends StatelessWidget {
                       utf8.decode(ManifestService
                           .manifestParsed
                           .destinyInventoryItemDefinition![
-                              sockets[socketId].plugHash]!
+                              socketsPerk[socketId].plugHash]!
                           .displayProperties!
                           .name!
                           .runes
@@ -97,7 +126,7 @@ class AttributsDetails extends StatelessWidget {
                       utf8.decode(ManifestService
                           .manifestParsed
                           .destinyInventoryItemDefinition![
-                              sockets[socketId].plugHash]!
+                              socketsPerk[socketId].plugHash]!
                           .displayProperties!
                           .description!
                           .runes

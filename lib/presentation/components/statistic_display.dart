@@ -24,7 +24,7 @@ class StatisticDisplay extends StatelessWidget {
       child: Row(
         mainAxisAlignment: mainAxisAlignment,
         children: [
-          Image.network(link),
+          SizedBox(width: width * 0.5, child: Image.network(link)),
           Text('$value',
               style: TextStyle(color: Colors.white70, fontSize: fontsize))
         ],

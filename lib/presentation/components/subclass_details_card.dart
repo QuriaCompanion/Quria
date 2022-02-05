@@ -23,7 +23,7 @@ class SubclassDetailCardWidget extends StatelessWidget {
     required this.subclass,
     this.attributeSocketId = 0,
     this.width = 800,
-    this.fontSize = 10,
+    this.fontSize = 20,
     this.sidePadding = 25,
     this.imageSize = 150,
     this.childPadding = 20,
@@ -50,15 +50,10 @@ class SubclassDetailCardWidget extends StatelessWidget {
                     .displayProperties!
                     .icon!),
           ),
-          Text("Lame de l'aube",
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 35,
-              )),
           SizedBox(
             height: (5 * iconSize) + (5 * childPadding),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,6 +88,7 @@ class SubclassDetailCardWidget extends StatelessWidget {
                           info.nodes![i].hidden != true)
                         TalentGridDisplay(
                             width: (width / 2) - (sidePadding * 2) - 1,
+                            fontSize: fontSize,
                             sidePadding: sidePadding,
                             childPadding: childPadding,
                             nodeIndex: i,
