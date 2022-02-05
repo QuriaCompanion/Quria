@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:bungie_api/enums/destiny_collectible_state.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_artifact_profile_scoped.dart';
@@ -183,6 +182,11 @@ class ProfileService {
       _profile!.profileProgression = response.profileProgression;
     }
     if (components.contains(DestinyComponentType.PresentationNodes)) {
+      _profile!.profilePresentationNodes = response.profilePresentationNodes;
+      _profile!.characterPresentationNodes =
+          response.characterPresentationNodes;
+    }
+    if (components.contains(DestinyComponentType.ItemPerks)) {
       _profile!.profilePresentationNodes = response.profilePresentationNodes;
       _profile!.characterPresentationNodes =
           response.characterPresentationNodes;
@@ -534,3 +538,77 @@ class ProfileService {
     return allItems;
   }
 }
+
+// Future<SubclassTalentGridInfo> getSubclassTalentGridInfo(
+//     DestinyItemComponent item) async {
+//   var def = ManifestService
+//       .manifestParsed.destinyInventoryItemDefinition![item.itemHash];
+//   var talentGrid = ProfileService().getTalentGrid(item.itemInstanceId!);
+//   var talentGridDef = ManifestService
+//       .manifestParsed.destinyTalentGridDefinition![talentGrid!.talentGridHash];
+//   var talentgridCategory =
+//       extractTalentGridNodeCategory(talentGridDef!, talentGrid);
+//   var mainPerk = getSubclassMainPerk(def!, talentgridCategory);
+
+//   // return SubclassTalentGridInfo(
+//   //   mainPerkHash: mainPerk,
+//   //   damageType: def.talentGrid!.hudDamageType!,
+//   // );
+// }
+
+// int getSubclassMainPerk(DestinyInventoryItemDefinition def,
+//     DestinyTalentNodeCategory talentgridCategory) {
+//   var str = "";
+
+//   switch (def.classType) {
+//     case DestinyClass.Titan:
+//       str += "titan";
+//       break;
+//     case DestinyClass.Hunter:
+//       str += "hunter";
+//       break;
+//     case DestinyClass.Warlock:
+//       str += "warlock";
+//       break;
+//     default:
+//       break;
+//   }
+//   switch (def?.talentGrid?.hudDamageType) {
+//     case DamageType.Arc:
+//       str += "_arc";
+//       break;
+//     case DamageType.Thermal:
+//       str += "_solar";
+//       break;
+//     case DamageType.Void:
+//       str += "_void";
+//       break;
+//     case DamageType.Stasis:
+//       str += "_stasis";
+//       break;
+//     default:
+//       break;
+//   }
+//   if ((talentgridCategory.identifier?.length ?? 0) > 0) {
+//     str += "_${talentgridCategory.identifier}";
+//   }
+
+//   return subclassMainPerks[str]!;
+// }
+
+// DestinyTalentNodeCategory extractTalentGridNodeCategory(
+//     DestinyTalentGridDefinition talentGridDef,
+//     DestinyItemTalentGridComponent talentGrid) {
+//   Iterable<int> activatedNodes = talentGrid?.nodes
+//       ?.where((node) => node.isActivated)
+//       ?.map((node) => node.nodeIndex);
+//   Iterable<DestinyTalentNodeCategory> selectedSkills =
+//       talentGridDef?.nodeCategories?.where((category) {
+//     var overlapping = category.nodeHashes
+//         .where((nodeHash) => activatedNodes?.contains(nodeHash) ?? false);
+//     return overlapping.length > 0;
+//   })?.toList();
+//   DestinyTalentNodeCategory subclassPath = selectedSkills
+//       ?.firstWhere((nodeDef) => nodeDef.isLoreDriven, orElse: () => null);
+//   return subclassPath;
+// }
