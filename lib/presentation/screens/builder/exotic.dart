@@ -5,10 +5,21 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/exotic_item.dart';
 import 'package:quria/presentation/components/loader.dart';
 
-@immutable
-class ExoticWidget extends StatelessWidget {
+class ExoticWidget extends StatefulWidget {
+  const ExoticWidget({Key? key}) : super(key: key);
+
+  @override
+  _ExoticWidgetState createState() => _ExoticWidgetState();
+}
+
+class _ExoticWidgetState extends State<ExoticWidget> {
   final DisplayService display = DisplayService();
-  ExoticWidget({Key? key}) : super(key: key);
+  late Future<List<DestinyInventoryItemDefinition>> _future;
+  @override
+  void initState() {
+    super.initState();
+    _future = display.getExotics();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +69,7 @@ class ExoticWidget extends StatelessWidget {
                   Expanded(
                     flex: 60,
                     child: FutureBuilder(
-                        future: display.getExotics(),
+                        future: _future,
                         builder: (context,
                             AsyncSnapshot<List<DestinyInventoryItemDefinition>>
                                 snapshot) {

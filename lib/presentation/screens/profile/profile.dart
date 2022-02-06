@@ -1,10 +1,4 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
-import 'package:bungie_api/models/destiny_class_definition.dart';
-import 'package:bungie_api/models/destiny_damage_type_definition.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
-import 'package:bungie_api/models/destiny_sandbox_perk_definition.dart';
-import 'package:bungie_api/models/destiny_stat_definition.dart';
-import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/constants/styles.dart';
@@ -14,6 +8,7 @@ import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/item_details_card.dart';
@@ -35,9 +30,17 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
+  final display = DisplayService();
   final storage = StorageService();
   final account = AccountService();
   final profile = ProfileService();
+  late Future<ProfileHelper> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = display.getProfileData(0);
+  }
 
   static const double bannerSpacing = 10;
   static const double bannerLeftSpacing = 150;
@@ -45,26 +48,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   static const double itemSectionSpace = 20;
   static const double itemDetailsSidePadding = 25;
   static const double itemDetailsChildPadding = 10;
-
-  Future<ProfileHelper> getProfileData() async {
-    try {
-      await ManifestService.getManifest<DestinyInventoryItemDefinition>();
-      await ManifestService.getManifest<DestinyDamageTypeDefinition>();
-      await ManifestService.getManifest<DestinyStatDefinition>();
-      await ManifestService.getManifest<DestinyClassDefinition>();
-      await ManifestService.getManifest<DestinySandboxPerkDefinition>();
-      await ManifestService.getManifest<DestinyTalentGridDefinition>();
-
-      final characters = profile.getCharacters();
-      ProfileHelper returned = ProfileHelper(
-          (await account.getMembership())!,
-          characters,
-          profile.getCharacterEquipment(characters[index].characterId!));
-      return returned;
-    } catch (e) {
-      rethrow;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +83,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     final double bannerUnselectedWidth = (bannerSelectedWidth / 100) * 66;
     final double bannerUnselectedFont = (bannerSelectedFont / 100) * 66;
     return FutureBuilder(
-        future: getProfileData(),
+        future: _future,
         builder: (BuildContext context, AsyncSnapshot<ProfileHelper> snapshot) {
           if (snapshot.hasData) {
             return SingleChildScrollView(
@@ -150,6 +133,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                               onTap: () {
                                                 setState(() {
                                                   index = i;
+                                                  snapshot.data!
+                                                          .characterEquipement =
+                                                      profile
+                                                          .getCharacterEquipment(
+                                                              snapshot
+                                                                  .data!
+                                                                  .characters[i]
+                                                                  .characterId!);
                                                   context
                                                       .read<CharacterCubit>()
                                                       .hideDetails();

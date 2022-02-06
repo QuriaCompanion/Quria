@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -77,9 +76,6 @@ class AttributsDetails extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     context.read<AttributsDetailsCubit>().changeId(index);
-                    inspect(ManifestService
-                            .manifestParsed.destinyInventoryItemDefinition![
-                        socketsPerk[index].plugHash]);
                   },
                   child: Container(
                       color: index == socketId

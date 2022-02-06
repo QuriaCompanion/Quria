@@ -14,9 +14,9 @@ class AppRouter {
       case routeProfile:
         return MaterialPageRoute(builder: (_) => const ProfileWidget());
       case routeBuilder:
-        return MaterialPageRoute(builder: (_) => BuilderWidget());
+        return MaterialPageRoute(builder: (_) => const BuilderWidget());
       case routeExotic:
-        return MaterialPageRoute(builder: (_) => ExoticWidget());
+        return MaterialPageRoute(builder: (_) => const ExoticWidget());
       default:
         return MaterialPageRoute(builder: (_) => LoginWidget());
     }
