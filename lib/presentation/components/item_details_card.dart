@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -8,6 +11,7 @@ import 'package:quria/presentation/components/stat_progress_bar.dart';
 import 'package:quria/presentation/components/weapon_details_hidden_stats.dart';
 
 import 'attributs_details.dart';
+import 'header_weapon_details.dart';
 
 @immutable
 class ItemDetailsWidget extends StatelessWidget {
@@ -36,6 +40,7 @@ class ItemDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final int displayHash = item.overrideStyleItemHash ?? item.itemHash!;
     final stats = profile.getPrecalculatedStats(item.itemInstanceId!);
+    final instanceInfo = profile.getInstanceInfo(item.itemInstanceId!);
     return RepaintBoundary(
       child: Container(
         width: width,
@@ -63,21 +68,30 @@ class ItemDetailsWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                // HeaderWeaponDetails(
-                //     name: utf8.decode(ManifestService.manifestParsed
-                //         .destinyInventoryItemDefinition![item.itemHash]!
-                //         .displayProperties!
-                //         .name!
-                //         .runes
-                //         .toList()),
-                //     typeOfAmmo: 'typeOfAmmo',
-                //     typeOfAmmoImg:
-                //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
-                //     typeOfWeapon: 'typeOfWeapon',
-                //     type: 'type',
-                //     typeImg:
-                //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
-                //     value: 100),
+                const SizedBox(
+                  width: 10,
+                ),
+                HeaderWeaponDetails(
+                  height: imageSize,
+                  width: width - imageSize - 10 - sidePadding * 2,
+                  name: ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition![item.itemHash]!
+                      .displayProperties!
+                      .name!,
+                  typeOfAmmo: DestinyData.ammoInfoByType[ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition![item.itemHash]!
+                      .equippingBlock
+                      ?.ammoType]!,
+                  type: ManifestService
+                          .manifestParsed.destinyDamageTypeDefinition![
+                      ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition![item.itemHash]!
+                          .defaultDamageTypeHash]!,
+                  value: instanceInfo.primaryStat?.value! ?? 0,
+                ),
               ],
             ),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

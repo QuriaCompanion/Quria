@@ -2,6 +2,7 @@ import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
 import 'package:bungie_api/models/destiny_sandbox_perk_definition.dart';
 import 'package:bungie_api/models/destiny_stat_definition.dart';
 import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
@@ -54,6 +55,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       await ManifestService.getManifest<DestinyClassDefinition>();
       await ManifestService.getManifest<DestinySandboxPerkDefinition>();
       await ManifestService.getManifest<DestinyTalentGridDefinition>();
+      await ManifestService.getManifest<DestinyPresentationNodeDefinition>();
 
       final characters = profile.getCharacters();
       ProfileHelper returned = ProfileHelper(
