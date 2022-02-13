@@ -6,24 +6,31 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/loader.dart';
 import 'package:quria/presentation/screens/builder/components/single_build.dart';
 
-class BuilderWidget extends StatelessWidget {
+class BuilderWidget extends StatefulWidget {
+  const BuilderWidget({Key? key}) : super(key: key);
+
+  @override
+  _BuilderWidgetState createState() => _BuilderWidgetState();
+}
+
+class _BuilderWidgetState extends State<BuilderWidget> {
   final BackendService _backendService = BackendService();
+  late Future<BuildResponse> _future;
   final manifest = ManifestService();
 
-  Future<BuildResponse> promise() async {
-    BuildResponse response = await _backendService.getBuilds();
-    return response;
+  @override
+  void initState() {
+    super.initState();
+    _future = _backendService.getBuilds();
   }
 
-  BuilderWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Future<BuildResponse?> future = promise();
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: ghostBackground,
       child: FutureBuilder(
-          future: future,
+          future: _future,
           builder:
               (BuildContext context, AsyncSnapshot<BuildResponse?> snapshot) {
             if (snapshot.hasData) {

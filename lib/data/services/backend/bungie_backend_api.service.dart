@@ -1,7 +1,4 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'dart:convert';
-import 'dart:developer';
 import 'package:bungie_api/enums/bungie_membership_type.dart';
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:http/http.dart' as http;
@@ -39,6 +36,14 @@ class BackendService {
   Future<BuildResponse> getBuilds() async {
     try {
       final exoticHash = await StorageService.getLocalStorage("exotic");
+      const statOrder = [
+        "mobility",
+        "resilience",
+        "recovery",
+        "discipline",
+        "intellect",
+        "strength"
+      ];
       GroupUserInfoCard? membership = await accountService.getMembership();
       BungieNetToken? token = await authService.getToken();
 
@@ -49,10 +54,15 @@ class BackendService {
           '/' +
           exoticHash.toString() +
           '/');
-      final response =
-          await http.get(uri, headers: {"Authorization": token!.accessToken});
+      final response = await http.post(
+        uri,
+        headers: {
+          "Authorization": token!.accessToken,
+          "Content-Type": "application/json"
+        },
+        body: json.encode({"statOrder": statOrder}),
+      );
       final responseJson = json.decode(response.body);
-      inspect(responseJson);
       final buildResponse = BuildResponse.fromJson(responseJson);
       return buildResponse;
     } catch (e) {

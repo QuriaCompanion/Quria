@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -68,29 +65,16 @@ class ItemDetailsWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 10,
+                SizedBox(
+                  width: childPadding,
                 ),
                 HeaderWeaponDetails(
                   height: imageSize,
-                  width: width - imageSize - 10 - sidePadding * 2,
-                  name: ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition![item.itemHash]!
-                      .displayProperties!
-                      .name!,
-                  typeOfAmmo: DestinyData.ammoInfoByType[ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition![item.itemHash]!
-                      .equippingBlock
-                      ?.ammoType]!,
-                  type: ManifestService
-                          .manifestParsed.destinyDamageTypeDefinition![
-                      ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition![item.itemHash]!
-                          .defaultDamageTypeHash]!,
-                  value: instanceInfo.primaryStat?.value! ?? 0,
+                  width: width - imageSize - childPadding - sidePadding * 2,
+                  item: item,
+                  fontSize: fontSize,
+                  childPadding: childPadding,
+                  powerLevel: instanceInfo.primaryStat?.value! ?? 0,
                 ),
               ],
             ),

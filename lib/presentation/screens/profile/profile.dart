@@ -15,8 +15,10 @@ import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/advanced_subclass_details_card.dart';
 import 'package:quria/presentation/components/item_details_card.dart';
 import 'package:quria/presentation/components/loader.dart';
 import 'package:quria/presentation/components/subclass_details_card.dart';
@@ -36,9 +38,17 @@ class ProfileWidget extends StatefulWidget {
 }
 
 class _ProfileWidgetState extends State<ProfileWidget> {
+  final display = DisplayService();
   final storage = StorageService();
   final account = AccountService();
   final profile = ProfileService();
+  late Future<ProfileHelper> _future;
+
+  @override
+  void initState() {
+    super.initState();
+    _future = display.getProfileData(0);
+  }
 
   static const double bannerSpacing = 10;
   static const double bannerLeftSpacing = 150;
@@ -102,7 +112,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     final double bannerUnselectedWidth = (bannerSelectedWidth / 100) * 66;
     final double bannerUnselectedFont = (bannerSelectedFont / 100) * 66;
     return FutureBuilder(
-        future: getProfileData(),
+        future: _future,
         builder: (BuildContext context, AsyncSnapshot<ProfileHelper> snapshot) {
           if (snapshot.hasData) {
             return SingleChildScrollView(
@@ -152,6 +162,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                               onTap: () {
                                                 setState(() {
                                                   index = i;
+                                                  snapshot.data!
+                                                          .characterEquipement =
+                                                      profile
+                                                          .getCharacterEquipment(
+                                                              snapshot
+                                                                  .data!
+                                                                  .characters[i]
+                                                                  .characterId!);
                                                   context
                                                       .read<CharacterCubit>()
                                                       .hideDetails();
@@ -208,6 +226,32 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                     itemDetailsSidePadding,
                                                 childPadding:
                                                     itemDetailsChildPadding,
+                                                characterId: snapshot
+                                                    .data!
+                                                    .characters[index]
+                                                    .characterId!,
+                                                subclass: characterState.item)
+                                          else if (ManifestService
+                                                      .manifestParsed
+                                                      .destinyInventoryItemDefinition![
+                                                          characterState
+                                                              .item.itemHash]!
+                                                      .itemType !=
+                                                  DestinyItemType.Subclass &&
+                                              ManifestService
+                                                      .manifestParsed
+                                                      .destinyInventoryItemDefinition![
+                                                          characterState
+                                                              .item.itemHash]!
+                                                      .equippingBlock!
+                                                      .equipmentSlotTypeHash ==
+                                                  3284755031)
+                                            AdvancedSubclassDetailsCard(
+                                                childPadding:
+                                                    itemDetailsChildPadding,
+                                                sidePadding:
+                                                    itemDetailsSidePadding,
+                                                width: itemDetailsWidth,
                                                 characterId: snapshot
                                                     .data!
                                                     .characters[index]

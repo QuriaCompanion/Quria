@@ -5,7 +5,6 @@ import 'package:bungie_api/enums/destiny_energy_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
-import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -670,13 +669,13 @@ class DestinyData {
   static Map<DestinyAmmunitionType, DestinyPresentationNodeDefinition>
       ammoInfoByType = {
     DestinyAmmunitionType.Primary:
-        ManifestService.manifestParsed!.destinyPresentationNodeDefinition![
+        ManifestService.manifestParsed.destinyPresentationNodeDefinition![
             ammoTypeHashes[DestinyAmmunitionType.Primary]]!,
     DestinyAmmunitionType.Special:
-        ManifestService.manifestParsed!.destinyPresentationNodeDefinition![
+        ManifestService.manifestParsed.destinyPresentationNodeDefinition![
             ammoTypeHashes[DestinyAmmunitionType.Special]]!,
     DestinyAmmunitionType.Heavy:
-        ManifestService.manifestParsed!.destinyPresentationNodeDefinition![
+        ManifestService.manifestParsed.destinyPresentationNodeDefinition![
             ammoTypeHashes[DestinyAmmunitionType.Heavy]]!,
   };
 

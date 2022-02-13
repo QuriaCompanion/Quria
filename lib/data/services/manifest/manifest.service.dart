@@ -52,12 +52,10 @@ class ManifestService {
     try {
       if (AllDestinyManifestComponents.getValue<T>() == null) {
         if (await isManifestSaved(T.toString())) {
-          AllDestinyManifestComponents.setValue<T>(
-              await compute<String, Map<int, T>>(_parseJsonDb, T.toString()));
+          await compute<String, Map<int, T>>(_parseJsonDb, T.toString());
         } else {
-          AllDestinyManifestComponents.setValue<T>(
-              await compute<String, Map<int, T>>(
-                  _parseJson, await getManifestRemote<T>()));
+          await compute<String, Map<int, T>>(
+              _parseJson, await getManifestRemote<T>());
           manifestSaved(T.toString());
         }
       }
@@ -77,8 +75,7 @@ class ManifestService {
 
   storeManifest<T>(Map<int, T> manifest) {}
 
-  static Future<String> getManifestRemote<T>(
-      {DownloadProgress? onProgress}) async {
+  static Future<String> getManifestRemote<T>() async {
     DestinyManifest info = await loadManifestInfo();
     String language = "fr";
     http.Response res = await http.get(Uri.parse('https://www.bungie.net' +
@@ -117,6 +114,7 @@ Future<Map<int, T>> _parseJson<T>(String manifest) async {
   for (final entry in decoded.entries) {
     items[int.parse(entry.key)] = type!(entry.value);
   }
+  AllDestinyManifestComponents.setValue<T>(items);
   return items;
 }
 
@@ -136,6 +134,7 @@ Future<Map<int, T>> _parseJsonDb<T>(String manifestName) async {
   for (final entry in decoded.entries) {
     items[int.parse(entry.key)] = type!(entry.value);
   }
+  AllDestinyManifestComponents.setValue<T>(items);
   return items;
 }
 
