@@ -36,6 +36,14 @@ class BackendService {
   Future<BuildResponse> getBuilds() async {
     try {
       final exoticHash = await StorageService.getLocalStorage("exotic");
+      const statOrder = [
+        "mobility",
+        "resilience",
+        "recovery",
+        "discipline",
+        "intellect",
+        "strength"
+      ];
       GroupUserInfoCard? membership = await accountService.getMembership();
       BungieNetToken? token = await authService.getToken();
 
@@ -46,8 +54,14 @@ class BackendService {
           '/' +
           exoticHash.toString() +
           '/');
-      final response =
-          await http.get(uri, headers: {"Authorization": token!.accessToken});
+      final response = await http.post(
+        uri,
+        headers: {
+          "Authorization": token!.accessToken,
+          "Content-Type": "application/json"
+        },
+        body: json.encode({"statOrder": statOrder}),
+      );
       final responseJson = json.decode(response.body);
       final buildResponse = BuildResponse.fromJson(responseJson);
       return buildResponse;

@@ -11,6 +11,7 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/advanced_subclass_details_card.dart';
 import 'package:quria/presentation/components/item_details_card.dart';
 import 'package:quria/presentation/components/loader.dart';
 import 'package:quria/presentation/components/subclass_details_card.dart';
@@ -197,6 +198,32 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                     itemDetailsSidePadding,
                                                 childPadding:
                                                     itemDetailsChildPadding,
+                                                characterId: snapshot
+                                                    .data!
+                                                    .characters[index]
+                                                    .characterId!,
+                                                subclass: characterState.item)
+                                          else if (ManifestService
+                                                      .manifestParsed
+                                                      .destinyInventoryItemDefinition![
+                                                          characterState
+                                                              .item.itemHash]!
+                                                      .itemType !=
+                                                  DestinyItemType.Subclass &&
+                                              ManifestService
+                                                      .manifestParsed
+                                                      .destinyInventoryItemDefinition![
+                                                          characterState
+                                                              .item.itemHash]!
+                                                      .equippingBlock!
+                                                      .equipmentSlotTypeHash ==
+                                                  3284755031)
+                                            AdvancedSubclassDetailsCard(
+                                                childPadding:
+                                                    itemDetailsChildPadding,
+                                                sidePadding:
+                                                    itemDetailsSidePadding,
+                                                width: itemDetailsWidth,
                                                 characterId: snapshot
                                                     .data!
                                                     .characters[index]

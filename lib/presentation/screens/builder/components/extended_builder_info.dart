@@ -35,10 +35,12 @@ class _ExtendedBuilderInfoState extends State<ExtendedBuilderInfo> {
       children: [
         InkWell(
           onTap: () {
-            setState(() => isVisible = !isVisible);
-            setState(() => icon = isVisible
-                ? Icons.arrow_upward_outlined
-                : Icons.arrow_downward_outlined);
+            setState(() {
+              isVisible = !isVisible;
+              icon = isVisible
+                  ? Icons.arrow_upward_outlined
+                  : Icons.arrow_downward_outlined;
+            });
           },
           child: Icon(
             icon,
