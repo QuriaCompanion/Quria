@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:bungie_api/enums/destiny_collectible_state.dart';
+import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_artifact_profile_scoped.dart';
 import 'package:bungie_api/models/destiny_character_activities_component.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
@@ -24,6 +24,7 @@ import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:bungie_api/enums/destiny_component_type.dart';
 import 'package:bungie_api/enums/destiny_scope.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.enum.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 
 enum LastLoadedFrom { server, cache }
@@ -92,7 +93,6 @@ class ProfileComponentGroups {
 
 class ProfileService {
   static final ProfileService _singleton = ProfileService._internal();
-  static final StorageService storageService = StorageService();
   late DateTime lastUpdated;
   factory ProfileService() {
     return _singleton;
@@ -118,12 +118,10 @@ class ProfileService {
       {List<DestinyComponentType>? components, bool skipUpdate = false}) async {
     try {
       DestinyProfileResponse? res = await _updateProfileData(updateComponents);
-      print(res);
       _lastLoadedFrom = LastLoadedFrom.server;
       _cacheProfile(_profile!);
       return res;
     } catch (e) {
-      inspect(e);
       if (!skipUpdate) await Future.delayed(const Duration(seconds: 2));
     }
     return _profile;
@@ -138,10 +136,9 @@ class ProfileService {
       await Future.delayed(duration);
       if (pauseAutomaticUpdater != true) {
         try {
-          print('auto refreshing');
           await fetchProfileData(components: updateComponents);
         } catch (e) {
-          print(e);
+          rethrow;
         }
       }
     }
@@ -185,6 +182,11 @@ class ProfileService {
       _profile!.profileProgression = response.profileProgression;
     }
     if (components.contains(DestinyComponentType.PresentationNodes)) {
+      _profile!.profilePresentationNodes = response.profilePresentationNodes;
+      _profile!.characterPresentationNodes =
+          response.characterPresentationNodes;
+    }
+    if (components.contains(DestinyComponentType.ItemPerks)) {
       _profile!.profilePresentationNodes = response.profilePresentationNodes;
       _profile!.characterPresentationNodes =
           response.characterPresentationNodes;
@@ -238,29 +240,26 @@ class ProfileService {
   }
 
   _cacheProfile(DestinyProfileResponse profile) async {
-    storageService.setLocalStorage('cachedProfile', profile.toJson());
-    print('saved to cache');
+    StorageService.setLocalStorage('cachedProfile', profile.toJson());
   }
 
-  Future<DestinyProfileResponse?> loadFromCache() async {
-    var json = await storageService.getLocalStorage('cachedProfile');
+  Future<DestinyProfileResponse?> loadProfile() async {
+    var json = await StorageService.getLocalStorage('cachedProfile');
     if (json != null) {
       try {
         DestinyProfileResponse response = DestinyProfileResponse.fromJson(json);
         if ((response.characters?.data?.length ?? 0) > 0) {
           _profile = response;
           _lastLoadedFrom = LastLoadedFrom.cache;
-          print('loaded profile from cache');
           inspect(response);
           return response;
         }
       } catch (e) {
-        print(e);
+        rethrow;
       }
     }
 
     DestinyProfileResponse? response = await fetchProfileData();
-    print('loaded profile from server');
     inspect(response);
     return response;
   }
@@ -284,8 +283,9 @@ class ProfileService {
   List<DestinyItemSocketState>? getItemSockets(String itemInstanceId) {
     try {
       return _profile!.itemComponents!.sockets!.data![itemInstanceId]?.sockets;
-    } catch (e) {}
-    return null;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Map<String, List<DestinyItemPlugBase>>? getItemReusablePlugs(
@@ -293,8 +293,9 @@ class ProfileService {
     try {
       return _profile!
           .itemComponents?.reusablePlugs?.data?[itemInstanceId]?.plugs;
-    } catch (e) {}
-    return null;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Map<String, List<DestinyObjectiveProgress>>? getPlugObjectives(
@@ -302,8 +303,9 @@ class ProfileService {
     try {
       return _profile!.itemComponents?.plugObjectives?.data![itemInstanceId]
           ?.objectivesPerPlug;
-    } catch (e) {}
-    return null;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Map<String, DestinyStat>? getPrecalculatedStats(String itemInstanceId) {
@@ -320,13 +322,16 @@ class ProfileService {
       var objectives = _profile!
           .itemComponents!.objectives?.data?[itemInstanceId]?.objectives;
       if (objectives != null) return objectives;
-    } catch (e) {}
+    } catch (e) {
+      rethrow;
+    }
     try {
       var objectives = _profile!.characterProgressions?.data?[characterId]
           ?.uninstancedItemObjectives?["$hash"];
       return objectives;
-    } catch (e) {}
-    return null;
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Map<String, DestinyPresentationNodeComponent>? getProfilePresentationNodes() {
@@ -382,6 +387,14 @@ class ProfileService {
     return _profile!.characters?.data![characterId];
   }
 
+  Iterable<DestinyItemComponent> getArmors(String charcterId) {
+    return _profile!.characterEquipment!.data![charcterId]!.items!.where(
+        (element) =>
+            ManifestService.manifestParsed
+                .destinyInventoryItemDefinition![element.itemHash]!.itemType ==
+            DestinyItemType.Armor);
+  }
+
   DestinyCharacterActivitiesComponent? getCharacterActivities(
       String characterId) {
     return _profile!.characterActivities?.data![characterId];
@@ -421,8 +434,8 @@ class ProfileService {
 
   bool isCollectibleUnlocked(int hash, DestinyScope scope) {
     String hashStr = "$hash";
-    Map<String, DestinyCollectibleComponent> collectibles =
-        _profile!.profileCollectibles!.data!.collectibles!;
+    Map<String, DestinyCollectibleComponent>? collectibles =
+        _profile?.profileCollectibles?.data?.collectibles;
     if (collectibles == null) {
       return true;
     }
@@ -468,10 +481,10 @@ class ProfileService {
     if (_profile!.metrics?.data?.metrics?.containsKey(hashStr) != true) {
       return null;
     }
-    return _profile!.metrics?.data?.metrics?[hashStr];
+    return _profile?.metrics?.data?.metrics?[hashStr];
   }
 
-  List<DestinyItemComponent> getItemsByInstanceId(List<String> ids) {
+  List<DestinyItemComponent> getItemsByInstanceId(List<String?> ids) {
     ids = ids.where((id) => id != null).toList();
     List<DestinyItemComponent> items = [];
     List<DestinyItemComponent> profileInventory =
@@ -525,3 +538,77 @@ class ProfileService {
     return allItems;
   }
 }
+
+// Future<SubclassTalentGridInfo> getSubclassTalentGridInfo(
+//     DestinyItemComponent item) async {
+//   var def = ManifestService
+//       .manifestParsed.destinyInventoryItemDefinition![item.itemHash];
+//   var talentGrid = ProfileService().getTalentGrid(item.itemInstanceId!);
+//   var talentGridDef = ManifestService
+//       .manifestParsed.destinyTalentGridDefinition![talentGrid!.talentGridHash];
+//   var talentgridCategory =
+//       extractTalentGridNodeCategory(talentGridDef!, talentGrid);
+//   var mainPerk = getSubclassMainPerk(def!, talentgridCategory);
+
+//   // return SubclassTalentGridInfo(
+//   //   mainPerkHash: mainPerk,
+//   //   damageType: def.talentGrid!.hudDamageType!,
+//   // );
+// }
+
+// int getSubclassMainPerk(DestinyInventoryItemDefinition def,
+//     DestinyTalentNodeCategory talentgridCategory) {
+//   var str = "";
+
+//   switch (def.classType) {
+//     case DestinyClass.Titan:
+//       str += "titan";
+//       break;
+//     case DestinyClass.Hunter:
+//       str += "hunter";
+//       break;
+//     case DestinyClass.Warlock:
+//       str += "warlock";
+//       break;
+//     default:
+//       break;
+//   }
+//   switch (def?.talentGrid?.hudDamageType) {
+//     case DamageType.Arc:
+//       str += "_arc";
+//       break;
+//     case DamageType.Thermal:
+//       str += "_solar";
+//       break;
+//     case DamageType.Void:
+//       str += "_void";
+//       break;
+//     case DamageType.Stasis:
+//       str += "_stasis";
+//       break;
+//     default:
+//       break;
+//   }
+//   if ((talentgridCategory.identifier?.length ?? 0) > 0) {
+//     str += "_${talentgridCategory.identifier}";
+//   }
+
+//   return subclassMainPerks[str]!;
+// }
+
+// DestinyTalentNodeCategory extractTalentGridNodeCategory(
+//     DestinyTalentGridDefinition talentGridDef,
+//     DestinyItemTalentGridComponent talentGrid) {
+//   Iterable<int> activatedNodes = talentGrid?.nodes
+//       ?.where((node) => node.isActivated)
+//       ?.map((node) => node.nodeIndex);
+//   Iterable<DestinyTalentNodeCategory> selectedSkills =
+//       talentGridDef?.nodeCategories?.where((category) {
+//     var overlapping = category.nodeHashes
+//         .where((nodeHash) => activatedNodes?.contains(nodeHash) ?? false);
+//     return overlapping.length > 0;
+//   })?.toList();
+//   DestinyTalentNodeCategory subclassPath = selectedSkills
+//       ?.firstWhere((nodeDef) => nodeDef.isLoreDriven, orElse: () => null);
+//   return subclassPath;
+// }

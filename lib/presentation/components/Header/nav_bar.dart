@@ -3,6 +3,7 @@ import 'package:quria/presentation/var/routes.dart';
 import 'components/nav_item.dart';
 
 class NavBarWidget extends StatefulWidget {
+  const NavBarWidget({Key? key}) : super(key: key);
   @override
   _NavBarWidgetState createState() => _NavBarWidgetState();
 }
@@ -12,7 +13,7 @@ class _NavBarWidgetState extends State<NavBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 60.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

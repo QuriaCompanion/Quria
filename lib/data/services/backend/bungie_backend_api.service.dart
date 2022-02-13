@@ -1,10 +1,6 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'dart:convert';
-import 'dart:developer';
 import 'package:bungie_api/enums/bungie_membership_type.dart';
 import 'package:bungie_api/models/group_user_info_card.dart';
-import 'package:bungie_api/models/user_membership_data.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:bungie_api/helpers/bungie_net_token.dart';
@@ -17,7 +13,6 @@ import 'package:quria/data/services/storage/storage.service.dart';
 class BackendService {
   static const String baseUrl = 'http://localhost:3001';
   static const String apiUrl = baseUrl;
-  static final StorageService storageService = StorageService();
   static final AccountService accountService = AccountService();
   static final AuthService authService = AuthService();
 
@@ -32,37 +27,46 @@ class BackendService {
       [BungieNetToken? token]) async {
     final response = await http.get(
         Uri.parse('/inventory/$membershipType/$membershipId'),
-        headers: {"Authorization": 'Bearer ' + token!.accessToken!});
+        headers: {"Authorization": 'Bearer ' + token!.accessToken});
     final responseJson = json.decode(response.body);
 
     return responseJson.items;
   }
 
-  Future<BuildResponse?> getBuilds() async {
+  Future<BuildResponse> getBuilds() async {
     try {
-      final exoticHash = await storageService.getLocalStorage("exotic");
+      final exoticHash = await StorageService.getLocalStorage("exotic");
+      const statOrder = [
+        "mobility",
+        "resilience",
+        "recovery",
+        "discipline",
+        "intellect",
+        "strength"
+      ];
       GroupUserInfoCard? membership = await accountService.getMembership();
       BungieNetToken? token = await authService.getToken();
-      print(exoticHash);
-      print(membership!.membershipType!.index.toString());
 
-      print(membership.membershipId);
       final uri = Uri.parse('http://localhost:3001/builder/' +
-          membership.membershipType!.index.toString() +
+          membership!.membershipType!.index.toString() +
           '/' +
           membership.membershipId! +
           '/' +
           exoticHash.toString() +
           '/');
-      final response =
-          await http.get(uri, headers: {"Authorization": token!.accessToken!});
-      print('ho');
+      final response = await http.post(
+        uri,
+        headers: {
+          "Authorization": token!.accessToken,
+          "Content-Type": "application/json"
+        },
+        body: json.encode({"statOrder": statOrder}),
+      );
       final responseJson = json.decode(response.body);
-      inspect(responseJson);
       final buildResponse = BuildResponse.fromJson(responseJson);
       return buildResponse;
     } catch (e) {
-      print(e);
+      rethrow;
     }
   }
 

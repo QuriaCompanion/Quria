@@ -12,12 +12,16 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: InkWell(
-          onTap: () {
-            download(context);
-          },
-          child: const Button(
-              value: 'Download Manifest', width: 250.0, height: 60),
+        child: Column(
+          children: [
+            InkWell(
+              onTap: () {
+                download(context);
+              },
+              child: const Button(
+                  value: 'Download Manifest', width: 250.0, height: 60),
+            ),
+          ],
         ),
       ),
     );

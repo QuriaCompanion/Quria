@@ -1,138 +1,98 @@
-import 'dart:convert';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/display/display.service.dart';
-import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:quria/presentation/var/routes.dart';
+import 'package:quria/presentation/components/exotic_item.dart';
+import 'package:quria/presentation/components/loader.dart';
 
-class ExoticWidget extends StatelessWidget {
-  DisplayService display = DisplayService();
-  StorageService storage = StorageService();
-  ExoticWidget({Key? key}) : super(key: key);
+class ExoticWidget extends StatefulWidget {
+  const ExoticWidget({Key? key}) : super(key: key);
+
+  @override
+  _ExoticWidgetState createState() => _ExoticWidgetState();
+}
+
+class _ExoticWidgetState extends State<ExoticWidget> {
+  final DisplayService display = DisplayService();
+  late Future<List<DestinyInventoryItemDefinition>> _future;
+  @override
+  void initState() {
+    super.initState();
+    _future = display.getExotics();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
         width: MediaQuery.of(context).size.width,
-        decoration: const BoxDecoration(
-            image: DecorationImage(
-                fit: BoxFit.fitWidth,
-                image: NetworkImage(
-                    "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg"))),
+        decoration: ghostBackground,
         child: exotic(context));
   }
 
   Widget exotic(BuildContext context) {
+    const double textFontSize = 25;
+    const double titleFontSize = 45;
+    const double padding = 50;
+    const double itemPadding = 60;
     return SingleChildScrollView(
-      child: Center(
-        child: Container(
-          child: Column(
-            children: [
-              Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(left: 200.0),
+      child: Container(
+        padding: EdgeInsets.only(
+            top: (MediaQuery.of(context).size.width / 100) * 5,
+            left: (MediaQuery.of(context).size.width / 100) * 5,
+            right: (MediaQuery.of(context).size.width / 100) * 5),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              "Veuillez choisir un éxotique",
+              textAlign: TextAlign.left,
+              style: TextStyle(color: Colors.white, fontSize: titleFontSize),
+            ),
+            const SizedBox(height: padding),
+            IntrinsicHeight(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Expanded(
+                    flex: 30,
                     child: Text(
-                      "Veuillez choisir un éxotique",
-                      style: TextStyle(color: Colors.white, fontSize: 35),
-                    ),
+                        "Prêt à construire votre armure de rêve?\nÇa commence maintenant!\nCommencez par choisir une armure exotique qui sera la pièrce maitresse de votre équipement.",
+                        style: TextStyle(
+                            color: Colors.white, fontSize: textFontSize)),
+                  ),
+                  const VerticalDivider(
+                    color: Colors.white,
+                    thickness: 1.5,
+                    width: padding * 2,
+                  ),
+                  Expanded(
+                    flex: 60,
+                    child: FutureBuilder(
+                        future: _future,
+                        builder: (context,
+                            AsyncSnapshot<List<DestinyInventoryItemDefinition>>
+                                snapshot) {
+                          if (snapshot.hasData) {
+                            List<Widget> list = <Widget>[];
+                            for (var i = 0; i < snapshot.data!.length; i++) {
+                              list.add(ExoticItem(value: snapshot.data![i]));
+                            }
+                            return Container(
+                              padding: const EdgeInsets.all(itemPadding),
+                              child: Wrap(
+                                children: list,
+                              ),
+                            );
+                          } else {
+                            return const Loader();
+                          }
+                        }),
                   ),
                 ],
               ),
-              const SizedBox(height: 60),
-              IntrinsicHeight(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Expanded(
-                      flex: 30,
-                      child: Padding(
-                        padding:
-                            EdgeInsets.only(left: 60.0, right: 60, top: 100),
-                        child: Text(
-                            "Prêt à construire votre armure de rêve?\nÇa commence maintenant!\nCommencez par choisir une armure exotique qui sera la pièrce maitresse de votre équipement.",
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 30)),
-                      ),
-                    ),
-                    const VerticalDivider(
-                      color: Colors.white,
-                      thickness: 1.5,
-                      width: 20,
-                    ),
-                    Expanded(
-                      flex: 60,
-                      child: FutureBuilder(
-                          future: display.getExotics(),
-                          builder: (context, AsyncSnapshot snapshot) {
-                            if (snapshot.hasData) {
-                              List<Widget> list = <Widget>[];
-                              for (var i = 0; i < snapshot.data.length; i++) {
-                                list.add(item(context, snapshot.data[i]));
-                              }
-                              return Container(
-                                child: Wrap(
-                                  children: list,
-                                ),
-                                padding: const EdgeInsets.all(60),
-                              );
-                            } else {
-                              return const Center(
-                                child: CircularProgressIndicator(),
-                              );
-                            }
-                          }),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          padding: const EdgeInsets.all(100),
-        ),
-      ),
-    );
-  }
-
-  Widget item(BuildContext context, DestinyInventoryItemDefinition data) {
-    return InkWell(
-      onTap: () => {
-        storage.setLocalStorage("exotic", data.hash),
-        Navigator.pushNamed(context, routeBuilder)
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Container(
-          width: 150,
-          decoration: BoxDecoration(
-            color: Colors.grey.shade700,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.5),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: const Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Image.network(
-                  "https://www.bungie.net" + data.displayProperties!.icon!,
-                  width: 150,
-                  fit: BoxFit.fill),
-              Padding(
-                padding: EdgeInsets.all(15.0),
-                child: Text(
-                    utf8.decode(data.displayProperties!.name!.runes.toList()),
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, color: Colors.white),
-                    overflow: TextOverflow.clip),
-              ),
-            ],
-          ),
+            )
+          ],
         ),
       ),
     );

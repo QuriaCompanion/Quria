@@ -1,10 +1,10 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'dart:developer';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:universal_io/io.dart';
 
-import 'package:bungie_api/helpers/bungie_net_token.dart';
 import 'package:bungie_api/helpers/oauth.dart';
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:bungie_api/models/user_membership_data.dart';
@@ -44,11 +44,7 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-          image: DecorationImage(
-              fit: BoxFit.fitWidth,
-              image: NetworkImage(
-                  "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg"))),
+      decoration: ghostBackground,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -121,9 +117,9 @@ class LoginWidgetState extends State<LoginWidget> {
 
   authCode(String code) async {
     try {
-      BungieNetToken token = await widget.auth.requestToken(code);
+      await widget.auth.requestToken(code);
       checkMembership();
-    } catch (e, stackTrace) {
+    } catch (e) {
       inspect(e);
     }
   }
@@ -137,7 +133,7 @@ class LoginWidgetState extends State<LoginWidget> {
   }
 
   loadProfile() async {
-    await widget.profile.loadFromCache();
+    await widget.profile.loadProfile();
   }
 
   void showSelectMembership() async {

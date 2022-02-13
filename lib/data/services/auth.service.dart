@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:universal_io/io.dart';
 
@@ -19,7 +18,6 @@ bool initialLinkHandled = false;
 class AuthService {
   BungieNetToken? _currentToken;
   GroupUserInfoCard? _currentMembership;
-  static final StorageService storageService = StorageService();
   static final AccountService accountService = AccountService();
 
   bool waitingAuthCode = false;
@@ -40,35 +38,31 @@ class AuthService {
   AuthService._internal();
 
   Future<BungieNetToken?> _getStoredToken() async {
-    var json = await storageService.getLocalStorage('bungie_token');
+    var json = await StorageService.getLocalStorage('bungie_token');
     try {
       return BungieNetToken.fromJson(json);
     } catch (e) {
       print("failed retrieving token ");
-      print(e);
+      return null;
     }
-    return null;
   }
 
   Future<void> _setStoredToken(BungieNetToken token) async {
     print(token.accessToken);
-    await storageService.setLocalStorage('bungie_token', token);
-    await storageService.setLocalStorage(
+    await StorageService.setLocalStorage('bungie_token', token);
+    await StorageService.setLocalStorage(
         'last_refresh', DateTime.now().toString());
   }
 
   Future<BungieNetToken> refreshToken(BungieNetToken token) async {
     BungieNetToken bNetToken =
-        await BungieApiService().refreshToken(token.refreshToken!);
+        await BungieApiService().refreshToken(token.refreshToken);
     saveToken(bNetToken);
     return bNetToken;
   }
 
   Future<void> saveToken(BungieNetToken token) async {
-    if (token.accessToken == null) {
-      return;
-    }
-    await accountService.setCurrentMembershipId(token.membershipId!);
+    await accountService.setCurrentMembershipId(token.membershipId);
     await _setStoredToken(token);
     await Future.delayed(const Duration(milliseconds: 1));
     _currentToken = token;
@@ -81,11 +75,11 @@ class AuthService {
       return null;
     }
     DateTime now = DateTime.now();
-    String? savedString = await storageService.getLocalStorage('last_refresh');
+    String? savedString = await StorageService.getLocalStorage('last_refresh');
     DateTime savedDate = DateTime.parse(savedString!);
-    DateTime expire = savedDate.add(Duration(seconds: token!.expiresIn!));
+    DateTime expire = savedDate.add(Duration(seconds: token!.expiresIn));
     DateTime refreshExpire =
-        savedDate.add(Duration(seconds: token.refreshExpiresIn!));
+        savedDate.add(Duration(seconds: token.refreshExpiresIn));
     if (refreshExpire.isBefore(now)) {
       return null;
     }
@@ -109,7 +103,6 @@ class AuthService {
     }
 
     if (uri?.queryParameters == null) return null;
-    print("initialURI: $uri");
     if (uri!.queryParameters.containsKey("code") ||
         uri.queryParameters.containsKey("error")) {
       closeWebView();

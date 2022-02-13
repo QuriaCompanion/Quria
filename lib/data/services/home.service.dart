@@ -17,8 +17,7 @@ class NetworkService {
       console.log(response.body);
       return jsonDecode(response.body) as List;
     } catch (e) {
-      print(e);
-      return [];
+      rethrow;
     }
   }
 }

@@ -1,7 +1,4 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'dart:convert';
-import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 import 'package:bungie_api/api/destiny2.dart';
@@ -64,7 +61,7 @@ class BungieApiService {
     return dotenv.env['client_id'];
   }
 
-  Future<DestinyManifestResponse> getManifestInfo() {
+  static Future<DestinyManifestResponse> getManifestInfo() {
     return Destiny2.getDestinyManifest(Client());
   }
 
