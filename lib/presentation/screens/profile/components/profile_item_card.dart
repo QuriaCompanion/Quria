@@ -1,11 +1,9 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
-import 'package:quria/constants/styles.dart';
 import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
-import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/icon_item.dart';
 
 class ProfileItemCard extends StatelessWidget {
   final DestinyItemComponent displayedItem;
@@ -23,34 +21,14 @@ class ProfileItemCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final displayHash =
-        displayedItem.overrideStyleItemHash ?? displayedItem.itemHash;
+        displayedItem.overrideStyleItemHash ?? displayedItem.itemHash!;
     return Container(
       child: InkWell(
         onTap: () {
           context.read<AttributsDetailsCubit>().changeId(0);
           context.read<CharacterCubit>().showDetails(displayedItem);
         },
-        child: Container(
-          decoration: ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition![displayedItem.itemHash]!
-                      .equippingBlock!
-                      .equipmentSlotTypeHash !=
-                  3284755031
-              ? regularShadow
-              : const BoxDecoration(),
-          child: Image(
-            image: NetworkImage(DestinyData.bungieLink +
-                ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition![displayHash]!
-                    .displayProperties!
-                    .icon!),
-            fit: BoxFit.fill,
-            width: sizes,
-            height: sizes,
-          ),
-        ),
+        child: ItemIcon(displayHash: displayHash, imageSize: sizes),
       ),
       margin: EdgeInsets.only(top: margin / 2, bottom: margin / 2),
     );

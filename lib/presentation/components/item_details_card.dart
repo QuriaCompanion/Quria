@@ -4,6 +4,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/icon_item.dart';
 import 'package:quria/presentation/components/stat_progress_bar.dart';
 import 'package:quria/presentation/components/weapon_details_hidden_stats.dart';
 
@@ -49,22 +50,7 @@ class ItemDetailsWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
-                  height: imageSize,
-                  width: imageSize,
-                  child: Container(
-                    decoration: regularShadow,
-                    child: Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          ManifestService
-                              .manifestParsed
-                              .destinyInventoryItemDefinition![displayHash]!
-                              .displayProperties!
-                              .icon!),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
+                ItemIcon(displayHash: displayHash, imageSize: imageSize),
                 SizedBox(
                   width: childPadding,
                 ),
