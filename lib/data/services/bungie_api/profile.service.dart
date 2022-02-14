@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:bungie_api/destiny2.dart';
 import 'package:bungie_api/enums/destiny_collectible_state.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_artifact_profile_scoped.dart';
@@ -7,6 +8,7 @@ import 'package:bungie_api/models/destiny_character_activities_component.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_character_progression_component.dart';
 import 'package:bungie_api/models/destiny_collectible_component.dart';
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
@@ -273,6 +275,46 @@ class ProfileService {
         false) {
       return _profile!.itemComponents!.talentGrids!.data![instanceId]!;
     }
+    return null;
+  }
+
+  int? getCurrentGrenadeHashForCharacter(String characterId) {
+    DestinyItemComponent subclass = getCharacterInventory(characterId)
+        .firstWhere((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash ==
+            3284755031);
+
+    DestinyItemSocketState? stasisGrenade =
+        getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.plugHash]
+                ?.itemTypeDisplayName ==
+            "Stasis Grenade");
+    if (stasisGrenade != null) {
+      return ManifestService
+          .manifestParsed.destinyInventoryItemDefinition?[stasisGrenade]?.hash;
+    }
+    DestinyItemTalentGridComponent? oldSubclass =
+        getTalentGrid(subclass.itemInstanceId!);
+
+    DestinyTalentNode? oldGrenade = oldSubclass?.nodes?.firstWhere((element) =>
+        element.isActivated == true && element.nodeIndex == 7 ||
+        element.nodeIndex == 8 ||
+        element.nodeIndex == 9);
+    if (oldGrenade != null) {
+      return ManifestService
+          .manifestParsed
+          .destinyTalentGridDefinition?[oldSubclass!.talentGridHash]!
+          .nodes?[oldGrenade.nodeIndex!]
+          .steps?[0]
+          .nodeStepHash;
+    }
+
     return null;
   }
 

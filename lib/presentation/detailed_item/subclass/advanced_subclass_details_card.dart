@@ -5,6 +5,7 @@ import 'package:bungie_api/destiny2.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/grenade_cooldowns.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
@@ -251,13 +252,17 @@ class SubclassSubItemDisplay extends StatelessWidget {
         Row(children: [
           SizedBox(
             width: iconSize,
-            child: Image(
-              image: NetworkImage(DestinyData.bungieLink +
-                  ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition![attribute.plugHash]!
-                      .displayProperties!
-                      .icon!),
+            child: Tooltip(
+              message:
+                  '${GrenadeCooldown.grenadeMap[attribute.plugHash]?[5] ?? ""}',
+              child: Image(
+                image: NetworkImage(DestinyData.bungieLink +
+                    ManifestService
+                        .manifestParsed
+                        .destinyInventoryItemDefinition![attribute.plugHash]!
+                        .displayProperties!
+                        .icon!),
+              ),
             ),
           ),
           SizedBox(width: childPadding),
