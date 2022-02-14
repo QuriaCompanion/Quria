@@ -1,11 +1,4 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
-import 'package:bungie_api/models/destiny_class_definition.dart';
-import 'package:bungie_api/models/destiny_damage_type_definition.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
-import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
-import 'package:bungie_api/models/destiny_sandbox_perk_definition.dart';
-import 'package:bungie_api/models/destiny_stat_definition.dart';
-import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/constants/styles.dart';
@@ -56,27 +49,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   static const double itemSectionSpace = 20;
   static const double itemDetailsSidePadding = 25;
   static const double itemDetailsChildPadding = 10;
-
-  Future<ProfileHelper> getProfileData() async {
-    try {
-      await ManifestService.getManifest<DestinyInventoryItemDefinition>();
-      await ManifestService.getManifest<DestinyDamageTypeDefinition>();
-      await ManifestService.getManifest<DestinyStatDefinition>();
-      await ManifestService.getManifest<DestinyClassDefinition>();
-      await ManifestService.getManifest<DestinySandboxPerkDefinition>();
-      await ManifestService.getManifest<DestinyTalentGridDefinition>();
-      await ManifestService.getManifest<DestinyPresentationNodeDefinition>();
-
-      final characters = profile.getCharacters();
-      ProfileHelper returned = ProfileHelper(
-          (await account.getMembership())!,
-          characters,
-          profile.getCharacterEquipment(characters[index].characterId!));
-      return returned;
-    } catch (e) {
-      rethrow;
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
