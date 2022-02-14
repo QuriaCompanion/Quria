@@ -3,7 +3,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/components/statistic_display.dart';
+import 'package:quria/presentation/components/misc/statistic_display.dart';
 import 'package:quria/presentation/screens/builder/components/extended_builder_info.dart';
 
 class SingleBuild extends StatelessWidget {

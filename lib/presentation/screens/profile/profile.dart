@@ -11,10 +11,10 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:quria/presentation/components/advanced_subclass_details_card.dart';
-import 'package:quria/presentation/components/item_details_card.dart';
-import 'package:quria/presentation/components/loader.dart';
-import 'package:quria/presentation/components/subclass_details_card.dart';
+import 'package:quria/presentation/detailed_item/item/item_details_card.dart';
+import 'package:quria/presentation/detailed_item/subclass/advanced_subclass_details_card.dart';
+import 'package:quria/presentation/components/misc/loader.dart';
+import 'package:quria/presentation/detailed_item/subclass/subclass_details_card.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner.dart';
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
 

@@ -2,8 +2,8 @@ import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/display/display.service.dart';
-import 'package:quria/presentation/components/exotic_item.dart';
-import 'package:quria/presentation/components/loader.dart';
+import 'package:quria/presentation/components/misc/exotic_item.dart';
+import 'package:quria/presentation/components/misc/loader.dart';
 
 class ExoticWidget extends StatefulWidget {
   const ExoticWidget({Key? key}) : super(key: key);

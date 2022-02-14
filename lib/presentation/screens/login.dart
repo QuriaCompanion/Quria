@@ -1,5 +1,3 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'dart:developer';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
@@ -13,7 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
-import 'package:quria/presentation/components/button.dart';
+import 'package:quria/presentation/components/misc/button.dart';
 
 typedef LoginCallback = void Function(String code);
 typedef SkipCallback = void Function();

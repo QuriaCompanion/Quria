@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
-import 'package:quria/presentation/components/statistic_display.dart';
+import 'package:quria/presentation/components/misc/statistic_display.dart';
 
 class VerticalCharacterStatsListingWidget extends StatelessWidget {
   final ProfileHelper? data;

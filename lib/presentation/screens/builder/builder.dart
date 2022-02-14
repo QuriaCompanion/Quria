@@ -3,7 +3,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/backend/bungie_backend_api.service.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/components/loader.dart';
+import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/screens/builder/components/single_build.dart';
 
 class BuilderWidget extends StatefulWidget {

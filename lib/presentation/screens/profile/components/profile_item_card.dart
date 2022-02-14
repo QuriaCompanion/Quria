@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quria/presentation/components/icon_item.dart';
+import 'package:quria/presentation/components/misc/icon_item.dart';
 
 class ProfileItemCard extends StatelessWidget {
   final DestinyItemComponent displayedItem;
