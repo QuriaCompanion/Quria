@@ -15,7 +15,7 @@ class HeaderWeaponDetails extends StatelessWidget {
   final double width;
   final double height;
   final double childPadding;
-  final double iconSize = 50;
+  final double iconSize;
   final double fontSize;
 
   final fontColor = const TextStyle(color: Colors.white);
@@ -26,6 +26,7 @@ class HeaderWeaponDetails extends StatelessWidget {
       required this.item,
 
       // style
+      required this.iconSize,
       required this.childPadding,
       required this.fontSize,
       required this.width,
@@ -75,31 +76,37 @@ class HeaderWeaponDetails extends StatelessWidget {
                           height: iconSize,
                         ),
                       SizedBox(width: childPadding),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          AutoSizeText(
-                            utf8.decode(ManifestService
-                                .manifestParsed
-                                .destinyInventoryItemDefinition![item.itemHash]!
-                                .displayProperties!
-                                .name!
-                                .runes
-                                .toList()),
-                            style: TextStyle(
-                                color: Colors.white, fontSize: fontSize + 5),
-                          ),
-                          Text(
-                            utf8.decode(ManifestService
-                                .manifestParsed
-                                .destinyInventoryItemDefinition![item.itemHash]!
-                                .itemTypeDisplayName!
-                                .runes
-                                .toList()),
-                            style: TextStyle(
-                                color: Colors.white, fontSize: fontSize - 5),
-                          )
-                        ],
+                      SizedBox(
+                        width: width * 0.5,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            AutoSizeText(
+                              utf8.decode(ManifestService
+                                  .manifestParsed
+                                  .destinyInventoryItemDefinition![
+                                      item.itemHash]!
+                                  .displayProperties!
+                                  .name!
+                                  .runes
+                                  .toList()),
+                              maxLines: 1,
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: fontSize + 5),
+                            ),
+                            AutoSizeText(
+                              utf8.decode(ManifestService
+                                  .manifestParsed
+                                  .destinyInventoryItemDefinition![
+                                      item.itemHash]!
+                                  .itemTypeDisplayName!
+                                  .runes
+                                  .toList()),
+                              style: TextStyle(
+                                  color: Colors.white, fontSize: fontSize - 5),
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),

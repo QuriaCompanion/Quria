@@ -69,6 +69,7 @@ class ItemDetailsWidget extends StatelessWidget {
                   width: childPadding,
                 ),
                 HeaderWeaponDetails(
+                  iconSize: iconSize / 2,
                   height: imageSize,
                   width: width - imageSize - childPadding - sidePadding * 2,
                   item: item,
