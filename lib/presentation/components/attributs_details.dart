@@ -118,17 +118,52 @@ class AttributsDetails extends StatelessWidget {
                       textAlign: TextAlign.left,
                     ),
                     SizedBox(height: padding),
-                    Text(
-                      utf8.decode(ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition![
-                              socketsPerk[socketId].plugHash]!
-                          .displayProperties!
-                          .description!
-                          .runes
-                          .toList()),
-                      style: TextStyle(fontSize: fontSize, color: Colors.white),
-                    )
+                    if (ManifestService
+                            .manifestParsed
+                            .destinyInventoryItemDefinition![
+                                socketsPerk[socketId].plugHash]!
+                            .perks!
+                            .isNotEmpty &&
+                        ManifestService
+                                .manifestParsed
+                                .destinySandboxPerkDefinition?[ManifestService
+                                    .manifestParsed
+                                    .destinyInventoryItemDefinition?[
+                                        socketsPerk[socketId].plugHash]
+                                    ?.perks?[0]
+                                    .perkHash]
+                                ?.displayProperties
+                                ?.description !=
+                            null)
+                      Text(
+                        utf8.decode(ManifestService
+                            .manifestParsed
+                            .destinySandboxPerkDefinition![ManifestService
+                                .manifestParsed
+                                .destinyInventoryItemDefinition![
+                                    socketsPerk[socketId].plugHash]!
+                                .perks![0]
+                                .perkHash]!
+                            .displayProperties!
+                            .description!
+                            .runes
+                            .toList()),
+                        style:
+                            TextStyle(fontSize: fontSize, color: Colors.white),
+                      )
+                    else
+                      Text(
+                        utf8.decode(ManifestService
+                            .manifestParsed
+                            .destinyInventoryItemDefinition![
+                                socketsPerk[socketId].plugHash]!
+                            .displayProperties!
+                            .description!
+                            .runes
+                            .toList()),
+                        style:
+                            TextStyle(fontSize: fontSize, color: Colors.white),
+                      )
                   ],
                 ),
               )
