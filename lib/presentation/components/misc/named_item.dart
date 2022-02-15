@@ -28,19 +28,22 @@ class NamedItem extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Stack(children: [
-              Image.network(
-                  DestinyData.bungieLink + value.displayProperties!.icon!,
-                  width: width,
-                  fit: BoxFit.fill),
-              if (value.iconWatermark != null)
-                Image(
-                  image: NetworkImage(
-                      DestinyData.bungieLink + value.iconWatermark!),
-                  height: width,
-                  fit: BoxFit.fill,
-                ),
-            ]),
+            Hero(
+              tag: value.hash!,
+              child: Stack(children: [
+                Image.network(
+                    DestinyData.bungieLink + value.displayProperties!.icon!,
+                    width: width,
+                    fit: BoxFit.fill),
+                if (value.iconWatermark != null)
+                  Image(
+                    image: NetworkImage(
+                        DestinyData.bungieLink + value.iconWatermark!),
+                    height: width,
+                    fit: BoxFit.fill,
+                  ),
+              ]),
+            ),
             SizedBox(
               height: width! / 2,
               child: Padding(

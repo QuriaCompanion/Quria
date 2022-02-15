@@ -278,7 +278,7 @@ class ProfileService {
   }
 
   int? getCurrentGrenadeHashForCharacter(String characterId) {
-    DestinyItemComponent subclass = getCharacterInventory(characterId)
+    DestinyItemComponent subclass = getCharacterEquipment(characterId)
         .firstWhere((element) =>
             ManifestService
                 .manifestParsed

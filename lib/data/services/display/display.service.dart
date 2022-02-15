@@ -3,6 +3,7 @@ import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:bungie_api/models/destiny_plug_set_definition.dart';
 import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
 import 'package:bungie_api/models/destiny_sandbox_perk_definition.dart';
 import 'package:bungie_api/models/destiny_stat_definition.dart';
@@ -71,6 +72,8 @@ class DisplayService {
 
   Future<Iterable<DestinyInventoryItemDefinition>?> collectionLoop() async {
     await ManifestService.getManifest<DestinyInventoryItemDefinition>();
+    await ManifestService.getManifest<DestinyPlugSetDefinition>();
+
     return compute(_getWeapons, "hey");
   }
 }

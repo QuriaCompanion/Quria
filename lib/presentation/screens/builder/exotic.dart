@@ -1,6 +1,5 @@
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
-import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/misc/named_item.dart';
@@ -25,10 +24,8 @@ class _ExoticWidgetState extends State<ExoticWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: ghostBackground,
-        child: exotic(context));
+    return SizedBox(
+        width: MediaQuery.of(context).size.width, child: exotic(context));
   }
 
   Widget exotic(BuildContext context) {
@@ -51,55 +48,52 @@ class _ExoticWidgetState extends State<ExoticWidget> {
               style: TextStyle(color: Colors.white, fontSize: titleFontSize),
             ),
             const SizedBox(height: padding),
-            IntrinsicHeight(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Expanded(
-                    flex: 30,
-                    child: Text(
-                        "Prêt à construire votre armure de rêve?\nÇa commence maintenant!\nCommencez par choisir une armure exotique qui sera la pièrce maitresse de votre équipement.",
-                        style: TextStyle(
-                            color: Colors.white, fontSize: textFontSize)),
-                  ),
-                  const VerticalDivider(
-                    color: Colors.white,
-                    thickness: 1.5,
-                    width: padding * 2,
-                  ),
-                  Expanded(
-                    flex: 60,
-                    child: FutureBuilder(
-                        future: _future,
-                        builder: (context,
-                            AsyncSnapshot<List<DestinyInventoryItemDefinition>>
-                                snapshot) {
-                          if (snapshot.hasData) {
-                            List<Widget> list = <Widget>[];
-                            for (var i = 0; i < snapshot.data!.length; i++) {
-                              list.add(InkWell(
-                                  onTap: () => {
-                                        StorageService.setLocalStorage(
-                                            "exotic", snapshot.data![i]),
-                                        Navigator.pushNamed(
-                                            context, routeBuilder)
-                                      },
-                                  child: NamedItem(value: snapshot.data![i])));
-                            }
-                            return Container(
-                              padding: const EdgeInsets.all(itemPadding),
-                              child: Wrap(
-                                children: list,
-                              ),
-                            );
-                          } else {
-                            return const Loader();
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Expanded(
+                  flex: 30,
+                  child: Text(
+                      "Prêt à construire votre armure de rêve?\nÇa commence maintenant!\nCommencez par choisir une armure exotique qui sera la pièrce maitresse de votre équipement.",
+                      style: TextStyle(
+                          color: Colors.white, fontSize: textFontSize)),
+                ),
+                const VerticalDivider(
+                  color: Colors.white,
+                  thickness: 1.5,
+                  width: padding * 2,
+                ),
+                Expanded(
+                  flex: 60,
+                  child: FutureBuilder(
+                      future: _future,
+                      builder: (context,
+                          AsyncSnapshot<List<DestinyInventoryItemDefinition>>
+                              snapshot) {
+                        if (snapshot.hasData) {
+                          List<Widget> list = <Widget>[];
+                          for (var i = 0; i < snapshot.data!.length; i++) {
+                            list.add(InkWell(
+                                onTap: () => {
+                                      StorageService.setLocalStorage(
+                                          "exotic", snapshot.data![i]),
+                                      Navigator.pushNamed(context, routeBuilder)
+                                    },
+                                child: NamedItem(value: snapshot.data![i])));
                           }
-                        }),
-                  ),
-                ],
-              ),
+                          return Container(
+                            padding: const EdgeInsets.all(itemPadding),
+                            child: Wrap(
+                              children: list,
+                            ),
+                          );
+                        } else {
+                          return const Loader();
+                        }
+                      }),
+                ),
+              ],
             )
           ],
         ),
