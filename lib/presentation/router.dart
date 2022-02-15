@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quria/presentation/screens/builder/builder.dart';
 import 'package:quria/presentation/screens/builder/exotic.dart';
+import 'package:quria/presentation/screens/collection/collection.dart';
 import 'package:quria/presentation/screens/home.dart';
 import 'package:quria/presentation/screens/login.dart';
 import 'package:quria/presentation/screens/profile/profile.dart';
@@ -17,6 +18,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const BuilderWidget());
       case routeExotic:
         return MaterialPageRoute(builder: (_) => const ExoticWidget());
+      case routeCollection:
+        return MaterialPageRoute(builder: (_) => const CollectionWidget());
       default:
         return MaterialPageRoute(builder: (_) => LoginWidget());
     }

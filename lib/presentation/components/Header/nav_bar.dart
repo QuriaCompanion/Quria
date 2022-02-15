@@ -20,6 +20,10 @@ class _NavBarWidgetState extends State<NavBarWidget> {
         mainAxisSize: MainAxisSize.max,
         children: const [
           NavigationItem(
+            title: 'Collection',
+            routeName: routeCollection,
+          ),
+          NavigationItem(
             title: 'Home',
             routeName: routeLogin,
           ),

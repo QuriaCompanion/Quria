@@ -1,3 +1,4 @@
+import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
@@ -67,10 +68,25 @@ class DisplayService {
     }
     return exoticItems;
   }
+
+  Future<Iterable<DestinyInventoryItemDefinition>?> collectionLoop() async {
+    await ManifestService.getManifest<DestinyInventoryItemDefinition>();
+    return compute(_getWeapons, "hey");
+  }
 }
 
 Future<ProfileHelper> _parseProfileHelper(int index) async {
   final characters = profile.getCharacters();
   return ProfileHelper((await account.getMembership())!, characters,
       profile.getCharacterEquipment(characters[index].characterId!));
+}
+
+Iterable<DestinyInventoryItemDefinition>? _getWeapons(String happy) {
+  List<DestinyInventoryItemDefinition>? weapons = ManifestService
+      .manifestParsed.destinyInventoryItemDefinition?.values
+      .where(((element) => element.itemType == DestinyItemType.Weapon))
+      .toList();
+  weapons?.sort((a, b) =>
+      a.inventory!.tierType!.index.compareTo(b.inventory!.tierType!.index));
+  return weapons!.reversed;
 }

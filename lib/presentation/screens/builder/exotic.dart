@@ -2,8 +2,10 @@ import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/display/display.service.dart';
-import 'package:quria/presentation/components/misc/exotic_item.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/misc/named_item.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class ExoticWidget extends StatefulWidget {
   const ExoticWidget({Key? key}) : super(key: key);
@@ -76,7 +78,14 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                           if (snapshot.hasData) {
                             List<Widget> list = <Widget>[];
                             for (var i = 0; i < snapshot.data!.length; i++) {
-                              list.add(ExoticItem(value: snapshot.data![i]));
+                              list.add(InkWell(
+                                  onTap: () => {
+                                        StorageService.setLocalStorage(
+                                            "exotic", snapshot.data![i]),
+                                        Navigator.pushNamed(
+                                            context, routeBuilder)
+                                      },
+                                  child: NamedItem(value: snapshot.data![i])));
                             }
                             return Container(
                               padding: const EdgeInsets.all(itemPadding),
