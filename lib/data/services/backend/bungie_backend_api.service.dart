@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:bungie_api/enums/bungie_membership_type.dart';
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:http/http.dart' as http;
@@ -35,7 +34,6 @@ class BackendService {
   }
 
   Future<BuildResponse> getBuilds(Map<String, dynamic> data) async {
-    inspect(data);
     try {
       final exoticHash = data['exoticHash'];
       GroupUserInfoCard? membership = await accountService.getMembership();
