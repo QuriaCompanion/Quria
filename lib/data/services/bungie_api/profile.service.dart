@@ -278,22 +278,24 @@ class ProfileService {
   }
 
   int? getCurrentGrenadeHashForCharacter(String characterId) {
-    DestinyItemComponent subclass = getCharacterInventory(characterId)
-        .firstWhere((element) =>
-            ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition?[element.itemHash]
-                ?.equippingBlock
-                ?.equipmentSlotTypeHash ==
-            3284755031);
+    var character = getCharacterEquipment(characterId);
+
+    DestinyItemComponent? subclass = character.firstWhere((element) =>
+        ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition?[element.itemHash]
+            ?.equippingBlock
+            ?.equipmentSlotTypeHash ==
+        3284755031);
 
     DestinyItemSocketState? stasisGrenade =
         getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
             ManifestService
                 .manifestParsed
                 .destinyInventoryItemDefinition?[element.plugHash]
-                ?.itemTypeDisplayName ==
-            "Stasis Grenade");
+                ?.plug
+                ?.plugCategoryHash ==
+            900498880);
     if (stasisGrenade != null) {
       return ManifestService
           .manifestParsed.destinyInventoryItemDefinition?[stasisGrenade]?.hash;
@@ -313,7 +315,6 @@ class ProfileService {
           .steps?[0]
           .nodeStepHash;
     }
-
     return null;
   }
 

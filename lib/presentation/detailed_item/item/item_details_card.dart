@@ -57,7 +57,7 @@ class ItemDetailsWidget extends StatelessWidget {
                   iconSize: iconSize / 2,
                   height: imageSize,
                   width: width - imageSize - childPadding - sidePadding * 2,
-                  item: item,
+                  itemHash: item.itemHash!,
                   fontSize: fontSize,
                   childPadding: childPadding,
                   powerLevel: instanceInfo.primaryStat?.value! ?? 0,

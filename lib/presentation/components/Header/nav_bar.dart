@@ -13,15 +13,16 @@ class _NavBarWidgetState extends State<NavBarWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      color: Colors.white,
       height: 60.0,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,
         children: const [
           NavigationItem(
-            title: 'Home',
-            routeName: routeLogin,
+            title: 'Collection',
+            routeName: routeCollection,
           ),
           NavigationItem(
             title: 'Profile',

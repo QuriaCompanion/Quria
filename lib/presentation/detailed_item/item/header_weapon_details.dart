@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
@@ -9,8 +8,8 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import '../../../data/services/manifest/manifest.service.dart';
 
 class HeaderWeaponDetails extends StatelessWidget {
-  final int powerLevel;
-  final DestinyItemComponent item;
+  final int? powerLevel;
+  final int itemHash;
   // style
   final double width;
   final double height;
@@ -22,8 +21,8 @@ class HeaderWeaponDetails extends StatelessWidget {
 
   const HeaderWeaponDetails(
       {Key? key,
-      required this.powerLevel,
-      required this.item,
+      this.powerLevel,
+      required this.itemHash,
 
       // style
       required this.iconSize,
@@ -38,7 +37,7 @@ class HeaderWeaponDetails extends StatelessWidget {
     DestinyPresentationNodeDefinition? typeOfAmmo = DestinyData.ammoInfoByType[
         ManifestService
             .manifestParsed
-            .destinyInventoryItemDefinition![item.itemHash]!
+            .destinyInventoryItemDefinition![itemHash]!
             .equippingBlock
             ?.ammoType];
     return SizedBox(
@@ -58,7 +57,7 @@ class HeaderWeaponDetails extends StatelessWidget {
                     children: [
                       if (ManifestService
                               .manifestParsed
-                              .destinyInventoryItemDefinition?[item.itemHash]
+                              .destinyInventoryItemDefinition?[itemHash]
                               ?.defaultDamageTypeHash !=
                           null)
                         Image(
@@ -68,7 +67,7 @@ class HeaderWeaponDetails extends StatelessWidget {
                                   .destinyDamageTypeDefinition![ManifestService
                                       .manifestParsed
                                       .destinyInventoryItemDefinition![
-                                          item.itemHash]!
+                                          itemHash]!
                                       .defaultDamageTypeHash]!
                                   .displayProperties!
                                   .icon!),
@@ -84,8 +83,7 @@ class HeaderWeaponDetails extends StatelessWidget {
                             AutoSizeText(
                               utf8.decode(ManifestService
                                   .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      item.itemHash]!
+                                  .destinyInventoryItemDefinition![itemHash]!
                                   .displayProperties!
                                   .name!
                                   .runes
@@ -97,8 +95,7 @@ class HeaderWeaponDetails extends StatelessWidget {
                             AutoSizeText(
                               utf8.decode(ManifestService
                                   .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      item.itemHash]!
+                                  .destinyInventoryItemDefinition![itemHash]!
                                   .itemTypeDisplayName!
                                   .runes
                                   .toList()),
@@ -112,25 +109,26 @@ class HeaderWeaponDetails extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Text(
-                    '$powerLevel',
-                    style:
-                        TextStyle(color: Colors.yellow, fontSize: fontSize + 5),
-                  ),
-                  Image(
-                    image: NetworkImage(DestinyData.bungieLink +
-                        ManifestService
-                            .manifestParsed
-                            .destinyStatDefinition![StatsHash.power]!
-                            .displayProperties!
-                            .icon!),
-                    width: fontSize + 5,
-                    color: Colors.yellow,
-                  ),
-                ],
-              )
+              if (powerLevel != null)
+                Row(
+                  children: [
+                    Text(
+                      '$powerLevel',
+                      style: TextStyle(
+                          color: Colors.yellow, fontSize: fontSize + 5),
+                    ),
+                    Image(
+                      image: NetworkImage(DestinyData.bungieLink +
+                          ManifestService
+                              .manifestParsed
+                              .destinyStatDefinition![StatsHash.power]!
+                              .displayProperties!
+                              .icon!),
+                      width: fontSize + 5,
+                      color: Colors.yellow,
+                    ),
+                  ],
+                )
             ],
           ),
           if (typeOfAmmo != null)

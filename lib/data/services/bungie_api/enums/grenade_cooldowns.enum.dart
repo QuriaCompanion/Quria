@@ -9,7 +9,7 @@ class GrenadeCooldown {
     2880143637: tier3, //magnetic
     1701872319: tier3, //suppressor
     328872098: tier4, //skip
-    2662033471: tier4, //vortex
+    2008044721: tier4, //vortex
     332456255: tier4, //spike
     2576774201: tier4, //voidwall
     79448980: tier4, //pulse

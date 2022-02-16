@@ -26,9 +26,8 @@ class _BuilderWidgetState extends State<BuilderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
-      decoration: ghostBackground,
       child: FutureBuilder(
           future: _future,
           builder:
