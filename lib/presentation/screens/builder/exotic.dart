@@ -78,7 +78,8 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                                 onTap: () => {
                                       StorageService.setLocalStorage(
                                           "exotic", snapshot.data![i]),
-                                      Navigator.pushNamed(context, routeBuilder)
+                                      Navigator.pushNamed(context, routeFilter,
+                                          arguments: snapshot.data![i].hash)
                                     },
                                 child: NamedItem(value: snapshot.data![i])));
                           }
