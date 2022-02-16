@@ -11,13 +11,12 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:quria/presentation/components/item_details_card.dart';
-import 'package:quria/presentation/components/loader.dart';
-import 'package:quria/presentation/components/subclass_details_card.dart';
+import 'package:quria/presentation/detailed_item/item/item_details_card.dart';
+import 'package:quria/presentation/detailed_item/subclass/advanced_subclass_details_card.dart';
+import 'package:quria/presentation/components/misc/loader.dart';
+import 'package:quria/presentation/detailed_item/subclass/subclass_details_card.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner.dart';
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
-
-int index = 0;
 
 @immutable
 class ProfileWidget extends StatefulWidget {
@@ -35,11 +34,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   final account = AccountService();
   final profile = ProfileService();
   late Future<ProfileHelper> _future;
-
+  late int index;
   @override
   void initState() {
+    index = 0;
     super.initState();
-    _future = display.getProfileData(0);
+    _future = display.getProfileData(index);
   }
 
   static const double bannerSpacing = 10;
@@ -114,54 +114,72 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsets.only(
-                                        left: bannerLeftSpacing,
-                                        top: bannerTopSpacing),
-                                    child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: [
-                                          for (int i = 0;
-                                              i <
-                                                  snapshot
-                                                      .data!.characters.length;
-                                              i++)
-                                            InkWell(
-                                              onTap: () {
-                                                setState(() {
-                                                  index = i;
-                                                  snapshot.data!
-                                                          .characterEquipement =
-                                                      profile
-                                                          .getCharacterEquipment(
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: bannerLeftSpacing,
+                                            top: bannerTopSpacing),
+                                        child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            children: [
+                                              for (int i = 0;
+                                                  i <
+                                                      snapshot.data!.characters
+                                                          .length;
+                                                  i++)
+                                                InkWell(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      index = i;
+                                                      snapshot.data!
+                                                              .characterEquipement =
+                                                          profile.getCharacterEquipment(
                                                               snapshot
                                                                   .data!
                                                                   .characters[i]
                                                                   .characterId!);
-                                                  context
-                                                      .read<CharacterCubit>()
-                                                      .hideDetails();
-                                                });
-                                              },
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: bannerSpacing / 2,
-                                                    bottom: bannerSpacing / 2),
-                                                child: CharacterBanner(
-                                                    width: index == i
-                                                        ? bannerSelectedWidth
-                                                        : bannerUnselectedWidth,
-                                                    fontSize: index == i
-                                                        ? bannerSelectedFont
-                                                        : bannerUnselectedFont,
-                                                    character: snapshot
-                                                        .data!.characters[i]),
-                                              ),
-                                            ),
-                                        ]),
+                                                      context
+                                                          .read<
+                                                              CharacterCubit>()
+                                                          .hideDetails();
+                                                    });
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                            .only(
+                                                        top: bannerSpacing / 2,
+                                                        bottom:
+                                                            bannerSpacing / 2),
+                                                    child: CharacterBanner(
+                                                        width: index == i
+                                                            ? bannerSelectedWidth
+                                                            : bannerUnselectedWidth,
+                                                        fontSize: index == i
+                                                            ? bannerSelectedFont
+                                                            : bannerUnselectedFont,
+                                                        character: snapshot
+                                                            .data!
+                                                            .characters[i]),
+                                                  ),
+                                                ),
+                                            ]),
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          profile.fetchProfileData();
+                                          display.getProfileData(index);
+                                        },
+                                        child: Icon(
+                                          Icons.refresh,
+                                          color: Colors.white,
+                                          size: iconSize,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                   Row(
                                     mainAxisAlignment:
@@ -197,6 +215,32 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                                     itemDetailsSidePadding,
                                                 childPadding:
                                                     itemDetailsChildPadding,
+                                                characterId: snapshot
+                                                    .data!
+                                                    .characters[index]
+                                                    .characterId!,
+                                                subclass: characterState.item)
+                                          else if (ManifestService
+                                                      .manifestParsed
+                                                      .destinyInventoryItemDefinition![
+                                                          characterState
+                                                              .item.itemHash]!
+                                                      .itemType !=
+                                                  DestinyItemType.Subclass &&
+                                              ManifestService
+                                                      .manifestParsed
+                                                      .destinyInventoryItemDefinition![
+                                                          characterState
+                                                              .item.itemHash]!
+                                                      .equippingBlock!
+                                                      .equipmentSlotTypeHash ==
+                                                  3284755031)
+                                            AdvancedSubclassDetailsCard(
+                                                childPadding:
+                                                    itemDetailsChildPadding,
+                                                sidePadding:
+                                                    itemDetailsSidePadding,
+                                                width: itemDetailsWidth,
                                                 characterId: snapshot
                                                     .data!
                                                     .characters[index]

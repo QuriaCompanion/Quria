@@ -4,10 +4,11 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/components/stat_progress_bar.dart';
-import 'package:quria/presentation/components/weapon_details_hidden_stats.dart';
-
-import 'attributs_details.dart';
+import 'package:quria/presentation/components/misc/icon_item.dart';
+import 'package:quria/presentation/detailed_item/item/header_weapon_details.dart';
+import 'package:quria/presentation/detailed_item/item/stat_progress_bar.dart';
+import 'package:quria/presentation/detailed_item/item/weapon_details_hidden_stats.dart';
+import 'package:quria/presentation/detailed_item/subclass/attributs_details.dart';
 
 @immutable
 class ItemDetailsWidget extends StatelessWidget {
@@ -36,6 +37,7 @@ class ItemDetailsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final int displayHash = item.overrideStyleItemHash ?? item.itemHash!;
     final stats = profile.getPrecalculatedStats(item.itemInstanceId!);
+    final instanceInfo = profile.getInstanceInfo(item.itemInstanceId!);
     return RepaintBoundary(
       child: Container(
         width: width,
@@ -47,37 +49,19 @@ class ItemDetailsWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
+                ItemIcon(displayHash: displayHash, imageSize: imageSize),
                 SizedBox(
-                  height: imageSize,
-                  width: imageSize,
-                  child: Container(
-                    decoration: regularShadow,
-                    child: Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          ManifestService
-                              .manifestParsed
-                              .destinyInventoryItemDefinition![displayHash]!
-                              .displayProperties!
-                              .icon!),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
+                  width: childPadding,
                 ),
-                // HeaderWeaponDetails(
-                //     name: utf8.decode(ManifestService.manifestParsed
-                //         .destinyInventoryItemDefinition![item.itemHash]!
-                //         .displayProperties!
-                //         .name!
-                //         .runes
-                //         .toList()),
-                //     typeOfAmmo: 'typeOfAmmo',
-                //     typeOfAmmoImg:
-                //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
-                //     typeOfWeapon: 'typeOfWeapon',
-                //     type: 'type',
-                //     typeImg:
-                //         'https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg',
-                //     value: 100),
+                HeaderWeaponDetails(
+                  iconSize: iconSize / 2,
+                  height: imageSize,
+                  width: width - imageSize - childPadding - sidePadding * 2,
+                  itemHash: item.itemHash!,
+                  fontSize: fontSize,
+                  childPadding: childPadding,
+                  powerLevel: instanceInfo.primaryStat?.value! ?? 0,
+                ),
               ],
             ),
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

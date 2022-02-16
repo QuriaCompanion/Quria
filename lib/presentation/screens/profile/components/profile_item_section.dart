@@ -31,8 +31,9 @@ class ProfileItemSectionWidget extends StatelessWidget {
                   ManifestService
                       .manifestParsed
                       .destinyInventoryItemDefinition![element.itemHash]!
-                      .itemType ==
-                  DestinyItemType.Subclass))
+                      .equippingBlock!
+                      .equipmentSlotTypeHash ==
+                  3284755031))
             ProfileItemCard(
                 margin: itemSectionSpacing,
                 sizes: sizes,

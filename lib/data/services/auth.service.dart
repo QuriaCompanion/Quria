@@ -42,16 +42,13 @@ class AuthService {
     try {
       return BungieNetToken.fromJson(json);
     } catch (e) {
-      print("failed retrieving token ");
       return null;
     }
   }
 
   Future<void> _setStoredToken(BungieNetToken token) async {
-    print(token.accessToken);
     await StorageService.setLocalStorage('bungie_token', token);
-    await StorageService.setLocalStorage(
-        'last_refresh', DateTime.now().toString());
+    await StorageService.setLocalStorage('last_refresh', "${DateTime.now()}");
   }
 
   Future<BungieNetToken> refreshToken(BungieNetToken token) async {

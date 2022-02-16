@@ -7,10 +7,9 @@ class NavigationItem extends StatelessWidget {
 
   const NavigationItem({required this.title, required this.routeName, Key? key})
       : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         navKey.currentState!.pushNamed(routeName);
       },

@@ -1,7 +1,4 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
-
 import 'dart:developer';
-import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:universal_io/io.dart';
 
@@ -13,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
-import 'package:quria/presentation/components/button.dart';
+import 'package:quria/presentation/components/misc/button.dart';
 
 typedef LoginCallback = void Function(String code);
 typedef SkipCallback = void Function();
@@ -43,29 +40,25 @@ class LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: ghostBackground,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            InkWell(
-              onTap: () {
-                authorizeClick(context);
-              },
-              child:
-                  const Button(value: 'Se connecter', width: 250.0, height: 60),
-            ),
-            const SizedBox(
-              height: 50.0,
-            ),
-            InkWell(
-              onTap: () => Navigator.pushNamed(context, "/logged"),
-              child:
-                  const Button(value: 'Go to home', width: 250.0, height: 60),
-            ),
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          InkWell(
+            onTap: () {
+              authorizeClick(context);
+            },
+            child:
+                const Button(value: 'Se connecter', width: 250.0, height: 60),
+          ),
+          const SizedBox(
+            height: 50.0,
+          ),
+          InkWell(
+            onTap: () => Navigator.pushNamed(context, "/logged"),
+            child: const Button(value: 'Go to home', width: 250.0, height: 60),
+          ),
+        ],
       ),
     );
   }

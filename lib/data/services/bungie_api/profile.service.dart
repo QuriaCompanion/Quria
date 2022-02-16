@@ -20,6 +20,7 @@ import 'package:bungie_api/models/destiny_presentation_node_component.dart';
 import 'package:bungie_api/models/destiny_profile_response.dart';
 import 'package:bungie_api/models/destiny_record_component.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
+import 'package:bungie_api/models/destiny_talent_node.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:bungie_api/enums/destiny_component_type.dart';
 import 'package:bungie_api/enums/destiny_scope.dart';
@@ -272,6 +273,47 @@ class ProfileService {
     if (_profile!.itemComponents?.talentGrids?.data?.containsKey(instanceId) ??
         false) {
       return _profile!.itemComponents!.talentGrids!.data![instanceId]!;
+    }
+    return null;
+  }
+
+  int? getCurrentGrenadeHashForCharacter(String characterId) {
+    var character = getCharacterEquipment(characterId);
+
+    DestinyItemComponent? subclass = character.firstWhere((element) =>
+        ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition?[element.itemHash]
+            ?.equippingBlock
+            ?.equipmentSlotTypeHash ==
+        3284755031);
+
+    DestinyItemSocketState? stasisGrenade =
+        getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.plugHash]
+                ?.plug
+                ?.plugCategoryHash ==
+            900498880);
+    if (stasisGrenade != null) {
+      return ManifestService
+          .manifestParsed.destinyInventoryItemDefinition?[stasisGrenade]?.hash;
+    }
+    DestinyItemTalentGridComponent? oldSubclass =
+        getTalentGrid(subclass.itemInstanceId!);
+
+    DestinyTalentNode? oldGrenade = oldSubclass?.nodes?.firstWhere((element) =>
+        element.isActivated == true && element.nodeIndex == 7 ||
+        element.nodeIndex == 8 ||
+        element.nodeIndex == 9);
+    if (oldGrenade != null) {
+      return ManifestService
+          .manifestParsed
+          .destinyTalentGridDefinition?[oldSubclass!.talentGridHash]!
+          .nodes?[oldGrenade.nodeIndex!]
+          .steps?[0]
+          .nodeStepHash;
     }
     return null;
   }

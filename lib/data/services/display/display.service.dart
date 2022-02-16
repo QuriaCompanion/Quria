@@ -1,7 +1,10 @@
+import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:bungie_api/models/destiny_plug_set_definition.dart';
+import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
 import 'package:bungie_api/models/destiny_sandbox_perk_definition.dart';
 import 'package:bungie_api/models/destiny_stat_definition.dart';
 import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
@@ -35,6 +38,7 @@ class DisplayService {
       await ManifestService.getManifest<DestinyClassDefinition>();
       await ManifestService.getManifest<DestinySandboxPerkDefinition>();
       await ManifestService.getManifest<DestinyTalentGridDefinition>();
+      await ManifestService.getManifest<DestinyPresentationNodeDefinition>();
 
       return await compute(_parseProfileHelper, index);
     } catch (e) {
@@ -65,10 +69,27 @@ class DisplayService {
     }
     return exoticItems;
   }
+
+  Future<Iterable<DestinyInventoryItemDefinition>?> collectionLoop() async {
+    await ManifestService.getManifest<DestinyInventoryItemDefinition>();
+    await ManifestService.getManifest<DestinyPlugSetDefinition>();
+
+    return compute(_getWeapons, "hey");
+  }
 }
 
 Future<ProfileHelper> _parseProfileHelper(int index) async {
   final characters = profile.getCharacters();
   return ProfileHelper((await account.getMembership())!, characters,
       profile.getCharacterEquipment(characters[index].characterId!));
+}
+
+Iterable<DestinyInventoryItemDefinition>? _getWeapons(String happy) {
+  List<DestinyInventoryItemDefinition>? weapons = ManifestService
+      .manifestParsed.destinyInventoryItemDefinition?.values
+      .where(((element) => element.itemType == DestinyItemType.Weapon))
+      .toList();
+  weapons?.sort((a, b) =>
+      a.inventory!.tierType!.index.compareTo(b.inventory!.tierType!.index));
+  return weapons!.reversed;
 }

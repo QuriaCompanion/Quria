@@ -14,8 +14,8 @@ class WeaponDetailsHiddenStats extends StatelessWidget {
   const WeaponDetailsHiddenStats(
       {Key? key,
       required this.hash,
-      required this.stats,
       required this.fontSize,
+      this.stats,
       this.padding = 8,
       this.width = 800,
       this.textColor = Colors.white})
@@ -42,24 +42,52 @@ class WeaponDetailsHiddenStats extends StatelessWidget {
                   'Total: ${stats![StatsStringHash.mobility]!.value! + stats![StatsStringHash.recovery]!.value! + stats![StatsStringHash.resilience]!.value! + stats![StatsStringHash.discipline]!.value! + stats![StatsStringHash.strength]!.value! + stats![StatsStringHash.intellect]!.value!}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
-              if (stats?[StatsStringHash.ammunition]?.value != null)
+              if (stats?[StatsStringHash.ammunition]?.value != null ||
+                  ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition?[hash]
+                          ?.stats
+                          ?.stats?[StatsStringHash.ammunition]
+                          ?.value !=
+                      null)
                 Text(
-                  'Munitions: ${stats![StatsStringHash.ammunition]?.value}',
+                  'Munitions: ${stats?[StatsStringHash.ammunition]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition?[hash]?.stats?.stats?[StatsStringHash.ammunition]?.value}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
-              if (stats?[StatsStringHash.rpm]?.value != null)
+              if (stats?[StatsStringHash.rpm]?.value != null ||
+                  ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition?[hash]
+                          ?.stats
+                          ?.stats?[StatsStringHash.rpm]
+                          ?.value !=
+                      null)
                 Text(
-                  'CPM: ${stats![StatsStringHash.rpm]?.value}',
+                  'CPM: ${stats?[StatsStringHash.rpm]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition?[hash]?.stats?.stats?[StatsStringHash.rpm]?.value}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
-              if (stats?[StatsStringHash.chargeTime]?.value != null)
+              if (stats?[StatsStringHash.chargeTime]?.value != null ||
+                  ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition?[hash]
+                          ?.stats
+                          ?.stats?[StatsStringHash.chargeTime]
+                          ?.value !=
+                      null)
                 Text(
-                  'Temps de charge: ${stats![StatsStringHash.chargeTime]?.value}',
+                  'Temps de charge: ${stats?[StatsStringHash.chargeTime]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition?[hash]?.stats?.stats?[StatsStringHash.chargeTime]?.value}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
-              if (stats?[StatsStringHash.magazine]?.value != null)
+              if (stats?[StatsStringHash.magazine]?.value != null ||
+                  ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition?[hash]
+                          ?.stats
+                          ?.stats?[StatsStringHash.magazine]
+                          ?.value !=
+                      null)
                 Text(
-                  'Chargeur: ${stats![StatsStringHash.magazine]?.value}',
+                  'Chargeur: ${stats?[StatsStringHash.magazine]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition?[hash]?.stats?.stats?[StatsStringHash.magazine]?.value}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
             ],

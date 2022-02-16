@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/home.service.dart';
-import 'package:quria/presentation/components/button.dart';
+import 'package:quria/presentation/components/misc/button.dart';
 
 class HomeWidget extends StatelessWidget {
   final ManifestService manifest = ManifestService();

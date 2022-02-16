@@ -5,7 +5,9 @@ import 'package:bungie_api/enums/destiny_energy_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
+import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class RaidPhases {
   static const int leviathanGardens = 3847906370;
@@ -664,6 +666,18 @@ class DestinyData {
     1926152773, // armor cosmetics
     2048875504, // weapon mods
   ];
+  static Map<DestinyAmmunitionType, DestinyPresentationNodeDefinition>
+      ammoInfoByType = {
+    DestinyAmmunitionType.Primary:
+        ManifestService.manifestParsed.destinyPresentationNodeDefinition![
+            ammoTypeHashes[DestinyAmmunitionType.Primary]]!,
+    DestinyAmmunitionType.Special:
+        ManifestService.manifestParsed.destinyPresentationNodeDefinition![
+            ammoTypeHashes[DestinyAmmunitionType.Special]]!,
+    DestinyAmmunitionType.Heavy:
+        ManifestService.manifestParsed.destinyPresentationNodeDefinition![
+            ammoTypeHashes[DestinyAmmunitionType.Heavy]]!,
+  };
 
   static Color getAmmoTypeColor(DestinyAmmunitionType type) {
     switch (type) {
