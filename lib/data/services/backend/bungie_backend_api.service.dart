@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:bungie_api/enums/bungie_membership_type.dart';
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:http/http.dart' as http;
@@ -33,17 +34,10 @@ class BackendService {
     return responseJson.items;
   }
 
-  Future<BuildResponse> getBuilds() async {
+  Future<BuildResponse> getBuilds(Map<String, dynamic> data) async {
+    inspect(data);
     try {
-      final exoticHash = await StorageService.getLocalStorage("exotic");
-      const statOrder = [
-        "mobility",
-        "resilience",
-        "recovery",
-        "discipline",
-        "intellect",
-        "strength"
-      ];
+      final exoticHash = data['exoticHash'];
       GroupUserInfoCard? membership = await accountService.getMembership();
       BungieNetToken? token = await authService.getToken();
 
@@ -60,7 +54,7 @@ class BackendService {
           "Authorization": token!.accessToken,
           "Content-Type": "application/json"
         },
-        body: json.encode({"statOrder": statOrder}),
+        body: json.encode({"statOrder": data['filter']}),
       );
       final responseJson = json.decode(response.body);
       final buildResponse = BuildResponse.fromJson(responseJson);

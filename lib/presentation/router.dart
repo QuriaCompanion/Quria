@@ -2,7 +2,7 @@ import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/presentation/screens/builder/builder.dart';
 import 'package:quria/presentation/screens/builder/exotic.dart';
-import 'package:quria/presentation/screens/builder/statsFilter.dart';
+import 'package:quria/presentation/screens/builder/stats_filter.dart';
 import 'package:quria/presentation/screens/collection/collection.dart';
 import 'package:quria/presentation/screens/home.dart';
 import 'package:quria/presentation/screens/inspect/inspect.dart';
@@ -18,9 +18,13 @@ class AppRouter {
       case routeProfile:
         return MaterialPageRoute(builder: (_) => const ProfileWidget());
       case routeFilter:
-        return MaterialPageRoute(builder: (_) => const StatsFilterWidget());
+        final int exoticHash = settings.arguments as int;
+        return MaterialPageRoute(
+            builder: (_) => StatsFilterWidget(exoticHash: exoticHash));
       case routeBuilder:
-        return MaterialPageRoute(builder: (_) => const BuilderWidget());
+        final Map<String, dynamic> data =
+            settings.arguments as Map<String, dynamic>;
+        return MaterialPageRoute(builder: (_) => BuilderWidget(data: data));
       case routeExotic:
         return MaterialPageRoute(builder: (_) => const ExoticWidget());
       case routeCollection:

@@ -1,6 +1,6 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quria/cubit/filter_cubit.dart';
 
 class FilterWidget extends StatefulWidget {
   const FilterWidget({Key? key}) : super(key: key);
@@ -40,23 +40,36 @@ class _FilterWidgetState extends State<FilterWidget> {
             }
             final String item = _items.removeAt(oldIndex);
             _items.insert(newIndex, item);
+            context.read<FilterCubit>().addFilterData(_items);
           });
         },
         children: <Widget>[
           for (int index = 0; index < _items.length; index += 1)
             Container(
-              decoration: const BoxDecoration(color: Colors.amber),
+              margin: const EdgeInsets.only(top: 5, bottom: 5),
+              padding: const EdgeInsets.only(top: 5, bottom: 5),
+              decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.6),
+                  borderRadius: BorderRadius.circular(5)),
               key: ValueKey(_items[index]),
               child: ReorderableDragStartListener(
                 index: index,
-                child: ListTile(
-                  title: Center(
-                      child: Text(
-                    _items[index],
-                    style: const TextStyle(fontSize: 25),
-                  )),
-                  dense: true,
-                  isThreeLine: false,
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: Center(
+                          child: Text(
+                        _items[index],
+                        style:
+                            const TextStyle(fontSize: 25, color: Colors.white),
+                      )),
+                      dense: true,
+                      isThreeLine: false,
+                      tileColor: Colors.black.withOpacity(0.0),
+                      selectedTileColor: Colors.black.withOpacity(0.0),
+                      selectedColor: Colors.black.withOpacity(0.0),
+                    )
+                  ],
                 ),
               ),
             ),
