@@ -77,7 +77,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                             list.add(InkWell(
                                 onTap: () => {
                                       StorageService.setLocalStorage(
-                                          "exotic", snapshot.data![i]),
+                                          "exotic", snapshot.data![i].hash),
                                       Navigator.pushNamed(context, routeBuilder)
                                     },
                                 child: NamedItem(value: snapshot.data![i])));

@@ -37,7 +37,6 @@ class ManifestService {
     }
     DestinyManifestResponse response = await BungieApiService.getManifestInfo();
     _manifestInfo = response.response;
-    print("ma bite ");
     return _manifestInfo!;
   }
 
@@ -50,20 +49,20 @@ class ManifestService {
   /// or from the [BungieApiService]
   ///
   /// returns true once the manifest is loaded
-  static Future<bool> getManifest<T>(String manifestName) async {
+  static Future<bool> getManifest<T>(String manifestName, Box box) async {
     try {
-      if (AllDestinyManifestComponents.getValue<T>() == null) {
-        if (await isManifestSaved(manifestName)) {
-          await compute<String, Map<int, T>>(_parseJsonDb, manifestName);
-        } else {
-          Map<String, String> manifestHelper = {
-            "manifestName": manifestName,
-            "manifest": await getManifestRemote(manifestName)
-          };
-          await compute<Map<String, String>, Map<int, T>>(
-              _parseJson, manifestHelper);
-          manifestSaved(manifestName);
-        }
+      if (await isManifestSaved(manifestName)) {
+        String manifest = StorageService.getDatabaseItem(box, manifestName);
+        Map<int, T> items =
+            await compute<String, Map<int, T>>(_parseJson, manifest);
+        AllDestinyManifestComponents.setValue<T>(items);
+      } else {
+        String manifest = await getManifestRemote(manifestName);
+        await StorageService.setDatabaseItem(box, manifestName, manifest);
+        Map<int, T> items =
+            await compute<String, Map<int, T>>(_parseJson, manifest);
+        AllDestinyManifestComponents.setValue<T>(items);
+        manifestSaved(manifestName);
       }
       return true;
     } catch (e) {
@@ -108,42 +107,37 @@ class ManifestService {
 /// Stores the data in the [Hive] database
 ///
 /// the data returned is typed and ready to be used
-Future<Map<int, T>> _parseJson<T>(Map<String, String> manifestHelper) async {
-  // Storing the data in a box
-  StorageService.isolateInit();
-  Box box = await StorageService.openBox<T>();
-  await StorageService.setDatabaseItem(
-      box, manifestHelper["manifestName"]!, manifestHelper["manifest"]);
-  StorageService.closeBox(box);
+// Future<Map<int, T>> _parseJson<T>(Map<String, String> manifestHelper) async {
+//   // Storing the data in a box
+//   StorageService.isolateInit();
+//   Box box = await StorageService.openBox<T>();
+//   await StorageService.setDatabaseItem(
+//       box, manifestHelper["manifestName"]!, manifestHelper["manifest"]);
+//   StorageService.closeBox(box);
 
-  Map<int, T> items = {};
-  final type = DefinitionTableNames.identities[T];
-  Map<String, dynamic> decoded =
-      jsonDecode(manifestHelper["manifest"]!) as Map<String, dynamic>;
-  for (final entry in decoded.entries) {
-    items[int.parse(entry.key)] = type!(entry.value);
-  }
-  AllDestinyManifestComponents.setValue<T>(items);
-  return items;
-}
+//   Map<int, T> items = {};
+//   final type = DefinitionTableNames.identities[T];
+//   Map<String, dynamic> decoded =
+//       jsonDecode(manifestHelper["manifest"]!) as Map<String, dynamic>;
+//   for (final entry in decoded.entries) {
+//     items[int.parse(entry.key)] = type!(entry.value);
+//   }
+//   AllDestinyManifestComponents.setValue<T>(items);
+//   return items;
+// }
 
-/// Given a [manifestName] and type [T]
+/// Given a [manifest] and type [T]
 ///
-/// returns the corresponding manifest from the [Hive] database
+/// returns the correctly typed data
 ///
 /// the data returned is typed and ready to be used
-Future<Map<int, T>> _parseJsonDb<T>(String manifestName) async {
-  StorageService.isolateInit();
-  Box box = await StorageService.openBox<T>();
-  String manifest = StorageService.getDatabaseItem(box, manifestName);
-
+Future<Map<int, T>> _parseJson<T>(String manifest) async {
   Map<int, T> items = {};
   final type = DefinitionTableNames.identities[T];
   Map<String, dynamic> decoded = jsonDecode(manifest) as Map<String, dynamic>;
   for (final entry in decoded.entries) {
     items[int.parse(entry.key)] = type!(entry.value);
   }
-  AllDestinyManifestComponents.setValue<T>(items);
   return items;
 }
 

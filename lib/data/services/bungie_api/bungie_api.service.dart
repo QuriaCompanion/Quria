@@ -28,7 +28,6 @@ import 'package:bungie_api/responses/int32_response.dart';
 import 'package:bungie_api/responses/user_membership_data_response.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/auth.service.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class BungieApiService {
   static const String baseUrl = 'https://www.bungie.net';

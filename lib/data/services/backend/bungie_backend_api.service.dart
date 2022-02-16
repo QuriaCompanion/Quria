@@ -11,7 +11,7 @@ import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 
 class BackendService {
-  static const String baseUrl = 'http://localhost:3001';
+  static const String baseUrl = 'https://quriaback.herokuapp.com';
   static const String apiUrl = baseUrl;
   static final AccountService accountService = AccountService();
   static final AuthService authService = AuthService();
@@ -22,16 +22,6 @@ class BackendService {
     return _singleton;
   }
   BackendService._internal();
-
-  getProfile(String? membershipId, BungieMembershipType? membershipType,
-      [BungieNetToken? token]) async {
-    final response = await http.get(
-        Uri.parse('/inventory/$membershipType/$membershipId'),
-        headers: {"Authorization": 'Bearer ' + token!.accessToken});
-    final responseJson = json.decode(response.body);
-
-    return responseJson.items;
-  }
 
   Future<BuildResponse> getBuilds() async {
     try {
@@ -47,7 +37,7 @@ class BackendService {
       GroupUserInfoCard? membership = await accountService.getMembership();
       BungieNetToken? token = await authService.getToken();
 
-      final uri = Uri.parse('http://localhost:3001/builder/' +
+      final uri = Uri.parse('$baseUrl/builder/' +
           membership!.membershipType!.index.toString() +
           '/' +
           membership.membershipId! +
@@ -57,6 +47,7 @@ class BackendService {
       final response = await http.post(
         uri,
         headers: {
+          "Access-Control-Allow-Origin": "*",
           "Authorization": token!.accessToken,
           "Content-Type": "application/json"
         },
