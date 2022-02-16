@@ -26,6 +26,8 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
     const double textFontSize = 25;
     const double titleFontSize = 45;
     const double padding = 50;
+    const double buttonWidth = 250;
+    const double buttonHeight = 60;
     Map<String, dynamic>? args;
     return Container(
       width: MediaQuery.of(context).size.width,
