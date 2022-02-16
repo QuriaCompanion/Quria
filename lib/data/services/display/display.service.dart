@@ -23,7 +23,8 @@ class DisplayService {
 
   Future<List<DestinyInventoryItemDefinition>> getExotics() async {
     final items = profile.getAllItems();
-    await ManifestService.getManifest<DestinyClassDefinition>();
+    await ManifestService.getManifest<DestinyClassDefinition>(
+        "DestinyClassDefinition");
     List<DestinyInventoryItemDefinition> exoticItems =
         await compute(exoticLoop, items);
 
@@ -32,13 +33,20 @@ class DisplayService {
 
   Future<ProfileHelper> getProfileData(int index) async {
     try {
-      await ManifestService.getManifest<DestinyInventoryItemDefinition>();
-      await ManifestService.getManifest<DestinyDamageTypeDefinition>();
-      await ManifestService.getManifest<DestinyStatDefinition>();
-      await ManifestService.getManifest<DestinyClassDefinition>();
-      await ManifestService.getManifest<DestinySandboxPerkDefinition>();
-      await ManifestService.getManifest<DestinyTalentGridDefinition>();
-      await ManifestService.getManifest<DestinyPresentationNodeDefinition>();
+      await ManifestService.getManifest<DestinyInventoryItemDefinition>(
+          "DestinyInventoryItemDefinition");
+      await ManifestService.getManifest<DestinyDamageTypeDefinition>(
+          "DestinyDamageTypeDefinition");
+      await ManifestService.getManifest<DestinyStatDefinition>(
+          "DestinyStatDefinition");
+      await ManifestService.getManifest<DestinyClassDefinition>(
+          "DestinyClassDefinition");
+      await ManifestService.getManifest<DestinySandboxPerkDefinition>(
+          "DestinySandboxPerkDefinition");
+      await ManifestService.getManifest<DestinyTalentGridDefinition>(
+          "DestinyTalentGridDefinition");
+      await ManifestService.getManifest<DestinyPresentationNodeDefinition>(
+          "DestinyPresentationNodeDefinition");
 
       return await compute(_parseProfileHelper, index);
     } catch (e) {
@@ -71,8 +79,10 @@ class DisplayService {
   }
 
   Future<Iterable<DestinyInventoryItemDefinition>?> collectionLoop() async {
-    await ManifestService.getManifest<DestinyInventoryItemDefinition>();
-    await ManifestService.getManifest<DestinyPlugSetDefinition>();
+    await ManifestService.getManifest<DestinyInventoryItemDefinition>(
+        "DestinyInventoryItemDefinition");
+    await ManifestService.getManifest<DestinyPlugSetDefinition>(
+        "DestinyPlugSetDefinition");
 
     return compute(_getWeapons, "hey");
   }

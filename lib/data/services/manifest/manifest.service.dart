@@ -8,6 +8,7 @@ import 'package:bungie_api/responses/destiny_manifest_response.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/definition_table_names.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 
 typedef DownloadProgress = void Function(int downloaded, int total);
@@ -36,6 +37,7 @@ class ManifestService {
     }
     DestinyManifestResponse response = await BungieApiService.getManifestInfo();
     _manifestInfo = response.response;
+    print("ma bite ");
     return _manifestInfo!;
   }
 
@@ -48,15 +50,19 @@ class ManifestService {
   /// or from the [BungieApiService]
   ///
   /// returns true once the manifest is loaded
-  static Future<bool> getManifest<T>() async {
+  static Future<bool> getManifest<T>(String manifestName) async {
     try {
       if (AllDestinyManifestComponents.getValue<T>() == null) {
-        if (await isManifestSaved(T.toString())) {
-          await compute<String, Map<int, T>>(_parseJsonDb, T.toString());
+        if (await isManifestSaved(manifestName)) {
+          await compute<String, Map<int, T>>(_parseJsonDb, manifestName);
         } else {
-          await compute<String, Map<int, T>>(
-              _parseJson, await getManifestRemote<T>());
-          manifestSaved(T.toString());
+          Map<String, String> manifestHelper = {
+            "manifestName": manifestName,
+            "manifest": await getManifestRemote(manifestName)
+          };
+          await compute<Map<String, String>, Map<int, T>>(
+              _parseJson, manifestHelper);
+          manifestSaved(manifestName);
         }
       }
       return true;
@@ -65,21 +71,22 @@ class ManifestService {
     }
   }
 
-  getManifestLocal<T>(myBox) {
-    return StorageService.getDatabaseItem(myBox, T.toString());
+  getManifestLocal<T>(myBox, String manifestName) {
+    return StorageService.getDatabaseItem(myBox, manifestName);
   }
 
   // Future<DestinyInventoryItemDefinition?> getDefinition<T>(int hash) async {
-  //   return await storage.getDatabaseItem(T.toString(), hash);
+  //   return await storage.getDatabaseItem(manifestName(), hash);
   // }
 
   storeManifest<T>(Map<int, T> manifest) {}
 
-  static Future<String> getManifestRemote<T>() async {
+  static Future<String> getManifestRemote<T>(String manifestName) async {
     DestinyManifest info = await loadManifestInfo();
+
     String language = "fr";
-    http.Response res = await http.get(Uri.parse('https://www.bungie.net' +
-        info.jsonWorldComponentContentPaths![language]![T.toString()]!));
+    http.Response res = await http.get(Uri.parse(DestinyData.bungieLink +
+        info.jsonWorldComponentContentPaths![language]![manifestName]!));
     return res.body;
   }
 
@@ -101,16 +108,18 @@ class ManifestService {
 /// Stores the data in the [Hive] database
 ///
 /// the data returned is typed and ready to be used
-Future<Map<int, T>> _parseJson<T>(String manifest) async {
+Future<Map<int, T>> _parseJson<T>(Map<String, String> manifestHelper) async {
   // Storing the data in a box
   StorageService.isolateInit();
   Box box = await StorageService.openBox<T>();
-  await StorageService.setDatabaseItem(box, T.toString(), manifest);
+  await StorageService.setDatabaseItem(
+      box, manifestHelper["manifestName"]!, manifestHelper["manifest"]);
   StorageService.closeBox(box);
 
   Map<int, T> items = {};
   final type = DefinitionTableNames.identities[T];
-  Map<String, dynamic> decoded = jsonDecode(manifest) as Map<String, dynamic>;
+  Map<String, dynamic> decoded =
+      jsonDecode(manifestHelper["manifest"]!) as Map<String, dynamic>;
   for (final entry in decoded.entries) {
     items[int.parse(entry.key)] = type!(entry.value);
   }
