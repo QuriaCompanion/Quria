@@ -26,15 +26,15 @@ class _FilterWidgetState extends State<FilterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final double filterSpacing = 10
-    final double fontSize = 25
+    double filterSpacing = 10;
+    double fontSize = 25;
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.8,
       height: MediaQuery.of(context).size.height * 0.6,
       child: ReorderableListView(
         padding: EdgeInsets.only(
             left: MediaQuery.of(context).size.width * 0.6,
-            right: MediaQuery.of(context).size.width * 0.6 ,
+            right: MediaQuery.of(context).size.width * 0.6),
         onReorder: (int oldIndex, int newIndex) {
           setState(() {
             if (oldIndex < newIndex) {
@@ -48,7 +48,7 @@ class _FilterWidgetState extends State<FilterWidget> {
         children: <Widget>[
           for (int index = 0; index < _items.length; index += 1)
             Container(
-              margin: EdgeInsets.symmetric(vertical: filterSpacing /2),
+              margin: EdgeInsets.symmetric(vertical: filterSpacing / 2),
               padding: EdgeInsets.symmetric(vertical: filterSpacing / 2),
               decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.6),
