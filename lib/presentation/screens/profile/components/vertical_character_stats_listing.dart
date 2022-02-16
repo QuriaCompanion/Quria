@@ -25,7 +25,7 @@ class VerticalCharacterStatsListingWidget extends StatelessWidget {
     int? grenadeHash = ProfileService().getCurrentGrenadeHashForCharacter(
         data!.characters[characterIndex].characterId!);
     String grenadeTimer =
-        " ${GrenadeCooldown.grenadeMap[grenadeHash]![disciplineTier]} sec.";
+        " ${GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier]} sec.";
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,

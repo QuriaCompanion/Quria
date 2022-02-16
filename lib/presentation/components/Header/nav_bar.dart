@@ -25,10 +25,6 @@ class _NavBarWidgetState extends State<NavBarWidget> {
             routeName: routeCollection,
           ),
           NavigationItem(
-            title: 'Home',
-            routeName: routeLogin,
-          ),
-          NavigationItem(
             title: 'Profile',
             routeName: '/profile',
           ),
