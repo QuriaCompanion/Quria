@@ -317,6 +317,45 @@ class ProfileService {
     }
     return null;
   }
+  int? getCurrentSuperHashForCharacter(String characterId) {
+    var character = getCharacterEquipment(characterId);
+
+    DestinyItemComponent? subclass = character.firstWhere((element) =>
+        ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition?[element.itemHash]
+            ?.equippingBlock
+            ?.equipmentSlotTypeHash ==
+        3284755031);
+
+    DestinyItemSocketState? stasisSuper =
+        getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.plugHash]
+                ?.plug
+                ?.plugCategoryHash ==
+            635737914);
+    if (stasisSuper != null) {
+      return ManifestService
+          .manifestParsed.destinyInventoryItemDefinition?[stasisSuper]?.hash;
+    }
+    DestinyItemTalentGridComponent? oldSubclass =
+        getTalentGrid(subclass.itemInstanceId!);
+
+    DestinyTalentNode? oldSuper = oldSubclass?.nodes?.firstWhere((element) =>
+        element.isActivated == true && element.nodeIndex == 10 ||
+        element.nodeIndex == 20);
+    if (oldSuper != null) {
+      return ManifestService
+          .manifestParsed
+          .destinyTalentGridDefinition?[oldSubclass!.talentGridHash]!
+          .nodes?[oldSuper.nodeIndex!]
+          .steps?[0]
+          .nodeStepHash;
+    }
+    return null;
+  }
 
   Map<String, DestinyItemSocketsComponent> getAllSockets() {
     return _profile!.itemComponents!.sockets!.data!;
