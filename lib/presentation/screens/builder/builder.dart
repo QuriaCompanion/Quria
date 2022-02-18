@@ -23,7 +23,7 @@ class _BuilderWidgetState extends State<BuilderWidget> {
     super.initState();
 
     _future = BuilderService().calculateBuilds(
-        statOrder: [], classType: DestinyClass.Warlock, exoticHash: 68357813);
+        statOrder: [], classType: DestinyClass.Warlock, exoticHash: 3627185503);
   }
 
   @override

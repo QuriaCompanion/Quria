@@ -1,3 +1,4 @@
+import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_item_investment_stat_definition.dart';
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
@@ -22,7 +23,8 @@ class BuilderService {
 
     BuilderHelper builder = BuilderHelper(
         statOrder: statOrder,
-        exoticHash: exoticHash,
+        exotic: ManifestService
+            .manifestParsed.destinyInventoryItemDefinition![exoticHash!],
         armors: armors,
         manifest:
             ManifestService.manifestParsed.destinyInventoryItemDefinition!,
@@ -59,25 +61,36 @@ class BuilderService {
       return investmentStats;
     }
 
+    final List<DestinyItemComponent> armors =
+        builderHelper.armors.where((element) {
+      if (element.itemHash == builderHelper.exotic?.hash) {
+        return true;
+      } else if (builderHelper.manifest[element.itemHash]?.itemSubType ==
+              builderHelper.exotic?.itemSubType ||
+          builderHelper.manifest[element.itemHash]?.inventory?.tierType ==
+              TierType.Exotic) {
+        return false;
+      } else {
+        return true;
+      }
+    }).toList();
     List<Build> builds = [];
-    for (DestinyItemComponent helmet in builderHelper.armors.where((element) =>
+
+    for (DestinyItemComponent helmet in armors.where((element) =>
         builderHelper.manifest[element.itemHash]?.itemSubType ==
         DestinyItemSubType.HelmetArmor)) {
       Map<int, int> helmetStats = statCalculator(helmet);
-      for (DestinyItemComponent gauntlet in builderHelper.armors.where(
-          (element) =>
-              builderHelper.manifest[element.itemHash]?.itemSubType ==
-              DestinyItemSubType.GauntletsArmor)) {
+      for (DestinyItemComponent gauntlet in armors.where((element) =>
+          builderHelper.manifest[element.itemHash]?.itemSubType ==
+          DestinyItemSubType.GauntletsArmor)) {
         Map<int, int> gauntletStats = statCalculator(gauntlet);
-        for (DestinyItemComponent chest in builderHelper.armors.where(
-            (element) =>
-                builderHelper.manifest[element.itemHash]?.itemSubType ==
-                DestinyItemSubType.ChestArmor)) {
+        for (DestinyItemComponent chest in armors.where((element) =>
+            builderHelper.manifest[element.itemHash]?.itemSubType ==
+            DestinyItemSubType.ChestArmor)) {
           Map<int, int> chestStats = statCalculator(chest);
-          for (DestinyItemComponent leg in builderHelper.armors.where(
-              (element) =>
-                  builderHelper.manifest[element.itemHash]?.itemSubType ==
-                  DestinyItemSubType.LegArmor)) {
+          for (DestinyItemComponent leg in armors.where((element) =>
+              builderHelper.manifest[element.itemHash]?.itemSubType ==
+              DestinyItemSubType.LegArmor)) {
             Map<int, int> legStats = statCalculator(leg);
             int mobility = helmetStats[2996146975]! +
                 gauntletStats[2996146975]! +
@@ -146,14 +159,18 @@ class BuilderService {
             ];
             builds.add(
                 Build(stats: stats, equipement: armors, mod: [], material: []));
+            if (builds.length == 100) {
+              builds.sort((a, b) => (a.stats.base < b.stats.base) ? 1 : -1);
+              builds = builds.getRange(0, 50).toList();
+            }
           }
         }
       }
     }
-    builds.sort((a, b) => (a.stats.base > b.stats.base) ? 1 : -1);
+
+    for (int i = 0; i <= 5; i++) {
+      builds.sort((a, b) => (a.stats.mobility > b.stats.mobility) ? 1 : -1);
+    }
     return builds;
-    // for(int i = 0; i <= 5; i++){
-    //       builds.sort((a, b) => (a.stats.m  > b.stats[req.body.statOrder[i]]) ? 1 : -1)
-    //   }
   }
 }

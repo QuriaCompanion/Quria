@@ -6,13 +6,12 @@ class BuilderHelper {
   List<String> statOrder;
   List<DestinyItemComponent> armors;
   Map<String, DestinyItemSocketsComponent> sockets;
-  int? exoticHash;
+  DestinyInventoryItemDefinition? exotic;
   Map<int, DestinyInventoryItemDefinition> manifest;
-  BuilderHelper({
-    required this.statOrder,
-    required this.armors,
-    required this.sockets,
-    this.exoticHash,
-    required this.manifest,
-  });
+  BuilderHelper(
+      {required this.statOrder,
+      required this.armors,
+      required this.sockets,
+      this.exotic,
+      required this.manifest});
 }
