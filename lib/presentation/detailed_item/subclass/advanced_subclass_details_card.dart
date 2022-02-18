@@ -252,17 +252,13 @@ class SubclassSubItemDisplay extends StatelessWidget {
         Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SizedBox(
             width: iconSize,
-            child: Tooltip(
-              message:
-                  '${GrenadeCooldown.grenadeMap[attribute.plugHash]?[5] ?? ""}',
-              child: Image(
-                image: NetworkImage(DestinyData.bungieLink +
-                    ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition![attribute.plugHash]!
-                        .displayProperties!
-                        .icon!),
-              ),
+            child: Image(
+              image: NetworkImage(DestinyData.bungieLink +
+                  ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition![attribute.plugHash]!
+                      .displayProperties!
+                      .icon!),
             ),
           ),
           SizedBox(width: childPadding),

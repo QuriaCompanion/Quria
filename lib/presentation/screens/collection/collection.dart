@@ -44,7 +44,6 @@ class _CollectionWidgetState extends State<CollectionWidget> {
     final itemListWidth = MediaQuery.of(context).size.width * 0.6;
     final filterWidth = MediaQuery.of(context).size.width * 0.3;
     double filterHeight = 900;
-    double paddingApp = 50;
     double filterItemsPadding = 15.0;
     double itemWidth = 150;
     return SingleChildScrollView(
