@@ -11,7 +11,7 @@ class SearchBar extends StatelessWidget {
         style: const TextStyle(color: Colors.white),
         decoration: const InputDecoration(
             border: OutlineInputBorder(),
-            hintText: 'Recherche',
+            hintText: 'Recherche...',
             hintStyle: TextStyle(color: Colors.white)),
         onChanged: onChange);
   }

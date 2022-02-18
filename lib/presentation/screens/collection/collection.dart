@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:bungie_api/enums/destiny_ammunition_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
@@ -24,6 +25,7 @@ class _CollectionWidgetState extends State<CollectionWidget> {
   late DestinyAmmunitionType currentAmmoType;
   late Future<Iterable<DestinyInventoryItemDefinition>?> _future;
   late String searchName;
+  late bool isLoading;
 
   @override
   void initState() {
@@ -33,6 +35,7 @@ class _CollectionWidgetState extends State<CollectionWidget> {
     currentFilter = CollectionFilter.primary;
     currentAmmoType = DestinyAmmunitionType.Primary;
     searchName = '';
+    isLoading = false;
   }
 
   @override
@@ -40,7 +43,10 @@ class _CollectionWidgetState extends State<CollectionWidget> {
     final padding = MediaQuery.of(context).size.width * globalPadding;
     final itemListWidth = MediaQuery.of(context).size.width * 0.6;
     final filterWidth = MediaQuery.of(context).size.width * 0.3;
+    double filterHeight = 900;
+    double paddingApp = 50;
     double filterItemsPadding = 15.0;
+    double itemWidth = 150;
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(left: padding, right: padding, top: padding),
@@ -59,96 +65,113 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                         .toLowerCase()
                         .contains(searchName.toLowerCase())));
                 return Row(
-                  mainAxisSize: MainAxisSize.max,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: filterWidth,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(filterItemsPadding * 2),
-                            child: SearchBar((searchValue) {
-                              setState(() {
-                                searchName = searchValue;
-                              });
-                            }),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              for (final entry
-                                  in CollectionFilter.typeFilters.entries)
-                                InkWell(
-                                  onTap: () => setState(() {
-                                    currentFilter = entry.value;
-                                    currentAmmoType = entry.key;
-                                    currentType =
-                                        entry.value.values.toList().first;
-                                  }),
-                                  child: SelectFilterType(
-                                    width: filterWidth / 3,
-                                    filterLogo: CollectionFilter
-                                        .ammoTypeLogo[entry.key]!,
-                                    isCurrentFilter:
-                                        currentFilter == entry.value,
-                                  ),
-                                ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              for (final entry in currentFilter.entries)
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: filterItemsPadding),
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        currentType = entry.value;
-                                      });
-                                    },
-                                    child: SelectFilterWeapon(
-                                      filterName: entry.key,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: filterHeight,
+                        width: filterWidth,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(filterItemsPadding * 2),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.4)),
+                                child: SearchBar((searchValue) {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+                                  Timer(const Duration(milliseconds: 100), () {
+                                    setState(() {
+                                      isLoading = false;
+                                      searchName = searchValue;
+                                    });
+                                  });
+                                }),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                for (final entry
+                                    in CollectionFilter.typeFilters.entries)
+                                  InkWell(
+                                    onTap: () => setState(() {
+                                      currentFilter = entry.value;
+                                      currentAmmoType = entry.key;
+                                      currentType =
+                                          entry.value.values.toList().first;
+                                    }),
+                                    child: SelectFilterType(
+                                      width: filterWidth / 3,
+                                      filterLogo: CollectionFilter
+                                          .ammoTypeLogo[entry.key]!,
                                       isCurrentFilter:
-                                          currentType == entry.value,
+                                          currentFilter == entry.value,
                                     ),
                                   ),
-                                ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
-                      child: SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.7,
-                        child: const VerticalDivider(
-                          color: Colors.white,
-                          thickness: 1.5,
-                          width: 25,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: SizedBox(
-                        width: itemListWidth,
-                        child: Wrap(
-                          children: [
-                            for (final item in filteredData)
-                              InkWell(
-                                  onTap: () => Navigator.pushNamed(
-                                      context, routeInspect,
-                                      arguments: item),
-                                  child: NamedItem(value: item))
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                for (final entry in currentFilter.entries)
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: filterItemsPadding),
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          currentType = entry.value;
+                                        });
+                                      },
+                                      child: SelectFilterWeapon(
+                                        filterName: entry.key,
+                                        isCurrentFilter:
+                                            currentType == entry.value,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            )
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                );
+                      if (isLoading)
+                        SizedBox(
+                            height: filterHeight,
+                            width: itemListWidth,
+                            child: const Loader())
+                      else
+                        SingleChildScrollView(
+                          child: SizedBox(
+                            width: itemListWidth,
+                            height: filterHeight,
+                            child: GridView.count(
+                              childAspectRatio: (itemWidth / (itemWidth * 1.5)),
+                              crossAxisCount: 5,
+                              children: [
+                                for (final item in filteredData)
+                                  Center(
+                                    child: SizedBox(
+                                      width: itemWidth,
+                                      height: itemWidth * 1.5,
+                                      child: InkWell(
+                                          onTap: () => Navigator.pushNamed(
+                                              context, routeInspect,
+                                              arguments: item),
+                                          child: NamedItem(
+                                            value: item,
+                                            width: itemWidth,
+                                          )),
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ),
+                        )
+                    ]);
               } else {
                 return const Loader();
               }
@@ -173,7 +196,9 @@ class SelectFilterWeapon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: isCurrentFilter ? Colors.black.withOpacity(0.5) : null,
+            color: isCurrentFilter
+                ? Colors.black.withOpacity(0.6)
+                : Colors.black.withOpacity(0.4),
             border: Border.all(color: Colors.black)),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -204,7 +229,9 @@ class SelectFilterType extends StatelessWidget {
     return Container(
         width: width,
         decoration: BoxDecoration(
-            color: isCurrentFilter ? Colors.black.withOpacity(0.5) : null,
+            color: isCurrentFilter
+                ? Colors.black.withOpacity(0.6)
+                : Colors.black.withOpacity(0.4),
             border: Border.all(color: Colors.black)),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),

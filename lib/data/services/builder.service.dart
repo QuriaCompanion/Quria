@@ -143,19 +143,19 @@ class BuilderService {
               Armor(
                   hash: helmet.itemHash!,
                   itemInstanceId: helmet.itemInstanceId!,
-                  type: 'Helmet'),
+                  type: 0),
               Armor(
                   hash: gauntlet.itemHash!,
                   itemInstanceId: gauntlet.itemInstanceId!,
-                  type: 'Gauntlets'),
+                  type: 1),
               Armor(
                   hash: chest.itemHash!,
                   itemInstanceId: chest.itemInstanceId!,
-                  type: 'Chest'),
+                  type: 2),
               Armor(
                   hash: leg.itemHash!,
                   itemInstanceId: leg.itemInstanceId!,
-                  type: 'Legs')
+                  type: 3)
             ];
             builds.add(
                 Build(stats: stats, equipement: armors, mod: [], material: []));

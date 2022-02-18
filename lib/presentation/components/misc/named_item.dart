@@ -20,48 +20,44 @@ class NamedItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Container(
-        width: width,
-        decoration: regularShadow,
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: [
-            Hero(
-              tag: value.hash!,
-              child: Stack(children: [
-                Image.network(
-                    DestinyData.bungieLink + value.displayProperties!.icon!,
-                    width: width,
-                    fit: BoxFit.fill),
-                if (value.iconWatermark != null)
-                  Image(
-                    image: NetworkImage(
-                        DestinyData.bungieLink + value.iconWatermark!),
-                    height: width,
-                    fit: BoxFit.fill,
-                  ),
-              ]),
-            ),
-            SizedBox(
-              height: width! / 2,
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Center(
-                  child: AutoSizeText(
-                      utf8.decode(
-                          value.displayProperties!.name!.runes.toList()),
-                      wrapWords: false,
-                      maxLines: 2,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18, color: txtColor),
-                      overflow: TextOverflow.clip),
+    return Container(
+      width: width,
+      decoration: regularShadow,
+      child: Column(
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          Hero(
+            tag: value.hash!,
+            child: Stack(children: [
+              Image.network(
+                  DestinyData.bungieLink + value.displayProperties!.icon!,
+                  width: width,
+                  fit: BoxFit.fill),
+              if (value.iconWatermark != null)
+                Image(
+                  image: NetworkImage(
+                      DestinyData.bungieLink + value.iconWatermark!),
+                  height: width,
+                  fit: BoxFit.fill,
                 ),
+            ]),
+          ),
+          SizedBox(
+            height: width! / 2,
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: Center(
+                child: AutoSizeText(
+                    utf8.decode(value.displayProperties!.name!.runes.toList()),
+                    wrapWords: false,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 18, color: txtColor),
+                    overflow: TextOverflow.clip),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

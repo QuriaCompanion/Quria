@@ -1,8 +1,11 @@
+import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
+import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
 import 'package:quria/presentation/screens/builder/components/extended_builder_info.dart';
 
@@ -39,17 +42,32 @@ class SingleBuild extends StatelessWidget {
         width: (width - (padding * 2)) / 6,
       ));
     }
+    List<DestinyItemComponent> items = ProfileService().getItemsByInstanceId([
+      buildInfo.equipement[0].itemInstanceId,
+      buildInfo.equipement[1].itemInstanceId,
+      buildInfo.equipement[2].itemInstanceId,
+      buildInfo.equipement[3].itemInstanceId
+    ]);
+    items.sort(((a, b) => ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition![a.itemHash]!
+                .itemSubType!
+                .index >
+            ManifestService.manifestParsed
+                .destinyInventoryItemDefinition![b.itemHash]!.itemSubType!.index
+        ? 1
+        : -1));
     List<Widget> listArmor = <Widget>[];
     for (var i = 0; i < buildInfo.equipement.length; i++) {
       listArmor.add(Container(
           decoration: regularShadow,
-          child: Image.network(DestinyData.bungieLink +
-              ManifestService
+          child: ItemIcon(
+              imageSize: 100,
+              displayHash: ManifestService
                   .manifestParsed
                   .destinyInventoryItemDefinition![
-                      buildInfo.equipement[i].hash]!
-                  .displayProperties!
-                  .icon!)));
+                      items[i].overrideStyleItemHash ?? items[i].itemHash]!
+                  .hash!)));
     }
     return Column(
       children: [
