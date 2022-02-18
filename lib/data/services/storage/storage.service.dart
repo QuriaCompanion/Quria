@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:localstorage/localstorage.dart';
+import 'package:path_provider/path_provider.dart';
 
 /// StorageService is to be called using static methods.
 ///
@@ -17,8 +18,8 @@ class StorageService {
 
   static isolateInit() async {
     if (!kIsWeb) {
-      // final directory = await getApplicationDocumentsDirectory();
-      Hive.init('Quria');
+      final directory = await getApplicationDocumentsDirectory();
+      Hive.init(directory.path + '/Quria');
     }
   }
 
@@ -62,8 +63,8 @@ class StorageService {
   /// Given a type [T] returns a Box named after the type.
   ///
   /// If the Box does not exist, it creates it.
-  static Future<Box> openBox<T>() async {
-    return Hive.openBox(T.toString());
+  static Future<Box> openBox<T>(String boxName) async {
+    return Hive.openBox(boxName);
   }
 
   /// Given a [box] it closes said box.

@@ -20,31 +20,31 @@ class VerticalCharacterStatsListingWidget extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    // int disciplineTier =
-    //     (data!.characters[characterIndex].stats!["1735777505"]! / 10).round();
-    // int superTier =
-    //     (data!.characters[characterIndex].stats!["144602215"]! / 10).round();
+    int disciplineTier =
+        (data!.characters[characterIndex].stats!["1735777505"]! / 10).floor();
+    int superTier =
+        (data!.characters[characterIndex].stats!["144602215"]! / 10).floor();
 
-    // int? grenadeHash = ProfileService().getCurrentGrenadeHashForCharacter(
-    //     data!.characters[characterIndex].characterId!);
-    // int? grenadeTimer =
-    //     GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier];
+    int? grenadeHash = ProfileService().getCurrentGrenadeHashForCharacter(
+        data!.characters[characterIndex].characterId!);
+    int? grenadeTimer =
+        GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier];
 
-    // int? superHash = ProfileService().getCurrentSuperHashForCharacter(
-    //     data!.characters[characterIndex].characterId!);
-    // int? superTimer = SuperCooldown.superMap[superHash]?[superTier];
+    int? superHash = ProfileService().getCurrentSuperHashForCharacter(
+        data!.characters[characterIndex].characterId!);
+    int? superTimer = SuperCooldown.superMap[superHash]?[superTier];
 
-    // Map<String, dynamic> timerStat = {
-    //   '1735777505': formatTime(grenadeTimer),
-    //   '144602215': formatTime(superTimer),
-    // };
+    Map<String, dynamic> timerStat = {
+      '1735777505': formatTime(grenadeTimer),
+      '144602215': formatTime(superTimer),
+    };
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         for (int i = 0; i < 6; i++)
           Tooltip(
-            message: '',
+            message: timerStat[DestinyData.armorStats[i]] ?? '',
             child: StatisticDisplay(
                 value: data!.characters[characterIndex]
                     .stats![DestinyData.armorStats[i]]!,

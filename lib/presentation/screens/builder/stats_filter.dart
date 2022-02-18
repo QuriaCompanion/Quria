@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/cubit/filter_cubit.dart';
+import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/presentation/components/misc/button.dart';
 import 'package:quria/presentation/screens/builder/components/filter.dart';
 import 'package:quria/constants/styles.dart';
