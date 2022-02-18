@@ -33,8 +33,8 @@ class _FilterWidgetState extends State<FilterWidget> {
       height: MediaQuery.of(context).size.height * 0.6,
       child: ReorderableListView(
         padding: EdgeInsets.only(
-            left: MediaQuery.of(context).size.width * 0.6,
-            right: MediaQuery.of(context).size.width * 0.6),
+            left: MediaQuery.of(context).size.width * 0.1,
+            right: MediaQuery.of(context).size.width * 0.1),
         onReorder: (int oldIndex, int newIndex) {
           setState(() {
             if (oldIndex < newIndex) {
