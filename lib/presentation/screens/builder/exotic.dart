@@ -33,7 +33,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
     const double textFontSize = 25;
     const double titleFontSize = 45;
     const double padding = 50;
-    const double itemPadding = 60;
+    const double itemPadding = 30;
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(
@@ -78,14 +78,18 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                         if (snapshot.hasData) {
                           List<Widget> list = <Widget>[];
                           for (var i = 0; i < snapshot.data!.length; i++) {
-                            list.add(InkWell(
-                                onTap: () => {
-                                      StorageService.setLocalStorage(
-                                          "exotic", snapshot.data![i]),
-                                      Navigator.pushNamed(context, routeFilter,
-                                          arguments: snapshot.data![i].hash)
-                                    },
-                                child: NamedItem(value: snapshot.data![i])));
+                            list.add(Padding(
+                              padding: const EdgeInsets.all(itemPadding / 2),
+                              child: InkWell(
+                                  onTap: () => {
+                                        StorageService.setLocalStorage(
+                                            "exotic", snapshot.data![i]),
+                                        Navigator.pushNamed(
+                                            context, routeFilter,
+                                            arguments: snapshot.data![i].hash)
+                                      },
+                                  child: NamedItem(value: snapshot.data![i])),
+                            ));
                           }
                           return Container(
                             padding: const EdgeInsets.all(itemPadding),
