@@ -120,8 +120,8 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
                                             })
                                           },
                                           child: const Button(
-                                              width: 250.0,
-                                              height: 60,
+                                              width: buttonWidth,
+                                              height: buttonHeight,
                                               value: "Next step"),
                                         )),
                                   ],
