@@ -70,66 +70,72 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                     SizedBox(
                         height: filterHeight,
                       width: filterWidth,
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(filterItemsPadding * 2),
-                            child: SearchBar((searchValue) {
-                              setState(() {
-                                  isLoading = true;
-                                });
-                                Timer(Duration(seconds: 1), () {
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade700,
+                              borderRadius: BorderRadius.circular(20)),
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(filterItemsPadding * 2),
+                                child: SearchBar((searchValue) {
                                   setState(() {
-                                    isLoading = false;
-                                    searchName = searchValue;
+                                    isLoading = true;
                                   });
-                                });
-                            }),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              for (final entry
-                                  in CollectionFilter.typeFilters.entries)
-                                InkWell(
-                                  onTap: () => setState(() {
-                                    currentFilter = entry.value;
-                                    currentAmmoType = entry.key;
-                                    currentType =
-                                        entry.value.values.toList().first;
-                                  }),
-                                  child: SelectFilterType(
-                                    width: filterWidth / 3,
-                                    filterLogo: CollectionFilter
-                                        .ammoTypeLogo[entry.key]!,
-                                    isCurrentFilter:
-                                        currentFilter == entry.value,
-                                  ),
-                                ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              for (final entry in currentFilter.entries)
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: filterItemsPadding),
-                                  child: InkWell(
-                                    onTap: () {
-                                      setState(() {
-                                        currentType = entry.value;
-                                      });
-                                    },
-                                    child: SelectFilterWeapon(
-                                      filterName: entry.key,
-                                      isCurrentFilter:
-                                          currentType == entry.value,
+                                  Timer(Duration(seconds: 1), () {
+                                    setState(() {
+                                      isLoading = false;
+                                      searchName = searchValue;
+                                    });
+                                  });
+                                }),
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  for (final entry
+                                      in CollectionFilter.typeFilters.entries)
+                                    InkWell(
+                                      onTap: () => setState(() {
+                                        currentFilter = entry.value;
+                                        currentAmmoType = entry.key;
+                                        currentType =
+                                            entry.value.values.toList().first;
+                                      }),
+                                      child: SelectFilterType(
+                                        width: filterWidth / 3,
+                                        filterLogo: CollectionFilter
+                                            .ammoTypeLogo[entry.key]!,
+                                        isCurrentFilter:
+                                            currentFilter == entry.value,
+                                      ),
                                     ),
-                                  ),
-                                ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  for (final entry in currentFilter.entries)
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: filterItemsPadding),
+                                      child: InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            currentType = entry.value;
+                                          });
+                                        },
+                                        child: SelectFilterWeapon(
+                                          filterName: entry.key,
+                                          isCurrentFilter:
+                                              currentType == entry.value,
+                                        ),
+                                      ),
+                                    ),
+                                ],
+                              )
                             ],
-                          )
-                        ],
+                          ),
                       ),
                     ),
                       if (isLoading)
