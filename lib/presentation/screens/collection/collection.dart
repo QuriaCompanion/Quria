@@ -70,13 +70,14 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                   children: [
                     SizedBox(
                         height: filterHeight,
-                      width: filterWidth,
-                        child: Container(
-                          decoration: regularShadow,
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.all(filterItemsPadding * 2),
+                        width: filterWidth,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(filterItemsPadding * 2),
+                              child: Container(
+                                decoration:
+                                    BoxDecoration(color: Colors.grey.shade900),
                                 child: SearchBar((searchValue) {
                                   setState(() {
                                     isLoading = true;
@@ -89,54 +90,53 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                                   });
                                 }),
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  for (final entry
-                                      in CollectionFilter.typeFilters.entries)
-                                    InkWell(
-                                      onTap: () => setState(() {
-                                        currentFilter = entry.value;
-                                        currentAmmoType = entry.key;
-                                        currentType =
-                                            entry.value.values.toList().first;
-                                      }),
-                                      child: SelectFilterType(
-                                        width: filterWidth / 3,
-                                        filterLogo: CollectionFilter
-                                            .ammoTypeLogo[entry.key]!,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                for (final entry
+                                    in CollectionFilter.typeFilters.entries)
+                                  InkWell(
+                                    onTap: () => setState(() {
+                                      currentFilter = entry.value;
+                                      currentAmmoType = entry.key;
+                                      currentType =
+                                          entry.value.values.toList().first;
+                                    }),
+                                    child: SelectFilterType(
+                                      width: filterWidth / 3,
+                                      filterLogo: CollectionFilter
+                                          .ammoTypeLogo[entry.key]!,
+                                      isCurrentFilter:
+                                          currentFilter == entry.value,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                            Column(
+                              children: [
+                                for (final entry in currentFilter.entries)
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: filterItemsPadding),
+                                    child: InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          currentType = entry.value;
+                                        });
+                                      },
+                                      child: SelectFilterWeapon(
+                                        filterName: entry.key,
                                         isCurrentFilter:
-                                            currentFilter == entry.value,
+                                            currentType == entry.value,
                                       ),
                                     ),
-                                ],
-                              ),
-                              Column(
-                                children: [
-                                  for (final entry in currentFilter.entries)
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: filterItemsPadding),
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            currentType = entry.value;
-                                          });
-                                        },
-                                        child: SelectFilterWeapon(
-                                          filterName: entry.key,
-                                          isCurrentFilter:
-                                              currentType == entry.value,
-                                        ),
-                                      ),
-                                    ),
-                                ],
-                              )
-                            ],
-                          ),
+                                  ),
+                              ],
+                            )
+                          ],
+                        ),
                       ),
-                    ),
                       if (isLoading)
                         SizedBox(
                             height: filterHeight,
@@ -195,7 +195,9 @@ class SelectFilterWeapon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            color: isCurrentFilter ? Colors.black.withOpacity(0.5) : null,
+            color: isCurrentFilter
+                ? Colors.black.withOpacity(0.5)
+                : Colors.grey.shade900,
             border: Border.all(color: Colors.black)),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -225,8 +227,10 @@ class SelectFilterType extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: width,
-        decoration: BoxDecoration(
-            color: isCurrentFilter ? Colors.black.withOpacity(0.5) : null,
+        decoration: BoxDecoration(   
+            color: isCurrentFilter
+                ? Colors.black.withOpacity(0.5)
+                : Colors.grey.shade900,
             border: Border.all(color: Colors.black)),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
