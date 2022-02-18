@@ -11,12 +11,11 @@ import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
+import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
-
-import '../../models/helpers/profileHelper.model.dart';
 
 ProfileService profile = ProfileService();
 AccountService account = AccountService();
