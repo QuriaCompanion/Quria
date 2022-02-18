@@ -4,6 +4,7 @@ import 'package:bungie_api/enums/destiny_ammunition_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/collection_filter.enum.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
@@ -71,9 +72,7 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                         height: filterHeight,
                       width: filterWidth,
                         child: Container(
-                          decoration: BoxDecoration(
-                              color: Colors.grey.shade700,
-                              borderRadius: BorderRadius.circular(20)),
+                          decoration: regularShadow,
                           child: Column(
                             children: [
                               Padding(
