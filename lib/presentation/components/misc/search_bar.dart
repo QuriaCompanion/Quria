@@ -8,11 +8,11 @@ class SearchBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.black),
         decoration: const InputDecoration(
             border: OutlineInputBorder(),
-            hintText: 'Recherche',
-            hintStyle: TextStyle(color: Colors.white)),
+            hintText: 'Recherche...',
+            hintStyle: TextStyle(color: Colors.black)),
         onChanged: onChange);
   }
 }

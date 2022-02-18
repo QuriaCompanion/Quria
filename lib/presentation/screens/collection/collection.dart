@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:bungie_api/enums/destiny_ammunition_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
@@ -23,6 +24,7 @@ class _CollectionWidgetState extends State<CollectionWidget> {
   late DestinyAmmunitionType currentAmmoType;
   late Future<Iterable<DestinyInventoryItemDefinition>?> _future;
   late String searchName;
+  late bool isLoading;
 
   @override
   void initState() {
@@ -32,14 +34,17 @@ class _CollectionWidgetState extends State<CollectionWidget> {
     currentFilter = CollectionFilter.primary;
     currentAmmoType = DestinyAmmunitionType.Primary;
     searchName = '';
+    isLoading = false;
   }
 
   @override
   Widget build(BuildContext context) {
     final itemListWidth = MediaQuery.of(context).size.width * 0.6;
     final filterWidth = MediaQuery.of(context).size.width * 0.3;
+    double filterHeight = 900;
     double paddingApp = 50;
     double filterItemsPadding = 15.0;
+    double itemWidth = 150;
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(
@@ -59,10 +64,11 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                         .toLowerCase()
                         .contains(searchName.toLowerCase())));
                 return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     SizedBox(
+                        height: filterHeight,
                       width: filterWidth,
                       child: Column(
                         children: [
@@ -70,8 +76,14 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                             padding: EdgeInsets.all(filterItemsPadding * 2),
                             child: SearchBar((searchValue) {
                               setState(() {
-                                searchName = searchValue;
-                              });
+                                  isLoading = true;
+                                });
+                                Timer(Duration(seconds: 1), () {
+                                  setState(() {
+                                    isLoading = false;
+                                    searchName = searchValue;
+                                  });
+                                });
                             }),
                           ),
                           Row(
@@ -120,21 +132,40 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: itemListWidth,
-                      child: Wrap(
-                        children: [
-                          for (final item in filteredData)
-                            InkWell(
-                                onTap: () => Navigator.pushNamed(
-                                    context, routeInspect,
-                                    arguments: item),
-                                child: NamedItem(value: item))
-                        ],
-                      ),
-                    ),
-                  ],
-                );
+                      if (isLoading)
+                        SizedBox(
+                            height: filterHeight,
+                            width: itemListWidth,
+                            child: const Loader())
+                      else
+                        SingleChildScrollView(
+                          child: SizedBox(
+                            width: itemListWidth,
+                            height: filterHeight,
+                            child: GridView.count(
+                              childAspectRatio: (itemWidth / (itemWidth * 1.5)),
+                              crossAxisCount: 5,
+                              children: [
+                                for (final item in filteredData)
+                                  Center(
+                                    child: SizedBox(
+                                      width: itemWidth,
+                                      height: itemWidth * 1.5,
+                                      child: InkWell(
+                                          onTap: () => Navigator.pushNamed(
+                                              context, routeInspect,
+                                              arguments: item),
+                                          child: NamedItem(
+                                            value: item,
+                                            width: itemWidth,
+                                          )),
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ),
+                        )
+                    ]);
               } else {
                 return const Loader();
               }
