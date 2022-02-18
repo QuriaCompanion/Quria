@@ -168,9 +168,6 @@ class BuilderService {
       }
     }
 
-    for (int i = 0; i <= 5; i++) {
-      builds.sort((a, b) => (a.stats.mobility > b.stats.mobility) ? 1 : -1);
-    }
     return builds;
   }
 }

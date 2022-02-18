@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/cubit/filter_cubit.dart';
+import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/presentation/components/misc/button.dart';
 import 'package:quria/presentation/screens/builder/components/filter.dart';
 import 'package:quria/constants/styles.dart';
@@ -28,7 +29,6 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
     const double padding = 50;
     const double buttonWidth = 250;
     const double buttonHeight = 60;
-    Map<String, dynamic>? args;
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: ghostBackground,
@@ -89,32 +89,35 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
                                                 0.5),
                                         child: InkWell(
                                           onTap: () => {
-                                            if (filterState is FilterDataState)
-                                              {
-                                                args = {
-                                                  "exoticHash":
-                                                      widget.exoticHash,
-                                                  "filter": filterState.data,
-                                                },
+                                            setState(() {
+                                              BuilderPreparation args;
+                                              if (filterState
+                                                  is FilterDataState) {
+                                                args = BuilderPreparation(
+                                                    statOrder: filterState.data,
+                                                    exoticHash:
+                                                        widget.exoticHash);
+                                                Navigator.pushNamed(
+                                                    context, routeBuilder,
+                                                    arguments: args);
+                                              } else {
+                                                args = BuilderPreparation(
+                                                    statOrder: [
+                                                      'Mobilité',
+                                                      'Résistance',
+                                                      'Récupération',
+                                                      'Discipline',
+                                                      'Intelligence',
+                                                      'Force'
+                                                    ],
+                                                    exoticHash:
+                                                        widget.exoticHash);
+
+                                                Navigator.pushNamed(
+                                                    context, routeBuilder,
+                                                    arguments: args);
                                               }
-                                            else
-                                              {
-                                                args = {
-                                                  "exoticHash":
-                                                      widget.exoticHash,
-                                                  "filter": [
-                                                    'Mobilité',
-                                                    'Résistance',
-                                                    'Récupération',
-                                                    'Discipline',
-                                                    'Intelligence',
-                                                    'Force'
-                                                  ],
-                                                },
-                                              },
-                                            Navigator.pushNamed(
-                                                context, routeBuilder,
-                                                arguments: args)
+                                            })
                                           },
                                           child: const Button(
                                               width: 250.0,

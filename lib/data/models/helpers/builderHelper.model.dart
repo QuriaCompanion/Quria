@@ -15,3 +15,9 @@ class BuilderHelper {
       this.exotic,
       required this.manifest});
 }
+
+class BuilderPreparation {
+  List<String> statOrder;
+  int? exoticHash;
+  BuilderPreparation({required this.statOrder, this.exoticHash});
+}

@@ -2,13 +2,14 @@ import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/screens/builder/components/single_build.dart';
 
 class BuilderWidget extends StatefulWidget {
-  final Map<String, dynamic> data;
+  final BuilderPreparation data;
   const BuilderWidget({Key? key, required this.data}) : super(key: key);
 
   @override
@@ -24,7 +25,9 @@ class _BuilderWidgetState extends State<BuilderWidget> {
     super.initState();
 
     _future = BuilderService().calculateBuilds(
-        statOrder: [], classType: DestinyClass.Warlock, exoticHash: 3627185503);
+        statOrder: widget.data.statOrder,
+        classType: DestinyClass.Warlock,
+        exoticHash: widget.data.exoticHash);
   }
 
   @override
