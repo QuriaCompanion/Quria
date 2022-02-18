@@ -8,7 +8,8 @@ import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/screens/builder/components/single_build.dart';
 
 class BuilderWidget extends StatefulWidget {
-  const BuilderWidget({Key? key}) : super(key: key);
+  final Map<String, dynamic> data;
+  const BuilderWidget({Key? key, required this.data}) : super(key: key);
 
   @override
   _BuilderWidgetState createState() => _BuilderWidgetState();
