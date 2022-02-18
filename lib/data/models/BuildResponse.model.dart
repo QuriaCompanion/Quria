@@ -124,7 +124,7 @@ class Misc {
 class Armor {
   late int hash;
   late String itemInstanceId;
-  late String type;
+  late int type;
 
   Armor({required this.hash, required this.itemInstanceId, required this.type});
 
