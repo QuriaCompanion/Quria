@@ -3,6 +3,7 @@ import 'package:bungie_api/enums/destiny_ammunition_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/collection_filter.enum.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
@@ -36,14 +37,13 @@ class _CollectionWidgetState extends State<CollectionWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final padding = MediaQuery.of(context).size.width * globalPadding;
     final itemListWidth = MediaQuery.of(context).size.width * 0.6;
     final filterWidth = MediaQuery.of(context).size.width * 0.3;
-    double paddingApp = 50;
     double filterItemsPadding = 15.0;
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(
-            left: paddingApp, right: paddingApp, top: paddingApp),
+        padding: EdgeInsets.only(left: padding, right: padding, top: padding),
         child: FutureBuilder(
             future: _future,
             builder: (BuildContext context,
@@ -59,8 +59,9 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                         .toLowerCase()
                         .contains(searchName.toLowerCase())));
                 return Row(
+                  mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
                       width: filterWidth,
@@ -120,17 +121,30 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      width: itemListWidth,
-                      child: Wrap(
-                        children: [
-                          for (final item in filteredData)
-                            InkWell(
-                                onTap: () => Navigator.pushNamed(
-                                    context, routeInspect,
-                                    arguments: item),
-                                child: NamedItem(value: item))
-                        ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15.0),
+                      child: SizedBox(
+                        height: MediaQuery.of(context).size.height * 0.7,
+                        child: const VerticalDivider(
+                          color: Colors.white,
+                          thickness: 1.5,
+                          width: 25,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: SizedBox(
+                        width: itemListWidth,
+                        child: Wrap(
+                          children: [
+                            for (final item in filteredData)
+                              InkWell(
+                                  onTap: () => Navigator.pushNamed(
+                                      context, routeInspect,
+                                      arguments: item),
+                                  child: NamedItem(value: item))
+                          ],
+                        ),
                       ),
                     ),
                   ],

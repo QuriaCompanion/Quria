@@ -28,6 +28,8 @@ class _InspectWidgetState extends State<InspectWidget> {
   Widget build(BuildContext context) {
     final double itemMainInfoWidth = MediaQuery.of(context).size.width * 0.33;
     return Container(
+        padding:
+            EdgeInsets.all(MediaQuery.of(context).size.width * globalPadding),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: NetworkImage(widget.item.screenshot != null

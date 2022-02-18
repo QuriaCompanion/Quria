@@ -1,5 +1,6 @@
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/misc/named_item.dart';
@@ -36,9 +37,9 @@ class _ExoticWidgetState extends State<ExoticWidget> {
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(
-            top: (MediaQuery.of(context).size.width / 100) * 5,
-            left: (MediaQuery.of(context).size.width / 100) * 5,
-            right: (MediaQuery.of(context).size.width / 100) * 5),
+            top: MediaQuery.of(context).size.width * globalPadding,
+            left: MediaQuery.of(context).size.width * globalPadding,
+            right: MediaQuery.of(context).size.width * globalPadding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -59,10 +60,13 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                       style: TextStyle(
                           color: Colors.white, fontSize: textFontSize)),
                 ),
-                const VerticalDivider(
-                  color: Colors.white,
-                  thickness: 1.5,
-                  width: padding * 2,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: const VerticalDivider(
+                    color: Colors.white,
+                    thickness: 1.5,
+                    width: padding * 2,
+                  ),
                 ),
                 Expanded(
                   flex: 60,

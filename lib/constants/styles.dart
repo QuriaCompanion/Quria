@@ -4,6 +4,8 @@ const TextStyle kPageTitleStyle = TextStyle(fontSize: 10.0);
 
 const Color backgroundColor = Color.fromARGB(255, 109, 102, 92);
 
+const double globalPadding = 0.05;
+
 BoxDecoration greyTransparentBackground = BoxDecoration(
   color: Colors.grey.withOpacity(0.3),
   boxShadow: [

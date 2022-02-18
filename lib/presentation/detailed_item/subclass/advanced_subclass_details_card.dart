@@ -249,7 +249,7 @@ class SubclassSubItemDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(children: [
+        Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
           SizedBox(
             width: iconSize,
             child: Tooltip(
