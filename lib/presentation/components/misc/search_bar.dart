@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 
+@immutable
 class SearchBar extends StatelessWidget {
-  SearchBar(this.onChange);
+  const SearchBar(this.onChange, {Key? key}) : super(key: key);
   final SearchValueCallback onChange;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(30),
-      child: TextField(
-          style: const TextStyle(color: Colors.white),
-          decoration: const InputDecoration(
-              contentPadding:
-                  EdgeInsets.symmetric(vertical: 30, horizontal: 20),
-              border: OutlineInputBorder(),
-              hintText: 'Recherche',
-              hintStyle: TextStyle(color: Colors.white)),
-          onChanged: onChange),
-    );
+    return TextField(
+        style: const TextStyle(color: Colors.white),
+        decoration: const InputDecoration(
+            border: OutlineInputBorder(),
+            hintText: 'Recherche',
+            hintStyle: TextStyle(color: Colors.white)),
+        onChanged: onChange);
   }
 }
 

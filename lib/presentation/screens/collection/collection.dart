@@ -40,35 +40,40 @@ class _CollectionWidgetState extends State<CollectionWidget> {
     final filterWidth = MediaQuery.of(context).size.width * 0.3;
     double paddingApp = 50;
     double filterItemsPadding = 15.0;
-    return Container(
-      padding: EdgeInsets.all(paddingApp),
-      child: FutureBuilder(
-          future: _future,
-          builder: (BuildContext context,
-              AsyncSnapshot<Iterable<DestinyInventoryItemDefinition>?>
-                  snapshot) {
-            if (snapshot.hasData) {
-              var filteredData = searchName.isEmpty
-                  ? snapshot.data!.where((element) =>
-                      element.itemSubType == currentType &&
-                      element.equippingBlock?.ammoType == currentAmmoType)
-                  : snapshot.data!.where(((element) => utf8
-                      .decode(element.displayProperties!.name!.runes.toList())
-                      .toLowerCase()
-                      .contains(searchName.toLowerCase())));
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  SizedBox(
-                    width: filterWidth,
-                    child: Column(
-                      children: [
-                        SearchBar((searchValue) {
-                          setState(() {
-                            searchName = searchValue;
-                          });
-                        }),
-                        if (searchName.isEmpty)
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(
+            left: paddingApp, right: paddingApp, top: paddingApp),
+        child: FutureBuilder(
+            future: _future,
+            builder: (BuildContext context,
+                AsyncSnapshot<Iterable<DestinyInventoryItemDefinition>?>
+                    snapshot) {
+              if (snapshot.hasData) {
+                var filteredData = searchName.isEmpty
+                    ? snapshot.data!.where((element) =>
+                        element.itemSubType == currentType &&
+                        element.equippingBlock?.ammoType == currentAmmoType)
+                    : snapshot.data!.where(((element) => utf8
+                        .decode(element.displayProperties!.name!.runes.toList())
+                        .toLowerCase()
+                        .contains(searchName.toLowerCase())));
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      width: filterWidth,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.all(filterItemsPadding * 2),
+                            child: SearchBar((searchValue) {
+                              setState(() {
+                                searchName = searchValue;
+                              });
+                            }),
+                          ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -91,7 +96,6 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                                 ),
                             ],
                           ),
-                        if (searchName.isEmpty)
                           Column(
                             children: [
                               for (final entry in currentFilter.entries)
@@ -113,11 +117,10 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                                 ),
                             ],
                           )
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  SingleChildScrollView(
-                    child: SizedBox(
+                    SizedBox(
                       width: itemListWidth,
                       child: Wrap(
                         children: [
@@ -130,13 +133,13 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                         ],
                       ),
                     ),
-                  ),
-                ],
-              );
-            } else {
-              return const Loader();
-            }
-          }),
+                  ],
+                );
+              } else {
+                return const Loader();
+              }
+            }),
+      ),
     );
   }
 }
