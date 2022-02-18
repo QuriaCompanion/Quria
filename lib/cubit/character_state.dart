@@ -6,6 +6,5 @@ class CharacterInitial extends CharacterState {}
 
 class ShowDetailsState extends CharacterState {
   final DestinyItemComponent item;
-
   ShowDetailsState({required this.item});
 }
