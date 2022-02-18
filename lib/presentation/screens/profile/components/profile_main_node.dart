@@ -43,7 +43,7 @@ class ProfileMainNodeWidget extends StatelessWidget {
               SizedBox(width: middleSpace),
               Row(
                 children: [
-                  VerticalCharacterStatsListingWidget(
+                  VerticalCharacterStatsListing(
                     fontSize: statsFontSize,
                     width: verticalStatWidth,
                     data: data,
