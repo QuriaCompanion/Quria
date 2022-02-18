@@ -111,6 +111,36 @@ class StatsStringHash {
   static const String power = "1935470627";
 }
 
+enum armorStatInt {
+  mobility,
+  resilience,
+  recovery,
+  intellect,
+  discipline,
+  strength,
+}
+
+extension ArmorStatIntExtension on armorStatInt {
+  int get value {
+    switch (this) {
+      case armorStatInt.mobility:
+        return 0;
+      case armorStatInt.resilience:
+        return 1;
+      case armorStatInt.recovery:
+        return 2;
+      case armorStatInt.intellect:
+        return 3;
+      case armorStatInt.discipline:
+        return 4;
+      case armorStatInt.strength:
+        return 5;
+      default:
+        return 0;
+    }
+  }
+}
+
 class DestinyData {
   static const Map<DamageType, int> damageTypeHashes = {
     DamageType.Kinetic: 3373582085,
