@@ -40,6 +40,7 @@ class _CollectionWidgetState extends State<CollectionWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final padding = MediaQuery.of(context).size.width * globalPadding;
     final itemListWidth = MediaQuery.of(context).size.width * 0.6;
     final filterWidth = MediaQuery.of(context).size.width * 0.3;
     double filterHeight = 900;
@@ -48,8 +49,7 @@ class _CollectionWidgetState extends State<CollectionWidget> {
     double itemWidth = 150;
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.only(
-            left: paddingApp, right: paddingApp, top: paddingApp),
+        padding: EdgeInsets.only(left: padding, right: padding, top: padding),
         child: FutureBuilder(
             future: _future,
             builder: (BuildContext context,
@@ -65,10 +65,11 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                         .toLowerCase()
                         .contains(searchName.toLowerCase())));
                 return Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
                         height: filterHeight,
                         width: filterWidth,
                         child: Column(
@@ -76,13 +77,13 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                             Padding(
                               padding: EdgeInsets.all(filterItemsPadding * 2),
                               child: Container(
-                                decoration:
-                                    BoxDecoration(color: Colors.grey.shade900),
+                                decoration: BoxDecoration(
+                                    color: Colors.black.withOpacity(0.4)),
                                 child: SearchBar((searchValue) {
                                   setState(() {
                                     isLoading = true;
                                   });
-                                  Timer(Duration(seconds: 1), () {
+                                  Timer(const Duration(milliseconds: 100), () {
                                     setState(() {
                                       isLoading = false;
                                       searchName = searchValue;
@@ -196,8 +197,8 @@ class SelectFilterWeapon extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
             color: isCurrentFilter
-                ? Colors.black.withOpacity(0.5)
-                : Colors.grey.shade900,
+                ? Colors.black.withOpacity(0.6)
+                : Colors.black.withOpacity(0.4),
             border: Border.all(color: Colors.black)),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
@@ -227,10 +228,10 @@ class SelectFilterType extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         width: width,
-        decoration: BoxDecoration(   
+        decoration: BoxDecoration(
             color: isCurrentFilter
-                ? Colors.black.withOpacity(0.5)
-                : Colors.grey.shade900,
+                ? Colors.black.withOpacity(0.6)
+                : Colors.black.withOpacity(0.4),
             border: Border.all(color: Colors.black)),
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),

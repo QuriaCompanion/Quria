@@ -41,6 +41,7 @@ class StatProgressBar extends StatelessWidget {
           percent: percentage,
           linearStrokeCap: LinearStrokeCap.butt,
           progressColor: Colors.white,
+          backgroundColor: Colors.white.withOpacity(0.5),
           lineHeight: height,
           width: (width / 100) * 60,
         ),

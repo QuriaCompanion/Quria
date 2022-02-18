@@ -70,9 +70,7 @@ class LoginWidgetState extends State<LoginWidget> {
           InkWell(
             onTap: () => yannisooLogin(),
             child: const Button(
-                value: 'se connecter en temps que yannisoo',
-                width: 250.0,
-                height: 60),
+                value: 'Je suis yannisoo', width: 250.0, height: 60),
           ),
         ],
       ),

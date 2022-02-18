@@ -43,7 +43,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   }
 
   static const double bannerSpacing = 10;
-  static const double bannerLeftSpacing = 150;
   static const double statArmorSpace = 40;
   static const double itemSectionSpace = 20;
   static const double itemDetailsSidePadding = 25;
@@ -51,7 +50,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
-    double bannerTopSpacing = 150;
+    double bannerLeftSpacing = (MediaQuery.of(context).size.width / 100) * 5;
+    double bannerBotSpacing = (MediaQuery.of(context).size.width / 100) * 2;
+    double bannerTopSpacing = (MediaQuery.of(context).size.width / 100) * 5;
     double fontSize = 20;
     double statsFontSize = 30;
     double bannerSelectedFont = 50;
@@ -117,7 +118,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       Padding(
                                         padding: EdgeInsets.only(
                                             left: bannerLeftSpacing,
-                                            top: bannerTopSpacing),
+                                            top: bannerTopSpacing,
+                                            bottom: bannerBotSpacing),
                                         child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
@@ -189,96 +191,107 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                       ),
                                     ],
                                   ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      ProfileMainNodeWidget(
-                                          imageSize: imageSize,
-                                          itemSectionSpacing: itemSectionSpace,
-                                          verticalStatWidth: verticalStatWidth,
-                                          middleSpace: middleSpace,
-                                          statArmorSpace: statArmorSpace,
-                                          statsFontSize: statsFontSize,
-                                          characterIndex: index,
-                                          data: snapshot.data!),
-                                      if (characterState is ShowDetailsState)
-                                        if (attributeState
-                                            is AttributsDetailsIdState)
-                                          if (ManifestService
-                                                  .manifestParsed
-                                                  .destinyInventoryItemDefinition![
-                                                      characterState
-                                                          .item.itemHash]!
-                                                  .itemType ==
-                                              DestinyItemType.Subclass)
-                                            SubclassDetailCardWidget(
-                                                width: itemDetailsWidth,
-                                                fontSize: fontSize,
-                                                imageSize: imageSize,
-                                                iconSize: iconSize,
-                                                sidePadding:
-                                                    itemDetailsSidePadding,
-                                                childPadding:
-                                                    itemDetailsChildPadding,
-                                                characterId: snapshot
-                                                    .data!
-                                                    .characters[index]
-                                                    .characterId!,
-                                                subclass: characterState.item)
-                                          else if (ManifestService
-                                                      .manifestParsed
-                                                      .destinyInventoryItemDefinition![
-                                                          characterState
-                                                              .item.itemHash]!
-                                                      .itemType !=
-                                                  DestinyItemType.Subclass &&
-                                              ManifestService
-                                                      .manifestParsed
-                                                      .destinyInventoryItemDefinition![
-                                                          characterState
-                                                              .item.itemHash]!
-                                                      .equippingBlock!
-                                                      .equipmentSlotTypeHash ==
-                                                  3284755031)
-                                            AdvancedSubclassDetailsCard(
-                                                childPadding:
-                                                    itemDetailsChildPadding,
-                                                sidePadding:
-                                                    itemDetailsSidePadding,
-                                                width: itemDetailsWidth,
-                                                characterId: snapshot
-                                                    .data!
-                                                    .characters[index]
-                                                    .characterId!,
-                                                subclass: characterState.item)
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            (MediaQuery.of(context).size.width /
+                                                    100) *
+                                                5),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          characterState is ShowDetailsState
+                                              ? MainAxisAlignment.spaceAround
+                                              : MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        ProfileMainNodeWidget(
+                                            imageSize: imageSize,
+                                            itemSectionSpacing:
+                                                itemSectionSpace,
+                                            verticalStatWidth:
+                                                verticalStatWidth,
+                                            middleSpace: middleSpace,
+                                            statArmorSpace: statArmorSpace,
+                                            statsFontSize: statsFontSize,
+                                            characterIndex: index,
+                                            data: snapshot.data!),
+                                        if (characterState is ShowDetailsState)
+                                          if (attributeState
+                                              is AttributsDetailsIdState)
+                                            if (ManifestService
+                                                    .manifestParsed
+                                                    .destinyInventoryItemDefinition![
+                                                        characterState
+                                                            .item.itemHash]!
+                                                    .itemType ==
+                                                DestinyItemType.Subclass)
+                                              SubclassDetailCardWidget(
+                                                  width: itemDetailsWidth,
+                                                  fontSize: fontSize,
+                                                  imageSize: imageSize,
+                                                  iconSize: iconSize,
+                                                  sidePadding:
+                                                      itemDetailsSidePadding,
+                                                  childPadding:
+                                                      itemDetailsChildPadding,
+                                                  characterId: snapshot
+                                                      .data!
+                                                      .characters[index]
+                                                      .characterId!,
+                                                  subclass: characterState.item)
+                                            else if (ManifestService
+                                                        .manifestParsed
+                                                        .destinyInventoryItemDefinition![
+                                                            characterState
+                                                                .item.itemHash]!
+                                                        .itemType !=
+                                                    DestinyItemType.Subclass &&
+                                                ManifestService
+                                                        .manifestParsed
+                                                        .destinyInventoryItemDefinition![
+                                                            characterState
+                                                                .item.itemHash]!
+                                                        .equippingBlock!
+                                                        .equipmentSlotTypeHash ==
+                                                    3284755031)
+                                              AdvancedSubclassDetailsCard(
+                                                  childPadding:
+                                                      itemDetailsChildPadding,
+                                                  sidePadding:
+                                                      itemDetailsSidePadding,
+                                                  width: itemDetailsWidth,
+                                                  characterId: snapshot
+                                                      .data!
+                                                      .characters[index]
+                                                      .characterId!,
+                                                  subclass: characterState.item)
+                                            else
+                                              ItemDetailsWidget(
+                                                  width: itemDetailsWidth,
+                                                  fontSize: fontSize,
+                                                  imageSize: imageSize,
+                                                  iconSize: iconSize,
+                                                  sidePadding:
+                                                      itemDetailsSidePadding,
+                                                  childPadding:
+                                                      itemDetailsChildPadding,
+                                                  attributeSocketId:
+                                                      attributeState.id,
+                                                  item: characterState.item)
                                           else
                                             ItemDetailsWidget(
                                                 width: itemDetailsWidth,
                                                 fontSize: fontSize,
                                                 imageSize: imageSize,
-                                                iconSize: iconSize,
                                                 sidePadding:
                                                     itemDetailsSidePadding,
+                                                iconSize: iconSize,
                                                 childPadding:
                                                     itemDetailsChildPadding,
-                                                attributeSocketId:
-                                                    attributeState.id,
                                                 item: characterState.item)
-                                        else
-                                          ItemDetailsWidget(
-                                              width: itemDetailsWidth,
-                                              fontSize: fontSize,
-                                              imageSize: imageSize,
-                                              sidePadding:
-                                                  itemDetailsSidePadding,
-                                              iconSize: iconSize,
-                                              childPadding:
-                                                  itemDetailsChildPadding,
-                                              item: characterState.item)
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
