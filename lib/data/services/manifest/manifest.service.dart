@@ -37,7 +37,6 @@ class ManifestService {
     }
     DestinyManifestResponse response = await BungieApiService.getManifestInfo();
     _manifestInfo = response.response;
-    print("ma bite ");
     return _manifestInfo!;
   }
 
