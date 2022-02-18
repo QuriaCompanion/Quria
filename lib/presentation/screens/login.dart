@@ -1,4 +1,4 @@
-import 'dart:html' as html;
+import "package:universal_html/html.dart" as html;
 import 'dart:developer';
 import 'package:bungie_api/helpers/bungie_net_token.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
@@ -40,6 +40,9 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   void initState() {
     super.initState();
+    if (widget.auth.getToken() == null) {
+      Navigator.pushNamed(context, routeProfile);
+    }
     getInitialUri().then((value) {
       if (!value.toString().contains('code=')) {
       } else {
