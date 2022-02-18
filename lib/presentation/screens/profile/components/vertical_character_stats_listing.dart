@@ -20,7 +20,7 @@ class VerticalCharacterStatsListingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     int disciplineTier =
-        (data!.characters[characterIndex].stats!["1735777505"]! / 10).round();
+        (data!.characters[characterIndex].stats!["1735777505"]! / 10).floor();
 
     int? grenadeHash = ProfileService().getCurrentGrenadeHashForCharacter(
         data!.characters[characterIndex].characterId!);

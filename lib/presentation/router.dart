@@ -13,7 +13,7 @@ class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       case routeLogin:
-        return MaterialPageRoute(builder: (_) => HomeWidget());
+        return MaterialPageRoute(builder: (_) => LoginWidget());
       case routeProfile:
         return MaterialPageRoute(builder: (_) => const ProfileWidget());
       case routeBuilder:

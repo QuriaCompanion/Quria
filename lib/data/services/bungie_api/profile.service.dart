@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
+import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_collectible_state.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_artifact_profile_scoped.dart';
@@ -577,6 +578,55 @@ class ProfileService {
       allItems.addAll(getCharacterInventory(charId).map((item) => item));
     }
     allItems.addAll(getProfileInventory().map((item) => item));
+    return allItems;
+  }
+
+  List<DestinyItemComponent> getAllArmorForClass(DestinyClass classType) {
+    List<DestinyItemComponent> allItems = [];
+    Iterable<String>? charIds =
+        getCharacters().map((char) => char.characterId!);
+    for (var charId in charIds) {
+      allItems.addAll(getCharacterEquipment(charId)
+          .where((element) =>
+              ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition?[element.itemHash]
+                      ?.classType ==
+                  classType &&
+              ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition?[element.itemHash]
+                      ?.itemType ==
+                  DestinyItemType.Armor)
+          .map((item) => item));
+      allItems.addAll(getCharacterInventory(charId)
+          .where((element) =>
+              ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition?[element.itemHash]
+                      ?.classType ==
+                  classType &&
+              ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition?[element.itemHash]
+                      ?.itemType ==
+                  DestinyItemType.Armor)
+          .map((item) => item));
+    }
+    allItems.addAll(getProfileInventory()
+        .where((element) =>
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.itemHash]
+                    ?.classType ==
+                classType &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.itemHash]
+                    ?.itemType ==
+                DestinyItemType.Armor)
+        .map((item) => item));
+
     return allItems;
   }
 }
