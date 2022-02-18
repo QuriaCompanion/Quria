@@ -80,8 +80,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       bannerTopSpacing = 50;
     }
 
-    final double bannerUnselectedWidth = (bannerSelectedWidth / 100) * 66;
-    final double bannerUnselectedFont = (bannerSelectedFont / 100) * 66;
     return FutureBuilder(
         future: _future,
         builder: (BuildContext context, AsyncSnapshot<ProfileHelper> snapshot) {
@@ -120,64 +118,74 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         padding: EdgeInsets.only(
                                             left: bannerLeftSpacing,
                                             top: bannerTopSpacing),
-                                        child: Column(
+                                        child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.center,
                                             children: [
+                                              CharacterBanner(
+                                                  width: bannerSelectedWidth,
+                                                  fontSize: bannerSelectedFont,
+                                                  character: snapshot
+                                                      .data!.characters[index]),
                                               for (int i = 0;
                                                   i <
                                                       snapshot.data!.characters
                                                           .length;
                                                   i++)
-                                                InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      index = i;
-                                                      snapshot.data!
-                                                              .characterEquipement =
-                                                          profile.getCharacterEquipment(
+                                                if (i != index)
+                                                  SizedBox(
+                                                    height:
+                                                        (bannerSelectedWidth /
+                                                            4.9375),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        setState(() {
+                                                          index = i;
+                                                          snapshot.data!
+                                                                  .characterEquipement =
+                                                              profile.getCharacterEquipment(
+                                                                  snapshot
+                                                                      .data!
+                                                                      .characters[
+                                                                          i]
+                                                                      .characterId!);
+                                                          context
+                                                              .read<
+                                                                  CharacterCubit>()
+                                                              .hideDetails();
+                                                        });
+                                                      },
+                                                      child: Padding(
+                                                        padding: const EdgeInsets
+                                                                .only(
+                                                            left:
+                                                                bannerSpacing),
+                                                        child: Image(
+                                                          image: NetworkImage(DestinyData
+                                                                  .bungieLink +
                                                               snapshot
                                                                   .data!
                                                                   .characters[i]
-                                                                  .characterId!);
-                                                      context
-                                                          .read<
-                                                              CharacterCubit>()
-                                                          .hideDetails();
-                                                    });
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                            .only(
-                                                        top: bannerSpacing / 2,
-                                                        bottom:
-                                                            bannerSpacing / 2),
-                                                    child: CharacterBanner(
-                                                        width: index == i
-                                                            ? bannerSelectedWidth
-                                                            : bannerUnselectedWidth,
-                                                        fontSize: index == i
-                                                            ? bannerSelectedFont
-                                                            : bannerUnselectedFont,
-                                                        character: snapshot
-                                                            .data!
-                                                            .characters[i]),
+                                                                  .emblemPath!),
+                                                          fit: BoxFit.fill,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
+                                              InkWell(
+                                                onTap: () {
+                                                  profile.fetchProfileData();
+                                                  display.getProfileData(index);
+                                                },
+                                                child: Icon(
+                                                  Icons.refresh,
+                                                  color: Colors.white,
+                                                  size: iconSize,
                                                 ),
+                                              ),
                                             ]),
-                                      ),
-                                      InkWell(
-                                        onTap: () {
-                                          profile.fetchProfileData();
-                                          display.getProfileData(index);
-                                        },
-                                        child: Icon(
-                                          Icons.refresh,
-                                          color: Colors.white,
-                                          size: iconSize,
-                                        ),
                                       ),
                                     ],
                                   ),
