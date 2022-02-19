@@ -1,3 +1,4 @@
+import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
@@ -26,7 +27,8 @@ AccountService account = AccountService();
 class DisplayService {
   static init() async {}
 
-  Future<List<DestinyInventoryItemDefinition>> getExotics() async {
+  Future<List<DestinyInventoryItemDefinition>> getExotics(
+      DestinyClass classType) async {
     final items = profile.getAllItems();
     if (ManifestService.manifestParsed.destinyClassDefinition == null) {
       Box box = await StorageService.openBox("manifest");
@@ -37,16 +39,14 @@ class DisplayService {
       await StorageService.closeBox(box);
     }
     // TODO: make a helper model out of this
-    Map<String, dynamic> exoticHelper = {
-      "manifest": ManifestService.manifestParsed,
-      "items": items
-    };
+
     List<DestinyInventoryItemDefinition> exoticItems = await compute(
         exoticLoop,
         ExoticHelper(
             manifest:
                 ManifestService.manifestParsed.destinyInventoryItemDefinition!,
-            items: items));
+            items: items,
+            classType: classType));
 
     return exoticItems;
   }
@@ -90,23 +90,16 @@ class DisplayService {
     }
   }
 
-  List<DestinyInventoryItemDefinition> exoticLoop(
-      Map<String, dynamic> exoticHelper) {
+  List<DestinyInventoryItemDefinition> exoticLoop(ExoticHelper exoticHelper) {
     List<DestinyInventoryItemDefinition> exoticItems = [];
-    for (DestinyItemComponent element in exoticHelper["items"]) {
-      if (exoticHelper["manifest"]
-                  .destinyInventoryItemDefinition![element.itemHash]!
-                  .summaryItemHash ==
-              715326750 &&
+    for (DestinyItemComponent element in exoticHelper.items) {
+      if (exoticHelper.manifest[element.itemHash]?.inventory?.tierType ==
+              TierType.Exotic &&
           !exoticItems.contains(ManifestService.manifestParsed
               .destinyInventoryItemDefinition![element.itemHash]) &&
-          exoticHelper["manifest"]
-                  .destinyInventoryItemDefinition![element.itemHash]!
-                  .classType!
-                  .index ==
-              2) {
-        exoticItems.add(exoticHelper["manifest"]
-            .destinyInventoryItemDefinition![element.itemHash]!);
+          exoticHelper.manifest[element.itemHash]?.classType ==
+              exoticHelper.classType) {
+        exoticItems.add(exoticHelper.manifest[element.itemHash]!);
       }
     }
     return exoticItems;

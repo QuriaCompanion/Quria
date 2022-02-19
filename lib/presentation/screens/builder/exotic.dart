@@ -1,3 +1,4 @@
+import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -20,7 +21,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
   @override
   void initState() {
     super.initState();
-    _future = display.getExotics();
+    _future = display.getExotics(DestinyClass.Warlock);
   }
 
   @override
