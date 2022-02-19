@@ -39,28 +39,13 @@ class AttributsDetails extends StatelessWidget {
                     .destinyInventoryItemDefinition![socket.plugHash]
                     ?.itemSubType ==
                 DestinyItemSubType.None &&
-            socket.isVisible == true))
-        .toList();
-    List<DestinyItemSocketState> socketsPerk = sockets
-        .where((socket) =>
+            socket.isVisible == true &&
             ManifestService
                     .manifestParsed
                     .destinyInventoryItemDefinition![socket.plugHash]
                     ?.plug
                     ?.plugCategoryHash !=
-                1392237582 &&
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition![socket.plugHash]
-                    ?.plug
-                    ?.plugCategoryHash !=
-                510594033 &&
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition![socket.plugHash]
-                    ?.plug
-                    ?.plugCategoryHash !=
-                2947756142)
+                2947756142))
         .toList();
     return Container(
       margin: EdgeInsets.symmetric(
@@ -72,7 +57,7 @@ class AttributsDetails extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              for (var index = 0; index < socketsPerk.length; index++)
+              for (var index = 0; index < sockets.length; index++)
                 InkWell(
                   onTap: () {
                     context.read<AttributsDetailsCubit>().changeId(index);
@@ -89,7 +74,7 @@ class AttributsDetails extends StatelessWidget {
                             ManifestService
                                 .manifestParsed
                                 .destinyInventoryItemDefinition![
-                                    socketsPerk[index].plugHash]!
+                                    sockets[index].plugHash]!
                                 .displayProperties!
                                 .icon!),
                         fit: BoxFit.fill,
@@ -109,7 +94,7 @@ class AttributsDetails extends StatelessWidget {
                       utf8.decode(ManifestService
                           .manifestParsed
                           .destinyInventoryItemDefinition![
-                              socketsPerk[socketId].plugHash]!
+                              sockets[socketId].plugHash]!
                           .displayProperties!
                           .name!
                           .runes
@@ -121,7 +106,7 @@ class AttributsDetails extends StatelessWidget {
                     if (ManifestService
                             .manifestParsed
                             .destinyInventoryItemDefinition![
-                                socketsPerk[socketId].plugHash]!
+                                sockets[socketId].plugHash]!
                             .perks!
                             .isNotEmpty &&
                         ManifestService
@@ -129,7 +114,7 @@ class AttributsDetails extends StatelessWidget {
                                 .destinySandboxPerkDefinition?[ManifestService
                                     .manifestParsed
                                     .destinyInventoryItemDefinition?[
-                                        socketsPerk[socketId].plugHash]
+                                        sockets[socketId].plugHash]
                                     ?.perks?[0]
                                     .perkHash]
                                 ?.displayProperties
@@ -141,7 +126,7 @@ class AttributsDetails extends StatelessWidget {
                             .destinySandboxPerkDefinition![ManifestService
                                 .manifestParsed
                                 .destinyInventoryItemDefinition![
-                                    socketsPerk[socketId].plugHash]!
+                                    sockets[socketId].plugHash]!
                                 .perks![0]
                                 .perkHash]!
                             .displayProperties!
@@ -156,7 +141,7 @@ class AttributsDetails extends StatelessWidget {
                         utf8.decode(ManifestService
                             .manifestParsed
                             .destinyInventoryItemDefinition![
-                                socketsPerk[socketId].plugHash]!
+                                sockets[socketId].plugHash]!
                             .displayProperties!
                             .description!
                             .runes

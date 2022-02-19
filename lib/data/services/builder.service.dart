@@ -92,6 +92,7 @@ class BuilderService {
               builderHelper.manifest[element.itemHash]?.itemSubType ==
               DestinyItemSubType.LegArmor)) {
             Map<int, int> legStats = statCalculator(leg);
+            Map<String, int> statValues = {};
             int mobility = helmetStats[2996146975]! +
                 gauntletStats[2996146975]! +
                 chestStats[2996146975]! +
@@ -122,17 +123,23 @@ class BuilderService {
                 chestStats[4244567218]! +
                 legStats[4244567218]! +
                 10;
-            int mobiTier = (mobility / 10).floor();
-            int resTier = (resilience / 10).floor();
-            int recTier = (recovery / 10).floor();
-            int discTier = (discipline / 10).floor();
-            int intTier = (intellect / 10).floor();
-            int strTier = (strength / 10).floor();
-            int baseTier =
-                mobiTier + resTier + recTier + discTier + intTier + strTier;
+            statValues["Mobilité"] = (mobility / 10).floor();
+            statValues["Résistance"] = (resilience / 10).floor();
+            statValues["Récupération"] = (recovery / 10).floor();
+            statValues["Discipline"] = (discipline / 10).floor();
+            statValues["Intelligence"] = (intellect / 10).floor();
+            statValues["Force"] = (strength / 10).floor();
+            int baseTier = statValues["Mobilité"]! +
+                statValues["Résistance"]! +
+                statValues["Récupération"]! +
+                statValues["Discipline"]! +
+                statValues["Intelligence"]! +
+                statValues["Force"]!;
+
             Stats stats = Stats(
                 base: baseTier,
                 max: baseTier + 9,
+                ordering: statValues,
                 mobility: mobility,
                 resilience: resilience,
                 recovery: recovery,
@@ -167,7 +174,32 @@ class BuilderService {
         }
       }
     }
+    builds = builds.getRange(0, 50).toList();
+    builds.sort((a, b) {
+      int tiers = a.stats.base.compareTo(b.stats.base);
+      if (tiers != 0) return tiers;
+      int stat0 = a.stats.ordering[builderHelper.statOrder[0]]!
+          .compareTo(b.stats.ordering[builderHelper.statOrder[0]]!);
+      if (stat0 != 0) return stat0;
+      int stat1 = a.stats.ordering[builderHelper.statOrder[1]]!
+          .compareTo(b.stats.ordering[builderHelper.statOrder[1]]!);
 
-    return builds;
+      if (stat1 != 0) return stat1;
+      int stat2 = a.stats.ordering[builderHelper.statOrder[2]]!
+          .compareTo(b.stats.ordering[builderHelper.statOrder[2]]!);
+      if (stat2 != 0) return stat2;
+      int stat3 = a.stats.ordering[builderHelper.statOrder[3]]!
+          .compareTo(b.stats.ordering[builderHelper.statOrder[3]]!);
+      if (stat3 != 0) return stat3;
+      int stat4 = a.stats.ordering[builderHelper.statOrder[4]]!
+          .compareTo(b.stats.ordering[builderHelper.statOrder[4]]!);
+      if (stat4 != 0) return stat4;
+      int stat5 = a.stats.ordering[builderHelper.statOrder[5]]!
+          .compareTo(b.stats.ordering[builderHelper.statOrder[5]]!);
+      if (stat5 != 0) return stat5;
+      return 0;
+    });
+
+    return builds.reversed.toList();
   }
 }

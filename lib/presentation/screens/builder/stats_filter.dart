@@ -27,7 +27,6 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
     const double textFontSize = 25;
     const double titleFontSize = 45;
     const double padding = 50;
-    Map<String, dynamic>? args;
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: ghostBackground,
@@ -89,30 +88,35 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
                                               0.5),
                                       child: InkWell(
                                         onTap: () => {
-                                          if (filterState is FilterDataState)
-                                            {
-                                              args = {
-                                                "exoticHash": widget.exoticHash,
-                                                "filter": filterState.data,
-                                              },
+                                          setState(() {
+                                            BuilderPreparation args;
+                                            if (filterState
+                                                is FilterDataState) {
+                                              args = BuilderPreparation(
+                                                  statOrder: filterState.data,
+                                                  exoticHash:
+                                                      widget.exoticHash);
+                                              Navigator.pushNamed(
+                                                  context, routeBuilder,
+                                                  arguments: args);
+                                            } else {
+                                              args = BuilderPreparation(
+                                                  statOrder: [
+                                                    'Mobilité',
+                                                    'Résistance',
+                                                    'Récupération',
+                                                    'Discipline',
+                                                    'Intelligence',
+                                                    'Force'
+                                                  ],
+                                                  exoticHash:
+                                                      widget.exoticHash);
+
+                                              Navigator.pushNamed(
+                                                  context, routeBuilder,
+                                                  arguments: args);
                                             }
-                                          else
-                                            {
-                                              args = {
-                                                "exoticHash": widget.exoticHash,
-                                                "filter": [
-                                                  'Mobilité',
-                                                  'Résistance',
-                                                  'Récupération',
-                                                  'Discipline',
-                                                  'Intelligence',
-                                                  'Force'
-                                                ],
-                                              },
-                                            },
-                                          Navigator.pushNamed(
-                                              context, routeBuilder,
-                                              arguments: args)
+                                          })
                                         },
                                         child: const Button(
                                             width: 250.0,

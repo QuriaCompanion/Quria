@@ -57,6 +57,7 @@ class Build {
 class Stats {
   late int base;
   late int max;
+  late Map<String, int> ordering;
   late int mobility;
   late int resilience;
   late int recovery;
@@ -67,6 +68,7 @@ class Stats {
   Stats(
       {required this.base,
       required this.max,
+      required this.ordering,
       required this.mobility,
       required this.resilience,
       required this.recovery,

@@ -45,7 +45,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const Text(
-              "Veuillez choisir un éxotique",
+              "Veuillez choisir un exotique",
               textAlign: TextAlign.left,
               style: TextStyle(color: Colors.white, fontSize: titleFontSize),
             ),
@@ -57,7 +57,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                 const Expanded(
                   flex: 30,
                   child: Text(
-                      "Prêt à construire votre armure de rêve?\nÇa commence maintenant!\nCommencez par choisir une armure exotique qui sera la pièrce maitresse de votre équipement.",
+                      "Prêt(e) à construire l’armure de vos rêves?\nÇa commence maintenant!\nCommencez par choisir une armure exotique qui sera la pièce maitresse de votre équipement.",
                       style: TextStyle(
                           color: Colors.white, fontSize: textFontSize)),
                 ),
