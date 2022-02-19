@@ -26,11 +26,6 @@ class ManifestService {
   }
   ManifestService._internal();
 
-  // Future<String> get _localPath async {
-  //   final directory = await getApplicationDocumentsDirectory();
-  //   return directory.path;
-  // }
-
   static Future<DestinyManifest> loadManifestInfo<T>() async {
     if (_manifestInfo != null) {
       return _manifestInfo!;
@@ -74,10 +69,6 @@ class ManifestService {
     return StorageService.getDatabaseItem(myBox, manifestName);
   }
 
-  // Future<DestinyInventoryItemDefinition?> getDefinition<T>(int hash) async {
-  //   return await storage.getDatabaseItem(manifestName(), hash);
-  // }
-
   storeManifest<T>(Map<int, T> manifest) {}
 
   static Future<String> getManifestRemote<T>(String manifestName) async {
@@ -104,30 +95,6 @@ class ManifestService {
 
 /// Given a [manifest] and type [T]
 ///
-/// Stores the data in the [Hive] database
-///
-/// the data returned is typed and ready to be used
-// Future<Map<int, T>> _parseJson<T>(Map<String, String> manifestHelper) async {
-//   // Storing the data in a box
-//   StorageService.isolateInit();
-//   Box box = await StorageService.openBox<T>();
-//   await StorageService.setDatabaseItem(
-//       box, manifestHelper["manifestName"]!, manifestHelper["manifest"]);
-//   StorageService.closeBox(box);
-
-//   Map<int, T> items = {};
-//   final type = DefinitionTableNames.identities[T];
-//   Map<String, dynamic> decoded =
-//       jsonDecode(manifestHelper["manifest"]!) as Map<String, dynamic>;
-//   for (final entry in decoded.entries) {
-//     items[int.parse(entry.key)] = type!(entry.value);
-//   }
-//   AllDestinyManifestComponents.setValue<T>(items);
-//   return items;
-// }
-
-/// Given a [manifest] and type [T]
-///
 /// returns the correctly typed data
 ///
 /// the data returned is typed and ready to be used
@@ -140,123 +107,3 @@ Future<Map<int, T>> _parseJson<T>(String manifest) async {
   }
   return items;
 }
-
-// Future<bool> test() async {
-//   var def = await getDefinition<DestinyInventoryItemDefinition>(3628991658);
-//   return def?.displayProperties?.name != null;
-// }
-
-// static List<int> _extractFromZip(dynamic zipFile) {
-//   List<int> unzippedData;
-//   List<int> bytes = zipFile.readAsBytesSync();
-//   ZipDecoder decoder = ZipDecoder();
-//   Archive archive = decoder.decodeBytes(bytes);
-//   for (ArchiveFile file in archive) {
-//     if (file.isFile) {
-//       unzippedData = file.content;
-//       return unzippedData;
-//     }
-//   }
-//   return [];
-// }
-
-// Future<Map<int, T>?> getDefinitions<T>(Iterable<int> hashes,
-//     [dynamic Function(Map<String, dynamic> json)? identity]) async {
-//   Set<int> hashesSet = hashes.toSet();
-//   hashesSet.retainWhere((h) => h != null);
-//   if (hashesSet == null) return null;
-//   var type = DefinitionTableNames.fromClass[T];
-//   identity ??= DefinitionTableNames.identities[T] as Function(
-//       Map<String, dynamic> json);
-//   Map<int, T> defs = {};
-//   hashesSet.removeWhere((hash) {
-//     if (_cached.keys.contains("${type}_$hash")) {
-//       defs[hash] = _cached["${type}_$hash"];
-//       return true;
-//     }
-//     return false;
-//   });
-
-//   if (hashesSet.isEmpty) {
-//     return defs;
-//   }
-//   List<int> searchHashes = hashesSet
-//       .map((hash) => hash > 2147483648 ? hash - 4294967296 : hash)
-//       .toList();
-//   String idList = "(" + List.filled(hashesSet.length, '?').join(',') + ")";
-
-//   Database db = await _openDb() as Database;
-
-//   var txn = db.transaction(storeName, 'readonly');
-//   var store = txn.objectStore(storeName);
-//   List<Map<String, dynamic>> results =
-//       await store.getAll({"id": idList}) as List<Map<String, dynamic>>;
-
-//   // List<Map<String, dynamic>> results = await db.query(type!,
-//   //     columns: ['id', 'json'],
-//   //     where: "id in $idList",
-//   //     whereArgs: searchHashes);
-//   try {
-//     for (var res in results) {
-//       int id = res['id'];
-//       int hash = id < 0 ? id + 4294967296 : id;
-//       String resultString = res['json'];
-//       var def = identity(jsonDecode(resultString));
-//       _cached["${type}_$hash"] = def;
-//       defs[hash] = def;
-//     }
-//   } catch (e) {}
-//   return defs.cast<int, T>();
-// }
-
-// Future<T?> getDefinition<T>(int hash,
-//     [dynamic Function(Map<String, dynamic> json)? identity]) async {
-//   if (hash == null) return null;
-//   String type = DefinitionTableNames.fromClass[T] as String;
-
-//   try {
-//     var cached = _cached["${type}_$hash"];
-//     if (cached != null) {
-//       return cached;
-//     }
-//   } catch (e) {}
-
-//   identity ??= DefinitionTableNames.identities[T] as Function(
-//       Map<String, dynamic> json);
-//   if (identity == null) {
-//     throw "missing identity for $T";
-//   }
-//   int searchHash = hash > 2147483648 ? hash - 4294967296 : hash;
-//   Database db = await _openDb() as Database;
-//   try {
-//     List<Map<String, dynamic>> results = await db.query(type,
-//         columns: ['json'], where: "id=?", whereArgs: [searchHash]);
-//     if (results.length < 1) {
-//       return null;
-//     }
-//     String resultString = results.first['json'];
-//     var def = identity(jsonDecode(resultString));
-//     _cached["${type}_$hash"] = def;
-//     return def;
-//   } catch (e) {
-//     if (e is sqflite.DatabaseException && e.isDatabaseClosedError()) {
-//       _db = null;
-//       return getDefinition(hash, identity);
-//     }
-//   }
-//   return null;
-// }
-// Future<Map<String, T>> getDefinitions<T>(Iterable<String?> hashes) async {
-//   Box myBox = await storage.openBox<T>();
-//   print('loading definitions');
-//   Map<String, T> definitions = {};
-//   for (String? hash in hashes) {
-//     print(hash);
-//     if (hash == null) {
-//       continue;
-//     }
-//     definitions[hash] = await storage.getDatabaseItem<T>(myBox, hash);
-//     print(definitions);
-//   }
-//   return definitions;
-// }
