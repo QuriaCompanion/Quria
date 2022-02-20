@@ -35,7 +35,7 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
     if (MediaQuery.of(context).size.width < 850) {
       return mobileView();
     } else {
-      return desktopView();
+      return desktopView(context);
     }
   }
 
@@ -123,7 +123,7 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
     );
   }
 
-  Widget desktopView() {
+  Widget desktopView(context) {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: ghostBackground,
@@ -173,7 +173,13 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
                                       top: (MediaQuery.of(context).size.width /
                                               100) *
                                           2),
-                                  child: const FilterWidget()),
+                                  child: SizedBox(
+                                      width: MediaQuery.of(context).size.width *
+                                          0.8,
+                                      height:
+                                          MediaQuery.of(context).size.height *
+                                              0.6,
+                                      child: const FilterWidget())),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [

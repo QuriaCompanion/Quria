@@ -318,6 +318,7 @@ class ProfileService {
     }
     return null;
   }
+
   int? getCurrentSuperHashForCharacter(String characterId) {
     var character = getCharacterEquipment(characterId);
 
@@ -463,6 +464,13 @@ class ProfileService {
       return dateB.compareTo(dateA);
     });
     return list;
+  }
+
+  String getCharacterIdByClass(DestinyClass classType) {
+    DestinyCharacterComponent character = _profile!.characters!.data!.values
+        .toList()
+        .firstWhere((element) => element.classType == classType);
+    return character.characterId!;
   }
 
   DestinyCharacterComponent? getCharacter(String characterId) {

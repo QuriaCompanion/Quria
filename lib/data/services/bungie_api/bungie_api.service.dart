@@ -115,8 +115,8 @@ class BungieApiService {
     return response.response;
   }
 
-  Future<int?> transferItem(int itemHash, int stackSize, bool transferToVault,
-      String itemId, String characterId) async {
+  Future<int?> transferItem(String itemId, String characterId,
+      {int? itemHash, int? stackSize, bool? transferToVault}) async {
     BungieNetToken? token = await auth.getToken();
     GroupUserInfoCard? membership = await accountService.getMembership();
     Int32Response response = await Destiny2.transferItem(

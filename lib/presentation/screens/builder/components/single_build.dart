@@ -2,6 +2,7 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -36,6 +37,10 @@ class SingleBuild extends StatelessWidget {
       buildInfo.equipement[2].itemInstanceId,
       buildInfo.equipement[3].itemInstanceId
     ]);
+    String characterId = ProfileService().getCharacterIdByClass(ManifestService
+        .manifestParsed
+        .destinyInventoryItemDefinition![items[0].itemHash]!
+        .classType!);
     items.sort(((a, b) => ManifestService
                 .manifestParsed
                 .destinyInventoryItemDefinition![a.itemHash]!
@@ -103,6 +108,24 @@ class SingleBuild extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: listArmor),
+                  ElevatedButton(
+                      onPressed: () async {
+                        for (Armor item in buildInfo.equipement) {
+                          try {
+                            await BungieApiService().transferItem(
+                                item.itemInstanceId, characterId,
+                                transferToVault: false,
+                                itemHash: item.hash,
+                                stackSize: 1);
+                            await BungieApiService()
+                                .equipItem(item.itemInstanceId, characterId);
+                          } catch (e) {
+                            await BungieApiService()
+                                .equipItem(item.itemInstanceId, characterId);
+                          }
+                        }
+                      },
+                      child: const Text("Équiper")),
                   ExtendedBuilderInfo(
                       padding: padding,
                       buildInfo: buildInfo,
