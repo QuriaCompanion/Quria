@@ -26,21 +26,9 @@ class SingleBuild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var values = [
-      buildInfo.stats.mobility,
-      buildInfo.stats.resilience,
-      buildInfo.stats.recovery,
-      buildInfo.stats.discipline,
-      buildInfo.stats.intellect,
-      buildInfo.stats.strength,
-    ];
-    List<Widget> listStats = <Widget>[];
-    for (var i = 0; i < 6; i++) {
-      listStats.add(StatisticDisplay(
-        value: values[i],
-        icon: DestinyData.statsIcon[i],
-        width: (width - (padding * 2)) / 6,
-      ));
+    double imageSize = 100;
+    if (MediaQuery.of(context).size.width < 600) {
+      imageSize = width / 6;
     }
     List<DestinyItemComponent> items = ProfileService().getItemsByInstanceId([
       buildInfo.equipement[0].itemInstanceId,
@@ -57,12 +45,28 @@ class SingleBuild extends StatelessWidget {
                 .destinyInventoryItemDefinition![b.itemHash]!.itemSubType!.index
         ? 1
         : -1));
+    var values = [
+      buildInfo.stats.mobility,
+      buildInfo.stats.resilience,
+      buildInfo.stats.recovery,
+      buildInfo.stats.discipline,
+      buildInfo.stats.intellect,
+      buildInfo.stats.strength,
+    ];
+    List<Widget> listStats = <Widget>[];
+    for (var i = 0; i < 6; i++) {
+      listStats.add(StatisticDisplay(
+        value: values[i],
+        icon: DestinyData.statsIcon[i],
+        width: (width - (padding * 2)) / 6,
+      ));
+    }
     List<Widget> listArmor = <Widget>[];
     for (var i = 0; i < buildInfo.equipement.length; i++) {
       listArmor.add(Container(
           decoration: regularShadow,
           child: ItemIcon(
-              imageSize: 100,
+              imageSize: imageSize,
               displayHash: ManifestService
                   .manifestParsed
                   .destinyInventoryItemDefinition![

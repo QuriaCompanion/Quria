@@ -18,7 +18,7 @@ class BuilderWidget extends StatefulWidget {
 class _BuilderWidgetState extends State<BuilderWidget> {
   late Future<List<Build>> _future;
   final manifest = ManifestService();
-
+  double singleBuildWidth = 600;
   @override
   void initState() {
     super.initState();
@@ -34,6 +34,10 @@ class _BuilderWidgetState extends State<BuilderWidget> {
 
   @override
   Widget build(BuildContext context) {
+    if (MediaQuery.of(context).size.width < 600) {
+      double sidePadding = MediaQuery.of(context).size.width * 0.025;
+      singleBuildWidth = MediaQuery.of(context).size.width - sidePadding * 2;
+    }
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: FutureBuilder(
@@ -43,7 +47,8 @@ class _BuilderWidgetState extends State<BuilderWidget> {
               List<Widget> list = <Widget>[];
               list.add(const SizedBox(height: 25));
               for (var i = 0; i < snapshot.data!.length; i++) {
-                list.add(SingleBuild(buildInfo: snapshot.data![i]));
+                list.add(SingleBuild(
+                    width: singleBuildWidth, buildInfo: snapshot.data![i]));
               }
               return ListView(
                 children: list,

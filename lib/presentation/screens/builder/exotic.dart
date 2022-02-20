@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
   final DisplayService display = DisplayService();
   late Future<List<DestinyInventoryItemDefinition>> _future;
   late bool isLoading;
+  String searchName = "";
   @override
   void initState() {
     super.initState();
@@ -37,6 +39,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
   double padding = 50;
   double itemPadding = 30;
   double itemSize = 150;
+
   List<Widget> list = [];
   @override
   Widget build(BuildContext context) {
@@ -154,7 +157,6 @@ class _ExoticWidgetState extends State<ExoticWidget> {
 
   Widget mobileView() {
     bool isLoading = false;
-    String searchName = "";
     double sideTextPadding = 0;
     double padding = MediaQuery.of(context).size.width * 0.025;
     double tooltipSize = 30;
@@ -180,7 +182,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                 child: Column(
                   children: [
                     Center(
-                      child: Text(
+                      child: AutoSizeText(
                         title,
                         textAlign: TextAlign.center,
                         style: TextStyle(
