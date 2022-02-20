@@ -18,18 +18,27 @@ class InspectWidget extends StatefulWidget {
 }
 
 class _InspectWidgetState extends State<InspectWidget> {
-  final double imageSize = 150;
-  final double fontSize = 20;
-  final double itemMainInfoPadding = 15;
-  final double childPadding = 15;
-  final double iconSize = 75;
-  final double padding = 30;
+  double imageSize = 150;
+  double fontSize = 20;
+  double itemMainInfoPadding = 15;
+  double childPadding = 15;
+  double iconSize = 75;
+  double padding = 30;
   @override
   Widget build(BuildContext context) {
     final double itemMainInfoWidth = MediaQuery.of(context).size.width * 0.33;
+    if (MediaQuery.of(context).size.width < 1600) {
+      imageSize = 100;
+      iconSize = 50;
+    }
+    if (MediaQuery.of(context).size.width < 850) {
+      return mobileView();
+    }
     return Container(
-        padding:
-            EdgeInsets.all(MediaQuery.of(context).size.width * globalPadding),
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).size.width * globalPadding,
+            left: MediaQuery.of(context).size.width * globalPadding,
+            right: MediaQuery.of(context).size.width * globalPadding),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: NetworkImage(widget.item.screenshot != null
@@ -38,89 +47,160 @@ class _InspectWidgetState extends State<InspectWidget> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Container(
-          padding: EdgeInsets.all(padding),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                width: itemMainInfoWidth,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(children: [
-                      Hero(
-                        tag: widget.item.hash!,
-                        child: ItemIcon(
-                            displayHash: widget.item.hash!,
-                            imageSize: imageSize),
-                      ),
-                      SizedBox(width: padding),
-                      HeaderWeaponDetails(
-                          itemHash: widget.item.hash!,
-                          iconSize: imageSize / 2.5,
-                          childPadding: itemMainInfoPadding,
-                          fontSize: fontSize,
-                          width: itemMainInfoWidth - imageSize - padding,
-                          height: imageSize)
-                    ]),
-                    Column(
-                      children: [
-                        for (int statHash in DestinyData.linearStatBySubType[
-                            ManifestService
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: itemMainInfoWidth,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(children: [
+                    Hero(
+                      tag: widget.item.hash!,
+                      child: ItemIcon(
+                          displayHash: widget.item.hash!, imageSize: imageSize),
+                    ),
+                    SizedBox(width: padding),
+                    HeaderWeaponDetails(
+                        itemHash: widget.item.hash!,
+                        iconSize: imageSize / 2.5,
+                        childPadding: itemMainInfoPadding,
+                        fontSize: fontSize,
+                        width: itemMainInfoWidth - imageSize - padding,
+                        height: imageSize)
+                  ]),
+                  Column(
+                    children: [
+                      for (int statHash in DestinyData.linearStatBySubType[
+                          ManifestService
+                              .manifestParsed
+                              .destinyInventoryItemDefinition![
+                                  widget.item.hash]!
+                              .itemSubType!]!)
+                        StatProgressBar(
+                            width: itemMainInfoWidth,
+                            fontSize: fontSize,
+                            padding: childPadding,
+                            name: ManifestService
+                                    .manifestParsed
+                                    .destinyStatDefinition![statHash]!
+                                    .displayProperties!
+                                    .name ??
+                                'error',
+                            value: ManifestService
+                                    .manifestParsed
+                                    .destinyInventoryItemDefinition![
+                                        widget.item.hash]!
+                                    .stats
+                                    ?.stats![statHash.toString()]
+                                    ?.value ??
+                                0,
+                            type: ManifestService
                                 .manifestParsed
-                                .destinyInventoryItemDefinition![widget
-                                    .item.hash]!
-                                .itemSubType!]!)
-                          StatProgressBar(
-                              width: itemMainInfoWidth,
-                              fontSize: fontSize,
-                              padding: childPadding,
-                              name: ManifestService
-                                      .manifestParsed
-                                      .destinyStatDefinition![statHash]!
-                                      .displayProperties!
-                                      .name ??
-                                  'error',
-                              value: ManifestService
-                                      .manifestParsed
-                                      .destinyInventoryItemDefinition![
-                                          widget.item.hash]!
-                                      .stats
-                                      ?.stats![statHash.toString()]
-                                      ?.value ??
-                                  0,
-                              type: ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      widget.item.hash]!
-                                  .itemType!),
-                      ],
-                    ),
-                    WeaponDetailsHiddenStats(
-                      width: itemMainInfoWidth,
-                      padding: childPadding,
-                      fontSize: fontSize,
-                      hash: widget.item.hash!,
-                    ),
-                  ],
-                ),
+                                .destinyInventoryItemDefinition![
+                                    widget.item.hash]!
+                                .itemType!),
+                    ],
+                  ),
+                  WeaponDetailsHiddenStats(
+                    width: itemMainInfoWidth,
+                    padding: childPadding,
+                    fontSize: fontSize,
+                    hash: widget.item.hash!,
+                  ),
+                ],
               ),
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SizedBox(height: imageSize),
-                    PerkList(
-                        item: widget.item,
-                        iconSize: iconSize,
-                        padding: childPadding)
-                  ],
-                ),
-              )
-            ],
-          ),
+            ),
+            SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SizedBox(height: imageSize),
+                  PerkList(
+                      item: widget.item,
+                      iconSize: iconSize,
+                      padding: childPadding)
+                ],
+              ),
+            )
+          ],
         ));
+  }
+
+  Widget mobileView() {
+    padding = MediaQuery.of(context).size.width * 0.025;
+    return SingleChildScrollView(
+      child: Container(
+          color: backgroundColor,
+          padding: EdgeInsets.only(top: padding, left: padding, right: padding),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width - padding * 2,
+            child: Column(
+              children: [
+                Row(children: [
+                  Hero(
+                    tag: widget.item.hash!,
+                    child: ItemIcon(
+                        displayHash: widget.item.hash!, imageSize: imageSize),
+                  ),
+                  SizedBox(width: padding),
+                  HeaderWeaponDetails(
+                      itemHash: widget.item.hash!,
+                      iconSize: imageSize / 2.5,
+                      childPadding: itemMainInfoPadding,
+                      fontSize: fontSize,
+                      width: MediaQuery.of(context).size.width -
+                          imageSize -
+                          padding * 3,
+                      height: imageSize),
+                ]),
+                for (int statHash in DestinyData.linearStatBySubType[
+                    ManifestService
+                        .manifestParsed
+                        .destinyInventoryItemDefinition![widget.item.hash]!
+                        .itemSubType!]!)
+                  StatProgressBar(
+                      width: MediaQuery.of(context).size.width - padding * 2,
+                      fontSize: fontSize,
+                      padding: childPadding,
+                      name: ManifestService
+                              .manifestParsed
+                              .destinyStatDefinition![statHash]!
+                              .displayProperties!
+                              .name ??
+                          'error',
+                      value: ManifestService
+                              .manifestParsed
+                              .destinyInventoryItemDefinition![
+                                  widget.item.hash]!
+                              .stats
+                              ?.stats![statHash.toString()]
+                              ?.value ??
+                          0,
+                      type: ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition![widget.item.hash]!
+                          .itemType!),
+                WeaponDetailsHiddenStats(
+                  width: MediaQuery.of(context).size.width - padding * 2,
+                  padding: childPadding,
+                  fontSize: fontSize,
+                  hash: widget.item.hash!,
+                ),
+                SizedBox(
+                  child: PerkList(
+                      item: widget.item,
+                      iconSize: MediaQuery.of(context).size.width / 7,
+                      padding: (MediaQuery.of(context).size.width -
+                              ((MediaQuery.of(context).size.width / 7) * 4) -
+                              padding * 2) /
+                          8),
+                )
+              ],
+            ),
+          )),
+    );
   }
 }
 

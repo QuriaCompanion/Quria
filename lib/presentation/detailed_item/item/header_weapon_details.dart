@@ -89,8 +89,13 @@ class HeaderWeaponDetails extends StatelessWidget {
                                   .runes
                                   .toList()),
                               maxLines: 1,
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: fontSize + 5),
+                              maxFontSize: fontSize + 5,
+                              stepGranularity: 1,
+                              minFontSize: 0,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
                             AutoSizeText(
                               utf8.decode(ManifestService
@@ -99,8 +104,13 @@ class HeaderWeaponDetails extends StatelessWidget {
                                   .itemTypeDisplayName!
                                   .runes
                                   .toList()),
-                              style: TextStyle(
-                                  color: Colors.white, fontSize: fontSize - 5),
+                              maxLines: 1,
+                              maxFontSize: fontSize - 5,
+                              overflow: TextOverflow.ellipsis,
+                              minFontSize: 0,
+                              style: const TextStyle(
+                                color: Colors.white,
+                              ),
                             )
                           ],
                         ),

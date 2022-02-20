@@ -38,32 +38,54 @@ class _CollectionWidgetState extends State<CollectionWidget> {
     isLoading = false;
   }
 
+  double filterHeight = 900;
+  double filterItemsPadding = 15.0;
+  double itemWidth = 150;
+  int axisCount = 8;
   @override
   Widget build(BuildContext context) {
     final padding = MediaQuery.of(context).size.width * globalPadding;
     final itemListWidth = MediaQuery.of(context).size.width * 0.6;
     final filterWidth = MediaQuery.of(context).size.width * 0.3;
-    double filterHeight = 900;
-    double filterItemsPadding = 15.0;
-    double itemWidth = 150;
+    if (MediaQuery.of(context).size.width < 2200) {
+      axisCount = 7;
+    }
+    if (MediaQuery.of(context).size.width < 1900) {
+      axisCount = 6;
+    }
+    if (MediaQuery.of(context).size.width < 1600) {
+      itemWidth = 100;
+    }
+    if (MediaQuery.of(context).size.width < 1100) {
+      axisCount = 5;
+    }
+    if (MediaQuery.of(context).size.width < 900) {
+      axisCount = 4;
+    }
+
     return SingleChildScrollView(
-      child: Container(
-        padding: EdgeInsets.only(left: padding, right: padding, top: padding),
-        child: FutureBuilder(
-            future: _future,
-            builder: (BuildContext context,
-                AsyncSnapshot<Iterable<DestinyInventoryItemDefinition>?>
-                    snapshot) {
-              if (snapshot.hasData) {
-                var filteredData = searchName.isEmpty
-                    ? snapshot.data!.where((element) =>
-                        element.itemSubType == currentType &&
-                        element.equippingBlock?.ammoType == currentAmmoType)
-                    : snapshot.data!.where(((element) => utf8
-                        .decode(element.displayProperties!.name!.runes.toList())
-                        .toLowerCase()
-                        .contains(searchName.toLowerCase())));
-                return Row(
+      child: FutureBuilder(
+          future: _future,
+          builder: (BuildContext context,
+              AsyncSnapshot<Iterable<DestinyInventoryItemDefinition>?>
+                  snapshot) {
+            if (snapshot.hasData) {
+              Iterable<DestinyInventoryItemDefinition> filteredData = searchName
+                      .isEmpty
+                  ? snapshot.data!.where((element) =>
+                      element.itemSubType == currentType &&
+                      element.equippingBlock?.ammoType == currentAmmoType)
+                  : snapshot.data!.where(((element) => utf8
+                      .decode(element.displayProperties!.name!.runes.toList())
+                      .toLowerCase()
+                      .contains(searchName.toLowerCase())));
+              if (MediaQuery.of(context).size.width < 850) {
+                return mobileView(context, filteredData);
+              }
+              return Container(
+                padding: EdgeInsets.only(
+                    left: padding, right: padding, top: padding),
+                child: Row(
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -149,7 +171,7 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                             height: filterHeight,
                             child: GridView.count(
                               childAspectRatio: (itemWidth / (itemWidth * 1.5)),
-                              crossAxisCount: 5,
+                              crossAxisCount: axisCount,
                               children: [
                                 for (final item in filteredData)
                                   Center(
@@ -170,11 +192,75 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                             ),
                           ),
                         )
-                    ]);
-              } else {
-                return const Loader();
-              }
-            }),
+                    ]),
+              );
+            } else {
+              return const Loader();
+            }
+          }),
+    );
+  }
+
+  Widget mobileView(BuildContext context,
+      Iterable<DestinyInventoryItemDefinition> filteredData) {
+    double itemListWidth = MediaQuery.of(context).size.width * 0.9;
+    if (MediaQuery.of(context).size.width < 500) {
+      axisCount = 3;
+    }
+    if (MediaQuery.of(context).size.width < 350) {
+      itemWidth = 75;
+    }
+    return Container(
+      color: backgroundColor,
+      child: Column(
+        children: [
+          SearchBar((searchValue) {
+            setState(() {
+              isLoading = true;
+            });
+            Timer(const Duration(milliseconds: 100), () {
+              setState(() {
+                isLoading = false;
+                searchName = searchValue;
+              });
+            });
+          }),
+          const Text("Filtres",
+              style: TextStyle(fontSize: 20, color: Colors.white)),
+          if (isLoading)
+            SizedBox(
+                height: filterHeight,
+                width: itemListWidth,
+                child: const Loader())
+          else
+            SingleChildScrollView(
+              child: SizedBox(
+                width: itemListWidth,
+                height: filterHeight,
+                child: GridView.count(
+                  childAspectRatio: (itemWidth / (itemWidth * 1.5)),
+                  crossAxisCount: axisCount,
+                  children: [
+                    for (final item in filteredData)
+                      Center(
+                        child: SizedBox(
+                          width: itemWidth,
+                          height: itemWidth * 1.5,
+                          child: InkWell(
+                              onTap: () => Navigator.pushNamed(
+                                  context, routeInspect,
+                                  arguments: item),
+                              child: NamedItem(
+                                value: item,
+                                width: itemWidth,
+                              )),
+                        ),
+                      )
+                  ],
+                ),
+              ),
+            )
+        ],
       ),
     );
   }

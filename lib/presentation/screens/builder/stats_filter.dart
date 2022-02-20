@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/cubit/filter_cubit.dart';
@@ -22,11 +23,107 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
     super.initState();
   }
 
+  double textFontSize = 25;
+  double titleFontSize = 45;
+  double padding = 50;
+  String title = "Sélectionnez l'ordre de vos statistiques";
+  String subtitle =
+      "Continuons avec vos statistiques! \nQu'est ce qui vous ferait rêver? \nChoisissez les statsque vous désirez dans votre ordre de priorité. On s'occupe de trouver les items parfait pour vous!";
+
   @override
   Widget build(BuildContext context) {
-    const double textFontSize = 25;
-    const double titleFontSize = 45;
-    const double padding = 50;
+    if (MediaQuery.of(context).size.width < 850) {
+      return mobileView();
+    } else {
+      return desktopView();
+    }
+  }
+
+  Widget mobileView() {
+    double tooltipSize = 30;
+    padding = MediaQuery.of(context).size.width * 0.025;
+    return Container(
+      color: backgroundColor,
+      padding: EdgeInsets.symmetric(horizontal: padding),
+      child: Column(
+        children: [
+          SizedBox(
+            width: MediaQuery.of(context).size.width - padding * 2,
+            child: Center(
+              child: AutoSizeText(
+                title,
+                maxLines: 2,
+                minFontSize: 0,
+                wrapWords: false,
+                maxFontSize: titleFontSize,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          ),
+          Tooltip(
+              message: subtitle,
+              textStyle: TextStyle(
+                fontSize: textFontSize,
+                color: Colors.white,
+              ),
+              triggerMode: TooltipTriggerMode.tap,
+              child: Icon(Icons.info_outline_rounded,
+                  size: tooltipSize, color: Colors.white)),
+          BlocProvider(
+            create: (context) => FilterCubit(),
+            child: BlocBuilder<FilterCubit, FilterState>(
+              builder: (context, filterState) {
+                return Column(
+                  children: [
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width - padding * 2,
+                        height: MediaQuery.of(context).size.height * 0.6,
+                        child: const FilterWidget()),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        InkWell(
+                          onTap: () => {
+                            setState(() {
+                              BuilderPreparation args;
+                              if (filterState is FilterDataState) {
+                                args = BuilderPreparation(
+                                    statOrder: filterState.data,
+                                    exoticHash: widget.exoticHash);
+                                Navigator.pushNamed(context, routeBuilder,
+                                    arguments: args);
+                              } else {
+                                args = BuilderPreparation(statOrder: [
+                                  'Mobilité',
+                                  'Résistance',
+                                  'Récupération',
+                                  'Discipline',
+                                  'Intelligence',
+                                  'Force'
+                                ], exoticHash: widget.exoticHash);
+
+                                Navigator.pushNamed(context, routeBuilder,
+                                    arguments: args);
+                              }
+                            })
+                          },
+                          child: const Button(
+                              width: 250.0, height: 60, value: "Next step"),
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget desktopView() {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: ghostBackground,
@@ -39,26 +136,25 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Sélectionner votre filtre",
+              Text(
+                title,
                 textAlign: TextAlign.left,
                 style: TextStyle(color: Colors.white, fontSize: titleFontSize),
               ),
-              const SizedBox(height: padding),
+              SizedBox(height: padding),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Expanded(
+                  Expanded(
                     flex: 30,
-                    child: Text(
-                        "Prêt à construire votre armure de rêve?\nÇa commence maintenant!\nCommencez par choisir une armure exotique qui sera la pièrce maitresse de votre équipement.",
+                    child: Text(subtitle,
                         style: TextStyle(
                             color: Colors.white, fontSize: textFontSize)),
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.7,
-                    child: const VerticalDivider(
+                    child: VerticalDivider(
                       color: Colors.white,
                       thickness: 1.5,
                       width: padding * 2,
@@ -121,7 +217,7 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
                                         child: const Button(
                                             width: 250.0,
                                             height: 60,
-                                            value: "Next step"),
+                                            value: "C'est parti !"),
                                       )),
                                 ],
                               )
