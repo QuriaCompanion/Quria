@@ -1,4 +1,3 @@
-import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
@@ -26,7 +25,10 @@ class _BuilderWidgetState extends State<BuilderWidget> {
 
     _future = BuilderService().calculateBuilds(
         statOrder: widget.data.statOrder,
-        classType: DestinyClass.Warlock,
+        classType: ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition![widget.data.exoticHash]!
+            .classType!,
         exoticHash: widget.data.exoticHash);
   }
 

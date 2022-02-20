@@ -8,12 +8,14 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 
 class NamedItem extends StatelessWidget {
   final DestinyInventoryItemDefinition value;
-  final double? width;
-  final Color? txtColor;
+  final double width;
+  final Color txtColor;
+  final double sideTextPadding;
 
   const NamedItem(
       {Key? key,
       required this.value,
+      this.sideTextPadding = 15,
       this.width = 150,
       this.txtColor = Colors.white})
       : super(key: key);
@@ -43,17 +45,24 @@ class NamedItem extends StatelessWidget {
             ]),
           ),
           SizedBox(
-            height: width! / 2,
+            height: width / 2,
+            width: width,
             child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Center(
-                child: AutoSizeText(
+              padding: EdgeInsets.symmetric(horizontal: sideTextPadding),
+              child: SizedBox(
+                width: width - sideTextPadding * 2,
+                height: width / 2,
+                child: Center(
+                  child: AutoSizeText(
                     utf8.decode(value.displayProperties!.name!.runes.toList()),
-                    wrapWords: false,
+                    style: TextStyle(color: txtColor),
                     maxLines: 2,
+                    stepGranularity: 2,
                     textAlign: TextAlign.center,
-                    style: TextStyle(fontSize: 18, color: txtColor),
-                    overflow: TextOverflow.clip),
+                    maxFontSize: 20,
+                    minFontSize: 4,
+                  ),
+                ),
               ),
             ),
           ),

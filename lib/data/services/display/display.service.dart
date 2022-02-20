@@ -1,4 +1,6 @@
+import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
@@ -11,6 +13,7 @@ import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
+import 'package:quria/data/models/helpers/exoticHelper.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
@@ -23,21 +26,25 @@ AccountService account = AccountService();
 class DisplayService {
   static init() async {}
 
-  Future<List<DestinyInventoryItemDefinition>> getExotics() async {
-    final items = profile.getAllItems();
-    if (ManifestService.manifestParsed.destinyClassDefinition == null) {
+  Future<List<DestinyInventoryItemDefinition>> getExotics(
+      DestinyClass classType) async {
+    final items = profile.getAllArmorForClass(classType);
+    if (ManifestService.manifestParsed.destinyClassDefinition == null ||
+        ManifestService.manifestParsed.destinyInventoryItemDefinition == null) {
       Box box = await StorageService.openBox("manifest");
+      await ManifestService.getManifest<DestinyInventoryItemDefinition>(
+          "DestinyInventoryItemDefinition", box);
       await ManifestService.getManifest<DestinyClassDefinition>(
           "DestinyClassDefinition", box);
       await StorageService.closeBox(box);
     }
-    // TODO: make a helper model out of this
-    Map<String, dynamic> exoticHelper = {
-      "manifest": ManifestService.manifestParsed,
-      "items": items
-    };
-    List<DestinyInventoryItemDefinition> exoticItems =
-        await compute(exoticLoop, exoticHelper);
+    List<DestinyInventoryItemDefinition> exoticItems = await compute(
+        exoticLoop,
+        ExoticHelper(
+            manifest:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition!,
+            items: items,
+            classType: classType));
 
     return exoticItems;
   }
@@ -81,23 +88,15 @@ class DisplayService {
     }
   }
 
-  List<DestinyInventoryItemDefinition> exoticLoop(
-      Map<String, dynamic> exoticHelper) {
+  List<DestinyInventoryItemDefinition> exoticLoop(ExoticHelper exoticHelper) {
     List<DestinyInventoryItemDefinition> exoticItems = [];
-    for (DestinyItemComponent element in exoticHelper["items"]) {
-      if (exoticHelper["manifest"]
-                  .destinyInventoryItemDefinition![element.itemHash]!
-                  .summaryItemHash ==
-              715326750 &&
-          !exoticItems.contains(ManifestService.manifestParsed
-              .destinyInventoryItemDefinition![element.itemHash]) &&
-          exoticHelper["manifest"]
-                  .destinyInventoryItemDefinition![element.itemHash]!
-                  .classType!
-                  .index ==
-              2) {
-        exoticItems.add(exoticHelper["manifest"]
-            .destinyInventoryItemDefinition![element.itemHash]!);
+    for (DestinyItemComponent element in exoticHelper.items) {
+      if (exoticHelper.manifest[element.itemHash]?.inventory?.tierType ==
+              TierType.Exotic &&
+          !exoticItems.contains(exoticHelper.manifest[element.itemHash]) &&
+          exoticHelper.manifest[element.itemHash]?.classType ==
+              exoticHelper.classType) {
+        exoticItems.add(exoticHelper.manifest[element.itemHash]!);
       }
     }
     return exoticItems;

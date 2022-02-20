@@ -119,6 +119,22 @@ enum armorStatInt {
   discipline,
   strength,
 }
+enum classLogo { titan, hunter, warlock }
+
+extension ClassLogoLink on classLogo {
+  String get link {
+    switch (this) {
+      case classLogo.titan:
+        return "https://www.bungie.net/common/destiny2_content/icons/8956751663b4394cd41076f93d2dd0d6.png";
+      case classLogo.hunter:
+        return "https://www.bungie.net/common/destiny2_content/icons/e7324e8c29c5314b8bce166ff167859d.png";
+      case classLogo.warlock:
+        return "https://www.bungie.net/common/destiny2_content/icons/bf7b2848d2f5fbebbf350d418b8ec148.png";
+      default:
+        return "0";
+    }
+  }
+}
 
 extension ArmorStatIntExtension on armorStatInt {
   int get value {
