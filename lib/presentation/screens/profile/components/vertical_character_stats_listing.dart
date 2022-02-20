@@ -11,10 +11,12 @@ class VerticalCharacterStatsListing extends StatefulWidget {
   final int characterIndex;
   final double fontSize;
   final double width;
+  final Axis direction;
   const VerticalCharacterStatsListing({
     Key? key,
     required this.data,
     required this.characterIndex,
+    this.direction = Axis.vertical,
     this.fontSize = 30,
     this.width = 110,
   }) : super(key: key);
@@ -56,23 +58,43 @@ class _VerticalCharacterStatsListingState
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        for (int i = 0; i < 6; i++)
-          Tooltip(
-            message: timerStat[DestinyData.armorStats[i]] ?? '',
-            child: StatisticDisplay(
-                value: widget.data!.characters[widget.characterIndex]
-                    .stats![DestinyData.armorStats[i]]!,
-                icon: DestinyData.statsIcon[i],
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                width: widget.width,
-                fontsize: widget.fontSize),
-          ),
-      ],
-    );
+    if (widget.direction == Axis.vertical) {
+      return Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          for (int i = 0; i < 6; i++)
+            Tooltip(
+              message: timerStat[DestinyData.armorStats[i]] ?? '',
+              child: StatisticDisplay(
+                  value: widget.data!.characters[widget.characterIndex]
+                      .stats![DestinyData.armorStats[i]]!,
+                  icon: DestinyData.statsIcon[i],
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  width: widget.width,
+                  fontsize: widget.fontSize),
+            ),
+        ],
+      );
+    } else {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          for (int i = 0; i < 6; i++)
+            Tooltip(
+              message: timerStat[DestinyData.armorStats[i]] ?? '',
+              child: StatisticDisplay(
+                  value: widget.data!.characters[widget.characterIndex]
+                      .stats![DestinyData.armorStats[i]]!,
+                  icon: DestinyData.statsIcon[i],
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  width: widget.width / 6,
+                  fontsize: widget.fontSize),
+            ),
+        ],
+      );
+    }
   }
 
   String formatTime(time) {

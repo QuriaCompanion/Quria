@@ -28,8 +28,9 @@ class DisplayService {
 
   Future<List<DestinyInventoryItemDefinition>> getExotics(
       DestinyClass classType) async {
-    final items = profile.getAllItems();
-    if (ManifestService.manifestParsed.destinyClassDefinition == null) {
+    final items = profile.getAllArmorForClass(classType);
+    if (ManifestService.manifestParsed.destinyClassDefinition == null ||
+        ManifestService.manifestParsed.destinyInventoryItemDefinition == null) {
       Box box = await StorageService.openBox("manifest");
       await ManifestService.getManifest<DestinyInventoryItemDefinition>(
           "DestinyInventoryItemDefinition", box);
@@ -37,8 +38,6 @@ class DisplayService {
           "DestinyClassDefinition", box);
       await StorageService.closeBox(box);
     }
-    // TODO: make a helper model out of this
-
     List<DestinyInventoryItemDefinition> exoticItems = await compute(
         exoticLoop,
         ExoticHelper(
@@ -94,8 +93,7 @@ class DisplayService {
     for (DestinyItemComponent element in exoticHelper.items) {
       if (exoticHelper.manifest[element.itemHash]?.inventory?.tierType ==
               TierType.Exotic &&
-          !exoticItems.contains(ManifestService.manifestParsed
-              .destinyInventoryItemDefinition![element.itemHash]) &&
+          !exoticItems.contains(exoticHelper.manifest[element.itemHash]) &&
           exoticHelper.manifest[element.itemHash]?.classType ==
               exoticHelper.classType) {
         exoticItems.add(exoticHelper.manifest[element.itemHash]!);

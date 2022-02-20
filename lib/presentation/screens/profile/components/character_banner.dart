@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
@@ -31,7 +32,7 @@ class CharacterBanner extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            AutoSizeText(
                 ManifestService
                         .manifestParsed
                         .destinyClassDefinition![character.classHash]!
@@ -45,7 +46,7 @@ class CharacterBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(character.light.toString(),
+                AutoSizeText(character.light.toString(),
                     style: TextStyle(color: Colors.yellow, fontSize: fontSize)),
                 Image(
                   image: NetworkImage(DestinyData.bungieLink +

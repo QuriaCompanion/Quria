@@ -8,7 +8,7 @@ import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/detailed_item/item/header_weapon_details.dart';
 import 'package:quria/presentation/detailed_item/item/stat_progress_bar.dart';
 import 'package:quria/presentation/detailed_item/item/weapon_details_hidden_stats.dart';
-import 'package:quria/presentation/detailed_item/subclass/attributs_details.dart';
+import 'package:quria/presentation/detailed_item/item/attributs_details.dart';
 
 @immutable
 class ItemDetailsWidget extends StatelessWidget {
