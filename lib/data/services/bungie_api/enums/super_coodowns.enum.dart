@@ -4,7 +4,7 @@ class SuperCooldown {
     1757742244: tier1, // fist of havoc
     1722642322: tier1, // hammer of sol
     2021620139: tier1, // behemoth
-    194702279: tier2, // nova warp
+    1656118680: tier2, // nova warp
     368405360: tier2, //sentinel
     4102085486: tier2, //daybreak
     178252917: tier2, // stormtrance
@@ -14,7 +14,8 @@ class SuperCooldown {
     3078181438: tier3, //arcbolt
     1323416107: tier3, // burning maul
     2936898795: tier3, //arc staff
-    3082407249: tier3, // nova bomb
+    1656118681: tier3, // nova bomb
+    1656118682: tier3, //nova cataclysm
     2795355746: tier3, // thundercrash
     2625980631: tier4, //Silence and squall
     1590824323: tier4, // blade barrage

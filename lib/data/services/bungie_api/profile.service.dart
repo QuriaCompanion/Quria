@@ -289,17 +289,23 @@ class ProfileService {
             ?.equipmentSlotTypeHash ==
         3284755031);
 
-    DestinyItemSocketState? stasisGrenade =
+    DestinyItemSocketState? newGrenade =
         getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
             ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition?[element.plugHash]
-                ?.plug
-                ?.plugCategoryHash ==
-            900498880);
-    if (stasisGrenade != null) {
-      return ManifestService
-          .manifestParsed.destinyInventoryItemDefinition?[stasisGrenade]?.hash;
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.plug
+                    ?.plugCategoryHash ==
+                900498880 ||
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.plug
+                    ?.plugCategoryHash ==
+                3089520417);
+    if (newGrenade != null) {
+      return ManifestService.manifestParsed
+          .destinyInventoryItemDefinition?[newGrenade.plugHash]?.hash;
     }
     DestinyItemTalentGridComponent? oldSubclass =
         getTalentGrid(subclass.itemInstanceId!);
@@ -333,14 +339,20 @@ class ProfileService {
     DestinyItemSocketState? stasisSuper =
         getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
             ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition?[element.plugHash]
-                ?.plug
-                ?.plugCategoryHash ==
-            635737914);
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.plug
+                    ?.plugCategoryHash ==
+                635737914 ||
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.plug
+                    ?.plugCategoryHash ==
+                4141244538);
     if (stasisSuper != null) {
-      return ManifestService
-          .manifestParsed.destinyInventoryItemDefinition?[stasisSuper]?.hash;
+      return ManifestService.manifestParsed
+          .destinyInventoryItemDefinition?[stasisSuper.plugHash]?.hash;
     }
     DestinyItemTalentGridComponent? oldSubclass =
         getTalentGrid(subclass.itemInstanceId!);

@@ -6,21 +6,21 @@ class GrenadeCooldown {
     3811945819: tier3, //lightning
     4256932443: tier3, //incendiary
     1399219: tier3, //coldsnap
-    2880143637: tier3, //magnetic
-    1701872319: tier3, //suppressor
+    1547656727: tier3, //magnetic
+    2265076177: tier3, //suppressor
     328872098: tier4, //skip
-    2008044721: tier4, //vortex
-    332456255: tier4, //spike
-    2576774201: tier4, //voidwall
+    1016030582: tier4, //vortex
+    1255073825: tier4, //spike
+    2809141585: tier4, //voidwall
     79448980: tier4, //pulse
     3322650917: tier4, //thermite
     1397213608: tier4, //solar
-    3252353493: tier4, //scatter
+    1514173218: tier4, //scatter
     2909653089: tier5, //swarm
     455260043: tier5, //tripmine
     3844755601: tier5, //flashbang
     3347197644: tier5, //storm
-    243660113: tier5, //axion
+    3232422679: tier5, //axion
     2995804739: tier6, //fusion
     1399216: tier7, //duskfield
     2927723086: tier7, //firebolt
