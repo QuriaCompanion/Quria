@@ -1,16 +1,17 @@
 class SuperCooldown {
   static const Map<int, Map<int, int>> superMap = {
-    499823166: tier1, // Spectral
+    2722573682: tier1, // Spectral
     1757742244: tier1, // fist of havoc
     1722642322: tier1, // hammer of sol
     2021620139: tier1, // behemoth
     1656118680: tier2, // nova warp
-    368405360: tier2, //sentinel
+    4260353952: tier2, //sentinel
     4102085486: tier2, //daybreak
     178252917: tier2, // stormtrance
     3882393894: tier2, // chaos reach
     675014898: tier2, // golden gun
-    3931765019: tier3, // shadowshot
+    2722573681: tier3, // quiver
+    2722573683: tier3, // deadshot
     3078181438: tier3, //arcbolt
     1323416107: tier3, // burning maul
     2936898795: tier3, //arc staff
@@ -19,6 +20,7 @@ class SuperCooldown {
     2795355746: tier3, // thundercrash
     2625980631: tier4, //Silence and squall
     1590824323: tier4, // blade barrage
+    4260353953: tier5, // bubble
     935376049: tier5, // well of radiance
   };
 
