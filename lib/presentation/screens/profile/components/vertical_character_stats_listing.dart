@@ -32,6 +32,10 @@ class _VerticalCharacterStatsListingState
   @override
   initState() {
     super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     int disciplineTier =
         (widget.data!.characters[widget.characterIndex].stats!["1735777505"]! /
                 10)
@@ -54,10 +58,6 @@ class _VerticalCharacterStatsListingState
       '1735777505': formatTime(grenadeTimer),
       '144602215': formatTime(superTimer),
     };
-  }
-
-  @override
-  Widget build(BuildContext context) {
     if (widget.direction == Axis.vertical) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
