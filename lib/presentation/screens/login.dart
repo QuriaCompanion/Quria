@@ -166,12 +166,12 @@ class LoginWidgetState extends State<LoginWidget> {
     final ProfileService profile = ProfileService();
     BungieNetToken token = BungieNetToken.fromJson({
       'access_token':
-          'CMraAxKGAgAg7dI+0TkMGh2uh5L3BF4tvx/zOmVisBiea6PBQf/lm4zgAAAAnCkNEwBf6Lsvtc6BbSSDmCObyW6vaLiISD453n7Fyy9nbQxiCwK5DqyxBCbsyjiEGe1OZBkiDKwQ345UObPGivziNHHOFaSo9tele6rSu8WqILkkfajnmABN5W3/VNHfkauDmocu4IPBa7ObnHwCQhJ3X0cshmisE+M5UqisIYy3ppOrfHqGnNxxsX5/P1LsjR0Vc8cd1W6eaDZoSAOHlMedKs/XkwIYPOUFcDQChqWk1JdxFaVJ/ycQCG641FDdnS6qfikNvgC6vwaZm6JkkxcrmBQMHNpcr40Z+IJ5oOo=',
+          "CKz7AxKGAgAgeUtts6Ss0etJ4v74fspqQMJUw03kC5u0Mzy45BRlG8bgAAAAUS2EA1MTJ4wTlOMk5lAdPMc/JaJEBKmobmBLYLxraR9MuZgC3HRldFkjaJBOjpgUCm/DrSpR6QKYXPADmrxXluNAsIqvtdBkRG+jC1PFjkp3lesmfN87OzON3594IbRotxBMe+WvAzjpcNSsu70lJPcuy2uCfYCp5DWjhkhF6hem2TBG1/4GytKb1zVZA7iXqPIYfzwJlGkNI0ibJ8xdjCJCLxu9c4GQZzoff6rLNPcBk+hfQnVyft0xEKYXBLDg7PaV6s3In7uYCfSBMkG/Xa2nyDcD3lWrVQDUDn4+6ww=",
       'expires_in': 3600,
+      'membership_id': "11319478",
+      'refresh_expires_in': 7776000,
       'refresh_token':
-          'CMraAxKGAgAgQpzRp7QWUtRVShDD4ebDYWnMQVHHWl1dnZevpWwv6XPgAAAAyHZqrwzy3ymqmzQAKZY5kqYBEtfU1BPAJq19gbF486zsq+lWy3CfAwnra/Gpfg6TkjFonIaYpdbSFLdZ/ij+JWsiRefHapizhxjmztiCB2ML8mnhwMYu6Fnm0bOhkjvIq6kKuEkSR0b5Tk0UcvG/x+wPxWjQvBkakujHmzKaraUa+++wU/YuCP6ZuV9p60tXRS8s4PGKAV3RKHSppsC/pxYHs00lShOd/EJcA5jeCwC6pBFdbUv7mOuTaK4Nk/aQkCzuKJSI5GnawJCMw/VXkwHBAWwb9svUsIBOygOXO0o=',
-      'refresh_expires_in': 3600,
-      'membership_id': '11319478',
+          "CKz7AxKGAgAghSc565zJ3/6Z3QOWGqhr5vjUPZFkn35tLnqoqXByZRTgAAAAVy6LETOkAR+zjX4+PP8eB6XnoqVqd0u6SAk4lkJ6jSSm7dh2bxuydpGnGXAE3PvRL8ZzvA0qboKU/hG67i3tju180xeAJqLIXKOwHliZe+6LM7bv6tg32+Qk7w5c5pk/RpfzgDgp2qQTyf7K+PXJ7Tm/TIDtamDDVNfDIq6QDjeF8sxZPPTiR4LgHzBUHWG7zUGEi6Obcn9CRSTRGmBQHcROgdaaJSEDKb99M/soU5xr+27VK1KsQkFS6XMN60u3BF/CY+ofcYS/luYxfWHKRay/SIgdsn2NNWi85NHQ1Sk="
     });
 
     if (await auth.getToken() == null) await auth.saveToken(token);
