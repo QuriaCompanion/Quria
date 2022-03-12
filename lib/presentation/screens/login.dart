@@ -40,16 +40,16 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   void initState() {
     super.initState();
-    if (widget.auth.getToken() == null) {
-      Navigator.pushNamed(context, routeProfile);
-    }
+    widget.auth.getToken().then((value) => {
+          if (value != null) {checkMembership()}
+        });
+
     getInitialUri().then((value) {
       if (!value.toString().contains('code=')) {
       } else {
         // You are connected, you can grab the code from the url.
         final fragments = value!.toString().split('=');
         authCode(fragments[1].replaceAll("#/", ""));
-        Navigator.pushNamed(context, routeProfile);
       }
     });
   }
@@ -144,6 +144,7 @@ class LoginWidgetState extends State<LoginWidget> {
       showSelectMembership();
     }
     loadProfile();
+    Navigator.pushNamed(context, routeProfile);
   }
 
   loadProfile() async {
