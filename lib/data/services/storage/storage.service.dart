@@ -77,7 +77,7 @@ class StorageService {
   /// Given a [box] and a [key] returns the manifest as a [String]
   ///
   /// The String still need to be parsed to be used.
-  static String getDatabaseItem(Box box, String key) {
+  static dynamic getDatabaseItem(Box box, String key) {
     return box.get(key);
   }
 
