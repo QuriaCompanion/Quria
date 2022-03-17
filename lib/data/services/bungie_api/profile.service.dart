@@ -242,6 +242,7 @@ class ProfileService {
 
   Future<DestinyProfileResponse?> loadProfile() async {
     DestinyProfileResponse? response = await fetchProfileData();
+    _profile = response;
     inspect(response);
     return response;
   }
