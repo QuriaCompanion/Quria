@@ -90,15 +90,6 @@ class ManifestService {
         false;
   }
 
-  // static Future<bool> isManifestOutDated(String manifestVersion) async {
-  //   return manifestVersion !=
-  //       await StorageService.getLocalStorage('manifestVersion');
-  // }
-
-  // static setCurrentManifestVersion(String manifestVersion) async {
-  //   await StorageService.setLocalStorage('manifestVersion', manifestVersion);
-  // }
-
   /// Given a [manifestName] sets corresponding manifestSaved value to true
   static Future<void> manifestSaved(String manifestName, version) async {
     return await StorageService.setLocalStorage(
