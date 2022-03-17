@@ -124,8 +124,6 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                                   padding: EdgeInsets.all(itemPadding / 2),
                                   child: InkWell(
                                       onTap: () => {
-                                            StorageService.setLocalStorage(
-                                                "exotic", snapshot.data![i]),
                                             Navigator.pushNamed(
                                                 context, routeFilter,
                                                 arguments:
