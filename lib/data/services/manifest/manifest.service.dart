@@ -46,7 +46,7 @@ class ManifestService {
   /// returns true once the manifest is loaded
   static Future<bool> getManifest<T>(String manifestName, Box box) async {
     try {
-      if (await isManifestSaved(manifestName)) {
+      if (await isManifestSaved(manifestName, await getManifestVersion())) {
         String manifest = StorageService.getDatabaseItem(box, manifestName);
         Map<int, T> items =
             await compute<String, Map<int, T>>(_parseJson, manifest);
@@ -57,7 +57,7 @@ class ManifestService {
         Map<int, T> items =
             await compute<String, Map<int, T>>(_parseJson, manifest);
         AllDestinyManifestComponents.setValue<T>(items);
-        manifestSaved(manifestName);
+        await manifestSaved(manifestName, await getManifestVersion());
       }
       return true;
     } catch (e) {
@@ -65,11 +65,14 @@ class ManifestService {
     }
   }
 
-  getManifestLocal<T>(myBox, String manifestName) {
-    return StorageService.getDatabaseItem(myBox, manifestName);
+  static getManifestVersion() async {
+    if (_manifestInfo != null) {
+      return _manifestInfo!.version;
+    }
+    DestinyManifestResponse response = await BungieApiService.getManifestInfo();
+    _manifestInfo = response.response;
+    return _manifestInfo!.version;
   }
-
-  storeManifest<T>(Map<int, T> manifest) {}
 
   static Future<String> getManifestRemote<T>(String manifestName) async {
     DestinyManifest info = await loadManifestInfo();
@@ -80,16 +83,17 @@ class ManifestService {
     return res.body;
   }
 
-  static Future<bool> isManifestSaved(String manifestName) async {
+  static Future<bool> isManifestSaved(
+      String manifestName, String version) async {
     return await StorageService.getLocalStorage(
-            'manifestSaved_$manifestName') ??
+            'manifestSaved_$manifestName$version') ??
         false;
   }
 
   /// Given a [manifestName] sets corresponding manifestSaved value to true
-  static Future<void> manifestSaved(String manifestName) async {
+  static Future<void> manifestSaved(String manifestName, version) async {
     return await StorageService.setLocalStorage(
-        'manifestSaved_$manifestName', true);
+        'manifestSaved_$manifestName$version', true);
   }
 }
 

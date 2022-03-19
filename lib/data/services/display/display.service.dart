@@ -36,7 +36,6 @@ class DisplayService {
           "DestinyInventoryItemDefinition", box);
       await ManifestService.getManifest<DestinyClassDefinition>(
           "DestinyClassDefinition", box);
-      await StorageService.closeBox(box);
     }
     List<DestinyInventoryItemDefinition> exoticItems = await compute(
         exoticLoop,
@@ -77,7 +76,6 @@ class DisplayService {
             "DestinyPresentationNodeDefinition", box);
         await ManifestService.getManifest<DestinyPlugSetDefinition>(
             "DestinyPlugSetDefinition", box);
-        await StorageService.closeBox(box);
       }
 
       final characters = profile.getCharacters();
@@ -110,7 +108,6 @@ class DisplayService {
           "DestinyInventoryItemDefinition", box);
       await ManifestService.getManifest<DestinyPlugSetDefinition>(
           "DestinyPlugSetDefinition", box);
-      await StorageService.closeBox(box);
     }
 
     return compute(_getWeapons, ManifestService.manifestParsed);

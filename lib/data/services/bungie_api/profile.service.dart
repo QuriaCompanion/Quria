@@ -121,7 +121,6 @@ class ProfileService {
     try {
       DestinyProfileResponse? res = await _updateProfileData(updateComponents);
       _lastLoadedFrom = LastLoadedFrom.server;
-      _cacheProfile(_profile!);
       return res;
     } catch (e) {
       if (!skipUpdate) await Future.delayed(const Duration(seconds: 2));
@@ -241,27 +240,9 @@ class ProfileService {
     return _profile;
   }
 
-  _cacheProfile(DestinyProfileResponse profile) async {
-    StorageService.setLocalStorage('cachedProfile', profile.toJson());
-  }
-
   Future<DestinyProfileResponse?> loadProfile() async {
-    var json = await StorageService.getLocalStorage('cachedProfile');
-    if (json != null) {
-      try {
-        DestinyProfileResponse response = DestinyProfileResponse.fromJson(json);
-        if ((response.characters?.data?.length ?? 0) > 0) {
-          _profile = response;
-          _lastLoadedFrom = LastLoadedFrom.cache;
-          inspect(response);
-          return response;
-        }
-      } catch (e) {
-        rethrow;
-      }
-    }
-
     DestinyProfileResponse? response = await fetchProfileData();
+    _profile = response;
     inspect(response);
     return response;
   }
