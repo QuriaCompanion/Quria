@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -234,11 +236,16 @@ class PerkList extends StatelessWidget {
                       .reusablePlugItems!)
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: padding),
-                      child: PerkItemDisplay(
-                        perk: ManifestService
-                                .manifestParsed.destinyInventoryItemDefinition![
-                            socket.plugItemHash]!,
-                        iconSize: iconSize,
+                      child: InkWell(
+                        onTap: () {
+                          print('P1');
+                        },
+                        child: PerkItemDisplay(
+                          perk: ManifestService.manifestParsed
+                                  .destinyInventoryItemDefinition![
+                              socket.plugItemHash]!,
+                          iconSize: iconSize,
+                        ),
                       ),
                     ),
                 if (item.sockets?.socketEntries?[index].randomizedPlugSetHash ==
