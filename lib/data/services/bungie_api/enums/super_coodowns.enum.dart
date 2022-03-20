@@ -3,6 +3,7 @@ class SuperCooldown {
     2722573682: tier1, // Spectral
     1757742244: tier1, // fist of havoc
     1722642322: tier1, // hammer of sol
+    3683904166: tier1, // shadebinder
     2021620139: tier1, // behemoth
     1656118680: tier2, // nova warp
     4260353952: tier2, //sentinel
