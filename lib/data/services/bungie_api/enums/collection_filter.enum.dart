@@ -21,6 +21,7 @@ class CollectionFilter {
     "Fusion linéaire": DestinyItemSubType.FusionRifleLine,
     "Revolver": DestinyItemSubType.HandCannon,
     "Pistolet": DestinyItemSubType.Sidearm,
+    "Glaive": DestinyItemSubType.Glaive,
   };
   static const Map<String, DestinyItemSubType> heavy = {
     "Mitrailleuse": DestinyItemSubType.Machinegun,
@@ -30,7 +31,8 @@ class CollectionFilter {
     "Fusion linéaire": DestinyItemSubType.FusionRifleLine,
     "Arc": DestinyItemSubType.Bow,
     "Fusil de précision": DestinyItemSubType.SniperRifle,
-    "Fusil à fusion": DestinyItemSubType.FusionRifle
+    "Fusil à fusion": DestinyItemSubType.FusionRifle,
+    "Fusil à pompe": DestinyItemSubType.Shotgun
   };
   static const Map<DestinyAmmunitionType, Map<String, DestinyItemSubType>>
       typeFilters = {

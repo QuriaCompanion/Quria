@@ -78,6 +78,7 @@ class StatsHash {
   static const int shootingSpeed = 447667954;
   static const int precision = 1591432999;
   static const int power = 1935470627;
+  static const int shieldDuration = 1842278586;
 }
 
 class StatsStringHash {
@@ -109,6 +110,7 @@ class StatsStringHash {
   static const String shootingSpeed = "447667954";
   static const String precision = "1591432999";
   static const String power = "1935470627";
+  static const String shieldDuration = "1842278586";
 }
 
 enum armorStatInt {
@@ -432,6 +434,15 @@ class DestinyData {
       StatsStringHash.reloadSpeed,
       StatsStringHash.aimAssist
     ],
+    // Glaive
+    DestinyItemSubType.Glaive: [
+      StatsStringHash.impact,
+      StatsStringHash.range,
+      StatsStringHash.shieldDuration,
+      StatsStringHash.handling,
+      StatsStringHash.reloadSpeed,
+      StatsStringHash.aimAssist
+    ],
   };
 
   static const Map<DestinyItemSubType, List> linearStatBySubType = {
@@ -629,6 +640,15 @@ class DestinyData {
       StatsHash.impact,
       StatsHash.precision,
       StatsHash.stability,
+      StatsHash.handling,
+      StatsHash.reloadSpeed,
+      StatsHash.aimAssist
+    ],
+    // Glaive
+    DestinyItemSubType.Glaive: [
+      StatsHash.impact,
+      StatsHash.range,
+      StatsHash.shieldDuration,
       StatsHash.handling,
       StatsHash.reloadSpeed,
       StatsHash.aimAssist

@@ -143,7 +143,7 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membership == null) {
       showSelectMembership();
     }
-    loadProfile();
+    await loadProfile();
     Navigator.pushNamed(context, routeProfile);
   }
 
