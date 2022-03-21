@@ -12,10 +12,10 @@ void main() async {
   // todo : use .env data
   await Firebase.initializeApp(
       options: const FirebaseOptions(
-          apiKey: 'AIzaSyAtmjDBRzaxM9YAQhOhFS_ryC5gaTjxjbI',
-          appId: 'quria-f5c32.firebaseapp.com',
-          messagingSenderId: '668020606368',
-          projectId: 'quria-f5c32'));
+          apiKey: 'AIzaSyAHPZS_6edfw4AVLW4VM1_hhkxrVUk9Mr0',
+          appId: '1:653536181122:web:c81569f39c669fc18eed9b',
+          messagingSenderId: '653536181122',
+          projectId: 'quriacompanion-13944'));
           
   await dotenv.load(fileName: ".env");
   runApp(QuriaApp(
