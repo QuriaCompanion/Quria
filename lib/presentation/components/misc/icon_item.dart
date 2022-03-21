@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 
-import '../../../data/services/bungie_api/enums/destiny_data.enum.dart';
+import '../../../data/services/bungie_api/enums/destiny_data.dart';
 import '../../../data/services/manifest/manifest.service.dart';
 
 class ItemIcon extends StatelessWidget {
