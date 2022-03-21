@@ -288,17 +288,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // TODO : move right place
-            ElevatedButton(
-              onPressed: () => {
-                FirestoreHelper().create(
-                    helmet: 'helmet',
-                    gauntlet: 'gauntlet',
-                    armor: 'armor',
-                    boots: 'boots')
-              },
-              child: const Text('click'),
-            ),
             CharacterBanner(
                 width: bannerSelectedWidth,
                 fontSize: bannerSelectedFont,

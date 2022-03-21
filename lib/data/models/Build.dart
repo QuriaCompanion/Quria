@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Build {
   String id = "";
+  String? userId;
   String? helmet;
   String? gauntlet;
   String? armor;
@@ -11,6 +12,7 @@ class Build {
   Build(DocumentSnapshot snapshot) {
     id = snapshot.id;
     Map<String, dynamic> map = snapshot.data() as Map<String, dynamic>;
+    userId = map["USER_ID"];
     helmet = map["HELMET"];
     gauntlet = map["GAUNTLET"];
     armor = map["ARMOR"];

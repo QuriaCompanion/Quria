@@ -1,11 +1,15 @@
+import 'dart:developer';
+
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/firebase/FirestoreHelper.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
 import 'package:quria/presentation/screens/builder/components/extended_builder_info.dart';
@@ -108,6 +112,17 @@ class SingleBuild extends StatelessWidget {
                   Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: listArmor),
+                  ElevatedButton(
+                      onPressed: () async => {
+                            FirestoreHelper().create(
+                                userId: await AccountService()
+                                    .getCurrentMembershipId(),
+                                helmet: items[0].itemInstanceId,
+                                gauntlet: items[1].itemInstanceId,
+                                armor: items[2].itemInstanceId,
+                                boots: items[3].itemInstanceId)
+                          },
+                      child: const Text('Enregistrer')),
                   ElevatedButton(
                       onPressed: () async {
                         for (Armor item in buildInfo.equipement) {

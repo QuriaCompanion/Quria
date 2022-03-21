@@ -9,7 +9,7 @@ import 'package:quria/presentation/var/routes.dart';
 void main() async {
   StorageService.init();
   WidgetsFlutterBinding.ensureInitialized();
-  // TODO : use .env data
+  // todo : use .env data
   await Firebase.initializeApp(
       options: const FirebaseOptions(
           apiKey: 'AIzaSyAtmjDBRzaxM9YAQhOhFS_ryC5gaTjxjbI',

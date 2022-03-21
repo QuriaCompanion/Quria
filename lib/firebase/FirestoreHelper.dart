@@ -8,6 +8,7 @@ class FirestoreHelper {
 
 // Build
   create({
+    required String? userId,
     required String? helmet,
     required String? gauntlet,
     required String? armor,
@@ -17,6 +18,7 @@ class FirestoreHelper {
 
     String uid = uuid.v1();
     Map<String, dynamic> map = {
+      "USER_ID": userId,
       "HELMET": helmet,
       "GAUNTLET": gauntlet,
       "ARMOR": armor,
