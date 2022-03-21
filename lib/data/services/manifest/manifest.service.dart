@@ -46,7 +46,7 @@ class ManifestService {
   /// returns true once the manifest is loaded
   static Future<bool> getManifest<T>(String manifestName, Box box) async {
     try {
-      if (await isManifestSaved(manifestName, await getManifestVersion())) {
+      if (await isManifestUpToDate(manifestName, await getManifestVersion())) {
         String manifest = StorageService.getDatabaseItem(box, manifestName);
         Map<int, T> items =
             await compute<String, Map<int, T>>(_parseJson, manifest);
@@ -83,17 +83,14 @@ class ManifestService {
     return res.body;
   }
 
-  static Future<bool> isManifestSaved(
+  static Future<bool> isManifestUpToDate(
       String manifestName, String version) async {
-    return await StorageService.getLocalStorage(
-            'manifestSaved_$manifestName$version') ??
-        false;
+    return await StorageService.getLocalStorage(manifestName) == version;
   }
 
   /// Given a [manifestName] sets corresponding manifestSaved value to true
-  static Future<void> manifestSaved(String manifestName, version) async {
-    return await StorageService.setLocalStorage(
-        'manifestSaved_$manifestName$version', true);
+  static Future<void> manifestSaved(String manifestName, String version) async {
+    return await StorageService.setLocalStorage(manifestName, version);
   }
 }
 

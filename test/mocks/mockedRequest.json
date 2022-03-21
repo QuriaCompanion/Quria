@@ -1,0 +1,80 @@
+{
+    "items": [
+    {
+      "itemHash": 4225322581,
+      "itemInstanceId": "6917529625883517719",
+      "quantity": 1,
+      "bindStatus": 0,
+      "location": 1,
+      "bucketHash": 1498876634,
+      "transferStatus": 0,
+      "lockable": true,
+      "state": 8,
+      "dismantlePermission": 2,
+      "isWrapper": false,
+      "tooltipNotificationIndexes": [],
+      "versionNumber": 0
+    },
+    {
+      "itemHash": 2780717641,
+      "itemInstanceId": "6917529405284441398",
+      "quantity": 1,
+      "bindStatus": 0,
+      "location": 1,
+      "bucketHash": 3551918588,
+      "transferStatus": 0,
+      "lockable": true,
+      "state": 5,
+      "dismantlePermission": 1,
+      "isWrapper": false,
+      "tooltipNotificationIndexes": [],
+      "versionNumber": 0
+    },
+   
+    {
+      "itemHash": 121305948,
+      "itemInstanceId": "6917529667209059507",
+      "quantity": 1,
+      "bindStatus": 0,
+      "location": 1,
+      "bucketHash": 20886954,
+      "transferStatus": 0,
+      "lockable": true,
+      "state": 0,
+      "dismantlePermission": 1,
+      "isWrapper": false,
+      "tooltipNotificationIndexes": [],
+      "versionNumber": 0
+    },
+    {
+      "itemHash": 121305948,
+      "itemInstanceId": "6917529201050999814",
+      "quantity": 1,
+      "bindStatus": 0,
+      "location": 1,
+      "bucketHash": 20886954,
+      "transferStatus": 0,
+      "lockable": true,
+      "state": 5,
+      "dismantlePermission": 1,
+      "isWrapper": false,
+      "tooltipNotificationIndexes": [],
+      "versionNumber": 0
+    },
+   
+    {
+      "itemHash": 3627185503,
+      "itemInstanceId": "6917529321711202818",
+      "quantity": 1,
+      "bindStatus": 0,
+      "location": 1,
+      "bucketHash": 3551918588,
+      "transferStatus": 1,
+      "lockable": true,
+      "state": 5,
+      "dismantlePermission": 1,
+      "isWrapper": false,
+      "tooltipNotificationIndexes": [],
+      "versionNumber": 0
+    }
+  ]}
