@@ -112,15 +112,15 @@ class DisplayService {
 
     return compute(_getWeapons, ManifestService.manifestParsed);
   }
-}
 
-Iterable<DestinyInventoryItemDefinition>? _getWeapons(
-    AllDestinyManifestComponents manifest) {
-  List<DestinyInventoryItemDefinition>? weapons = manifest
-      .destinyInventoryItemDefinition?.values
-      .where(((element) => element.itemType == DestinyItemType.Weapon))
-      .toList();
-  weapons?.sort((a, b) =>
-      a.inventory!.tierType!.index.compareTo(b.inventory!.tierType!.index));
-  return weapons!.reversed;
+  Iterable<DestinyInventoryItemDefinition>? _getWeapons(
+      AllDestinyManifestComponents manifest) {
+    List<DestinyInventoryItemDefinition>? weapons = manifest
+        .destinyInventoryItemDefinition?.values
+        .where(((element) => element.itemType == DestinyItemType.Weapon))
+        .toList();
+    weapons?.sort((a, b) =>
+        a.inventory!.tierType!.index.compareTo(b.inventory!.tierType!.index));
+    return weapons!.reversed;
+  }
 }
