@@ -6,7 +6,6 @@ abstract class PerkSetState {}
 class PerkSetInitial extends PerkSetState {}
 
 class PerkSetDataState extends PerkSetState {
-  final int id;
-  final Map<String, Socket> body;
-  PerkSetDataState({required this.id, required this.body});
+  final InspectHelper body;
+  PerkSetDataState({required this.body});
 }

@@ -2,7 +2,9 @@ import 'dart:developer';
 
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/cubit/perk_set_cubit.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
@@ -10,6 +12,8 @@ import 'package:quria/presentation/detailed_item/item/header_weapon_details.dart
 import 'package:quria/presentation/detailed_item/item/perk_item_display.dart';
 import 'package:quria/presentation/detailed_item/item/stat_progress_bar.dart';
 import 'package:quria/presentation/detailed_item/item/weapon_details_hidden_stats.dart';
+
+import '../../../data/models/helpers/inspectHelper.model.dart';
 
 class InspectWidget extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
@@ -26,6 +30,7 @@ class _InspectWidgetState extends State<InspectWidget> {
   double childPadding = 15;
   double iconSize = 75;
   double padding = 30;
+  final InspectHelper selectedPerks = InspectHelper();
   @override
   Widget build(BuildContext context) {
     final double itemMainInfoWidth = MediaQuery.of(context).size.width * 0.33;
@@ -120,6 +125,7 @@ class _InspectWidgetState extends State<InspectWidget> {
                 children: [
                   SizedBox(height: imageSize),
                   PerkList(
+                      selectedPerks: selectedPerks,
                       item: widget.item,
                       iconSize: iconSize,
                       padding: childPadding)
@@ -192,6 +198,7 @@ class _InspectWidgetState extends State<InspectWidget> {
                 ),
                 SizedBox(
                   child: PerkList(
+                      selectedPerks: selectedPerks,
                       item: widget.item,
                       iconSize: MediaQuery.of(context).size.width / 7,
                       padding: (MediaQuery.of(context).size.width -
@@ -209,58 +216,129 @@ class _InspectWidgetState extends State<InspectWidget> {
 class PerkList extends StatelessWidget {
   const PerkList({
     Key? key,
+    required this.selectedPerks,
     required this.item,
     required this.iconSize,
     required this.padding,
   }) : super(key: key);
 
+  final InspectHelper selectedPerks;
   final DestinyInventoryItemDefinition item;
   final double iconSize;
   final double padding;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        for (int index = 1; index <= 4; index++)
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: padding),
-            child: Column(
-              children: [
-                if (item.sockets?.socketEntries?[index].randomizedPlugSetHash !=
-                    null)
-                  for (var socket in ManifestService
-                      .manifestParsed
-                      .destinyPlugSetDefinition![item.sockets!
-                          .socketEntries![index].randomizedPlugSetHash]!
-                      .reusablePlugItems!)
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: padding),
-                      child: InkWell(
-                        onTap: () {
-                          print('P1');
-                        },
-                        child: PerkItemDisplay(
-                          perk: ManifestService.manifestParsed
-                                  .destinyInventoryItemDefinition![
-                              socket.plugItemHash]!,
-                          iconSize: iconSize,
-                        ),
-                      ),
-                    ),
-                if (item.sockets?.socketEntries?[index].randomizedPlugSetHash ==
-                    null)
-                  PerkItemDisplay(
-                    perk: ManifestService
-                            .manifestParsed.destinyInventoryItemDefinition![
-                        item.sockets?.socketEntries?[index]
-                            .singleInitialItemHash]!,
-                    iconSize: iconSize,
-                  )
-              ],
+    return BlocProvider(
+      create: (context) => PerkSetCubit(),
+      child: BlocBuilder<PerkSetCubit, PerkSetState>(
+        builder: (context, state) {
+          return SizedBox(
+            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+              for (int index = 1; index <= 4; index++)
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: padding),
+                  child: ColumnPerkDisplay(
+                      item: item,
+                      index: index,
+                      padding: padding,
+                      selectedPerks: selectedPerks,
+                      iconSize: iconSize),
+                )
+            ]),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class ColumnPerkDisplay extends StatefulWidget {
+  const ColumnPerkDisplay({
+    Key? key,
+    required this.item,
+    required this.index,
+    required this.padding,
+    required this.selectedPerks,
+    required this.iconSize,
+  }) : super(key: key);
+
+  final DestinyInventoryItemDefinition item;
+  final int index;
+  final double padding;
+  final InspectHelper selectedPerks;
+  final double iconSize;
+
+  @override
+  State<ColumnPerkDisplay> createState() => _ColumnPerkDisplayState();
+}
+
+class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
+  int selectedIndex = 0;
+  @override
+  Widget build(BuildContext context) {
+    final List sockets = ManifestService
+        .manifestParsed
+        .destinyPlugSetDefinition![widget
+            .item.sockets!.socketEntries![widget.index].randomizedPlugSetHash]!
+        .reusablePlugItems!;
+    return Column(
+      children: [
+        if (widget.item.sockets?.socketEntries?[widget.index]
+                .randomizedPlugSetHash !=
+            null)
+          for (int i = 0; i < sockets.length; i++)
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: widget.padding),
+              child: InkWell(
+                onTap: () {
+                  setState(() {
+                    selectedIndex = i;
+                    switch (widget.index) {
+                      case 1:
+                        widget.selectedPerks.firstColumn = ManifestService
+                                .manifestParsed.destinyInventoryItemDefinition![
+                            sockets[i].plugItemHash]!;
+                        inspect(widget.selectedPerks);
+                        break;
+                      case 2:
+                        widget.selectedPerks.secondColumn = ManifestService
+                                .manifestParsed.destinyInventoryItemDefinition![
+                            sockets[i].plugItemHash]!;
+                        break;
+                      case 3:
+                        widget.selectedPerks.thirdColumn = ManifestService
+                                .manifestParsed.destinyInventoryItemDefinition![
+                            sockets[i].plugItemHash]!;
+                        break;
+                      case 4:
+                        widget.selectedPerks.fourthColumn = ManifestService
+                                .manifestParsed.destinyInventoryItemDefinition![
+                            sockets[i].plugItemHash]!;
+                        break;
+                    }
+                  });
+                },
+                child: PerkItemDisplay(
+                  selected: selectedIndex == i,
+                  perk: ManifestService
+                          .manifestParsed.destinyInventoryItemDefinition![
+                      sockets[i].plugItemHash]!,
+                  iconSize: widget.iconSize,
+                ),
+              ),
             ),
+        if (widget.item.sockets?.socketEntries?[widget.index]
+                .randomizedPlugSetHash ==
+            null)
+          PerkItemDisplay(
+            perk:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition![
+                    widget.item.sockets?.socketEntries?[widget.index]
+                        .singleInitialItemHash]!,
+            iconSize: widget.iconSize,
           )
-      ]),
+      ],
     );
   }
 }

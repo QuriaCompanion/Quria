@@ -7,7 +7,12 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 class PerkItemDisplay extends StatelessWidget {
   final DestinyInventoryItemDefinition perk;
   final double iconSize;
-  const PerkItemDisplay({required this.perk, required this.iconSize, Key? key})
+  final bool selected;
+  const PerkItemDisplay(
+      {required this.perk,
+      required this.iconSize,
+      this.selected = false,
+      Key? key})
       : super(key: key);
 
   @override
@@ -15,7 +20,7 @@ class PerkItemDisplay extends StatelessWidget {
     return Tooltip(
       message: utf8.decode(perk.displayProperties!.name!.runes.toList()),
       child: CircleAvatar(
-        radius: iconSize / 2,
+        radius: selected ? iconSize / 1.5 : iconSize / 2,
         child: Image(
             image: NetworkImage(
           DestinyData.bungieLink + perk.displayProperties!.icon!,
