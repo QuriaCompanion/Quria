@@ -272,17 +272,12 @@ class ProfileService {
     DestinyItemSocketState? newGrenade =
         getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
             ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
-                    ?.plug
-                    ?.plugCategoryHash ==
-                900498880 ||
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
-                    ?.plug
-                    ?.plugCategoryHash ==
-                3089520417);
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.plugHash]
+                ?.plug
+                ?.plugCategoryIdentifier
+                ?.contains("grenade") ??
+            false);
     if (newGrenade != null) {
       return ManifestService.manifestParsed
           .destinyInventoryItemDefinition?[newGrenade.plugHash]?.hash;
@@ -305,6 +300,48 @@ class ProfileService {
     return null;
   }
 
+  int? getCurrentMeleeHashForCharacter(String characterId) {
+    var character = getCharacterEquipment(characterId);
+
+    DestinyItemComponent? subclass = character.firstWhere((element) =>
+        ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition?[element.itemHash]
+            ?.equippingBlock
+            ?.equipmentSlotTypeHash ==
+        3284755031);
+
+    DestinyItemSocketState? newMelee = getItemSockets(subclass.itemInstanceId!)
+        ?.firstWhere((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.plugHash]
+                ?.plug
+                ?.plugCategoryIdentifier
+                ?.contains("melee") ??
+            false);
+    if (newMelee != null) {
+      return ManifestService.manifestParsed
+          .destinyInventoryItemDefinition?[newMelee.plugHash]?.hash;
+    }
+    DestinyItemTalentGridComponent? oldSubclass =
+        getTalentGrid(subclass.itemInstanceId!);
+
+    DestinyTalentNode? oldMelee = oldSubclass?.nodes?.firstWhere((element) =>
+        element.isActivated == true && element.nodeIndex == 7 ||
+        element.nodeIndex == 8 ||
+        element.nodeIndex == 9);
+    if (oldMelee != null) {
+      return ManifestService
+          .manifestParsed
+          .destinyTalentGridDefinition?[oldSubclass!.talentGridHash]!
+          .nodes?[oldMelee.nodeIndex!]
+          .steps?[0]
+          .nodeStepHash;
+    }
+    return null;
+  }
+
   int? getCurrentSuperHashForCharacter(String characterId) {
     var character = getCharacterEquipment(characterId);
 
@@ -319,29 +356,13 @@ class ProfileService {
     DestinyItemSocketState? newSuper = getItemSockets(subclass.itemInstanceId!)
         ?.firstWhere((element) =>
             ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
-                    ?.plug
-                    ?.plugCategoryHash ==
-                635737914 ||
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
-                    ?.plug
-                    ?.plugCategoryHash ==
-                4141244538 ||
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
-                    ?.plug
-                    ?.plugCategoryHash ==
-                3468785159 ||
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
-                    ?.plug
-                    ?.plugCategoryHash ==
-                2613010961);
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.plugHash]
+                ?.plug
+                ?.plugCategoryIdentifier
+                ?.contains("super") ??
+            false);
+
     if (newSuper != null) {
       return ManifestService.manifestParsed
           .destinyInventoryItemDefinition?[newSuper.plugHash]?.hash;

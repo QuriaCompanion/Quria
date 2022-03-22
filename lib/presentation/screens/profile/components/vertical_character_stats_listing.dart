@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/enums/grenade_cooldowns.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/melee_cooldowns.enum.dart';
 import 'package:quria/data/services/bungie_api/enums/super_coodowns.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
@@ -36,14 +37,18 @@ class _VerticalCharacterStatsListingState
 
   @override
   Widget build(BuildContext context) {
-    int disciplineTier =
-        (widget.data!.characters[widget.characterIndex].stats!["1735777505"]! /
-                10)
-            .floor();
-    int superTier =
-        (widget.data!.characters[widget.characterIndex].stats!["144602215"]! /
-                10)
-            .floor();
+    int disciplineTier = (widget.data!.characters[widget.characterIndex]
+                .stats![StatsStringHash.discipline]! /
+            10)
+        .floor();
+    int superTier = (widget.data!.characters[widget.characterIndex]
+                .stats![StatsStringHash.intellect]! /
+            10)
+        .floor();
+    int strengthTier = (widget.data!.characters[widget.characterIndex]
+                .stats![StatsStringHash.strength]! /
+            10)
+        .floor();
 
     int? grenadeHash = ProfileService().getCurrentGrenadeHashForCharacter(
         widget.data!.characters[widget.characterIndex].characterId!);
@@ -54,9 +59,14 @@ class _VerticalCharacterStatsListingState
         widget.data!.characters[widget.characterIndex].characterId!);
     int? superTimer = SuperCooldown.superMap[superHash]?[superTier];
 
+    int? meleeHash = ProfileService().getCurrentMeleeHashForCharacter(
+        widget.data!.characters[widget.characterIndex].characterId!);
+    int? meleeTimer = MeleeCooldown.meleeMap[meleeHash]?[strengthTier];
+
     timerStat = {
-      '1735777505': formatTime(grenadeTimer),
-      '144602215': formatTime(superTimer),
+      StatsStringHash.discipline: formatTime(grenadeTimer),
+      StatsStringHash.intellect: formatTime(superTimer),
+      StatsStringHash.strength: formatTime(meleeTimer),
     };
     if (widget.direction == Axis.vertical) {
       return Column(
