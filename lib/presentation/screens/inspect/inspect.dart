@@ -1,8 +1,6 @@
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/cubit/perk_set_cubit.dart';
 import 'package:quria/data/models/helpers/inspectHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -10,7 +8,7 @@ import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/detailed_item/item/header_weapon_details.dart';
 import 'package:quria/presentation/detailed_item/item/stat_progress_bar.dart';
 import 'package:quria/presentation/detailed_item/item/weapon_details_hidden_stats.dart';
-import 'package:quria/presentation/screens/inspect/components/column_perk_display.dart';
+import 'package:quria/presentation/screens/inspect/components/perk_list.dart';
 
 class InspectWidget extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
@@ -206,46 +204,6 @@ class _InspectWidgetState extends State<InspectWidget> {
               ],
             ),
           )),
-    );
-  }
-}
-
-class PerkList extends StatelessWidget {
-  const PerkList({
-    Key? key,
-    required this.selectedPerks,
-    required this.item,
-    required this.iconSize,
-    required this.padding,
-  }) : super(key: key);
-
-  final InspectHelper selectedPerks;
-  final DestinyInventoryItemDefinition item;
-  final double iconSize;
-  final double padding;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => PerkSetCubit(),
-      child: BlocBuilder<PerkSetCubit, PerkSetState>(
-        builder: (context, state) {
-          return SizedBox(
-            child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              for (int index = 1; index <= 4; index++)
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: padding),
-                  child: ColumnPerkDisplay(
-                      item: item,
-                      index: index,
-                      padding: padding,
-                      selectedPerks: selectedPerks,
-                      iconSize: iconSize),
-                )
-            ]),
-          );
-        },
-      ),
     );
   }
 }
