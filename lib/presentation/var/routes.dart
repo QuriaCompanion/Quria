@@ -4,6 +4,7 @@ const String routeLogin = '/login';
 const String routeHome = '/';
 const String routeFilter = '/filter';
 const String routeBuilder = '/builder';
+const String routeBuilderList = '/builder-list';
 const String routeProfile = '/profile';
 const String routeExotic = '/exotic';
 const String routeCollection = '/collection';

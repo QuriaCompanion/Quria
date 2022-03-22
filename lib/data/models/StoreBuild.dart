@@ -1,7 +1,7 @@
 // ignore_for_file: file_names
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-class Build {
+class StoreBuild {
   String id = "";
   String? userId;
   String? helmet;
@@ -9,7 +9,7 @@ class Build {
   String? armor;
   String? boots;
 
-  Build(DocumentSnapshot snapshot) {
+  StoreBuild(DocumentSnapshot snapshot) {
     id = snapshot.id;
     Map<String, dynamic> map = snapshot.data() as Map<String, dynamic>;
     userId = map["USER_ID"];

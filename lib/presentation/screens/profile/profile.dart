@@ -20,7 +20,6 @@ import 'package:quria/presentation/screens/profile/components/profile_main_node.
 import 'package:quria/presentation/screens/profile/components/profile_mobile_item_card.dart';
 import 'package:quria/presentation/screens/profile/components/vertical_character_stats_listing.dart';
 
-import '../../../firebase/FirestoreHelper.dart';
 
 @immutable
 class ProfileWidget extends StatefulWidget {

@@ -32,6 +32,10 @@ class _NavBarWidgetState extends State<NavBarWidget> {
             title: 'Builder',
             routeName: routeExotic,
           ),
+          NavigationItem(
+            title: 'BuilderList',
+            routeName: routeBuilderList,
+          ),
         ],
       ),
     );

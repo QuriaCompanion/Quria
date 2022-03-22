@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:uuid/uuid.dart';
 
-import '../data/models/Build.dart';
+import '../data/models/StoreBuild.dart';
 
 class FirestoreHelper {
   final builders = FirebaseFirestore.instance.collection("Builder");

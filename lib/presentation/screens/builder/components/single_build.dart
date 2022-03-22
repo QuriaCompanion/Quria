@@ -4,7 +4,6 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
-import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
@@ -115,8 +114,6 @@ class SingleBuild extends StatelessWidget {
                   ElevatedButton(
                       onPressed: () async => {
                             FirestoreHelper().create(
-                                userId: await AccountService()
-                                    .getCurrentMembershipId(),
                                 helmet: items[0].itemInstanceId,
                                 gauntlet: items[1].itemInstanceId,
                                 armor: items[2].itemInstanceId,
