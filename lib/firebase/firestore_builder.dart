@@ -54,8 +54,7 @@ class FirestoreBuilder {
     builders.doc(uid).delete();
   }
 
-  Future<Future<QuerySnapshot<Map<String, dynamic>>>> list() async {
-    var userId = await AccountService().getCurrentMembershipId();
-    return builders.where(builders, isEqualTo: userId).get();
+  Stream<QuerySnapshot<Map<String, dynamic>>> list(userId) {
+    return builders.where('USER_ID', isEqualTo: userId).snapshots();
   }
 }
