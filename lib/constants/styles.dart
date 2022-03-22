@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 const TextStyle kPageTitleStyle = TextStyle(fontSize: 10.0);
 
-const Color backgroundColor = Color.fromARGB(255, 109, 102, 92);
-
 const double globalPadding = 0.05;
 
 BoxDecoration greyTransparentBackground = BoxDecoration(
@@ -46,3 +44,13 @@ const BoxDecoration ghostBackground = BoxDecoration(
         fit: BoxFit.fitWidth,
         image: NetworkImage(
             "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg")));
+
+const Color backgroundColor = Color.fromARGB(255, 109, 102, 92);
+const Color black = Color(0xFF0C0E13);
+const Color blackLight = Color(0xFF191C24);
+const Color yellow = Color(0xFFF7D04D);
+const Color legend = Color(0xFF53306A);
+const Color crucible = Color(0xFFB63A32);
+const Color vanguard = Color(0xFF1373F4);
+const Color grey = Color(0xFF3B3F4A);
+const Color blueEquipped = Color(0xFF59A1E7);

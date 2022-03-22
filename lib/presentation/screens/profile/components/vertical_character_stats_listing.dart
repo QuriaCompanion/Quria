@@ -88,8 +88,7 @@ class _VerticalCharacterStatsListingState
       );
     } else {
       return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           for (int i = 0; i < 6; i++)
             Tooltip(
@@ -99,7 +98,7 @@ class _VerticalCharacterStatsListingState
                       .stats![DestinyData.armorStats[i]]!,
                   icon: DestinyData.statsIcon[i],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  width: widget.width / 6,
+                  width: widget.width * 0.064,
                   fontsize: widget.fontSize),
             ),
         ],

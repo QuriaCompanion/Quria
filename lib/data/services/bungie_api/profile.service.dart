@@ -258,19 +258,22 @@ class ProfileService {
     return null;
   }
 
-  int? getCurrentGrenadeHashForCharacter(String characterId) {
+  DestinyItemComponent getSubClassForCharacter(String characterId) {
     var character = getCharacterEquipment(characterId);
-
-    DestinyItemComponent? subclass = character.firstWhere((element) =>
+    return character.firstWhere((element) =>
         ManifestService
             .manifestParsed
             .destinyInventoryItemDefinition?[element.itemHash]
             ?.equippingBlock
             ?.equipmentSlotTypeHash ==
         3284755031);
+  }
+
+  int? getCurrentGrenadeHashForCharacter(String characterId) {
+    DestinyItemComponent? subclass = getSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newGrenade =
-        getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
+        getItemSockets(subclass!.itemInstanceId!)?.firstWhere((element) =>
             ManifestService
                 .manifestParsed
                 .destinyInventoryItemDefinition?[element.plugHash]
@@ -301,17 +304,9 @@ class ProfileService {
   }
 
   int? getCurrentMeleeHashForCharacter(String characterId) {
-    var character = getCharacterEquipment(characterId);
+    DestinyItemComponent? subclass = getSubClassForCharacter(characterId);
 
-    DestinyItemComponent? subclass = character.firstWhere((element) =>
-        ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition?[element.itemHash]
-            ?.equippingBlock
-            ?.equipmentSlotTypeHash ==
-        3284755031);
-
-    DestinyItemSocketState? newMelee = getItemSockets(subclass.itemInstanceId!)
+    DestinyItemSocketState? newMelee = getItemSockets(subclass!.itemInstanceId!)
         ?.firstWhere((element) =>
             ManifestService
                 .manifestParsed
@@ -343,17 +338,9 @@ class ProfileService {
   }
 
   int? getCurrentSuperHashForCharacter(String characterId) {
-    var character = getCharacterEquipment(characterId);
+    DestinyItemComponent? subclass = getSubClassForCharacter(characterId);
 
-    DestinyItemComponent? subclass = character.firstWhere((element) =>
-        ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition?[element.itemHash]
-            ?.equippingBlock
-            ?.equipmentSlotTypeHash ==
-        3284755031);
-
-    DestinyItemSocketState? newSuper = getItemSockets(subclass.itemInstanceId!)
+    DestinyItemSocketState? newSuper = getItemSockets(subclass!.itemInstanceId!)
         ?.firstWhere((element) =>
             ManifestService
                 .manifestParsed
