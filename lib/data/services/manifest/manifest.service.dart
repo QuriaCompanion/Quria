@@ -7,8 +7,8 @@ import 'package:bungie_api/models/destiny_manifest.dart';
 import 'package:bungie_api/responses/destiny_manifest_response.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
-import 'package:quria/data/services/bungie_api/enums/definition_table_names.enum.dart';
-import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/definition_table_names.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 
 typedef DownloadProgress = void Function(int downloaded, int total);

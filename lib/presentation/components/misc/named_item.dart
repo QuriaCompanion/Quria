@@ -4,7 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
 class NamedItem extends StatelessWidget {
   final DestinyInventoryItemDefinition value;

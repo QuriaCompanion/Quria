@@ -25,7 +25,7 @@ import 'package:bungie_api/models/destiny_talent_node.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:bungie_api/enums/destiny_component_type.dart';
 import 'package:bungie_api/enums/destiny_scope.dart';
-import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
 enum LastLoadedFrom { server, cache }

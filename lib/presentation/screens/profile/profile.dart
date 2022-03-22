@@ -6,7 +6,7 @@ import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
-import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -44,14 +44,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     _future = display.getProfileData(index);
   }
 
-  double bannerSpacing = 10;
-  double statArmorSpace = 40;
-  double itemSectionSpace = 20;
-  double itemDetailsSidePadding = 25;
-  double itemDetailsChildPadding = 10;
-  double fontSize = 20;
-  double statsFontSize = 30;
-  double bannerSelectedFont = 50;
+  late double bannerSpacing;
+  late double statArmorSpace;
+  late double itemSectionSpace;
+  late double itemDetailsSidePadding;
+  late double itemDetailsChildPadding;
+  late double fontSize;
+  late double statsFontSize;
+  late double bannerSelectedFont;
   late double pagePadding;
   late double bannerBotSpacing;
   late double bannerTopSpacing;
@@ -64,6 +64,14 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   @override
   Widget build(BuildContext context) {
+    bannerSpacing = 10;
+    statArmorSpace = 40;
+    itemSectionSpace = 20;
+    itemDetailsSidePadding = 25;
+    itemDetailsChildPadding = 10;
+    fontSize = 20;
+    statsFontSize = 30;
+    bannerSelectedFont = 50;
     pagePadding = MediaQuery.of(context).size.width * 0.05;
     bannerBotSpacing = MediaQuery.of(context).size.width * 0.02;
     itemDetailsWidth = MediaQuery.of(context).size.width * 0.45;

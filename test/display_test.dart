@@ -11,7 +11,33 @@ import 'package:universal_io/io.dart';
 void main() async {
   group('DisplayService()', () {
     group('exoticLoop', () {
-      test('all exotics', () async {
+      test('it should return an array of 3 DestinyIventoryItemDefinition',
+          () async {
+        final response = File(
+            'C:/Users/hunts/work/cours/Quria/Quria/test/mocks/mockedRequest.json');
+        final Map<String, dynamic> json =
+            jsonDecode(await response.readAsString());
+        List<DestinyItemComponent> items = [];
+        for (var item in json["items"]) {
+          items.add(DestinyItemComponent.fromJson(item));
+        }
+        final manifestResponse = File(
+            'C:/Users/hunts/work/cours/Quria/Quria/test/mocks/mockedManifest.json');
+        final Map<String, dynamic> manifestJson =
+            jsonDecode(await manifestResponse.readAsString());
+        Map<int, DestinyInventoryItemDefinition> manifest = {};
+        for (final entry in manifestJson.entries) {
+          manifest[int.parse(entry.key)] =
+              DestinyInventoryItemDefinition.fromJson(entry.value);
+        }
+        ExoticHelper exoticHelperMock = ExoticHelper(
+            manifest: manifest, items: items, classType: DestinyClass.Warlock);
+        List<DestinyInventoryItemDefinition> exotics =
+            DisplayService().exoticLoop(exoticHelperMock);
+        expect(exotics.length, equals(3));
+        expect(exotics[0].displayProperties?.name, equals("Necrotic Grip"));
+      });
+      test("it should throw an error if there is no manifest", () async {
         final response = File(
             'C:/Users/hunts/work/cours/Quria/Quria/test/mocks/mockedRequest.json');
         final Map<String, dynamic> json =

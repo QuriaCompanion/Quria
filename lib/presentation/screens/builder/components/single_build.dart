@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
-import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/firebase/firestore_builder.dart';

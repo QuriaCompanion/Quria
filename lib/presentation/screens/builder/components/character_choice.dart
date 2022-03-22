@@ -1,6 +1,6 @@
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:flutter/material.dart';
-import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
 class CharacterChoice extends StatefulWidget {
   final double width;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
-import 'package:quria/data/services/bungie_api/enums/destiny_data.enum.dart';
-import 'package:quria/data/services/bungie_api/enums/grenade_cooldowns.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/services/bungie_api/enums/grenade_cooldowns.dart';
 import 'package:quria/data/services/bungie_api/enums/melee_cooldowns.enum.dart';
-import 'package:quria/data/services/bungie_api/enums/super_coodowns.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/super_coodowns.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
 
