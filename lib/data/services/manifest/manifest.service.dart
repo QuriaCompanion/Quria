@@ -44,19 +44,18 @@ class ManifestService {
   /// or from the [BungieApiService]
   ///
   /// returns true once the manifest is loaded
-  static Future<bool> getManifest<T>(String manifestName, Box box) async {
+  static Future<bool> getManifest<T>(String manifestName, LazyBox box) async {
     try {
       if (await isManifestUpToDate(manifestName, await getManifestVersion())) {
-        String manifest = StorageService.getDatabaseItem(box, manifestName);
-        Map<int, T> items =
-            await compute<String, Map<int, T>>(_parseJson, manifest);
-        AllDestinyManifestComponents.setValue<T>(items);
+        String manifest =
+            await StorageService.getDatabaseItem(box, manifestName);
+        await AllDestinyManifestComponents.setValue<T>(
+            await compute<String, Map<int, T>>(_parseJson, manifest));
       } else {
         String manifest = await getManifestRemote(manifestName);
         await StorageService.setDatabaseItem(box, manifestName, manifest);
-        Map<int, T> items =
-            await compute<String, Map<int, T>>(_parseJson, manifest);
-        AllDestinyManifestComponents.setValue<T>(items);
+        await AllDestinyManifestComponents.setValue<T>(
+            await compute<String, Map<int, T>>(_parseJson, manifest));
         await manifestSaved(manifestName, await getManifestVersion());
       }
       return true;

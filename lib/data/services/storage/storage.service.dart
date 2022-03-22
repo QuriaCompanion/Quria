@@ -55,7 +55,7 @@ class StorageService {
   /// Given a [box], a [key] and a [value], stores the [value] in the [box].
   ///
   /// can be awaited if necessary.
-  static Future<void> setDatabaseItem<T>(Box box, String key, value) async {
+  static Future<void> setDatabaseItem<T>(LazyBox box, String key, value) async {
     await box.put(key, value);
     return;
   }
@@ -63,8 +63,8 @@ class StorageService {
   /// Given a type [T] returns a Box named after the type.
   ///
   /// If the Box does not exist, it creates it.
-  static Future<Box> openBox<T>(String boxName) async {
-    return Hive.openBox(boxName);
+  static Future<LazyBox> openBox<T>(String boxName) async {
+    return Hive.openLazyBox(boxName);
   }
 
   /// Given a [box] it closes said box.
@@ -77,8 +77,8 @@ class StorageService {
   /// Given a [box] and a [key] returns the manifest as a [String]
   ///
   /// The String still need to be parsed to be used.
-  static dynamic getDatabaseItem(Box box, String key) {
-    return box.get(key);
+  static dynamic getDatabaseItem(LazyBox box, String key) async {
+    return await box.get(key);
   }
 
   /// Given a [box] returns every item in the [box].

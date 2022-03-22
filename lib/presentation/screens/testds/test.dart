@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/StoreBuild.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/firebase/firestore_builder.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
-import 'package:universal_html/html.dart';
 
 class TestWidget extends StatefulWidget {
   const TestWidget({
@@ -24,6 +21,7 @@ class _TestWidgetState extends State<TestWidget> {
     super.initState();
     _future = AccountService().getCurrentMembershipId();
   }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(

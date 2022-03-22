@@ -31,7 +31,7 @@ class DisplayService {
     final items = profile.getAllArmorForClass(classType);
     if (ManifestService.manifestParsed.destinyClassDefinition == null ||
         ManifestService.manifestParsed.destinyInventoryItemDefinition == null) {
-      Box box = await StorageService.openBox("manifest");
+      LazyBox box = await StorageService.openBox("manifest");
       await ManifestService.getManifest<DestinyInventoryItemDefinition>(
           "DestinyInventoryItemDefinition", box);
       await ManifestService.getManifest<DestinyClassDefinition>(
@@ -59,7 +59,7 @@ class DisplayService {
           ManifestService.manifestParsed.destinyPresentationNodeDefinition ==
               null ||
           ManifestService.manifestParsed.destinyClassDefinition == null) {
-        Box box = await StorageService.openBox("manifest");
+        LazyBox box = await StorageService.openBox("manifest");
         await ManifestService.getManifest<DestinyInventoryItemDefinition>(
             "DestinyInventoryItemDefinition", box);
         await ManifestService.getManifest<DestinyDamageTypeDefinition>(
@@ -103,7 +103,7 @@ class DisplayService {
   Future<Iterable<DestinyInventoryItemDefinition>?> collectionLoop() async {
     if (ManifestService.manifestParsed.destinyInventoryItemDefinition == null ||
         ManifestService.manifestParsed.destinyPlugSetDefinition == null) {
-      Box box = await StorageService.openBox("manifest");
+      LazyBox box = await StorageService.openBox("manifest");
       await ManifestService.getManifest<DestinyInventoryItemDefinition>(
           "DestinyInventoryItemDefinition", box);
       await ManifestService.getManifest<DestinyPlugSetDefinition>(
