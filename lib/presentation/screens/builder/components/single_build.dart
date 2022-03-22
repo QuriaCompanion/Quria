@@ -115,8 +115,6 @@ class SingleBuild extends StatelessWidget {
                   ElevatedButton(
                       onPressed: () async => {
                             FirestoreHelper().create(
-                                userId: await AccountService()
-                                    .getCurrentMembershipId(),
                                 helmet: items[0].itemInstanceId,
                                 gauntlet: items[1].itemInstanceId,
                                 armor: items[2].itemInstanceId,
