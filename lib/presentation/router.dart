@@ -8,6 +8,7 @@ import 'package:quria/presentation/screens/collection/collection.dart';
 import 'package:quria/presentation/screens/inspect/inspect.dart';
 import 'package:quria/presentation/screens/login.dart';
 import 'package:quria/presentation/screens/profile/profile.dart';
+import 'package:quria/presentation/screens/testds/test.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 class AppRouter {
@@ -17,6 +18,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => LoginWidget());
       case routeProfile:
         return MaterialPageRoute(builder: (_) => const ProfileWidget());
+      case routeBuilderList:
+        return MaterialPageRoute(builder: (_) => const TestWidget());
       case routeFilter:
         final int exoticHash = settings.arguments as int;
         return MaterialPageRoute(

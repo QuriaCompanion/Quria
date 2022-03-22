@@ -6,6 +6,7 @@ import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/firebase/firestore_builder.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
 import 'package:quria/presentation/screens/builder/components/extended_builder_info.dart';
@@ -109,6 +110,12 @@ class SingleBuild extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: listArmor),
                   ElevatedButton(
+                      onPressed: () => saveBuild(
+                            context,
+                            items,
+                          ),
+                      child: const Text('Enregistrer')),
+                  ElevatedButton(
                       onPressed: () async {
                         for (Armor item in buildInfo.equipement) {
                           try {
@@ -137,6 +144,50 @@ class SingleBuild extends StatelessWidget {
           height: spacing,
         )
       ],
+    );
+  }
+
+  saveBuild(context, items) {
+    String buildName = "";
+
+    Widget okButton = ElevatedButton(
+      child: const Text("Enregistrer"),
+      onPressed: () {
+        if (buildName.isNotEmpty) {
+          FirestoreBuilder().create(name: buildName, armor: items);
+          Navigator.pop(context);
+        }
+      },
+    );
+    Widget cancelButton = ElevatedButton(
+      child: const Text("Annuler"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+
+    return showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(builder: (context, setState) {
+        return AlertDialog(
+          title: const Text("Nom de votre build"),
+          content: TextField(
+            onChanged: (value) {
+              setState(() {
+                buildName = value;
+              });
+            },
+            decoration: const InputDecoration(
+              border: OutlineInputBorder(),
+              labelText: 'build name',
+            ),
+          ),
+          actions: [
+            cancelButton,
+            okButton,
+          ],
+        );
+      }),
     );
   }
 }
