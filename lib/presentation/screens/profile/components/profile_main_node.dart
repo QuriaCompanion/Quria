@@ -46,8 +46,8 @@ class ProfileMainNodeWidget extends StatelessWidget {
                   VerticalCharacterStatsListing(
                     fontSize: statsFontSize,
                     width: verticalStatWidth,
-                    data: data,
-                    characterIndex: characterIndex,
+                    stats: data.characters[characterIndex].stats,
+                    characterId: data.characters[characterIndex].characterId!,
                   ),
                   SizedBox(width: statArmorSpace),
                   ProfileItemSectionWidget(
