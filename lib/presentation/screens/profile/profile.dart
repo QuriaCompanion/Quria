@@ -20,11 +20,11 @@ import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/detailed_item/subclass/subclass_details_card.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner.dart';
 import 'package:quria/presentation/screens/profile/components/mobile_character_banner.dart';
+import 'package:quria/presentation/screens/profile/components/mobile_profile_header_Info.dart';
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
 import 'package:quria/presentation/screens/profile/components/profile_mobile_item_card.dart';
 import 'package:quria/presentation/screens/profile/components/vertical_character_stats_listing.dart';
 import 'package:quria/presentation/var/routes.dart';
-import 'dart:math' as math;
 
 @immutable
 class ProfileWidget extends StatefulWidget {
@@ -173,53 +173,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       .manifestParsed
                       .destinyInventoryItemDefinition![subclass.itemHash]!
                       .screenshot!,
-              child: Padding(
-                padding: EdgeInsets.only(
-                    bottom: MediaQuery.of(context).size.width * globalPadding),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Transform.rotate(
-                          angle: -math.pi / 4,
-                          child: Container(
-                            height: MediaQuery.of(context).size.width * 0.15,
-                            width: MediaQuery.of(context).size.width * 0.15,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.white)),
-                          ),
-                        ),
-                        Image(
-                          image: NetworkImage(DestinyData.bungieLink +
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      subclass.itemHash]!
-                                  .displayProperties!
-                                  .icon!),
-                          height: MediaQuery.of(context).size.width * 0.17,
-                          width: MediaQuery.of(context).size.width * 0.17,
-                          fit: BoxFit.fill,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                      height: MediaQuery.of(context).size.width * 0.17,
-                      child: VerticalCharacterStatsListing(
-                        data: snapshot.data,
-                        characterIndex: index,
-                        direction: Axis.horizontal,
-                        fontSize: statsFontSize,
-                        width: MediaQuery.of(context).size.width,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              child: MobileProfileHeaderInfo(
+                  stats: snapshot.data!.characters[index].stats,
+                  fontSize: statsFontSize,
+                  characterId: snapshot.data!.characters[index].characterId!),
             ),
             for (int i = 0; i <= 7; i++)
               Padding(
