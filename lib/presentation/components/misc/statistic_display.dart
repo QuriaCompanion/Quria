@@ -21,21 +21,38 @@ class StatisticDisplay extends StatelessWidget {
   Widget build(BuildContext context) {
     String link = DestinyData.bungieLink + icon;
     return SizedBox(
-      width: width,
-      child: Row(
-        mainAxisAlignment: mainAxisAlignment,
-        children: [
-          SizedBox(width: width * 0.5, child: Image.network(link)),
-          SizedBox(
-            width: width * 0.5,
-            child: AutoSizeText('$value',
-                textAlign: TextAlign.center,
-                maxLines: 1,
-                minFontSize: 5,
-                style: TextStyle(color: Colors.white70, fontSize: fontsize)),
-          )
-        ],
-      ),
-    );
+        width: width,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: width,
+              child: Image.network(link),
+            ),
+            SizedBox(
+              width: width,
+              child: AutoSizeText('$value',
+                  textAlign: TextAlign.center,
+                  maxLines: 1,
+                  minFontSize: 5,
+                  style: TextStyle(color: Colors.white70, fontSize: fontsize)),
+            ),
+          ],
+        )
+        // child: Row(
+        //   mainAxisAlignment: mainAxisAlignment,
+        //   children: [
+        //
+        //     SizedBox(
+        //       width: width * 0.5,
+        //       child: AutoSizeText('$value',
+        //           textAlign: TextAlign.center,
+        //           maxLines: 1,
+        //           minFontSize: 5,
+        //           style: TextStyle(color: Colors.white70, fontSize: fontsize)),
+        //     )
+        //   ],
+        // ),
+        );
   }
 }
