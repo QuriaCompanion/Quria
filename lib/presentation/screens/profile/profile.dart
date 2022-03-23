@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
+import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -19,6 +20,7 @@ import 'package:quria/presentation/screens/profile/components/character_banner.d
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
 import 'package:quria/presentation/screens/profile/components/profile_mobile_item_card.dart';
 import 'package:quria/presentation/screens/profile/components/vertical_character_stats_listing.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 @immutable
 class ProfileWidget extends StatefulWidget {
@@ -168,12 +170,24 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             for (int i = 0; i <= 7; i++)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15.0),
-                child: ProfileMobileItemCard(
-                    width: MediaQuery.of(context).size.width - pagePadding * 2,
-                    imageSize: imageSize,
-                    itemPadding: itemDetailsSidePadding,
-                    itemChildPadding: itemDetailsChildPadding,
-                    item: snapshot.data!.characterEquipement[i]),
+                child: InkWell(
+                  onTap: () {
+                    // open mobile inspect
+                    Navigator.pushNamed(context, routeInspectMobile,
+                        arguments: InspectData(
+                            hash:
+                                snapshot.data!.characterEquipement[i].itemHash!,
+                            instanceId: snapshot
+                                .data!.characterEquipement[i].itemInstanceId!));
+                  },
+                  child: ProfileMobileItemCard(
+                      width:
+                          MediaQuery.of(context).size.width - pagePadding * 2,
+                      imageSize: imageSize,
+                      itemPadding: itemDetailsSidePadding,
+                      itemChildPadding: itemDetailsChildPadding,
+                      item: snapshot.data!.characterEquipement[i]),
+                ),
               )
           ]),
     );

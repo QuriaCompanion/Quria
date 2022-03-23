@@ -127,6 +127,19 @@ class DestinyData {
     DamageType.Void: 3454344768,
   };
 
+  static const List<int> perkCategoryHash = [
+    2619833294,
+    2833605196,
+    1757026848,
+    7906839,
+    1806783418,
+    164955586,
+    1202604782,
+    2718120384,
+    577918720,
+    3886533313
+  ];
+
   static const String bungieLink = "https://www.bungie.net";
   static const Map<TierType, int> tierTypeHashes = {
     TierType.Basic: 3340296461,

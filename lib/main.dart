@@ -16,7 +16,7 @@ void main() async {
           appId: '1:653536181122:web:c81569f39c669fc18eed9b',
           messagingSenderId: '653536181122',
           projectId: 'quriacompanion-13944'));
-          
+
   await dotenv.load(fileName: ".env");
   runApp(QuriaApp(
     router: AppRouter(),
@@ -31,6 +31,7 @@ class QuriaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(fontFamily: 'Inter'),
       debugShowCheckedModeBanner: false,
       onGenerateRoute: AppRouter.generateRoute,
       builder: (_, child) => AppView(
