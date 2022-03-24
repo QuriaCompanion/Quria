@@ -1,9 +1,12 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
+import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -16,9 +19,12 @@ import 'package:quria/presentation/detailed_item/subclass/advanced_subclass_deta
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/detailed_item/subclass/subclass_details_card.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner.dart';
+import 'package:quria/presentation/screens/profile/components/mobile_character_banner.dart';
+import 'package:quria/presentation/screens/profile/components/mobile_profile_header_Info.dart';
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
 import 'package:quria/presentation/screens/profile/components/profile_mobile_item_card.dart';
 import 'package:quria/presentation/screens/profile/components/vertical_character_stats_listing.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 @immutable
 class ProfileWidget extends StatefulWidget {
@@ -61,6 +67,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   late double iconSize;
   late double verticalStatWidth;
   late double bannerSelectedWidth;
+  late DestinyItemComponent subclass;
 
   @override
   Widget build(BuildContext context) {
@@ -109,6 +116,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         future: _future,
         builder: (BuildContext context, AsyncSnapshot<ProfileHelper> snapshot) {
           if (snapshot.hasData) {
+            subclass = ProfileService().getSubClassForCharacter(
+                snapshot.data!.characters[index].characterId!);
             return SingleChildScrollView(
               child: BlocProvider(
                 create: (_) => CharacterCubit(),
@@ -157,23 +166,39 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            characterBanner(snapshot, context),
-            VerticalCharacterStatsListing(
-              data: snapshot.data,
-              characterIndex: index,
-              direction: Axis.horizontal,
-              fontSize: statsFontSize,
-              width: MediaQuery.of(context).size.width - pagePadding * 2,
+            mobileHeader(
+              context,
+              imageLink: DestinyData.bungieLink +
+                  ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition![subclass.itemHash]!
+                      .screenshot!,
+              child: MobileProfileHeaderInfo(
+                  stats: snapshot.data!.characters[index].stats,
+                  fontSize: statsFontSize,
+                  characterId: snapshot.data!.characters[index].characterId!),
             ),
             for (int i = 0; i <= 7; i++)
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15.0),
-                child: ProfileMobileItemCard(
-                    width: MediaQuery.of(context).size.width - pagePadding * 2,
-                    imageSize: imageSize,
-                    itemPadding: itemDetailsSidePadding,
-                    itemChildPadding: itemDetailsChildPadding,
-                    item: snapshot.data!.characterEquipement[i]),
+                child: InkWell(
+                  onTap: () {
+                    // open mobile inspect
+                    Navigator.pushNamed(context, routeInspectMobile,
+                        arguments: InspectData(
+                            hash:
+                                snapshot.data!.characterEquipement[i].itemHash!,
+                            instanceId: snapshot
+                                .data!.characterEquipement[i].itemInstanceId!));
+                  },
+                  child: ProfileMobileItemCard(
+                      width:
+                          MediaQuery.of(context).size.width - pagePadding * 2,
+                      imageSize: imageSize,
+                      itemPadding: itemDetailsSidePadding,
+                      itemChildPadding: itemDetailsChildPadding,
+                      item: snapshot.data!.characterEquipement[i]),
+                ),
               )
           ]),
     );
@@ -291,7 +316,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       padding: EdgeInsets.only(
           left: pagePadding, top: pagePadding, bottom: bannerBotSpacing),
       child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CharacterBanner(
@@ -333,6 +358,23 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 size: iconSize,
               ),
             ),
+          ]),
+    );
+  }
+
+  Widget characterBannerMobile(
+      AsyncSnapshot<ProfileHelper> snapshot, BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+          left: pagePadding, top: pagePadding, bottom: bannerBotSpacing),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            MobileCharacterBanner(
+                width: bannerSelectedWidth,
+                fontSize: bannerSelectedFont,
+                character: snapshot.data!.characters[index]),
           ]),
     );
   }

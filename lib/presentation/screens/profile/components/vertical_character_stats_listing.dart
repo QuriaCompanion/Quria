@@ -8,15 +8,15 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
 
 class VerticalCharacterStatsListing extends StatefulWidget {
-  final ProfileHelper? data;
-  final int characterIndex;
+  final stats;
+  final String characterId;
   final double fontSize;
   final double width;
   final Axis direction;
   const VerticalCharacterStatsListing({
     Key? key,
-    required this.data,
-    required this.characterIndex,
+    required this.stats,
+    required this.characterId,
     this.direction = Axis.vertical,
     this.fontSize = 30,
     this.width = 110,
@@ -37,30 +37,22 @@ class _VerticalCharacterStatsListingState
 
   @override
   Widget build(BuildContext context) {
-    int disciplineTier = (widget.data!.characters[widget.characterIndex]
-                .stats![StatsStringHash.discipline]! /
-            10)
-        .floor();
-    int superTier = (widget.data!.characters[widget.characterIndex]
-                .stats![StatsStringHash.intellect]! /
-            10)
-        .floor();
-    int strengthTier = (widget.data!.characters[widget.characterIndex]
-                .stats![StatsStringHash.strength]! /
-            10)
-        .floor();
+    int disciplineTier =
+        (widget.stats[StatsStringHash.discipline]! / 10).floor();
+    int superTier = (widget.stats[StatsStringHash.intellect]! / 10).floor();
+    int strengthTier = (widget.stats[StatsStringHash.strength]! / 10).floor();
 
-    int? grenadeHash = ProfileService().getCurrentGrenadeHashForCharacter(
-        widget.data!.characters[widget.characterIndex].characterId!);
+    int? grenadeHash =
+        ProfileService().getCurrentGrenadeHashForCharacter(widget.characterId);
     int? grenadeTimer =
         GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier];
 
-    int? superHash = ProfileService().getCurrentSuperHashForCharacter(
-        widget.data!.characters[widget.characterIndex].characterId!);
+    int? superHash =
+        ProfileService().getCurrentSuperHashForCharacter(widget.characterId);
     int? superTimer = SuperCooldown.superMap[superHash]?[superTier];
 
-    int? meleeHash = ProfileService().getCurrentMeleeHashForCharacter(
-        widget.data!.characters[widget.characterIndex].characterId!);
+    int? meleeHash =
+        ProfileService().getCurrentMeleeHashForCharacter(widget.characterId);
     int? meleeTimer = MeleeCooldown.meleeMap[meleeHash]?[strengthTier];
 
     timerStat = {
@@ -77,8 +69,7 @@ class _VerticalCharacterStatsListingState
             Tooltip(
               message: timerStat[DestinyData.armorStats[i]] ?? '',
               child: StatisticDisplay(
-                  value: widget.data!.characters[widget.characterIndex]
-                      .stats![DestinyData.armorStats[i]]!,
+                  value: widget.stats[DestinyData.armorStats[i]]!,
                   icon: DestinyData.statsIcon[i],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   width: widget.width,
@@ -88,18 +79,16 @@ class _VerticalCharacterStatsListingState
       );
     } else {
       return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           for (int i = 0; i < 6; i++)
             Tooltip(
               message: timerStat[DestinyData.armorStats[i]] ?? '',
               child: StatisticDisplay(
-                  value: widget.data!.characters[widget.characterIndex]
-                      .stats![DestinyData.armorStats[i]]!,
+                  value: widget.stats[DestinyData.armorStats[i]]!,
                   icon: DestinyData.statsIcon[i],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  width: widget.width / 6,
+                  width: widget.width * 0.064,
                   fontsize: widget.fontSize),
             ),
         ],

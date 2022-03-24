@@ -1,9 +1,7 @@
-import 'dart:convert';
-
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:quria/constants/texts.dart';
 
 class StatProgressBar extends StatelessWidget {
   final String name;
@@ -33,26 +31,18 @@ class StatProgressBar extends StatelessWidget {
     return Container(
       padding: EdgeInsets.symmetric(vertical: padding),
       width: width,
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+      child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+        textCaption(name),
+        const SizedBox(width: 10),
         SizedBox(
-          width: width * 0.4,
-          child: AutoSizeText(
-            '${utf8.decode(name.runes.toList())}: $value',
-            minFontSize: 0,
-            maxFontSize: fontSize,
-            stepGranularity: 20,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: const TextStyle(color: Colors.white),
-          ),
-        ),
+            width: 25, child: Center(child: textCaptionBold(value.toString()))),
         LinearPercentIndicator(
           percent: percentage,
           linearStrokeCap: LinearStrokeCap.butt,
           progressColor: Colors.white,
           backgroundColor: Colors.white.withOpacity(0.5),
           lineHeight: height,
-          width: width * 0.6,
+          width: width * 0.5,
         ),
       ]),
     );

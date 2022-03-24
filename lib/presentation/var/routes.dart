@@ -9,5 +9,6 @@ const String routeProfile = '/profile';
 const String routeExotic = '/exotic';
 const String routeCollection = '/collection';
 const String routeInspect = "/inspect";
+const String routeInspectMobile = "/inspect-mobile";
 
 final navKey = GlobalKey<NavigatorState>();

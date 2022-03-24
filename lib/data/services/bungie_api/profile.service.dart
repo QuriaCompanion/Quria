@@ -8,6 +8,7 @@ import 'package:bungie_api/models/destiny_character_activities_component.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_character_progression_component.dart';
 import 'package:bungie_api/models/destiny_collectible_component.dart';
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
@@ -25,6 +26,7 @@ import 'package:bungie_api/models/destiny_talent_node.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:bungie_api/enums/destiny_component_type.dart';
 import 'package:bungie_api/enums/destiny_scope.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
@@ -258,16 +260,19 @@ class ProfileService {
     return null;
   }
 
-  int? getCurrentGrenadeHashForCharacter(String characterId) {
+  DestinyItemComponent getSubClassForCharacter(String characterId) {
     var character = getCharacterEquipment(characterId);
-
-    DestinyItemComponent? subclass = character.firstWhere((element) =>
+    return character.firstWhere((element) =>
         ManifestService
             .manifestParsed
             .destinyInventoryItemDefinition?[element.itemHash]
             ?.equippingBlock
             ?.equipmentSlotTypeHash ==
         3284755031);
+  }
+
+  int? getCurrentGrenadeHashForCharacter(String characterId) {
+    DestinyItemComponent? subclass = getSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newGrenade =
         getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
@@ -301,15 +306,7 @@ class ProfileService {
   }
 
   int? getCurrentMeleeHashForCharacter(String characterId) {
-    var character = getCharacterEquipment(characterId);
-
-    DestinyItemComponent? subclass = character.firstWhere((element) =>
-        ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition?[element.itemHash]
-            ?.equippingBlock
-            ?.equipmentSlotTypeHash ==
-        3284755031);
+    DestinyItemComponent? subclass = getSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newMelee = getItemSockets(subclass.itemInstanceId!)
         ?.firstWhere((element) =>
@@ -343,15 +340,7 @@ class ProfileService {
   }
 
   int? getCurrentSuperHashForCharacter(String characterId) {
-    var character = getCharacterEquipment(characterId);
-
-    DestinyItemComponent? subclass = character.firstWhere((element) =>
-        ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition?[element.itemHash]
-            ?.equippingBlock
-            ?.equipmentSlotTypeHash ==
-        3284755031);
+    DestinyItemComponent? subclass = getSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newSuper = getItemSockets(subclass.itemInstanceId!)
         ?.firstWhere((element) =>
@@ -414,6 +403,49 @@ class ProfileService {
     } catch (e) {
       rethrow;
     }
+  }
+
+  List<List<DestinyInventoryItemDefinition>> getItemPerksAsItemDef(
+      Map<String, List<DestinyItemPlugBase>> plugs,
+      List<DestinyItemSocketState>? sockets) {
+    List<List<DestinyInventoryItemDefinition>> perks = [];
+    for (DestinyItemSocketState socket in sockets!) {
+      for (List<DestinyItemPlugBase> plug in plugs.values) {
+        if (plug.any((element) => element.plugItemHash == socket.plugHash) &&
+            DestinyData.perkCategoryHash.contains(ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[socket.plugHash]!
+                .plug!
+                .plugCategoryHash!)) {
+          List<DestinyInventoryItemDefinition> plugDefitions = [];
+          for (DestinyItemPlugBase plug in plug) {
+            plugDefitions.add(ManifestService.manifestParsed
+                .destinyInventoryItemDefinition![plug.plugItemHash]!);
+          }
+          perks.add(plugDefitions);
+        }
+      }
+      if (ManifestService
+                  .manifestParsed
+                  .destinyInventoryItemDefinition?[socket.plugHash]
+                  ?.displayProperties
+                  ?.icon !=
+              null &&
+          DestinyData.perkCategoryHash.contains(ManifestService
+              .manifestParsed
+              .destinyInventoryItemDefinition?[socket.plugHash]!
+              .plug!
+              .plugCategoryHash!) &&
+          !perks.any((element) => element.contains(ManifestService
+              .manifestParsed
+              .destinyInventoryItemDefinition![socket.plugHash]!))) {
+        perks.add([
+          ManifestService
+              .manifestParsed.destinyInventoryItemDefinition![socket.plugHash]!
+        ]);
+      }
+    }
+    return perks;
   }
 
   Map<String, DestinyStat>? getPrecalculatedStats(String itemInstanceId) {
