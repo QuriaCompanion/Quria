@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
@@ -165,17 +167,44 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            mobileHeader(
-              context,
-              imageLink: DestinyData.bungieLink +
-                  ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition![subclass.itemHash]!
-                      .screenshot!,
-              child: MobileProfileHeaderInfo(
-                  stats: snapshot.data!.characters[index].stats,
-                  fontSize: statsFontSize,
-                  characterId: snapshot.data!.characters[index].characterId!),
+            Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                mobileHeader(
+                  context,
+                  imageLink: DestinyData.bungieLink +
+                      ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition![subclass.itemHash]!
+                          .screenshot!,
+                  child: MobileProfileHeaderInfo(
+                      stats: snapshot.data!.characters[index].stats,
+                      fontSize: statsFontSize,
+                      characterId:
+                          snapshot.data!.characters[index].characterId!),
+                ),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: ClipRect(
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          MobileCharacterBanner(
+                              chooseCharacter: (value) {
+                                setState(() {
+                                  index = value;
+                                });
+                              },
+                              characterIndex: index,
+                              characters: snapshot.data!.characters),
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
             ),
             for (int i = 0; i <= 7; i++)
               Padding(
@@ -371,9 +400,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             MobileCharacterBanner(
+                chooseCharacter: (value) {
+                  setState(() {
+                    index = value;
+                  });
+                },
+                characterIndex: index,
                 width: bannerSelectedWidth,
                 fontSize: bannerSelectedFont,
-                character: snapshot.data!.characters[index]),
+                characters: snapshot.data!.characters),
           ]),
     );
   }
