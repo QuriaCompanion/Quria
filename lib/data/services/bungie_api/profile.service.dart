@@ -405,24 +405,32 @@ class ProfileService {
     }
   }
 
+  String getDropLocation(int hash) {
+    return ManifestService
+            .manifestParsed.destinyCollectibleDefinition![hash]?.sourceString ??
+        "Source inconnu";
+  }
+
   List<List<DestinyInventoryItemDefinition>> getItemPerksAsItemDef(
-      Map<String, List<DestinyItemPlugBase>> plugs,
+      Map<String, List<DestinyItemPlugBase>>? plugs,
       List<DestinyItemSocketState>? sockets) {
     List<List<DestinyInventoryItemDefinition>> perks = [];
     for (DestinyItemSocketState socket in sockets!) {
-      for (List<DestinyItemPlugBase> plug in plugs.values) {
-        if (plug.any((element) => element.plugItemHash == socket.plugHash) &&
-            DestinyData.perkCategoryHash.contains(ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition?[socket.plugHash]!
-                .plug!
-                .plugCategoryHash!)) {
-          List<DestinyInventoryItemDefinition> plugDefitions = [];
-          for (DestinyItemPlugBase plug in plug) {
-            plugDefitions.add(ManifestService.manifestParsed
-                .destinyInventoryItemDefinition![plug.plugItemHash]!);
+      if (plugs != null) {
+        for (List<DestinyItemPlugBase> plug in plugs.values) {
+          if (plug.any((element) => element.plugItemHash == socket.plugHash) &&
+              DestinyData.perkCategoryHash.contains(ManifestService
+                  .manifestParsed
+                  .destinyInventoryItemDefinition?[socket.plugHash]!
+                  .plug!
+                  .plugCategoryHash!)) {
+            List<DestinyInventoryItemDefinition> plugDefitions = [];
+            for (DestinyItemPlugBase plug in plug) {
+              plugDefitions.add(ManifestService.manifestParsed
+                  .destinyInventoryItemDefinition![plug.plugItemHash]!);
+            }
+            perks.add(plugDefitions);
           }
-          perks.add(plugDefitions);
         }
       }
       if (ManifestService

@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/presentation/screens/inspect/components/mobile_item_attribute.dart';
+import 'package:quria/presentation/screens/inspect/components/mobile_item_origin.dart';
 import 'package:quria/presentation/screens/inspect/components/mobile_item_other_attributes.dart';
 import 'package:quria/presentation/screens/inspect/components/mobile_stats.dart';
 
 class MobileInspectStatistics extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
   final String instanceId;
-
   final Map<String, DestinyStat>? stats;
 
   const MobileInspectStatistics(
@@ -39,16 +39,21 @@ class _MobileInspectStatisticsState extends State<MobileInspectStatistics> {
 
   @override
   Widget build(BuildContext context) {
+    double pagePadding = globalPadding(context);
+
     return Padding(
-      padding: EdgeInsets.symmetric(
-          horizontal: MediaQuery.of(context).size.width * globalPadding),
+      padding: EdgeInsets.symmetric(horizontal: pagePadding),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const SizedBox(height: 22),
+        SizedBox(height: pagePadding),
         MobileItemStats(item: widget.item, stats: widget.stats),
-        const SizedBox(height: 22),
-        MobileItemAttributes(sockets: sockets, plugs: plugs),
-        const SizedBox(height: 22),
-        MobileItemOtherAttributes(sockets: sockets, plugs: plugs),
+        SizedBox(height: pagePadding),
+        MobileItemAttributes(
+            instanceId: widget.instanceId, sockets: sockets, plugs: plugs),
+        SizedBox(height: pagePadding),
+        MobileItemOtherAttributes(sockets: sockets),
+        SizedBox(height: pagePadding),
+        MobileItemOrigin(collectionHash: widget.item.collectibleHash!),
+        SizedBox(height: pagePadding),
       ]),
     );
   }

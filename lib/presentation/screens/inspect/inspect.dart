@@ -38,9 +38,9 @@ class _InspectWidgetState extends State<InspectWidget> {
     }
     return Container(
         padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.width * globalPadding,
-            left: MediaQuery.of(context).size.width * globalPadding,
-            right: MediaQuery.of(context).size.width * globalPadding),
+            top: globalPadding(context),
+            left: globalPadding(context),
+            right: globalPadding(context)),
         decoration: BoxDecoration(
           image: DecorationImage(
             image: NetworkImage(widget.item.screenshot != null

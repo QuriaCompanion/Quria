@@ -67,9 +67,7 @@ class _MobileInspectState extends State<MobileInspect> {
           SizedBox(
             height: 45,
             child: ListView(
-              padding: EdgeInsets.symmetric(
-                horizontal: MediaQuery.of(context).size.width * globalPadding,
-              ),
+              padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
               scrollDirection: Axis.horizontal,
               children: [
                 InkWell(

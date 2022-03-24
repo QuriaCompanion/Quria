@@ -34,7 +34,9 @@ class MobileItemStats extends StatelessWidget {
                       .displayProperties!
                       .name ??
                   'error',
-              value: stats![statHash.toString()]?.value ?? 0,
+              value: stats?[statHash.toString()]?.value ??
+                  item.stats?.stats?[statHash.toString()]?.value ??
+                  0,
               type: item.itemType),
       ],
     );

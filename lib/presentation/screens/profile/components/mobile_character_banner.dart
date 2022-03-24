@@ -8,7 +8,7 @@ class MobileCharacterBanner extends StatelessWidget {
   final DestinyCharacterComponent character;
   final double width;
   final double fontSize;
-  MobileCharacterBanner(
+  const MobileCharacterBanner(
       {Key? key, required this.character, this.width = 500, this.fontSize = 50})
       : super(key: key);
 

@@ -44,7 +44,7 @@ class _CollectionWidgetState extends State<CollectionWidget> {
   int axisCount = 8;
   @override
   Widget build(BuildContext context) {
-    final padding = MediaQuery.of(context).size.width * globalPadding;
+    final padding = globalPadding(context);
     final itemListWidth = MediaQuery.of(context).size.width * 0.6;
     final filterWidth = MediaQuery.of(context).size.width * 0.3;
     if (MediaQuery.of(context).size.width < 2200) {

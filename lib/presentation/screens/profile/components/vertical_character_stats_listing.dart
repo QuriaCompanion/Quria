@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/grenade_cooldowns.dart';
 import 'package:quria/data/services/bungie_api/enums/melee_cooldowns.enum.dart';
@@ -8,7 +7,7 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
 
 class VerticalCharacterStatsListing extends StatefulWidget {
-  final stats;
+  final Map<String, int> stats;
   final String characterId;
   final double fontSize;
   final double width;

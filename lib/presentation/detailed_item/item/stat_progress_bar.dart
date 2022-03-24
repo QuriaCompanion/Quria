@@ -33,12 +33,11 @@ class StatProgressBar extends StatelessWidget {
       width: width,
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
         textCaption(name),
-        const SizedBox(width: 10),
         SizedBox(
             width: 25, child: Center(child: textCaptionBold(value.toString()))),
         LinearPercentIndicator(
           percent: percentage,
-          linearStrokeCap: LinearStrokeCap.butt,
+          linearStrokeCap: LinearStrokeCap.roundAll,
           progressColor: Colors.white,
           backgroundColor: Colors.white.withOpacity(0.5),
           lineHeight: height,
