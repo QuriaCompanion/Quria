@@ -2,6 +2,7 @@ import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
+import 'package:bungie_api/models/destiny_collectible_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -66,6 +67,8 @@ class DisplayService {
             "DestinyDamageTypeDefinition", box);
         await ManifestService.getManifest<DestinyStatDefinition>(
             "DestinyStatDefinition", box);
+        await ManifestService.getManifest<DestinyCollectibleDefinition>(
+            "DestinyCollectibleDefinition", box);
         await ManifestService.getManifest<DestinyClassDefinition>(
             "DestinyClassDefinition", box);
         await ManifestService.getManifest<DestinySandboxPerkDefinition>(

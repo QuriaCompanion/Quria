@@ -66,9 +66,9 @@ class _ExoticWidgetState extends State<ExoticWidget> {
     return SingleChildScrollView(
       child: Container(
         padding: EdgeInsets.only(
-            top: MediaQuery.of(context).size.width * globalPadding,
-            left: MediaQuery.of(context).size.width * globalPadding,
-            right: MediaQuery.of(context).size.width * globalPadding),
+            top: globalPadding(context),
+            left: globalPadding(context),
+            right: globalPadding(context)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

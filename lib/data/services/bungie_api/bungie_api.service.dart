@@ -1,4 +1,8 @@
 import 'dart:convert';
+import 'package:bungie_api/enums/destiny_socket_array_type.dart';
+import 'package:bungie_api/models/destiny_insert_plugs_free_action_request.dart';
+import 'package:bungie_api/models/destiny_insert_plugs_request_entry.dart';
+import 'package:bungie_api/responses/destiny_item_change_response_response.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:bungie_api/api/destiny2.dart';
@@ -156,6 +160,24 @@ class BungieApiService {
           ..characterId = characterId
           ..membershipType = membership!.membershipType);
     return response.response;
+  }
+
+  Future<DestinyItemChangeResponseResponse?> insertSocketPlugFree(
+      String itemInstanceId, int plugItemHash, int index) async {
+    var plug = DestinyInsertPlugsRequestEntry()
+      ..plugItemHash = plugItemHash
+      ..socketArrayType = DestinySocketArrayType.Default
+      ..socketIndex = index;
+    BungieNetToken? token = await auth.getToken();
+    GroupUserInfoCard? membership = await accountService.getMembership();
+    var response = await Destiny2.insertSocketPlugFree(
+        Client(token: token),
+        DestinyInsertPlugsFreeActionRequest()
+          ..itemId = itemInstanceId
+          ..characterId = "2305843009264759898"
+          ..plug = plug
+          ..membershipType = membership!.membershipType);
+    return response;
   }
 
   Future<int?> changeLockState(

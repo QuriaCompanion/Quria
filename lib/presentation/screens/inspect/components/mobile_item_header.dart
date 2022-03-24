@@ -19,8 +19,7 @@ class MobileItemHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding:
-          EdgeInsets.all(MediaQuery.of(context).size.width * globalPadding),
+      padding: EdgeInsets.all(globalPadding(context)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.start,

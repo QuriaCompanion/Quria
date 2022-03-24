@@ -20,10 +20,9 @@ import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/detailed_item/subclass/subclass_details_card.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner.dart';
 import 'package:quria/presentation/screens/profile/components/mobile_character_banner.dart';
-import 'package:quria/presentation/screens/profile/components/mobile_profile_header_Info.dart';
+import 'package:quria/presentation/screens/profile/components/mobile_profile_header_info.dart';
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
 import 'package:quria/presentation/screens/profile/components/profile_mobile_item_card.dart';
-import 'package:quria/presentation/screens/profile/components/vertical_character_stats_listing.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 @immutable

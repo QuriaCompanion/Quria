@@ -36,8 +36,7 @@ class _MobileProfileHeaderInfoState extends State<MobileProfileHeaderInfo> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
-          bottom: MediaQuery.of(context).size.width * globalPadding),
+      padding: EdgeInsets.only(bottom: globalPadding(context)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -71,7 +70,7 @@ class _MobileProfileHeaderInfoState extends State<MobileProfileHeaderInfo> {
             width: MediaQuery.of(context).size.width * 0.6,
             height: MediaQuery.of(context).size.width * 0.17,
             child: VerticalCharacterStatsListing(
-              stats: widget.stats,
+              stats: widget.stats!,
               characterId: widget.characterId,
               direction: Axis.horizontal,
               fontSize: widget.fontSize,

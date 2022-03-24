@@ -137,7 +137,14 @@ class DestinyData {
     1202604782,
     2718120384,
     577918720,
-    3886533313
+    3886533313,
+    3962145884
+  ];
+
+  static const List<int> modCategoryHash = [
+    510594033,
+    974142739,
+    1744546145,
   ];
 
   static const String bungieLink = "https://www.bungie.net";

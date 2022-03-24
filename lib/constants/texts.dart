@@ -3,90 +3,101 @@ import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-Widget textH1(String child) {
+Widget textH1(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),
-    style: const TextStyle(
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.bold,
-      color: Colors.white,
+      color: color,
     ),
   );
 }
 
-Widget textH2(String child) {
+Widget textH2(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),
-    style: const TextStyle(
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
       fontSize: 18,
       fontWeight: FontWeight.w700,
-      color: Colors.white,
+      color: color,
     ),
   );
 }
 
-Widget textH3(String child) {
+Widget textH3(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),
-    style: const TextStyle(
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
       fontSize: 16,
       fontWeight: FontWeight.w700,
-      color: Colors.white,
+      color: color,
     ),
   );
 }
 
-Widget textBodyBold(String child) {
+Widget textBodyBold(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),
-    style: const TextStyle(
+    maxLines: 15,
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w700,
-      color: Colors.white,
+      color: color,
     ),
   );
 }
 
-Widget textBodyMedium(String child) {
+Widget textBodyMedium(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),
-    style: const TextStyle(
+    maxLines: 15,
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w500,
-      color: Colors.white,
+      color: color,
     ),
   );
 }
 
-Widget textBodyRegular(String child) {
+Widget textBodyRegular(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),
-    style: const TextStyle(
+    maxLines: 15,
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
       fontSize: 14,
       fontWeight: FontWeight.w400,
-      color: Colors.white,
+      color: color,
     ),
   );
 }
 
-Widget textCaptionBold(String child) {
+Widget textCaptionBold(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),
-    style: const TextStyle(
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.w700,
-      color: Colors.white,
+      color: color,
     ),
   );
 }
 
-Widget textCaption(String child) {
+Widget textCaption(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),
-    style: const TextStyle(
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.w400,
-      color: Colors.white,
+      color: color,
     ),
   );
 }
