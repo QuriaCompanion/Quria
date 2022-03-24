@@ -43,11 +43,13 @@ BoxDecoration blackTransparentBackground = BoxDecoration(
     ),
   ],
 );
-
-const divider = VerticalDivider(
-  color: grey,
+const hr = Divider(
+  color: blackLight,
+  height: 22,
   thickness: 1,
 );
+const divider =
+    Text(' | ', style: TextStyle(color: Color.fromRGBO(40, 45, 56, 1)));
 
 BoxDecoration regularShadow = BoxDecoration(
   color: Colors.grey.shade700,

@@ -4,6 +4,7 @@ import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_collectible_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
+import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_plug_set_definition.dart';
@@ -73,6 +74,8 @@ class DisplayService {
             "DestinyClassDefinition", box);
         await ManifestService.getManifest<DestinySandboxPerkDefinition>(
             "DestinySandboxPerkDefinition", box);
+        await ManifestService.getManifest<DestinyEquipmentSlotDefinition>(
+            "DestinyEquipmentSlotDefinition", box);
         await ManifestService.getManifest<DestinyTalentGridDefinition>(
             "DestinyTalentGridDefinition", box);
         await ManifestService.getManifest<DestinyPresentationNodeDefinition>(
