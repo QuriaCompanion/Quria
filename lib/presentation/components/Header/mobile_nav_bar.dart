@@ -1,8 +1,5 @@
-import 'dart:ui';
-
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
-import 'package:quria/constants/styles.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner_info.dart';
 import 'package:quria/presentation/screens/profile/components/mobile_character_banner.dart';
 

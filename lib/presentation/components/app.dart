@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 
-import 'Header/nav_bar.dart';
-
 class AppView extends StatelessWidget {
   final Widget child;
 

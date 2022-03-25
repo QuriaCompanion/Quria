@@ -1,5 +1,5 @@
-import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
@@ -21,11 +21,11 @@ class MobileInspect extends StatefulWidget {
 class _MobileInspectState extends State<MobileInspect> {
   late final DestinyInventoryItemDefinition item;
   late final Map<String, DestinyStat>? stats;
-  late final DestinyDamageTypeDefinition damageType;
   late final String imageLink;
   late final int powerLevel;
   late Widget content;
   late String selected;
+  late String? elementIcon;
   @override
   void initState() {
     super.initState();
@@ -33,12 +33,20 @@ class _MobileInspectState extends State<MobileInspect> {
     item = ManifestService
         .manifestParsed.destinyInventoryItemDefinition![widget.data.hash]!;
     stats = profile.getPrecalculatedStats(widget.data.instanceId);
-
-    powerLevel =
-        profile.getInstanceInfo(widget.data.instanceId).primaryStat!.value!;
+    DestinyItemInstanceComponent instanceInfo =
+        profile.getInstanceInfo(widget.data.instanceId);
+    powerLevel = instanceInfo.primaryStat!.value!;
     imageLink = DestinyData.bungieLink + item.screenshot!;
-    damageType = ManifestService.manifestParsed
-        .destinyDamageTypeDefinition![item.defaultDamageTypeHash!]!;
+    elementIcon = ManifestService
+            .manifestParsed
+            .destinyDamageTypeDefinition?[item.defaultDamageTypeHash]
+            ?.displayProperties
+            ?.icon ??
+        ManifestService
+            .manifestParsed
+            .destinyEnergyTypeDefinition?[instanceInfo.energy?.energyTypeHash]
+            ?.displayProperties
+            ?.icon;
     content = MobileInspectStatistics(
       item: item,
       stats: stats,
@@ -57,7 +65,7 @@ class _MobileInspectState extends State<MobileInspect> {
             imageLink: imageLink,
             child: MobileItemHeader(
               name: item.displayProperties!.name!,
-              damage: damageType.displayProperties!.icon!,
+              iconElement: elementIcon!,
               type: item.itemTypeDisplayName!,
               power: powerLevel,
             ),

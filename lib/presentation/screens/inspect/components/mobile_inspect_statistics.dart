@@ -1,3 +1,4 @@
+import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
@@ -47,9 +48,20 @@ class _MobileInspectStatisticsState extends State<MobileInspectStatistics> {
         SizedBox(height: pagePadding),
         MobileItemStats(item: widget.item, stats: widget.stats),
         SizedBox(height: pagePadding),
-        MobileItemAttributes(
-            instanceId: widget.instanceId, sockets: sockets, plugs: plugs),
-        SizedBox(height: pagePadding),
+        Builder(builder: (context) {
+          if (widget.item.itemType == DestinyItemType.Weapon) {
+            Column(
+              children: [
+                MobileItemAttributes(
+                    instanceId: widget.instanceId,
+                    sockets: sockets,
+                    plugs: plugs),
+                SizedBox(height: pagePadding)
+              ],
+            );
+          }
+          return Container();
+        }),
         MobileItemOtherAttributes(sockets: sockets),
         SizedBox(height: pagePadding),
         MobileItemOrigin(collectionHash: widget.item.collectibleHash!),

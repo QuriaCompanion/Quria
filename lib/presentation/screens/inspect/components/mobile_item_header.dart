@@ -6,13 +6,13 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 class MobileItemHeader extends StatelessWidget {
   final String name;
   final String type;
-  final String damage;
+  final String iconElement;
   final int power;
 
   const MobileItemHeader(
       {required this.name,
       required this.type,
-      required this.damage,
+      required this.iconElement,
       required this.power,
       Key? key})
       : super(key: key);
@@ -32,7 +32,7 @@ class MobileItemHeader extends StatelessWidget {
                 Image(
                     height: 16,
                     width: 16,
-                    image: NetworkImage(DestinyData.bungieLink + damage)),
+                    image: NetworkImage(DestinyData.bungieLink + iconElement)),
                 const SizedBox(width: 8),
                 textH2(power.toString()),
                 divider,

@@ -4,6 +4,7 @@ import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
 import 'package:bungie_api/models/destiny_collectible_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
+import 'package:bungie_api/models/destiny_energy_type_definition.dart';
 import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -81,6 +82,8 @@ class DisplayService {
             "DestinyPresentationNodeDefinition", box);
         await ManifestService.getManifest<DestinyPlugSetDefinition>(
             "DestinyPlugSetDefinition", box);
+        await ManifestService.getManifest<DestinyEnergyTypeDefinition>(
+            "DestinyEnergyTypeDefinition", box);
       }
 
       final characters = profile.getCharacters();

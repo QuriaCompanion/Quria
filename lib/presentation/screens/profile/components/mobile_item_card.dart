@@ -1,4 +1,3 @@
-import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -26,18 +25,25 @@ class _MobileItemCardState extends State<MobileItemCard> {
   late final int powerLevel;
   @override
   Widget build(BuildContext context) {
+    final instanceInfo =
+        ProfileService().getInstanceInfo(widget.item.itemInstanceId!);
     final DestinyInventoryItemDefinition itemDef = ManifestService
         .manifestParsed.destinyInventoryItemDefinition![widget.item.itemHash]!;
     final DestinyEquipmentSlotDefinition itemCategory =
         ManifestService.manifestParsed.destinyEquipmentSlotDefinition![
             itemDef.equippingBlock!.equipmentSlotTypeHash]!;
-    final DestinyDamageTypeDefinition damageType = ManifestService
-        .manifestParsed
-        .destinyDamageTypeDefinition![itemDef.defaultDamageTypeHash!]!;
-    final int powerLevel = ProfileService()
-        .getInstanceInfo(widget.item.itemInstanceId!)
-        .primaryStat!
-        .value!;
+    final String? elementIcon = ManifestService
+            .manifestParsed
+            .destinyDamageTypeDefinition?[itemDef.defaultDamageTypeHash]
+            ?.displayProperties
+            ?.icon ??
+        ManifestService
+            .manifestParsed
+            .destinyEnergyTypeDefinition?[instanceInfo.energy?.energyTypeHash]
+            ?.displayProperties
+            ?.icon;
+
+    final int powerLevel = instanceInfo.primaryStat!.value!;
     double iconSize = MediaQuery.of(context).size.width / 6.69;
     return Container(
       padding: const EdgeInsets.all(10),
@@ -80,8 +86,8 @@ class _MobileItemCardState extends State<MobileItemCard> {
                           height: 12,
                           margin: const EdgeInsets.only(right: 5),
                           child: Image(
-                            image: NetworkImage(DestinyData.bungieLink +
-                                damageType.displayProperties!.icon!),
+                            image: NetworkImage(
+                                DestinyData.bungieLink + elementIcon!),
                           )),
                       textBodyBold(powerLevel.toString()),
                       divider,
@@ -92,7 +98,7 @@ class _MobileItemCardState extends State<MobileItemCard> {
               ),
             ),
             const Spacer(),
-            Icon(
+            const Icon(
               Icons.arrow_drop_down_sharp,
               color: Colors.white,
             )

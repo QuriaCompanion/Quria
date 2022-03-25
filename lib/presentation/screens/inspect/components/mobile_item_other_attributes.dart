@@ -24,6 +24,12 @@ class _MobileItemOtherAttributesState extends State<MobileItemOtherAttributes> {
     displayedMods = widget.sockets!
         .where((element) =>
             element.plugHash != null &&
+                ManifestService
+                        .manifestParsed
+                        .destinyInventoryItemDefinition?[element.plugHash]
+                        ?.displayProperties
+                        ?.icon !=
+                    null &&
                 DestinyData.modCategoryHash.contains(ManifestService
                     .manifestParsed
                     .destinyInventoryItemDefinition![element.plugHash]!
