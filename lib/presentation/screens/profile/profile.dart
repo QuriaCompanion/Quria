@@ -152,7 +152,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                           onPressed: () => Scaffold.of(context).openDrawer(),
                         );
                       }),
-                      toolbarHeight: choosingCharacter ? 110 : 56,
+                      toolbarHeight: choosingCharacter ? 130 : 56,
                       backgroundColor: Colors.transparent,
                       flexibleSpace: MobileProfileNavBar(
                           callback: (newIndex) {
