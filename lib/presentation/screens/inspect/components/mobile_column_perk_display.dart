@@ -99,7 +99,12 @@ class _PerkItemWithFunctionState extends State<PerkItemWithFunction> {
               expand: false,
               context: context,
               builder: (context) {
-                return PerkModal(perk: widget.perk);
+                return PerkModal(
+                    perk: widget.perk,
+                    instanceId: widget.instanceId,
+                    onSocketsChanged: (newSockets) =>
+                        widget.onSocketsChanged(newSockets),
+                    index: widget.index);
               });
         },
         onLongPress: () {
@@ -119,7 +124,6 @@ class _PerkItemWithFunctionState extends State<PerkItemWithFunction> {
                 });
               });
             } catch (e) {
-              print("hello");
               setState(() {
                 loading = false;
               });
@@ -139,12 +143,18 @@ class _PerkItemWithFunctionState extends State<PerkItemWithFunction> {
 }
 
 class PerkModal extends StatelessWidget {
+  final DestinyInventoryItemDefinition perk;
+  final int? index;
+  final String? instanceId;
+  final Function(List<DestinyItemSocketState>?)? onSocketsChanged;
+
   const PerkModal({
     Key? key,
     required this.perk,
+    this.onSocketsChanged,
+    this.index,
+    this.instanceId,
   }) : super(key: key);
-
-  final DestinyInventoryItemDefinition perk;
 
   @override
   Widget build(BuildContext context) {
@@ -235,15 +245,29 @@ class PerkModal extends StatelessWidget {
                   return Column(children: list);
                 }),
               ),
-              Container(
-                height: (MediaQuery.of(context).size.width -
-                        (globalPadding(context) * 6)) /
-                    5,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(100))),
-                child: Center(child: textBodyMedium("Equiper", color: black)),
-              )
+              ElevatedButton(
+                onPressed: () {
+                  if (instanceId != null) {
+                    BungieApiService()
+                        .insertSocketPlugFree(instanceId!, perk.hash!, index!)
+                        .then((value) async {
+                      onSocketsChanged!(
+                          value?.response?.item?.sockets?.data?.sockets);
+                    });
+                  }
+                },
+                child: textBodyMedium("Equiper", color: black),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.white,
+                    fixedSize: Size(
+                        MediaQuery.of(context).size.width -
+                            globalPadding(context) * 2,
+                        (MediaQuery.of(context).size.width -
+                                globalPadding(context) * 2) *
+                            0.147),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50))),
+              ),
             ],
           ),
         ),

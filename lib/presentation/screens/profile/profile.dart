@@ -1,11 +1,10 @@
-import 'dart:ui';
-
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/constants/texts.dart';
 import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
@@ -16,13 +15,14 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/Header/mobile_nav_bar.dart';
+import 'package:quria/presentation/components/misc/mobile_nav_item.dart';
 import 'package:quria/presentation/detailed_item/item/item_details_card.dart';
 import 'package:quria/presentation/detailed_item/subclass/advanced_subclass_details_card.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/detailed_item/subclass/subclass_details_card.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner.dart';
 import 'package:quria/presentation/screens/profile/components/mobile_item_card.dart';
-import 'package:quria/presentation/screens/profile/components/mobile_character_banner.dart';
 import 'package:quria/presentation/screens/profile/components/mobile_profile_header_info.dart';
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -43,10 +43,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   final account = AccountService();
   final profile = ProfileService();
   late Future<ProfileHelper> _future;
-  late int index;
+  int index = 0;
+  DestinyItemType currentFilter = DestinyItemType.Weapon;
   @override
   void initState() {
-    index = 0;
     super.initState();
     _future = display.getProfileData(index);
   }
@@ -69,6 +69,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   late double verticalStatWidth;
   late double bannerSelectedWidth;
   late DestinyItemComponent subclass;
+  bool choosingCharacter = false;
 
   @override
   Widget build(BuildContext context) {
@@ -119,23 +120,68 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           if (snapshot.hasData) {
             subclass = ProfileService().getSubClassForCharacter(
                 snapshot.data!.characters[index].characterId!);
-            return SingleChildScrollView(
-              child: BlocProvider(
-                create: (_) => CharacterCubit(),
-                child: BlocBuilder<CharacterCubit, CharacterState>(
-                    builder: (context, characterState) {
-                  int displayHash = snapshot
-                          .data!.characterEquipement[5].overrideStyleItemHash ??
-                      snapshot.data!.characterEquipement[5].itemHash!;
-                  if (MediaQuery.of(context).size.width > 850) {
-                    return webView(
-                        displayHash, snapshot, characterState, context);
-                  } else {
-                    return mobileView(
-                        displayHash, snapshot, characterState, context);
-                  }
-                }),
-              ),
+            return BlocProvider(
+              create: (_) => CharacterCubit(),
+              child: BlocBuilder<CharacterCubit, CharacterState>(
+                  builder: (context, characterState) {
+                int displayHash = snapshot
+                        .data!.characterEquipement[5].overrideStyleItemHash ??
+                    snapshot.data!.characterEquipement[5].itemHash!;
+                if (MediaQuery.of(context).size.width > 850) {
+                  return Column(
+                    children: [
+                      webView(displayHash, snapshot, characterState, context),
+                    ],
+                  );
+                } else {
+                  return Scaffold(
+                    drawer: textH1("test"),
+                    extendBody: true,
+                    extendBodyBehindAppBar: true,
+                    appBar: AppBar(
+                      leading: Builder(builder: (context) {
+                        return IconButton(
+                          alignment: Alignment.topCenter,
+                          padding: EdgeInsets.only(
+                            top: (56 -
+                                    (MediaQuery.of(context).size.width *
+                                        0.064)) /
+                                2,
+                          ),
+                          icon: Icon(Icons.menu),
+                          onPressed: () => Scaffold.of(context).openDrawer(),
+                        );
+                      }),
+                      toolbarHeight: choosingCharacter ? 110 : 56,
+                      backgroundColor: Colors.transparent,
+                      flexibleSpace: MobileProfileNavBar(
+                          callback: (newIndex) {
+                            setState(() {
+                              index = newIndex;
+                              snapshot.data!.characterEquipement =
+                                  profile.getCharacterEquipment(snapshot
+                                      .data!.characters[newIndex].characterId!);
+                              choosingCharacter = !choosingCharacter;
+                            });
+                          },
+                          choosingCharacter: () {
+                            setState(() {
+                              choosingCharacter = !choosingCharacter;
+                            });
+                          },
+                          index: index,
+                          characters: snapshot.data!.characters),
+                    ),
+                    body: Container(
+                      decoration: ghostBackground,
+                      child: SingleChildScrollView(
+                        child: mobileView(
+                            displayHash, snapshot, characterState, context),
+                      ),
+                    ),
+                  );
+                }
+              }),
             );
           } else {
             return Container(
@@ -145,7 +191,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         });
   }
 
-  Container mobileView(int displayHash, AsyncSnapshot<ProfileHelper> snapshot,
+  Widget mobileView(int displayHash, AsyncSnapshot<ProfileHelper> snapshot,
       CharacterState characterState, BuildContext context) {
     bannerSelectedWidth = MediaQuery.of(context).size.width * 0.6;
     imageSize = MediaQuery.of(context).size.width * 0.25;
@@ -161,84 +207,89 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       bannerSelectedFont = 10;
       statsFontSize = 15;
     }
-    return Container(
-      decoration: const BoxDecoration(color: backgroundColor),
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Stack(
-              alignment: Alignment.topCenter,
+    return Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              mobileHeader(
+                context,
+                imageLink: DestinyData.bungieLink +
+                    ManifestService
+                        .manifestParsed
+                        .destinyInventoryItemDefinition![subclass.itemHash]!
+                        .screenshot!,
+                child: MobileProfileHeaderInfo(
+                    stats: snapshot.data!.characters[index].stats,
+                    fontSize: statsFontSize,
+                    characterId: snapshot.data!.characters[index].characterId!),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 45,
+            child: ListView(
+              padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
+              scrollDirection: Axis.horizontal,
               children: [
-                mobileHeader(
-                  context,
-                  imageLink: DestinyData.bungieLink +
-                      ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition![subclass.itemHash]!
-                          .screenshot!,
-                  child: MobileProfileHeaderInfo(
-                      stats: snapshot.data!.characters[index].stats,
-                      fontSize: statsFontSize,
-                      characterId:
-                          snapshot.data!.characters[index].characterId!),
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: ClipRect(
-                    child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          MobileCharacterBanner(
-                              chooseCharacter: (value) {
-                                setState(() {
-                                  index = value;
-                                });
-                              },
-                              characterIndex: index,
-                              characters: snapshot.data!.characters),
-                        ],
-                      ),
-                    ),
-                  ),
-                )
+                InkWell(
+                    onTap: () {
+                      setState(() {
+                        currentFilter = DestinyItemType.Weapon;
+                      });
+                    },
+                    child: MobileNavItem(
+                      selected: currentFilter == DestinyItemType.Weapon,
+                      value: "Armes",
+                      width: 171,
+                    )),
+                InkWell(
+                    onTap: () {
+                      setState(() {
+                        currentFilter = DestinyItemType.Armor;
+                      });
+                    },
+                    child: MobileNavItem(
+                      selected: currentFilter == DestinyItemType.Armor,
+                      value: "Armure",
+                      width: 171,
+                    )),
               ],
             ),
-            for (int i = 0; i <= 2; i++)
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: pagePadding),
-                child: Column(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        // open mobile inspect
-                        Navigator.pushNamed(context, routeInspectMobile,
-                            arguments: InspectData(
-                                hash: snapshot
-                                    .data!.characterEquipement[i].itemHash!,
-                                instanceId: snapshot.data!
-                                    .characterEquipement[i].itemInstanceId!));
-                      },
-                      child: MobileItemCard(
-                        itemHash:
-                            snapshot.data!.characterEquipement[i].itemHash!,
-                        instanceId: snapshot
-                            .data!.characterEquipement[i].itemInstanceId!,
-                      ),
+          ),
+          for (DestinyItemComponent item in snapshot.data!.characterEquipement
+              .where((element) =>
+                  ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition?[element.itemHash]
+                      ?.itemType ==
+                  currentFilter))
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: pagePadding),
+              child: Column(
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, routeInspectMobile,
+                          arguments: InspectData(
+                              hash: item.itemHash!,
+                              instanceId: item.itemInstanceId!));
+                    },
+                    child: MobileItemCard(
+                      item: item,
                     ),
-                    if (i <= 1)
-                      const Divider(
-                        thickness: 1,
-                        height: 25,
-                        color: Colors.grey,
-                      ),
-                  ],
-                ),
-              )
-          ]),
-    );
+                  ),
+                  const Divider(
+                    thickness: 1,
+                    height: 25,
+                    color: grey,
+                  ),
+                ],
+              ),
+            )
+        ]);
   }
 
   Widget webView(int displayHash, AsyncSnapshot<ProfileHelper> snapshot,
@@ -395,29 +446,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 size: iconSize,
               ),
             ),
-          ]),
-    );
-  }
-
-  Widget characterBannerMobile(
-      AsyncSnapshot<ProfileHelper> snapshot, BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(
-          left: pagePadding, top: pagePadding, bottom: bannerBotSpacing),
-      child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            MobileCharacterBanner(
-                chooseCharacter: (value) {
-                  setState(() {
-                    index = value;
-                  });
-                },
-                characterIndex: index,
-                width: bannerSelectedWidth,
-                fontSize: bannerSelectedFont,
-                characters: snapshot.data!.characters),
           ]),
     );
   }

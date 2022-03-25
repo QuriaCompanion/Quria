@@ -225,6 +225,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
+  dropdown_below:
+    dependency: "direct main"
+    description:
+      name: dropdown_below
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.3"
   ffi:
     dependency: transitive
     description:

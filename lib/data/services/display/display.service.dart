@@ -22,10 +22,9 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 
-ProfileService profile = ProfileService();
-AccountService account = AccountService();
-
 class DisplayService {
+  ProfileService profile = ProfileService();
+  AccountService account = AccountService();
   static init() async {}
 
   Future<List<DestinyInventoryItemDefinition>> getExotics(

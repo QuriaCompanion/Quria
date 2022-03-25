@@ -272,7 +272,7 @@ class ProfileService {
   }
 
   int? getCurrentGrenadeHashForCharacter(String characterId) {
-    DestinyItemComponent? subclass = getSubClassForCharacter(characterId);
+    DestinyItemComponent subclass = getSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newGrenade =
         getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
@@ -325,9 +325,9 @@ class ProfileService {
         getTalentGrid(subclass.itemInstanceId!);
 
     DestinyTalentNode? oldMelee = oldSubclass?.nodes?.firstWhere((element) =>
-        element.isActivated == true && element.nodeIndex == 7 ||
-        element.nodeIndex == 8 ||
-        element.nodeIndex == 9);
+        element.isActivated == true && element.nodeIndex == 11 ||
+        element.nodeIndex == 15 ||
+        element.nodeIndex == 21);
     if (oldMelee != null) {
       return ManifestService
           .manifestParsed
@@ -520,6 +520,7 @@ class ProfileService {
   }
 
   List<DestinyCharacterComponent> getCharacters() {
+    if (_profile == null) return [];
     List<DestinyCharacterComponent> list =
         _profile!.characters!.data!.values.toList();
 

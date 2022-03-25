@@ -1,6 +1,7 @@
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -11,13 +12,10 @@ import 'package:quria/presentation/components/misc/icon_item.dart';
 
 class MobileItemCard extends StatefulWidget {
   // data
-  final int itemHash;
-  final String instanceId;
-
+  final DestinyItemComponent item;
   const MobileItemCard({
     Key? key,
-    required this.itemHash,
-    required this.instanceId,
+    required this.item,
   }) : super(key: key);
 
   @override
@@ -25,26 +23,21 @@ class MobileItemCard extends StatefulWidget {
 }
 
 class _MobileItemCardState extends State<MobileItemCard> {
-  late final DestinyInventoryItemDefinition itemDef;
-  late final DestinyEquipmentSlotDefinition itemCategory;
-  late final DestinyDamageTypeDefinition damageType;
   late final int powerLevel;
   @override
-  void initState() {
-    super.initState();
-    itemDef = ManifestService
-        .manifestParsed.destinyInventoryItemDefinition![widget.itemHash]!;
-    itemCategory =
-        ManifestService.manifestParsed.destinyEquipmentSlotDefinition![
-            itemDef.equippingBlock!.equipmentSlotTypeHash!]!;
-    powerLevel =
-        ProfileService().getInstanceInfo(widget.instanceId).primaryStat!.value!;
-    damageType = ManifestService.manifestParsed
-        .destinyDamageTypeDefinition![itemDef.defaultDamageTypeHash!]!;
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final DestinyInventoryItemDefinition itemDef = ManifestService
+        .manifestParsed.destinyInventoryItemDefinition![widget.item.itemHash]!;
+    final DestinyEquipmentSlotDefinition itemCategory =
+        ManifestService.manifestParsed.destinyEquipmentSlotDefinition![
+            itemDef.equippingBlock!.equipmentSlotTypeHash]!;
+    final DestinyDamageTypeDefinition damageType = ManifestService
+        .manifestParsed
+        .destinyDamageTypeDefinition![itemDef.defaultDamageTypeHash!]!;
+    final int powerLevel = ProfileService()
+        .getInstanceInfo(widget.item.itemInstanceId!)
+        .primaryStat!
+        .value!;
     double iconSize = MediaQuery.of(context).size.width / 6.69;
     return Container(
       padding: const EdgeInsets.all(10),

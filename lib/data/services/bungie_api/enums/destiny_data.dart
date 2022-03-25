@@ -842,6 +842,31 @@ class DestinyData {
         return Colors.white;
     }
   }
+
+  static Map<int, int> superNodeToSandbox = {
+    //burning maul
+    1323416107: 2401205106,
+    //hammer of sol
+    1722642322: 3881209933,
+    //fist of havoc
+    1757742244: 113667234,
+    //thundercrash
+    2795355746: 3326771373,
+    //daybreak
+    4102085486: 1136882502,
+    //Well of radiance
+    935376049: 1267155257,
+    //Stormtrance
+    178252917: 3972661583,
+    // chaos reach
+    3882393894: 3368836162,
+    //golden gun
+    675014898: 3205500087,
+    //blade barrage
+    1590824323: 2041340886,
+    //arc staff
+    2936898795: 674606208
+  };
 }
 
 class SubclassTalentGridInfo {
@@ -858,55 +883,6 @@ class SubclassTalentGridInfo {
       required this.jumpPerkHash,
       required this.classSkillPerkHash});
 }
-
-// const Map<String, List<DestinySandboxPerkDefinition>> subclassMainPerks = {
-//   //titan solar
-//   "titan_solar_firstpath": [
-//     ManifestService.manifestParsed.DestinyNodeStepSummaryDefinition[]
-//   ],
-//   "titan_solar_secondpath": 2401205106,
-//   "titan_solar_thirdpath": 461974996,
-//   //titan arc
-//   "titan_arc_firstpath": 3720167252,
-//   "titan_arc_secondpath": 3326771373,
-//   "titan_arc_thirdpath": 2918527423,
-//   //titan void
-//   "titan_void_firstpath": 3170765412,
-//   "titan_void_secondpath": 3112248479,
-//   "titan_void_thirdpath": 3471252175,
-//   //titan stasis
-//   "titan_stasis": 1720064609,
-
-//   //hunter solar
-//   "hunter_solar_firstpath": 3165122177,
-//   "hunter_solar_secondpath": 2041340886,
-//   "hunter_solar_thirdpath": 2265198010,
-//   //hunter arc
-//   "hunter_arc_firstpath": 914737202,
-//   "hunter_arc_secondpath": 2236497009,
-//   "hunter_arc_thirdpath": 1302127157,
-//   //hunter void
-//   "hunter_void_firstpath": 423378447,
-//   "hunter_void_secondpath": 4099200371,
-//   "hunter_void_thirdpath": 3566763565,
-//   //hunter stasis
-//   "hunter_stasis": 2115357203,
-
-//   //warlock solar
-//   "warlock_solar_firstpath": 1887222240,
-//   "warlock_solar_secondpath": 1267155257,
-//   "warlock_solar_thirdpath": 4050937691,
-//   //warlock arc
-//   "warlock_arc_firstpath": 3972661583,
-//   "warlock_arc_secondpath": 3368836162,
-//   "warlock_arc_thirdpath": 4087094734,
-//   //warlock void
-//   "warlock_void_firstpath": 195170165,
-//   "warlock_void_secondpath": 3247948194,
-//   "warlock_void_thirdpath": 3959434990,
-//   //warlock stasis
-//   "warlock_stasis": 1507879500,
-// };
 
 enum CurrencyConversionType { inventoryItem, currency }
 

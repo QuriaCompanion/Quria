@@ -41,17 +41,17 @@ class _VerticalCharacterStatsListingState
     int superTier = (widget.stats[StatsStringHash.intellect]! / 10).floor();
     int strengthTier = (widget.stats[StatsStringHash.strength]! / 10).floor();
 
-    int? grenadeHash =
-        ProfileService().getCurrentGrenadeHashForCharacter(widget.characterId);
+    int grenadeHash =
+        ProfileService().getCurrentGrenadeHashForCharacter(widget.characterId)!;
     int? grenadeTimer =
         GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier];
 
-    int? superHash =
-        ProfileService().getCurrentSuperHashForCharacter(widget.characterId);
+    int superHash =
+        ProfileService().getCurrentSuperHashForCharacter(widget.characterId)!;
     int? superTimer = SuperCooldown.superMap[superHash]?[superTier];
 
-    int? meleeHash =
-        ProfileService().getCurrentMeleeHashForCharacter(widget.characterId);
+    int meleeHash =
+        ProfileService().getCurrentMeleeHashForCharacter(widget.characterId)!;
     int? meleeTimer = MeleeCooldown.meleeMap[meleeHash]?[strengthTier];
 
     timerStat = {

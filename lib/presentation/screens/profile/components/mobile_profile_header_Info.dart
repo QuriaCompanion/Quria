@@ -1,4 +1,3 @@
-import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'dart:math' as math;
@@ -26,15 +25,22 @@ class MobileProfileHeaderInfo extends StatefulWidget {
 }
 
 class _MobileProfileHeaderInfoState extends State<MobileProfileHeaderInfo> {
-  late DestinyItemComponent subclass;
-  @override
-  void initState() {
-    super.initState();
-    subclass = ProfileService().getSubClassForCharacter(widget.characterId);
-  }
-
   @override
   Widget build(BuildContext context) {
+    int superHash =
+        ProfileService().getCurrentSuperHashForCharacter(widget.characterId)!;
+    String characterSuper = ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition![superHash]
+            ?.displayProperties
+            ?.icon ??
+        ManifestService
+            .manifestParsed
+            .destinySandboxPerkDefinition![
+                DestinyData.superNodeToSandbox[superHash]]
+            ?.displayProperties
+            ?.icon ??
+        "";
     return Padding(
       padding: EdgeInsets.only(bottom: globalPadding(context)),
       child: Row(
@@ -54,12 +60,7 @@ class _MobileProfileHeaderInfoState extends State<MobileProfileHeaderInfo> {
                 ),
               ),
               Image(
-                image: NetworkImage(DestinyData.bungieLink +
-                    ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition![subclass.itemHash]!
-                        .displayProperties!
-                        .icon!),
+                image: NetworkImage(DestinyData.bungieLink + characterSuper),
                 height: MediaQuery.of(context).size.width * 0.17,
                 width: MediaQuery.of(context).size.width * 0.17,
                 fit: BoxFit.fill,

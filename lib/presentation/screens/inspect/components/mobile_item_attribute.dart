@@ -45,7 +45,7 @@ class _MobileItemAttributesState extends State<MobileItemAttributes> {
             child: textCaption(
                 'Taper pour plus de dÃ©tails, maintenir pour Ã©quiper'),
           )),
-      SizedBox(height: 15),
+      SizedBox(height: globalPadding(context)),
       Builder(builder: (context) {
         List<Widget> list = <Widget>[];
         for (int i = 0; i < perks.length; i++) {

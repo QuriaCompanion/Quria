@@ -32,6 +32,7 @@ dependencies:
   universal_io: ^2.0.4
   cupertino_icons: ^1.0.2
   modal_bottom_sheet: ^2.0.1
+  dropdown_below: ^1.0.3
   sleek_circular_slider : ^2.0.1
   auto_size_text: ^3.0.0
   flutter:
