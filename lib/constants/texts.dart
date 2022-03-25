@@ -65,6 +65,19 @@ Widget textBodyMedium(String child, {color = Colors.white}) {
   );
 }
 
+Widget textBodyHighRegular(String child, {color = Colors.white}) {
+  return AutoSizeText(
+    utf8Decode(child),
+    maxLines: 15,
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
+      fontSize: 18,
+      fontWeight: FontWeight.w400,
+      color: color,
+    ),
+  );
+}
+
 Widget textBodyRegular(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),

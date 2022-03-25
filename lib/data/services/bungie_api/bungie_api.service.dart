@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:bungie_api/enums/destiny_socket_array_type.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_free_action_request.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_request_entry.dart';
@@ -116,6 +117,7 @@ class BungieApiService {
     BungieNetToken? token = await auth.getToken();
     UserMembershipDataResponse response =
         await User.getMembershipDataForCurrentUser(Client(token: token));
+    inspect(response);
     return response.response;
   }
 

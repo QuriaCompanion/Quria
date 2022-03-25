@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/constants/texts.dart';
 import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
-import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -16,6 +14,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/Header/mobile_nav_bar.dart';
+import 'package:quria/presentation/components/burger.dart';
 import 'package:quria/presentation/components/misc/mobile_nav_item.dart';
 import 'package:quria/presentation/detailed_item/item/item_details_card.dart';
 import 'package:quria/presentation/detailed_item/subclass/advanced_subclass_details_card.dart';
@@ -25,7 +24,6 @@ import 'package:quria/presentation/screens/profile/components/character_banner.d
 import 'package:quria/presentation/screens/profile/components/mobile_item_card.dart';
 import 'package:quria/presentation/screens/profile/components/mobile_profile_header_info.dart';
 import 'package:quria/presentation/screens/profile/components/profile_main_node.dart';
-import 'package:quria/presentation/var/routes.dart';
 
 @immutable
 class ProfileWidget extends StatefulWidget {
@@ -135,7 +133,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   );
                 } else {
                   return Scaffold(
-                    drawer: textH1("test"),
+                    drawer: const Burger(),
                     extendBody: true,
                     extendBodyBehindAppBar: true,
                     appBar: AppBar(
@@ -270,16 +268,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               padding: EdgeInsets.symmetric(horizontal: pagePadding),
               child: Column(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(context, routeInspectMobile,
-                          arguments: InspectData(
-                              hash: item.itemHash!,
-                              instanceId: item.itemInstanceId!));
-                    },
-                    child: MobileItemCard(
-                      item: item,
-                    ),
+                  MobileItemCard(
+                    item: item,
+                    instanceId: item.itemInstanceId!,
                   ),
                   const Divider(
                     thickness: 1,
