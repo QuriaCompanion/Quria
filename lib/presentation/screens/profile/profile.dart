@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/constants/texts.dart';
 import 'package:quria/cubit/attributs_details_cubit.dart';
 import 'package:quria/cubit/character_cubit.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
@@ -16,6 +15,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/Header/mobile_nav_bar.dart';
+import 'package:quria/presentation/components/burger.dart';
 import 'package:quria/presentation/components/misc/mobile_nav_item.dart';
 import 'package:quria/presentation/detailed_item/item/item_details_card.dart';
 import 'package:quria/presentation/detailed_item/subclass/advanced_subclass_details_card.dart';
@@ -135,7 +135,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   );
                 } else {
                   return Scaffold(
-                    drawer: textH1("test"),
+                    drawer: const Burger(),
                     extendBody: true,
                     extendBodyBehindAppBar: true,
                     appBar: AppBar(
