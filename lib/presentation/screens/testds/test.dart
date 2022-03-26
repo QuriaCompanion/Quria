@@ -41,7 +41,7 @@ class _TestWidgetState extends State<TestWidget> {
                           return Text(build.boots.hash.toString());
                         });
                   } else {
-                    return Text('no data');
+                    return const Text('no data');
                   }
                 });
           } else {

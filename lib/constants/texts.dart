@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-Widget textH1(String child, {color = Colors.white}) {
+Widget textH1(String child, {color = Colors.white, maxLines = 1}) {
   return AutoSizeText(
     utf8Decode(child),
     overflow: TextOverflow.ellipsis,
+    maxLines: maxLines,
     style: TextStyle(
       fontSize: 24,
       fontWeight: FontWeight.bold,

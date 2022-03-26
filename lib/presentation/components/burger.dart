@@ -1,14 +1,10 @@
-import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:bungie_api/models/user_membership_data.dart';
 import 'package:flutter/material.dart';
-import 'package:hive/hive.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
-
-import 'Header/nav_bar.dart';
 
 class Burger extends StatefulWidget {
   const Burger({Key? key}) : super(key: key);

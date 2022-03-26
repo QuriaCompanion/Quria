@@ -1,4 +1,3 @@
-import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
@@ -6,17 +5,18 @@ import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
-import 'package:quria/presentation/screens/inspect/components/mobile_item_attribute.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/detailed_item/item/armor_mods.dart';
 import 'package:quria/presentation/screens/inspect/components/mobile_item_origin.dart';
 import 'package:quria/presentation/screens/inspect/components/mobile_item_other_attributes.dart';
 import 'package:quria/presentation/screens/inspect/components/mobile_stats.dart';
 
-class MobileInspectStatistics extends StatefulWidget {
+class MobileInspectArmorStatistics extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
   final String instanceId;
   final Map<String, DestinyStat>? stats;
 
-  const MobileInspectStatistics(
+  const MobileInspectArmorStatistics(
       {required this.item,
       required this.instanceId,
       required this.stats,
@@ -24,18 +24,27 @@ class MobileInspectStatistics extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<MobileInspectStatistics> createState() =>
-      _MobileInspectStatisticsState();
+  State<MobileInspectArmorStatistics> createState() =>
+      _MobileInspectArmorStatisticsState();
 }
 
-class _MobileInspectStatisticsState extends State<MobileInspectStatistics> {
+class _MobileInspectArmorStatisticsState
+    extends State<MobileInspectArmorStatistics> {
   late Map<String, List<DestinyItemPlugBase>>? plugs;
   late List<DestinyItemSocketState>? sockets;
+  late String afinityIcon;
+
   @override
   void initState() {
     super.initState();
     plugs = ProfileService().getItemReusablePlugs(widget.instanceId);
     sockets = ProfileService().getItemSockets(widget.instanceId);
+    final instance = ProfileService().getInstanceInfo(widget.instanceId);
+    afinityIcon = ManifestService
+        .manifestParsed
+        .destinyEnergyTypeDefinition![instance.energy!.energyTypeHash]!
+        .displayProperties!
+        .icon!;
   }
 
   @override
@@ -48,24 +57,20 @@ class _MobileInspectStatisticsState extends State<MobileInspectStatistics> {
         SizedBox(height: pagePadding),
         MobileItemStats(item: widget.item, stats: widget.stats),
         SizedBox(height: pagePadding),
+        ArmorMods(afinityIcon: afinityIcon, sockets: sockets!),
+        SizedBox(height: pagePadding),
+        MobileItemOtherAttributes(sockets: sockets),
         Builder(builder: (context) {
-          if (widget.item.itemType == DestinyItemType.Weapon) {
-            Column(
+          if (widget.item.collectibleHash != null) {
+            return Column(
               children: [
-                MobileItemAttributes(
-                    instanceId: widget.instanceId,
-                    sockets: sockets,
-                    plugs: plugs),
-                SizedBox(height: pagePadding)
+                MobileItemOrigin(collectionHash: widget.item.collectibleHash!),
+                SizedBox(height: pagePadding),
               ],
             );
           }
           return Container();
         }),
-        MobileItemOtherAttributes(sockets: sockets),
-        SizedBox(height: pagePadding),
-        MobileItemOrigin(collectionHash: widget.item.collectibleHash!),
-        SizedBox(height: pagePadding),
       ]),
     );
   }

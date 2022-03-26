@@ -1,6 +1,4 @@
 import 'dart:math';
-
-import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -31,10 +29,9 @@ class _MobileItemCardState extends State<MobileItemCard>
     with TickerProviderStateMixin {
   late final DestinyInventoryItemDefinition itemDef;
   late final DestinyEquipmentSlotDefinition itemCategory;
-  late final DestinyDamageTypeDefinition damageType;
   late bool dropDownActivated = true;
-  late AnimationController controller =
-      AnimationController(vsync: this, duration: Duration(milliseconds: 100));
+  late AnimationController controller = AnimationController(
+      vsync: this, duration: const Duration(milliseconds: 100));
   late Animation<double> animation;
   late List<DestinyItemSocketState> perks;
 
@@ -76,9 +73,6 @@ class _MobileItemCardState extends State<MobileItemCard>
             ?.icon;
 
     final int powerLevel = instanceInfo.primaryStat!.value!;
-    final DestinyDamageTypeDefinition damageType = ManifestService
-        .manifestParsed
-        .destinyDamageTypeDefinition![itemDef.defaultDamageTypeHash!]!;
 
     // setRotation(0);
     final sockets = ProfileService().getItemSockets(widget.instanceId);
@@ -133,6 +127,9 @@ class _MobileItemCardState extends State<MobileItemCard>
                   ),
                   SizedBox(width: globalPadding(context)),
                   SizedBox(
+                    width: MediaQuery.of(context).size.width -
+                        (iconSize * 2) -
+                        globalPadding(context) * 3,
                     height: iconSize,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -147,8 +144,8 @@ class _MobileItemCardState extends State<MobileItemCard>
                                 height: 12,
                                 margin: const EdgeInsets.only(right: 5),
                                 child: Image(
-                                  image: NetworkImage(DestinyData.bungieLink +
-                                      damageType.displayProperties!.icon!),
+                                  image: NetworkImage(
+                                      DestinyData.bungieLink + elementIcon!),
                                 )),
                             textBodyBold(powerLevel.toString()),
                             divider,
@@ -172,18 +169,22 @@ class _MobileItemCardState extends State<MobileItemCard>
                   dropDownActivated = !dropDownActivated;
                 })
               },
-              child: AnimatedBuilder(
-                  animation: animation,
-                  builder: (context, child) {
-                    return Transform.rotate(
-                      angle: animation.value,
-                      child: child,
-                    );
-                  },
-                  child: const Icon(
-                    Icons.arrow_drop_down_sharp,
-                    color: Colors.white,
-                  )),
+              child: SizedBox(
+                height: iconSize,
+                width: iconSize,
+                child: AnimatedBuilder(
+                    animation: animation,
+                    builder: (context, child) {
+                      return Transform.rotate(
+                        angle: animation.value,
+                        child: child,
+                      );
+                    },
+                    child: Icon(
+                      Icons.arrow_drop_down_sharp,
+                      color: Colors.white,
+                    )),
+              ),
             )
           ]),
           Visibility(
@@ -212,7 +213,7 @@ class _MobileItemCardState extends State<MobileItemCard>
                                 perk.plugHash]!,
                             iconSize: smallIconSize,
                           )),
-                    Spacer(),
+                    const Spacer(),
                     Row(
                       children: [
                         Container(
@@ -223,8 +224,8 @@ class _MobileItemCardState extends State<MobileItemCard>
                             shape: BoxShape.rectangle,
                           ),
                           child: Image(
-                            image: NetworkImage(DestinyData.bungieLink +
-                                damageType.displayProperties!.icon!),
+                            image: NetworkImage(
+                                DestinyData.bungieLink + elementIcon),
                           ),
                         ),
                         Container(
@@ -234,8 +235,8 @@ class _MobileItemCardState extends State<MobileItemCard>
                             shape: BoxShape.rectangle,
                           ),
                           child: Image(
-                            image: NetworkImage(DestinyData.bungieLink +
-                                damageType.displayProperties!.icon!),
+                            image: NetworkImage(
+                                DestinyData.bungieLink + elementIcon),
                           ),
                         ),
                       ],

@@ -146,7 +146,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                         0.064)) /
                                 2,
                           ),
-                          icon: Icon(Icons.menu),
+                          icon: const Icon(Icons.menu),
                           onPressed: () => Scaffold.of(context).openDrawer(),
                         );
                       }),

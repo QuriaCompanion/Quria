@@ -10,5 +10,6 @@ const String routeExotic = '/exotic';
 const String routeCollection = '/collection';
 const String routeInspect = "/inspect";
 const String routeInspectMobile = "/inspect-mobile";
+const String routeInspectMobileArmor = "/inspect-mobile-item";
 
 final navKey = GlobalKey<NavigatorState>();

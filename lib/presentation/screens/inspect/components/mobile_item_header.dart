@@ -18,30 +18,30 @@ class MobileItemHeader extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(globalPadding(context)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          textH1(name),
-          SizedBox(
-            height: 22,
-            child: Row(
-              children: [
-                Image(
-                    height: 16,
-                    width: 16,
-                    image: NetworkImage(DestinyData.bungieLink + iconElement)),
-                const SizedBox(width: 8),
-                textH2(power.toString()),
-                divider,
-                textBodyRegular(type),
-              ],
-            ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+            width: MediaQuery.of(context).size.width -
+                (globalPadding(context) * 2),
+            child: textH1(name, maxLines: 2)),
+        SizedBox(
+          height: 22,
+          child: Row(
+            children: [
+              Image(
+                  height: 16,
+                  width: 16,
+                  image: NetworkImage(DestinyData.bungieLink + iconElement)),
+              const SizedBox(width: 8),
+              textH2(power.toString()),
+              divider,
+              textBodyRegular(type),
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

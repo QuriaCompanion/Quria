@@ -12,6 +12,8 @@ const Color grey = Color(0xFF3B3F4A);
 const Color greyLight = Color(0xFF898C94);
 const Color blueEquipped = Color(0xFF59A1E7);
 
+const Color solar = Color(0xFF753D24);
+
 double globalPadding(BuildContext context) {
   return MediaQuery.of(context).size.width * 0.05;
 }
