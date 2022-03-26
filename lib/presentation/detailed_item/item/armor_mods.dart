@@ -1,24 +1,46 @@
-import 'dart:developer';
-
+import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/detailed_item/item/armor_afinity.dart';
+import 'package:quria/presentation/detailed_item/item/armor_mod_icon_display.dart';
+import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
-class ArmorMods extends StatelessWidget {
+class ArmorMods extends StatefulWidget {
   final List<DestinyItemSocketState> sockets;
+  final String? instanceId;
+  final DestinyInventoryItemDefinition item;
   final String afinityIcon;
-  const ArmorMods({required this.afinityIcon, required this.sockets, Key? key})
+  const ArmorMods(
+      {required this.afinityIcon,
+      required this.sockets,
+      required this.item,
+      this.instanceId,
+      Key? key})
       : super(key: key);
 
   @override
+  State<ArmorMods> createState() => _ArmorModsState();
+}
+
+class _ArmorModsState extends State<ArmorMods> {
+  late List<DestinyItemSocketState> currentSockets;
+  @override
+  void initState() {
+    super.initState();
+    currentSockets = widget.sockets;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final Map<int, DestinyItemSocketState> displayedSockets = sockets
+    final Map<int, DestinyItemSocketState> displayedSockets = currentSockets
         .where((element) =>
             (element.isVisible!) &&
             ManifestService
@@ -37,13 +59,24 @@ class ArmorMods extends StatelessWidget {
                     .manifestParsed
                     .destinyInventoryItemDefinition?[element.plugHash]
                     ?.itemType !=
-                DestinyItemType.Armor)
+                DestinyItemType.Armor &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.itemSubType !=
+                DestinyItemSubType.Ornament &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.inventory
+                    ?.tierType !=
+                TierType.Exotic)
         .toList()
         .asMap();
     return mobileSection(context, title: "Mods", children: [
       ArmorAfinity(
-          afinityIcon: afinityIcon,
-          afinity: sockets.firstWhere((element) =>
+          afinityIcon: widget.afinityIcon,
+          afinity: widget.sockets.firstWhere((element) =>
               ManifestService
                   .manifestParsed
                   .destinyInventoryItemDefinition![element.plugHash]
@@ -68,118 +101,43 @@ class ArmorMods extends StatelessWidget {
           for (MapEntry<int, DestinyItemSocketState> socket
               in displayedSockets.entries)
             Padding(
-              padding: socket.key + 1 != displayedSockets.length
-                  ? EdgeInsets.only(right: globalPadding(context))
-                  : EdgeInsets.zero,
-              child: Image(
-                width: mobileItemSize(context),
-                height: mobileItemSize(context),
-                image: NetworkImage(DestinyData.bungieLink +
-                    ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition![
-                            socket.value.plugHash!]!
-                        .displayProperties!
-                        .icon!),
-              ),
-            )
+                padding: socket.key + 1 != displayedSockets.length
+                    ? EdgeInsets.only(right: globalPadding(context))
+                    : EdgeInsets.zero,
+                child: InkWell(
+                  onTap: () {
+                    showMaterialModalBottomSheet(
+                        backgroundColor: Colors.transparent,
+                        expand: false,
+                        context: context,
+                        builder: (context) {
+                          return ArmorModModal(
+                            index: socket.key,
+                            socket: ManifestService.manifestParsed
+                                    .destinyInventoryItemDefinition![
+                                socket.value.plugHash]!,
+                            instanceId: widget.instanceId,
+                            plugSetsHash: widget
+                                .item
+                                .sockets!
+                                .socketEntries![socket.key]
+                                .reusablePlugSetHash!,
+                            onSocketChange: (sockets) {
+                              setState(() {
+                                currentSockets = sockets!;
+                              });
+                            },
+                          );
+                        });
+                  },
+                  child: ArmorModIconDisplay(
+                    socket: ManifestService
+                            .manifestParsed.destinyInventoryItemDefinition![
+                        socket.value.plugHash]!,
+                  ),
+                ))
         ],
       )
     ]);
-  }
-}
-
-class ArmorAfinity extends StatelessWidget {
-  final String afinityIcon;
-  final DestinyItemSocketState afinity;
-  const ArmorAfinity({
-    required this.afinityIcon,
-    required this.afinity,
-    Key? key,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    final DestinyInventoryItemDefinition afinityDef = ManifestService
-        .manifestParsed.destinyInventoryItemDefinition![afinity.plugHash!]!;
-    inspect(afinityDef);
-    return Column(
-      children: [
-        Container(
-            width: double.infinity,
-            height: mobileItemSize(context),
-            decoration: const BoxDecoration(
-                color: solar,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8), topRight: Radius.circular(8))),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Image(
-                          width: 18,
-                          height: 18,
-                          image: NetworkImage(
-                              DestinyData.bungieLink + afinityIcon)),
-                      SizedBox(
-                          width: (MediaQuery.of(context).size.width -
-                                  (globalPadding(context) * 2)) *
-                              0.005),
-                      textH2(afinityDef.investmentStats![0].value.toString()),
-                    ],
-                  ),
-                  textBodyRegular('InutilisÃ©: ' +
-                      (10 - afinityDef.investmentStats![0].value!).toString()),
-                ],
-              ),
-            )),
-        SizedBox(
-            height: (MediaQuery.of(context).size.width -
-                    (globalPadding(context) * 2)) *
-                0.005),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Container(
-              height: mobileItemSize(context) / 3,
-              width: (MediaQuery.of(context).size.width -
-                      (globalPadding(context) * 2)) /
-                  10.5,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8)),
-              ),
-            ),
-            for (int i = 2; i < 10; i++)
-              Container(
-                height: mobileItemSize(context) / 3,
-                width: (MediaQuery.of(context).size.width -
-                        (globalPadding(context) * 2)) /
-                    10.5,
-                decoration: BoxDecoration(
-                  color: afinityDef.investmentStats![0].value! >= i
-                      ? Colors.white
-                      : greyLight,
-                ),
-              ),
-            Container(
-              height: mobileItemSize(context) / 3,
-              width: (MediaQuery.of(context).size.width -
-                      (globalPadding(context) * 2)) /
-                  10.5,
-              decoration: BoxDecoration(
-                color: afinityDef.investmentStats![0].value! == 10
-                    ? Colors.white
-                    : greyLight,
-                borderRadius:
-                    const BorderRadius.only(bottomRight: Radius.circular(8)),
-              ),
-            ),
-          ],
-        )
-      ],
-    );
   }
 }

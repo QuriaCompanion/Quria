@@ -84,6 +84,8 @@ class DisplayService {
             "DestinyPlugSetDefinition", box);
         await ManifestService.getManifest<DestinyEnergyTypeDefinition>(
             "DestinyEnergyTypeDefinition", box);
+        await ManifestService.getManifest<DestinyPlugSetDefinition>(
+            "DestinyPlugSetDefinition", box);
       }
 
       final characters = profile.getCharacters();

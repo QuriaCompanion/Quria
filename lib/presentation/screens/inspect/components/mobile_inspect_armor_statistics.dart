@@ -1,3 +1,4 @@
+import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
@@ -7,8 +8,9 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/detailed_item/item/armor_mods.dart';
+import 'package:quria/presentation/screens/inspect/components/mobile_inspect_cosmetics.dart';
+import 'package:quria/presentation/screens/inspect/components/mobile_inspect_exotic_armor.dart';
 import 'package:quria/presentation/screens/inspect/components/mobile_item_origin.dart';
-import 'package:quria/presentation/screens/inspect/components/mobile_item_other_attributes.dart';
 import 'package:quria/presentation/screens/inspect/components/mobile_stats.dart';
 
 class MobileInspectArmorStatistics extends StatefulWidget {
@@ -56,16 +58,51 @@ class _MobileInspectArmorStatisticsState
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         SizedBox(height: pagePadding),
         MobileItemStats(item: widget.item, stats: widget.stats),
+        Builder(builder: (context) {
+          if (widget.item.inventory?.tierType == TierType.Exotic) {
+            DestinyInventoryItemDefinition? exoticPerk =
+                ManifestService.manifestParsed.destinyInventoryItemDefinition![
+                    sockets
+                        ?.firstWhere((element) =>
+                            ManifestService
+                                    .manifestParsed
+                                    .destinyInventoryItemDefinition?[
+                                        element.plugHash]
+                                    ?.plug
+                                    ?.plugCategoryHash ==
+                                1744546145 &&
+                            ManifestService
+                                    .manifestParsed
+                                    .destinyInventoryItemDefinition?[
+                                        element.plugHash]
+                                    ?.inventory
+                                    ?.tierType ==
+                                TierType.Exotic)
+                        .plugHash];
+            return Column(
+              children: [
+                SizedBox(height: pagePadding),
+                MobileInspectExoticArmor(
+                    iconSize: mobileItemSize(context), item: exoticPerk!),
+              ],
+            );
+          }
+          return Container();
+        }),
         SizedBox(height: pagePadding),
-        ArmorMods(afinityIcon: afinityIcon, sockets: sockets!),
+        ArmorMods(
+            instanceId: widget.instanceId,
+            afinityIcon: afinityIcon,
+            sockets: sockets!,
+            item: widget.item),
         SizedBox(height: pagePadding),
-        MobileItemOtherAttributes(sockets: sockets),
+        MobileInspectCosmetics(sockets: sockets!),
         Builder(builder: (context) {
           if (widget.item.collectibleHash != null) {
             return Column(
               children: [
-                MobileItemOrigin(collectionHash: widget.item.collectibleHash!),
                 SizedBox(height: pagePadding),
+                MobileItemOrigin(collectionHash: widget.item.collectibleHash!),
               ],
             );
           }

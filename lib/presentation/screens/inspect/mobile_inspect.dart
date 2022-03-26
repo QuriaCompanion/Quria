@@ -70,18 +70,8 @@ class _MobileInspectState extends State<MobileInspect> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       backgroundColor: black,
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: blackLight,
-        onPressed: () {
-          Navigator.pop(context);
-        },
-        child: Center(
-          child: Icon(
-            Icons.chevron_left,
-            color: Colors.white,
-          ),
-        ),
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
         child: Column(

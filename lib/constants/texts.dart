@@ -108,6 +108,7 @@ Widget textCaption(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),
     overflow: TextOverflow.ellipsis,
+    maxLines: 15,
     style: TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.w400,

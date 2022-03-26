@@ -1,11 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:bungie_api/enums/destiny_socket_array_type.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_free_action_request.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_request_entry.dart';
 import 'package:bungie_api/responses/destiny_item_change_response_response.dart';
-import 'package:http/http.dart' as http;
-
 import 'package:bungie_api/api/destiny2.dart';
 import 'package:bungie_api/api/settings.dart';
 import 'package:bungie_api/api/user.dart';
@@ -33,6 +30,8 @@ import 'package:bungie_api/responses/int32_response.dart';
 import 'package:bungie_api/responses/user_membership_data_response.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/auth.service.dart';
+import 'package:http/http.dart' as http;
+import 'package:quria/data/services/bungie_api/profile.service.dart';
 
 class BungieApiService {
   static const String baseUrl = 'https://www.bungie.net';
@@ -117,7 +116,6 @@ class BungieApiService {
     BungieNetToken? token = await auth.getToken();
     UserMembershipDataResponse response =
         await User.getMembershipDataForCurrentUser(Client(token: token));
-    inspect(response);
     return response.response;
   }
 
@@ -179,6 +177,7 @@ class BungieApiService {
           ..characterId = "2305843009264759898"
           ..plug = plug
           ..membershipType = membership!.membershipType);
+    ProfileService().fetchProfileData();
     return response;
   }
 

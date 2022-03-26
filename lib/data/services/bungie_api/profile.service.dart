@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_collectible_state.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
@@ -244,7 +243,6 @@ class ProfileService {
   Future<DestinyProfileResponse?> loadProfile() async {
     DestinyProfileResponse? response = await fetchProfileData();
     _profile = response;
-    inspect(response);
     return response;
   }
 

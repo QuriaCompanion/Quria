@@ -32,7 +32,7 @@ class StatProgressBar extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: padding),
       width: width,
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
-        textCaption(name),
+        SizedBox(width: width * 0.4 - 25, child: textCaption(name)),
         SizedBox(
             width: 25, child: Center(child: textCaptionBold(value.toString()))),
         LinearPercentIndicator(

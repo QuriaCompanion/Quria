@@ -1,4 +1,7 @@
 import 'dart:math';
+import 'package:bungie_api/enums/destiny_item_sub_type.dart';
+import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -33,7 +36,6 @@ class _MobileItemCardState extends State<MobileItemCard>
   late AnimationController controller = AnimationController(
       vsync: this, duration: const Duration(milliseconds: 100));
   late Animation<double> animation;
-  late List<DestinyItemSocketState> perks;
 
   @override
   void dispose() {
@@ -74,22 +76,67 @@ class _MobileItemCardState extends State<MobileItemCard>
 
     final int powerLevel = instanceInfo.primaryStat!.value!;
 
-    // setRotation(0);
     final sockets = ProfileService().getItemSockets(widget.instanceId);
-    if (sockets != null) {
-      perks = sockets
-          .where((element) =>
-              element.plugHash != null &&
-              DestinyData.perkCategoryHash.contains(ManifestService
-                  .manifestParsed
-                  .destinyInventoryItemDefinition?[element.plugHash]!
-                  .plug!
-                  .plugCategoryHash!))
-          .toList();
-    } else {
-      perks = [];
-    }
+    final List<DestinyItemSocketState>? perks = sockets!
+        .where((element) =>
+            element.plugHash != null &&
+            DestinyData.perkCategoryHash.contains(ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.plugHash]!
+                .plug!
+                .plugCategoryHash!))
+        .toList();
 
+    final List<DestinyItemSocketState> armorSockets = sockets
+        .where((element) =>
+            (element.isVisible!) &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.plug
+                    ?.plugCategoryHash !=
+                2973005342 &&
+            !ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition![element.plugHash]!
+                .plug!
+                .plugCategoryIdentifier!
+                .contains('masterworks.stat') &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.itemType !=
+                DestinyItemType.Armor &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.itemSubType !=
+                DestinyItemSubType.Ornament &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.inventory
+                    ?.tierType !=
+                TierType.Exotic)
+        .toList();
+    final List<DestinyItemSocketState>? cosmetics = sockets
+        .where((element) =>
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.itemType ==
+                DestinyItemType.Armor ||
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.itemSubType ==
+                DestinyItemSubType.Ornament ||
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition?[element.plugHash]
+                    ?.itemSubType ==
+                DestinyItemSubType.Shader)
+        .toList();
     double iconSize = MediaQuery.of(context).size.width / 6.69;
     double smallIconSize = MediaQuery.of(context).size.width / 11.9;
     return Container(
@@ -180,7 +227,7 @@ class _MobileItemCardState extends State<MobileItemCard>
                         child: child,
                       );
                     },
-                    child: Icon(
+                    child: const Icon(
                       Icons.arrow_drop_down_sharp,
                       color: Colors.white,
                     )),
@@ -198,7 +245,7 @@ class _MobileItemCardState extends State<MobileItemCard>
                 ),
                 Row(
                   children: [
-                    for (DestinyItemSocketState perk in perks)
+                    for (DestinyItemSocketState perk in perks!)
                       Container(
                           width: smallIconSize,
                           height: smallIconSize,
@@ -213,9 +260,8 @@ class _MobileItemCardState extends State<MobileItemCard>
                                 perk.plugHash]!,
                             iconSize: smallIconSize,
                           )),
-                    const Spacer(),
-                    Row(
-                      children: [
+                    if (itemDef.itemType == DestinyItemType.Armor)
+                      for (DestinyItemSocketState socket in armorSockets)
                         Container(
                           width: smallIconSize,
                           height: smallIconSize,
@@ -224,21 +270,36 @@ class _MobileItemCardState extends State<MobileItemCard>
                             shape: BoxShape.rectangle,
                           ),
                           child: Image(
-                            image: NetworkImage(
-                                DestinyData.bungieLink + elementIcon),
+                            image: NetworkImage(DestinyData.bungieLink +
+                                ManifestService
+                                    .manifestParsed
+                                    .destinyInventoryItemDefinition![
+                                        socket.plugHash]!
+                                    .displayProperties!
+                                    .icon!),
                           ),
                         ),
-                        Container(
-                          width: smallIconSize,
-                          height: smallIconSize,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.rectangle,
+                    const Spacer(),
+                    Row(
+                      children: [
+                        for (DestinyItemSocketState socket in cosmetics!)
+                          Container(
+                            width: smallIconSize,
+                            height: smallIconSize,
+                            margin: const EdgeInsets.only(right: 10),
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.rectangle,
+                            ),
+                            child: Image(
+                              image: NetworkImage(DestinyData.bungieLink +
+                                  ManifestService
+                                      .manifestParsed
+                                      .destinyInventoryItemDefinition![
+                                          socket.plugHash]!
+                                      .displayProperties!
+                                      .icon!),
+                            ),
                           ),
-                          child: Image(
-                            image: NetworkImage(
-                                DestinyData.bungieLink + elementIcon),
-                          ),
-                        ),
                       ],
                     )
                   ],
