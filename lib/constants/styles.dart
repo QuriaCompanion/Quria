@@ -15,11 +15,19 @@ const Color blueEquipped = Color(0xFF59A1E7);
 const Color solar = Color(0xFF753D24);
 
 double globalPadding(BuildContext context) {
-  return MediaQuery.of(context).size.width * 0.05;
+  return vw(context) * 0.05;
 }
 
 double mobileItemSize(BuildContext context) {
-  return (MediaQuery.of(context).size.width - (globalPadding(context) * 6)) / 5;
+  return (vw(context) - (globalPadding(context) * 6)) / 5;
+}
+
+double vw(BuildContext context) {
+  return MediaQuery.of(context).size.width;
+}
+
+double vh(BuildContext context) {
+  return MediaQuery.of(context).size.height;
 }
 
 const Color backgroundColor = black;

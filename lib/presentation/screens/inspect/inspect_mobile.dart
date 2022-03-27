@@ -9,9 +9,10 @@ import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/screens/inspect/components/mobile_inspect_armor_statistics.dart';
-import 'package:quria/presentation/screens/inspect/components/mobile_inspect_weapon_statistics.dart';
-import 'package:quria/presentation/screens/inspect/components/mobile_item_header.dart';
+import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
+import 'package:quria/presentation/screens/inspect/inspect_mobile_armor_info.dart';
+import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_info.dart';
+import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_header.dart';
 
 class MobileInspect extends StatefulWidget {
   final InspectData data;
@@ -51,23 +52,22 @@ class _MobileInspectState extends State<MobileInspect> {
             ?.displayProperties
             ?.icon;
     content = itemDef.itemType == DestinyItemType.Weapon
-        ? MobileInspectWeaponStatistics(
+        ? InspectMobileWeaponInfo(
             item: itemDef,
             stats: stats,
             instanceId: widget.data.instanceId,
           )
-        : MobileInspectArmorStatistics(
+        : InspectMobileArmorInfo(
             item: itemDef,
             stats: stats,
             instanceId: widget.data.instanceId,
           );
-    selected = 'Statistiques';
+    selected = 'Informations';
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBody: true,
       extendBodyBehindAppBar: true,
       backgroundColor: black,
       appBar: AppBar(
@@ -79,14 +79,61 @@ class _MobileInspectState extends State<MobileInspect> {
             mobileHeader(
               context,
               imageLink: imageLink,
-              child: MobileItemHeader(
+              child: InspectMobileHeader(
                 name: itemDef.displayProperties!.name!,
                 iconElement: elementIcon!,
                 type: itemDef.itemTypeDisplayName!,
                 power: powerLevel,
               ),
             ),
-            content
+            SizedBox(
+              height: 45,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  InkWell(
+                      onTap: () {
+                        setState(() {
+                          selected = "Informations";
+                          content = itemDef.itemType == DestinyItemType.Weapon
+                              ? InspectMobileWeaponInfo(
+                                  item: itemDef,
+                                  stats: stats,
+                                  instanceId: widget.data.instanceId,
+                                )
+                              : InspectMobileArmorInfo(
+                                  item: itemDef,
+                                  stats: stats,
+                                  instanceId: widget.data.instanceId,
+                                );
+                        });
+                      },
+                      child: MobileNavItem(
+                        selected: selected == "Informations",
+                        value: "Informations",
+                        width: 171,
+                      )),
+                  InkWell(
+                      onTap: () {
+                        setState(() {
+                          selected = "Recomendations";
+                        });
+                      },
+                      child: MobileNavItem(
+                        selected: "Recomendations" == selected,
+                        value: "Recomendations",
+                        width: 171,
+                      )),
+                ],
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  left: globalPadding(context),
+                  right: globalPadding(context),
+                  bottom: globalPadding(context)),
+              child: content,
+            )
           ],
         ),
       ),

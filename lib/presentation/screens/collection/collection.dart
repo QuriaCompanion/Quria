@@ -45,21 +45,21 @@ class _CollectionWidgetState extends State<CollectionWidget> {
   @override
   Widget build(BuildContext context) {
     final padding = globalPadding(context);
-    final itemListWidth = MediaQuery.of(context).size.width * 0.6;
-    final filterWidth = MediaQuery.of(context).size.width * 0.3;
-    if (MediaQuery.of(context).size.width < 2200) {
+    final itemListWidth = vw(context) * 0.6;
+    final filterWidth = vw(context) * 0.3;
+    if (vw(context) < 2200) {
       axisCount = 7;
     }
-    if (MediaQuery.of(context).size.width < 1900) {
+    if (vw(context) < 1900) {
       axisCount = 6;
     }
-    if (MediaQuery.of(context).size.width < 1600) {
+    if (vw(context) < 1600) {
       itemWidth = 100;
     }
-    if (MediaQuery.of(context).size.width < 1100) {
+    if (vw(context) < 1100) {
       axisCount = 5;
     }
-    if (MediaQuery.of(context).size.width < 900) {
+    if (vw(context) < 900) {
       axisCount = 4;
     }
 
@@ -79,7 +79,7 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                       .decode(element.displayProperties!.name!.runes.toList())
                       .toLowerCase()
                       .contains(searchName.toLowerCase())));
-              if (MediaQuery.of(context).size.width < 850) {
+              if (vw(context) < 850) {
                 return mobileView(context, filteredData);
               }
               return Container(
@@ -203,11 +203,11 @@ class _CollectionWidgetState extends State<CollectionWidget> {
 
   Widget mobileView(BuildContext context,
       Iterable<DestinyInventoryItemDefinition> filteredData) {
-    double itemListWidth = MediaQuery.of(context).size.width * 0.9;
-    if (MediaQuery.of(context).size.width < 500) {
+    double itemListWidth = vw(context) * 0.9;
+    if (vw(context) < 500) {
       axisCount = 3;
     }
-    if (MediaQuery.of(context).size.width < 350) {
+    if (vw(context) < 350) {
       itemWidth = 75;
     }
     return Container(

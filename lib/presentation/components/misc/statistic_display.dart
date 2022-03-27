@@ -1,14 +1,14 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
-class StatisticDisplay extends StatelessWidget {
+class VerticalStatisticDisplay extends StatelessWidget {
   final int value;
   final String icon;
   final double width;
   final double fontsize;
   final MainAxisAlignment mainAxisAlignment;
-  const StatisticDisplay(
+  const VerticalStatisticDisplay(
       {Key? key,
       required this.value,
       required this.icon,
@@ -31,11 +31,7 @@ class StatisticDisplay extends StatelessWidget {
             ),
             SizedBox(
               width: width,
-              child: AutoSizeText('$value',
-                  textAlign: TextAlign.center,
-                  maxLines: 1,
-                  minFontSize: 5,
-                  style: TextStyle(color: Colors.white70, fontSize: fontsize)),
+              child: Center(child: textCaptionBold('$value')),
             ),
           ],
         )

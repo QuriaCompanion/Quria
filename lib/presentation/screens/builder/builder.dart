@@ -34,12 +34,12 @@ class _BuilderWidgetState extends State<BuilderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width < 600) {
-      double sidePadding = MediaQuery.of(context).size.width * 0.025;
-      singleBuildWidth = MediaQuery.of(context).size.width - sidePadding * 2;
+    if (vw(context) < 600) {
+      double sidePadding = vw(context) * 0.025;
+      singleBuildWidth = vw(context) - sidePadding * 2;
     }
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
+      width: vw(context),
       child: FutureBuilder(
           future: _future,
           builder: (BuildContext context, AsyncSnapshot<List<Build>> snapshot) {

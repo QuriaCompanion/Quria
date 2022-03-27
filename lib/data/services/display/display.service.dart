@@ -17,7 +17,6 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/helpers/exoticHelper.model.dart';
-import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -50,8 +49,9 @@ class DisplayService {
     return exoticItems;
   }
 
-  Future<ProfileHelper> getProfileData(int index) async {
+  Future<bool> getProfileData(int index) async {
     try {
+      await profile.loadProfile();
       if (ManifestService.manifestParsed.destinyInventoryItemDefinition ==
               null ||
           ManifestService.manifestParsed.destinyDamageTypeDefinition == null ||
@@ -87,10 +87,7 @@ class DisplayService {
         await ManifestService.getManifest<DestinyPlugSetDefinition>(
             "DestinyPlugSetDefinition", box);
       }
-
-      final characters = profile.getCharacters();
-      return ProfileHelper((await account.getMembership())!, characters,
-          profile.getCharacterEquipment(characters[index].characterId!));
+      return true;
     } catch (e) {
       rethrow;
     }

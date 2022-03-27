@@ -53,42 +53,48 @@ class _ArmorModModalState extends State<ArmorModModal> {
           borderRadius: BorderRadius.all(Radius.circular(24)), color: black),
       child: SingleChildScrollView(
         child: Column(children: [
-          mobileSection(context, title: "Ãquiper un mod", children: [
-            ModDisplay(iconSize: mobileItemSize(context), item: widget.socket),
-            const Divider(
-              color: blackLight,
-              height: 22,
-              thickness: 1,
-            ),
-            for (var plug in plugs!)
-              Padding(
-                padding: EdgeInsets.only(bottom: globalPadding(context)),
-                child: InkWell(
-                  onTap: () {
-                    showMaterialModalBottomSheet(
-                        backgroundColor: Colors.transparent,
-                        expand: false,
-                        context: context,
-                        builder: (context) {
-                          return ArmorModSubModal(
-                              mod: ManifestService.manifestParsed
-                                      .destinyInventoryItemDefinition![
-                                  plug.plugItemHash]!,
-                              instanceId: widget.instanceId,
-                              onSocketsChanged: (sockets) {
-                                widget.onSocketChange(sockets);
-                                Navigator.pop(context);
-                              },
-                              index: widget.index);
-                        });
-                  },
-                  child: ItemWithTypeName(
-                      iconSize: mobileItemSize(context),
-                      item: ManifestService.manifestParsed
-                          .destinyInventoryItemDefinition![plug.plugItemHash]!),
-                ),
-              ),
-          ])
+          mobileSection(context,
+              title: "Ãquiper un mod",
+              child: Column(
+                children: [
+                  ModDisplay(
+                      iconSize: mobileItemSize(context), item: widget.socket),
+                  const Divider(
+                    color: blackLight,
+                    height: 22,
+                    thickness: 1,
+                  ),
+                  for (var plug in plugs!)
+                    Padding(
+                      padding: EdgeInsets.only(bottom: globalPadding(context)),
+                      child: InkWell(
+                        onTap: () {
+                          showMaterialModalBottomSheet(
+                              backgroundColor: Colors.transparent,
+                              expand: false,
+                              context: context,
+                              builder: (context) {
+                                return ArmorModSubModal(
+                                    mod: ManifestService.manifestParsed
+                                            .destinyInventoryItemDefinition![
+                                        plug.plugItemHash]!,
+                                    instanceId: widget.instanceId,
+                                    onSocketsChanged: (sockets) {
+                                      widget.onSocketChange(sockets);
+                                      Navigator.pop(context);
+                                    },
+                                    index: widget.index);
+                              });
+                        },
+                        child: ItemWithTypeName(
+                            iconSize: mobileItemSize(context),
+                            item: ManifestService.manifestParsed
+                                    .destinyInventoryItemDefinition![
+                                plug.plugItemHash]!),
+                      ),
+                    ),
+                ],
+              ))
         ]),
       ),
     );

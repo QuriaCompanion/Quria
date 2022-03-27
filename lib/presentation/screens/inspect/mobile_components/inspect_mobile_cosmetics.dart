@@ -3,7 +3,6 @@ import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/detailed_item/item/item_with_type_name.dart';
 
@@ -17,12 +16,6 @@ class MobileInspectCosmetics extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        textH2("CosmÃ©tiques"),
-        const Divider(
-          color: blackLight,
-          height: 15,
-          thickness: 1,
-        ),
         for (DestinyItemSocketState socket in sockets.where((element) =>
             ManifestService
                     .manifestParsed

@@ -3,13 +3,13 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
-class MobileItemHeader extends StatelessWidget {
+class InspectMobileHeader extends StatelessWidget {
   final String name;
   final String type;
   final String iconElement;
   final int power;
 
-  const MobileItemHeader(
+  const InspectMobileHeader(
       {required this.name,
       required this.type,
       required this.iconElement,
@@ -23,8 +23,7 @@ class MobileItemHeader extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-            width: MediaQuery.of(context).size.width -
-                (globalPadding(context) * 2),
+            width: vw(context) - (globalPadding(context) * 2),
             child: textH1(name, maxLines: 2)),
         SizedBox(
           height: 22,

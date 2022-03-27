@@ -1,22 +1,21 @@
 import 'package:bungie_api/destiny2.dart';
 import 'package:flutter/material.dart';
-import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/screens/inspect/components/mobile_item_mod_attribute.dart';
+import 'package:quria/presentation/detailed_item/item/item_named_description.dart';
 
-class MobileItemOtherAttributes extends StatefulWidget {
+class InspectMobileIntrinsics extends StatefulWidget {
   final List<DestinyItemSocketState>? sockets;
-  const MobileItemOtherAttributes({required this.sockets, Key? key})
+  const InspectMobileIntrinsics({required this.sockets, Key? key})
       : super(key: key);
 
   @override
-  State<MobileItemOtherAttributes> createState() =>
-      _MobileItemOtherAttributesState();
+  State<InspectMobileIntrinsics> createState() =>
+      _InspectMobileIntrinsicsState();
 }
 
-class _MobileItemOtherAttributesState extends State<MobileItemOtherAttributes> {
+class _InspectMobileIntrinsicsState extends State<InspectMobileIntrinsics> {
   late List<DestinyItemSocketState> displayedMods;
   @override
   void initState() {
@@ -53,9 +52,7 @@ class _MobileItemOtherAttributesState extends State<MobileItemOtherAttributes> {
 
   @override
   Widget build(BuildContext context) {
-    final double iconSize =
-        (MediaQuery.of(context).size.width - ((globalPadding(context)) * 6)) /
-            5;
+    final double iconSize = (vw(context) - ((globalPadding(context)) * 6)) / 5;
 
     List<Widget> list = <Widget>[];
     for (DestinyItemSocketState socket in displayedMods) {
@@ -74,7 +71,8 @@ class _MobileItemOtherAttributesState extends State<MobileItemOtherAttributes> {
         thickness: 1,
       ),
     );
-    return mobileSection(context,
-        title: 'Mods et attributs intrinsÃ©ques', children: list);
+    return Column(
+      children: list,
+    );
   }
 }

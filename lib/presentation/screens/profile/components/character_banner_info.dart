@@ -13,7 +13,7 @@ class CharacterBannerInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.5,
+      width: vw(context) * 0.5,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -22,8 +22,8 @@ class CharacterBannerInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.064,
-                height: MediaQuery.of(context).size.width * 0.064,
+                width: vw(context) * 0.064,
+                height: vw(context) * 0.064,
                 child: Image(
                   image: NetworkImage(
                       DestinyData.bungieLink + character.emblemPath!),
@@ -31,7 +31,7 @@ class CharacterBannerInfo extends StatelessWidget {
                 ),
               ),
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.016,
+                width: vw(context) * 0.016,
               ),
               textH3(ManifestService
                       .manifestParsed
@@ -41,13 +41,13 @@ class CharacterBannerInfo extends StatelessWidget {
             ],
           ),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.17,
+            width: vw(context) * 0.17,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.064,
-                    height: MediaQuery.of(context).size.width * 0.064,
+                    width: vw(context) * 0.064,
+                    height: vw(context) * 0.064,
                     child: Image(
                       image: NetworkImage(DestinyData.bungieLink +
                           ManifestService

@@ -28,12 +28,12 @@ class _InspectWidgetState extends State<InspectWidget> {
   final InspectHelper selectedPerks = InspectHelper();
   @override
   Widget build(BuildContext context) {
-    final double itemMainInfoWidth = MediaQuery.of(context).size.width * 0.33;
-    if (MediaQuery.of(context).size.width < 1600) {
+    final double itemMainInfoWidth = vw(context) * 0.33;
+    if (vw(context) < 1600) {
       imageSize = 100;
       iconSize = 50;
     }
-    if (MediaQuery.of(context).size.width < 850) {
+    if (vw(context) < 850) {
       return mobileView();
     }
     return Container(
@@ -132,13 +132,13 @@ class _InspectWidgetState extends State<InspectWidget> {
   }
 
   Widget mobileView() {
-    padding = MediaQuery.of(context).size.width * 0.025;
+    padding = vw(context) * 0.025;
     return SingleChildScrollView(
       child: Container(
           color: backgroundColor,
           padding: EdgeInsets.only(top: padding, left: padding, right: padding),
           child: SizedBox(
-            width: MediaQuery.of(context).size.width - padding * 2,
+            width: vw(context) - padding * 2,
             child: Column(
               children: [
                 Row(children: [
@@ -153,9 +153,7 @@ class _InspectWidgetState extends State<InspectWidget> {
                       iconSize: imageSize / 2.5,
                       childPadding: itemMainInfoPadding,
                       fontSize: fontSize,
-                      width: MediaQuery.of(context).size.width -
-                          imageSize -
-                          padding * 3,
+                      width: vw(context) - imageSize - padding * 3,
                       height: imageSize),
                 ]),
                 for (int statHash in DestinyData.linearStatBySubType[
@@ -164,7 +162,7 @@ class _InspectWidgetState extends State<InspectWidget> {
                         .destinyInventoryItemDefinition![widget.item.hash]!
                         .itemSubType!]!)
                   StatProgressBar(
-                      width: MediaQuery.of(context).size.width - padding * 2,
+                      width: vw(context) - padding * 2,
                       fontSize: fontSize,
                       padding: childPadding,
                       name: ManifestService
@@ -186,7 +184,7 @@ class _InspectWidgetState extends State<InspectWidget> {
                           .destinyInventoryItemDefinition![widget.item.hash]!
                           .itemType!),
                 WeaponDetailsHiddenStats(
-                  width: MediaQuery.of(context).size.width - padding * 2,
+                  width: vw(context) - padding * 2,
                   padding: childPadding,
                   fontSize: fontSize,
                   hash: widget.item.hash!,
@@ -195,9 +193,9 @@ class _InspectWidgetState extends State<InspectWidget> {
                   child: PerkList(
                       selectedPerks: selectedPerks,
                       item: widget.item,
-                      iconSize: MediaQuery.of(context).size.width / 7,
-                      padding: (MediaQuery.of(context).size.width -
-                              ((MediaQuery.of(context).size.width / 7) * 4) -
+                      iconSize: vw(context) / 7,
+                      padding: (vw(context) -
+                              ((vw(context) / 7) * 4) -
                               padding * 2) /
                           8),
                 )

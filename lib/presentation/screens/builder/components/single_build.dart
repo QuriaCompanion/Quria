@@ -31,7 +31,7 @@ class SingleBuild extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double imageSize = 100;
-    if (MediaQuery.of(context).size.width < 600) {
+    if (vw(context) < 600) {
       imageSize = width / 6;
     }
     List<DestinyItemComponent> items = ProfileService().getItemsByInstanceId([
@@ -63,7 +63,7 @@ class SingleBuild extends StatelessWidget {
     ];
     List<Widget> listStats = <Widget>[];
     for (var i = 0; i < 6; i++) {
-      listStats.add(StatisticDisplay(
+      listStats.add(VerticalStatisticDisplay(
         value: values[i],
         icon: DestinyData.statsIcon[i],
         width: (width - (padding * 2)) / 6,

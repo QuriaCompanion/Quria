@@ -31,8 +31,8 @@ class _MobileCharacterBannerState extends State<MobileCharacterBanner> {
           constraints: const BoxConstraints(),
           padding: EdgeInsets.zero,
           icon: const Icon(Icons.arrow_drop_down),
-          splashRadius: MediaQuery.of(context).size.width * 0.032,
-          iconSize: MediaQuery.of(context).size.width * 0.064,
+          splashRadius: vw(context) * 0.032,
+          iconSize: vw(context) * 0.064,
           color: greyLight,
           onPressed: () {
             setState(() {

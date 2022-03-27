@@ -6,8 +6,8 @@ Widget mobileHeader(BuildContext context,
     {required String imageLink, required Widget child}) {
   return Container(
     alignment: Alignment.bottomCenter,
-    width: MediaQuery.of(context).size.width,
-    height: MediaQuery.of(context).size.width * 0.9,
+    width: vw(context),
+    height: vw(context) * 0.9,
     decoration: BoxDecoration(
         image: DecorationImage(
             alignment: Alignment.topRight,
@@ -25,7 +25,7 @@ Widget mobileHeader(BuildContext context,
           ),
         ),
         alignment: Alignment.bottomCenter,
-        height: MediaQuery.of(context).size.width / 3.17,
+        height: vw(context) / 3.17,
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
             child: child)),
@@ -35,19 +35,22 @@ Widget mobileHeader(BuildContext context,
 Widget mobileSection(
   BuildContext context, {
   required String title,
-  required List<Widget> children,
+  required Widget child,
 }) {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      textH2(title),
-      const Divider(
-        color: blackLight,
-        height: 22,
-        thickness: 1,
-      ),
-      ...children
-    ],
+  return Padding(
+    padding: EdgeInsets.only(top: globalPadding(context)),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        textH2(title),
+        const Divider(
+          color: blackLight,
+          height: 22,
+          thickness: 1,
+        ),
+        child
+      ],
+    ),
   );
 }
 

@@ -32,7 +32,7 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width < 850) {
+    if (vw(context) < 850) {
       return mobileView();
     } else {
       return desktopView(context);
@@ -41,14 +41,14 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
 
   Widget mobileView() {
     double tooltipSize = 30;
-    padding = MediaQuery.of(context).size.width * 0.025;
+    padding = vw(context) * 0.025;
     return Container(
       color: backgroundColor,
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: Column(
         children: [
           SizedBox(
-            width: MediaQuery.of(context).size.width - padding * 2,
+            width: vw(context) - padding * 2,
             child: Center(
               child: AutoSizeText(
                 title,
@@ -77,7 +77,7 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
                 return Column(
                   children: [
                     SizedBox(
-                        width: MediaQuery.of(context).size.width - padding * 2,
+                        width: vw(context) - padding * 2,
                         height: MediaQuery.of(context).size.height * 0.6,
                         child: const FilterWidget()),
                     Row(
@@ -125,14 +125,14 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
 
   Widget desktopView(context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
+      width: vw(context),
       decoration: ghostBackground,
       child: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.only(
-              top: (MediaQuery.of(context).size.width / 100) * 5,
-              left: (MediaQuery.of(context).size.width / 100) * 5,
-              right: (MediaQuery.of(context).size.width / 100) * 5),
+              top: (vw(context) / 100) * 5,
+              left: (vw(context) / 100) * 5,
+              right: (vw(context) / 100) * 5),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -170,12 +170,9 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
                             children: [
                               Container(
                                   padding: EdgeInsets.only(
-                                      top: (MediaQuery.of(context).size.width /
-                                              100) *
-                                          2),
+                                      top: (vw(context) / 100) * 2),
                                   child: SizedBox(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.8,
+                                      width: vw(context) * 0.8,
                                       height:
                                           MediaQuery.of(context).size.height *
                                               0.6,
@@ -185,9 +182,7 @@ class _StatsFilterWidgetState extends State<StatsFilterWidget> {
                                 children: [
                                   Container(
                                       padding: EdgeInsets.all(
-                                          (MediaQuery.of(context).size.width /
-                                                  100) *
-                                              0.5),
+                                          (vw(context) / 100) * 0.5),
                                       child: InkWell(
                                         onTap: () => {
                                           setState(() {

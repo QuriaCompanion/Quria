@@ -2,25 +2,24 @@ import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
-import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
-import 'package:quria/presentation/screens/inspect/components/mobile_column_perk_display.dart';
+import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_perk_column.dart';
 
-class MobileItemAttributes extends StatefulWidget {
+class InspectMobilePerks extends StatefulWidget {
   final Map<String, List<DestinyItemPlugBase>>? plugs;
   final List<DestinyItemSocketState>? sockets;
   final String? instanceId;
-  const MobileItemAttributes(
+  const InspectMobilePerks(
       {required this.sockets, required this.plugs, this.instanceId, Key? key})
       : super(key: key);
 
   @override
-  State<MobileItemAttributes> createState() => _MobileItemAttributesState();
+  State<InspectMobilePerks> createState() => _InspectMobilePerksState();
 }
 
-class _MobileItemAttributesState extends State<MobileItemAttributes> {
+class _InspectMobilePerksState extends State<InspectMobilePerks> {
   List<DestinyItemSocketState>? currentSockets;
   @override
   void initState() {
@@ -33,7 +32,7 @@ class _MobileItemAttributesState extends State<MobileItemAttributes> {
     List<List<DestinyInventoryItemDefinition>> perks =
         ProfileService().getItemPerksAsItemDef(widget.plugs, currentSockets);
 
-    return mobileSection(context, title: 'Attributs', children: [
+    return Column(children: [
       Container(
           padding:
               EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
@@ -53,7 +52,7 @@ class _MobileItemAttributesState extends State<MobileItemAttributes> {
             padding: i != perks.length - 1
                 ? EdgeInsets.only(right: globalPadding(context))
                 : EdgeInsets.zero,
-            child: MobileColumnPerkDisplay(
+            child: InspectMobilePerkColumn(
                 onSocketsChanged: (newSockets) {
                   setState(() {
                     currentSockets = newSockets;

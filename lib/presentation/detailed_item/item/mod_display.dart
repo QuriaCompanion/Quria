@@ -23,9 +23,7 @@ class ModDisplay extends StatelessWidget {
         ArmorModIconDisplay(socket: item),
         SizedBox(width: globalPadding(context)),
         SizedBox(
-          width: MediaQuery.of(context).size.width -
-              (globalPadding(context) * 3) -
-              iconSize,
+          width: vw(context) - (globalPadding(context) * 3) - iconSize,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

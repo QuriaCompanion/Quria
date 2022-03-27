@@ -5,7 +5,6 @@ import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -73,7 +72,7 @@ class _ArmorModsState extends State<ArmorMods> {
                 TierType.Exotic)
         .toList()
         .asMap();
-    return mobileSection(context, title: "Mods", children: [
+    return Column(children: [
       ArmorAfinity(
           afinityIcon: widget.afinityIcon,
           afinity: widget.sockets.firstWhere((element) =>

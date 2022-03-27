@@ -143,12 +143,7 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membership == null) {
       showSelectMembership();
     }
-    await loadProfile();
     Navigator.pushNamed(context, routeProfile);
-  }
-
-  loadProfile() async {
-    await widget.profile.loadProfile();
   }
 
   void showSelectMembership() async {
@@ -157,7 +152,6 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membershipData?.destinyMemberships?.length == 1) {
       await widget.account.saveMembership(
           membershipData!, membershipData.destinyMemberships![0].membershipId!);
-      await loadProfile();
     }
   }
 

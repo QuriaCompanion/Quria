@@ -40,8 +40,7 @@ class ArmorAfinity extends StatelessWidget {
                           image: NetworkImage(
                               DestinyData.bungieLink + afinityIcon)),
                       SizedBox(
-                          width: (MediaQuery.of(context).size.width -
-                                  (globalPadding(context) * 2)) *
+                          width: (vw(context) - (globalPadding(context) * 2)) *
                               0.005),
                       textH2(afinityDef.investmentStats![0].value.toString()),
                     ],
@@ -51,18 +50,13 @@ class ArmorAfinity extends StatelessWidget {
                 ],
               ),
             )),
-        SizedBox(
-            height: (MediaQuery.of(context).size.width -
-                    (globalPadding(context) * 2)) *
-                0.005),
+        SizedBox(height: (vw(context) - (globalPadding(context) * 2)) * 0.005),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               height: mobileItemSize(context) / 3,
-              width: (MediaQuery.of(context).size.width -
-                      (globalPadding(context) * 2)) /
-                  10.5,
+              width: (vw(context) - (globalPadding(context) * 2)) / 10.5,
               decoration: const BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.only(bottomLeft: Radius.circular(8)),
@@ -71,9 +65,7 @@ class ArmorAfinity extends StatelessWidget {
             for (int i = 2; i < 10; i++)
               Container(
                 height: mobileItemSize(context) / 3,
-                width: (MediaQuery.of(context).size.width -
-                        (globalPadding(context) * 2)) /
-                    10.5,
+                width: (vw(context) - (globalPadding(context) * 2)) / 10.5,
                 decoration: BoxDecoration(
                   color: afinityDef.investmentStats![0].value! >= i
                       ? Colors.white
@@ -82,9 +74,7 @@ class ArmorAfinity extends StatelessWidget {
               ),
             Container(
               height: mobileItemSize(context) / 3,
-              width: (MediaQuery.of(context).size.width -
-                      (globalPadding(context) * 2)) /
-                  10.5,
+              width: (vw(context) - (globalPadding(context) * 2)) / 10.5,
               decoration: BoxDecoration(
                 color: afinityDef.investmentStats![0].value! == 10
                     ? Colors.white

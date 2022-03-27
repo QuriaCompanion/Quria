@@ -7,9 +7,9 @@ import 'package:quria/presentation/screens/builder/exotic.dart';
 import 'package:quria/presentation/screens/builder/stats_filter.dart';
 import 'package:quria/presentation/screens/collection/collection.dart';
 import 'package:quria/presentation/screens/inspect/inspect.dart';
-import 'package:quria/presentation/screens/inspect/mobile_inspect.dart';
+import 'package:quria/presentation/screens/inspect/inspect_mobile.dart';
 import 'package:quria/presentation/screens/login.dart';
-import 'package:quria/presentation/screens/profile/profile.dart';
+import 'package:quria/presentation/screens/profile/profile_page.dart';
 import 'package:quria/presentation/screens/testds/test.dart';
 import 'package:quria/presentation/var/routes.dart';
 

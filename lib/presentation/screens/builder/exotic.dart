@@ -42,25 +42,25 @@ class _ExoticWidgetState extends State<ExoticWidget> {
   List<Widget> list = [];
   @override
   Widget build(BuildContext context) {
-    return SizedBox(width: MediaQuery.of(context).size.width, child: exotic());
+    return SizedBox(width: vw(context), child: exotic());
   }
 
   Widget exotic() {
-    if (MediaQuery.of(context).size.width < 1420) {
+    if (vw(context) < 1420) {
       textFontSize = 20;
       titleFontSize = 35;
       padding = 30;
       itemPadding = 20;
       itemSize = 100;
     }
-    if (MediaQuery.of(context).size.width < 1200) {
+    if (vw(context) < 1200) {
       textFontSize = 15;
       titleFontSize = 30;
       padding = 20;
       itemPadding = 10;
       itemSize = 80;
     }
-    if (MediaQuery.of(context).size.width < 850) {
+    if (vw(context) < 850) {
       return mobileView();
     }
     return SingleChildScrollView(
@@ -108,8 +108,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                               isLoading = false;
                             });
                           },
-                          width:
-                              MediaQuery.of(context).size.width - padding * 2),
+                          width: vw(context) - padding * 2),
                       FutureBuilder(
                           future: _future,
                           builder: (context,
@@ -155,7 +154,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
   Widget mobileView() {
     bool isLoading = false;
     double sideTextPadding = 0;
-    double padding = MediaQuery.of(context).size.width * 0.025;
+    double padding = vw(context) * 0.025;
     double tooltipSize = 30;
 
     return FutureBuilder(
@@ -203,7 +202,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                             isLoading = false;
                           });
                         },
-                        width: MediaQuery.of(context).size.width - padding * 2),
+                        width: vw(context) - padding * 2),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: itemPadding),
                       child: SearchBar((searchValue) {
@@ -222,7 +221,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                       const Loader()
                     else
                       SizedBox(
-                        width: MediaQuery.of(context).size.width - padding * 2,
+                        width: vw(context) - padding * 2,
                         child: Wrap(
                             alignment: WrapAlignment.spaceBetween,
                             children: [

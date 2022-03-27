@@ -33,8 +33,8 @@ class _BurgerState extends State<Burger> {
               child: Column(
                 children: [
                   Container(
-                    width: MediaQuery.of(context).size.width * 0.58,
-                    height: (MediaQuery.of(context).size.width * 0.58) * 0.74,
+                    width: vw(context) * 0.58,
+                    height: (vw(context) * 0.58) * 0.74,
                     padding: EdgeInsets.all(globalPadding(context)),
                     decoration: BoxDecoration(
                       image: DecorationImage(
@@ -47,10 +47,8 @@ class _BurgerState extends State<Burger> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Container(
-                          width:
-                              (MediaQuery.of(context).size.width * 0.58) * 0.22,
-                          height:
-                              (MediaQuery.of(context).size.width * 0.58) * 0.22,
+                          width: (vw(context) * 0.58) * 0.22,
+                          height: (vw(context) * 0.58) * 0.22,
                           decoration: BoxDecoration(
                             image: DecorationImage(
                                 fit: BoxFit.fill,
@@ -65,13 +63,13 @@ class _BurgerState extends State<Burger> {
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height -
-                        ((MediaQuery.of(context).size.width * 0.58) * 0.74) -
+                        ((vw(context) * 0.58) * 0.74) -
                         globalPadding(context),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.58,
+                          width: vw(context) * 0.58,
                           padding: EdgeInsets.all(globalPadding(context)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -124,7 +122,7 @@ class _BurgerState extends State<Burger> {
                           ),
                         ),
                         Container(
-                          width: MediaQuery.of(context).size.width * 0.58,
+                          width: vw(context) * 0.58,
                           padding: EdgeInsets.only(
                               left: globalPadding(context),
                               right: globalPadding(context),

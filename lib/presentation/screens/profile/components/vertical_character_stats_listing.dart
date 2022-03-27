@@ -67,7 +67,7 @@ class _VerticalCharacterStatsListingState
           for (int i = 0; i < 6; i++)
             Tooltip(
               message: timerStat[DestinyData.armorStats[i]] ?? '',
-              child: StatisticDisplay(
+              child: VerticalStatisticDisplay(
                   value: widget.stats[DestinyData.armorStats[i]]!,
                   icon: DestinyData.statsIcon[i],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,7 +83,7 @@ class _VerticalCharacterStatsListingState
           for (int i = 0; i < 6; i++)
             Tooltip(
               message: timerStat[DestinyData.armorStats[i]] ?? '',
-              child: StatisticDisplay(
+              child: VerticalStatisticDisplay(
                   value: widget.stats[DestinyData.armorStats[i]]!,
                   icon: DestinyData.statsIcon[i],
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

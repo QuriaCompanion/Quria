@@ -1,14 +1,15 @@
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner_info.dart';
-import 'package:quria/presentation/screens/profile/components/mobile_character_banner.dart';
+import 'package:quria/presentation/screens/profile/mobile_components/mobile_character_banner.dart';
 
-class MobileProfileNavBar extends StatefulWidget {
+class MobileCharacterChoice extends StatefulWidget {
   final Function(int) callback;
   final Function choosingCharacter;
   final int index;
   final List<DestinyCharacterComponent> characters;
-  const MobileProfileNavBar(
+  const MobileCharacterChoice(
       {required this.callback,
       required this.index,
       required this.characters,
@@ -17,10 +18,10 @@ class MobileProfileNavBar extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<MobileProfileNavBar> createState() => _MobileProfileNavBarState();
+  State<MobileCharacterChoice> createState() => _MobileCharacterChoiceState();
 }
 
-class _MobileProfileNavBarState extends State<MobileProfileNavBar> {
+class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
   bool choosingCharacter = false;
   List<int> order = [0, 1, 2];
 
@@ -30,7 +31,7 @@ class _MobileProfileNavBarState extends State<MobileProfileNavBar> {
       children: [
         Container(
           padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-          width: MediaQuery.of(context).size.width,
+          width: vw(context),
           child: SizedBox(
             height: 56,
             child: Center(
@@ -63,14 +64,14 @@ class _MobileProfileNavBarState extends State<MobileProfileNavBar> {
                   character: widget.characters[order[1]],
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.064,
+                  width: vw(context) * 0.064,
                 )
               ],
             ),
           ),
         if (choosingCharacter && widget.characters.length > 2)
           SizedBox(
-            height: (56 - (MediaQuery.of(context).size.width * 0.064)) / 2,
+            height: (56 - (vw(context) * 0.064)) / 2,
           ),
         if (choosingCharacter && widget.characters.length > 2)
           InkWell(
@@ -89,7 +90,7 @@ class _MobileProfileNavBarState extends State<MobileProfileNavBar> {
                   character: widget.characters[order[2]],
                 ),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.064,
+                  width: vw(context) * 0.064,
                 )
               ],
             ),
