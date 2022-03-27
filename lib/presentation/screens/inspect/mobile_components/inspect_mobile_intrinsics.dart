@@ -58,7 +58,7 @@ class _InspectMobileIntrinsicsState extends State<InspectMobileIntrinsics> {
     for (DestinyItemSocketState socket in displayedMods) {
       list.add(Padding(
         padding: const EdgeInsets.only(bottom: 22),
-        child: MobileItemModAttribute(
+        child: ItemNamedDescription(
             iconSize: iconSize,
             item: ManifestService.manifestParsed
                 .destinyInventoryItemDefinition![socket.plugHash]!),

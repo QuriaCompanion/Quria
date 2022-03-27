@@ -25,7 +25,6 @@ import 'package:quria/data/services/storage/storage.service.dart';
 class DisplayService {
   ProfileService profile = ProfileService();
   AccountService account = AccountService();
-  static init() async {}
 
   Future<List<DestinyInventoryItemDefinition>> getExotics(
       DestinyClass classType) async {
@@ -104,6 +103,8 @@ class DisplayService {
         exoticItems.add(exoticHelper.manifest[element.itemHash]!);
       }
     }
+    exoticItems
+        .sort((a, b) => a.itemSubType!.index.compareTo(b.itemSubType!.index));
     return exoticItems;
   }
 

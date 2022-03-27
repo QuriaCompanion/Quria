@@ -29,6 +29,11 @@ class InspectMobileExoticArmor extends StatelessWidget {
                         ?.tierType ==
                     TierType.Exotic)
             .plugHash]!;
-    return ModDisplay(iconSize: mobileItemSize(context), item: item);
+    return ModDisplay(
+        width:
+            vw(context) - globalPadding(context) * 2 - mobileItemSize(context),
+        iconSize: mobileItemSize(context),
+        padding: globalPadding(context),
+        item: item);
   }
 }

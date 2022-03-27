@@ -9,7 +9,8 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
-import 'package:quria/presentation/screens/profile/profile_mobile_scaffold.dart';
+import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
+import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
 
 @immutable
 class ProfileWidget extends StatefulWidget {
@@ -104,14 +105,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 children: [],
               );
             } else {
-              return ProfileMobileScaffold(
-                data: data,
-                onCharacterChange: (newIndex) {
-                  setState(() {
-                    index = newIndex;
-                  });
-                },
-              );
+              return ScaffoldCharacters(
+                  characters: data.characters,
+                  selectedCharacterIndex: data.selectedCharacterIndex,
+                  onCharacterChange: (newIndex) {
+                    setState(() {
+                      index = newIndex;
+                    });
+                  },
+                  body: ProfileMobileView(data: data));
             }
           } else {
             return Container(

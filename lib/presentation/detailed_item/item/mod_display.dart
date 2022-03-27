@@ -5,14 +5,17 @@ import 'package:quria/constants/texts.dart';
 import 'package:quria/presentation/detailed_item/item/armor_mod_icon_display.dart';
 
 class ModDisplay extends StatelessWidget {
+  final double padding;
+  final double iconSize;
+  final double width;
+  final DestinyInventoryItemDefinition item;
   const ModDisplay({
     Key? key,
     required this.iconSize,
     required this.item,
+    required this.width,
+    required this.padding,
   }) : super(key: key);
-
-  final double iconSize;
-  final DestinyInventoryItemDefinition item;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +24,15 @@ class ModDisplay extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         ArmorModIconDisplay(socket: item),
-        SizedBox(width: globalPadding(context)),
+        SizedBox(width: padding),
         SizedBox(
-          width: vw(context) - (globalPadding(context) * 3) - iconSize,
+          width: width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               textBodyRegular(item.displayProperties!.name!),
-              textCaption(item.displayProperties!.description!),
+              textCaption(item.displayProperties!.description!,
+                  color: greyLight),
             ],
           ),
         ),

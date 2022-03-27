@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/presentation/screens/builder/builder.dart';
-import 'package:quria/presentation/screens/builder/exotic.dart';
+import 'package:quria/presentation/screens/builder/exotic/exotic_page.dart';
 import 'package:quria/presentation/screens/builder/stats_filter.dart';
 import 'package:quria/presentation/screens/collection/collection.dart';
 import 'package:quria/presentation/screens/inspect/inspect.dart';

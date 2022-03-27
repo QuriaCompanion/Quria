@@ -58,7 +58,12 @@ class _ArmorModModalState extends State<ArmorModModal> {
               child: Column(
                 children: [
                   ModDisplay(
-                      iconSize: mobileItemSize(context), item: widget.socket),
+                      width: vw(context) -
+                          globalPadding(context) * 2 -
+                          mobileItemSize(context),
+                      padding: globalPadding(context),
+                      iconSize: mobileItemSize(context),
+                      item: widget.socket),
                   const Divider(
                     color: blackLight,
                     height: 22,

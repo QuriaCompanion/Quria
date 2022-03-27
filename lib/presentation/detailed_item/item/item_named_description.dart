@@ -6,11 +6,10 @@ import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
-class MobileItemModAttribute extends StatelessWidget {
+class ItemNamedDescription extends StatelessWidget {
   final DestinyInventoryItemDefinition item;
   final double iconSize;
-  const MobileItemModAttribute(
-      {required this.item, this.iconSize = 15, Key? key})
+  const ItemNamedDescription({required this.item, this.iconSize = 15, Key? key})
       : super(key: key);
 
   @override

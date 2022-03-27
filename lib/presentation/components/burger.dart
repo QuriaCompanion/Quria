@@ -5,6 +5,7 @@ import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class Burger extends StatefulWidget {
   const Burger({Key? key}) : super(key: key);
@@ -75,22 +76,32 @@ class _BurgerState extends State<Burger> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               const SizedBox(height: 24),
-                              Row(
-                                children: [
-                                  const Icon(Icons.person_outline_outlined,
-                                      color: Colors.white),
-                                  const SizedBox(width: 18),
-                                  textBodyHighRegular("Personnage"),
-                                ],
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, routeProfile);
+                                },
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.person_outline_outlined,
+                                        color: Colors.white),
+                                    const SizedBox(width: 18),
+                                    textBodyHighRegular("Personnage"),
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 32),
-                              Row(
-                                children: [
-                                  const Icon(Icons.star_border,
-                                      color: Colors.white),
-                                  const SizedBox(width: 18),
-                                  textBodyHighRegular("Builds"),
-                                ],
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(context, routeExotic);
+                                },
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.star_border,
+                                        color: Colors.white),
+                                    const SizedBox(width: 18),
+                                    textBodyHighRegular("Builds"),
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 32),
                               Row(

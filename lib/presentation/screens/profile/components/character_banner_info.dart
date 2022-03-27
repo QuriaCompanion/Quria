@@ -41,7 +41,7 @@ class CharacterBannerInfo extends StatelessWidget {
             ],
           ),
           SizedBox(
-            width: vw(context) * 0.17,
+            width: vw(context) * 0.18,
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

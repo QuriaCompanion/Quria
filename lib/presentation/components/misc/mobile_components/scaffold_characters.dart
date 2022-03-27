@@ -1,22 +1,27 @@
+import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/presentation/components/Header/mobile_components/mobile_character_choice.dart';
 import 'package:quria/presentation/components/burger.dart';
-import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
 
-class ProfileMobileScaffold extends StatefulWidget {
-  final ProfileHelper data;
+class ScaffoldCharacters extends StatefulWidget {
   final Function(int) onCharacterChange;
-  const ProfileMobileScaffold(
-      {required this.data, required this.onCharacterChange, Key? key})
+  final List<DestinyCharacterComponent> characters;
+  final int selectedCharacterIndex;
+  final Widget body;
+  const ScaffoldCharacters(
+      {required this.onCharacterChange,
+      required this.characters,
+      required this.selectedCharacterIndex,
+      required this.body,
+      Key? key})
       : super(key: key);
 
   @override
-  State<ProfileMobileScaffold> createState() => _ProfileMobileScaffoldState();
+  State<ScaffoldCharacters> createState() => _ScaffoldCharactersState();
 }
 
-class _ProfileMobileScaffoldState extends State<ProfileMobileScaffold> {
+class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
   bool choosingCharacter = false;
   @override
   Widget build(BuildContext context) {
@@ -49,13 +54,13 @@ class _ProfileMobileScaffoldState extends State<ProfileMobileScaffold> {
                 choosingCharacter = !choosingCharacter;
               });
             },
-            index: widget.data.selectedCharacterIndex,
-            characters: widget.data.characters),
+            index: widget.selectedCharacterIndex,
+            characters: widget.characters),
       ),
       body: Container(
         decoration: ghostBackground,
         child: SingleChildScrollView(
-          child: ProfileMobileView(data: widget.data),
+          child: widget.body,
         ),
       ),
     );
