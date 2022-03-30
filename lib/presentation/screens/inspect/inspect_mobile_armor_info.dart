@@ -5,7 +5,6 @@ import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
-import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/detailed_item/item/armor_mods.dart';
@@ -51,8 +50,6 @@ class _InspectMobileArmorInfoState extends State<InspectMobileArmorInfo> {
 
   @override
   Widget build(BuildContext context) {
-    double pagePadding = globalPadding(context);
-
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       mobileSection(context,
           title: "Actions rapide", child: const InspectMobileActions()),
@@ -70,7 +67,6 @@ class _InspectMobileArmorInfoState extends State<InspectMobileArmorInfo> {
               afinityIcon: afinityIcon,
               sockets: sockets!,
               item: widget.item)),
-      SizedBox(height: pagePadding),
       mobileSection(context,
           title: "CosmÃ©tiques",
           child: MobileInspectCosmetics(sockets: sockets!)),

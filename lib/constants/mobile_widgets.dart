@@ -3,7 +3,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 
 Widget mobileHeader(BuildContext context,
-    {required String imageLink, required Widget child}) {
+    {required ImageProvider<Object> image, required Widget child}) {
   return Container(
     alignment: Alignment.bottomCenter,
     width: vw(context),
@@ -12,7 +12,7 @@ Widget mobileHeader(BuildContext context,
         image: DecorationImage(
             alignment: Alignment.topRight,
             fit: BoxFit.fitHeight,
-            image: NetworkImage(imageLink))),
+            image: image)),
     child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -28,7 +28,9 @@ Widget mobileHeader(BuildContext context,
         height: vw(context) / 3.17,
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
-            child: child)),
+            child: SizedBox(
+                width: vw(context) - globalPadding(context) * 2,
+                child: child))),
   );
 }
 

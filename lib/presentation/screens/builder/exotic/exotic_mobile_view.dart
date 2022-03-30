@@ -4,6 +4,7 @@ import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/presentation/screens/builder/exotic/mobile_components/exotic_mobile_item.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class ExoticMobileView extends StatelessWidget {
   final List<DestinyInventoryItemDefinition> exotics;
@@ -14,12 +15,14 @@ class ExoticMobileView extends StatelessWidget {
     return Column(
       children: [
         mobileHeader(context,
-            imageLink: "",
+            image: exoticHeader,
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 textH1("Choisis un exotique"),
                 textBodyRegular(
-                    "Il sert de base pour la construction de ton build"),
+                    "Il sert de base pour la construction de ton build."),
               ],
             )),
         Padding(
@@ -30,9 +33,15 @@ class ExoticMobileView extends StatelessWidget {
           child: Column(
             children: [
               for (DestinyInventoryItemDefinition exotic in exotics)
-                Padding(
-                  padding: EdgeInsets.only(bottom: globalPadding(context)),
-                  child: ExoticMobileItem(item: exotic),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, routeFilter,
+                        arguments: exotic.hash);
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: globalPadding(context)),
+                    child: ExoticMobileItem(item: exotic),
+                  ),
                 )
             ],
           ),

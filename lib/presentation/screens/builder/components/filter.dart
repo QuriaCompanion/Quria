@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quria/cubit/filter_cubit.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:quria/constants/styles.dart';
+import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/helpers/filterHelper.model.dart';
 
 class FilterWidget extends StatefulWidget {
-  const FilterWidget({Key? key}) : super(key: key);
+  final double width;
+  final double itemHeight;
+  final List<FilterHelper> items;
+  final Function(List<FilterHelper>) onFilterChanged;
+  const FilterWidget(
+      {required this.width,
+      required this.onFilterChanged,
+      required this.items,
+      this.itemHeight = 44,
+      Key? key})
+      : super(key: key);
 
   @override
   _FilterWidgetState createState() => _FilterWidgetState();
@@ -15,58 +27,54 @@ class _FilterWidgetState extends State<FilterWidget> {
     super.initState();
   }
 
-  final List<String> _items = [
-    'Mobilité',
-    'Résistance',
-    'Récupération',
-    'Discipline',
-    'Intelligence',
-    'Force'
-  ];
-
   @override
   Widget build(BuildContext context) {
-    double filterSpacing = 10;
-    double fontSize = 25;
     return ReorderableListView(
       onReorder: (int oldIndex, int newIndex) {
         setState(() {
           if (oldIndex < newIndex) {
-            newIndex -= 1;
+            newIndex--;
           }
-          final String item = _items.removeAt(oldIndex);
-          _items.insert(newIndex, item);
-          context.read<FilterCubit>().addFilterData(_items);
+          final FilterHelper item = widget.items.removeAt(oldIndex);
+          widget.items.insert(newIndex, item);
         });
       },
-      children: <Widget>[
-        for (int index = 0; index < _items.length; index += 1)
+      children: [
+        for (int index = 0; index < widget.items.length; index++)
           Container(
-            margin: EdgeInsets.symmetric(vertical: filterSpacing / 2),
-            padding: EdgeInsets.symmetric(vertical: filterSpacing / 2),
+            key: ValueKey(widget.items[index].name),
             decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.6),
-                borderRadius: BorderRadius.circular(5)),
-            key: ValueKey(_items[index]),
+                color: blackLight, borderRadius: BorderRadius.circular(8)),
+            margin: const EdgeInsets.only(bottom: 8),
+            clipBehavior: Clip.hardEdge,
             child: ReorderableDragStartListener(
-              index: index,
-              child: Column(
-                children: [
-                  ListTile(
-                    title: Center(
-                        child: Text(
-                      _items[index],
-                      style: TextStyle(fontSize: fontSize, color: Colors.white),
-                    )),
-                    dense: true,
-                    isThreeLine: false,
-                    tileColor: Colors.black.withOpacity(0.0),
-                    selectedTileColor: Colors.black.withOpacity(0.0),
-                    selectedColor: Colors.black.withOpacity(0.0),
-                  )
-                ],
-              ),
-            ),
+                index: index,
+                child: ListTile(
+                  horizontalTitleGap: 0,
+                  minVerticalPadding: 0,
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  leading: SvgPicture.asset(
+                    "assets/icons/${widget.items[index].icon}",
+                    color: Colors.white,
+                  ),
+                  trailing: const Icon(
+                    Icons.drag_handle,
+                    color: Colors.white,
+                  ),
+                  title: textBodyBold(
+                    widget.items[index].name,
+                  ),
+                  dense: true,
+                  isThreeLine: false,
+                  tileColor: blackLight,
+                  selectedTileColor: blackLight,
+                  selectedColor: blackLight,
+                  focusColor: blackLight,
+                  hoverColor: black,
+                  textColor: black,
+                  iconColor: black,
+                )),
           ),
       ],
     );

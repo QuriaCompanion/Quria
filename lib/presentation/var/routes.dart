@@ -11,5 +11,6 @@ const String routeCollection = '/collection';
 const String routeInspect = "/inspect";
 const String routeInspectMobile = "/inspect-mobile";
 const String routeInspectMobileArmor = "/inspect-mobile-item";
+const String routeSubclass = "/subclass";
 
 final navKey = GlobalKey<NavigatorState>();

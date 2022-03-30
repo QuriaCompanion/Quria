@@ -78,7 +78,7 @@ class _MobileInspectState extends State<MobileInspect> {
           children: [
             mobileHeader(
               context,
-              imageLink: imageLink,
+              image: NetworkImage(imageLink),
               child: InspectMobileHeader(
                 name: itemDef.displayProperties!.name!,
                 iconElement: elementIcon!,

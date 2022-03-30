@@ -78,6 +78,7 @@ class _BurgerState extends State<Burger> {
                               const SizedBox(height: 24),
                               InkWell(
                                 onTap: () {
+                                  Navigator.pop(context);
                                   Navigator.pushNamed(context, routeProfile);
                                 },
                                 child: Row(
@@ -92,6 +93,7 @@ class _BurgerState extends State<Burger> {
                               const SizedBox(height: 32),
                               InkWell(
                                 onTap: () {
+                                  Navigator.pop(context);
                                   Navigator.pushNamed(context, routeExotic);
                                 },
                                 child: Row(
