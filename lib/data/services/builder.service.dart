@@ -14,7 +14,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class BuilderService {
   Future<List<Build>> calculateBuilds(
-      {required List<String> statOrder,
+      {required List<int> statOrder,
       required DestinyClass classType,
       int? exoticHash}) async {
     ProfileService profile = ProfileService();
@@ -61,6 +61,30 @@ class BuilderService {
       return investmentStats;
     }
 
+    Map<int, int> modBonus = {
+      2996146975: 0,
+      392767087: 0,
+      1943323491: 0,
+      1735777505: 0,
+      144602215: 0,
+      4244567218: 0,
+    };
+    for (var mod in builderHelper.mods) {
+      if (mod.investmentStats != null && mod.investmentStats!.isNotEmpty) {
+        for (var stat in mod.investmentStats!) {
+          if (stat.statTypeHash == 2996146975 ||
+              stat.statTypeHash == 392767087 ||
+              stat.statTypeHash == 1943323491 ||
+              stat.statTypeHash == 1735777505 ||
+              stat.statTypeHash == 144602215 ||
+              stat.statTypeHash == 4244567218) {
+            modBonus[stat.statTypeHash!] =
+                modBonus[stat.statTypeHash]! + stat.value!;
+          }
+        }
+      }
+    }
+
     final List<DestinyItemComponent> armors =
         builderHelper.armors.where((element) {
       if (element.itemHash == builderHelper.exotic?.hash) {
@@ -92,49 +116,57 @@ class BuilderService {
               builderHelper.manifest[element.itemHash]?.itemSubType ==
               DestinyItemSubType.LegArmor)) {
             Map<int, int> legStats = statCalculator(leg);
-            Map<String, int> statValues = {};
+            Map<int, int> statValues = {};
             int mobility = helmetStats[2996146975]! +
                 gauntletStats[2996146975]! +
                 chestStats[2996146975]! +
                 legStats[2996146975]! +
+                modBonus[2996146975]! +
                 10;
             int resilience = helmetStats[392767087]! +
                 gauntletStats[392767087]! +
                 chestStats[392767087]! +
                 legStats[392767087]! +
+                modBonus[392767087]! +
                 10;
+
             int recovery = helmetStats[1943323491]! +
                 gauntletStats[1943323491]! +
                 chestStats[1943323491]! +
                 legStats[1943323491]! +
+                modBonus[1943323491]! +
                 10;
+
             int discipline = helmetStats[1735777505]! +
                 gauntletStats[1735777505]! +
                 chestStats[1735777505]! +
                 legStats[1735777505]! +
+                modBonus[1735777505]! +
                 10;
             int intellect = helmetStats[144602215]! +
                 gauntletStats[144602215]! +
                 chestStats[144602215]! +
                 legStats[144602215]! +
+                modBonus[144602215]! +
                 10;
             int strength = helmetStats[4244567218]! +
                 gauntletStats[4244567218]! +
                 chestStats[4244567218]! +
                 legStats[4244567218]! +
+                modBonus[4244567218]! +
                 10;
-            statValues["Mobilité"] = (mobility / 10).floor();
-            statValues["Résistance"] = (resilience / 10).floor();
-            statValues["Récupération"] = (recovery / 10).floor();
-            statValues["Discipline"] = (discipline / 10).floor();
-            statValues["Intelligence"] = (intellect / 10).floor();
-            statValues["Force"] = (strength / 10).floor();
-            int baseTier = statValues["Mobilité"]! +
-                statValues["Résistance"]! +
-                statValues["Récupération"]! +
-                statValues["Discipline"]! +
-                statValues["Intelligence"]! +
-                statValues["Force"]!;
+            statValues[2996146975] = (mobility / 10).floor();
+            statValues[392767087] = (resilience / 10).floor();
+            statValues[1943323491] = (recovery / 10).floor();
+            statValues[1735777505] = (discipline / 10).floor();
+            statValues[144602215] = (intellect / 10).floor();
+            statValues[4244567218] = (strength / 10).floor();
+            int baseTier = statValues[2996146975]! +
+                statValues[392767087]! +
+                statValues[1943323491]! +
+                statValues[1735777505]! +
+                statValues[144602215]! +
+                statValues[4244567218]!;
 
             Stats stats = Stats(
                 base: baseTier,

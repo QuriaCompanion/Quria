@@ -42,8 +42,8 @@ class _StatsFilterPageState extends State<StatsFilterPage> {
     if (vw(context) < 850) {
       return ScaffoldSteps<SubclassHelper>(
         route: routeSubclass,
-        arguments: SubclassHelper(
-            exoticHash: widget.exoticHash, exoticSockets: filters),
+        arguments:
+            SubclassHelper(exoticHash: widget.exoticHash, statOrder: filters),
         body: StatsFilterMobileView(
           filters: filters,
           exoticHash: widget.exoticHash,

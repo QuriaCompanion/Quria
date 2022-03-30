@@ -57,7 +57,7 @@ class Build {
 class Stats {
   late int base;
   late int max;
-  late Map<String, int> ordering;
+  late Map<int, int> ordering;
   late int mobility;
   late int resilience;
   late int recovery;
