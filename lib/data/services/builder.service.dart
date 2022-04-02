@@ -1,6 +1,6 @@
 import 'package:bungie_api/enums/tier_type.dart';
+import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_investment_stat_definition.dart';
-import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -9,26 +9,30 @@ import 'package:bungie_api/models/destiny_item_sockets_component.dart';
 import 'package:flutter/foundation.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class BuilderService {
-  Future<List<Build>> calculateBuilds(
-      {required List<int> statOrder,
-      required DestinyClass classType,
-      int? exoticHash}) async {
+  Future<List<Build>> calculateBuilds({
+    required BuilderPreparation data,
+  }) async {
     ProfileService profile = ProfileService();
-    List<DestinyItemComponent> armors = profile.getAllArmorForClass(classType);
+    DestinyCharacterComponent? character =
+        profile.getCharacter(data.characterId);
+    List<DestinyItemComponent> armors =
+        profile.getAllArmorForClass(character!.classType!);
     Map<String, DestinyItemSocketsComponent> sockets = profile.getAllSockets();
 
     BuilderHelper builder = BuilderHelper(
-        statOrder: statOrder,
+        statOrder: data.statOrder,
         exotic: ManifestService
-            .manifestParsed.destinyInventoryItemDefinition![exoticHash!],
+            .manifestParsed.destinyInventoryItemDefinition![data.exoticHash],
         armors: armors,
         manifest:
             ManifestService.manifestParsed.destinyInventoryItemDefinition!,
-        sockets: sockets);
+        sockets: sockets,
+        mods: data.mods);
 
     return await compute(_armorLoop, builder);
   }
@@ -62,22 +66,22 @@ class BuilderService {
     }
 
     Map<int, int> modBonus = {
-      2996146975: 0,
-      392767087: 0,
-      1943323491: 0,
-      1735777505: 0,
-      144602215: 0,
-      4244567218: 0,
+      StatsHash.mobility: 0,
+      StatsHash.resilience: 0,
+      StatsHash.recovery: 0,
+      StatsHash.discipline: 0,
+      StatsHash.intellect: 0,
+      StatsHash.strength: 0,
     };
     for (var mod in builderHelper.mods) {
       if (mod.investmentStats != null && mod.investmentStats!.isNotEmpty) {
         for (var stat in mod.investmentStats!) {
-          if (stat.statTypeHash == 2996146975 ||
-              stat.statTypeHash == 392767087 ||
-              stat.statTypeHash == 1943323491 ||
-              stat.statTypeHash == 1735777505 ||
-              stat.statTypeHash == 144602215 ||
-              stat.statTypeHash == 4244567218) {
+          if (stat.statTypeHash == StatsHash.mobility ||
+              stat.statTypeHash == StatsHash.resilience ||
+              stat.statTypeHash == StatsHash.recovery ||
+              stat.statTypeHash == StatsHash.discipline ||
+              stat.statTypeHash == StatsHash.intellect ||
+              stat.statTypeHash == StatsHash.strength) {
             modBonus[stat.statTypeHash!] =
                 modBonus[stat.statTypeHash]! + stat.value!;
           }
@@ -117,60 +121,73 @@ class BuilderService {
               DestinyItemSubType.LegArmor)) {
             Map<int, int> legStats = statCalculator(leg);
             Map<int, int> statValues = {};
-            int mobility = helmetStats[2996146975]! +
-                gauntletStats[2996146975]! +
-                chestStats[2996146975]! +
-                legStats[2996146975]! +
-                modBonus[2996146975]! +
+            int mobility = helmetStats[StatsHash.mobility]! +
+                gauntletStats[StatsHash.mobility]! +
+                chestStats[StatsHash.mobility]! +
+                legStats[StatsHash.mobility]! +
                 10;
-            int resilience = helmetStats[392767087]! +
-                gauntletStats[392767087]! +
-                chestStats[392767087]! +
-                legStats[392767087]! +
-                modBonus[392767087]! +
+            int resilience = helmetStats[StatsHash.resilience]! +
+                gauntletStats[StatsHash.resilience]! +
+                chestStats[StatsHash.resilience]! +
+                legStats[StatsHash.resilience]! +
                 10;
 
-            int recovery = helmetStats[1943323491]! +
-                gauntletStats[1943323491]! +
-                chestStats[1943323491]! +
-                legStats[1943323491]! +
-                modBonus[1943323491]! +
+            int recovery = helmetStats[StatsHash.recovery]! +
+                gauntletStats[StatsHash.recovery]! +
+                chestStats[StatsHash.recovery]! +
+                legStats[StatsHash.recovery]! +
                 10;
 
-            int discipline = helmetStats[1735777505]! +
-                gauntletStats[1735777505]! +
-                chestStats[1735777505]! +
-                legStats[1735777505]! +
-                modBonus[1735777505]! +
+            int discipline = helmetStats[StatsHash.discipline]! +
+                gauntletStats[StatsHash.discipline]! +
+                chestStats[StatsHash.discipline]! +
+                legStats[StatsHash.discipline]! +
                 10;
-            int intellect = helmetStats[144602215]! +
-                gauntletStats[144602215]! +
-                chestStats[144602215]! +
-                legStats[144602215]! +
-                modBonus[144602215]! +
+            int intellect = helmetStats[StatsHash.intellect]! +
+                gauntletStats[StatsHash.intellect]! +
+                chestStats[StatsHash.intellect]! +
+                legStats[StatsHash.intellect]! +
                 10;
-            int strength = helmetStats[4244567218]! +
-                gauntletStats[4244567218]! +
-                chestStats[4244567218]! +
-                legStats[4244567218]! +
-                modBonus[4244567218]! +
+            int strength = helmetStats[StatsHash.strength]! +
+                gauntletStats[StatsHash.strength]! +
+                chestStats[StatsHash.strength]! +
+                legStats[StatsHash.strength]! +
                 10;
-            statValues[2996146975] = (mobility / 10).floor();
-            statValues[392767087] = (resilience / 10).floor();
-            statValues[1943323491] = (recovery / 10).floor();
-            statValues[1735777505] = (discipline / 10).floor();
-            statValues[144602215] = (intellect / 10).floor();
-            statValues[4244567218] = (strength / 10).floor();
-            int baseTier = statValues[2996146975]! +
-                statValues[392767087]! +
-                statValues[1943323491]! +
-                statValues[1735777505]! +
-                statValues[144602215]! +
-                statValues[4244567218]!;
+            statValues[StatsHash.mobility] = (mobility / 10).floor();
+            statValues[StatsHash.resilience] = (resilience / 10).floor();
+            statValues[StatsHash.recovery] = (recovery / 10).floor();
+            statValues[StatsHash.discipline] = (discipline / 10).floor();
+            statValues[StatsHash.intellect] = (intellect / 10).floor();
+            statValues[StatsHash.strength] = (strength / 10).floor();
+            int baseTier = statValues[StatsHash.mobility]! +
+                statValues[StatsHash.resilience]! +
+                statValues[StatsHash.recovery]! +
+                statValues[StatsHash.discipline]! +
+                statValues[StatsHash.intellect]! +
+                statValues[StatsHash.strength]!;
 
+            mobility = mobility + modBonus[StatsHash.mobility]!;
+            resilience = resilience + modBonus[StatsHash.resilience]!;
+            recovery = recovery + modBonus[StatsHash.recovery]!;
+            discipline = discipline + modBonus[StatsHash.discipline]!;
+            intellect = intellect + modBonus[StatsHash.intellect]!;
+            strength = strength + modBonus[StatsHash.strength]!;
+
+            statValues[StatsHash.mobility] = (mobility / 10).floor();
+            statValues[StatsHash.resilience] = (resilience / 10).floor();
+            statValues[StatsHash.recovery] = (recovery / 10).floor();
+            statValues[StatsHash.discipline] = (discipline / 10).floor();
+            statValues[StatsHash.intellect] = (intellect / 10).floor();
+            statValues[StatsHash.strength] = (strength / 10).floor();
+            int finalTier = statValues[StatsHash.mobility]! +
+                statValues[StatsHash.resilience]! +
+                statValues[StatsHash.recovery]! +
+                statValues[StatsHash.discipline]! +
+                statValues[StatsHash.intellect]! +
+                statValues[StatsHash.strength]!;
             Stats stats = Stats(
                 base: baseTier,
-                max: baseTier + 9,
+                max: finalTier,
                 ordering: statValues,
                 mobility: mobility,
                 resilience: resilience,

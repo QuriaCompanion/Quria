@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/detailed_item/item/armor_afinity.dart';
 import 'package:quria/presentation/detailed_item/item/armor_mod_icon_display.dart';
@@ -107,23 +108,27 @@ class _ArmorModsState extends State<ArmorMods> {
                   onTap: () {
                     showMaterialModalBottomSheet(
                         backgroundColor: Colors.transparent,
-                        expand: false,
+                        expand: true,
                         context: context,
                         builder: (context) {
                           return ArmorModModal(
-                            index: socket.key,
                             socket: ManifestService.manifestParsed
                                     .destinyInventoryItemDefinition![
                                 socket.value.plugHash]!,
-                            instanceId: widget.instanceId,
                             plugSetsHash: widget
                                 .item
                                 .sockets!
                                 .socketEntries![socket.key]
                                 .reusablePlugSetHash!,
-                            onSocketChange: (sockets) {
-                              setState(() {
-                                currentSockets = sockets!;
+                            onSocketChange: (itemHash) {
+                              BungieApiService()
+                                  .insertSocketPlugFree(
+                                      widget.instanceId!, itemHash, socket.key)
+                                  .then((value) {
+                                setState(() {
+                                  currentSockets = value!
+                                      .response!.item!.sockets!.data!.sockets!;
+                                });
                               });
                             },
                           );

@@ -17,6 +17,7 @@ const Color solar = Color(0xFF753D24);
 const statisticHeader = AssetImage("assets/img/Stats.png");
 const exoticHeader = AssetImage("assets/img/Exotic.png");
 const subclassHeader = AssetImage("assets/img/Subclass.png");
+const modsHeader = AssetImage("assets/img/mods.png");
 
 double globalPadding(BuildContext context) {
   return vw(context) * 0.05;

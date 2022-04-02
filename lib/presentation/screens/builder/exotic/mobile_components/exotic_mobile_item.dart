@@ -40,7 +40,11 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
   void initState() {
     super.initState();
     setRotation(90);
+  }
 
+  bool isOpen = false;
+  @override
+  Widget build(BuildContext context) {
     perk = ManifestService.manifestParsed.destinyInventoryItemDefinition![widget
         .item.sockets!.socketEntries
         ?.firstWhere((element) =>
@@ -59,11 +63,6 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
                     ?.tierType ==
                 TierType.Exotic)
         .singleInitialItemHash]!;
-  }
-
-  bool isOpen = false;
-  @override
-  Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(globalPadding(context) / 2),
       decoration: BoxDecoration(

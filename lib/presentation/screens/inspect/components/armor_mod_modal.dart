@@ -1,6 +1,5 @@
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
-import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/mobile_widgets.dart';
@@ -13,15 +12,11 @@ import 'package:quria/presentation/screens/inspect/components/armor_mod_sub_moda
 
 class ArmorModModal extends StatefulWidget {
   final DestinyInventoryItemDefinition socket;
-  final Function(List<DestinyItemSocketState>?) onSocketChange;
+  final void Function(int) onSocketChange;
   final int plugSetsHash;
-  final int index;
-  final String? instanceId;
 
   const ArmorModModal(
       {required this.socket,
-      required this.index,
-      required this.instanceId,
       required this.plugSetsHash,
       required this.onSocketChange,
       Key? key})
@@ -42,15 +37,12 @@ class _ArmorModModalState extends State<ArmorModModal> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height -
-          56 -
-          MediaQuery.of(context).padding.top,
+      height: MediaQuery.of(context).size.height,
       padding: EdgeInsets.only(
           top: globalPadding(context),
           left: globalPadding(context),
           right: globalPadding(context)),
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.all(Radius.circular(24)), color: black),
+      decoration: const BoxDecoration(color: black),
       child: SingleChildScrollView(
         child: Column(children: [
           mobileSection(context,
@@ -59,7 +51,7 @@ class _ArmorModModalState extends State<ArmorModModal> {
                 children: [
                   ModDisplay(
                       width: vw(context) -
-                          globalPadding(context) * 2 -
+                          globalPadding(context) * 3 -
                           mobileItemSize(context),
                       padding: globalPadding(context),
                       iconSize: mobileItemSize(context),
@@ -80,15 +72,14 @@ class _ArmorModModalState extends State<ArmorModModal> {
                               context: context,
                               builder: (context) {
                                 return ArmorModSubModal(
-                                    mod: ManifestService.manifestParsed
-                                            .destinyInventoryItemDefinition![
-                                        plug.plugItemHash]!,
-                                    instanceId: widget.instanceId,
-                                    onSocketsChanged: (sockets) {
-                                      widget.onSocketChange(sockets);
-                                      Navigator.pop(context);
-                                    },
-                                    index: widget.index);
+                                  mod: ManifestService.manifestParsed
+                                          .destinyInventoryItemDefinition![
+                                      plug.plugItemHash]!,
+                                  onSocketsChanged: () {
+                                    Navigator.pop(context);
+                                    widget.onSocketChange(plug.plugItemHash!);
+                                  },
+                                );
                               });
                         },
                         child: ItemWithTypeName(

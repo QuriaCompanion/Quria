@@ -24,12 +24,8 @@ class _BuilderWidgetState extends State<BuilderWidget> {
     super.initState();
 
     _future = BuilderService().calculateBuilds(
-        statOrder: widget.data.statOrder,
-        classType: ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition![widget.data.exoticHash]!
-            .classType!,
-        exoticHash: widget.data.exoticHash);
+      data: widget.data,
+    );
   }
 
   @override

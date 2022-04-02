@@ -126,6 +126,11 @@ class DestinyData {
     DamageType.Arc: 2303181850,
     DamageType.Void: 3454344768,
   };
+  static const Map<DestinyClass, List<int>> subclass = {
+    DestinyClass.Warlock: [3291545503, 2849050827, 3481861797, 1751782730],
+    DestinyClass.Titan: [613647804, 2842471112, 3105935002, 2958378809],
+    DestinyClass.Hunter: [873720784, 2453351420, 3635991036, 1334959255]
+  };
 
   static const List<int> perkCategoryHash = [
     2619833294,
@@ -148,6 +153,7 @@ class DestinyData {
   ];
 
   static const String bungieLink = "https://www.bungie.net";
+
   static const Map<TierType, int> tierTypeHashes = {
     TierType.Basic: 3340296461,
     TierType.Common: 2395677314,

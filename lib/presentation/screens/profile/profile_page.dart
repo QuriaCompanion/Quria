@@ -92,8 +92,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             DestinyCharacterComponent selectedCharacter = characters[index];
             List<DestinyItemComponent> equipement =
                 profile.getCharacterEquipment(selectedCharacter.characterId!);
-            DestinyItemComponent selectedCharacterSubclass =
-                profile.getSubClassForCharacter(selectedCharacter.characterId!);
+            DestinyItemComponent selectedCharacterSubclass = profile
+                .getCurrentSubClassForCharacter(selectedCharacter.characterId!);
             data = ProfileHelper(
                 characters: characters,
                 selectedCharacter: selectedCharacter,

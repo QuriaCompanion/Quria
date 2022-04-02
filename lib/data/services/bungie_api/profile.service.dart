@@ -258,7 +258,22 @@ class ProfileService {
     return null;
   }
 
-  DestinyItemComponent getSubClassForCharacter(String characterId) {
+  List<DestinyItemComponent> getSubclassesForCharacter(String characterId) {
+    var character = getCharacterInventory(characterId);
+    character.addAll(getCharacterEquipment(characterId));
+    return character
+        .where((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash ==
+            3284755031)
+        .toSet()
+        .toList();
+  }
+
+  DestinyItemComponent getCurrentSubClassForCharacter(String characterId) {
     var character = getCharacterEquipment(characterId);
     return character.firstWhere((element) =>
         ManifestService
@@ -270,7 +285,7 @@ class ProfileService {
   }
 
   int? getCurrentGrenadeHashForCharacter(String characterId) {
-    DestinyItemComponent subclass = getSubClassForCharacter(characterId);
+    DestinyItemComponent subclass = getCurrentSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newGrenade =
         getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
@@ -304,7 +319,8 @@ class ProfileService {
   }
 
   int? getCurrentMeleeHashForCharacter(String characterId) {
-    DestinyItemComponent? subclass = getSubClassForCharacter(characterId);
+    DestinyItemComponent? subclass =
+        getCurrentSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newMelee = getItemSockets(subclass.itemInstanceId!)
         ?.firstWhere((element) =>
@@ -338,7 +354,8 @@ class ProfileService {
   }
 
   int? getCurrentSuperHashForCharacter(String characterId) {
-    DestinyItemComponent? subclass = getSubClassForCharacter(characterId);
+    DestinyItemComponent? subclass =
+        getCurrentSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newSuper = getItemSockets(subclass.itemInstanceId!)
         ?.firstWhere((element) =>

@@ -9,8 +9,10 @@ const String routeProfile = '/profile';
 const String routeExotic = '/exotic';
 const String routeCollection = '/collection';
 const String routeInspect = "/inspect";
-const String routeInspectMobile = "/inspect-mobile";
-const String routeInspectMobileArmor = "/inspect-mobile-item";
+const String routeInspectMobile = "/inspect-mobile-weapon";
+const String routeInspectMobileArmor = "/inspect-mobile-armor";
 const String routeSubclass = "/subclass";
+const String routeBuilderMod = "/builder-mod";
+const String routeMod = "/mod";
 
 final navKey = GlobalKey<NavigatorState>();

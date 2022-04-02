@@ -56,6 +56,31 @@ Widget mobileSection(
   );
 }
 
+Widget mobileSectionInverted(
+  BuildContext context, {
+  required String title,
+  required Widget child,
+}) {
+  return Padding(
+    padding: EdgeInsets.only(top: globalPadding(context)),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        textH2(title),
+        SizedBox(
+          height: globalPadding(context) / 2,
+        ),
+        child,
+        const Divider(
+          color: blackLight,
+          height: 22,
+          thickness: 1,
+        ),
+      ],
+    ),
+  );
+}
+
 Widget mobileCard(
   BuildContext context, {
   required Widget child,
@@ -67,4 +92,18 @@ Widget mobileCard(
           borderRadius: BorderRadius.all(Radius.circular(8))),
       width: double.infinity,
       child: child);
+}
+
+Widget pictureBordered({required ImageProvider image, double size = 44}) {
+  return Container(
+    width: size,
+    height: size,
+    decoration: BoxDecoration(
+      border: Border.all(
+        color: Colors.white,
+        width: 1,
+      ),
+    ),
+    child: Image(image: image),
+  );
 }

@@ -8,23 +8,24 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/detailed_item/item/armor_mod_icon_display.dart';
 import 'package:quria/presentation/detailed_item/item/stat_progress_bar.dart';
 
-class ArmorModSubModal extends StatelessWidget {
+class SubclassModModal extends StatefulWidget {
   final DestinyInventoryItemDefinition mod;
-  final void Function()? onSocketsChanged;
-
-  const ArmorModSubModal({
-    Key? key,
-    required this.mod,
-    this.onSocketsChanged,
-  }) : super(key: key);
+  final void Function() onSocketChange;
+  const SubclassModModal(
+      {required this.mod, required this.onSocketChange, Key? key})
+      : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    DestinySandboxPerkDefinition? perkItem;
+  State<SubclassModModal> createState() => _SubclassModModalState();
+}
 
-    if (mod.perks != null && mod.perks!.isNotEmpty) {
-      perkItem = ManifestService
-          .manifestParsed.destinySandboxPerkDefinition?[mod.perks?[0].perkHash];
+class _SubclassModModalState extends State<SubclassModModal> {
+  DestinySandboxPerkDefinition? perkItem;
+  @override
+  Widget build(BuildContext context) {
+    if (widget.mod.perks != null && widget.mod.perks!.isNotEmpty) {
+      perkItem = ManifestService.manifestParsed
+          .destinySandboxPerkDefinition?[widget.mod.perks?[0].perkHash];
     }
     return Container(
       height: MediaQuery.of(context).size.height * 0.75,
@@ -42,7 +43,7 @@ class ArmorModSubModal extends StatelessWidget {
               Row(
                 children: [
                   ArmorModIconDisplay(
-                    socket: mod,
+                    socket: widget.mod,
                   ),
                   SizedBox(width: globalPadding(context)),
                   SizedBox(
@@ -54,9 +55,9 @@ class ArmorModSubModal extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         textH3(perkItem?.displayProperties?.name ??
-                            mod.displayProperties?.name ??
+                            widget.mod.displayProperties?.name ??
                             ""),
-                        textBodyRegular(mod.itemTypeDisplayName ?? "")
+                        textBodyRegular(widget.mod.itemTypeDisplayName ?? "")
                       ],
                     ),
                   ),
@@ -83,7 +84,7 @@ class ArmorModSubModal extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               textBodyRegular(perkItem?.displayProperties?.description ??
-                  mod.displayProperties?.description ??
+                  widget.mod.displayProperties?.description ??
                   ""),
               const Divider(
                 color: blackLight,
@@ -93,8 +94,8 @@ class ArmorModSubModal extends StatelessWidget {
               Builder(
                 builder: ((context) {
                   List<Widget> list = [];
-                  if (mod.investmentStats?.isNotEmpty ?? false) {
-                    for (var stat in mod.investmentStats!) {
+                  if (widget.mod.investmentStats?.isNotEmpty ?? false) {
+                    for (var stat in widget.mod.investmentStats!) {
                       list.add(StatProgressBar(
                           width: vw(context),
                           fontSize: 20,
@@ -120,8 +121,8 @@ class ArmorModSubModal extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  onSocketsChanged!();
                   Navigator.pop(context);
+                  widget.onSocketChange();
                 },
                 child: textBodyMedium("Equiper", color: black),
                 style: ElevatedButton.styleFrom(

@@ -53,6 +53,7 @@ class _ExoticWidgetState extends State<ExoticWidget> {
                 });
               },
               body: ExoticMobileView(
+                characterId: characters[selectedCharacterIndex].characterId!,
                 exotics: snapshot.data!,
               ),
             );

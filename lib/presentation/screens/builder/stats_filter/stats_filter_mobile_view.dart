@@ -6,14 +6,10 @@ import 'package:quria/data/models/helpers/filterHelper.model.dart';
 import 'package:quria/presentation/screens/builder/components/filter.dart';
 
 class StatsFilterMobileView extends StatefulWidget {
-  final int exoticHash;
   final List<FilterHelper> filters;
   final Function(List<FilterHelper>) onFilterChanged;
   const StatsFilterMobileView(
-      {required this.exoticHash,
-      required this.filters,
-      required this.onFilterChanged,
-      Key? key})
+      {required this.filters, required this.onFilterChanged, Key? key})
       : super(key: key);
 
   @override

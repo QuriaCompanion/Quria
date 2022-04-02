@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/helpers/statsFilterHelper.model.dart';
 import 'package:quria/presentation/screens/builder/exotic/mobile_components/exotic_mobile_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 class ExoticMobileView extends StatelessWidget {
   final List<DestinyInventoryItemDefinition> exotics;
-  const ExoticMobileView({required this.exotics, Key? key}) : super(key: key);
+  final String characterId;
+  const ExoticMobileView(
+      {required this.exotics, required this.characterId, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +40,9 @@ class ExoticMobileView extends StatelessWidget {
                 InkWell(
                   onTap: () {
                     Navigator.pushNamed(context, routeFilter,
-                        arguments: exotic.hash);
+                        arguments: StatsFilterHelper(
+                            characterId: characterId,
+                            exoticHash: exotic.hash!));
                   },
                   child: Padding(
                     padding: EdgeInsets.only(bottom: globalPadding(context)),
