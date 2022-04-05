@@ -26,10 +26,14 @@ class _SubclassModsPageState extends State<SubclassModsPage> {
   void initState() {
     super.initState();
     sockets = ProfileService().getItemSockets(widget.data.subclassInstanceId);
-    chosenSockets = sockets!
-        .map((e) => ManifestService
-            .manifestParsed.destinyInventoryItemDefinition![e.plugHash]!)
-        .toList();
+    if (sockets != null) {
+      chosenSockets = sockets!
+          .map((e) => ManifestService
+              .manifestParsed.destinyInventoryItemDefinition![e.plugHash]!)
+          .toList();
+    } else {
+      chosenSockets = [];
+    }
   }
 
   @override

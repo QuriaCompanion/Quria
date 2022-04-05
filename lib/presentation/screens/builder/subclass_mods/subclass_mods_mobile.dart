@@ -31,10 +31,15 @@ class _SubclassModsMobileState extends State<SubclassModsMobile> {
   @override
   void initState() {
     super.initState();
-    displayedSockets = widget.sockets!
-        .map((e) => ManifestService
-            .manifestParsed.destinyInventoryItemDefinition![e.plugHash]!)
-        .toList();
+
+    if (widget.sockets != null) {
+      displayedSockets = widget.sockets!
+          .map((e) => ManifestService
+              .manifestParsed.destinyInventoryItemDefinition![e.plugHash]!)
+          .toList();
+    } else {
+      displayedSockets = [];
+    }
   }
 
   @override
