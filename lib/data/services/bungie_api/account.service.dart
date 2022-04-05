@@ -37,7 +37,9 @@ class AccountService {
   }
 
   Future<UserMembershipData?> _getStoredMembershipData() async {
-    var json = await StorageService.getLocalStorage('membershipData');
+    Map<String, dynamic>? json =
+        await StorageService.getLocalStorage('membershipData')
+            as Map<String, dynamic>?;
     if (json == null) {
       return null;
     }
