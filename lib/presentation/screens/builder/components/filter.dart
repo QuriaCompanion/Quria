@@ -37,6 +37,7 @@ class _FilterWidgetState extends State<FilterWidget> {
           }
           final FilterHelper item = widget.items.removeAt(oldIndex);
           widget.items.insert(newIndex, item);
+          widget.onFilterChanged(widget.items);
         });
       },
       children: [

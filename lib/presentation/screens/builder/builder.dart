@@ -5,7 +5,6 @@ import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
-import 'package:quria/presentation/screens/builder/components/single_build.dart';
 
 class BuilderWidget extends StatefulWidget {
   final BuilderPreparation data;
@@ -42,10 +41,10 @@ class _BuilderWidgetState extends State<BuilderWidget> {
             if (snapshot.hasData) {
               List<Widget> list = <Widget>[];
               list.add(const SizedBox(height: 25));
-              for (var i = 0; i < snapshot.data!.length; i++) {
-                list.add(SingleBuild(
-                    width: singleBuildWidth, buildInfo: snapshot.data![i]));
-              }
+              // for (var i = 0; i < snapshot.data!.length; i++) {
+              //   list.add(SingleBuild(
+              //       width: singleBuildWidth, buildInfo: snapshot.data![i]));
+              // }
               return ListView(
                 children: list,
               );

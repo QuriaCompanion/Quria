@@ -8,7 +8,7 @@ const Color yellow = Color(0xFFF7D04D);
 const Color legend = Color(0xFF53306A);
 const Color crucible = Color(0xFFB63A32);
 const Color vanguard = Color(0xFF1373F4);
-const Color grey = Color(0xFF3B3F4A);
+const Color grey = Color(0xFF282D38);
 const Color greyLight = Color(0xFF898C94);
 const Color blueEquipped = Color(0xFF59A1E7);
 
@@ -20,7 +20,7 @@ const subclassHeader = AssetImage("assets/img/Subclass.png");
 const modsHeader = AssetImage("assets/img/mods.png");
 
 double globalPadding(BuildContext context) {
-  return vw(context) * 0.05;
+  return vw(context) * 0.04266;
 }
 
 double mobileItemSize(BuildContext context) {

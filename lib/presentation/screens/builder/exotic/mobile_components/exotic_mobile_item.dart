@@ -49,19 +49,25 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
         .item.sockets!.socketEntries
         ?.firstWhere((element) =>
             ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition?[
-                        element.singleInitialItemHash]
-                    ?.plug
-                    ?.plugCategoryHash ==
-                1744546145 &&
+                        .manifestParsed
+                        .destinyInventoryItemDefinition?[
+                            element.singleInitialItemHash]
+                        ?.plug
+                        ?.plugCategoryHash ==
+                    1744546145 &&
+                ManifestService
+                        .manifestParsed
+                        .destinyInventoryItemDefinition?[
+                            element.singleInitialItemHash]
+                        ?.inventory
+                        ?.tierType ==
+                    TierType.Exotic ||
             ManifestService
                     .manifestParsed
                     .destinyInventoryItemDefinition?[
                         element.singleInitialItemHash]
-                    ?.inventory
-                    ?.tierType ==
-                TierType.Exotic)
+                    ?.hash ==
+                3268255645)
         .singleInitialItemHash]!;
     return Container(
       padding: EdgeInsets.all(globalPadding(context) / 2),

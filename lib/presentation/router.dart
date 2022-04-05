@@ -6,7 +6,7 @@ import 'package:quria/data/models/helpers/modHelper.model.dart';
 import 'package:quria/data/models/helpers/statsFilterHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassModHelper.model.dart';
-import 'package:quria/presentation/screens/builder/builder.dart';
+import 'package:quria/presentation/screens/builder/builder_results/builder_results_page.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_page.dart';
 import 'package:quria/presentation/screens/builder/mods/mods_page.dart';
 import 'package:quria/presentation/screens/builder/stats_filter/stats_filter_page.dart';
@@ -35,7 +35,8 @@ class AppRouter {
       case routeBuilder:
         final BuilderPreparation data =
             settings.arguments as BuilderPreparation;
-        return MaterialPageRoute(builder: (_) => BuilderWidget(data: data));
+        return MaterialPageRoute(
+            builder: (_) => BuilderResultsPage(data: data));
       case routeInspectMobile:
         final InspectData data = settings.arguments as InspectData;
         return MaterialPageRoute(builder: (_) => MobileInspect(data: data));

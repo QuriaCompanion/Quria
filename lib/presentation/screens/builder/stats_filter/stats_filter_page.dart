@@ -50,7 +50,9 @@ class _StatsFilterPageState extends State<StatsFilterPage> {
         body: StatsFilterMobileView(
           filters: filters,
           onFilterChanged: (list) {
-            filters = list;
+            setState(() {
+              filters = list;
+            });
           },
         ),
       );

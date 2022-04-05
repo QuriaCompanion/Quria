@@ -5,7 +5,7 @@ import 'dart:math' as math;
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/screens/profile/components/vertical_character_stats_listing.dart';
+import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
 
 class ProfileMobileHeader extends StatefulWidget {
   final String characterId;
@@ -65,13 +65,12 @@ class _ProfileMobileHeaderState extends State<ProfileMobileHeader> {
             ],
           ),
           SizedBox(
-            width: vw(context) * 0.6,
             height: vw(context) * 0.17,
-            child: VerticalCharacterStatsListing(
+            child: CharacterStatsListing(
               stats: widget.stats!,
               characterId: widget.characterId,
               direction: Axis.horizontal,
-              width: vw(context),
+              width: vw(context) * 0.6,
             ),
           ),
         ],

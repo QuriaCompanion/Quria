@@ -1,4 +1,3 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
@@ -94,7 +93,7 @@ class _ModsPageState extends State<ModsPage> {
           ]),
       // boots
       ModSlots(
-          title: "Objet de torse",
+          title: "Objet de classe",
           elementSocketEntries: ManifestService
               .manifestParsed
               .destinyInventoryItemDefinition![3500810712]!
@@ -114,15 +113,6 @@ class _ModsPageState extends State<ModsPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<DestinyInventoryItemDefinition?> selectedMods =
-        widget.data.subclassMods;
-    for (var item in armorMods) {
-      for (int i = 0; i < item.items.length; i++) {
-        if (item.items[i] != null) {
-          selectedMods.add(item.items[i]);
-        }
-      }
-    }
     if (vw(context) < 850) {
       return ScaffoldSteps<BuilderPreparation>(
         route: routeBuilder,
@@ -131,7 +121,8 @@ class _ModsPageState extends State<ModsPage> {
             subclassInstanceId: widget.data.subclassInstanceId,
             statOrder: widget.data.statOrder,
             exoticHash: widget.data.exoticHash,
-            mods: widget.data.subclassMods),
+            armorMods: armorMods,
+            subclassMods: widget.data.subclassMods),
         body: ModsMobileView(
           armorMods: armorMods,
           onChange: (newMods) {

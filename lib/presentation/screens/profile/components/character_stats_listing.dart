@@ -6,13 +6,13 @@ import 'package:quria/data/services/bungie_api/enums/super_coodowns.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
 
-class VerticalCharacterStatsListing extends StatefulWidget {
+class CharacterStatsListing extends StatefulWidget {
   final Map<String, int> stats;
   final String characterId;
   final double fontSize;
   final double width;
   final Axis direction;
-  const VerticalCharacterStatsListing({
+  const CharacterStatsListing({
     Key? key,
     required this.stats,
     required this.characterId,
@@ -22,12 +22,10 @@ class VerticalCharacterStatsListing extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _VerticalCharacterStatsListingState createState() =>
-      _VerticalCharacterStatsListingState();
+  _CharacterStatsListingState createState() => _CharacterStatsListingState();
 }
 
-class _VerticalCharacterStatsListingState
-    extends State<VerticalCharacterStatsListing> {
+class _CharacterStatsListingState extends State<CharacterStatsListing> {
   late Map<String, dynamic> timerStat;
   @override
   initState() {
@@ -77,20 +75,23 @@ class _VerticalCharacterStatsListingState
         ],
       );
     } else {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          for (int i = 0; i < 6; i++)
-            Tooltip(
-              message: timerStat[DestinyData.armorStats[i]] ?? '',
-              child: VerticalStatisticDisplay(
-                  value: widget.stats[DestinyData.armorStats[i]]!,
-                  icon: DestinyData.statsIcon[i],
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  width: widget.width * 0.064,
-                  fontsize: widget.fontSize),
-            ),
-        ],
+      return SizedBox(
+        width: widget.width,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            for (int i = 0; i < 6; i++)
+              Tooltip(
+                message: timerStat[DestinyData.armorStats[i]] ?? '',
+                child: VerticalStatisticDisplay(
+                    value: widget.stats[DestinyData.armorStats[i]]!,
+                    icon: DestinyData.statsIcon[i],
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    width: widget.width * 0.14,
+                    fontsize: widget.fontSize),
+              ),
+          ],
+        ),
       );
     }
   }
