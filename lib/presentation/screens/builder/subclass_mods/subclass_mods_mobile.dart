@@ -93,7 +93,7 @@ class _SubclassModsMobileState extends State<SubclassModsMobile> {
                           }
                         },
                         plugSetHash: widget.subclass.sockets!.socketEntries![i]
-                            .reusablePlugSetHash!)),
+                            .reusablePlugSetHash)),
               mobileSectionInverted(context,
                   title: "Aspects",
                   child: Column(

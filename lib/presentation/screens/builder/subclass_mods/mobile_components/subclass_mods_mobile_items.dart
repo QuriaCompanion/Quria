@@ -11,7 +11,7 @@ import 'package:quria/presentation/detailed_item/subclass/subclass_mod_modal.dar
 
 class SubclassMobileItems extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
-  final int plugSetHash;
+  final int? plugSetHash;
   final void Function(DestinyInventoryItemDefinition) onSocketChange;
   const SubclassMobileItems(
       {required this.item,
@@ -27,8 +27,11 @@ class SubclassMobileItems extends StatefulWidget {
 class _SubclassMobileItemsState extends State<SubclassMobileItems> {
   @override
   Widget build(BuildContext context) {
-    List<DestinyItemPlug> plugs =
-        ProfileService().getPlugSets(widget.plugSetHash).toSet().toList();
+    List<DestinyItemPlug>? plugs;
+    if (widget.plugSetHash != null) {
+      plugs =
+          ProfileService().getPlugSets(widget.plugSetHash!).toSet().toList();
+    }
 
     return SizedBox(
       width: vw(context) - globalPadding(context) * 2,
@@ -52,48 +55,49 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
               spacing: globalPadding(context) / 2,
               runSpacing: globalPadding(context) / 2,
               children: [
-                for (var plug in plugs)
-                  if (plug.plugItemHash != widget.item.hash)
-                    InkWell(
-                      onTap: () {
-                        showMaterialModalBottomSheet(
-                            backgroundColor: Colors.transparent,
-                            expand: false,
-                            context: context,
-                            builder: (context) {
-                              return SubclassModModal(
-                                  mod: ManifestService.manifestParsed
-                                          .destinyInventoryItemDefinition![
-                                      plug.plugItemHash]!,
-                                  onSocketChange: () {
-                                    setState(() {
-                                      widget.onSocketChange(ManifestService
-                                              .manifestParsed
-                                              .destinyInventoryItemDefinition![
-                                          plug.plugItemHash]!);
+                if (plugs != null)
+                  for (var plug in plugs)
+                    if (plug.plugItemHash != widget.item.hash)
+                      InkWell(
+                        onTap: () {
+                          showMaterialModalBottomSheet(
+                              backgroundColor: Colors.transparent,
+                              expand: false,
+                              context: context,
+                              builder: (context) {
+                                return SubclassModModal(
+                                    mod: ManifestService.manifestParsed
+                                            .destinyInventoryItemDefinition![
+                                        plug.plugItemHash]!,
+                                    onSocketChange: () {
+                                      setState(() {
+                                        widget.onSocketChange(ManifestService
+                                                .manifestParsed
+                                                .destinyInventoryItemDefinition![
+                                            plug.plugItemHash]!);
+                                      });
                                     });
-                                  });
-                            });
-                      },
-                      onLongPress: () {
-                        widget.onSocketChange(ManifestService
-                                .manifestParsed.destinyInventoryItemDefinition![
-                            plug.plugItemHash]!);
-                      },
-                      child: SizedBox(
-                        width: 44,
-                        height: 44,
-                        child: pictureBordered(
-                            image: NetworkImage(DestinyData.bungieLink +
-                                ManifestService
-                                    .manifestParsed
-                                    .destinyInventoryItemDefinition![
-                                        plug.plugItemHash]!
-                                    .displayProperties!
-                                    .icon!),
-                            size: 44),
-                      ),
-                    )
+                              });
+                        },
+                        onLongPress: () {
+                          widget.onSocketChange(ManifestService.manifestParsed
+                                  .destinyInventoryItemDefinition![
+                              plug.plugItemHash]!);
+                        },
+                        child: SizedBox(
+                          width: 44,
+                          height: 44,
+                          child: pictureBordered(
+                              image: NetworkImage(DestinyData.bungieLink +
+                                  ManifestService
+                                      .manifestParsed
+                                      .destinyInventoryItemDefinition![
+                                          plug.plugItemHash]!
+                                      .displayProperties!
+                                      .icon!),
+                              size: 44),
+                        ),
+                      )
               ],
             ),
           )
