@@ -4,10 +4,10 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/inspectHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/detailed_item/item/header_weapon_details.dart';
+import 'package:quria/presentation/components/detailed_item/item/stat_progress_bar.dart';
+import 'package:quria/presentation/components/detailed_item/item/weapon_details_hidden_stats.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
-import 'package:quria/presentation/detailed_item/item/header_weapon_details.dart';
-import 'package:quria/presentation/detailed_item/item/stat_progress_bar.dart';
-import 'package:quria/presentation/detailed_item/item/weapon_details_hidden_stats.dart';
 import 'package:quria/presentation/screens/inspect/components/perk_list.dart';
 
 class InspectWidget extends StatefulWidget {

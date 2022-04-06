@@ -43,35 +43,41 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
               ),
             ],
           ),
-          SizedBox(
-            height: 45,
-            child: ListView(
-              padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
-              scrollDirection: Axis.horizontal,
-              children: [
-                InkWell(
-                    onTap: () {
-                      setState(() {
-                        currentFilter = DestinyItemType.Weapon;
-                      });
-                    },
-                    child: MobileNavItem(
-                      selected: currentFilter == DestinyItemType.Weapon,
-                      value: "Armes",
-                      width: 171,
-                    )),
-                InkWell(
-                    onTap: () {
-                      setState(() {
-                        currentFilter = DestinyItemType.Armor;
-                      });
-                    },
-                    child: MobileNavItem(
-                      selected: currentFilter == DestinyItemType.Armor,
-                      value: "Armure",
-                      width: 171,
-                    )),
-              ],
+          Padding(
+            padding: EdgeInsets.only(
+                top: globalPadding(context),
+                bottom: globalPadding(context) * 2),
+            child: SizedBox(
+              height: 45,
+              child: ListView(
+                padding:
+                    EdgeInsets.symmetric(horizontal: globalPadding(context)),
+                scrollDirection: Axis.horizontal,
+                children: [
+                  InkWell(
+                      onTap: () {
+                        setState(() {
+                          currentFilter = DestinyItemType.Weapon;
+                        });
+                      },
+                      child: MobileNavItem(
+                        selected: currentFilter == DestinyItemType.Weapon,
+                        value: "Armes",
+                        width: 171,
+                      )),
+                  InkWell(
+                      onTap: () {
+                        setState(() {
+                          currentFilter = DestinyItemType.Armor;
+                        });
+                      },
+                      child: MobileNavItem(
+                        selected: currentFilter == DestinyItemType.Armor,
+                        value: "Armure",
+                        width: 171,
+                      )),
+                ],
+              ),
             ),
           ),
           for (DestinyItemComponent item
@@ -89,9 +95,9 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                     item: item,
                     instanceId: item.itemInstanceId!,
                   ),
-                  const Divider(
+                  Divider(
                     thickness: 1,
-                    height: 25,
+                    height: globalPadding(context) * 2,
                     color: grey,
                   ),
                 ],

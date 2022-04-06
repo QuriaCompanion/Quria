@@ -1,32 +1,30 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
-import 'package:bungie_api/models/destiny_sandbox_perk_definition.dart';
+import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/detailed_item/item/armor_mod_icon_display.dart';
-import 'package:quria/presentation/detailed_item/item/stat_progress_bar.dart';
+import 'package:quria/presentation/components/detailed_item/item/perk_item_display.dart';
+import 'package:quria/presentation/components/detailed_item/item/stat_progress_bar.dart';
 
-class SubclassModModal extends StatefulWidget {
-  final DestinyInventoryItemDefinition mod;
-  final void Function() onSocketChange;
-  const SubclassModModal(
-      {required this.mod, required this.onSocketChange, Key? key})
-      : super(key: key);
+class PerkModal extends StatelessWidget {
+  final DestinyInventoryItemDefinition perk;
+  final int? index;
+  final String? instanceId;
+  final Function(List<DestinyItemSocketState>?)? onSocketsChanged;
 
-  @override
-  State<SubclassModModal> createState() => _SubclassModModalState();
-}
+  const PerkModal({
+    Key? key,
+    required this.perk,
+    this.onSocketsChanged,
+    this.index,
+    this.instanceId,
+  }) : super(key: key);
 
-class _SubclassModModalState extends State<SubclassModModal> {
-  DestinySandboxPerkDefinition? perkItem;
   @override
   Widget build(BuildContext context) {
-    if (widget.mod.perks != null && widget.mod.perks!.isNotEmpty) {
-      perkItem = ManifestService.manifestParsed
-          .destinySandboxPerkDefinition?[widget.mod.perks?[0].perkHash];
-    }
     return Container(
       height: MediaQuery.of(context).size.height * 0.75,
       decoration: const BoxDecoration(
@@ -42,10 +40,8 @@ class _SubclassModModalState extends State<SubclassModModal> {
             children: [
               Row(
                 children: [
-                  ArmorModIconDisplay(
-                    iconSize: mobileItemSize(context),
-                    socket: widget.mod,
-                  ),
+                  PerkItemDisplay(
+                      perk: perk, iconSize: mobileItemSize(context)),
                   SizedBox(width: globalPadding(context)),
                   SizedBox(
                     width: vw(context) -
@@ -55,10 +51,8 @@ class _SubclassModModalState extends State<SubclassModModal> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        textH3(perkItem?.displayProperties?.name ??
-                            widget.mod.displayProperties?.name ??
-                            ""),
-                        textBodyRegular(widget.mod.itemTypeDisplayName ?? "")
+                        textH3(perk.displayProperties?.name ?? ""),
+                        textBodyRegular(perk.itemTypeDisplayName ?? "")
                       ],
                     ),
                   ),
@@ -84,9 +78,7 @@ class _SubclassModModalState extends State<SubclassModModal> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              textBodyRegular(perkItem?.displayProperties?.description ??
-                  widget.mod.displayProperties?.description ??
-                  ""),
+              textBodyRegular(perk.displayProperties?.description ?? ""),
               const Divider(
                 color: blackLight,
                 height: 22,
@@ -95,8 +87,8 @@ class _SubclassModModalState extends State<SubclassModModal> {
               Builder(
                 builder: ((context) {
                   List<Widget> list = [];
-                  if (widget.mod.investmentStats?.isNotEmpty ?? false) {
-                    for (var stat in widget.mod.investmentStats!) {
+                  if (perk.investmentStats?.isNotEmpty ?? false) {
+                    for (var stat in perk.investmentStats!) {
                       list.add(StatProgressBar(
                           width: vw(context),
                           fontSize: 20,
@@ -120,19 +112,25 @@ class _SubclassModModalState extends State<SubclassModModal> {
                   return Column(children: list);
                 }),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                  widget.onSocketChange();
-                },
-                child: textBodyMedium("Equiper", color: black),
-                style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    fixedSize: Size(vw(context) - globalPadding(context) * 2,
-                        (vw(context) - globalPadding(context) * 2) * 0.147),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50))),
-              ),
+              if (instanceId != null)
+                ElevatedButton(
+                  onPressed: () {
+                    BungieApiService()
+                        .insertSocketPlugFree(instanceId!, perk.hash!, index!)
+                        .then((value) async {
+                      onSocketsChanged!(
+                          value?.response?.item?.sockets?.data?.sockets);
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: textBodyMedium("Equiper", color: black),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
+                      fixedSize: Size(vw(context) - globalPadding(context) * 2,
+                          (vw(context) - globalPadding(context) * 2) * 0.147),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50))),
+                ),
             ],
           ),
         ),

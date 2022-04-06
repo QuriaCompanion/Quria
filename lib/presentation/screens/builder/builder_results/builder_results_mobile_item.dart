@@ -79,12 +79,12 @@ class BuilderResultsMobileItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               RoundedButton(
-                text: textBodyMedium('Suivant', color: black),
+                text: textBodyMedium('Equiper', color: black),
                 onPressed: () {},
                 width: vw(context) * 0.4,
               ),
               RoundedButton(
-                text: textBodyMedium('Suivant', color: black),
+                text: textBodyMedium('Enregistrer', color: Colors.white),
                 onPressed: () {},
                 textColor: Colors.white,
                 buttonColor: grey,

@@ -2,7 +2,7 @@ import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/presentation/detailed_item/item/armor_mod_icon_display.dart';
+import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
 
 class ModWithTypeName extends StatelessWidget {
   final DestinyInventoryItemDefinition item;

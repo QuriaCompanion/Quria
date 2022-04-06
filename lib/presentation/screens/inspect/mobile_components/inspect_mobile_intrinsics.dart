@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/detailed_item/item/item_named_description.dart';
+import 'package:quria/presentation/components/detailed_item/item/item_named_description.dart';
 
 class InspectMobileIntrinsics extends StatefulWidget {
   final List<DestinyItemSocketState>? sockets;
@@ -64,13 +64,6 @@ class _InspectMobileIntrinsicsState extends State<InspectMobileIntrinsics> {
                 .destinyInventoryItemDefinition![socket.plugHash]!),
       ));
     }
-    list.add(
-      const Divider(
-        color: blackLight,
-        height: 22,
-        thickness: 1,
-      ),
-    );
     return Column(
       children: list,
     );

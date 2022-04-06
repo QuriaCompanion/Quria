@@ -4,7 +4,7 @@ import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/detailed_item/item/mod_display.dart';
+import 'package:quria/presentation/components/detailed_item/item/mod_display.dart';
 
 class InspectMobileExoticArmor extends StatelessWidget {
   final List<DestinyItemSocketState>? sockets;

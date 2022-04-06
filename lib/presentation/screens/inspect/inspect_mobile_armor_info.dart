@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/detailed_item/item/armor_mods.dart';
+import 'package:quria/presentation/components/detailed_item/item/armor_mods.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_actions.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_cosmetics.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_exotic_armor.dart';

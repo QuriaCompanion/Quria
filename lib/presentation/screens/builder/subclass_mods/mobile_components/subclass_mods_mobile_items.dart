@@ -7,7 +7,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/detailed_item/subclass/subclass_mod_modal.dart';
+import 'package:quria/presentation/components/detailed_item/subclass/subclass_mod_modal.dart';
 
 class SubclassMobileItems extends StatefulWidget {
   final DestinyInventoryItemDefinition item;

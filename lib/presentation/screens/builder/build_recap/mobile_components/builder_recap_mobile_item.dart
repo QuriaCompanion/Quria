@@ -5,9 +5,9 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/detailed_item/item/armor_afinity.dart';
+import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
-import 'package:quria/presentation/detailed_item/item/armor_afinity.dart';
-import 'package:quria/presentation/detailed_item/item/armor_mod_icon_display.dart';
 
 class BuilderRecapMobileItem extends StatelessWidget {
   final Armor item;

@@ -4,8 +4,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-
-import '../../../data/services/manifest/manifest.service.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class HeaderWeaponDetails extends StatelessWidget {
   final int? powerLevel;

@@ -9,8 +9,8 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/detailed_item/item/armor_afinity.dart';
-import 'package:quria/presentation/detailed_item/item/armor_mod_icon_display.dart';
+import 'package:quria/presentation/components/detailed_item/item/armor_afinity.dart';
+import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
 class ArmorMods extends StatefulWidget {

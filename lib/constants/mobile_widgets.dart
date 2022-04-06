@@ -40,7 +40,7 @@ Widget mobileSection(
   required Widget child,
 }) {
   return Padding(
-    padding: EdgeInsets.only(top: globalPadding(context)),
+    padding: EdgeInsets.symmetric(vertical: globalPadding(context)),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -62,7 +62,7 @@ Widget mobileSectionInverted(
   required Widget child,
 }) {
   return Padding(
-    padding: EdgeInsets.only(top: globalPadding(context)),
+    padding: EdgeInsets.symmetric(vertical: globalPadding(context)),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

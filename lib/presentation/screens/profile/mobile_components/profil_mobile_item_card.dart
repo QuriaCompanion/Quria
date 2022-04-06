@@ -13,8 +13,8 @@ import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/detailed_item/item/perk_item_display.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
-import 'package:quria/presentation/detailed_item/item/perk_item_display.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 class ProfileMobileItemCard extends StatefulWidget {

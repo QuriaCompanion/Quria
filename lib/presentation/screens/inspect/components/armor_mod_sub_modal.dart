@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/detailed_item/item/armor_mod_icon_display.dart';
-import 'package:quria/presentation/detailed_item/item/stat_progress_bar.dart';
+import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
+import 'package:quria/presentation/components/detailed_item/item/stat_progress_bar.dart';
 
 class ArmorModSubModal extends StatelessWidget {
   final DestinyInventoryItemDefinition mod;

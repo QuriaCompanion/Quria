@@ -86,45 +86,50 @@ class _MobileInspectState extends State<MobileInspect> {
                 power: powerLevel,
               ),
             ),
-            SizedBox(
-              height: 45,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                      onTap: () {
-                        setState(() {
-                          selected = "Informations";
-                          content = itemDef.itemType == DestinyItemType.Weapon
-                              ? InspectMobileWeaponInfo(
-                                  item: itemDef,
-                                  stats: stats,
-                                  instanceId: widget.data.instanceId,
-                                )
-                              : InspectMobileArmorInfo(
-                                  item: itemDef,
-                                  stats: stats,
-                                  instanceId: widget.data.instanceId,
-                                );
-                        });
-                      },
-                      child: MobileNavItem(
-                        selected: selected == "Informations",
-                        value: "Informations",
-                        width: 171,
-                      )),
-                  InkWell(
-                      onTap: () {
-                        setState(() {
-                          selected = "Recomendations";
-                        });
-                      },
-                      child: MobileNavItem(
-                        selected: "Recomendations" == selected,
-                        value: "Recomendations",
-                        width: 171,
-                      )),
-                ],
+            Padding(
+              padding: EdgeInsets.only(
+                  top: globalPadding(context),
+                  bottom: globalPadding(context) * 2),
+              child: SizedBox(
+                height: 45,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                        onTap: () {
+                          setState(() {
+                            selected = "Informations";
+                            content = itemDef.itemType == DestinyItemType.Weapon
+                                ? InspectMobileWeaponInfo(
+                                    item: itemDef,
+                                    stats: stats,
+                                    instanceId: widget.data.instanceId,
+                                  )
+                                : InspectMobileArmorInfo(
+                                    item: itemDef,
+                                    stats: stats,
+                                    instanceId: widget.data.instanceId,
+                                  );
+                          });
+                        },
+                        child: MobileNavItem(
+                          selected: selected == "Informations",
+                          value: "Informations",
+                          width: 171,
+                        )),
+                    InkWell(
+                        onTap: () {
+                          setState(() {
+                            selected = "Recomendations";
+                          });
+                        },
+                        child: MobileNavItem(
+                          selected: "Recomendations" == selected,
+                          value: "Recomendations",
+                          width: 171,
+                        )),
+                  ],
+                ),
               ),
             ),
             Padding(

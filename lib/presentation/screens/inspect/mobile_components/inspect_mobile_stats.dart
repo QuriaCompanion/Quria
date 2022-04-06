@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/detailed_item/item/stat_progress_bar.dart';
+import 'package:quria/presentation/components/detailed_item/item/stat_progress_bar.dart';
 
 class InspectMobileStats extends StatelessWidget {
   final DestinyInventoryItemDefinition item;
