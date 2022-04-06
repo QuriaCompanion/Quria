@@ -43,6 +43,7 @@ class _SubclassModModalState extends State<SubclassModModal> {
               Row(
                 children: [
                   ArmorModIconDisplay(
+                    iconSize: mobileItemSize(context),
                     socket: widget.mod,
                   ),
                   SizedBox(width: globalPadding(context)),

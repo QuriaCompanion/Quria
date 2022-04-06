@@ -4,7 +4,9 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/models/helpers/builderRecapHelper.model.dart';
 import 'package:quria/presentation/screens/builder/builder_results/builder_results_mobile_item.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class BuilderResultsMobileView extends StatelessWidget {
   final List<Build> buildResults;
@@ -37,10 +39,18 @@ class BuilderResultsMobileView extends StatelessWidget {
           for (var buildResult in buildResults)
             Padding(
               padding: EdgeInsets.all(globalPadding(context)),
-              child: BuilderResultsMobileItem(
-                buildResult: buildResult,
-                characterId: characterId,
-                mods: mods,
+              child: InkWell(
+                onTap: () {
+                  Navigator.pushNamed(context, routeBuilderRecap,
+                      arguments: BuilderRecapHelper(
+                          build: buildResult,
+                          mods: mods,
+                          characterId: characterId));
+                },
+                child: BuilderResultsMobileItem(
+                  buildResult: buildResult,
+                  characterId: characterId,
+                ),
               ),
             ),
         ])

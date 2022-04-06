@@ -42,6 +42,7 @@ class ArmorModSubModal extends StatelessWidget {
               Row(
                 children: [
                   ArmorModIconDisplay(
+                    iconSize: mobileItemSize(context),
                     socket: mod,
                   ),
                   SizedBox(width: globalPadding(context)),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
@@ -10,13 +9,9 @@ import 'package:quria/presentation/screens/profile/components/character_stats_li
 
 class BuilderResultsMobileItem extends StatelessWidget {
   final Build buildResult;
-  final List<ModSlots> mods;
   final String characterId;
   const BuilderResultsMobileItem(
-      {required this.buildResult,
-      required this.characterId,
-      required this.mods,
-      Key? key})
+      {required this.buildResult, required this.characterId, Key? key})
       : super(key: key);
 
   @override

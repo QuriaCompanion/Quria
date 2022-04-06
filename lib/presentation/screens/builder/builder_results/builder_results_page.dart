@@ -6,6 +6,7 @@ import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_base.dart';
+import 'package:quria/presentation/components/misc/mobile_components/scaffold_burger_and_back_option.dart';
 import 'package:quria/presentation/screens/builder/builder_results/builder_results_mobile_view.dart';
 
 class BuilderResultsPage extends StatefulWidget {
@@ -39,7 +40,7 @@ class _BuilderResultsPageState extends State<BuilderResultsPage> {
         builder: (BuildContext context, AsyncSnapshot<List<Build>> snapshot) {
           if (snapshot.hasData) {
             if (vw(context) < 850) {
-              return ScaffoldBase(
+              return ScaffoldBurgerAndBackOption(
                 body: BuilderResultsMobileView(
                   buildResults: snapshot.data!,
                   mods: widget.data.armorMods,

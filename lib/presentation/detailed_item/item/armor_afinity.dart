@@ -8,16 +8,14 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class ArmorAfinity extends StatelessWidget {
   final String afinityIcon;
-  final DestinyItemSocketState afinity;
+  final int pointsAvailable;
   const ArmorAfinity({
     required this.afinityIcon,
-    required this.afinity,
+    required this.pointsAvailable,
     Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final DestinyInventoryItemDefinition afinityDef = ManifestService
-        .manifestParsed.destinyInventoryItemDefinition![afinity.plugHash!]!;
     return Column(
       children: [
         Container(
@@ -42,11 +40,11 @@ class ArmorAfinity extends StatelessWidget {
                       SizedBox(
                           width: (vw(context) - (globalPadding(context) * 2)) *
                               0.005),
-                      textH2(afinityDef.investmentStats![0].value.toString()),
+                      textH2(pointsAvailable.toString()),
                     ],
                   ),
-                  textBodyRegular('InutilisÃ©: ' +
-                      (10 - afinityDef.investmentStats![0].value!).toString()),
+                  textBodyRegular(
+                      'InutilisÃ©: ' + (10 - pointsAvailable).toString()),
                 ],
               ),
             )),
@@ -67,18 +65,14 @@ class ArmorAfinity extends StatelessWidget {
                 height: mobileItemSize(context) / 3,
                 width: (vw(context) - (globalPadding(context) * 2)) / 10.5,
                 decoration: BoxDecoration(
-                  color: afinityDef.investmentStats![0].value! >= i
-                      ? Colors.white
-                      : greyLight,
+                  color: pointsAvailable >= i ? Colors.white : greyLight,
                 ),
               ),
             Container(
               height: mobileItemSize(context) / 3,
               width: (vw(context) - (globalPadding(context) * 2)) / 10.5,
               decoration: BoxDecoration(
-                color: afinityDef.investmentStats![0].value! == 10
-                    ? Colors.white
-                    : greyLight,
+                color: pointsAvailable == 10 ? Colors.white : greyLight,
                 borderRadius:
                     const BorderRadius.only(bottomRight: Radius.circular(8)),
               ),

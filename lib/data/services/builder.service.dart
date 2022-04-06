@@ -210,8 +210,11 @@ class BuilderService {
               if (stat.statTypeHash == 3779394102 ||
                   stat.statTypeHash == 3344745325 ||
                   stat.statTypeHash == 107977982 ||
+                  stat.statTypeHash == 3950461274 ||
+                  stat.statTypeHash == 998798867 ||
+                  stat.statTypeHash == 2399985800 ||
                   stat.statTypeHash == 3176563510 ||
-                  stat.statTypeHash == 3176563510) {
+                  stat.statTypeHash == 3578062600) {
                 armorModspace[armor.key] -= stat.value!;
               }
             }

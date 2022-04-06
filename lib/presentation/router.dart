@@ -1,11 +1,13 @@
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
+import 'package:quria/data/models/helpers/builderRecapHelper.model.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/modHelper.model.dart';
 import 'package:quria/data/models/helpers/statsFilterHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassModHelper.model.dart';
+import 'package:quria/presentation/screens/builder/build_recap/builder_recap_page.dart';
 import 'package:quria/presentation/screens/builder/builder_results/builder_results_page.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_page.dart';
 import 'package:quria/presentation/screens/builder/mods/mods_page.dart';
@@ -37,6 +39,10 @@ class AppRouter {
             settings.arguments as BuilderPreparation;
         return MaterialPageRoute(
             builder: (_) => BuilderResultsPage(data: data));
+      case routeBuilderRecap:
+        final BuilderRecapHelper data =
+            settings.arguments as BuilderRecapHelper;
+        return MaterialPageRoute(builder: (_) => BuilderRecapPage(data: data));
       case routeInspectMobile:
         final InspectData data = settings.arguments as InspectData;
         return MaterialPageRoute(builder: (_) => MobileInspect(data: data));

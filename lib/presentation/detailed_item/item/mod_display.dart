@@ -23,7 +23,7 @@ class ModDisplay extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ArmorModIconDisplay(socket: item),
+        ArmorModIconDisplay(iconSize: iconSize, socket: item),
         SizedBox(width: padding),
         SizedBox(
           width: width,

@@ -14,5 +14,6 @@ const String routeInspectMobileArmor = "/inspect-mobile-armor";
 const String routeSubclass = "/subclass";
 const String routeBuilderMod = "/builder-mod";
 const String routeMod = "/mod";
+const String routeBuilderRecap = "/builder-recap";
 
 final navKey = GlobalKey<NavigatorState>();

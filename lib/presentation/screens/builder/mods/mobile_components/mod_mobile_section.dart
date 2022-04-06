@@ -6,6 +6,7 @@ import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/detailed_item/item/armor_mod_icon_display.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
 class ModsMobileSection extends StatelessWidget {
@@ -50,10 +51,8 @@ class ModsMobileSection extends StatelessWidget {
                         );
                       });
                 },
-                child: pictureBordered(
-                    size: mobileItemSize(context),
-                    image: NetworkImage(DestinyData.bungieLink +
-                        item.value!.displayProperties!.icon!)),
+                child: ArmorModIconDisplay(
+                    iconSize: mobileItemSize(context), socket: item.value!),
               ),
             ),
       ],

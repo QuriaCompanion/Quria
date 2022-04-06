@@ -76,14 +76,20 @@ class _ArmorModsState extends State<ArmorMods> {
     return Column(children: [
       ArmorAfinity(
           afinityIcon: widget.afinityIcon,
-          afinity: widget.sockets.firstWhere((element) =>
-              ManifestService
-                  .manifestParsed
-                  .destinyInventoryItemDefinition![element.plugHash]
-                  ?.plug
-                  ?.plugCategoryIdentifier
-                  ?.contains('masterworks.stat') ==
-              true)),
+          pointsAvailable: ManifestService
+              .manifestParsed
+              .destinyInventoryItemDefinition![widget.sockets
+                  .firstWhere((element) =>
+                      ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition![element.plugHash]
+                          ?.plug
+                          ?.plugCategoryIdentifier
+                          ?.contains('masterworks.stat') ==
+                      true)
+                  .plugHash]!
+              .investmentStats![0]
+              .value!),
       SizedBox(height: globalPadding(context)),
       Container(
           padding:
@@ -135,6 +141,7 @@ class _ArmorModsState extends State<ArmorMods> {
                         });
                   },
                   child: ArmorModIconDisplay(
+                    iconSize: mobileItemSize(context),
                     socket: ManifestService
                             .manifestParsed.destinyInventoryItemDefinition![
                         socket.value.plugHash]!,

@@ -2,7 +2,6 @@ import 'package:bungie_api/destiny2.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
 class TalentGridMobileItem extends StatelessWidget {

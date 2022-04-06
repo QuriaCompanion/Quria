@@ -7,19 +7,23 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class ArmorModIconDisplay extends StatelessWidget {
   final DestinyInventoryItemDefinition socket;
-  const ArmorModIconDisplay({required this.socket, Key? key}) : super(key: key);
+  final double iconSize;
+  const ArmorModIconDisplay(
+      {required this.iconSize, required this.socket, Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: mobileItemSize(context),
-      height: mobileItemSize(context),
+    return Container(
+      decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+      width: iconSize,
+      height: iconSize,
       child: Stack(
         alignment: Alignment.topRight,
         children: [
           Image(
-            width: mobileItemSize(context),
-            height: mobileItemSize(context),
+            width: iconSize,
+            height: iconSize,
             image: NetworkImage(
                 DestinyData.bungieLink + socket.displayProperties!.icon!),
           ),
@@ -32,8 +36,8 @@ class ArmorModIconDisplay extends StatelessWidget {
                       ?.hasIcon ==
                   true)
             Image(
-              width: mobileItemSize(context),
-              height: mobileItemSize(context),
+              width: iconSize,
+              height: iconSize,
               image: NetworkImage(DestinyData.bungieLink +
                   ManifestService
                       .manifestParsed

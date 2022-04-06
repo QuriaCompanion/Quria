@@ -15,7 +15,7 @@ class ModWithTypeName extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        ArmorModIconDisplay(socket: item),
+        ArmorModIconDisplay(iconSize: iconSize, socket: item),
         SizedBox(width: globalPadding(context)),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,

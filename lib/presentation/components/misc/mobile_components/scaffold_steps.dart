@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/presentation/components/burger.dart';
+import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 
 class ScaffoldSteps<T> extends StatelessWidget {
   final Widget body;
