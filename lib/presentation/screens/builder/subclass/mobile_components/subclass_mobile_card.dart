@@ -2,6 +2,7 @@ import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/models/helpers/modHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassModHelper.model.dart';
 import 'dart:math' as math;
@@ -23,13 +24,21 @@ class SubclassMobileCard extends StatelessWidget {
         .manifestParsed.destinyInventoryItemDefinition![subclass.itemHash]!;
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, routeBuilderMod,
-            arguments: SubclassModHelper(
-                characterId: data.characterId,
-                subclassInstanceId: subclass.itemInstanceId!,
-                subclass: subclassDef,
-                statOrder: data.statOrder,
-                exoticHash: data.exoticHash));
+        subclassDef.talentGrid?.talentGridHash == 0
+            ? Navigator.pushNamed(context, routeBuilderMod,
+                arguments: SubclassModHelper(
+                    characterId: data.characterId,
+                    subclassInstanceId: subclass.itemInstanceId!,
+                    subclass: subclassDef,
+                    statOrder: data.statOrder,
+                    exoticHash: data.exoticHash))
+            : Navigator.pushNamed(context, routeMod,
+                arguments: ModHelper(
+                    characterId: data.characterId,
+                    subclassInstanceId: subclass.itemInstanceId!,
+                    statOrder: data.statOrder,
+                    subclassMods: [],
+                    exoticHash: data.exoticHash));
       },
       child: Container(
           width: (vw(context) - globalPadding(context) * 3) / 2,

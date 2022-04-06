@@ -11,11 +11,11 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/mobile_components/subclass_mods_mobile_items.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
-class SubclassModsMobile extends StatefulWidget {
+class SubclassModsMobileView extends StatefulWidget {
   final List<DestinyItemSocketState>? sockets;
   final DestinyInventoryItemDefinition subclass;
   final void Function(List<DestinyInventoryItemDefinition>) onChange;
-  const SubclassModsMobile(
+  const SubclassModsMobileView(
       {required this.sockets,
       required this.subclass,
       required this.onChange,
@@ -23,37 +23,37 @@ class SubclassModsMobile extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<SubclassModsMobile> createState() => _SubclassModsMobileState();
+  State<SubclassModsMobileView> createState() => _SubclassModsMobileViewState();
 }
 
-class _SubclassModsMobileState extends State<SubclassModsMobile> {
+class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
   late final List<DestinyInventoryItemDefinition> displayedSockets;
   @override
   void initState() {
     super.initState();
 
-    if (widget.sockets != null) {
-      displayedSockets = widget.sockets!
-          .map((e) => ManifestService
-              .manifestParsed.destinyInventoryItemDefinition![e.plugHash]!)
-          .toList();
-    } else {
-      displayedSockets = [];
-    }
+    displayedSockets = widget.sockets!
+        .map((e) => ManifestService
+            .manifestParsed.destinyInventoryItemDefinition![e.plugHash]!)
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    int aspectOne =
-        displayedSockets[5].investmentStats?.firstWhereIndexedOrNull((i, _) {
-              return i == 0;
-            })?.value ??
-            0;
-    int aspectTwo =
-        displayedSockets[6].investmentStats?.firstWhereIndexedOrNull((i, _) {
-              return i == 0;
-            })?.value ??
-            0;
+    int? aspectOne;
+    int? aspectTwo;
+    if (displayedSockets.isNotEmpty) {
+      aspectOne =
+          displayedSockets[5].investmentStats?.firstWhereIndexedOrNull((i, _) {
+                return i == 0;
+              })?.value ??
+              0;
+      aspectTwo =
+          displayedSockets[6].investmentStats?.firstWhereIndexedOrNull((i, _) {
+                return i == 0;
+              })?.value ??
+              0;
+    }
     return Column(
       children: [
         mobileHeader(context,
@@ -132,58 +132,59 @@ class _SubclassModsMobileState extends State<SubclassModsMobile> {
                               .socketEntries![6].reusablePlugSetHash!),
                     ],
                   )),
-              mobileSectionInverted(context,
-                  title: "Fragments",
-                  child: Row(
-                    children: [
-                      for (int i = 0; i < aspectOne + aspectTwo; i++)
-                        Padding(
-                          padding: i != 4
-                              ? EdgeInsets.only(right: globalPadding(context))
-                              : EdgeInsets.zero,
-                          child: InkWell(
-                            onTap: () {
-                              showMaterialModalBottomSheet(
-                                  backgroundColor: Colors.transparent,
-                                  expand: true,
-                                  context: context,
-                                  builder: (context) {
-                                    return ArmorModModal(
-                                      socket: displayedSockets[7 + i],
-                                      plugSetsHash: widget
-                                          .subclass
-                                          .sockets!
-                                          .socketEntries![7 + i]
-                                          .reusablePlugSetHash!,
-                                      onSocketChange: (itemHash) {
-                                        if (!displayedSockets.contains(
-                                            ManifestService.manifestParsed
-                                                    .destinyInventoryItemDefinition![
-                                                itemHash]!)) {
-                                          setState(() {
-                                            displayedSockets[
-                                                7 + i] = ManifestService
-                                                    .manifestParsed
-                                                    .destinyInventoryItemDefinition![
-                                                itemHash]!;
-                                          });
-                                          widget.onChange(displayedSockets);
-                                        }
-                                      },
-                                    );
-                                  });
-                            },
-                            child: pictureBordered(
-                              image: NetworkImage(DestinyData.bungieLink +
-                                  displayedSockets[7 + i]
-                                      .displayProperties!
-                                      .icon!),
-                              size: mobileItemSize(context),
+              if (aspectOne != null && aspectTwo != null)
+                mobileSectionInverted(context,
+                    title: "Fragments",
+                    child: Row(
+                      children: [
+                        for (int i = 0; i < aspectOne + aspectTwo; i++)
+                          Padding(
+                            padding: i != 4
+                                ? EdgeInsets.only(right: globalPadding(context))
+                                : EdgeInsets.zero,
+                            child: InkWell(
+                              onTap: () {
+                                showMaterialModalBottomSheet(
+                                    backgroundColor: Colors.transparent,
+                                    expand: true,
+                                    context: context,
+                                    builder: (context) {
+                                      return ArmorModModal(
+                                        socket: displayedSockets[7 + i],
+                                        plugSetsHash: widget
+                                            .subclass
+                                            .sockets!
+                                            .socketEntries![7 + i]
+                                            .reusablePlugSetHash!,
+                                        onSocketChange: (itemHash) {
+                                          if (!displayedSockets.contains(
+                                              ManifestService.manifestParsed
+                                                      .destinyInventoryItemDefinition![
+                                                  itemHash]!)) {
+                                            setState(() {
+                                              displayedSockets[
+                                                  7 + i] = ManifestService
+                                                      .manifestParsed
+                                                      .destinyInventoryItemDefinition![
+                                                  itemHash]!;
+                                            });
+                                            widget.onChange(displayedSockets);
+                                          }
+                                        },
+                                      );
+                                    });
+                              },
+                              child: pictureBordered(
+                                image: NetworkImage(DestinyData.bungieLink +
+                                    displayedSockets[7 + i]
+                                        .displayProperties!
+                                        .icon!),
+                                size: mobileItemSize(context),
+                              ),
                             ),
                           ),
-                        ),
-                    ],
-                  )),
+                      ],
+                    )),
               SizedBox(
                 height: globalPadding(context) * 4,
               ),

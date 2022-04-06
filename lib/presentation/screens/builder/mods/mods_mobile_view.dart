@@ -26,16 +26,23 @@ class ModsMobileView extends StatelessWidget {
                 textBodyRegular("Selectionne les mods que tu veux Ã©quiper."),
               ],
             )),
-        for (var mods in armorMods.asMap().entries)
-          mobileSectionInverted(context,
-              title: mods.value.title,
-              child: ModsMobileSection(
-                  items: mods.value.items,
-                  scoketEntries: mods.value.elementSocketEntries,
-                  onChange: (modSlots, index) {
-                    armorMods[mods.key].items[index] = modSlots;
-                    onChange(armorMods);
-                  })),
+        Padding(
+          padding: EdgeInsets.all(globalPadding(context)),
+          child: Column(
+            children: [
+              for (var mods in armorMods.asMap().entries)
+                mobileSectionInverted(context,
+                    title: mods.value.title,
+                    child: ModsMobileSection(
+                        items: mods.value.items,
+                        scoketEntries: mods.value.elementSocketEntries,
+                        onChange: (modSlots, index) {
+                          armorMods[mods.key].items[index] = modSlots;
+                          onChange(armorMods);
+                        })),
+            ],
+          ),
+        ),
         SizedBox(height: globalPadding(context) * 4),
       ],
     );

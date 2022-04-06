@@ -48,7 +48,10 @@ class ExoticMobileView extends StatelessWidget {
                     padding: EdgeInsets.only(bottom: globalPadding(context)),
                     child: ExoticMobileItem(item: exotic),
                   ),
-                )
+                ),
+              SizedBox(
+                height: globalPadding(context) * 4,
+              ),
             ],
           ),
         )

@@ -37,7 +37,10 @@ class SubclassMobileView extends StatelessWidget {
                 subclass: subclass,
               ),
           ],
-        )
+        ),
+        SizedBox(
+          height: globalPadding(context) * 4,
+        ),
       ],
     );
   }
