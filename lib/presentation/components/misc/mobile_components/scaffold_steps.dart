@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
+import 'package:quria/presentation/components/misc/rounded_button.dart';
 
 class ScaffoldSteps<T> extends StatelessWidget {
   final Widget body;
@@ -46,21 +47,12 @@ class ScaffoldSteps<T> extends StatelessWidget {
                 color: Colors.white,
               ),
             ),
-            ElevatedButton(
-                style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all<Size>(
-                    const Size(200, 50),
-                  ),
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.white),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(99),
-                  )),
-                ),
-                onPressed: () {
-                  Navigator.pushNamed(context, route, arguments: arguments);
-                },
-                child: textBodyBold('Suivant', color: black)),
+            RoundedButton(
+                text: textBodyBold('Suivant', color: black),
+                width: 200,
+                height: 50,
+                onPressed: () =>
+                    Navigator.pushNamed(context, route, arguments: arguments)),
           ],
         ),
       ),

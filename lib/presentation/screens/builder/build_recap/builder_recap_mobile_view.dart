@@ -5,7 +5,6 @@ import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/builderRecapHelper.model.dart';
-import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/screens/builder/build_recap/mobile_components/builder_recap_mobile_actions.dart';
 import 'package:quria/presentation/screens/builder/build_recap/mobile_components/builder_recap_mobile_item.dart';
 

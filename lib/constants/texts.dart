@@ -28,6 +28,42 @@ Widget textH2(String child, {color = Colors.white}) {
   );
 }
 
+Widget textQuria(String child, {color = Colors.white}) {
+  return AutoSizeText(
+    utf8Decode(child),
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
+      fontSize: 26,
+      fontWeight: FontWeight.w300,
+      color: color,
+    ),
+  );
+}
+
+Widget textCompanion(String child, {color = Colors.white}) {
+  return AutoSizeText(
+    utf8Decode(child),
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
+      fontSize: 30,
+      fontWeight: FontWeight.w900,
+      color: color,
+    ),
+  );
+}
+
+Widget textConnect(String child, {color = Colors.white}) {
+  return AutoSizeText(
+    utf8Decode(child),
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w400,
+      color: color,
+    ),
+  );
+}
+
 Widget textH3(String child, {color = Colors.white}) {
   return AutoSizeText(
     utf8Decode(child),

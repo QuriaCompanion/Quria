@@ -1,3 +1,7 @@
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:quria/constants/styles.dart';
+import 'package:quria/constants/texts.dart';
+import 'package:quria/presentation/components/misc/rounded_button.dart';
 import "package:universal_html/html.dart" as html;
 import 'dart:developer';
 import 'package:bungie_api/helpers/bungie_net_token.dart';
@@ -14,10 +18,6 @@ import 'package:flutter/services.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
-import 'package:quria/presentation/components/misc/button.dart';
-
-typedef LoginCallback = void Function(String code);
-typedef SkipCallback = void Function();
 
 class LoginWidget extends StatefulWidget {
   final String title = "Login";
@@ -25,12 +25,9 @@ class LoginWidget extends StatefulWidget {
   final AuthService auth = AuthService();
   final AccountService account = AccountService();
   final ProfileService profile = ProfileService();
-  final LoginCallback? onLogin;
-  final SkipCallback? onSkip;
   final bool forceReauth;
 
-  LoginWidget({Key? key, this.onLogin, this.onSkip, this.forceReauth = true})
-      : super(key: key);
+  LoginWidget({Key? key, this.forceReauth = true}) : super(key: key);
 
   @override
   LoginWidgetState createState() => LoginWidgetState();
@@ -40,9 +37,9 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   void initState() {
     super.initState();
-    widget.auth.getToken().then((value) => {
-          if (value != null) {checkMembership()}
-        });
+    // widget.auth.getToken().then((value) => {
+    //       if (value != null) {checkMembership()}
+    //     });
 
     getInitialUri().then((value) {
       if (!value.toString().contains('code=')) {
@@ -56,25 +53,52 @@ class LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
+    return Scaffold(
+      backgroundColor: black,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: Padding(
+      //   padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
+      //   child: RoundedButton(
+      //       text: textBodyBold('Se connecter', color: black),
+      //       onPressed: () {
+      //         authorizeClick(context);
+      //       },
+      //       width: 250.0,
+      //       height: 60),
+      // ),
+      floatingActionButton: Padding(
+        padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
+        child: RoundedButton(
+            text: textBodyBold('se connecter:dev', color: black),
+            onPressed: () {
+              yannisooLogin();
+            },
+            width: 250.0,
+            height: 60),
+      ),
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          InkWell(
-            onTap: () {
-              authorizeClick(context);
-            },
-            child:
-                const Button(value: 'Se connecter', width: 250.0, height: 60),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              textQuria("QURIA"),
+              SvgPicture.asset(
+                "assets/img/Quria.svg",
+                width: 50,
+                height: 50,
+              )
+            ],
           ),
-          const SizedBox(
-            height: 50.0,
+          textCompanion("D2 COMPANION"),
+          SizedBox(
+            width: vw(context) * 0.4,
+            child: Divider(
+              height: globalPadding(context) * 2.5,
+              color: Colors.white,
+            ),
           ),
-          InkWell(
-            onTap: () => yannisooLogin(),
-            child: const Button(
-                value: 'Je suis yannisoo', width: 250.0, height: 60),
-          ),
+          textConnect("CONNECTEZ-VOUS POUR CONTINUER"),
         ],
       ),
     );

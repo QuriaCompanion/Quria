@@ -1,10 +1,7 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
-import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class ArmorAfinity extends StatelessWidget {
   final String afinityIcon;

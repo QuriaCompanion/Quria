@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/constants/texts.dart';
 
 class RoundedButton extends StatelessWidget {
   final Function onPressed;
-  final String text;
+  final Widget text;
   final Color textColor;
   final Color buttonColor;
   final double width;
@@ -25,9 +24,10 @@ class RoundedButton extends StatelessWidget {
       onPressed: () {
         onPressed();
       },
-      child: textBodyMedium(text, color: textColor),
+      child: text,
       style: ElevatedButton.styleFrom(
           primary: buttonColor,
+          onPrimary: black,
           fixedSize: Size(width, height),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
