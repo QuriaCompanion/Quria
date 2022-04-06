@@ -122,7 +122,8 @@ class _ModsPageState extends State<ModsPage> {
             statOrder: widget.data.statOrder,
             exoticHash: widget.data.exoticHash,
             armorMods: armorMods,
-            subclassMods: widget.data.subclassMods),
+            subclassMods: widget.data.subclassMods,
+            classItemInstanceId: widget.data.classItemInstanceId),
         body: ModsMobileView(
           armorMods: armorMods,
           onChange: (newMods) {

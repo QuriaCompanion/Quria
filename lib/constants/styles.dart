@@ -18,6 +18,7 @@ const statisticHeader = AssetImage("assets/img/Stats.png");
 const exoticHeader = AssetImage("assets/img/Exotic.png");
 const subclassHeader = AssetImage("assets/img/Subclass.png");
 const modsHeader = AssetImage("assets/img/mods.png");
+const buildHeader = AssetImage("assets/img/build.png");
 
 double globalPadding(BuildContext context) {
   return vw(context) * 0.04266;

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quria/constants/styles.dart';
 
 class Loader extends StatelessWidget {
   final String waitingMessage;
@@ -19,21 +20,25 @@ class Loader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          waitingMessage,
-          style: TextStyle(
-              fontSize: fontSize, fontWeight: fontWeight, color: color),
-        ),
-        SizedBox(
-          height: spacing,
-        ),
-        RepaintBoundary(
-            child: CircularProgressIndicator(color: animationColor)),
-      ],
+    return Container(
+      decoration: const BoxDecoration(color: backgroundColor),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            waitingMessage,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: fontSize, fontWeight: fontWeight, color: color),
+          ),
+          SizedBox(
+            height: spacing,
+          ),
+          RepaintBoundary(
+              child: CircularProgressIndicator(color: animationColor)),
+        ],
+      ),
     );
   }
 }

@@ -61,12 +61,14 @@ class BuilderResultsMobileItem extends StatelessWidget {
           ),
           Row(
             children: [
-              for (Armor armor in buildResult.equipement)
+              for (int i = 0; i < buildResult.equipement.length; i++)
                 Padding(
-                  padding: EdgeInsets.only(right: globalPadding(context)),
+                  padding: i != buildResult.equipement.length - 1
+                      ? EdgeInsets.only(right: globalPadding(context))
+                      : EdgeInsets.zero,
                   child: ItemIcon(
-                    displayHash: armor.hash,
-                    imageSize: mobileItemSize(context),
+                    displayHash: buildResult.equipement[i].hash,
+                    imageSize: (vw(context) - (globalPadding(context) * 8)) / 5,
                   ),
                 ),
             ],

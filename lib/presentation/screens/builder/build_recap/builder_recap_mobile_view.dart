@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
@@ -15,12 +13,10 @@ class BuilderRecapMobileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    inspect(data);
     return Column(
       children: [
         mobileHeader(context,
-            image: const NetworkImage(
-                "https://www.bungie.net/common/destiny2_content/screenshots/2842471112.jpg"),
+            image: buildHeader,
             child: Center(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -61,6 +57,12 @@ class BuilderRecapMobileView extends StatelessWidget {
                   child: BuilderRecapMobileItem(
                     item: data.build.equipement[3],
                     mods: data.mods[3].items,
+                  )),
+              mobileSection(context,
+                  title: "Objet de classe",
+                  child: BuilderRecapMobileItem(
+                    item: data.build.equipement[4],
+                    mods: data.mods[4].items,
                   ))
             ],
           ),

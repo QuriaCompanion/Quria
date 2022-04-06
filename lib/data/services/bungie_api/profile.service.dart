@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_collectible_state.dart';
+import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_artifact_profile_scoped.dart';
 import 'package:bungie_api/models/destiny_character_activities_component.dart';
@@ -709,7 +710,8 @@ class ProfileService {
     return allItems;
   }
 
-  List<DestinyItemComponent> getAllArmorForClass(DestinyClass classType) {
+  List<DestinyItemComponent> getAllArmorForClass(DestinyClass classType,
+      {DestinyItemSubType? itemSubType}) {
     List<DestinyItemComponent> allItems = [];
     Iterable<String>? charIds =
         getCharacters().map((char) => char.characterId!);
@@ -725,7 +727,13 @@ class ProfileService {
                       .manifestParsed
                       .destinyInventoryItemDefinition?[element.itemHash]
                       ?.itemType ==
-                  DestinyItemType.Armor)
+                  DestinyItemType.Armor &&
+              (itemSubType == null ||
+                  ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition?[element.itemHash]
+                          ?.itemSubType ==
+                      itemSubType))
           .map((item) => item));
       allItems.addAll(getCharacterInventory(charId)
           .where((element) =>
@@ -738,7 +746,13 @@ class ProfileService {
                       .manifestParsed
                       .destinyInventoryItemDefinition?[element.itemHash]
                       ?.itemType ==
-                  DestinyItemType.Armor)
+                  DestinyItemType.Armor &&
+              (itemSubType == null ||
+                  ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition?[element.itemHash]
+                          ?.itemSubType ==
+                      itemSubType))
           .map((item) => item));
     }
     allItems.addAll(getProfileInventory()
@@ -752,7 +766,13 @@ class ProfileService {
                     .manifestParsed
                     .destinyInventoryItemDefinition?[element.itemHash]
                     ?.itemType ==
-                DestinyItemType.Armor)
+                DestinyItemType.Armor &&
+            (itemSubType == null ||
+                ManifestService
+                        .manifestParsed
+                        .destinyInventoryItemDefinition?[element.itemHash]
+                        ?.itemSubType ==
+                    itemSubType))
         .map((item) => item));
 
     return allItems;

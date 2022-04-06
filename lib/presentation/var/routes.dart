@@ -12,8 +12,9 @@ const String routeInspect = "/inspect";
 const String routeInspectMobile = "/inspect-mobile-weapon";
 const String routeInspectMobileArmor = "/inspect-mobile-armor";
 const String routeSubclass = "/subclass";
-const String routeBuilderMod = "/builder-mod";
+const String routeSubclassMod = "/subclass-mod";
 const String routeMod = "/mod";
 const String routeBuilderRecap = "/builder-recap";
+const String routeClassItemChoice = "/class-item-choice";
 
 final navKey = GlobalKey<NavigatorState>();

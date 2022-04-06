@@ -24,8 +24,7 @@ class BuilderResultsMobileView extends StatelessWidget {
     return Column(
       children: [
         mobileHeader(context,
-            image: const NetworkImage(
-                "https://www.bungie.net/common/destiny2_content/screenshots/2842471112.jpg"),
+            image: buildHeader,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,

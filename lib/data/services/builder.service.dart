@@ -24,6 +24,9 @@ class BuilderService {
         profile.getAllArmorForClass(character!.classType!);
     Map<String, DestinyItemSocketsComponent> sockets = profile.getAllSockets();
 
+    DestinyItemComponent classItem =
+        profile.getItemsByInstanceId([data.classItemInstanceId]).first;
+
     BuilderHelper builder = BuilderHelper(
         statOrder: data.statOrder,
         exotic: ManifestService
@@ -33,7 +36,8 @@ class BuilderService {
             ManifestService.manifestParsed.destinyInventoryItemDefinition!,
         sockets: sockets,
         armorMods: data.armorMods,
-        subclassMods: data.subclassMods);
+        subclassMods: data.subclassMods,
+        classItem: classItem);
 
     return await compute(_armorLoop, builder);
   }
@@ -380,7 +384,12 @@ class BuilderService {
                   hash: leg.itemHash!,
                   itemInstanceId: leg.itemInstanceId!,
                   mods: optionalModsResult.modSelected[3],
-                  type: 3)
+                  type: 3),
+              Armor(
+                  hash: builderHelper.classItem.itemHash!,
+                  itemInstanceId: builderHelper.classItem.itemInstanceId!,
+                  mods: optionalModsResult.modSelected[4],
+                  type: 4)
             ];
             builds.add(Build(
               stats: stats,

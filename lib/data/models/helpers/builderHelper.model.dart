@@ -12,6 +12,7 @@ class BuilderHelper {
   List<ModSlots> armorMods;
   List<DestinyInventoryItemDefinition> subclassMods;
   Map<int, DestinyInventoryItemDefinition> manifest;
+  DestinyItemComponent classItem;
   BuilderHelper({
     required this.statOrder,
     required this.armors,
@@ -19,6 +20,7 @@ class BuilderHelper {
     required this.manifest,
     required this.subclassMods,
     required this.armorMods,
+    required this.classItem,
     this.exotic,
   });
 }
@@ -30,12 +32,14 @@ class BuilderPreparation {
   int exoticHash;
   List<ModSlots> armorMods;
   String? subclassInstanceId;
+  String classItemInstanceId;
   BuilderPreparation({
     required this.characterId,
     required this.subclassMods,
     required this.statOrder,
     required this.exoticHash,
     required this.armorMods,
+    required this.classItemInstanceId,
     this.subclassInstanceId,
   });
 }
