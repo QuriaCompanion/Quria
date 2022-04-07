@@ -55,12 +55,14 @@ class _MobileInspectState extends State<MobileInspect> {
         ? InspectMobileWeaponInfo(
             item: itemDef,
             stats: stats,
+            characterId: widget.data.characterId!,
             instanceId: widget.data.instanceId,
           )
         : InspectMobileArmorInfo(
             item: itemDef,
             stats: stats,
             instanceId: widget.data.instanceId,
+            characterId: widget.data.characterId!,
           );
     selected = 'Informations';
   }
@@ -103,12 +105,14 @@ class _MobileInspectState extends State<MobileInspect> {
                                 ? InspectMobileWeaponInfo(
                                     item: itemDef,
                                     stats: stats,
+                                    characterId: widget.data.characterId!,
                                     instanceId: widget.data.instanceId,
                                   )
                                 : InspectMobileArmorInfo(
                                     item: itemDef,
                                     stats: stats,
                                     instanceId: widget.data.instanceId,
+                                    characterId: widget.data.characterId!,
                                   );
                           });
                         },

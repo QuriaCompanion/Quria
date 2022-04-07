@@ -17,12 +17,14 @@ import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mob
 class InspectMobileArmorInfo extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
   final String instanceId;
+  final String characterId;
   final Map<String, DestinyStat>? stats;
 
   const InspectMobileArmorInfo(
       {required this.item,
       required this.instanceId,
       required this.stats,
+      required this.characterId,
       Key? key})
       : super(key: key);
 
@@ -66,6 +68,7 @@ class _InspectMobileArmorInfoState extends State<InspectMobileArmorInfo> {
               instanceId: widget.instanceId,
               afinityIcon: afinityIcon,
               sockets: sockets!,
+              characterId: widget.characterId,
               item: widget.item)),
       mobileSection(context,
           title: "CosmÃ©tiques",

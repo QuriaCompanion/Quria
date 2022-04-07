@@ -274,6 +274,22 @@ class ProfileService {
         .toList();
   }
 
+  List<DestinyItemComponent> getItemsForCharacter(
+      String characterId, int slotTypeHash) {
+    var character = getCharacterInventory(characterId);
+    character.addAll(getCharacterEquipment(characterId));
+    return character
+        .where((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash !=
+            slotTypeHash)
+        .toSet()
+        .toList();
+  }
+
   DestinyItemComponent getCurrentSubClassForCharacter(String characterId) {
     var character = getCharacterEquipment(characterId);
     return character.firstWhere((element) =>

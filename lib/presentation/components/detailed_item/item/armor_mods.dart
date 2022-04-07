@@ -15,13 +15,15 @@ import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.da
 
 class ArmorMods extends StatefulWidget {
   final List<DestinyItemSocketState> sockets;
-  final String? instanceId;
   final DestinyInventoryItemDefinition item;
   final String afinityIcon;
+  final String? instanceId;
+  final String? characterId;
   const ArmorMods(
       {required this.afinityIcon,
       required this.sockets,
       required this.item,
+      this.characterId,
       this.instanceId,
       Key? key})
       : super(key: key);
@@ -128,8 +130,8 @@ class _ArmorModsState extends State<ArmorMods> {
                                 .reusablePlugSetHash!,
                             onSocketChange: (itemHash) {
                               BungieApiService()
-                                  .insertSocketPlugFree(
-                                      widget.instanceId!, itemHash, socket.key)
+                                  .insertSocketPlugFree(widget.instanceId!,
+                                      itemHash, socket.key, widget.characterId!)
                                   .then((value) {
                                 setState(() {
                                   currentSockets = value!

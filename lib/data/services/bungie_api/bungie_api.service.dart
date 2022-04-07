@@ -163,7 +163,10 @@ class BungieApiService {
   }
 
   Future<DestinyItemChangeResponseResponse?> insertSocketPlugFree(
-      String itemInstanceId, int plugItemHash, int index) async {
+      String itemInstanceId,
+      int plugItemHash,
+      int index,
+      String characterId) async {
     var plug = DestinyInsertPlugsRequestEntry()
       ..plugItemHash = plugItemHash
       ..socketArrayType = DestinySocketArrayType.Default
@@ -174,7 +177,7 @@ class BungieApiService {
         Client(token: token),
         DestinyInsertPlugsFreeActionRequest()
           ..itemId = itemInstanceId
-          ..characterId = "2305843009264759898"
+          ..characterId = characterId
           ..plug = plug
           ..membershipType = membership!.membershipType);
     ProfileService().fetchProfileData();

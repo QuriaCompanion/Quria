@@ -13,15 +13,17 @@ class PerkModal extends StatelessWidget {
   final DestinyInventoryItemDefinition perk;
   final int? index;
   final String? instanceId;
+  final String? characterId;
   final Function(List<DestinyItemSocketState>?)? onSocketsChanged;
 
-  const PerkModal({
-    Key? key,
-    required this.perk,
-    this.onSocketsChanged,
-    this.index,
-    this.instanceId,
-  }) : super(key: key);
+  const PerkModal(
+      {Key? key,
+      required this.perk,
+      this.onSocketsChanged,
+      this.index,
+      this.instanceId,
+      this.characterId})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -116,7 +118,8 @@ class PerkModal extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     BungieApiService()
-                        .insertSocketPlugFree(instanceId!, perk.hash!, index!)
+                        .insertSocketPlugFree(
+                            instanceId!, perk.hash!, index!, characterId!)
                         .then((value) async {
                       onSocketsChanged!(
                           value?.response?.item?.sockets?.data?.sockets);

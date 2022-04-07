@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:quria/constants/styles.dart';
 
 class Loader extends StatelessWidget {
@@ -35,8 +36,7 @@ class Loader extends StatelessWidget {
           SizedBox(
             height: spacing,
           ),
-          RepaintBoundary(
-              child: CircularProgressIndicator(color: animationColor)),
+          RepaintBoundary(child: Lottie.asset('assets/animations/loader.json')),
         ],
       ),
     );

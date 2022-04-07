@@ -8,11 +8,13 @@ class InspectMobilePerkColumn extends StatefulWidget {
   final List<DestinyInventoryItemDefinition>? perkColumn;
   final List<DestinyItemSocketState> sockets;
   final String? instanceId;
+  final String? characterId;
   final Function(List<DestinyItemSocketState>?)? onSocketsChanged;
   const InspectMobilePerkColumn(
       {required this.perkColumn,
       required this.sockets,
       this.onSocketsChanged,
+      required this.characterId,
       this.instanceId,
       Key? key})
       : super(key: key);
@@ -53,6 +55,7 @@ class _InspectMobilePerkColumnState extends State<InspectMobilePerkColumn> {
                   sockets: widget.sockets,
                   instanceId: widget.instanceId,
                   index: index,
+                  characterId: widget.characterId,
                   onSocketsChanged: widget.onSocketsChanged!),
             ),
       ],

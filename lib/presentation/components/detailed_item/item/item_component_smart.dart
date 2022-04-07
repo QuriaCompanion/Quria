@@ -32,7 +32,7 @@ class ItemComponentSmart extends StatelessWidget {
     return Row(
       children: [
         ItemIcon(
-          displayHash: item.itemHash!,
+          displayHash: item.overrideStyleItemHash ?? item.itemHash!,
           imageSize: mobileItemSize(context),
         ),
         SizedBox(width: globalPadding(context)),

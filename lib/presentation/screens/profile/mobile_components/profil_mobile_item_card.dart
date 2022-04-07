@@ -15,7 +15,10 @@ import 'package:quria/presentation/components/detailed_item/item/item_component_
 
 class ProfileMobileItemCard extends StatefulWidget {
   final DestinyItemComponent item;
-  const ProfileMobileItemCard({Key? key, required this.item}) : super(key: key);
+  final String characterId;
+  const ProfileMobileItemCard(
+      {Key? key, required this.characterId, required this.item})
+      : super(key: key);
 
   @override
   State<ProfileMobileItemCard> createState() => _ProfileMobileItemCardState();
@@ -133,6 +136,7 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
           powerLevel: powerLevel,
           perks: perks,
           cosmetics: cosmetics!,
+          characterId: widget.characterId,
           armorSockets: armorSockets)
     ]);
   }

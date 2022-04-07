@@ -93,6 +93,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                 children: [
                   ProfileMobileItemCard(
                     item: item,
+                    characterId: widget.data.selectedCharacter.characterId!,
                   ),
                   Divider(
                     thickness: 1,

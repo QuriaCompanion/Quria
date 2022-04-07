@@ -11,8 +11,13 @@ class InspectMobilePerks extends StatefulWidget {
   final Map<String, List<DestinyItemPlugBase>>? plugs;
   final List<DestinyItemSocketState>? sockets;
   final String? instanceId;
+  final String? characterId;
   const InspectMobilePerks(
-      {required this.sockets, required this.plugs, this.instanceId, Key? key})
+      {required this.sockets,
+      required this.plugs,
+      this.characterId,
+      this.instanceId,
+      Key? key})
       : super(key: key);
 
   @override
@@ -59,6 +64,7 @@ class _InspectMobilePerksState extends State<InspectMobilePerks> {
                   });
                 },
                 instanceId: widget.instanceId,
+                characterId: widget.characterId,
                 perkColumn: perks[i],
                 sockets: currentSockets!),
           ));

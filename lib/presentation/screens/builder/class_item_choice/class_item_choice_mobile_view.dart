@@ -33,18 +33,22 @@ class ClassItemChoiceMobileView extends StatelessWidget {
           child: Column(
             children: [
               for (DestinyItemComponent item in classItems)
-                Padding(
-                  padding:
-                      EdgeInsets.symmetric(vertical: globalPadding(context)),
-                  child: InkWell(
-                      onTap: () => Navigator.pushNamed(context, routeMod,
-                          arguments: ModHelper(
-                              characterId: data.characterId,
-                              statOrder: data.statOrder,
-                              subclassMods: data.subclassMods,
-                              exoticHash: data.exoticHash,
-                              classItemInstanceId: item.itemInstanceId!)),
-                      child: ItemComponentSmart(item: item)),
+                Column(
+                  children: [
+                    InkWell(
+                        onTap: () => Navigator.pushNamed(context, routeMod,
+                            arguments: ModHelper(
+                                characterId: data.characterId,
+                                statOrder: data.statOrder,
+                                subclassMods: data.subclassMods,
+                                exoticHash: data.exoticHash,
+                                classItemInstanceId: item.itemInstanceId!)),
+                        child: ItemComponentSmart(item: item)),
+                    Divider(
+                      height: globalPadding(context) * 2,
+                      color: Colors.white,
+                    ),
+                  ],
                 ),
               SizedBox(
                 height: globalPadding(context) * 4,

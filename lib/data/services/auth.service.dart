@@ -71,6 +71,7 @@ class AuthService {
     if (token?.accessToken == null || token?.expiresIn == null) {
       return null;
     }
+
     DateTime now = DateTime.now();
     String? savedString = await StorageService.getLocalStorage('last_refresh');
     DateTime savedDate = DateTime.parse(savedString!);
@@ -84,6 +85,11 @@ class AuthService {
       token = await refreshToken(token);
     }
     return token;
+  }
+
+  Future<void> removeToken() async {
+    _currentToken = null;
+    await StorageService.removeLocalStorage('bungie_token');
   }
 
   Future<BungieNetToken> requestToken(String code) async {

@@ -15,12 +15,14 @@ import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mob
 class InspectMobileWeaponInfo extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
   final String instanceId;
+  final String characterId;
   final Map<String, DestinyStat>? stats;
 
   const InspectMobileWeaponInfo(
       {required this.item,
       required this.instanceId,
       required this.stats,
+      required this.characterId,
       Key? key})
       : super(key: key);
 
@@ -50,7 +52,10 @@ class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
       mobileSection(context,
           title: "Attributs de l'arme",
           child: InspectMobilePerks(
-              instanceId: widget.instanceId, sockets: sockets, plugs: plugs)),
+              instanceId: widget.instanceId,
+              sockets: sockets,
+              plugs: plugs,
+              characterId: widget.characterId)),
       mobileSection(context,
           title: "Mods et attributs intrinsÃ¨ques",
           child: InspectMobileIntrinsics(sockets: sockets)),

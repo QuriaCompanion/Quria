@@ -10,6 +10,7 @@ import 'package:quria/presentation/components/detailed_item/item/perk_modal.dart
 class InspectMobilePerkItem extends StatefulWidget {
   final DestinyInventoryItemDefinition perk;
   final List<DestinyItemSocketState> sockets;
+  final String? characterId;
   final String? instanceId;
   final int index;
   final Function(List<DestinyItemSocketState>?) onSocketsChanged;
@@ -18,6 +19,7 @@ class InspectMobilePerkItem extends StatefulWidget {
       required this.sockets,
       required this.onSocketsChanged,
       required this.index,
+      this.characterId,
       this.instanceId,
       Key? key})
       : super(key: key);
@@ -45,6 +47,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
                     instanceId: widget.instanceId,
                     onSocketsChanged: (newSockets) =>
                         widget.onSocketsChanged(newSockets),
+                    characterId: widget.characterId,
                     index: widget.index);
               });
         },
@@ -55,8 +58,8 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
             });
             try {
               BungieApiService()
-                  .insertSocketPlugFree(
-                      widget.instanceId!, widget.perk.hash!, widget.index)
+                  .insertSocketPlugFree(widget.instanceId!, widget.perk.hash!,
+                      widget.index, widget.characterId!)
                   .then((value) async {
                 setState(() {
                   loading = false;

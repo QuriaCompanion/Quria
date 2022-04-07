@@ -2,6 +2,7 @@ import 'package:bungie_api/models/user_membership_data.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
@@ -140,13 +141,19 @@ class _BurgerState extends State<Burger> {
                               left: globalPadding(context),
                               right: globalPadding(context),
                               bottom: globalPadding(context)),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.power_settings_new,
-                                  color: Colors.white),
-                              const SizedBox(width: 18),
-                              textBodyHighRegular("DÃ©connexion"),
-                            ],
+                          child: InkWell(
+                            onTap: () {
+                              AuthService().removeToken();
+                              Navigator.pushNamed(context, routeLogin);
+                            },
+                            child: Row(
+                              children: [
+                                const Icon(Icons.power_settings_new,
+                                    color: Colors.white),
+                                const SizedBox(width: 18),
+                                textBodyHighRegular("DÃ©connexion"),
+                              ],
+                            ),
                           ),
                         )
                       ],

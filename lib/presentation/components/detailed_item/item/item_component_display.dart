@@ -17,6 +17,7 @@ class ItemComponentDisplay extends StatefulWidget {
   final DestinyItemComponent item;
   final DestinyInventoryItemDefinition itemDef;
   final String elementIcon;
+  final String characterId;
   final int powerLevel;
   final List<DestinyItemSocketState>? perks;
   final List<DestinyItemSocketState> cosmetics;
@@ -29,6 +30,7 @@ class ItemComponentDisplay extends StatefulWidget {
       required this.powerLevel,
       required this.perks,
       required this.cosmetics,
+      required this.characterId,
       required this.armorSockets,
       Key? key})
       : super(key: key);
@@ -72,12 +74,14 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
               Navigator.pushNamed(context, routeInspectMobile,
                   arguments: InspectData(
                       hash: widget.item.itemHash!,
+                      characterId: widget.characterId,
                       instanceId: widget.item.itemInstanceId!));
             },
             child: Row(
               children: [
                 ItemIcon(
-                  displayHash: widget.itemDef.hash!,
+                  displayHash:
+                      widget.item.overrideStyleItemHash ?? widget.itemDef.hash!,
                   imageSize: iconSize,
                 ),
                 SizedBox(width: globalPadding(context)),
