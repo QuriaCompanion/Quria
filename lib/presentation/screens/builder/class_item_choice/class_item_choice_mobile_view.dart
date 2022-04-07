@@ -42,6 +42,7 @@ class ClassItemChoiceMobileView extends StatelessWidget {
                                 statOrder: data.statOrder,
                                 subclassMods: data.subclassMods,
                                 exoticHash: data.exoticHash,
+                                subclassInstanceId: data.subclassInstanceId,
                                 classItemInstanceId: item.itemInstanceId!)),
                         child: ItemComponentSmart(item: item)),
                     Divider(

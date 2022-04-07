@@ -1,7 +1,10 @@
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
@@ -10,8 +13,16 @@ import 'package:quria/presentation/screens/profile/components/character_stats_li
 class BuilderResultsMobileItem extends StatelessWidget {
   final Build buildResult;
   final String characterId;
+  final List<ModSlots> mods;
+  final String? subclassId;
+  final List<DestinyInventoryItemDefinition> subclassMods;
   const BuilderResultsMobileItem(
-      {required this.buildResult, required this.characterId, Key? key})
+      {required this.buildResult,
+      required this.mods,
+      required this.characterId,
+      required this.subclassMods,
+      this.subclassId,
+      Key? key})
       : super(key: key);
 
   @override
@@ -82,7 +93,25 @@ class BuilderResultsMobileItem extends StatelessWidget {
             children: [
               RoundedButton(
                 text: textBodyMedium('Equiper', color: black),
-                onPressed: () {},
+                onPressed: () {
+                  // final snackBar = SnackBar(
+                  //   content: const Text('Yay! A SnackBar!'),
+                  //   action: SnackBarAction(
+                  //     label: 'Undo',
+                  //     onPressed: () {
+                  //       // Some code to undo the change.
+                  //     },
+                  //   ),
+                  // );
+                  // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  BungieActionsService().equipBuild(
+                    build: buildResult,
+                    characterId: characterId,
+                    mods: mods,
+                    subclassMods: subclassMods,
+                    subclassId: subclassId,
+                  );
+                },
                 width: vw(context) * 0.4,
               ),
               RoundedButton(

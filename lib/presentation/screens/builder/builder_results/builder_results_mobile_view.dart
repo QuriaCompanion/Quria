@@ -1,3 +1,4 @@
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
@@ -12,10 +13,14 @@ class BuilderResultsMobileView extends StatelessWidget {
   final List<Build> buildResults;
   final List<ModSlots> mods;
   final String characterId;
+  final String? subclassId;
+  final List<DestinyInventoryItemDefinition> subclassMods;
   const BuilderResultsMobileView(
       {required this.buildResults,
       required this.characterId,
       required this.mods,
+      required this.subclassMods,
+      this.subclassId,
       Key? key})
       : super(key: key);
 
@@ -44,11 +49,16 @@ class BuilderResultsMobileView extends StatelessWidget {
                       arguments: BuilderRecapHelper(
                           build: buildResult,
                           mods: mods,
+                          subclassMods: subclassMods,
+                          subclassId: subclassId,
                           characterId: characterId));
                 },
                 child: BuilderResultsMobileItem(
                   buildResult: buildResult,
                   characterId: characterId,
+                  mods: mods,
+                  subclassMods: subclassMods,
+                  subclassId: subclassId,
                 ),
               ),
             ),

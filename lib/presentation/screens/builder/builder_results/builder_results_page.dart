@@ -44,6 +44,8 @@ class _BuilderResultsPageState extends State<BuilderResultsPage> {
                   buildResults: snapshot.data!,
                   mods: widget.data.armorMods,
                   characterId: widget.data.characterId,
+                  subclassId: widget.data.subclassInstanceId,
+                  subclassMods: widget.data.subclassMods,
                 ),
               );
             } else {

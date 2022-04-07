@@ -277,14 +277,13 @@ class ProfileService {
   List<DestinyItemComponent> getItemsForCharacter(
       String characterId, int slotTypeHash) {
     var character = getCharacterInventory(characterId);
-    character.addAll(getCharacterEquipment(characterId));
     return character
         .where((element) =>
             ManifestService
                 .manifestParsed
                 .destinyInventoryItemDefinition?[element.itemHash]
                 ?.equippingBlock
-                ?.equipmentSlotTypeHash !=
+                ?.equipmentSlotTypeHash ==
             slotTypeHash)
         .toSet()
         .toList();
