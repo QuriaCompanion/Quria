@@ -71,16 +71,34 @@ class LoginWidgetState extends State<LoginWidget> {
       //       width: 250.0,
       //       height: 60),
       // ),
-      floatingActionButton: Padding(
-        padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
-        child: RoundedButton(
-            text: textBodyBold('se connecter:dev', color: black),
-            onPressed: () {
-              loadingModal();
-              yannisooLogin();
-            },
-            width: 250.0,
-            height: 60),
+      floatingActionButton: SizedBox(
+        height: 250,
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
+              child: RoundedButton(
+                  text: textBodyBold('Se connecter', color: black),
+                  onPressed: () {
+                    loadingModal();
+                    authorizeClick(context);
+                  },
+                  width: 250.0,
+                  height: 60),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
+              child: RoundedButton(
+                  text: textBodyBold('se connecter:dev', color: black),
+                  onPressed: () {
+                    loadingModal();
+                    yannisooLogin();
+                  },
+                  width: 250.0,
+                  height: 60),
+            ),
+          ],
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
