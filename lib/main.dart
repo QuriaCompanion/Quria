@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/app.dart';
 import 'package:quria/presentation/router.dart';
@@ -18,8 +19,11 @@ void main() async {
           projectId: 'quriacompanion-13944'));
 
   await dotenv.load(fileName: ".env");
-  runApp(QuriaApp(
-    router: AppRouter(),
+  runApp(Container(
+    decoration: const BoxDecoration(color: black),
+    child: QuriaApp(
+      router: AppRouter(),
+    ),
   ));
 }
 
