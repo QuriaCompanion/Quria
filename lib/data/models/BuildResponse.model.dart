@@ -1,146 +1,43 @@
-class BuildResponse {
-  late final List<Build> builds;
-  BuildResponse({required this.builds});
-  BuildResponse.fromJson(Map<String, dynamic> json)
-      : builds =
-            (json['builds'] as List).map((e) => Build.fromJson(e)).toList();
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 
-  Map<String, dynamic> toJson() =>
-      {'builds': builds.map((e) => e.toJson()).toList()};
+class BuildResponse {
+  final List<Build> builds;
+  BuildResponse({required this.builds});
 }
 
 class Build {
-  late Stats stats;
-  late List<Misc> mod;
-  late List<Misc> material;
-  late List<Armor> equipement;
+  Stats stats;
+  List<Armor> equipement;
   Build({
     required this.stats,
-    required this.mod,
-    required this.material,
     required this.equipement,
   });
-
-  Build.fromJson(Map<String, dynamic> json) {
-    stats = Stats.fromJson(json['stats']);
-
-    mod = <Misc>[];
-    if (json['mod'] != null) {
-      json['mod'].forEach((v) {
-        mod.add(Misc.fromJson(v));
-      });
-    }
-    material = <Misc>[];
-    if (json['materials'] != null) {
-      json['materials'].forEach((v) {
-        material.add(Misc.fromJson(v));
-      });
-    }
-    equipement = <Armor>[];
-    if (json['equipement'] != null) {
-      json['equipement'].forEach((v) {
-        equipement.add(Armor.fromJson(v));
-      });
-    }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['stats'] = stats.toJson();
-    data['mods'] = mod.map((v) => v.toJson()).toList();
-    data['materials'] = material.map((v) => v.toJson()).toList();
-    data['equipment'] = equipement.map((v) => v.toJson()).toList();
-    return data;
-  }
 }
 
 class Stats {
-  late int base;
-  late int max;
-  late Map<String, int> ordering;
-  late int mobility;
-  late int resilience;
-  late int recovery;
-  late int discipline;
-  late int intellect;
-  late int strength;
+  int base;
+  int max;
+  Map<int, int> ordering;
+  Map<int, int> statistics;
 
   Stats(
       {required this.base,
       required this.max,
       required this.ordering,
-      required this.mobility,
-      required this.resilience,
-      required this.recovery,
-      required this.discipline,
-      required this.intellect,
-      required this.strength});
-
-  Stats.fromJson(Map<String, dynamic> json) {
-    base = json['base'];
-    max = json['max'];
-    mobility = json['mobility'];
-    resilience = json['resilience'];
-    recovery = json['recovery'];
-    discipline = json['discipline'];
-    intellect = json['intellect'];
-    strength = json['strength'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['base'] = base;
-    data['max'] = max;
-    data['mobility'] = mobility;
-    data['resilience'] = resilience;
-    data['recovery'] = recovery;
-    data['discipline'] = discipline;
-    data['intellect'] = intellect;
-    data['strength'] = strength;
-    return data;
-  }
-}
-
-class Misc {
-  late String name;
-  late String icon;
-  late int number;
-
-  Misc({required this.name, required this.icon, required this.number});
-
-  Misc.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    icon = json['icon'];
-    number = json['number'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['name'] = name;
-    data['icon'] = icon;
-    data['number'] = number;
-    return data;
-  }
+      required this.statistics});
 }
 
 class Armor {
-  late int hash;
-  late String itemInstanceId;
-  late int type;
+  int hash;
+  String itemInstanceId;
+  int displayHash;
+  int type;
 
-  Armor({required this.hash, required this.itemInstanceId, required this.type});
-
-  Armor.fromJson(Map<String, dynamic> json) {
-    hash = json['hash'];
-    itemInstanceId = json['itemInstanceId'];
-    type = json['type'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['hash'] = hash;
-    data['itemInstanceId'] = itemInstanceId;
-    data['type'] = type;
-    return data;
-  }
+  DestinyInventoryItemDefinition? mods;
+  Armor(
+      {required this.hash,
+      required this.itemInstanceId,
+      required this.displayHash,
+      required this.type,
+      this.mods});
 }

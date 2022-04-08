@@ -12,8 +12,8 @@ class Button extends StatelessWidget {
       required this.value,
       required this.width,
       required this.height,
-      this.bgColor = Colors.black54,
-      this.txtColor = Colors.white})
+      this.bgColor = Colors.white,
+      this.txtColor = Colors.black})
       : super(key: key);
 
   @override

@@ -9,8 +9,6 @@ class NavBarWidget extends StatefulWidget {
 }
 
 class _NavBarWidgetState extends State<NavBarWidget> {
-  int index = 0;
-
   @override
   Widget build(BuildContext context) {
     return Container(

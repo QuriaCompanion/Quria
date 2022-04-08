@@ -1,3 +1,11 @@
+import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive/hive.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:quria/constants/styles.dart';
+import 'package:quria/constants/texts.dart';
+import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
+import 'package:quria/presentation/components/misc/rounded_button.dart';
 import "package:universal_html/html.dart" as html;
 import 'dart:developer';
 import 'package:bungie_api/helpers/bungie_net_token.dart';
@@ -14,10 +22,6 @@ import 'package:flutter/services.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
-import 'package:quria/presentation/components/misc/button.dart';
-
-typedef LoginCallback = void Function(String code);
-typedef SkipCallback = void Function();
 
 class LoginWidget extends StatefulWidget {
   final String title = "Login";
@@ -25,12 +29,9 @@ class LoginWidget extends StatefulWidget {
   final AuthService auth = AuthService();
   final AccountService account = AccountService();
   final ProfileService profile = ProfileService();
-  final LoginCallback? onLogin;
-  final SkipCallback? onSkip;
   final bool forceReauth;
 
-  LoginWidget({Key? key, this.onLogin, this.onSkip, this.forceReauth = true})
-      : super(key: key);
+  LoginWidget({Key? key, this.forceReauth = true}) : super(key: key);
 
   @override
   LoginWidgetState createState() => LoginWidgetState();
@@ -56,26 +57,77 @@ class LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          InkWell(
-            onTap: () {
-              authorizeClick(context);
-            },
-            child:
-                const Button(value: 'Se connecter', width: 250.0, height: 60),
-          ),
-          const SizedBox(
-            height: 50.0,
-          ),
-          InkWell(
-            onTap: () => yannisooLogin(),
-            child: const Button(
-                value: 'Je suis yannisoo', width: 250.0, height: 60),
-          ),
-        ],
+    return Scaffold(
+      backgroundColor: black,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: Padding(
+      //   padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
+      //   child: RoundedButton(
+      //       text: textBodyBold('Se connecter', color: black),
+      //       onPressed: () {
+      //         loadingModal();
+      //         authorizeClick(context);
+      //       },
+      //       width: 250.0,
+      //       height: 60),
+      // ),
+      floatingActionButton: SizedBox(
+        height: 250,
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
+              child: RoundedButton(
+                  text: textBodyBold('Se connecter', color: black),
+                  onPressed: () {
+                    loadingModal();
+                    authorizeClick(context);
+                  },
+                  width: 250.0,
+                  height: 60),
+            ),
+            Padding(
+              padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
+              child: RoundedButton(
+                  text: textBodyBold('se connecter:dev', color: black),
+                  onPressed: () {
+                    loadingModal();
+                    yannisooLogin();
+                  },
+                  width: 250.0,
+                  height: 60),
+            ),
+          ],
+        ),
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                textQuria("QURIA"),
+                SvgPicture.asset(
+                  "assets/img/Quria.svg",
+                  width: 50,
+                  height: 50,
+                )
+              ],
+            ),
+            textCompanion("D2 COMPANION"),
+            SizedBox(
+              width: vw(context) * 0.4,
+              child: Divider(
+                height: globalPadding(context) * 2.5,
+                color: Colors.white,
+              ),
+            ),
+            textConnect("CONNECTEZ-VOUS POUR CONTINUER"),
+          ],
+        ),
       ),
     );
   }
@@ -89,6 +141,7 @@ class LoginWidgetState extends State<LoginWidget> {
         html.window.location.assign(authorizationEndpoint);
       });
     } on OAuthException catch (e) {
+      Navigator.of(context).pop();
       bool isIOS = Platform.isIOS;
       String platformMessage =
           "If this keeps happening, please try to login with a mainstream browser.";
@@ -143,12 +196,7 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membership == null) {
       showSelectMembership();
     }
-    await loadProfile();
     Navigator.pushNamed(context, routeProfile);
-  }
-
-  loadProfile() async {
-    await widget.profile.loadProfile();
   }
 
   void showSelectMembership() async {
@@ -157,8 +205,21 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membershipData?.destinyMemberships?.length == 1) {
       await widget.account.saveMembership(
           membershipData!, membershipData.destinyMemberships![0].membershipId!);
-      await loadProfile();
     }
+  }
+
+  void loadingModal() {
+    showMaterialModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        isDismissible: false,
+        expand: false,
+        builder: (context) {
+          return const LoadingModal(
+            text1: "Connexion en cours",
+            text2: "Veuillez patienter ...",
+          );
+        });
   }
 
   void yannisooLogin() async {

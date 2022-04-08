@@ -6,27 +6,24 @@ import '../../../data/services/manifest/manifest.service.dart';
 
 class ItemIcon extends StatelessWidget {
   const ItemIcon({
-    Key? key,
     required this.displayHash,
     required this.imageSize,
+    this.isMasterworked = false,
+    Key? key,
   }) : super(key: key);
 
   final int displayHash;
   final double imageSize;
+  final bool isMasterworked;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: imageSize,
       height: imageSize,
-      decoration: ManifestService
-                  .manifestParsed
-                  .destinyInventoryItemDefinition?[displayHash]
-                  ?.equippingBlock
-                  ?.equipmentSlotTypeHash !=
-              3284755031
-          ? regularShadow
-          : const BoxDecoration(),
+      decoration: BoxDecoration(
+        border: Border.all(color: isMasterworked ? yellow : Colors.white),
+      ),
       child: Stack(children: [
         Image(
           image: NetworkImage(DestinyData.bungieLink +

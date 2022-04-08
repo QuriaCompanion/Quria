@@ -1,13 +1,14 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_collectible_state.dart';
+import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_artifact_profile_scoped.dart';
 import 'package:bungie_api/models/destiny_character_activities_component.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_character_progression_component.dart';
 import 'package:bungie_api/models/destiny_collectible_component.dart';
+import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
@@ -25,6 +26,7 @@ import 'package:bungie_api/models/destiny_talent_node.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:bungie_api/enums/destiny_component_type.dart';
 import 'package:bungie_api/enums/destiny_scope.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
@@ -242,7 +244,6 @@ class ProfileService {
   Future<DestinyProfileResponse?> loadProfile() async {
     DestinyProfileResponse? response = await fetchProfileData();
     _profile = response;
-    inspect(response);
     return response;
   }
 
@@ -258,16 +259,49 @@ class ProfileService {
     return null;
   }
 
-  int? getCurrentGrenadeHashForCharacter(String characterId) {
-    var character = getCharacterEquipment(characterId);
+  List<DestinyItemComponent> getSubclassesForCharacter(String characterId) {
+    var character = getCharacterInventory(characterId);
+    character.addAll(getCharacterEquipment(characterId));
+    return character
+        .where((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash ==
+            3284755031)
+        .toSet()
+        .toList();
+  }
 
-    DestinyItemComponent? subclass = character.firstWhere((element) =>
+  List<DestinyItemComponent> getItemsForCharacter(
+      String characterId, int slotTypeHash) {
+    var character = getCharacterInventory(characterId);
+    return character
+        .where((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition?[element.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash ==
+            slotTypeHash)
+        .toSet()
+        .toList();
+  }
+
+  DestinyItemComponent getCurrentSubClassForCharacter(String characterId) {
+    var character = getCharacterEquipment(characterId);
+    return character.firstWhere((element) =>
         ManifestService
             .manifestParsed
             .destinyInventoryItemDefinition?[element.itemHash]
             ?.equippingBlock
             ?.equipmentSlotTypeHash ==
         3284755031);
+  }
+
+  int? getCurrentGrenadeHashForCharacter(String characterId) {
+    DestinyItemComponent subclass = getCurrentSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newGrenade =
         getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
@@ -301,15 +335,8 @@ class ProfileService {
   }
 
   int? getCurrentMeleeHashForCharacter(String characterId) {
-    var character = getCharacterEquipment(characterId);
-
-    DestinyItemComponent? subclass = character.firstWhere((element) =>
-        ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition?[element.itemHash]
-            ?.equippingBlock
-            ?.equipmentSlotTypeHash ==
-        3284755031);
+    DestinyItemComponent? subclass =
+        getCurrentSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newMelee = getItemSockets(subclass.itemInstanceId!)
         ?.firstWhere((element) =>
@@ -328,9 +355,9 @@ class ProfileService {
         getTalentGrid(subclass.itemInstanceId!);
 
     DestinyTalentNode? oldMelee = oldSubclass?.nodes?.firstWhere((element) =>
-        element.isActivated == true && element.nodeIndex == 7 ||
-        element.nodeIndex == 8 ||
-        element.nodeIndex == 9);
+        element.isActivated == true && element.nodeIndex == 11 ||
+        element.nodeIndex == 15 ||
+        element.nodeIndex == 21);
     if (oldMelee != null) {
       return ManifestService
           .manifestParsed
@@ -343,15 +370,8 @@ class ProfileService {
   }
 
   int? getCurrentSuperHashForCharacter(String characterId) {
-    var character = getCharacterEquipment(characterId);
-
-    DestinyItemComponent? subclass = character.firstWhere((element) =>
-        ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition?[element.itemHash]
-            ?.equippingBlock
-            ?.equipmentSlotTypeHash ==
-        3284755031);
+    DestinyItemComponent? subclass =
+        getCurrentSubClassForCharacter(characterId);
 
     DestinyItemSocketState? newSuper = getItemSockets(subclass.itemInstanceId!)
         ?.firstWhere((element) =>
@@ -414,6 +434,57 @@ class ProfileService {
     } catch (e) {
       rethrow;
     }
+  }
+
+  String getDropLocation(int hash) {
+    return ManifestService
+            .manifestParsed.destinyCollectibleDefinition![hash]?.sourceString ??
+        "Source inconnu";
+  }
+
+  List<List<DestinyInventoryItemDefinition>> getItemPerksAsItemDef(
+      Map<String, List<DestinyItemPlugBase>>? plugs,
+      List<DestinyItemSocketState>? sockets) {
+    List<List<DestinyInventoryItemDefinition>> perks = [];
+    for (DestinyItemSocketState socket in sockets!) {
+      if (plugs != null) {
+        for (List<DestinyItemPlugBase> plug in plugs.values) {
+          if (plug.any((element) => element.plugItemHash == socket.plugHash) &&
+              DestinyData.perkCategoryHash.contains(ManifestService
+                  .manifestParsed
+                  .destinyInventoryItemDefinition?[socket.plugHash]!
+                  .plug!
+                  .plugCategoryHash!)) {
+            List<DestinyInventoryItemDefinition> plugDefitions = [];
+            for (DestinyItemPlugBase plug in plug) {
+              plugDefitions.add(ManifestService.manifestParsed
+                  .destinyInventoryItemDefinition![plug.plugItemHash]!);
+            }
+            perks.add(plugDefitions);
+          }
+        }
+      }
+      if (ManifestService
+                  .manifestParsed
+                  .destinyInventoryItemDefinition?[socket.plugHash]
+                  ?.displayProperties
+                  ?.icon !=
+              null &&
+          DestinyData.perkCategoryHash.contains(ManifestService
+              .manifestParsed
+              .destinyInventoryItemDefinition?[socket.plugHash]!
+              .plug!
+              .plugCategoryHash!) &&
+          !perks.any((element) => element.contains(ManifestService
+              .manifestParsed
+              .destinyInventoryItemDefinition![socket.plugHash]!))) {
+        perks.add([
+          ManifestService
+              .manifestParsed.destinyInventoryItemDefinition![socket.plugHash]!
+        ]);
+      }
+    }
+    return perks;
   }
 
   Map<String, DestinyStat>? getPrecalculatedStats(String itemInstanceId) {
@@ -480,6 +551,7 @@ class ProfileService {
   }
 
   List<DestinyCharacterComponent> getCharacters() {
+    if (_profile == null) return [];
     List<DestinyCharacterComponent> list =
         _profile!.characters!.data!.values.toList();
 
@@ -653,7 +725,8 @@ class ProfileService {
     return allItems;
   }
 
-  List<DestinyItemComponent> getAllArmorForClass(DestinyClass classType) {
+  List<DestinyItemComponent> getAllArmorForClass(DestinyClass classType,
+      {DestinyItemSubType? itemSubType}) {
     List<DestinyItemComponent> allItems = [];
     Iterable<String>? charIds =
         getCharacters().map((char) => char.characterId!);
@@ -669,7 +742,13 @@ class ProfileService {
                       .manifestParsed
                       .destinyInventoryItemDefinition?[element.itemHash]
                       ?.itemType ==
-                  DestinyItemType.Armor)
+                  DestinyItemType.Armor &&
+              (itemSubType == null ||
+                  ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition?[element.itemHash]
+                          ?.itemSubType ==
+                      itemSubType))
           .map((item) => item));
       allItems.addAll(getCharacterInventory(charId)
           .where((element) =>
@@ -682,7 +761,13 @@ class ProfileService {
                       .manifestParsed
                       .destinyInventoryItemDefinition?[element.itemHash]
                       ?.itemType ==
-                  DestinyItemType.Armor)
+                  DestinyItemType.Armor &&
+              (itemSubType == null ||
+                  ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition?[element.itemHash]
+                          ?.itemSubType ==
+                      itemSubType))
           .map((item) => item));
     }
     allItems.addAll(getProfileInventory()
@@ -696,7 +781,13 @@ class ProfileService {
                     .manifestParsed
                     .destinyInventoryItemDefinition?[element.itemHash]
                     ?.itemType ==
-                DestinyItemType.Armor)
+                DestinyItemType.Armor &&
+            (itemSubType == null ||
+                ManifestService
+                        .manifestParsed
+                        .destinyInventoryItemDefinition?[element.itemHash]
+                        ?.itemSubType ==
+                    itemSubType))
         .map((item) => item));
 
     return allItems;

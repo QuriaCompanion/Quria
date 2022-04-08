@@ -7,7 +7,7 @@ import 'package:quria/presentation/screens/profile/components/profile_item_card.
 
 class ProfileItemSectionWidget extends StatelessWidget {
   final DestinyItemType itemType;
-  final ProfileHelper? data;
+  final ProfileHelper data;
   final double sizes;
   final double itemSectionSpacing;
   const ProfileItemSectionWidget({
@@ -26,8 +26,8 @@ class ProfileItemSectionWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (isWeaponSide)
-          for (DestinyItemComponent equipement in data!.characterEquipement
-              .where((element) =>
+          for (DestinyItemComponent equipement
+              in data.selectedCharacterInventory.where((element) =>
                   ManifestService
                       .manifestParsed
                       .destinyInventoryItemDefinition![element.itemHash]!
@@ -38,8 +38,8 @@ class ProfileItemSectionWidget extends StatelessWidget {
                 margin: itemSectionSpacing,
                 sizes: sizes,
                 displayedItem: equipement),
-        for (DestinyItemComponent equipement in data!.characterEquipement.where(
-            (element) =>
+        for (DestinyItemComponent equipement in data.selectedCharacterInventory
+            .where((element) =>
                 ManifestService
                     .manifestParsed
                     .destinyInventoryItemDefinition![element.itemHash]!

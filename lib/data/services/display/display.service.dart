@@ -2,7 +2,10 @@ import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_class_definition.dart';
+import 'package:bungie_api/models/destiny_collectible_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
+import 'package:bungie_api/models/destiny_energy_type_definition.dart';
+import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_plug_set_definition.dart';
@@ -14,17 +17,14 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/helpers/exoticHelper.model.dart';
-import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 
-ProfileService profile = ProfileService();
-AccountService account = AccountService();
-
 class DisplayService {
-  static init() async {}
+  ProfileService profile = ProfileService();
+  AccountService account = AccountService();
 
   Future<List<DestinyInventoryItemDefinition>> getExotics(
       DestinyClass classType) async {
@@ -48,8 +48,9 @@ class DisplayService {
     return exoticItems;
   }
 
-  Future<ProfileHelper> getProfileData(int index) async {
+  Future<bool> getProfileData(int index) async {
     try {
+      await profile.loadProfile();
       if (ManifestService.manifestParsed.destinyInventoryItemDefinition ==
               null ||
           ManifestService.manifestParsed.destinyDamageTypeDefinition == null ||
@@ -66,21 +67,26 @@ class DisplayService {
             "DestinyDamageTypeDefinition", box);
         await ManifestService.getManifest<DestinyStatDefinition>(
             "DestinyStatDefinition", box);
+        await ManifestService.getManifest<DestinyCollectibleDefinition>(
+            "DestinyCollectibleDefinition", box);
         await ManifestService.getManifest<DestinyClassDefinition>(
             "DestinyClassDefinition", box);
         await ManifestService.getManifest<DestinySandboxPerkDefinition>(
             "DestinySandboxPerkDefinition", box);
+        await ManifestService.getManifest<DestinyEquipmentSlotDefinition>(
+            "DestinyEquipmentSlotDefinition", box);
         await ManifestService.getManifest<DestinyTalentGridDefinition>(
             "DestinyTalentGridDefinition", box);
         await ManifestService.getManifest<DestinyPresentationNodeDefinition>(
             "DestinyPresentationNodeDefinition", box);
         await ManifestService.getManifest<DestinyPlugSetDefinition>(
             "DestinyPlugSetDefinition", box);
+        await ManifestService.getManifest<DestinyEnergyTypeDefinition>(
+            "DestinyEnergyTypeDefinition", box);
+        await ManifestService.getManifest<DestinyPlugSetDefinition>(
+            "DestinyPlugSetDefinition", box);
       }
-
-      final characters = profile.getCharacters();
-      return ProfileHelper((await account.getMembership())!, characters,
-          profile.getCharacterEquipment(characters[index].characterId!));
+      return true;
     } catch (e) {
       rethrow;
     }
@@ -97,6 +103,8 @@ class DisplayService {
         exoticItems.add(exoticHelper.manifest[element.itemHash]!);
       }
     }
+    exoticItems
+        .sort((a, b) => a.itemSubType!.index.compareTo(b.itemSubType!.index));
     return exoticItems;
   }
 
