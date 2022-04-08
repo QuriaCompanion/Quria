@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
@@ -21,6 +23,14 @@ class ScaffoldBurgerAndBackOption extends StatelessWidget {
             onPressed: () => Scaffold.of(context).openDrawer(),
           );
         }),
+        flexibleSpace: SizedBox(
+          width: vw(context),
+          height: appBarHeight(context),
+          child: ClipRect(
+              child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          )),
+        ),
         backgroundColor: Colors.transparent,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,

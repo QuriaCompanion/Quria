@@ -59,7 +59,7 @@ class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
                   character: widget.characters[order[1]],
                 ),
                 SizedBox(
-                  width: vw(context) * 0.064,
+                  width: appBarItem(context),
                 )
               ],
             ),
@@ -85,7 +85,7 @@ class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
                   character: widget.characters[order[2]],
                 ),
                 SizedBox(
-                  width: vw(context) * 0.064,
+                  width: appBarItem(context),
                 )
               ],
             ),

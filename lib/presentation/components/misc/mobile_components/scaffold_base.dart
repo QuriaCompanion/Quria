@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 
@@ -11,6 +13,14 @@ class ScaffoldBase extends StatelessWidget {
       extendBodyBehindAppBar: true,
       backgroundColor: black,
       appBar: AppBar(
+        flexibleSpace: SizedBox(
+          width: vw(context),
+          height: appBarHeight(context),
+          child: ClipRect(
+              child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          )),
+        ),
         backgroundColor: Colors.transparent,
       ),
       body: Container(

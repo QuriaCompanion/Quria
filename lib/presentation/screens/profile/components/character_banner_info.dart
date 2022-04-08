@@ -23,8 +23,8 @@ class CharacterBannerInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: vw(context) * 0.064,
-                height: vw(context) * 0.064,
+                width: appBarItem(context),
+                height: appBarItem(context),
                 child: Image(
                   image: NetworkImage(
                       DestinyData.bungieLink + character.emblemPath!),
@@ -47,8 +47,8 @@ class CharacterBannerInfo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: vw(context) * 0.064,
-                    height: vw(context) * 0.064,
+                    width: appBarItem(context),
+                    height: appBarItem(context),
                     child: Image(
                       image: NetworkImage(DestinyData.bungieLink +
                           ManifestService

@@ -37,6 +37,16 @@ double vh(BuildContext context) {
   return MediaQuery.of(context).size.height;
 }
 
+double appBarItem(BuildContext context) {
+  return vh(context) * 0.064;
+}
+
+double appBarHeight(BuildContext context) {
+  return MediaQuery.of(context).padding.top +
+      (globalPadding(context) * 2) +
+      appBarItem(context);
+}
+
 const Color backgroundColor = black;
 BoxDecoration greyTransparentBackground = BoxDecoration(
   color: Colors.grey.withOpacity(0.3),

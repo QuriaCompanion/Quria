@@ -46,18 +46,18 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
           );
         }),
         toolbarHeight: choosingCharacter
-            ? (globalPadding(context) * 4) + (vw(context) * 0.064) * 3
-            : (globalPadding(context) * 2) + vw(context) * 0.064,
+            ? MediaQuery.of(context).padding.top +
+                (globalPadding(context) * 4) +
+                (appBarItem(context)) * 3
+            : appBarHeight(context),
         backgroundColor: Colors.transparent,
         flexibleSpace: SizedBox(
           width: vw(context),
           height: choosingCharacter
               ? MediaQuery.of(context).padding.top +
                   (globalPadding(context) * 4) +
-                  (vw(context) * 0.064) * 3
-              : MediaQuery.of(context).padding.top +
-                  (globalPadding(context) * 2) +
-                  vw(context) * 0.064,
+                  (appBarItem(context)) * 3
+              : appBarHeight(context),
           child: ClipRect(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
