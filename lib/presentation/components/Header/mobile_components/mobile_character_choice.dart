@@ -30,10 +30,11 @@ class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+          padding: EdgeInsets.only(
+              top: MediaQuery.of(context).padding.top + globalPadding(context)),
           width: vw(context),
           child: SizedBox(
-            height: 56,
+            height: vw(context) * 0.064,
             child: Center(
               child: MobileCharacterBanner(
                   chooseCharacter: () {
@@ -47,6 +48,10 @@ class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
             ),
           ),
         ),
+        if (choosingCharacter && widget.characters.length > 1)
+          SizedBox(
+            height: globalPadding(context),
+          ),
         if (choosingCharacter && widget.characters.length > 1)
           InkWell(
             onTap: () {
@@ -71,7 +76,7 @@ class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
           ),
         if (choosingCharacter && widget.characters.length > 2)
           SizedBox(
-            height: (56 - (vw(context) * 0.064)) / 2,
+            height: globalPadding(context),
           ),
         if (choosingCharacter && widget.characters.length > 2)
           InkWell(

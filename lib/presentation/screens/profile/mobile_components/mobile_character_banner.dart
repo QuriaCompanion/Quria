@@ -24,8 +24,15 @@ class _MobileCharacterBannerState extends State<MobileCharacterBanner> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        CharacterBannerInfo(
-          character: widget.characters[widget.characterIndex],
+        InkWell(
+          onTap: () {
+            setState(() {
+              widget.chooseCharacter();
+            });
+          },
+          child: CharacterBannerInfo(
+            character: widget.characters[widget.characterIndex],
+          ),
         ),
         IconButton(
           constraints: const BoxConstraints(),

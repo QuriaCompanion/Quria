@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -34,28 +36,44 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
           return IconButton(
             alignment: Alignment.topCenter,
             padding: EdgeInsets.only(
-              top: (56 - (vw(context) * 0.064)) / 2,
+              top: globalPadding(context),
             ),
-            icon: const Icon(Icons.menu),
+            icon: Icon(
+              Icons.menu,
+              size: vw(context) * 0.064,
+            ),
             onPressed: () => Scaffold.of(context).openDrawer(),
           );
         }),
-        toolbarHeight: choosingCharacter ? 130 : 56,
+        toolbarHeight: choosingCharacter
+            ? (globalPadding(context) * 4) + (vw(context) * 0.064) * 3
+            : (globalPadding(context) * 2) + vw(context) * 0.064,
         backgroundColor: Colors.transparent,
-        flexibleSpace: MobileCharacterChoice(
-            callback: (newIndex) {
-              setState(() {
-                widget.onCharacterChange(newIndex);
-                choosingCharacter = !choosingCharacter;
-              });
-            },
-            choosingCharacter: () {
-              setState(() {
-                choosingCharacter = !choosingCharacter;
-              });
-            },
-            index: widget.selectedCharacterIndex,
-            characters: widget.characters),
+        flexibleSpace: SizedBox(
+          width: vw(context),
+          height: choosingCharacter
+              ? (globalPadding(context) * 4) + (vw(context) * 0.064) * 3
+              : (globalPadding(context) * 2) + vw(context) * 0.064,
+          child: ClipRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: MobileCharacterChoice(
+                  callback: (newIndex) {
+                    setState(() {
+                      widget.onCharacterChange(newIndex);
+                      choosingCharacter = !choosingCharacter;
+                    });
+                  },
+                  choosingCharacter: () {
+                    setState(() {
+                      choosingCharacter = !choosingCharacter;
+                    });
+                  },
+                  index: widget.selectedCharacterIndex,
+                  characters: widget.characters),
+            ),
+          ),
+        ),
       ),
       body: Container(
         decoration: ghostBackground,
