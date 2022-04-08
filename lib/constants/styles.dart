@@ -38,7 +38,7 @@ double vh(BuildContext context) {
 }
 
 double appBarItem(BuildContext context) {
-  return vh(context) * 0.064;
+  return vw(context) * 0.064;
 }
 
 double appBarHeight(BuildContext context) {
