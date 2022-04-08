@@ -10,7 +10,7 @@
     "prefer_related_applications": false,
     "icons": [
         {
-            "src": "icons/quria.png",
+            "src": "Quria.svg",
             "sizes": "1024x1024",
             "type": "image/png",
             "purpose": "maskable"
