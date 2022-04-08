@@ -13,6 +13,7 @@ class CharacterBannerInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: vw(context) * 0.064,
       width: vw(context) * 0.5,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

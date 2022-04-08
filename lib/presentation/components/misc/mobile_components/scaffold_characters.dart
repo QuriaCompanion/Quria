@@ -36,7 +36,7 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
           return IconButton(
             alignment: Alignment.topCenter,
             padding: EdgeInsets.only(
-              top: globalPadding(context),
+              top: MediaQuery.of(context).padding.top + globalPadding(context),
             ),
             icon: Icon(
               Icons.menu,
@@ -52,25 +52,34 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
         flexibleSpace: SizedBox(
           width: vw(context),
           height: choosingCharacter
-              ? (globalPadding(context) * 4) + (vw(context) * 0.064) * 3
-              : (globalPadding(context) * 2) + vw(context) * 0.064,
+              ? MediaQuery.of(context).padding.top +
+                  (globalPadding(context) * 4) +
+                  (vw(context) * 0.064) * 3
+              : MediaQuery.of(context).padding.top +
+                  (globalPadding(context) * 2) +
+                  vw(context) * 0.064,
           child: ClipRect(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: MobileCharacterChoice(
-                  callback: (newIndex) {
-                    setState(() {
-                      widget.onCharacterChange(newIndex);
-                      choosingCharacter = !choosingCharacter;
-                    });
-                  },
-                  choosingCharacter: () {
-                    setState(() {
-                      choosingCharacter = !choosingCharacter;
-                    });
-                  },
-                  index: widget.selectedCharacterIndex,
-                  characters: widget.characters),
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).padding.top +
+                        globalPadding(context)),
+                child: MobileCharacterChoice(
+                    callback: (newIndex) {
+                      setState(() {
+                        widget.onCharacterChange(newIndex);
+                        choosingCharacter = !choosingCharacter;
+                      });
+                    },
+                    choosingCharacter: () {
+                      setState(() {
+                        choosingCharacter = !choosingCharacter;
+                      });
+                    },
+                    index: widget.selectedCharacterIndex,
+                    characters: widget.characters),
+              ),
             ),
           ),
         ),

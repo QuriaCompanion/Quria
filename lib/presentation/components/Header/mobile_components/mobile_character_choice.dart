@@ -29,25 +29,15 @@ class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + globalPadding(context)),
-          width: vw(context),
-          child: SizedBox(
-            height: vw(context) * 0.064,
-            child: Center(
-              child: MobileCharacterBanner(
-                  chooseCharacter: () {
-                    setState(() {
-                      choosingCharacter = !choosingCharacter;
-                      widget.choosingCharacter();
-                    });
-                  },
-                  characterIndex: widget.index,
-                  characters: widget.characters),
-            ),
-          ),
-        ),
+        MobileCharacterBanner(
+            chooseCharacter: () {
+              setState(() {
+                choosingCharacter = !choosingCharacter;
+                widget.choosingCharacter();
+              });
+            },
+            characterIndex: widget.index,
+            characters: widget.characters),
         if (choosingCharacter && widget.characters.length > 1)
           SizedBox(
             height: globalPadding(context),
