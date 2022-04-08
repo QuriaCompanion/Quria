@@ -22,6 +22,7 @@ import 'package:quria/presentation/screens/inspect/inspect_mobile.dart';
 import 'package:quria/presentation/screens/login.dart';
 import 'package:quria/presentation/screens/profile/profile_page.dart';
 import 'package:quria/presentation/screens/testds/test.dart';
+import 'package:quria/presentation/screens/vault/vault_page.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 class AppRouter {
@@ -69,6 +70,8 @@ class AppRouter {
             builder: (_) => ModsPage(
                   data: data,
                 ));
+      case routeVault:
+        return MaterialPageRoute(builder: (_) => const VaultPage());
       case routeCollection:
         return MaterialPageRoute(builder: (_) => const CollectionWidget());
       case routeInspect:

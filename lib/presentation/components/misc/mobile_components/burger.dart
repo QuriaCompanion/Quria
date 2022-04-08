@@ -107,13 +107,19 @@ class _BurgerState extends State<Burger> {
                                 ),
                               ),
                               const SizedBox(height: 32),
-                              Row(
-                                children: [
-                                  const Icon(Icons.check_box_outline_blank,
-                                      color: Colors.white),
-                                  const SizedBox(width: 18),
-                                  textBodyHighRegular("Coffre"),
-                                ],
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                  Navigator.pushNamed(context, routeVault);
+                                },
+                                child: Row(
+                                  children: [
+                                    const Icon(Icons.check_box_outline_blank,
+                                        color: Colors.white),
+                                    const SizedBox(width: 18),
+                                    textBodyHighRegular("Coffre"),
+                                  ],
+                                ),
                               ),
                               const SizedBox(height: 32),
                               Row(

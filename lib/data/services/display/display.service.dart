@@ -17,6 +17,7 @@ import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/helpers/exoticHelper.model.dart';
+import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -46,6 +47,13 @@ class DisplayService {
             classType: classType));
 
     return exoticItems;
+  }
+
+  Future<VaultHelper> getVault() async {
+    await profile.loadProfile();
+    final characters = profile.getCharacters();
+    final inventory = profile.getProfileInventory();
+    return VaultHelper(characters: characters, vaultItems: inventory);
   }
 
   Future<bool> getProfileData(int index) async {
