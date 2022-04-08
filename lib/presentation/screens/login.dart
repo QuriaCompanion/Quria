@@ -58,6 +58,7 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: black,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       // floatingActionButton: Padding(
       //   padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
