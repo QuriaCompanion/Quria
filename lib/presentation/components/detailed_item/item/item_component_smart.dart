@@ -45,11 +45,7 @@ class ItemComponentSmart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              textH3(ManifestService
-                  .manifestParsed
-                  .destinyInventoryItemDefinition![item.itemHash]!
-                  .displayProperties!
-                  .name!),
+              textH3(itemDef.displayProperties!.name!),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

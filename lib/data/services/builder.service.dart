@@ -367,26 +367,33 @@ class BuilderService {
             List<Armor> armors = [
               Armor(
                   hash: helmet.itemHash!,
+                  displayHash: helmet.overrideStyleItemHash ?? helmet.itemHash!,
                   itemInstanceId: helmet.itemInstanceId!,
                   mods: optionalModsResult.modSelected[0],
                   type: 0),
               Armor(
                   hash: gauntlet.itemHash!,
+                  displayHash:
+                      gauntlet.overrideStyleItemHash ?? gauntlet.itemHash!,
                   itemInstanceId: gauntlet.itemInstanceId!,
                   mods: optionalModsResult.modSelected[1],
                   type: 1),
               Armor(
                   hash: chest.itemHash!,
+                  displayHash: chest.overrideStyleItemHash ?? chest.itemHash!,
                   itemInstanceId: chest.itemInstanceId!,
                   mods: optionalModsResult.modSelected[2],
                   type: 2),
               Armor(
                   hash: leg.itemHash!,
+                  displayHash: leg.overrideStyleItemHash ?? leg.itemHash!,
                   itemInstanceId: leg.itemInstanceId!,
                   mods: optionalModsResult.modSelected[3],
                   type: 3),
               Armor(
                   hash: builderHelper.classItem.itemHash!,
+                  displayHash: builderHelper.classItem.overrideStyleItemHash ??
+                      builderHelper.classItem.itemHash!,
                   itemInstanceId: builderHelper.classItem.itemInstanceId!,
                   mods: optionalModsResult.modSelected[4],
                   type: 4)

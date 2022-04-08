@@ -40,7 +40,16 @@ class _ExoticWidgetState extends State<ExoticWidget> {
             ProfileService().getCharacters();
         if (snapshot.hasData) isLoading = false;
         if (isLoading) {
-          return const Loader();
+          return Container(
+              height: vh(context),
+              width: vw(context),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: splashBackground)),
+              child: Loader(
+                splashColor: Colors.transparent,
+                animationSize: vw(context) * 0.5,
+              ));
         } else {
           if (vw(context) < 850) {
             return ScaffoldCharacters(

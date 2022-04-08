@@ -1,6 +1,10 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hive/hive.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import "package:universal_html/html.dart" as html;
 import 'dart:developer';
@@ -37,9 +41,9 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   void initState() {
     super.initState();
-    // widget.auth.getToken().then((value) => {
-    //       if (value != null) {checkMembership()}
-    //     });
+    widget.auth.getToken().then((value) => {
+          if (value != null) {checkMembership()}
+        });
 
     getInitialUri().then((value) {
       if (!value.toString().contains('code=')) {
@@ -54,13 +58,13 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: black,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       // floatingActionButton: Padding(
       //   padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
       //   child: RoundedButton(
       //       text: textBodyBold('Se connecter', color: black),
       //       onPressed: () {
+      //         loadingModal();
       //         authorizeClick(context);
       //       },
       //       width: 250.0,
@@ -71,35 +75,40 @@ class LoginWidgetState extends State<LoginWidget> {
         child: RoundedButton(
             text: textBodyBold('se connecter:dev', color: black),
             onPressed: () {
+              loadingModal();
               yannisooLogin();
             },
             width: 250.0,
             height: 60),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              textQuria("QURIA"),
-              SvgPicture.asset(
-                "assets/img/Quria.svg",
-                width: 50,
-                height: 50,
-              )
-            ],
-          ),
-          textCompanion("D2 COMPANION"),
-          SizedBox(
-            width: vw(context) * 0.4,
-            child: Divider(
-              height: globalPadding(context) * 2.5,
-              color: Colors.white,
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                textQuria("QURIA"),
+                SvgPicture.asset(
+                  "assets/img/Quria.svg",
+                  width: 50,
+                  height: 50,
+                )
+              ],
             ),
-          ),
-          textConnect("CONNECTEZ-VOUS POUR CONTINUER"),
-        ],
+            textCompanion("D2 COMPANION"),
+            SizedBox(
+              width: vw(context) * 0.4,
+              child: Divider(
+                height: globalPadding(context) * 2.5,
+                color: Colors.white,
+              ),
+            ),
+            textConnect("CONNECTEZ-VOUS POUR CONTINUER"),
+          ],
+        ),
       ),
     );
   }
@@ -113,6 +122,7 @@ class LoginWidgetState extends State<LoginWidget> {
         html.window.location.assign(authorizationEndpoint);
       });
     } on OAuthException catch (e) {
+      Navigator.of(context).pop();
       bool isIOS = Platform.isIOS;
       String platformMessage =
           "If this keeps happening, please try to login with a mainstream browser.";
@@ -177,6 +187,20 @@ class LoginWidgetState extends State<LoginWidget> {
       await widget.account.saveMembership(
           membershipData!, membershipData.destinyMemberships![0].membershipId!);
     }
+  }
+
+  void loadingModal() {
+    showMaterialModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        isDismissible: false,
+        expand: false,
+        builder: (context) {
+          return const LoadingModal(
+            text1: "Connexion en cours",
+            text2: "Veuillez patienter ...",
+          );
+        });
   }
 
   void yannisooLogin() async {

@@ -16,7 +16,7 @@ class QuickAction extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap(),
+      onTap: () => onTap(),
       child: SizedBox(
         height: vw(context) * 0.2,
         child: Column(

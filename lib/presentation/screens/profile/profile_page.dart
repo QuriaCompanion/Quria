@@ -117,8 +117,15 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             }
           } else {
             return Container(
-                decoration: const BoxDecoration(color: backgroundColor),
-                child: const Loader());
+                height: vh(context),
+                width: vw(context),
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover, image: splashBackground)),
+                child: Loader(
+                  splashColor: Colors.transparent,
+                  animationSize: vw(context) * 0.5,
+                ));
           }
         });
   }

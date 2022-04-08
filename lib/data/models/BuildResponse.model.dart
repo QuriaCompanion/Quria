@@ -30,12 +30,14 @@ class Stats {
 class Armor {
   int hash;
   String itemInstanceId;
+  int displayHash;
   int type;
 
   DestinyInventoryItemDefinition? mods;
   Armor(
       {required this.hash,
       required this.itemInstanceId,
+      required this.displayHash,
       required this.type,
       this.mods});
 }

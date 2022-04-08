@@ -39,6 +39,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bloc: ^7.3.0
+  bottom_loader: ^0.2.2
   flutter_dotenv: ^5.0.2
   flutter_svg: ^1.0.3
   http: ^0.13.4

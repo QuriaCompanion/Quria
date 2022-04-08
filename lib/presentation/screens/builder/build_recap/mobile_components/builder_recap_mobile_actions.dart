@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/bungie_api/enums/quick_actions.enum.dart';
-import 'package:quria/presentation/components/quick_action.dart';
+import 'package:quria/presentation/components/misc/quick_action.dart';
 
 class BuilderRecapMobileActions extends StatelessWidget {
   final Function(quick_actions) onAction;
@@ -15,7 +15,9 @@ class BuilderRecapMobileActions extends StatelessWidget {
         QuickAction(
             icon: "assets/icons/Equip.svg",
             title: "Equiper",
-            onTap: () => onAction(quick_actions.equip)),
+            onTap: () {
+              onAction(quick_actions.equip);
+            }),
         QuickAction(
             icon: "assets/icons/Save.svg",
             title: "Sauvegarder",

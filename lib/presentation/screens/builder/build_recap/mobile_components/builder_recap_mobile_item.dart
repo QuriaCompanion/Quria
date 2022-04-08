@@ -75,7 +75,8 @@ class BuilderRecapMobileItem extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ItemIcon(displayHash: item.hash, imageSize: vw(context) * 0.192),
+            ItemIcon(
+                displayHash: item.displayHash, imageSize: vw(context) * 0.192),
             Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: globalPadding(context) / 2),

@@ -1,5 +1,8 @@
+import 'package:bottom_loader/bottom_loader.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
@@ -7,6 +10,7 @@ import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
+import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
 
@@ -78,7 +82,7 @@ class BuilderResultsMobileItem extends StatelessWidget {
                       ? EdgeInsets.only(right: globalPadding(context))
                       : EdgeInsets.zero,
                   child: ItemIcon(
-                    displayHash: buildResult.equipement[i].hash,
+                    displayHash: buildResult.equipement[i].displayHash,
                     imageSize: (vw(context) - (globalPadding(context) * 8)) / 5,
                   ),
                 ),
@@ -94,23 +98,26 @@ class BuilderResultsMobileItem extends StatelessWidget {
               RoundedButton(
                 text: textBodyMedium('Equiper', color: black),
                 onPressed: () {
-                  // final snackBar = SnackBar(
-                  //   content: const Text('Yay! A SnackBar!'),
-                  //   action: SnackBarAction(
-                  //     label: 'Undo',
-                  //     onPressed: () {
-                  //       // Some code to undo the change.
-                  //     },
-                  //   ),
-                  // );
-                  // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  BungieActionsService().equipBuild(
-                    build: buildResult,
-                    characterId: characterId,
-                    mods: mods,
-                    subclassMods: subclassMods,
-                    subclassId: subclassId,
-                  );
+                  showMaterialModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      isDismissible: false,
+                      expand: false,
+                      builder: (context) {
+                        return const LoadingModal(
+                          text1: "Nous equipons votre equipement.",
+                          text2: "Cela peut prendre du temps ...",
+                        );
+                      });
+                  BungieActionsService()
+                      .equipBuild(
+                        build: buildResult,
+                        characterId: characterId,
+                        mods: mods,
+                        subclassMods: subclassMods,
+                        subclassId: subclassId,
+                      )
+                      .then((value) => Navigator.pop(context));
                 },
                 width: vw(context) * 0.4,
               ),
