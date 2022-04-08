@@ -40,16 +40,14 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
             ),
             icon: Icon(
               Icons.menu,
-              size: vw(context) * 0.064,
+              size: appBarItem(context),
             ),
             onPressed: () => Scaffold.of(context).openDrawer(),
           );
         }),
         toolbarHeight: choosingCharacter
-            ? MediaQuery.of(context).padding.top +
-                (globalPadding(context) * 4) +
-                (appBarItem(context)) * 3
-            : appBarHeight(context),
+            ? ((globalPadding(context) * 4) + (appBarItem(context)) * 3)
+            : (globalPadding(context) * 2) + appBarItem(context),
         backgroundColor: Colors.transparent,
         flexibleSpace: SizedBox(
           width: vw(context),
