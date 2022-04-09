@@ -44,7 +44,9 @@ class Loader extends StatelessWidget {
             ),
           RepaintBoundary(
               child: Lottie.asset('assets/animations/loader.json',
-                  width: animationSize, height: animationSize)),
+                  frameRate: FrameRate.max,
+                  width: animationSize,
+                  height: animationSize)),
         ],
       ),
     );
