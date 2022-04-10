@@ -37,9 +37,7 @@ class ManifestService {
 
   /// Given  a type [T] stores give type manifest in [manifestParsed]
   ///
-  /// The data can come from [manifestParsed]
-  ///
-  /// or from the [Hive] database
+  /// from the [Hive] database
   ///
   /// or from the [BungieApiService]
   ///
@@ -53,10 +51,11 @@ class ManifestService {
             await compute<String, Map<int, T>>(_parseJson, manifest));
       } else {
         String manifest = await getManifestRemote(manifestName);
-        await StorageService.setDatabaseItem(box, manifestName, manifest);
         await AllDestinyManifestComponents.setValue<T>(
             await compute<String, Map<int, T>>(_parseJson, manifest));
-        await manifestSaved(manifestName, await getManifestVersion());
+        StorageService.setDatabaseItem(box, manifestName, manifest).then(
+            (value) async =>
+                manifestSaved(manifestName, await getManifestVersion()));
       }
       return true;
     } catch (e) {

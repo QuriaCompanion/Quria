@@ -69,35 +69,38 @@ class DisplayService {
               null ||
           ManifestService.manifestParsed.destinyClassDefinition == null) {
         LazyBox box = await StorageService.openBox("manifest");
-        await ManifestService.getManifest<DestinyInventoryItemDefinition>(
-            "DestinyInventoryItemDefinition", box);
-        await ManifestService.getManifest<DestinyDamageTypeDefinition>(
-            "DestinyDamageTypeDefinition", box);
-        await ManifestService.getManifest<DestinyStatDefinition>(
-            "DestinyStatDefinition", box);
-        await ManifestService.getManifest<DestinyCollectibleDefinition>(
-            "DestinyCollectibleDefinition", box);
-        await ManifestService.getManifest<DestinyClassDefinition>(
-            "DestinyClassDefinition", box);
-        await ManifestService.getManifest<DestinySandboxPerkDefinition>(
-            "DestinySandboxPerkDefinition", box);
-        await ManifestService.getManifest<DestinyEquipmentSlotDefinition>(
-            "DestinyEquipmentSlotDefinition", box);
-        await ManifestService.getManifest<DestinyTalentGridDefinition>(
-            "DestinyTalentGridDefinition", box);
-        await ManifestService.getManifest<DestinyPresentationNodeDefinition>(
-            "DestinyPresentationNodeDefinition", box);
-        await ManifestService.getManifest<DestinyPlugSetDefinition>(
-            "DestinyPlugSetDefinition", box);
-        await ManifestService.getManifest<DestinyEnergyTypeDefinition>(
-            "DestinyEnergyTypeDefinition", box);
-        await ManifestService.getManifest<DestinyPlugSetDefinition>(
-            "DestinyPlugSetDefinition", box);
+        await ManifestService.getManifestVersion();
+        await Future.wait([
+          ManifestService.getManifest<DestinyInventoryItemDefinition>(
+              "DestinyInventoryItemDefinition", box),
+          ManifestService.getManifest<DestinyDamageTypeDefinition>(
+              "DestinyDamageTypeDefinition", box),
+          ManifestService.getManifest<DestinyStatDefinition>(
+              "DestinyStatDefinition", box),
+          ManifestService.getManifest<DestinyCollectibleDefinition>(
+              "DestinyCollectibleDefinition", box),
+          ManifestService.getManifest<DestinyClassDefinition>(
+              "DestinyClassDefinition", box),
+          ManifestService.getManifest<DestinySandboxPerkDefinition>(
+              "DestinySandboxPerkDefinition", box),
+          ManifestService.getManifest<DestinyEquipmentSlotDefinition>(
+              "DestinyEquipmentSlotDefinition", box),
+          ManifestService.getManifest<DestinyTalentGridDefinition>(
+              "DestinyTalentGridDefinition", box),
+          ManifestService.getManifest<DestinyPresentationNodeDefinition>(
+              "DestinyPresentationNodeDefinition", box),
+          ManifestService.getManifest<DestinyPlugSetDefinition>(
+              "DestinyPlugSetDefinition", box),
+          ManifestService.getManifest<DestinyEnergyTypeDefinition>(
+              "DestinyEnergyTypeDefinition", box),
+          ManifestService.getManifest<DestinyPlugSetDefinition>(
+              "DestinyPlugSetDefinition", box),
+        ]);
       }
       return true;
     } catch (e) {
       rethrow;
-    }
+    } finally {}
   }
 
   List<DestinyInventoryItemDefinition> exoticLoop(ExoticHelper exoticHelper) {

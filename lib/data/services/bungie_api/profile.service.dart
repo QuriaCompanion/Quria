@@ -129,7 +129,7 @@ class ProfileService {
     return _profile;
   }
 
-  startAutomaticUpdater() async {
+  void startAutomaticUpdater() async {
     if (_lastLoadedFrom == LastLoadedFrom.cache) {
       await fetchProfileData(components: ProfileComponentGroups.everything);
     }
@@ -242,7 +242,11 @@ class ProfileService {
   }
 
   Future<DestinyProfileResponse?> loadProfile() async {
+    if (_profile != null) {
+      return _profile;
+    }
     DestinyProfileResponse? response = await fetchProfileData();
+    startAutomaticUpdater();
     _profile = response;
     return response;
   }

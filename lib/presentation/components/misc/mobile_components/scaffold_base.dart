@@ -19,6 +19,7 @@ class ScaffoldBase extends StatelessWidget {
           child: ClipRect(
               child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: SizedBox(width: vw(context), height: appBarHeight(context)),
           )),
         ),
         backgroundColor: Colors.transparent,
