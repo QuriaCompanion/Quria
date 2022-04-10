@@ -6,6 +6,7 @@ import 'package:bungie_api/models/destiny_collectible_definition.dart';
 import 'package:bungie_api/models/destiny_damage_type_definition.dart';
 import 'package:bungie_api/models/destiny_energy_type_definition.dart';
 import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
+import 'package:bungie_api/models/destiny_inventory_bucket_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_plug_set_definition.dart';
@@ -95,6 +96,8 @@ class DisplayService {
               "DestinyEnergyTypeDefinition", box),
           ManifestService.getManifest<DestinyPlugSetDefinition>(
               "DestinyPlugSetDefinition", box),
+          ManifestService.getManifest<DestinyInventoryBucketDefinition>(
+              "DestinyInventoryBucketDefinition", box),
         ]);
       }
       return true;

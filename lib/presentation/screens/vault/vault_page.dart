@@ -38,7 +38,7 @@ class _VaultPageState extends State<VaultPage> {
                   },
                   characters: snapshot.data!.characters,
                   selectedCharacterIndex: index,
-                  body: const VaultMobileView());
+                  body: VaultMobileView(data: snapshot.data!));
             } else {
               return Container();
             }
