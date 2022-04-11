@@ -44,19 +44,19 @@ class ManifestService {
   /// returns true once the manifest is loaded
   static Future<bool> getManifest<T>(String manifestName, LazyBox box) async {
     try {
-      if (await isManifestUpToDate(manifestName, await getManifestVersion())) {
-        String manifest =
-            await StorageService.getDatabaseItem(box, manifestName);
-        await AllDestinyManifestComponents.setValue<T>(
-            await compute<String, Map<int, T>>(_parseJson, manifest));
-      } else {
-        String manifest = await getManifestRemote(manifestName);
-        await AllDestinyManifestComponents.setValue<T>(
-            await compute<String, Map<int, T>>(_parseJson, manifest));
-        StorageService.setDatabaseItem(box, manifestName, manifest).then(
-            (value) async =>
-                manifestSaved(manifestName, await getManifestVersion()));
-      }
+      // if (await isManifestUpToDate(manifestName, await getManifestVersion())) {
+      //   String manifest =
+      //       await StorageService.getDatabaseItem(box, manifestName);
+      //   await AllDestinyManifestComponents.setValue<T>(
+      //       await compute<String, Map<int, T>>(_parseJson, manifest));
+      // } else {
+      String manifest = await getManifestRemote(manifestName);
+      await AllDestinyManifestComponents.setValue<T>(
+          await compute<String, Map<int, T>>(_parseJson, manifest));
+      // StorageService.setDatabaseItem(box, manifestName, manifest).then(
+      //     (value) async =>
+      //         manifestSaved(manifestName, await getManifestVersion()));
+      // }
       return true;
     } catch (e) {
       rethrow;
