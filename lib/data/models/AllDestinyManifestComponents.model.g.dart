@@ -290,6 +290,23 @@ AllDestinyManifestComponents _$AllDestinyManifestComponentsFromJson(
         (k, e) => MapEntry(int.parse(k),
             DestinyChecklistDefinition.fromJson(e as Map<String, dynamic>)),
       )
+      ..destinyHistoricalStatsDefinition =
+          (json['DestinyHistoricalStatsDefinition'] as Map<String, dynamic>?)
+              ?.map(
+        (k, e) => MapEntry(
+            int.parse(k),
+            DestinyHistoricalStatsDefinition.fromJson(
+                e as Map<String, dynamic>)),
+      )
+      ..destinyMilestoneRewardEntryDefinition =
+          (json['DestinyMilestoneRewardEntryDefinition']
+                  as Map<String, dynamic>?)
+              ?.map(
+        (k, e) => MapEntry(
+            int.parse(k),
+            DestinyMilestoneRewardEntryDefinition.fromJson(
+                e as Map<String, dynamic>)),
+      )
       ..destinyEnergyTypeDefinition =
           (json['DestinyEnergyTypeDefinition'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(int.parse(k),
@@ -406,6 +423,12 @@ Map<String, dynamic> _$AllDestinyManifestComponentsToJson(
       'DestinyBreakerTypeDefinition': instance.destinyBreakerTypeDefinition
           ?.map((k, e) => MapEntry(k.toString(), e)),
       'DestinyChecklistDefinition': instance.destinyChecklistDefinition
+          ?.map((k, e) => MapEntry(k.toString(), e)),
+      'DestinyHistoricalStatsDefinition': instance
+          .destinyHistoricalStatsDefinition
+          ?.map((k, e) => MapEntry(k.toString(), e)),
+      'DestinyMilestoneRewardEntryDefinition': instance
+          .destinyMilestoneRewardEntryDefinition
           ?.map((k, e) => MapEntry(k.toString(), e)),
       'DestinyEnergyTypeDefinition': instance.destinyEnergyTypeDefinition
           ?.map((k, e) => MapEntry(k.toString(), e)),

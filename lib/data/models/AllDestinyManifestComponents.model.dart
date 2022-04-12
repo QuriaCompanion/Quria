@@ -18,7 +18,7 @@ import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
 import 'package:bungie_api/models/destiny_faction_definition.dart';
 import 'package:bungie_api/models/destiny_gender_definition.dart';
 import 'package:bungie_api/models/destiny_inventory_bucket_definition.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_category_definition.dart';
 import 'package:bungie_api/models/destiny_item_tier_type_definition.dart';
 import 'package:bungie_api/models/destiny_location_definition.dart';

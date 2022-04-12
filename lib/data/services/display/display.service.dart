@@ -1,26 +1,16 @@
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
-import 'package:bungie_api/models/destiny_class_definition.dart';
-import 'package:bungie_api/models/destiny_collectible_definition.dart';
-import 'package:bungie_api/models/destiny_damage_type_definition.dart';
-import 'package:bungie_api/models/destiny_energy_type_definition.dart';
-import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_plug_set_definition.dart';
-import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
-import 'package:bungie_api/models/destiny_sandbox_perk_definition.dart';
-import 'package:bungie_api/models/destiny_stat_definition.dart';
-import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
 import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_class_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/exoticHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/data/services/storage/storage.service.dart';
 
 class DisplayService {
   ProfileService profile = ProfileService();
@@ -31,11 +21,8 @@ class DisplayService {
     final items = profile.getAllArmorForClass(classType);
     if (ManifestService.manifestParsed.destinyClassDefinition == null ||
         ManifestService.manifestParsed.destinyInventoryItemDefinition == null) {
-      LazyBox box = await StorageService.openBox("manifest");
-      await ManifestService.getManifest<DestinyInventoryItemDefinition>(
-          "DestinyInventoryItemDefinition", box);
-      await ManifestService.getManifest<DestinyClassDefinition>(
-          "DestinyClassDefinition", box);
+      await ManifestService.getManifest<DestinyInventoryItemDefinition>();
+      await ManifestService.getManifest<DestinyClassDefinition>();
     }
     List<DestinyInventoryItemDefinition> exoticItems = await compute(
         exoticLoop,
@@ -52,42 +39,9 @@ class DisplayService {
     try {
       await profile.loadProfile();
       if (ManifestService.manifestParsed.destinyInventoryItemDefinition ==
-              null ||
-          ManifestService.manifestParsed.destinyDamageTypeDefinition == null ||
-          ManifestService.manifestParsed.destinyStatDefinition == null ||
-          ManifestService.manifestParsed.destinyTalentGridDefinition == null ||
-          ManifestService.manifestParsed.destinySandboxPerkDefinition == null ||
-          ManifestService.manifestParsed.destinyPresentationNodeDefinition ==
-              null ||
-          ManifestService.manifestParsed.destinyClassDefinition == null) {
-        LazyBox box = await StorageService.openBox("manifest");
+          null) {
         await ManifestService.getManifestVersion();
-        await Future.wait([
-          ManifestService.getManifest<DestinyInventoryItemDefinition>(
-              "DestinyInventoryItemDefinition", box),
-          ManifestService.getManifest<DestinyDamageTypeDefinition>(
-              "DestinyDamageTypeDefinition", box),
-          ManifestService.getManifest<DestinyStatDefinition>(
-              "DestinyStatDefinition", box),
-          ManifestService.getManifest<DestinyCollectibleDefinition>(
-              "DestinyCollectibleDefinition", box),
-          ManifestService.getManifest<DestinyClassDefinition>(
-              "DestinyClassDefinition", box),
-          ManifestService.getManifest<DestinySandboxPerkDefinition>(
-              "DestinySandboxPerkDefinition", box),
-          ManifestService.getManifest<DestinyEquipmentSlotDefinition>(
-              "DestinyEquipmentSlotDefinition", box),
-          ManifestService.getManifest<DestinyTalentGridDefinition>(
-              "DestinyTalentGridDefinition", box),
-          ManifestService.getManifest<DestinyPresentationNodeDefinition>(
-              "DestinyPresentationNodeDefinition", box),
-          ManifestService.getManifest<DestinyPlugSetDefinition>(
-              "DestinyPlugSetDefinition", box),
-          ManifestService.getManifest<DestinyEnergyTypeDefinition>(
-              "DestinyEnergyTypeDefinition", box),
-          ManifestService.getManifest<DestinyPlugSetDefinition>(
-              "DestinyPlugSetDefinition", box),
-        ]);
+        await ManifestService.loadAllManifest();
       }
       return true;
     } catch (e) {
@@ -114,11 +68,8 @@ class DisplayService {
   Future<Iterable<DestinyInventoryItemDefinition>?> collectionLoop() async {
     if (ManifestService.manifestParsed.destinyInventoryItemDefinition == null ||
         ManifestService.manifestParsed.destinyPlugSetDefinition == null) {
-      LazyBox box = await StorageService.openBox("manifest");
-      await ManifestService.getManifest<DestinyInventoryItemDefinition>(
-          "DestinyInventoryItemDefinition", box);
-      await ManifestService.getManifest<DestinyPlugSetDefinition>(
-          "DestinyPlugSetDefinition", box);
+      await ManifestService.getManifest<DestinyInventoryItemDefinition>();
+      await ManifestService.getManifest<DestinyPlugSetDefinition>();
     }
 
     return compute(_getWeapons, ManifestService.manifestParsed);

@@ -1,11 +1,22 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-import 'package:hive/hive.dart';
-import 'package:http/http.dart' as http;
 import 'package:bungie_api/models/destiny_manifest.dart';
+import 'package:flutter/foundation.dart';
+import 'package:http/http.dart' as http;
 import 'package:bungie_api/responses/destiny_manifest_response.dart';
+import 'package:isar/isar.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_class_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_collectible_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_damage_type_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_energy_type_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_plug_set_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_stat_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/definition_table_names.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -18,6 +29,7 @@ class ManifestService {
   static DestinyManifest? _manifestInfo;
   static final AllDestinyManifestComponents manifestParsed =
       AllDestinyManifestComponents();
+  static final manifestList = DefinitionTableNames();
   final StorageService storage = StorageService();
   static final ManifestService _singleton = ManifestService._internal();
 
@@ -35,35 +47,83 @@ class ManifestService {
     return _manifestInfo!;
   }
 
-  /// Given  a type [T] stores give type manifest in [manifestParsed]
+  static loadAllManifest() async {
+    Isar isar;
+    isar = await Isar.open(
+      relaxedDurability: true,
+      schemas: [
+        DestinyInventoryItemDefinitionSchema,
+        DestinyClassDefinitionSchema,
+        DestinyDamageTypeDefinitionSchema,
+        DestinyStatDefinitionSchema,
+        DestinyTalentGridDefinitionSchema,
+        DestinySandboxPerkDefinitionSchema,
+        DestinyEnergyTypeDefinitionSchema,
+        DestinyEquipmentSlotDefinitionSchema,
+        DestinyPresentationNodeDefinitionSchema,
+        DestinyCollectibleDefinitionSchema,
+        DestinyPlugSetDefinitionSchema,
+      ],
+    );
+    if (await isManifestOutdated(await ManifestService.getManifestVersion())) {
+      await Future.wait([
+        getManifest<DestinyInventoryItemDefinition>(),
+        getManifest<DestinyClassDefinition>(),
+        getManifest<DestinyDamageTypeDefinition>(),
+        getManifest<DestinyStatDefinition>(),
+        getManifest<DestinyCollectibleDefinition>(),
+        getManifest<DestinyClassDefinition>(),
+        getManifest<DestinySandboxPerkDefinition>(),
+        getManifest<DestinyEquipmentSlotDefinition>(),
+        getManifest<DestinyTalentGridDefinition>(),
+        getManifest<DestinyPresentationNodeDefinition>(),
+        getManifest<DestinyPlugSetDefinition>(),
+        getManifest<DestinyEnergyTypeDefinition>(),
+      ]);
+      print("downloaded");
+      await isar.writeTxn((isar) async {
+        await isar.destinyInventoryItemDefinitions
+            .putAll(manifestList.destinyInventoryItemDefinition!);
+        await isar.destinyClassDefinitions
+            .putAll(manifestList.destinyClassDefinition!);
+        await isar.destinyDamageTypeDefinitions
+            .putAll(manifestList.destinyDamageTypeDefinition!);
+        await isar.destinyStatDefinitions
+            .putAll(manifestList.destinyStatDefinition!);
+        await isar.destinyTalentGridDefinitions
+            .putAll(manifestList.destinyTalentGridDefinition!);
+        await isar.destinySandboxPerkDefinitions
+            .putAll(manifestList.destinySandboxPerkDefinition!);
+        await isar.destinyEquipmentSlotDefinitions
+            .putAll(manifestList.destinyEquipmentSlotDefinition!);
+        await isar.destinyPresentationNodeDefinitions
+            .putAll(manifestList.destinyPresentationNodeDefinition!);
+        await isar.destinyEnergyTypeDefinitions
+            .putAll(manifestList.destinyEnergyTypeDefinition!);
+        await isar.destinyPlugSetDefinitions
+            .putAll(manifestList.destinyPlugSetDefinition!);
+        await isar.destinyCollectibleDefinitions
+            .putAll(manifestList.destinyCollectibleDefinition!);
+      }).then((value) {});
+    }
+  }
+
+  /// Given  a type [T] download the data from the manifest and stores it in [manifestParsed]
   ///
-  /// from the [Hive] database
+  /// This is a generic method that can be used to download any type of data from the manifest
   ///
-  /// or from the [BungieApiService]
-  ///
-  /// returns true once the manifest is loaded
-  static Future<bool> getManifest<T>(String manifestName, LazyBox box) async {
+  /// promise of void
+  static Future<void> getManifest<T>() async {
     try {
-      // if (await isManifestUpToDate(manifestName, await getManifestVersion())) {
-      //   String manifest =
-      //       await StorageService.getDatabaseItem(box, manifestName);
-      //   await AllDestinyManifestComponents.setValue<T>(
-      //       await compute<String, Map<int, T>>(_parseJson, manifest));
-      // } else {
-      String manifest = await getManifestRemote(manifestName);
-      await AllDestinyManifestComponents.setValue<T>(
-          await compute<String, Map<int, T>>(_parseJson, manifest));
-      // StorageService.setDatabaseItem(box, manifestName, manifest).then(
-      //     (value) async =>
-      //         manifestSaved(manifestName, await getManifestVersion()));
-      // }
-      return true;
+      DefinitionTableNames.setValue<T>(await compute<String, List<T>>(
+          _typeData<T>,
+          await getManifestRemote(DefinitionTableNames.fromClass[T]!)));
     } catch (e) {
       rethrow;
     }
   }
 
-  static getManifestVersion() async {
+  static Future<String?> getManifestVersion() async {
     if (_manifestInfo != null) {
       return _manifestInfo!.version;
     }
@@ -81,14 +141,13 @@ class ManifestService {
     return res.body;
   }
 
-  static Future<bool> isManifestUpToDate(
-      String manifestName, String version) async {
-    return await StorageService.getLocalStorage(manifestName) == version;
+  static Future<bool> isManifestOutdated(String? version) async {
+    return await StorageService.getLocalStorage("manifestVersion") != version;
   }
 
   /// Given a [manifestName] sets corresponding manifestSaved value to true
-  static Future<void> manifestSaved(String manifestName, String version) async {
-    return await StorageService.setLocalStorage(manifestName, version);
+  static Future<void> manifestSaved(String version) async {
+    return await StorageService.setLocalStorage("manifestVersion", version);
   }
 }
 
@@ -97,12 +156,12 @@ class ManifestService {
 /// returns the correctly typed data
 ///
 /// the data returned is typed and ready to be used
-Future<Map<int, T>> _parseJson<T>(String manifest) async {
-  Map<int, T> items = {};
+List<T> _typeData<T>(String manifest) {
+  List<T> items = [];
   final type = DefinitionTableNames.identities[T];
   Map<String, dynamic> decoded = jsonDecode(manifest) as Map<String, dynamic>;
-  for (final entry in decoded.entries) {
-    items[int.parse(entry.key)] = type!(entry.value);
+  for (final entry in decoded.values) {
+    items.add(type!(entry));
   }
   return items;
 }
