@@ -26,6 +26,7 @@ class StorageService {
   static late Isar isar;
   static init() async {
     _storage = LocalStorage('Quria');
+
     isar = await Isar.open(
       relaxedDurability: true,
       schemas: [
@@ -41,6 +42,7 @@ class StorageService {
         DestinyCollectibleDefinitionSchema,
         DestinyPlugSetDefinitionSchema,
       ],
+      directory: kIsWeb ? null : (await getApplicationSupportDirectory()).path,
     );
   }
 

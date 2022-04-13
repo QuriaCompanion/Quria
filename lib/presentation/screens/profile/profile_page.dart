@@ -1,6 +1,4 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
-import 'package:bungie_api/models/destiny_character_component.dart';
-import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
@@ -27,7 +25,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   final storage = StorageService();
   final account = AccountService();
   final profile = ProfileService();
-  late Future<void> _future;
+  late Future<ProfileHelper> _future;
   int index = 0;
   DestinyItemType currentFilter = DestinyItemType.Weapon;
   @override
@@ -48,7 +46,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   late double imageSize;
   late double iconSize;
   late double verticalStatWidth;
-  late ProfileHelper data;
   bool choosingCharacter = false;
 
   @override
@@ -85,21 +82,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     }
     return FutureBuilder(
         future: _future,
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<ProfileHelper> snapshot) {
           if (snapshot.hasData) {
-            List<DestinyCharacterComponent> characters =
-                profile.getCharacters();
-            DestinyCharacterComponent selectedCharacter = characters[index];
-            List<DestinyItemComponent> equipement =
-                profile.getCharacterEquipment(selectedCharacter.characterId!);
-            DestinyItemComponent selectedCharacterSubclass = profile
-                .getCurrentSubClassForCharacter(selectedCharacter.characterId!);
-            data = ProfileHelper(
-                characters: characters,
-                selectedCharacter: selectedCharacter,
-                selectedCharacterInventory: equipement,
-                selectedCharacterSubclass: selectedCharacterSubclass,
-                selectedCharacterIndex: index);
+            ProfileHelper data = snapshot.data!;
             if (vw(context) > 850) {
               return Column(
                 children: [],

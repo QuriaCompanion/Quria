@@ -166,7 +166,7 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membership == null) {
       showSelectMembership();
     }
-    Navigator.pushNamed(context, routeProfile);
+    Navigator.pushReplacementNamed(context, routeProfile);
   }
 
   void showSelectMembership() async {
@@ -208,7 +208,5 @@ class LoginWidgetState extends State<LoginWidget> {
 
     if (await auth.getToken() == null) await auth.saveToken(token);
     await account.getMembership();
-    await profile.loadProfile();
-    Navigator.pushNamed(context, routeProfile);
   }
 }

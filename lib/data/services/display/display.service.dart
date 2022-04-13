@@ -1,6 +1,7 @@
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
+import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_plug_set_definition.dart';
 import 'package:flutter/foundation.dart';
@@ -8,6 +9,7 @@ import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_class_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/exoticHelper.model.dart';
+import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -35,15 +37,23 @@ class DisplayService {
     return exoticItems;
   }
 
-  Future<bool> getProfileData(int index) async {
+  Future<ProfileHelper> getProfileData(int index) async {
     try {
       await profile.loadProfile();
-      if (ManifestService.manifestParsed.destinyInventoryItemDefinition ==
-          null) {
-        await ManifestService.getManifestVersion();
-        await ManifestService.loadAllManifest();
-      }
-      return true;
+      await ManifestService.getManifestVersion();
+      await ManifestService.loadAllManifest();
+      List<DestinyCharacterComponent> characters = profile.getCharacters();
+      DestinyCharacterComponent selectedCharacter = characters[index];
+      List<DestinyItemComponent> equipement =
+          profile.getCharacterEquipment(selectedCharacter.characterId!);
+      DestinyItemComponent selectedCharacterSubclass = profile
+          .getCurrentSubClassForCharacter(selectedCharacter.characterId!);
+      return ProfileHelper(
+          characters: characters,
+          selectedCharacter: selectedCharacter,
+          selectedCharacterInventory: equipement,
+          selectedCharacterSubclass: selectedCharacterSubclass,
+          selectedCharacterIndex: index);
     } catch (e) {
       rethrow;
     } finally {}
