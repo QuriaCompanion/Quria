@@ -20,7 +20,7 @@ class DestinyDamageTypeDefinition {
 
   /// The description of the damage type, icon etc...
   @JsonKey(name: 'displayProperties')
-  @ClassConverter<DestinyDisplayPropertiesDefinition>()
+  @DestinyDisplayPropertiesDefinitionConverter()
   DestinyDisplayPropertiesDefinition? displayProperties;
 
   /// A variant of the icon that is transparent and colorless.

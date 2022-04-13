@@ -5,8 +5,8 @@ import 'package:bungie_api/enums/destiny_energy_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
-import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_definition.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class StatsHash {

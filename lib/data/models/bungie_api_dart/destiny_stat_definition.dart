@@ -30,7 +30,7 @@ class DestinyStatDefinition {
 
   /// Many Destiny*Definition contracts - the "first order" entities of Destiny that have their own tables in the Manifest Database - also have displayable information. This is the base class for that display information.
   @JsonKey(name: 'displayProperties')
-  @ClassConverter<DestinyDisplayPropertiesDefinition>()
+  @DestinyDisplayPropertiesDefinitionConverter()
   DestinyDisplayPropertiesDefinition? displayProperties;
 
   /// Stats can exist on a character or an item, and they may potentially be aggregated in different ways. The DestinyStatAggregationType enum value indicates the way that this stat is being aggregated.

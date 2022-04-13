@@ -25,7 +25,7 @@ class DestinyPresentationNodeDefinition {
 
   /// Many Destiny*Definition contracts - the "first order" entities of Destiny that have their own tables in the Manifest Database - also have displayable information. This is the base class for that display information.
   @JsonKey(name: 'displayProperties')
-  @ClassConverter<DestinyDisplayPropertiesDefinition>()
+  @DestinyDisplayPropertiesDefinitionConverter()
   DestinyDisplayPropertiesDefinition? displayProperties;
 
   /// The original icon for this presentation node, before we futzed with it.
@@ -59,7 +59,7 @@ class DestinyPresentationNodeDefinition {
 
   /// The child entities contained by this presentation node.
   @JsonKey(name: 'children')
-  @ClassConverter<DestinyPresentationNodeChildrenBlock>()
+  @DestinyPresentationNodeChildrenBlockConverter()
   DestinyPresentationNodeChildrenBlock? children;
 
   /// A hint for how to display this presentation node when it's shown in a list.
@@ -80,7 +80,7 @@ class DestinyPresentationNodeDefinition {
 
   /// The requirements for being able to interact with this presentation node and its children.
   @JsonKey(name: 'requirements')
-  @ClassConverter<DestinyPresentationNodeRequirementsBlock>()
+  @DestinyPresentationNodeRequirementsBlockConverter()
   DestinyPresentationNodeRequirementsBlock? requirements;
 
   /// If this presentation node has children, but the game doesn't let you inspect the details of those children, that is indicated here.

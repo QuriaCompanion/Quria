@@ -17,15 +17,16 @@ extension GetDestinyStatDefinitionCollection on Isar {
 final DestinyStatDefinitionSchema = CollectionSchema(
   name: 'DestinyStatDefinition',
   schema:
-      '{"name":"DestinyStatDefinition","idName":"hash","properties":[{"name":"hasComputedBlock","type":"Bool"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"statCategory","type":"Long"}],"indexes":[],"links":[]}',
+      '{"name":"DestinyStatDefinition","idName":"hash","properties":[{"name":"displayProperties","type":"String"},{"name":"hasComputedBlock","type":"Bool"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"statCategory","type":"Long"}],"indexes":[],"links":[]}',
   nativeAdapter: const _DestinyStatDefinitionNativeAdapter(),
   webAdapter: const _DestinyStatDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
-    'hasComputedBlock': 0,
-    'index': 1,
-    'redacted': 2,
-    'statCategory': 3
+    'displayProperties': 0,
+    'hasComputedBlock': 1,
+    'index': 2,
+    'redacted': 3,
+    'statCategory': 4
   },
   listProperties: {},
   indexIds: {},
@@ -45,6 +46,8 @@ final DestinyStatDefinitionSchema = CollectionSchema(
   version: 2,
 );
 
+const _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter =
+    DestinyDisplayPropertiesDefinitionConverter();
 const _destinyStatDefinitionDestinyStatCategoryConverter =
     DestinyStatCategoryConverter();
 
@@ -56,6 +59,11 @@ class _DestinyStatDefinitionWebAdapter
   Object serialize(IsarCollection<DestinyStatDefinition> collection,
       DestinyStatDefinition object) {
     final jsObj = IsarNative.newJsObject();
+    IsarNative.jsObjectSet(
+        jsObj,
+        'displayProperties',
+        _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties));
     IsarNative.jsObjectSet(jsObj, 'hasComputedBlock', object.hasComputedBlock);
     IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
     IsarNative.jsObjectSet(jsObj, 'index', object.index);
@@ -72,6 +80,9 @@ class _DestinyStatDefinitionWebAdapter
   DestinyStatDefinition deserialize(
       IsarCollection<DestinyStatDefinition> collection, dynamic jsObj) {
     final object = DestinyStatDefinition();
+    object.displayProperties =
+        _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
     object.hasComputedBlock = IsarNative.jsObjectGet(jsObj, 'hasComputedBlock');
     object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
     object.index = IsarNative.jsObjectGet(jsObj, 'index');
@@ -84,6 +95,9 @@ class _DestinyStatDefinitionWebAdapter
   @override
   P deserializeProperty<P>(Object jsObj, String propertyName) {
     switch (propertyName) {
+      case 'displayProperties':
+        return (_destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
       case 'hasComputedBlock':
         return (IsarNative.jsObjectGet(jsObj, 'hasComputedBlock')) as P;
       case 'hash':
@@ -117,25 +131,34 @@ class _DestinyStatDefinitionNativeAdapter
       List<int> offsets,
       AdapterAlloc alloc) {
     var dynamicSize = 0;
-    final value0 = object.hasComputedBlock;
-    final _hasComputedBlock = value0;
-    final value1 = object.index;
-    final _index = value1;
-    final value2 = object.redacted;
-    final _redacted = value2;
-    final value3 = _destinyStatDefinitionDestinyStatCategoryConverter
+    final value0 =
+        _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties);
+    IsarUint8List? _displayProperties;
+    if (value0 != null) {
+      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
+    }
+    dynamicSize += (_displayProperties?.length ?? 0) as int;
+    final value1 = object.hasComputedBlock;
+    final _hasComputedBlock = value1;
+    final value2 = object.index;
+    final _index = value2;
+    final value3 = object.redacted;
+    final _redacted = value3;
+    final value4 = _destinyStatDefinitionDestinyStatCategoryConverter
         .toIsar(object.statCategory);
-    final _statCategory = value3;
+    final _statCategory = value4;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
     rawObj.buffer_length = size;
     final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
     final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBool(offsets[0], _hasComputedBlock);
-    writer.writeLong(offsets[1], _index);
-    writer.writeBool(offsets[2], _redacted);
-    writer.writeLong(offsets[3], _statCategory);
+    writer.writeBytes(offsets[0], _displayProperties);
+    writer.writeBool(offsets[1], _hasComputedBlock);
+    writer.writeLong(offsets[2], _index);
+    writer.writeBool(offsets[3], _redacted);
+    writer.writeLong(offsets[4], _statCategory);
   }
 
   @override
@@ -145,12 +168,15 @@ class _DestinyStatDefinitionNativeAdapter
       IsarBinaryReader reader,
       List<int> offsets) {
     final object = DestinyStatDefinition();
-    object.hasComputedBlock = reader.readBoolOrNull(offsets[0]);
+    object.displayProperties =
+        _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[0]));
+    object.hasComputedBlock = reader.readBoolOrNull(offsets[1]);
     object.hash = id;
-    object.index = reader.readLongOrNull(offsets[1]);
-    object.redacted = reader.readBoolOrNull(offsets[2]);
+    object.index = reader.readLongOrNull(offsets[2]);
+    object.redacted = reader.readBoolOrNull(offsets[3]);
     object.statCategory = _destinyStatDefinitionDestinyStatCategoryConverter
-        .fromIsar(reader.readLongOrNull(offsets[3]));
+        .fromIsar(reader.readLongOrNull(offsets[4]));
     return object;
   }
 
@@ -161,12 +187,15 @@ class _DestinyStatDefinitionNativeAdapter
       case -1:
         return id as P;
       case 0:
-        return (reader.readBoolOrNull(offset)) as P;
+        return (_destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 1:
-        return (reader.readLongOrNull(offset)) as P;
-      case 2:
         return (reader.readBoolOrNull(offset)) as P;
+      case 2:
+        return (reader.readLongOrNull(offset)) as P;
       case 3:
+        return (reader.readBoolOrNull(offset)) as P;
+      case 4:
         return (_destinyStatDefinitionDestinyStatCategoryConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
       default:
@@ -267,6 +296,133 @@ extension DestinyStatDefinitionQueryWhere on QueryBuilder<DestinyStatDefinition,
 
 extension DestinyStatDefinitionQueryFilter on QueryBuilder<
     DestinyStatDefinition, DestinyStatDefinition, QFilterCondition> {
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
+      QAfterFilterCondition> displayPropertiesIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'displayProperties',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
+      QAfterFilterCondition> displayPropertiesEqualTo(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'displayProperties',
+      value: _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
+      QAfterFilterCondition> displayPropertiesGreaterThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'displayProperties',
+      value: _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
+      QAfterFilterCondition> displayPropertiesLessThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'displayProperties',
+      value: _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
+      QAfterFilterCondition> displayPropertiesBetween(
+    DestinyDisplayPropertiesDefinition? lower,
+    DestinyDisplayPropertiesDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'displayProperties',
+      lower: _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(lower),
+      includeLower: includeLower,
+      upper: _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
+      QAfterFilterCondition> displayPropertiesStartsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'displayProperties',
+      value: _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
+      QAfterFilterCondition> displayPropertiesEndsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'displayProperties',
+      value: _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
+          QAfterFilterCondition>
+      displayPropertiesContains(DestinyDisplayPropertiesDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'displayProperties',
+      value: _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
+          QAfterFilterCondition>
+      displayPropertiesMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'displayProperties',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
       QAfterFilterCondition> hasComputedBlockIsNull() {
     return addFilterConditionInternal(FilterCondition(
@@ -490,6 +646,16 @@ extension DestinyStatDefinitionQueryLinks on QueryBuilder<DestinyStatDefinition,
 extension DestinyStatDefinitionQueryWhereSortBy
     on QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QSortBy> {
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterSortBy>
+      sortByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterSortBy>
+      sortByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterSortBy>
       sortByHasComputedBlock() {
     return addSortByInternal('hasComputedBlock', Sort.asc);
   }
@@ -542,6 +708,16 @@ extension DestinyStatDefinitionQueryWhereSortBy
 
 extension DestinyStatDefinitionQueryWhereSortThenBy
     on QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QSortThenBy> {
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterSortBy>
+      thenByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterSortBy>
+      thenByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterSortBy>
       thenByHasComputedBlock() {
     return addSortByInternal('hasComputedBlock', Sort.asc);
@@ -596,6 +772,12 @@ extension DestinyStatDefinitionQueryWhereSortThenBy
 extension DestinyStatDefinitionQueryWhereDistinct
     on QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QDistinct> {
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QDistinct>
+      distinctByDisplayProperties({bool caseSensitive = true}) {
+    return addDistinctByInternal('displayProperties',
+        caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QDistinct>
       distinctByHasComputedBlock() {
     return addDistinctByInternal('hasComputedBlock');
   }
@@ -623,6 +805,11 @@ extension DestinyStatDefinitionQueryWhereDistinct
 
 extension DestinyStatDefinitionQueryProperty on QueryBuilder<
     DestinyStatDefinition, DestinyStatDefinition, QQueryProperty> {
+  QueryBuilder<DestinyStatDefinition, DestinyDisplayPropertiesDefinition?,
+      QQueryOperations> displayPropertiesProperty() {
+    return addPropertyNameInternal('displayProperties');
+  }
+
   QueryBuilder<DestinyStatDefinition, bool?, QQueryOperations>
       hasComputedBlockProperty() {
     return addPropertyNameInternal('hasComputedBlock');

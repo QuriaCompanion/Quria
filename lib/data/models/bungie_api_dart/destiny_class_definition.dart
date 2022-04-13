@@ -27,11 +27,12 @@ class DestinyClassDefinition {
       name: 'classType',
       fromJson: decodeDestinyClass,
       toJson: encodeDestinyClass)
+  @DestinyClassConverter()
   DestinyClass? classType;
 
   /// Many Destiny*Definition contracts - the "first order" entities of Destiny that have their own tables in the Manifest Database - also have displayable information. This is the base class for that display information.
   @JsonKey(name: 'displayProperties')
-  @ClassConverter<DestinyDisplayPropertiesDefinition>()
+  @DestinyDisplayPropertiesDefinitionConverter()
   DestinyDisplayPropertiesDefinition? displayProperties;
 
   /// A localized string referring to the singular form of the Class's name when referred to in gendered form. Keyed by the DestinyGender.

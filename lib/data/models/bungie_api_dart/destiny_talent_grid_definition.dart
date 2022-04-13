@@ -36,14 +36,14 @@ class DestinyTalentGridDefinition {
 
   /// The list of Talent Nodes on the Grid (recall that Nodes themselves are really just locations in the UI to show whatever their current Step is. You will only know the current step for a node by retrieving instanced data through platform calls to the API that return DestinyItemTalentGridComponent).
   @JsonKey(name: 'nodes')
-  @ClassListNullableConverter<DestinyTalentNodeDefinition>()
+  @DestinyTalentNodeDefinitionListConverter()
   List<DestinyTalentNodeDefinition>? nodes;
 
   /// Talent Nodes can exist in "exclusive sets": these are sets of nodes in which only a single node in the set can be activated at any given time. Activating a node in this set will automatically deactivate the other nodes in the set (referred to as a "Swap").
   /// If a node in the exclusive set has already been activated, the game will not charge you materials to activate another node in the set, even if you have never activated it before, because you already paid the cost to activate one node in the set.
   /// Not to be confused with Exclusive Groups. (how the heck do we NOT get confused by that? Jeez) See the groups property for information about that only-tangentially-related concept.
   @JsonKey(name: 'exclusiveSets')
-  @ClassListNullableConverter<DestinyTalentNodeExclusiveSetDefinition>()
+  @DestinyTalentNodeExclusiveSetDefinitionListConverter()
   List<DestinyTalentNodeExclusiveSetDefinition>? exclusiveSets;
 
   /// This is a quick reference to the indexes of nodes that are not part of exclusive sets. Handy for knowing which talent nodes can only be activated directly, rather than via swapping.
@@ -53,13 +53,13 @@ class DestinyTalentGridDefinition {
   /// Talent Nodes can have "Exclusive Groups". These are not to be confused with Exclusive Sets (see exclusiveSets property).
   /// Look at the definition of DestinyTalentExclusiveGroup for more information and how they work. These groups are keyed by the "groupHash" from DestinyTalentExclusiveGroup.
   @JsonKey(name: 'groups')
-  @MapClassConverter<DestinyTalentExclusiveGroup>()
+  @DestinyTalentExclusiveGroupMapConverter()
   Map<String, DestinyTalentExclusiveGroup>? groups;
 
   /// BNet wants to show talent nodes grouped by similar purpose with localized titles. This is the ordered list of those categories: if you want to show nodes by category, you can iterate over this list, render the displayProperties for the category as the title, and then iterate over the talent nodes referenced by the category to show the related nodes.
   /// Note that this is different from Exclusive Groups or Sets, because these categories also incorporate "Independent" nodes that belong to neither sets nor groups. These are purely for visual grouping of nodes rather than functional grouping.
   @JsonKey(name: 'nodeCategories')
-  @ClassListNullableConverter<DestinyTalentNodeCategory>()
+  @DestinyTalentNodeCategoryListConverter()
   List<DestinyTalentNodeCategory>? nodeCategories;
 
   /// The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally.

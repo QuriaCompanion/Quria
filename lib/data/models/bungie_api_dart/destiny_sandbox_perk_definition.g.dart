@@ -18,17 +18,19 @@ extension GetDestinySandboxPerkDefinitionCollection on Isar {
 final DestinySandboxPerkDefinitionSchema = CollectionSchema(
   name: 'DestinySandboxPerkDefinition',
   schema:
-      '{"name":"DestinySandboxPerkDefinition","idName":"hash","properties":[{"name":"damageType","type":"Long"},{"name":"damageTypeHash","type":"Long"},{"name":"index","type":"Long"},{"name":"isDisplayable","type":"Bool"},{"name":"perkIdentifier","type":"String"},{"name":"redacted","type":"Bool"}],"indexes":[],"links":[]}',
+      '{"name":"DestinySandboxPerkDefinition","idName":"hash","properties":[{"name":"damageType","type":"Long"},{"name":"damageTypeHash","type":"Long"},{"name":"displayProperties","type":"String"},{"name":"index","type":"Long"},{"name":"isDisplayable","type":"Bool"},{"name":"perkGroups","type":"String"},{"name":"perkIdentifier","type":"String"},{"name":"redacted","type":"Bool"}],"indexes":[],"links":[]}',
   nativeAdapter: const _DestinySandboxPerkDefinitionNativeAdapter(),
   webAdapter: const _DestinySandboxPerkDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'damageType': 0,
     'damageTypeHash': 1,
-    'index': 2,
-    'isDisplayable': 3,
-    'perkIdentifier': 4,
-    'redacted': 5
+    'displayProperties': 2,
+    'index': 3,
+    'isDisplayable': 4,
+    'perkGroups': 5,
+    'perkIdentifier': 6,
+    'redacted': 7
   },
   listProperties: {},
   indexIds: {},
@@ -49,6 +51,10 @@ final DestinySandboxPerkDefinitionSchema = CollectionSchema(
 );
 
 const _destinySandboxPerkDefinitionDamageTypeConverter = DamageTypeConverter();
+const _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter =
+    DestinyDisplayPropertiesDefinitionConverter();
+const _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter =
+    DestinyTalentNodeStepGroupsConverter();
 
 class _DestinySandboxPerkDefinitionWebAdapter
     extends IsarWebTypeAdapter<DestinySandboxPerkDefinition> {
@@ -64,9 +70,19 @@ class _DestinySandboxPerkDefinitionWebAdapter
         _destinySandboxPerkDefinitionDamageTypeConverter
             .toIsar(object.damageType));
     IsarNative.jsObjectSet(jsObj, 'damageTypeHash', object.damageTypeHash);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'displayProperties',
+        _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties));
     IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
     IsarNative.jsObjectSet(jsObj, 'index', object.index);
     IsarNative.jsObjectSet(jsObj, 'isDisplayable', object.isDisplayable);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'perkGroups',
+        _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+            .toIsar(object.perkGroups));
     IsarNative.jsObjectSet(jsObj, 'perkIdentifier', object.perkIdentifier);
     IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
     return jsObj;
@@ -79,9 +95,15 @@ class _DestinySandboxPerkDefinitionWebAdapter
     object.damageType = _destinySandboxPerkDefinitionDamageTypeConverter
         .fromIsar(IsarNative.jsObjectGet(jsObj, 'damageType'));
     object.damageTypeHash = IsarNative.jsObjectGet(jsObj, 'damageTypeHash');
+    object.displayProperties =
+        _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
     object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
     object.index = IsarNative.jsObjectGet(jsObj, 'index');
     object.isDisplayable = IsarNative.jsObjectGet(jsObj, 'isDisplayable');
+    object.perkGroups =
+        _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'perkGroups'));
     object.perkIdentifier = IsarNative.jsObjectGet(jsObj, 'perkIdentifier');
     object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
     return object;
@@ -95,12 +117,18 @@ class _DestinySandboxPerkDefinitionWebAdapter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'damageType'))) as P;
       case 'damageTypeHash':
         return (IsarNative.jsObjectGet(jsObj, 'damageTypeHash')) as P;
+      case 'displayProperties':
+        return (_destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
       case 'hash':
         return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
       case 'index':
         return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
       case 'isDisplayable':
         return (IsarNative.jsObjectGet(jsObj, 'isDisplayable')) as P;
+      case 'perkGroups':
+        return (_destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'perkGroups'))) as P;
       case 'perkIdentifier':
         return (IsarNative.jsObjectGet(jsObj, 'perkIdentifier')) as P;
       case 'redacted':
@@ -132,18 +160,34 @@ class _DestinySandboxPerkDefinitionNativeAdapter
     final _damageType = value0;
     final value1 = object.damageTypeHash;
     final _damageTypeHash = value1;
-    final value2 = object.index;
-    final _index = value2;
-    final value3 = object.isDisplayable;
-    final _isDisplayable = value3;
-    final value4 = object.perkIdentifier;
+    final value2 =
+        _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties);
+    IsarUint8List? _displayProperties;
+    if (value2 != null) {
+      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
+    }
+    dynamicSize += (_displayProperties?.length ?? 0) as int;
+    final value3 = object.index;
+    final _index = value3;
+    final value4 = object.isDisplayable;
+    final _isDisplayable = value4;
+    final value5 =
+        _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+            .toIsar(object.perkGroups);
+    IsarUint8List? _perkGroups;
+    if (value5 != null) {
+      _perkGroups = IsarBinaryWriter.utf8Encoder.convert(value5);
+    }
+    dynamicSize += (_perkGroups?.length ?? 0) as int;
+    final value6 = object.perkIdentifier;
     IsarUint8List? _perkIdentifier;
-    if (value4 != null) {
-      _perkIdentifier = IsarBinaryWriter.utf8Encoder.convert(value4);
+    if (value6 != null) {
+      _perkIdentifier = IsarBinaryWriter.utf8Encoder.convert(value6);
     }
     dynamicSize += (_perkIdentifier?.length ?? 0) as int;
-    final value5 = object.redacted;
-    final _redacted = value5;
+    final value7 = object.redacted;
+    final _redacted = value7;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
@@ -152,10 +196,12 @@ class _DestinySandboxPerkDefinitionNativeAdapter
     final writer = IsarBinaryWriter(buffer, staticSize);
     writer.writeLong(offsets[0], _damageType);
     writer.writeLong(offsets[1], _damageTypeHash);
-    writer.writeLong(offsets[2], _index);
-    writer.writeBool(offsets[3], _isDisplayable);
-    writer.writeBytes(offsets[4], _perkIdentifier);
-    writer.writeBool(offsets[5], _redacted);
+    writer.writeBytes(offsets[2], _displayProperties);
+    writer.writeLong(offsets[3], _index);
+    writer.writeBool(offsets[4], _isDisplayable);
+    writer.writeBytes(offsets[5], _perkGroups);
+    writer.writeBytes(offsets[6], _perkIdentifier);
+    writer.writeBool(offsets[7], _redacted);
   }
 
   @override
@@ -168,11 +214,17 @@ class _DestinySandboxPerkDefinitionNativeAdapter
     object.damageType = _destinySandboxPerkDefinitionDamageTypeConverter
         .fromIsar(reader.readLongOrNull(offsets[0]));
     object.damageTypeHash = reader.readLongOrNull(offsets[1]);
+    object.displayProperties =
+        _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[2]));
     object.hash = id;
-    object.index = reader.readLongOrNull(offsets[2]);
-    object.isDisplayable = reader.readBoolOrNull(offsets[3]);
-    object.perkIdentifier = reader.readStringOrNull(offsets[4]);
-    object.redacted = reader.readBoolOrNull(offsets[5]);
+    object.index = reader.readLongOrNull(offsets[3]);
+    object.isDisplayable = reader.readBoolOrNull(offsets[4]);
+    object.perkGroups =
+        _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+            .fromIsar(reader.readStringOrNull(offsets[5]));
+    object.perkIdentifier = reader.readStringOrNull(offsets[6]);
+    object.redacted = reader.readBoolOrNull(offsets[7]);
     return object;
   }
 
@@ -188,12 +240,18 @@ class _DestinySandboxPerkDefinitionNativeAdapter
       case 1:
         return (reader.readLongOrNull(offset)) as P;
       case 2:
-        return (reader.readLongOrNull(offset)) as P;
+        return (_destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 3:
-        return (reader.readBoolOrNull(offset)) as P;
+        return (reader.readLongOrNull(offset)) as P;
       case 4:
-        return (reader.readStringOrNull(offset)) as P;
+        return (reader.readBoolOrNull(offset)) as P;
       case 5:
+        return (_destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 6:
+        return (reader.readStringOrNull(offset)) as P;
+      case 7:
         return (reader.readBoolOrNull(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -416,6 +474,141 @@ extension DestinySandboxPerkDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> displayPropertiesIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'displayProperties',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> displayPropertiesEqualTo(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'displayProperties',
+      value:
+          _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> displayPropertiesGreaterThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> displayPropertiesLessThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> displayPropertiesBetween(
+    DestinyDisplayPropertiesDefinition? lower,
+    DestinyDisplayPropertiesDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'displayProperties',
+      lower:
+          _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> displayPropertiesStartsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'displayProperties',
+      value:
+          _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> displayPropertiesEndsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'displayProperties',
+      value:
+          _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+          QAfterFilterCondition>
+      displayPropertiesContains(DestinyDisplayPropertiesDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'displayProperties',
+      value:
+          _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+          QAfterFilterCondition>
+      displayPropertiesMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'displayProperties',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QAfterFilterCondition> hashIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -550,6 +743,133 @@ extension DestinySandboxPerkDefinitionQueryFilter on QueryBuilder<
       type: ConditionType.eq,
       property: 'isDisplayable',
       value: value,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> perkGroupsIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'perkGroups',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> perkGroupsEqualTo(
+    DestinyTalentNodeStepGroups? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'perkGroups',
+      value: _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> perkGroupsGreaterThan(
+    DestinyTalentNodeStepGroups? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'perkGroups',
+      value: _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> perkGroupsLessThan(
+    DestinyTalentNodeStepGroups? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'perkGroups',
+      value: _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> perkGroupsBetween(
+    DestinyTalentNodeStepGroups? lower,
+    DestinyTalentNodeStepGroups? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'perkGroups',
+      lower: _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .toIsar(lower),
+      includeLower: includeLower,
+      upper: _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> perkGroupsStartsWith(
+    DestinyTalentNodeStepGroups value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'perkGroups',
+      value: _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterFilterCondition> perkGroupsEndsWith(
+    DestinyTalentNodeStepGroups value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'perkGroups',
+      value: _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+          QAfterFilterCondition>
+      perkGroupsContains(DestinyTalentNodeStepGroups value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'perkGroups',
+      value: _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+          QAfterFilterCondition>
+      perkGroupsMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'perkGroups',
+      value: pattern,
+      caseSensitive: caseSensitive,
     ));
   }
 
@@ -718,6 +1038,16 @@ extension DestinySandboxPerkDefinitionQueryWhereSortBy on QueryBuilder<
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterSortBy> sortByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterSortBy> sortByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QAfterSortBy> sortByHash() {
     return addSortByInternal('hash', Sort.asc);
   }
@@ -745,6 +1075,16 @@ extension DestinySandboxPerkDefinitionQueryWhereSortBy on QueryBuilder<
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QAfterSortBy> sortByIsDisplayableDesc() {
     return addSortByInternal('isDisplayable', Sort.desc);
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterSortBy> sortByPerkGroups() {
+    return addSortByInternal('perkGroups', Sort.asc);
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterSortBy> sortByPerkGroupsDesc() {
+    return addSortByInternal('perkGroups', Sort.desc);
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
@@ -791,6 +1131,16 @@ extension DestinySandboxPerkDefinitionQueryWhereSortThenBy on QueryBuilder<
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterSortBy> thenByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterSortBy> thenByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QAfterSortBy> thenByHash() {
     return addSortByInternal('hash', Sort.asc);
   }
@@ -818,6 +1168,16 @@ extension DestinySandboxPerkDefinitionQueryWhereSortThenBy on QueryBuilder<
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QAfterSortBy> thenByIsDisplayableDesc() {
     return addSortByInternal('isDisplayable', Sort.desc);
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterSortBy> thenByPerkGroups() {
+    return addSortByInternal('perkGroups', Sort.asc);
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QAfterSortBy> thenByPerkGroupsDesc() {
+    return addSortByInternal('perkGroups', Sort.desc);
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
@@ -854,6 +1214,12 @@ extension DestinySandboxPerkDefinitionQueryWhereDistinct on QueryBuilder<
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QDistinct> distinctByDisplayProperties({bool caseSensitive = true}) {
+    return addDistinctByInternal('displayProperties',
+        caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QDistinct> distinctByHash() {
     return addDistinctByInternal('hash');
   }
@@ -866,6 +1232,11 @@ extension DestinySandboxPerkDefinitionQueryWhereDistinct on QueryBuilder<
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QDistinct> distinctByIsDisplayable() {
     return addDistinctByInternal('isDisplayable');
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
+      QDistinct> distinctByPerkGroups({bool caseSensitive = true}) {
+    return addDistinctByInternal('perkGroups', caseSensitive: caseSensitive);
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
@@ -894,6 +1265,13 @@ extension DestinySandboxPerkDefinitionQueryProperty on QueryBuilder<
     return addPropertyNameInternal('damageTypeHash');
   }
 
+  QueryBuilder<
+      DestinySandboxPerkDefinition,
+      DestinyDisplayPropertiesDefinition?,
+      QQueryOperations> displayPropertiesProperty() {
+    return addPropertyNameInternal('displayProperties');
+  }
+
   QueryBuilder<DestinySandboxPerkDefinition, int?, QQueryOperations>
       hashProperty() {
     return addPropertyNameInternal('hash');
@@ -907,6 +1285,11 @@ extension DestinySandboxPerkDefinitionQueryProperty on QueryBuilder<
   QueryBuilder<DestinySandboxPerkDefinition, bool?, QQueryOperations>
       isDisplayableProperty() {
     return addPropertyNameInternal('isDisplayable');
+  }
+
+  QueryBuilder<DestinySandboxPerkDefinition, DestinyTalentNodeStepGroups?,
+      QQueryOperations> perkGroupsProperty() {
+    return addPropertyNameInternal('perkGroups');
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, String?, QQueryOperations>

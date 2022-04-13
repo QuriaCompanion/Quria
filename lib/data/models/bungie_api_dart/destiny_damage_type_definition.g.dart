@@ -17,16 +17,17 @@ extension GetDestinyDamageTypeDefinitionCollection on Isar {
 final DestinyDamageTypeDefinitionSchema = CollectionSchema(
   name: 'DestinyDamageTypeDefinition',
   schema:
-      '{"name":"DestinyDamageTypeDefinition","idName":"hash","properties":[{"name":"enumValue","type":"Long"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"showIcon","type":"Bool"},{"name":"transparentIconPath","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"DestinyDamageTypeDefinition","idName":"hash","properties":[{"name":"displayProperties","type":"String"},{"name":"enumValue","type":"Long"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"showIcon","type":"Bool"},{"name":"transparentIconPath","type":"String"}],"indexes":[],"links":[]}',
   nativeAdapter: const _DestinyDamageTypeDefinitionNativeAdapter(),
   webAdapter: const _DestinyDamageTypeDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
-    'enumValue': 0,
-    'index': 1,
-    'redacted': 2,
-    'showIcon': 3,
-    'transparentIconPath': 4
+    'displayProperties': 0,
+    'enumValue': 1,
+    'index': 2,
+    'redacted': 3,
+    'showIcon': 4,
+    'transparentIconPath': 5
   },
   listProperties: {},
   indexIds: {},
@@ -46,6 +47,8 @@ final DestinyDamageTypeDefinitionSchema = CollectionSchema(
   version: 2,
 );
 
+const _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter =
+    DestinyDisplayPropertiesDefinitionConverter();
 const _destinyDamageTypeDefinitionDamageTypeConverter = DamageTypeConverter();
 
 class _DestinyDamageTypeDefinitionWebAdapter
@@ -56,6 +59,11 @@ class _DestinyDamageTypeDefinitionWebAdapter
   Object serialize(IsarCollection<DestinyDamageTypeDefinition> collection,
       DestinyDamageTypeDefinition object) {
     final jsObj = IsarNative.newJsObject();
+    IsarNative.jsObjectSet(
+        jsObj,
+        'displayProperties',
+        _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties));
     IsarNative.jsObjectSet(
         jsObj,
         'enumValue',
@@ -74,6 +82,9 @@ class _DestinyDamageTypeDefinitionWebAdapter
   DestinyDamageTypeDefinition deserialize(
       IsarCollection<DestinyDamageTypeDefinition> collection, dynamic jsObj) {
     final object = DestinyDamageTypeDefinition();
+    object.displayProperties =
+        _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
     object.enumValue = _destinyDamageTypeDefinitionDamageTypeConverter
         .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'));
     object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
@@ -88,6 +99,9 @@ class _DestinyDamageTypeDefinitionWebAdapter
   @override
   P deserializeProperty<P>(Object jsObj, String propertyName) {
     switch (propertyName) {
+      case 'displayProperties':
+        return (_destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
       case 'enumValue':
         return (_destinyDamageTypeDefinitionDamageTypeConverter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'))) as P;
@@ -123,19 +137,27 @@ class _DestinyDamageTypeDefinitionNativeAdapter
       List<int> offsets,
       AdapterAlloc alloc) {
     var dynamicSize = 0;
-    final value0 = _destinyDamageTypeDefinitionDamageTypeConverter
+    final value0 =
+        _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties);
+    IsarUint8List? _displayProperties;
+    if (value0 != null) {
+      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
+    }
+    dynamicSize += (_displayProperties?.length ?? 0) as int;
+    final value1 = _destinyDamageTypeDefinitionDamageTypeConverter
         .toIsar(object.enumValue);
-    final _enumValue = value0;
-    final value1 = object.index;
-    final _index = value1;
-    final value2 = object.redacted;
-    final _redacted = value2;
-    final value3 = object.showIcon;
-    final _showIcon = value3;
-    final value4 = object.transparentIconPath;
+    final _enumValue = value1;
+    final value2 = object.index;
+    final _index = value2;
+    final value3 = object.redacted;
+    final _redacted = value3;
+    final value4 = object.showIcon;
+    final _showIcon = value4;
+    final value5 = object.transparentIconPath;
     IsarUint8List? _transparentIconPath;
-    if (value4 != null) {
-      _transparentIconPath = IsarBinaryWriter.utf8Encoder.convert(value4);
+    if (value5 != null) {
+      _transparentIconPath = IsarBinaryWriter.utf8Encoder.convert(value5);
     }
     dynamicSize += (_transparentIconPath?.length ?? 0) as int;
     final size = staticSize + dynamicSize;
@@ -144,11 +166,12 @@ class _DestinyDamageTypeDefinitionNativeAdapter
     rawObj.buffer_length = size;
     final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
     final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeLong(offsets[0], _enumValue);
-    writer.writeLong(offsets[1], _index);
-    writer.writeBool(offsets[2], _redacted);
-    writer.writeBool(offsets[3], _showIcon);
-    writer.writeBytes(offsets[4], _transparentIconPath);
+    writer.writeBytes(offsets[0], _displayProperties);
+    writer.writeLong(offsets[1], _enumValue);
+    writer.writeLong(offsets[2], _index);
+    writer.writeBool(offsets[3], _redacted);
+    writer.writeBool(offsets[4], _showIcon);
+    writer.writeBytes(offsets[5], _transparentIconPath);
   }
 
   @override
@@ -158,13 +181,16 @@ class _DestinyDamageTypeDefinitionNativeAdapter
       IsarBinaryReader reader,
       List<int> offsets) {
     final object = DestinyDamageTypeDefinition();
+    object.displayProperties =
+        _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[0]));
     object.enumValue = _destinyDamageTypeDefinitionDamageTypeConverter
-        .fromIsar(reader.readLongOrNull(offsets[0]));
+        .fromIsar(reader.readLongOrNull(offsets[1]));
     object.hash = id;
-    object.index = reader.readLongOrNull(offsets[1]);
-    object.redacted = reader.readBoolOrNull(offsets[2]);
-    object.showIcon = reader.readBoolOrNull(offsets[3]);
-    object.transparentIconPath = reader.readStringOrNull(offsets[4]);
+    object.index = reader.readLongOrNull(offsets[2]);
+    object.redacted = reader.readBoolOrNull(offsets[3]);
+    object.showIcon = reader.readBoolOrNull(offsets[4]);
+    object.transparentIconPath = reader.readStringOrNull(offsets[5]);
     return object;
   }
 
@@ -175,15 +201,18 @@ class _DestinyDamageTypeDefinitionNativeAdapter
       case -1:
         return id as P;
       case 0:
+        return (_destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 1:
         return (_destinyDamageTypeDefinitionDamageTypeConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 1:
-        return (reader.readLongOrNull(offset)) as P;
       case 2:
-        return (reader.readBoolOrNull(offset)) as P;
+        return (reader.readLongOrNull(offset)) as P;
       case 3:
         return (reader.readBoolOrNull(offset)) as P;
       case 4:
+        return (reader.readBoolOrNull(offset)) as P;
+      case 5:
         return (reader.readStringOrNull(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -285,6 +314,141 @@ extension DestinyDamageTypeDefinitionQueryFilter on QueryBuilder<
     DestinyDamageTypeDefinition,
     DestinyDamageTypeDefinition,
     QFilterCondition> {
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterFilterCondition> displayPropertiesIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'displayProperties',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterFilterCondition> displayPropertiesEqualTo(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'displayProperties',
+      value:
+          _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterFilterCondition> displayPropertiesGreaterThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterFilterCondition> displayPropertiesLessThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterFilterCondition> displayPropertiesBetween(
+    DestinyDisplayPropertiesDefinition? lower,
+    DestinyDisplayPropertiesDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'displayProperties',
+      lower:
+          _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterFilterCondition> displayPropertiesStartsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'displayProperties',
+      value:
+          _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterFilterCondition> displayPropertiesEndsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'displayProperties',
+      value:
+          _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+          QAfterFilterCondition>
+      displayPropertiesContains(DestinyDisplayPropertiesDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'displayProperties',
+      value:
+          _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+          QAfterFilterCondition>
+      displayPropertiesMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'displayProperties',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
       QAfterFilterCondition> enumValueIsNull() {
     return addFilterConditionInternal(FilterCondition(
@@ -628,6 +792,16 @@ extension DestinyDamageTypeDefinitionQueryLinks on QueryBuilder<
 extension DestinyDamageTypeDefinitionQueryWhereSortBy on QueryBuilder<
     DestinyDamageTypeDefinition, DestinyDamageTypeDefinition, QSortBy> {
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterSortBy> sortByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterSortBy> sortByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
       QAfterSortBy> sortByEnumValue() {
     return addSortByInternal('enumValue', Sort.asc);
   }
@@ -690,6 +864,16 @@ extension DestinyDamageTypeDefinitionQueryWhereSortBy on QueryBuilder<
 
 extension DestinyDamageTypeDefinitionQueryWhereSortThenBy on QueryBuilder<
     DestinyDamageTypeDefinition, DestinyDamageTypeDefinition, QSortThenBy> {
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterSortBy> thenByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QAfterSortBy> thenByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
       QAfterSortBy> thenByEnumValue() {
     return addSortByInternal('enumValue', Sort.asc);
@@ -754,6 +938,12 @@ extension DestinyDamageTypeDefinitionQueryWhereSortThenBy on QueryBuilder<
 extension DestinyDamageTypeDefinitionQueryWhereDistinct on QueryBuilder<
     DestinyDamageTypeDefinition, DestinyDamageTypeDefinition, QDistinct> {
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
+      QDistinct> distinctByDisplayProperties({bool caseSensitive = true}) {
+    return addDistinctByInternal('displayProperties',
+        caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
       QDistinct> distinctByEnumValue() {
     return addDistinctByInternal('enumValue');
   }
@@ -787,6 +977,11 @@ extension DestinyDamageTypeDefinitionQueryWhereDistinct on QueryBuilder<
 
 extension DestinyDamageTypeDefinitionQueryProperty on QueryBuilder<
     DestinyDamageTypeDefinition, DestinyDamageTypeDefinition, QQueryProperty> {
+  QueryBuilder<DestinyDamageTypeDefinition, DestinyDisplayPropertiesDefinition?,
+      QQueryOperations> displayPropertiesProperty() {
+    return addPropertyNameInternal('displayProperties');
+  }
+
   QueryBuilder<DestinyDamageTypeDefinition, DamageType?, QQueryOperations>
       enumValueProperty() {
     return addPropertyNameInternal('enumValue');

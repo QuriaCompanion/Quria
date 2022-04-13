@@ -21,7 +21,7 @@ class DestinyEquipmentSlotDefinition {
 
   /// Many Destiny*Definition contracts - the "first order" entities of Destiny that have their own tables in the Manifest Database - also have displayable information. This is the base class for that display information.
   @JsonKey(name: 'displayProperties')
-  @ClassConverter<DestinyDisplayPropertiesDefinition>()
+  @DestinyDisplayPropertiesDefinitionConverter()
   DestinyDisplayPropertiesDefinition? displayProperties;
 
   /// These technically point to "Equipment Category Definitions". But don't get excited. There's nothing of significant value in those definitions, so I didn't bother to expose them. You can use the hash here to group equipment slots by common functionality, which serves the same purpose as if we had the Equipment Category definitions exposed.
@@ -38,7 +38,7 @@ class DestinyEquipmentSlotDefinition {
 
   /// The Art Dye Channels that apply to this equipment slot.
   @JsonKey(name: 'artDyeChannels')
-  @ClassListNullableConverter<DestinyArtDyeReference>()
+  @DestinyArtDyeReferenceListConverter()
   List<DestinyArtDyeReference>? artDyeChannels;
 
   /// The unique identifier for this entity. Guaranteed to be unique for the type of entity, but not globally.

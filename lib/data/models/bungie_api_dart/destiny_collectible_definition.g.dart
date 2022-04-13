@@ -18,21 +18,25 @@ extension GetDestinyCollectibleDefinitionCollection on Isar {
 final DestinyCollectibleDefinitionSchema = CollectionSchema(
   name: 'DestinyCollectibleDefinition',
   schema:
-      '{"name":"DestinyCollectibleDefinition","idName":"itemHash","properties":[{"name":"hash","type":"Long"},{"name":"index","type":"Long"},{"name":"parentNodeHashes","type":"LongList"},{"name":"presentationNodeType","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"scope","type":"Long"},{"name":"sourceHash","type":"Long"},{"name":"sourceString","type":"String"},{"name":"traitHashes","type":"LongList"},{"name":"traitIds","type":"StringList"}],"indexes":[],"links":[]}',
+      '{"name":"DestinyCollectibleDefinition","idName":"itemHash","properties":[{"name":"acquisitionInfo","type":"String"},{"name":"displayProperties","type":"String"},{"name":"hash","type":"Long"},{"name":"index","type":"Long"},{"name":"parentNodeHashes","type":"LongList"},{"name":"presentationInfo","type":"String"},{"name":"presentationNodeType","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"scope","type":"Long"},{"name":"sourceHash","type":"Long"},{"name":"sourceString","type":"String"},{"name":"stateInfo","type":"String"},{"name":"traitHashes","type":"LongList"},{"name":"traitIds","type":"StringList"}],"indexes":[],"links":[]}',
   nativeAdapter: const _DestinyCollectibleDefinitionNativeAdapter(),
   webAdapter: const _DestinyCollectibleDefinitionWebAdapter(),
   idName: 'itemHash',
   propertyIds: {
-    'hash': 0,
-    'index': 1,
-    'parentNodeHashes': 2,
-    'presentationNodeType': 3,
-    'redacted': 4,
-    'scope': 5,
-    'sourceHash': 6,
-    'sourceString': 7,
-    'traitHashes': 8,
-    'traitIds': 9
+    'acquisitionInfo': 0,
+    'displayProperties': 1,
+    'hash': 2,
+    'index': 3,
+    'parentNodeHashes': 4,
+    'presentationInfo': 5,
+    'presentationNodeType': 6,
+    'redacted': 7,
+    'scope': 8,
+    'sourceHash': 9,
+    'sourceString': 10,
+    'stateInfo': 11,
+    'traitHashes': 12,
+    'traitIds': 13
   },
   listProperties: {'parentNodeHashes', 'traitHashes', 'traitIds'},
   indexIds: {},
@@ -52,10 +56,18 @@ final DestinyCollectibleDefinitionSchema = CollectionSchema(
   version: 2,
 );
 
+const _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter =
+    DestinyCollectibleAcquisitionBlockConverter();
+const _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter =
+    DestinyDisplayPropertiesDefinitionConverter();
+const _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter =
+    DestinyPresentationChildBlockConverter();
 const _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter =
     DestinyPresentationNodeTypeConverter();
 const _destinyCollectibleDefinitionDestinyScopeConverter =
     DestinyScopeConverter();
+const _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter =
+    DestinyCollectibleStateBlockConverter();
 
 class _DestinyCollectibleDefinitionWebAdapter
     extends IsarWebTypeAdapter<DestinyCollectibleDefinition> {
@@ -65,10 +77,25 @@ class _DestinyCollectibleDefinitionWebAdapter
   Object serialize(IsarCollection<DestinyCollectibleDefinition> collection,
       DestinyCollectibleDefinition object) {
     final jsObj = IsarNative.newJsObject();
+    IsarNative.jsObjectSet(
+        jsObj,
+        'acquisitionInfo',
+        _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+            .toIsar(object.acquisitionInfo));
+    IsarNative.jsObjectSet(
+        jsObj,
+        'displayProperties',
+        _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties));
     IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
     IsarNative.jsObjectSet(jsObj, 'index', object.index);
     IsarNative.jsObjectSet(jsObj, 'itemHash', object.itemHash);
     IsarNative.jsObjectSet(jsObj, 'parentNodeHashes', object.parentNodeHashes);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'presentationInfo',
+        _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+            .toIsar(object.presentationInfo));
     IsarNative.jsObjectSet(
         jsObj,
         'presentationNodeType',
@@ -82,6 +109,11 @@ class _DestinyCollectibleDefinitionWebAdapter
             .toIsar(object.scope));
     IsarNative.jsObjectSet(jsObj, 'sourceHash', object.sourceHash);
     IsarNative.jsObjectSet(jsObj, 'sourceString', object.sourceString);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'stateInfo',
+        _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+            .toIsar(object.stateInfo));
     IsarNative.jsObjectSet(jsObj, 'traitHashes', object.traitHashes);
     IsarNative.jsObjectSet(jsObj, 'traitIds', object.traitIds);
     return jsObj;
@@ -91,6 +123,12 @@ class _DestinyCollectibleDefinitionWebAdapter
   DestinyCollectibleDefinition deserialize(
       IsarCollection<DestinyCollectibleDefinition> collection, dynamic jsObj) {
     final object = DestinyCollectibleDefinition();
+    object.acquisitionInfo =
+        _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'acquisitionInfo'));
+    object.displayProperties =
+        _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
     object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
     object.index = IsarNative.jsObjectGet(jsObj, 'index');
     object.itemHash = IsarNative.jsObjectGet(jsObj, 'itemHash');
@@ -99,6 +137,9 @@ class _DestinyCollectibleDefinitionWebAdapter
             ?.map((e) => e ?? double.negativeInfinity)
             .toList()
             .cast<int>();
+    object.presentationInfo =
+        _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationInfo'));
     object.presentationNodeType =
         _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationNodeType'));
@@ -107,6 +148,9 @@ class _DestinyCollectibleDefinitionWebAdapter
         .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'));
     object.sourceHash = IsarNative.jsObjectGet(jsObj, 'sourceHash');
     object.sourceString = IsarNative.jsObjectGet(jsObj, 'sourceString');
+    object.stateInfo =
+        _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'stateInfo'));
     object.traitHashes = (IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
         ?.map((e) => e ?? double.negativeInfinity)
         .toList()
@@ -121,6 +165,12 @@ class _DestinyCollectibleDefinitionWebAdapter
   @override
   P deserializeProperty<P>(Object jsObj, String propertyName) {
     switch (propertyName) {
+      case 'acquisitionInfo':
+        return (_destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'acquisitionInfo'))) as P;
+      case 'displayProperties':
+        return (_destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
       case 'hash':
         return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
       case 'index':
@@ -132,6 +182,9 @@ class _DestinyCollectibleDefinitionWebAdapter
             ?.map((e) => e ?? double.negativeInfinity)
             .toList()
             .cast<int>()) as P;
+      case 'presentationInfo':
+        return (_destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationInfo'))) as P;
       case 'presentationNodeType':
         return (_destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
             .fromIsar(
@@ -145,6 +198,9 @@ class _DestinyCollectibleDefinitionWebAdapter
         return (IsarNative.jsObjectGet(jsObj, 'sourceHash')) as P;
       case 'sourceString':
         return (IsarNative.jsObjectGet(jsObj, 'sourceString')) as P;
+      case 'stateInfo':
+        return (_destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'stateInfo'))) as P;
       case 'traitHashes':
         return ((IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
             ?.map((e) => e ?? double.negativeInfinity)
@@ -177,61 +233,97 @@ class _DestinyCollectibleDefinitionNativeAdapter
       List<int> offsets,
       AdapterAlloc alloc) {
     var dynamicSize = 0;
-    final value0 = object.hash;
-    final _hash = value0;
-    final value1 = object.index;
-    final _index = value1;
-    final value2 = object.parentNodeHashes;
-    dynamicSize += (value2?.length ?? 0) * 8;
-    final _parentNodeHashes = value2;
-    final value3 =
+    final value0 =
+        _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+            .toIsar(object.acquisitionInfo);
+    IsarUint8List? _acquisitionInfo;
+    if (value0 != null) {
+      _acquisitionInfo = IsarBinaryWriter.utf8Encoder.convert(value0);
+    }
+    dynamicSize += (_acquisitionInfo?.length ?? 0) as int;
+    final value1 =
+        _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties);
+    IsarUint8List? _displayProperties;
+    if (value1 != null) {
+      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value1);
+    }
+    dynamicSize += (_displayProperties?.length ?? 0) as int;
+    final value2 = object.hash;
+    final _hash = value2;
+    final value3 = object.index;
+    final _index = value3;
+    final value4 = object.parentNodeHashes;
+    dynamicSize += (value4?.length ?? 0) * 8;
+    final _parentNodeHashes = value4;
+    final value5 =
+        _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+            .toIsar(object.presentationInfo);
+    IsarUint8List? _presentationInfo;
+    if (value5 != null) {
+      _presentationInfo = IsarBinaryWriter.utf8Encoder.convert(value5);
+    }
+    dynamicSize += (_presentationInfo?.length ?? 0) as int;
+    final value6 =
         _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
             .toIsar(object.presentationNodeType);
-    final _presentationNodeType = value3;
-    final value4 = object.redacted;
-    final _redacted = value4;
-    final value5 =
+    final _presentationNodeType = value6;
+    final value7 = object.redacted;
+    final _redacted = value7;
+    final value8 =
         _destinyCollectibleDefinitionDestinyScopeConverter.toIsar(object.scope);
-    final _scope = value5;
-    final value6 = object.sourceHash;
-    final _sourceHash = value6;
-    final value7 = object.sourceString;
+    final _scope = value8;
+    final value9 = object.sourceHash;
+    final _sourceHash = value9;
+    final value10 = object.sourceString;
     IsarUint8List? _sourceString;
-    if (value7 != null) {
-      _sourceString = IsarBinaryWriter.utf8Encoder.convert(value7);
+    if (value10 != null) {
+      _sourceString = IsarBinaryWriter.utf8Encoder.convert(value10);
     }
     dynamicSize += (_sourceString?.length ?? 0) as int;
-    final value8 = object.traitHashes;
-    dynamicSize += (value8?.length ?? 0) * 8;
-    final _traitHashes = value8;
-    final value9 = object.traitIds;
-    dynamicSize += (value9?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList9;
-    if (value9 != null) {
-      bytesList9 = [];
-      for (var str in value9) {
+    final value11 =
+        _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+            .toIsar(object.stateInfo);
+    IsarUint8List? _stateInfo;
+    if (value11 != null) {
+      _stateInfo = IsarBinaryWriter.utf8Encoder.convert(value11);
+    }
+    dynamicSize += (_stateInfo?.length ?? 0) as int;
+    final value12 = object.traitHashes;
+    dynamicSize += (value12?.length ?? 0) * 8;
+    final _traitHashes = value12;
+    final value13 = object.traitIds;
+    dynamicSize += (value13?.length ?? 0) * 8;
+    List<IsarUint8List?>? bytesList13;
+    if (value13 != null) {
+      bytesList13 = [];
+      for (var str in value13) {
         final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList9.add(bytes);
+        bytesList13.add(bytes);
         dynamicSize += bytes.length as int;
       }
     }
-    final _traitIds = bytesList9;
+    final _traitIds = bytesList13;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
     rawObj.buffer_length = size;
     final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
     final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeLong(offsets[0], _hash);
-    writer.writeLong(offsets[1], _index);
-    writer.writeLongList(offsets[2], _parentNodeHashes);
-    writer.writeLong(offsets[3], _presentationNodeType);
-    writer.writeBool(offsets[4], _redacted);
-    writer.writeLong(offsets[5], _scope);
-    writer.writeLong(offsets[6], _sourceHash);
-    writer.writeBytes(offsets[7], _sourceString);
-    writer.writeLongList(offsets[8], _traitHashes);
-    writer.writeStringList(offsets[9], _traitIds);
+    writer.writeBytes(offsets[0], _acquisitionInfo);
+    writer.writeBytes(offsets[1], _displayProperties);
+    writer.writeLong(offsets[2], _hash);
+    writer.writeLong(offsets[3], _index);
+    writer.writeLongList(offsets[4], _parentNodeHashes);
+    writer.writeBytes(offsets[5], _presentationInfo);
+    writer.writeLong(offsets[6], _presentationNodeType);
+    writer.writeBool(offsets[7], _redacted);
+    writer.writeLong(offsets[8], _scope);
+    writer.writeLong(offsets[9], _sourceHash);
+    writer.writeBytes(offsets[10], _sourceString);
+    writer.writeBytes(offsets[11], _stateInfo);
+    writer.writeLongList(offsets[12], _traitHashes);
+    writer.writeStringList(offsets[13], _traitIds);
   }
 
   @override
@@ -241,20 +333,32 @@ class _DestinyCollectibleDefinitionNativeAdapter
       IsarBinaryReader reader,
       List<int> offsets) {
     final object = DestinyCollectibleDefinition();
-    object.hash = reader.readLongOrNull(offsets[0]);
-    object.index = reader.readLongOrNull(offsets[1]);
+    object.acquisitionInfo =
+        _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+            .fromIsar(reader.readStringOrNull(offsets[0]));
+    object.displayProperties =
+        _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[1]));
+    object.hash = reader.readLongOrNull(offsets[2]);
+    object.index = reader.readLongOrNull(offsets[3]);
     object.itemHash = id;
-    object.parentNodeHashes = reader.readLongList(offsets[2]);
+    object.parentNodeHashes = reader.readLongList(offsets[4]);
+    object.presentationInfo =
+        _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+            .fromIsar(reader.readStringOrNull(offsets[5]));
     object.presentationNodeType =
         _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(reader.readLongOrNull(offsets[3]));
-    object.redacted = reader.readBoolOrNull(offsets[4]);
+            .fromIsar(reader.readLongOrNull(offsets[6]));
+    object.redacted = reader.readBoolOrNull(offsets[7]);
     object.scope = _destinyCollectibleDefinitionDestinyScopeConverter
-        .fromIsar(reader.readLongOrNull(offsets[5]));
-    object.sourceHash = reader.readLongOrNull(offsets[6]);
-    object.sourceString = reader.readStringOrNull(offsets[7]);
-    object.traitHashes = reader.readLongList(offsets[8]);
-    object.traitIds = reader.readStringList(offsets[9]);
+        .fromIsar(reader.readLongOrNull(offsets[8]));
+    object.sourceHash = reader.readLongOrNull(offsets[9]);
+    object.sourceString = reader.readStringOrNull(offsets[10]);
+    object.stateInfo =
+        _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+            .fromIsar(reader.readStringOrNull(offsets[11]));
+    object.traitHashes = reader.readLongList(offsets[12]);
+    object.traitIds = reader.readStringList(offsets[13]);
     return object;
   }
 
@@ -265,26 +369,38 @@ class _DestinyCollectibleDefinitionNativeAdapter
       case -1:
         return id as P;
       case 0:
-        return (reader.readLongOrNull(offset)) as P;
+        return (_destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 1:
-        return (reader.readLongOrNull(offset)) as P;
+        return (_destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 2:
-        return (reader.readLongList(offset)) as P;
+        return (reader.readLongOrNull(offset)) as P;
       case 3:
+        return (reader.readLongOrNull(offset)) as P;
+      case 4:
+        return (reader.readLongList(offset)) as P;
+      case 5:
+        return (_destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 6:
         return (_destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 4:
+      case 7:
         return (reader.readBoolOrNull(offset)) as P;
-      case 5:
+      case 8:
         return (_destinyCollectibleDefinitionDestinyScopeConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 6:
-        return (reader.readLongOrNull(offset)) as P;
-      case 7:
-        return (reader.readStringOrNull(offset)) as P;
-      case 8:
-        return (reader.readLongList(offset)) as P;
       case 9:
+        return (reader.readLongOrNull(offset)) as P;
+      case 10:
+        return (reader.readStringOrNull(offset)) as P;
+      case 11:
+        return (_destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 12:
+        return (reader.readLongList(offset)) as P;
+      case 13:
         return (reader.readStringList(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -386,6 +502,276 @@ extension DestinyCollectibleDefinitionQueryFilter on QueryBuilder<
     DestinyCollectibleDefinition,
     DestinyCollectibleDefinition,
     QFilterCondition> {
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> acquisitionInfoIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'acquisitionInfo',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> acquisitionInfoEqualTo(
+    DestinyCollectibleAcquisitionBlock? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'acquisitionInfo',
+      value:
+          _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> acquisitionInfoGreaterThan(
+    DestinyCollectibleAcquisitionBlock? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'acquisitionInfo',
+      value:
+          _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> acquisitionInfoLessThan(
+    DestinyCollectibleAcquisitionBlock? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'acquisitionInfo',
+      value:
+          _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> acquisitionInfoBetween(
+    DestinyCollectibleAcquisitionBlock? lower,
+    DestinyCollectibleAcquisitionBlock? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'acquisitionInfo',
+      lower:
+          _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> acquisitionInfoStartsWith(
+    DestinyCollectibleAcquisitionBlock value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'acquisitionInfo',
+      value:
+          _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> acquisitionInfoEndsWith(
+    DestinyCollectibleAcquisitionBlock value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'acquisitionInfo',
+      value:
+          _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+          QAfterFilterCondition>
+      acquisitionInfoContains(DestinyCollectibleAcquisitionBlock value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'acquisitionInfo',
+      value:
+          _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+          QAfterFilterCondition>
+      acquisitionInfoMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'acquisitionInfo',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> displayPropertiesIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'displayProperties',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> displayPropertiesEqualTo(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'displayProperties',
+      value:
+          _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> displayPropertiesGreaterThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> displayPropertiesLessThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> displayPropertiesBetween(
+    DestinyDisplayPropertiesDefinition? lower,
+    DestinyDisplayPropertiesDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'displayProperties',
+      lower:
+          _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> displayPropertiesStartsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'displayProperties',
+      value:
+          _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> displayPropertiesEndsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'displayProperties',
+      value:
+          _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+          QAfterFilterCondition>
+      displayPropertiesContains(DestinyDisplayPropertiesDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'displayProperties',
+      value:
+          _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+          QAfterFilterCondition>
+      displayPropertiesMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'displayProperties',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterFilterCondition> hashIsNull() {
     return addFilterConditionInternal(FilterCondition(
@@ -632,6 +1018,133 @@ extension DestinyCollectibleDefinitionQueryFilter on QueryBuilder<
       includeLower: includeLower,
       upper: upper,
       includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> presentationInfoIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'presentationInfo',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> presentationInfoEqualTo(
+    DestinyPresentationChildBlock? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'presentationInfo',
+      value: _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> presentationInfoGreaterThan(
+    DestinyPresentationChildBlock? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'presentationInfo',
+      value: _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> presentationInfoLessThan(
+    DestinyPresentationChildBlock? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'presentationInfo',
+      value: _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> presentationInfoBetween(
+    DestinyPresentationChildBlock? lower,
+    DestinyPresentationChildBlock? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'presentationInfo',
+      lower: _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .toIsar(lower),
+      includeLower: includeLower,
+      upper: _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> presentationInfoStartsWith(
+    DestinyPresentationChildBlock value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'presentationInfo',
+      value: _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> presentationInfoEndsWith(
+    DestinyPresentationChildBlock value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'presentationInfo',
+      value: _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+          QAfterFilterCondition>
+      presentationInfoContains(DestinyPresentationChildBlock value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'presentationInfo',
+      value: _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+          QAfterFilterCondition>
+      presentationInfoMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'presentationInfo',
+      value: pattern,
+      caseSensitive: caseSensitive,
     ));
   }
 
@@ -958,6 +1471,133 @@ extension DestinyCollectibleDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> stateInfoIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'stateInfo',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> stateInfoEqualTo(
+    DestinyCollectibleStateBlock? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'stateInfo',
+      value: _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> stateInfoGreaterThan(
+    DestinyCollectibleStateBlock? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'stateInfo',
+      value: _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> stateInfoLessThan(
+    DestinyCollectibleStateBlock? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'stateInfo',
+      value: _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> stateInfoBetween(
+    DestinyCollectibleStateBlock? lower,
+    DestinyCollectibleStateBlock? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'stateInfo',
+      lower: _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .toIsar(lower),
+      includeLower: includeLower,
+      upper: _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> stateInfoStartsWith(
+    DestinyCollectibleStateBlock value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'stateInfo',
+      value: _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterFilterCondition> stateInfoEndsWith(
+    DestinyCollectibleStateBlock value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'stateInfo',
+      value: _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+          QAfterFilterCondition>
+      stateInfoContains(DestinyCollectibleStateBlock value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'stateInfo',
+      value: _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+          QAfterFilterCondition>
+      stateInfoMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'stateInfo',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterFilterCondition> traitHashesIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -1162,6 +1802,26 @@ extension DestinyCollectibleDefinitionQueryLinks on QueryBuilder<
 extension DestinyCollectibleDefinitionQueryWhereSortBy on QueryBuilder<
     DestinyCollectibleDefinition, DestinyCollectibleDefinition, QSortBy> {
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> sortByAcquisitionInfo() {
+    return addSortByInternal('acquisitionInfo', Sort.asc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> sortByAcquisitionInfoDesc() {
+    return addSortByInternal('acquisitionInfo', Sort.desc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> sortByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> sortByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterSortBy> sortByHash() {
     return addSortByInternal('hash', Sort.asc);
   }
@@ -1189,6 +1849,16 @@ extension DestinyCollectibleDefinitionQueryWhereSortBy on QueryBuilder<
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterSortBy> sortByItemHashDesc() {
     return addSortByInternal('itemHash', Sort.desc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> sortByPresentationInfo() {
+    return addSortByInternal('presentationInfo', Sort.asc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> sortByPresentationInfoDesc() {
+    return addSortByInternal('presentationInfo', Sort.desc);
   }
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
@@ -1240,10 +1910,40 @@ extension DestinyCollectibleDefinitionQueryWhereSortBy on QueryBuilder<
       QAfterSortBy> sortBySourceStringDesc() {
     return addSortByInternal('sourceString', Sort.desc);
   }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> sortByStateInfo() {
+    return addSortByInternal('stateInfo', Sort.asc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> sortByStateInfoDesc() {
+    return addSortByInternal('stateInfo', Sort.desc);
+  }
 }
 
 extension DestinyCollectibleDefinitionQueryWhereSortThenBy on QueryBuilder<
     DestinyCollectibleDefinition, DestinyCollectibleDefinition, QSortThenBy> {
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> thenByAcquisitionInfo() {
+    return addSortByInternal('acquisitionInfo', Sort.asc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> thenByAcquisitionInfoDesc() {
+    return addSortByInternal('acquisitionInfo', Sort.desc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> thenByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> thenByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterSortBy> thenByHash() {
     return addSortByInternal('hash', Sort.asc);
@@ -1272,6 +1972,16 @@ extension DestinyCollectibleDefinitionQueryWhereSortThenBy on QueryBuilder<
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterSortBy> thenByItemHashDesc() {
     return addSortByInternal('itemHash', Sort.desc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> thenByPresentationInfo() {
+    return addSortByInternal('presentationInfo', Sort.asc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> thenByPresentationInfoDesc() {
+    return addSortByInternal('presentationInfo', Sort.desc);
   }
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
@@ -1323,10 +2033,32 @@ extension DestinyCollectibleDefinitionQueryWhereSortThenBy on QueryBuilder<
       QAfterSortBy> thenBySourceStringDesc() {
     return addSortByInternal('sourceString', Sort.desc);
   }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> thenByStateInfo() {
+    return addSortByInternal('stateInfo', Sort.asc);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QAfterSortBy> thenByStateInfoDesc() {
+    return addSortByInternal('stateInfo', Sort.desc);
+  }
 }
 
 extension DestinyCollectibleDefinitionQueryWhereDistinct on QueryBuilder<
     DestinyCollectibleDefinition, DestinyCollectibleDefinition, QDistinct> {
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QDistinct> distinctByAcquisitionInfo({bool caseSensitive = true}) {
+    return addDistinctByInternal('acquisitionInfo',
+        caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QDistinct> distinctByDisplayProperties({bool caseSensitive = true}) {
+    return addDistinctByInternal('displayProperties',
+        caseSensitive: caseSensitive);
+  }
+
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QDistinct> distinctByHash() {
     return addDistinctByInternal('hash');
@@ -1340,6 +2072,12 @@ extension DestinyCollectibleDefinitionQueryWhereDistinct on QueryBuilder<
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QDistinct> distinctByItemHash() {
     return addDistinctByInternal('itemHash');
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QDistinct> distinctByPresentationInfo({bool caseSensitive = true}) {
+    return addDistinctByInternal('presentationInfo',
+        caseSensitive: caseSensitive);
   }
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
@@ -1366,12 +2104,31 @@ extension DestinyCollectibleDefinitionQueryWhereDistinct on QueryBuilder<
       QDistinct> distinctBySourceString({bool caseSensitive = true}) {
     return addDistinctByInternal('sourceString', caseSensitive: caseSensitive);
   }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
+      QDistinct> distinctByStateInfo({bool caseSensitive = true}) {
+    return addDistinctByInternal('stateInfo', caseSensitive: caseSensitive);
+  }
 }
 
 extension DestinyCollectibleDefinitionQueryProperty on QueryBuilder<
     DestinyCollectibleDefinition,
     DestinyCollectibleDefinition,
     QQueryProperty> {
+  QueryBuilder<
+      DestinyCollectibleDefinition,
+      DestinyCollectibleAcquisitionBlock?,
+      QQueryOperations> acquisitionInfoProperty() {
+    return addPropertyNameInternal('acquisitionInfo');
+  }
+
+  QueryBuilder<
+      DestinyCollectibleDefinition,
+      DestinyDisplayPropertiesDefinition?,
+      QQueryOperations> displayPropertiesProperty() {
+    return addPropertyNameInternal('displayProperties');
+  }
+
   QueryBuilder<DestinyCollectibleDefinition, int?, QQueryOperations>
       hashProperty() {
     return addPropertyNameInternal('hash');
@@ -1390,6 +2147,11 @@ extension DestinyCollectibleDefinitionQueryProperty on QueryBuilder<
   QueryBuilder<DestinyCollectibleDefinition, List<int>?, QQueryOperations>
       parentNodeHashesProperty() {
     return addPropertyNameInternal('parentNodeHashes');
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyPresentationChildBlock?,
+      QQueryOperations> presentationInfoProperty() {
+    return addPropertyNameInternal('presentationInfo');
   }
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyPresentationNodeType?,
@@ -1415,6 +2177,11 @@ extension DestinyCollectibleDefinitionQueryProperty on QueryBuilder<
   QueryBuilder<DestinyCollectibleDefinition, String?, QQueryOperations>
       sourceStringProperty() {
     return addPropertyNameInternal('sourceString');
+  }
+
+  QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleStateBlock?,
+      QQueryOperations> stateInfoProperty() {
+    return addPropertyNameInternal('stateInfo');
   }
 
   QueryBuilder<DestinyCollectibleDefinition, List<int>?, QQueryOperations>

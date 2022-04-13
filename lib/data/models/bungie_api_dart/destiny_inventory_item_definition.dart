@@ -21,12 +21,12 @@ class DestinyInventoryItemDefinition {
 
   /// Many Destiny*Definition contracts - the "first order" entities of Destiny that have their own tables in the Manifest Database - also have displayable information. This is the base class for that display information.
   @JsonKey(name: 'displayProperties')
-  @ClassConverter<DestinyDisplayPropertiesDefinition>()
+  @DestinyDisplayPropertiesDefinitionConverter()
   DestinyDisplayPropertiesDefinition? displayProperties;
 
   /// Tooltips that only come up conditionally for the item. Check the live data DestinyItemComponent.tooltipNotificationIndexes property for which of these should be shown at runtime.
   @JsonKey(name: 'tooltipNotifications')
-  @ClassListNullableConverter<DestinyItemTooltipNotification>()
+  @DestinyItemTooltipNotificationListConverter()
   List<DestinyItemTooltipNotification>? tooltipNotifications;
 
   /// If this item has a collectible related to it, this is the hash identifier of that collectible entry.
@@ -55,7 +55,7 @@ class DestinyInventoryItemDefinition {
 
   /// Sometimes, an item will have a background color. Most notably this occurs with Emblems, who use the Background Color for small character nameplates such as the "friends" view you see in-game. There are almost certainly other items that have background color as well, though I have not bothered to investigate what items have it nor what purposes they serve: use it as you will.
   @JsonKey(name: 'backgroundColor')
-  @ClassConverter<DestinyColor>()
+  @DestinyColorConverter()
   DestinyColor? backgroundColor;
 
   /// If we were able to acquire an in-game screenshot for the item, the path to that screenshot will be returned here. Note that not all items have screenshots: particularly not any non-equippable items.
@@ -87,27 +87,27 @@ class DestinyInventoryItemDefinition {
 
   /// If the item can be "used", this block will be non-null, and will have data related to the action performed when using the item. (Guess what? 99% of the time, this action is "dismantle". Shocker)
   @JsonKey(name: 'action')
-  @ClassConverter<DestinyItemActionBlockDefinition?>()
+  @DestinyItemActionBlockDefinitionConverter()
   DestinyItemActionBlockDefinition? action;
 
   /// Recipe items will have relevant crafting information available here.
   @JsonKey(name: 'crafting')
-  @ClassConverter<DestinyItemCraftingBlockDefinition?>()
+  @DestinyItemCraftingBlockDefinitionConverter()
   DestinyItemCraftingBlockDefinition? crafting;
 
   /// If this item can exist in an inventory, this block will be non-null. In practice, every item that currently exists has one of these blocks. But note that it is not necessarily guaranteed.
   @JsonKey(name: 'inventory')
-  @ClassConverter<DestinyItemInventoryBlockDefinition?>()
+  @DestinyItemInventoryBlockDefinitionConverter()
   DestinyItemInventoryBlockDefinition? inventory;
 
   /// If this item is a quest, this block will be non-null. In practice, I wish I had called this the Quest block, but at the time it wasn't clear to me whether it would end up being used for purposes other than quests. It will contain data about the steps in the quest, and mechanics we can use for displaying and tracking the quest.
   @JsonKey(name: 'setData')
-  @ClassConverter<DestinyItemSetBlockDefinition?>()
+  @DestinyItemSetBlockDefinitionConverter()
   DestinyItemSetBlockDefinition? setData;
 
   /// If this item can have stats (such as a weapon, armor, or vehicle), this block will be non-null and populated with the stats found on the item.
   @JsonKey(name: 'stats')
-  @ClassConverter<DestinyItemStatBlockDefinition?>()
+  @DestinyItemStatBlockDefinitionConverter()
   DestinyItemStatBlockDefinition? stats;
 
   /// If the item is an emblem that has a special Objective attached to it - for instance, if the emblem tracks PVP Kills, or what-have-you. This is a bit different from, for example, the Vanguard Kill Tracker mod, which pipes data into the "art channel". When I get some time, I would like to standardize these so you can get at the values they expose without having to care about what they're being used for and how they are wired up, but for now here's the raw data.
@@ -116,82 +116,82 @@ class DestinyInventoryItemDefinition {
 
   /// If this item can be equipped, this block will be non-null and will be populated with the conditions under which it can be equipped.
   @JsonKey(name: 'equippingBlock')
-  @ClassConverter<DestinyEquippingBlockDefinition?>()
+  @DestinyEquippingBlockDefinitionConverter()
   DestinyEquippingBlockDefinition? equippingBlock;
 
   /// If this item can be rendered, this block will be non-null and will be populated with rendering information.
   @JsonKey(name: 'translationBlock')
-  @ClassConverter<DestinyItemTranslationBlockDefinition>()
+  @DestinyItemTranslationBlockDefinitionConverter()
   DestinyItemTranslationBlockDefinition? translationBlock;
 
   /// If this item can be Used or Acquired to gain other items (for instance, how Eververse Boxes can be consumed to get items from the box), this block will be non-null and will give summary information for the items that can be acquired.
   @JsonKey(name: 'preview')
-  @ClassConverter<DestinyItemPreviewBlockDefinition?>()
+  @DestinyItemPreviewBlockDefinitionConverter()
   DestinyItemPreviewBlockDefinition? preview;
 
   /// If this item can have a level or stats, this block will be non-null and will be populated with default quality (item level, "quality", and infusion) data. See the block for more details, there's often less upfront information in D2 so you'll want to be aware of how you use quality and item level on the definition level now.
   @JsonKey(name: 'quality')
-  @ClassConverter<DestinyItemQualityBlockDefinition?>()
+  @DestinyItemQualityBlockDefinitionConverter()
   DestinyItemQualityBlockDefinition? quality;
 
   /// The conceptual "Value" of an item, if any was defined. See the DestinyItemValueBlockDefinition for more details.
   @JsonKey(name: 'value')
-  @ClassConverter<DestinyItemValueBlockDefinition?>()
+  @DestinyItemValueBlockDefinitionConverter()
   DestinyItemValueBlockDefinition? value;
 
   /// If this item has a known source, this block will be non-null and populated with source information. Unfortunately, at this time we are not generating sources: that is some aggressively manual work which we didn't have time for, and I'm hoping to get back to at some point in the future.
   @JsonKey(name: 'sourceData')
-  @ClassConverter<DestinyItemSourceBlockDefinition?>()
+  @DestinyItemSourceBlockDefinitionConverter()
   DestinyItemSourceBlockDefinition? sourceData;
 
   /// If this item has Objectives (extra tasks that can be accomplished related to the item... most frequently when the item is a Quest Step and the Objectives need to be completed to move on to the next Quest Step), this block will be non-null and the objectives defined herein.
   @JsonKey(name: 'objectives')
-  @ClassConverter<DestinyItemObjectiveBlockDefinition?>()
+  @DestinyItemObjectiveBlockDefinitionConverter()
   DestinyItemObjectiveBlockDefinition? objectives;
 
   /// If this item has available metrics to be shown, this block will be non-null have the appropriate hashes defined.
   @JsonKey(name: 'metrics')
-  @ClassConverter<DestinyItemMetricBlockDefinition?>()
+  @DestinyItemMetricBlockDefinitionConverter()
   DestinyItemMetricBlockDefinition? metrics;
 
   /// If this item *is* a Plug, this will be non-null and the info defined herein. See DestinyItemPlugDefinition for more information.
   @JsonKey(name: 'plug')
-  @ClassConverter<DestinyItemPlugDefinition?>()
+  @DestinyItemPlugDefinitionConverter()
   DestinyItemPlugDefinition? plug;
 
   /// If this item has related items in a "Gear Set", this will be non-null and the relationships defined herein.
   @JsonKey(name: 'gearset')
-  @ClassConverter<DestinyItemGearsetBlockDefinition?>()
+  @DestinyItemGearsetBlockDefinitionConverter()
   DestinyItemGearsetBlockDefinition? gearset;
 
   /// If this item is a "reward sack" that can be opened to provide other items, this will be non-null and the properties of the sack contained herein.
   @JsonKey(name: 'sack')
-  @ClassConverter<DestinyItemSackBlockDefinition?>()
+  @DestinyItemSackBlockDefinitionConverter()
   DestinyItemSackBlockDefinition? sack;
 
   /// If this item has any Sockets, this will be non-null and the individual sockets on the item will be defined herein.
   @JsonKey(name: 'sockets')
-  @ClassConverter<DestinyItemSocketBlockDefinition?>()
+  @DestinyItemSocketBlockDefinitionConverter()
   DestinyItemSocketBlockDefinition? sockets;
 
   /// Summary data about the item.
   @JsonKey(name: 'summary')
-  @ClassConverter<DestinyItemSummaryBlockDefinition>()
+  @DestinyItemSummaryBlockDefinitionConverter()
   DestinyItemSummaryBlockDefinition? summary;
 
   /// If the item has a Talent Grid, this will be non-null and the properties of the grid defined herein. Note that, while many items still have talent grids, the only ones with meaningful Nodes still on them will be Subclass/"Build" items.
   @JsonKey(name: 'talentGrid')
-  @ClassConverter<DestinyItemTalentGridBlockDefinition>()
+  @DestinyItemTalentGridBlockDefinitionConverter()
   DestinyItemTalentGridBlockDefinition? talentGrid;
 
   /// If the item has stats, this block will be defined. It has the "raw" investment stats for the item. These investment stats don't take into account the ways that the items can spawn, nor do they take into account any Stat Group transformations. I have retained them for debugging purposes, but I do not know how useful people will find them.
   @JsonKey(name: 'investmentStats')
-  @ClassListNullableConverter<DestinyItemInvestmentStatDefinition>()
+  @DestinyItemInvestmentStatDefinitionListConverter()
   List<DestinyItemInvestmentStatDefinition>? investmentStats;
 
   /// If the item has any *intrinsic* Perks (Perks that it will provide regardless of Sockets, Talent Grid, and other transitory state), they will be defined here.
   @JsonKey(name: 'perks')
-  @ClassListNullableConverter<DestinyItemPerkEntryDefinition>()
+  @DestinyItemPerkEntryDefinitionListConverter()
   List<DestinyItemPerkEntryDefinition>? perks;
 
   /// If the item has any related Lore (DestinyLoreDefinition), this will be the hash identifier you can use to look up the lore definition.
@@ -205,7 +205,7 @@ class DestinyInventoryItemDefinition {
 
   /// If any animations were extracted from game content for this item, these will be the definitions of those animations.
   @JsonKey(name: 'animations')
-  @ClassListNullableConverter<DestinyAnimationReference>()
+  @DestinyAnimationReferenceListConverter()
   List<DestinyAnimationReference>? animations;
 
   /// BNet may forbid the execution of actions on this item via the API. If that is occurring, allowActions will be set to false.
@@ -214,7 +214,7 @@ class DestinyInventoryItemDefinition {
 
   /// If we added any help or informational URLs about this item, these will be those links.
   @JsonKey(name: 'links')
-  @ClassListNullableConverter<HyperlinkReference>()
+  @HyperlinkReferenceListConverter()
   List<HyperlinkReference>? links;
 
   /// The boolean will indicate to us (and you!) whether something *could* happen when you transfer this item from the Postmaster that might be considered a "destructive" action.
@@ -295,7 +295,7 @@ class DestinyInventoryItemDefinition {
   /// - Talent Node perks
   /// - Known, reusable plugs for sockets
   @JsonKey(name: 'damageTypes')
-  @DamageTypesConverter()
+  @DamageTypeListConverter()
   List<DamageType>? damageTypes;
 
   /// If the item has a damage type that could be considered to be default, it will be populated here.

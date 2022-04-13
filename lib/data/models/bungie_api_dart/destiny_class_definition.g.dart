@@ -17,16 +17,18 @@ extension GetDestinyClassDefinitionCollection on Isar {
 final DestinyClassDefinitionSchema = CollectionSchema(
   name: 'DestinyClassDefinition',
   schema:
-      '{"name":"DestinyClassDefinition","idName":"hash","properties":[{"name":"genderedClassNames","type":"String"},{"name":"genderedClassNamesByGenderHash","type":"String"},{"name":"index","type":"Long"},{"name":"mentorVendorHash","type":"Long"},{"name":"redacted","type":"Bool"}],"indexes":[],"links":[]}',
+      '{"name":"DestinyClassDefinition","idName":"hash","properties":[{"name":"classType","type":"Long"},{"name":"displayProperties","type":"String"},{"name":"genderedClassNames","type":"String"},{"name":"genderedClassNamesByGenderHash","type":"String"},{"name":"index","type":"Long"},{"name":"mentorVendorHash","type":"Long"},{"name":"redacted","type":"Bool"}],"indexes":[],"links":[]}',
   nativeAdapter: const _DestinyClassDefinitionNativeAdapter(),
   webAdapter: const _DestinyClassDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
-    'genderedClassNames': 0,
-    'genderedClassNamesByGenderHash': 1,
-    'index': 2,
-    'mentorVendorHash': 3,
-    'redacted': 4
+    'classType': 0,
+    'displayProperties': 1,
+    'genderedClassNames': 2,
+    'genderedClassNamesByGenderHash': 3,
+    'index': 4,
+    'mentorVendorHash': 5,
+    'redacted': 6
   },
   listProperties: {},
   indexIds: {},
@@ -46,6 +48,9 @@ final DestinyClassDefinitionSchema = CollectionSchema(
   version: 2,
 );
 
+const _destinyClassDefinitionDestinyClassConverter = DestinyClassConverter();
+const _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter =
+    DestinyDisplayPropertiesDefinitionConverter();
 const _destinyClassDefinitionMapConverter = MapConverter();
 
 class _DestinyClassDefinitionWebAdapter
@@ -56,6 +61,13 @@ class _DestinyClassDefinitionWebAdapter
   Object serialize(IsarCollection<DestinyClassDefinition> collection,
       DestinyClassDefinition object) {
     final jsObj = IsarNative.newJsObject();
+    IsarNative.jsObjectSet(jsObj, 'classType',
+        _destinyClassDefinitionDestinyClassConverter.toIsar(object.classType));
+    IsarNative.jsObjectSet(
+        jsObj,
+        'displayProperties',
+        _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties));
     IsarNative.jsObjectSet(jsObj, 'genderedClassNames',
         _destinyClassDefinitionMapConverter.toIsar(object.genderedClassNames));
     IsarNative.jsObjectSet(
@@ -74,6 +86,11 @@ class _DestinyClassDefinitionWebAdapter
   DestinyClassDefinition deserialize(
       IsarCollection<DestinyClassDefinition> collection, dynamic jsObj) {
     final object = DestinyClassDefinition();
+    object.classType = _destinyClassDefinitionDestinyClassConverter
+        .fromIsar(IsarNative.jsObjectGet(jsObj, 'classType'));
+    object.displayProperties =
+        _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
     object.genderedClassNames = _destinyClassDefinitionMapConverter
         .fromIsar(IsarNative.jsObjectGet(jsObj, 'genderedClassNames'));
     object.genderedClassNamesByGenderHash =
@@ -89,6 +106,12 @@ class _DestinyClassDefinitionWebAdapter
   @override
   P deserializeProperty<P>(Object jsObj, String propertyName) {
     switch (propertyName) {
+      case 'classType':
+        return (_destinyClassDefinitionDestinyClassConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'classType'))) as P;
+      case 'displayProperties':
+        return (_destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
       case 'genderedClassNames':
         return (_destinyClassDefinitionMapConverter.fromIsar(
             IsarNative.jsObjectGet(jsObj, 'genderedClassNames'))) as P;
@@ -127,37 +150,50 @@ class _DestinyClassDefinitionNativeAdapter
       AdapterAlloc alloc) {
     var dynamicSize = 0;
     final value0 =
+        _destinyClassDefinitionDestinyClassConverter.toIsar(object.classType);
+    final _classType = value0;
+    final value1 =
+        _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties);
+    IsarUint8List? _displayProperties;
+    if (value1 != null) {
+      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value1);
+    }
+    dynamicSize += (_displayProperties?.length ?? 0) as int;
+    final value2 =
         _destinyClassDefinitionMapConverter.toIsar(object.genderedClassNames);
     IsarUint8List? _genderedClassNames;
-    if (value0 != null) {
-      _genderedClassNames = IsarBinaryWriter.utf8Encoder.convert(value0);
+    if (value2 != null) {
+      _genderedClassNames = IsarBinaryWriter.utf8Encoder.convert(value2);
     }
     dynamicSize += (_genderedClassNames?.length ?? 0) as int;
-    final value1 = _destinyClassDefinitionMapConverter
+    final value3 = _destinyClassDefinitionMapConverter
         .toIsar(object.genderedClassNamesByGenderHash);
     IsarUint8List? _genderedClassNamesByGenderHash;
-    if (value1 != null) {
+    if (value3 != null) {
       _genderedClassNamesByGenderHash =
-          IsarBinaryWriter.utf8Encoder.convert(value1);
+          IsarBinaryWriter.utf8Encoder.convert(value3);
     }
     dynamicSize += (_genderedClassNamesByGenderHash?.length ?? 0) as int;
-    final value2 = object.index;
-    final _index = value2;
-    final value3 = object.mentorVendorHash;
-    final _mentorVendorHash = value3;
-    final value4 = object.redacted;
-    final _redacted = value4;
+    final value4 = object.index;
+    final _index = value4;
+    final value5 = object.mentorVendorHash;
+    final _mentorVendorHash = value5;
+    final value6 = object.redacted;
+    final _redacted = value6;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
     rawObj.buffer_length = size;
     final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
     final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBytes(offsets[0], _genderedClassNames);
-    writer.writeBytes(offsets[1], _genderedClassNamesByGenderHash);
-    writer.writeLong(offsets[2], _index);
-    writer.writeLong(offsets[3], _mentorVendorHash);
-    writer.writeBool(offsets[4], _redacted);
+    writer.writeLong(offsets[0], _classType);
+    writer.writeBytes(offsets[1], _displayProperties);
+    writer.writeBytes(offsets[2], _genderedClassNames);
+    writer.writeBytes(offsets[3], _genderedClassNamesByGenderHash);
+    writer.writeLong(offsets[4], _index);
+    writer.writeLong(offsets[5], _mentorVendorHash);
+    writer.writeBool(offsets[6], _redacted);
   }
 
   @override
@@ -167,14 +203,19 @@ class _DestinyClassDefinitionNativeAdapter
       IsarBinaryReader reader,
       List<int> offsets) {
     final object = DestinyClassDefinition();
+    object.classType = _destinyClassDefinitionDestinyClassConverter
+        .fromIsar(reader.readLongOrNull(offsets[0]));
+    object.displayProperties =
+        _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[1]));
     object.genderedClassNames = _destinyClassDefinitionMapConverter
-        .fromIsar(reader.readStringOrNull(offsets[0]));
+        .fromIsar(reader.readStringOrNull(offsets[2]));
     object.genderedClassNamesByGenderHash = _destinyClassDefinitionMapConverter
-        .fromIsar(reader.readStringOrNull(offsets[1]));
+        .fromIsar(reader.readStringOrNull(offsets[3]));
     object.hash = id;
-    object.index = reader.readLongOrNull(offsets[2]);
-    object.mentorVendorHash = reader.readLongOrNull(offsets[3]);
-    object.redacted = reader.readBoolOrNull(offsets[4]);
+    object.index = reader.readLongOrNull(offsets[4]);
+    object.mentorVendorHash = reader.readLongOrNull(offsets[5]);
+    object.redacted = reader.readBoolOrNull(offsets[6]);
     return object;
   }
 
@@ -185,16 +226,22 @@ class _DestinyClassDefinitionNativeAdapter
       case -1:
         return id as P;
       case 0:
-        return (_destinyClassDefinitionMapConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
+        return (_destinyClassDefinitionDestinyClassConverter
+            .fromIsar(reader.readLongOrNull(offset))) as P;
       case 1:
-        return (_destinyClassDefinitionMapConverter
+        return (_destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
             .fromIsar(reader.readStringOrNull(offset))) as P;
       case 2:
-        return (reader.readLongOrNull(offset)) as P;
+        return (_destinyClassDefinitionMapConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 3:
-        return (reader.readLongOrNull(offset)) as P;
+        return (_destinyClassDefinitionMapConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 4:
+        return (reader.readLongOrNull(offset)) as P;
+      case 5:
+        return (reader.readLongOrNull(offset)) as P;
+      case 6:
         return (reader.readBoolOrNull(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -294,6 +341,193 @@ extension DestinyClassDefinitionQueryWhere on QueryBuilder<
 
 extension DestinyClassDefinitionQueryFilter on QueryBuilder<
     DestinyClassDefinition, DestinyClassDefinition, QFilterCondition> {
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> classTypeIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'classType',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> classTypeEqualTo(DestinyClass? value) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'classType',
+      value: _destinyClassDefinitionDestinyClassConverter.toIsar(value),
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> classTypeGreaterThan(
+    DestinyClass? value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'classType',
+      value: _destinyClassDefinitionDestinyClassConverter.toIsar(value),
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> classTypeLessThan(
+    DestinyClass? value, {
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'classType',
+      value: _destinyClassDefinitionDestinyClassConverter.toIsar(value),
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> classTypeBetween(
+    DestinyClass? lower,
+    DestinyClass? upper, {
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'classType',
+      lower: _destinyClassDefinitionDestinyClassConverter.toIsar(lower),
+      includeLower: includeLower,
+      upper: _destinyClassDefinitionDestinyClassConverter.toIsar(upper),
+      includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> displayPropertiesIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'displayProperties',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> displayPropertiesEqualTo(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'displayProperties',
+      value: _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> displayPropertiesGreaterThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'displayProperties',
+      value: _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> displayPropertiesLessThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'displayProperties',
+      value: _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> displayPropertiesBetween(
+    DestinyDisplayPropertiesDefinition? lower,
+    DestinyDisplayPropertiesDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'displayProperties',
+      lower: _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(lower),
+      includeLower: includeLower,
+      upper: _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> displayPropertiesStartsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'displayProperties',
+      value: _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+      QAfterFilterCondition> displayPropertiesEndsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'displayProperties',
+      value: _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+          QAfterFilterCondition>
+      displayPropertiesContains(DestinyDisplayPropertiesDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'displayProperties',
+      value: _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
+          QAfterFilterCondition>
+      displayPropertiesMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'displayProperties',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
       QAfterFilterCondition> genderedClassNamesIsNull() {
     return addFilterConditionInternal(FilterCondition(
@@ -738,6 +972,26 @@ extension DestinyClassDefinitionQueryLinks on QueryBuilder<
 extension DestinyClassDefinitionQueryWhereSortBy
     on QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QSortBy> {
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterSortBy>
+      sortByClassType() {
+    return addSortByInternal('classType', Sort.asc);
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterSortBy>
+      sortByClassTypeDesc() {
+    return addSortByInternal('classType', Sort.desc);
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterSortBy>
+      sortByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterSortBy>
+      sortByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterSortBy>
       sortByGenderedClassNames() {
     return addSortByInternal('genderedClassNames', Sort.asc);
   }
@@ -800,6 +1054,26 @@ extension DestinyClassDefinitionQueryWhereSortBy
 
 extension DestinyClassDefinitionQueryWhereSortThenBy on QueryBuilder<
     DestinyClassDefinition, DestinyClassDefinition, QSortThenBy> {
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterSortBy>
+      thenByClassType() {
+    return addSortByInternal('classType', Sort.asc);
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterSortBy>
+      thenByClassTypeDesc() {
+    return addSortByInternal('classType', Sort.desc);
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterSortBy>
+      thenByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterSortBy>
+      thenByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterSortBy>
       thenByGenderedClassNames() {
     return addSortByInternal('genderedClassNames', Sort.asc);
@@ -864,6 +1138,17 @@ extension DestinyClassDefinitionQueryWhereSortThenBy on QueryBuilder<
 extension DestinyClassDefinitionQueryWhereDistinct
     on QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QDistinct> {
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QDistinct>
+      distinctByClassType() {
+    return addDistinctByInternal('classType');
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QDistinct>
+      distinctByDisplayProperties({bool caseSensitive = true}) {
+    return addDistinctByInternal('displayProperties',
+        caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QDistinct>
       distinctByGenderedClassNames({bool caseSensitive = true}) {
     return addDistinctByInternal('genderedClassNames',
         caseSensitive: caseSensitive);
@@ -898,6 +1183,16 @@ extension DestinyClassDefinitionQueryWhereDistinct
 
 extension DestinyClassDefinitionQueryProperty on QueryBuilder<
     DestinyClassDefinition, DestinyClassDefinition, QQueryProperty> {
+  QueryBuilder<DestinyClassDefinition, DestinyClass?, QQueryOperations>
+      classTypeProperty() {
+    return addPropertyNameInternal('classType');
+  }
+
+  QueryBuilder<DestinyClassDefinition, DestinyDisplayPropertiesDefinition?,
+      QQueryOperations> displayPropertiesProperty() {
+    return addPropertyNameInternal('displayProperties');
+  }
+
   QueryBuilder<DestinyClassDefinition, Map<String, String>?, QQueryOperations>
       genderedClassNamesProperty() {
     return addPropertyNameInternal('genderedClassNames');

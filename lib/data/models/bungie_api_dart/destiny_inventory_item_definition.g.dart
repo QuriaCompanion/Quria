@@ -18,53 +18,74 @@ extension GetDestinyInventoryItemDefinitionCollection on Isar {
 final DestinyInventoryItemDefinitionSchema = CollectionSchema(
   name: 'DestinyInventoryItemDefinition',
   schema:
-      '{"name":"DestinyInventoryItemDefinition","idName":"hash","properties":[{"name":"allowActions","type":"Bool"},{"name":"animations","type":"StringList"},{"name":"breakerType","type":"Long"},{"name":"breakerTypeHash","type":"Long"},{"name":"classType","type":"Long"},{"name":"collectibleHash","type":"Long"},{"name":"damageTypeHashes","type":"LongList"},{"name":"damageTypes","type":"LongList"},{"name":"defaultDamageType","type":"Long"},{"name":"defaultDamageTypeHash","type":"Long"},{"name":"displaySource","type":"String"},{"name":"doesPostmasterPullHaveSideEffects","type":"Bool"},{"name":"emblemObjectiveHash","type":"Long"},{"name":"equippable","type":"Bool"},{"name":"flavorText","type":"String"},{"name":"iconWatermark","type":"String"},{"name":"iconWatermarkShelved","type":"String"},{"name":"index","type":"Long"},{"name":"investmentStats","type":"StringList"},{"name":"isWrapper","type":"Bool"},{"name":"itemCategoryHashes","type":"LongList"},{"name":"itemSubType","type":"Long"},{"name":"itemType","type":"Long"},{"name":"itemTypeAndTierDisplayName","type":"String"},{"name":"itemTypeDisplayName","type":"String"},{"name":"links","type":"StringList"},{"name":"loreHash","type":"Long"},{"name":"nonTransferrable","type":"Bool"},{"name":"perks","type":"StringList"},{"name":"redacted","type":"Bool"},{"name":"screenshot","type":"String"},{"name":"seasonHash","type":"Long"},{"name":"secondaryIcon","type":"String"},{"name":"secondaryOverlay","type":"String"},{"name":"secondarySpecial","type":"String"},{"name":"specialItemType","type":"Long"},{"name":"summaryItemHash","type":"Long"},{"name":"tooltipNotifications","type":"StringList"},{"name":"tooltipStyle","type":"String"},{"name":"traitHashes","type":"LongList"},{"name":"traitIds","type":"StringList"},{"name":"uiItemDisplayStyle","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"DestinyInventoryItemDefinition","idName":"hash","properties":[{"name":"action","type":"String"},{"name":"allowActions","type":"Bool"},{"name":"animations","type":"StringList"},{"name":"backgroundColor","type":"String"},{"name":"breakerType","type":"Long"},{"name":"breakerTypeHash","type":"Long"},{"name":"classType","type":"Long"},{"name":"collectibleHash","type":"Long"},{"name":"crafting","type":"String"},{"name":"damageTypeHashes","type":"LongList"},{"name":"damageTypes","type":"LongList"},{"name":"defaultDamageType","type":"Long"},{"name":"defaultDamageTypeHash","type":"Long"},{"name":"displayProperties","type":"String"},{"name":"displaySource","type":"String"},{"name":"doesPostmasterPullHaveSideEffects","type":"Bool"},{"name":"emblemObjectiveHash","type":"Long"},{"name":"equippable","type":"Bool"},{"name":"equippingBlock","type":"String"},{"name":"flavorText","type":"String"},{"name":"gearset","type":"String"},{"name":"iconWatermark","type":"String"},{"name":"iconWatermarkShelved","type":"String"},{"name":"index","type":"Long"},{"name":"inventory","type":"String"},{"name":"investmentStats","type":"StringList"},{"name":"isWrapper","type":"Bool"},{"name":"itemCategoryHashes","type":"LongList"},{"name":"itemSubType","type":"Long"},{"name":"itemType","type":"Long"},{"name":"itemTypeAndTierDisplayName","type":"String"},{"name":"itemTypeDisplayName","type":"String"},{"name":"links","type":"StringList"},{"name":"loreHash","type":"Long"},{"name":"metrics","type":"String"},{"name":"nonTransferrable","type":"Bool"},{"name":"objectives","type":"String"},{"name":"perks","type":"StringList"},{"name":"plug","type":"String"},{"name":"preview","type":"String"},{"name":"quality","type":"String"},{"name":"redacted","type":"Bool"},{"name":"sack","type":"String"},{"name":"screenshot","type":"String"},{"name":"seasonHash","type":"Long"},{"name":"secondaryIcon","type":"String"},{"name":"secondaryOverlay","type":"String"},{"name":"secondarySpecial","type":"String"},{"name":"setData","type":"String"},{"name":"sockets","type":"String"},{"name":"sourceData","type":"String"},{"name":"specialItemType","type":"Long"},{"name":"stats","type":"String"},{"name":"summary","type":"String"},{"name":"summaryItemHash","type":"Long"},{"name":"talentGrid","type":"String"},{"name":"tooltipNotifications","type":"StringList"},{"name":"tooltipStyle","type":"String"},{"name":"traitHashes","type":"LongList"},{"name":"traitIds","type":"StringList"},{"name":"translationBlock","type":"String"},{"name":"uiItemDisplayStyle","type":"String"},{"name":"value","type":"String"}],"indexes":[],"links":[]}',
   nativeAdapter: const _DestinyInventoryItemDefinitionNativeAdapter(),
   webAdapter: const _DestinyInventoryItemDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
-    'allowActions': 0,
-    'animations': 1,
-    'breakerType': 2,
-    'breakerTypeHash': 3,
-    'classType': 4,
-    'collectibleHash': 5,
-    'damageTypeHashes': 6,
-    'damageTypes': 7,
-    'defaultDamageType': 8,
-    'defaultDamageTypeHash': 9,
-    'displaySource': 10,
-    'doesPostmasterPullHaveSideEffects': 11,
-    'emblemObjectiveHash': 12,
-    'equippable': 13,
-    'flavorText': 14,
-    'iconWatermark': 15,
-    'iconWatermarkShelved': 16,
-    'index': 17,
-    'investmentStats': 18,
-    'isWrapper': 19,
-    'itemCategoryHashes': 20,
-    'itemSubType': 21,
-    'itemType': 22,
-    'itemTypeAndTierDisplayName': 23,
-    'itemTypeDisplayName': 24,
-    'links': 25,
-    'loreHash': 26,
-    'nonTransferrable': 27,
-    'perks': 28,
-    'redacted': 29,
-    'screenshot': 30,
-    'seasonHash': 31,
-    'secondaryIcon': 32,
-    'secondaryOverlay': 33,
-    'secondarySpecial': 34,
-    'specialItemType': 35,
-    'summaryItemHash': 36,
-    'tooltipNotifications': 37,
-    'tooltipStyle': 38,
-    'traitHashes': 39,
-    'traitIds': 40,
-    'uiItemDisplayStyle': 41
+    'action': 0,
+    'allowActions': 1,
+    'animations': 2,
+    'backgroundColor': 3,
+    'breakerType': 4,
+    'breakerTypeHash': 5,
+    'classType': 6,
+    'collectibleHash': 7,
+    'crafting': 8,
+    'damageTypeHashes': 9,
+    'damageTypes': 10,
+    'defaultDamageType': 11,
+    'defaultDamageTypeHash': 12,
+    'displayProperties': 13,
+    'displaySource': 14,
+    'doesPostmasterPullHaveSideEffects': 15,
+    'emblemObjectiveHash': 16,
+    'equippable': 17,
+    'equippingBlock': 18,
+    'flavorText': 19,
+    'gearset': 20,
+    'iconWatermark': 21,
+    'iconWatermarkShelved': 22,
+    'index': 23,
+    'inventory': 24,
+    'investmentStats': 25,
+    'isWrapper': 26,
+    'itemCategoryHashes': 27,
+    'itemSubType': 28,
+    'itemType': 29,
+    'itemTypeAndTierDisplayName': 30,
+    'itemTypeDisplayName': 31,
+    'links': 32,
+    'loreHash': 33,
+    'metrics': 34,
+    'nonTransferrable': 35,
+    'objectives': 36,
+    'perks': 37,
+    'plug': 38,
+    'preview': 39,
+    'quality': 40,
+    'redacted': 41,
+    'sack': 42,
+    'screenshot': 43,
+    'seasonHash': 44,
+    'secondaryIcon': 45,
+    'secondaryOverlay': 46,
+    'secondarySpecial': 47,
+    'setData': 48,
+    'sockets': 49,
+    'sourceData': 50,
+    'specialItemType': 51,
+    'stats': 52,
+    'summary': 53,
+    'summaryItemHash': 54,
+    'talentGrid': 55,
+    'tooltipNotifications': 56,
+    'tooltipStyle': 57,
+    'traitHashes': 58,
+    'traitIds': 59,
+    'translationBlock': 60,
+    'uiItemDisplayStyle': 61,
+    'value': 62
   },
   listProperties: {
     'animations',
@@ -95,22 +116,72 @@ final DestinyInventoryItemDefinitionSchema = CollectionSchema(
   version: 2,
 );
 
-const _destinyInventoryItemDefinitionClassListNullableConverter =
-    ClassListNullableConverter();
+const _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter =
+    DestinyItemActionBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyAnimationReferenceListConverter =
+    DestinyAnimationReferenceListConverter();
+const _destinyInventoryItemDefinitionDestinyColorConverter =
+    DestinyColorConverter();
 const _destinyInventoryItemDefinitionDestinyBreakerTypeConverter =
     DestinyBreakerTypeConverter();
 const _destinyInventoryItemDefinitionDestinyClassConverter =
     DestinyClassConverter();
-const _destinyInventoryItemDefinitionDamageTypesConverter =
-    DamageTypesConverter();
+const _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter =
+    DestinyItemCraftingBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDamageTypeListConverter =
+    DamageTypeListConverter();
 const _destinyInventoryItemDefinitionDamageTypeConverter =
     DamageTypeConverter();
+const _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter =
+    DestinyDisplayPropertiesDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter =
+    DestinyEquippingBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter =
+    DestinyItemGearsetBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter =
+    DestinyItemInventoryBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemInvestmentStatDefinitionListConverter =
+    DestinyItemInvestmentStatDefinitionListConverter();
 const _destinyInventoryItemDefinitionDestinyItemSubTypeConverter =
     DestinyItemSubTypeConverter();
 const _destinyInventoryItemDefinitionDestinyItemTypeConverter =
     DestinyItemTypeConverter();
+const _destinyInventoryItemDefinitionHyperlinkReferenceListConverter =
+    HyperlinkReferenceListConverter();
+const _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter =
+    DestinyItemMetricBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter =
+    DestinyItemObjectiveBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemPerkEntryDefinitionListConverter =
+    DestinyItemPerkEntryDefinitionListConverter();
+const _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter =
+    DestinyItemPlugDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter =
+    DestinyItemPreviewBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter =
+    DestinyItemQualityBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter =
+    DestinyItemSackBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter =
+    DestinyItemSetBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter =
+    DestinyItemSocketBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter =
+    DestinyItemSourceBlockDefinitionConverter();
 const _destinyInventoryItemDefinitionSpecialItemTypeConverter =
     SpecialItemTypeConverter();
+const _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter =
+    DestinyItemStatBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter =
+    DestinyItemSummaryBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter =
+    DestinyItemTalentGridBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemTooltipNotificationListConverter =
+    DestinyItemTooltipNotificationListConverter();
+const _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter =
+    DestinyItemTranslationBlockDefinitionConverter();
+const _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter =
+    DestinyItemValueBlockDefinitionConverter();
 
 class _DestinyInventoryItemDefinitionWebAdapter
     extends IsarWebTypeAdapter<DestinyInventoryItemDefinition> {
@@ -120,12 +191,22 @@ class _DestinyInventoryItemDefinitionWebAdapter
   Object serialize(IsarCollection<DestinyInventoryItemDefinition> collection,
       DestinyInventoryItemDefinition object) {
     final jsObj = IsarNative.newJsObject();
+    IsarNative.jsObjectSet(
+        jsObj,
+        'action',
+        _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+            .toIsar(object.action));
     IsarNative.jsObjectSet(jsObj, 'allowActions', object.allowActions);
     IsarNative.jsObjectSet(
         jsObj,
         'animations',
-        _destinyInventoryItemDefinitionClassListNullableConverter
+        _destinyInventoryItemDefinitionDestinyAnimationReferenceListConverter
             .toIsar(object.animations));
+    IsarNative.jsObjectSet(
+        jsObj,
+        'backgroundColor',
+        _destinyInventoryItemDefinitionDestinyColorConverter
+            .toIsar(object.backgroundColor));
     IsarNative.jsObjectSet(
         jsObj,
         'breakerType',
@@ -138,11 +219,16 @@ class _DestinyInventoryItemDefinitionWebAdapter
         _destinyInventoryItemDefinitionDestinyClassConverter
             .toIsar(object.classType));
     IsarNative.jsObjectSet(jsObj, 'collectibleHash', object.collectibleHash);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'crafting',
+        _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+            .toIsar(object.crafting));
     IsarNative.jsObjectSet(jsObj, 'damageTypeHashes', object.damageTypeHashes);
     IsarNative.jsObjectSet(
         jsObj,
         'damageTypes',
-        _destinyInventoryItemDefinitionDamageTypesConverter
+        _destinyInventoryItemDefinitionDamageTypeListConverter
             .toIsar(object.damageTypes));
     IsarNative.jsObjectSet(
         jsObj,
@@ -151,13 +237,28 @@ class _DestinyInventoryItemDefinitionWebAdapter
             .toIsar(object.defaultDamageType));
     IsarNative.jsObjectSet(
         jsObj, 'defaultDamageTypeHash', object.defaultDamageTypeHash);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'displayProperties',
+        _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties));
     IsarNative.jsObjectSet(jsObj, 'displaySource', object.displaySource);
     IsarNative.jsObjectSet(jsObj, 'doesPostmasterPullHaveSideEffects',
         object.doesPostmasterPullHaveSideEffects);
     IsarNative.jsObjectSet(
         jsObj, 'emblemObjectiveHash', object.emblemObjectiveHash);
     IsarNative.jsObjectSet(jsObj, 'equippable', object.equippable);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'equippingBlock',
+        _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+            .toIsar(object.equippingBlock));
     IsarNative.jsObjectSet(jsObj, 'flavorText', object.flavorText);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'gearset',
+        _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+            .toIsar(object.gearset));
     IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
     IsarNative.jsObjectSet(jsObj, 'iconWatermark', object.iconWatermark);
     IsarNative.jsObjectSet(
@@ -165,8 +266,13 @@ class _DestinyInventoryItemDefinitionWebAdapter
     IsarNative.jsObjectSet(jsObj, 'index', object.index);
     IsarNative.jsObjectSet(
         jsObj,
+        'inventory',
+        _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+            .toIsar(object.inventory));
+    IsarNative.jsObjectSet(
+        jsObj,
         'investmentStats',
-        _destinyInventoryItemDefinitionClassListNullableConverter
+        _destinyInventoryItemDefinitionDestinyItemInvestmentStatDefinitionListConverter
             .toIsar(object.investmentStats));
     IsarNative.jsObjectSet(jsObj, 'isWrapper', object.isWrapper);
     IsarNative.jsObjectSet(
@@ -188,16 +294,46 @@ class _DestinyInventoryItemDefinitionWebAdapter
     IsarNative.jsObjectSet(
         jsObj,
         'links',
-        _destinyInventoryItemDefinitionClassListNullableConverter
+        _destinyInventoryItemDefinitionHyperlinkReferenceListConverter
             .toIsar(object.links));
     IsarNative.jsObjectSet(jsObj, 'loreHash', object.loreHash);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'metrics',
+        _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+            .toIsar(object.metrics));
     IsarNative.jsObjectSet(jsObj, 'nonTransferrable', object.nonTransferrable);
     IsarNative.jsObjectSet(
         jsObj,
+        'objectives',
+        _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+            .toIsar(object.objectives));
+    IsarNative.jsObjectSet(
+        jsObj,
         'perks',
-        _destinyInventoryItemDefinitionClassListNullableConverter
+        _destinyInventoryItemDefinitionDestinyItemPerkEntryDefinitionListConverter
             .toIsar(object.perks));
+    IsarNative.jsObjectSet(
+        jsObj,
+        'plug',
+        _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+            .toIsar(object.plug));
+    IsarNative.jsObjectSet(
+        jsObj,
+        'preview',
+        _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+            .toIsar(object.preview));
+    IsarNative.jsObjectSet(
+        jsObj,
+        'quality',
+        _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+            .toIsar(object.quality));
     IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'sack',
+        _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+            .toIsar(object.sack));
     IsarNative.jsObjectSet(jsObj, 'screenshot', object.screenshot);
     IsarNative.jsObjectSet(jsObj, 'seasonHash', object.seasonHash);
     IsarNative.jsObjectSet(jsObj, 'secondaryIcon', object.secondaryIcon);
@@ -205,20 +341,60 @@ class _DestinyInventoryItemDefinitionWebAdapter
     IsarNative.jsObjectSet(jsObj, 'secondarySpecial', object.secondarySpecial);
     IsarNative.jsObjectSet(
         jsObj,
+        'setData',
+        _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+            .toIsar(object.setData));
+    IsarNative.jsObjectSet(
+        jsObj,
+        'sockets',
+        _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+            .toIsar(object.sockets));
+    IsarNative.jsObjectSet(
+        jsObj,
+        'sourceData',
+        _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+            .toIsar(object.sourceData));
+    IsarNative.jsObjectSet(
+        jsObj,
         'specialItemType',
         _destinyInventoryItemDefinitionSpecialItemTypeConverter
             .toIsar(object.specialItemType));
+    IsarNative.jsObjectSet(
+        jsObj,
+        'stats',
+        _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+            .toIsar(object.stats));
+    IsarNative.jsObjectSet(
+        jsObj,
+        'summary',
+        _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+            .toIsar(object.summary));
     IsarNative.jsObjectSet(jsObj, 'summaryItemHash', object.summaryItemHash);
     IsarNative.jsObjectSet(
         jsObj,
+        'talentGrid',
+        _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+            .toIsar(object.talentGrid));
+    IsarNative.jsObjectSet(
+        jsObj,
         'tooltipNotifications',
-        _destinyInventoryItemDefinitionClassListNullableConverter
+        _destinyInventoryItemDefinitionDestinyItemTooltipNotificationListConverter
             .toIsar(object.tooltipNotifications));
     IsarNative.jsObjectSet(jsObj, 'tooltipStyle', object.tooltipStyle);
     IsarNative.jsObjectSet(jsObj, 'traitHashes', object.traitHashes);
     IsarNative.jsObjectSet(jsObj, 'traitIds', object.traitIds);
     IsarNative.jsObjectSet(
+        jsObj,
+        'translationBlock',
+        _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+            .toIsar(object.translationBlock));
+    IsarNative.jsObjectSet(
         jsObj, 'uiItemDisplayStyle', object.uiItemDisplayStyle);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'value',
+        _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+            .toIsar(object.value));
     return jsObj;
   }
 
@@ -227,14 +403,19 @@ class _DestinyInventoryItemDefinitionWebAdapter
       IsarCollection<DestinyInventoryItemDefinition> collection,
       dynamic jsObj) {
     final object = DestinyInventoryItemDefinition();
+    object.action =
+        _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'action'));
     object.allowActions = IsarNative.jsObjectGet(jsObj, 'allowActions');
     object.animations =
-        _destinyInventoryItemDefinitionClassListNullableConverter
+        _destinyInventoryItemDefinitionDestinyAnimationReferenceListConverter
             .fromIsar((IsarNative.jsObjectGet(jsObj, 'animations') as List?)
                 ?.map((e) => e ?? '')
                 .toList()
-                .cast<String>())
-            ?.cast<DestinyAnimationReference>();
+                .cast<String>());
+    object.backgroundColor =
+        _destinyInventoryItemDefinitionDestinyColorConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'backgroundColor'));
     object.breakerType =
         _destinyInventoryItemDefinitionDestinyBreakerTypeConverter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'breakerType'));
@@ -242,12 +423,15 @@ class _DestinyInventoryItemDefinitionWebAdapter
     object.classType = _destinyInventoryItemDefinitionDestinyClassConverter
         .fromIsar(IsarNative.jsObjectGet(jsObj, 'classType'));
     object.collectibleHash = IsarNative.jsObjectGet(jsObj, 'collectibleHash');
+    object.crafting =
+        _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'crafting'));
     object.damageTypeHashes =
         (IsarNative.jsObjectGet(jsObj, 'damageTypeHashes') as List?)
             ?.map((e) => e ?? double.negativeInfinity)
             .toList()
             .cast<int>();
-    object.damageTypes = _destinyInventoryItemDefinitionDamageTypesConverter
+    object.damageTypes = _destinyInventoryItemDefinitionDamageTypeListConverter
         .fromIsar((IsarNative.jsObjectGet(jsObj, 'damageTypes') as List?)
             ?.map((e) => e ?? double.negativeInfinity)
             .toList()
@@ -257,26 +441,37 @@ class _DestinyInventoryItemDefinitionWebAdapter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'defaultDamageType'));
     object.defaultDamageTypeHash =
         IsarNative.jsObjectGet(jsObj, 'defaultDamageTypeHash');
+    object.displayProperties =
+        _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
     object.displaySource = IsarNative.jsObjectGet(jsObj, 'displaySource');
     object.doesPostmasterPullHaveSideEffects =
         IsarNative.jsObjectGet(jsObj, 'doesPostmasterPullHaveSideEffects');
     object.emblemObjectiveHash =
         IsarNative.jsObjectGet(jsObj, 'emblemObjectiveHash');
     object.equippable = IsarNative.jsObjectGet(jsObj, 'equippable');
+    object.equippingBlock =
+        _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'equippingBlock'));
     object.flavorText = IsarNative.jsObjectGet(jsObj, 'flavorText');
+    object.gearset =
+        _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'gearset'));
     object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
     object.iconWatermark = IsarNative.jsObjectGet(jsObj, 'iconWatermark');
     object.iconWatermarkShelved =
         IsarNative.jsObjectGet(jsObj, 'iconWatermarkShelved');
     object.index = IsarNative.jsObjectGet(jsObj, 'index');
+    object.inventory =
+        _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'inventory'));
     object.investmentStats =
-        _destinyInventoryItemDefinitionClassListNullableConverter
+        _destinyInventoryItemDefinitionDestinyItemInvestmentStatDefinitionListConverter
             .fromIsar(
                 (IsarNative.jsObjectGet(jsObj, 'investmentStats') as List?)
                     ?.map((e) => e ?? '')
                     .toList()
-                    .cast<String>())
-            ?.cast<DestinyItemInvestmentStatDefinition>();
+                    .cast<String>());
     object.isWrapper = IsarNative.jsObjectGet(jsObj, 'isWrapper');
     object.itemCategoryHashes =
         (IsarNative.jsObjectGet(jsObj, 'itemCategoryHashes') as List?)
@@ -292,38 +487,73 @@ class _DestinyInventoryItemDefinitionWebAdapter
         IsarNative.jsObjectGet(jsObj, 'itemTypeAndTierDisplayName');
     object.itemTypeDisplayName =
         IsarNative.jsObjectGet(jsObj, 'itemTypeDisplayName');
-    object.links = _destinyInventoryItemDefinitionClassListNullableConverter
-        .fromIsar((IsarNative.jsObjectGet(jsObj, 'links') as List?)
-            ?.map((e) => e ?? '')
-            .toList()
-            .cast<String>())
-        ?.cast<HyperlinkReference>();
+    object.links =
+        _destinyInventoryItemDefinitionHyperlinkReferenceListConverter.fromIsar(
+            (IsarNative.jsObjectGet(jsObj, 'links') as List?)
+                ?.map((e) => e ?? '')
+                .toList()
+                .cast<String>());
     object.loreHash = IsarNative.jsObjectGet(jsObj, 'loreHash');
+    object.metrics =
+        _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'metrics'));
     object.nonTransferrable = IsarNative.jsObjectGet(jsObj, 'nonTransferrable');
-    object.perks = _destinyInventoryItemDefinitionClassListNullableConverter
-        .fromIsar((IsarNative.jsObjectGet(jsObj, 'perks') as List?)
-            ?.map((e) => e ?? '')
-            .toList()
-            .cast<String>())
-        ?.cast<DestinyItemPerkEntryDefinition>();
+    object.objectives =
+        _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'objectives'));
+    object.perks =
+        _destinyInventoryItemDefinitionDestinyItemPerkEntryDefinitionListConverter
+            .fromIsar((IsarNative.jsObjectGet(jsObj, 'perks') as List?)
+                ?.map((e) => e ?? '')
+                .toList()
+                .cast<String>());
+    object.plug =
+        _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'plug'));
+    object.preview =
+        _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'preview'));
+    object.quality =
+        _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'quality'));
     object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+    object.sack =
+        _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'sack'));
     object.screenshot = IsarNative.jsObjectGet(jsObj, 'screenshot');
     object.seasonHash = IsarNative.jsObjectGet(jsObj, 'seasonHash');
     object.secondaryIcon = IsarNative.jsObjectGet(jsObj, 'secondaryIcon');
     object.secondaryOverlay = IsarNative.jsObjectGet(jsObj, 'secondaryOverlay');
     object.secondarySpecial = IsarNative.jsObjectGet(jsObj, 'secondarySpecial');
+    object.setData =
+        _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'setData'));
+    object.sockets =
+        _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'sockets'));
+    object.sourceData =
+        _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'sourceData'));
     object.specialItemType =
         _destinyInventoryItemDefinitionSpecialItemTypeConverter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'specialItemType'));
+    object.stats =
+        _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'stats'));
+    object.summary =
+        _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'summary'));
     object.summaryItemHash = IsarNative.jsObjectGet(jsObj, 'summaryItemHash');
+    object.talentGrid =
+        _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'talentGrid'));
     object.tooltipNotifications =
-        _destinyInventoryItemDefinitionClassListNullableConverter
+        _destinyInventoryItemDefinitionDestinyItemTooltipNotificationListConverter
             .fromIsar(
                 (IsarNative.jsObjectGet(jsObj, 'tooltipNotifications') as List?)
                     ?.map((e) => e ?? '')
                     .toList()
-                    .cast<String>())
-            ?.cast<DestinyItemTooltipNotification>();
+                    .cast<String>());
     object.tooltipStyle = IsarNative.jsObjectGet(jsObj, 'tooltipStyle');
     object.traitHashes = (IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
         ?.map((e) => e ?? double.negativeInfinity)
@@ -333,22 +563,34 @@ class _DestinyInventoryItemDefinitionWebAdapter
         ?.map((e) => e ?? '')
         .toList()
         .cast<String>();
+    object.translationBlock =
+        _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'translationBlock'));
     object.uiItemDisplayStyle =
         IsarNative.jsObjectGet(jsObj, 'uiItemDisplayStyle');
+    object.value =
+        _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'value'));
     return object;
   }
 
   @override
   P deserializeProperty<P>(Object jsObj, String propertyName) {
     switch (propertyName) {
+      case 'action':
+        return (_destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'action'))) as P;
       case 'allowActions':
         return (IsarNative.jsObjectGet(jsObj, 'allowActions')) as P;
       case 'animations':
-        return (_destinyInventoryItemDefinitionClassListNullableConverter
+        return (_destinyInventoryItemDefinitionDestinyAnimationReferenceListConverter
             .fromIsar((IsarNative.jsObjectGet(jsObj, 'animations') as List?)
                 ?.map((e) => e ?? '')
                 .toList()
                 .cast<String>())) as P;
+      case 'backgroundColor':
+        return (_destinyInventoryItemDefinitionDestinyColorConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'backgroundColor'))) as P;
       case 'breakerType':
         return (_destinyInventoryItemDefinitionDestinyBreakerTypeConverter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'breakerType'))) as P;
@@ -359,13 +601,16 @@ class _DestinyInventoryItemDefinitionWebAdapter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'classType'))) as P;
       case 'collectibleHash':
         return (IsarNative.jsObjectGet(jsObj, 'collectibleHash')) as P;
+      case 'crafting':
+        return (_destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'crafting'))) as P;
       case 'damageTypeHashes':
         return ((IsarNative.jsObjectGet(jsObj, 'damageTypeHashes') as List?)
             ?.map((e) => e ?? double.negativeInfinity)
             .toList()
             .cast<int>()) as P;
       case 'damageTypes':
-        return (_destinyInventoryItemDefinitionDamageTypesConverter.fromIsar(
+        return (_destinyInventoryItemDefinitionDamageTypeListConverter.fromIsar(
             (IsarNative.jsObjectGet(jsObj, 'damageTypes') as List?)
                 ?.map((e) => e ?? double.negativeInfinity)
                 .toList()
@@ -375,6 +620,9 @@ class _DestinyInventoryItemDefinitionWebAdapter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'defaultDamageType'))) as P;
       case 'defaultDamageTypeHash':
         return (IsarNative.jsObjectGet(jsObj, 'defaultDamageTypeHash')) as P;
+      case 'displayProperties':
+        return (_destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
       case 'displaySource':
         return (IsarNative.jsObjectGet(jsObj, 'displaySource')) as P;
       case 'doesPostmasterPullHaveSideEffects':
@@ -384,8 +632,14 @@ class _DestinyInventoryItemDefinitionWebAdapter
         return (IsarNative.jsObjectGet(jsObj, 'emblemObjectiveHash')) as P;
       case 'equippable':
         return (IsarNative.jsObjectGet(jsObj, 'equippable')) as P;
+      case 'equippingBlock':
+        return (_destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'equippingBlock'))) as P;
       case 'flavorText':
         return (IsarNative.jsObjectGet(jsObj, 'flavorText')) as P;
+      case 'gearset':
+        return (_destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'gearset'))) as P;
       case 'hash':
         return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
       case 'iconWatermark':
@@ -394,8 +648,11 @@ class _DestinyInventoryItemDefinitionWebAdapter
         return (IsarNative.jsObjectGet(jsObj, 'iconWatermarkShelved')) as P;
       case 'index':
         return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+      case 'inventory':
+        return (_destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'inventory'))) as P;
       case 'investmentStats':
-        return (_destinyInventoryItemDefinitionClassListNullableConverter
+        return (_destinyInventoryItemDefinitionDestinyItemInvestmentStatDefinitionListConverter
             .fromIsar(
                 (IsarNative.jsObjectGet(jsObj, 'investmentStats') as List?)
                     ?.map((e) => e ?? '')
@@ -420,23 +677,41 @@ class _DestinyInventoryItemDefinitionWebAdapter
       case 'itemTypeDisplayName':
         return (IsarNative.jsObjectGet(jsObj, 'itemTypeDisplayName')) as P;
       case 'links':
-        return (_destinyInventoryItemDefinitionClassListNullableConverter
+        return (_destinyInventoryItemDefinitionHyperlinkReferenceListConverter
             .fromIsar((IsarNative.jsObjectGet(jsObj, 'links') as List?)
                 ?.map((e) => e ?? '')
                 .toList()
                 .cast<String>())) as P;
       case 'loreHash':
         return (IsarNative.jsObjectGet(jsObj, 'loreHash')) as P;
+      case 'metrics':
+        return (_destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'metrics'))) as P;
       case 'nonTransferrable':
         return (IsarNative.jsObjectGet(jsObj, 'nonTransferrable')) as P;
+      case 'objectives':
+        return (_destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'objectives'))) as P;
       case 'perks':
-        return (_destinyInventoryItemDefinitionClassListNullableConverter
+        return (_destinyInventoryItemDefinitionDestinyItemPerkEntryDefinitionListConverter
             .fromIsar((IsarNative.jsObjectGet(jsObj, 'perks') as List?)
                 ?.map((e) => e ?? '')
                 .toList()
                 .cast<String>())) as P;
+      case 'plug':
+        return (_destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'plug'))) as P;
+      case 'preview':
+        return (_destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'preview'))) as P;
+      case 'quality':
+        return (_destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'quality'))) as P;
       case 'redacted':
         return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+      case 'sack':
+        return (_destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'sack'))) as P;
       case 'screenshot':
         return (IsarNative.jsObjectGet(jsObj, 'screenshot')) as P;
       case 'seasonHash':
@@ -447,13 +722,31 @@ class _DestinyInventoryItemDefinitionWebAdapter
         return (IsarNative.jsObjectGet(jsObj, 'secondaryOverlay')) as P;
       case 'secondarySpecial':
         return (IsarNative.jsObjectGet(jsObj, 'secondarySpecial')) as P;
+      case 'setData':
+        return (_destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'setData'))) as P;
+      case 'sockets':
+        return (_destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'sockets'))) as P;
+      case 'sourceData':
+        return (_destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'sourceData'))) as P;
       case 'specialItemType':
         return (_destinyInventoryItemDefinitionSpecialItemTypeConverter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'specialItemType'))) as P;
+      case 'stats':
+        return (_destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'stats'))) as P;
+      case 'summary':
+        return (_destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'summary'))) as P;
       case 'summaryItemHash':
         return (IsarNative.jsObjectGet(jsObj, 'summaryItemHash')) as P;
+      case 'talentGrid':
+        return (_destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'talentGrid'))) as P;
       case 'tooltipNotifications':
-        return (_destinyInventoryItemDefinitionClassListNullableConverter
+        return (_destinyInventoryItemDefinitionDestinyItemTooltipNotificationListConverter
             .fromIsar(
                 (IsarNative.jsObjectGet(jsObj, 'tooltipNotifications') as List?)
                     ?.map((e) => e ?? '')
@@ -471,8 +764,14 @@ class _DestinyInventoryItemDefinitionWebAdapter
             ?.map((e) => e ?? '')
             .toList()
             .cast<String>()) as P;
+      case 'translationBlock':
+        return (_destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'translationBlock'))) as P;
       case 'uiItemDisplayStyle':
         return (IsarNative.jsObjectGet(jsObj, 'uiItemDisplayStyle')) as P;
+      case 'value':
+        return (_destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'value'))) as P;
       default:
         throw 'Illegal propertyName';
     }
@@ -495,114 +794,134 @@ class _DestinyInventoryItemDefinitionNativeAdapter
       List<int> offsets,
       AdapterAlloc alloc) {
     var dynamicSize = 0;
-    final value0 = object.allowActions;
-    final _allowActions = value0;
-    final value1 = _destinyInventoryItemDefinitionClassListNullableConverter
-        .toIsar(object.animations);
-    dynamicSize += (value1?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList1;
-    if (value1 != null) {
-      bytesList1 = [];
-      for (var str in value1) {
+    final value0 =
+        _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+            .toIsar(object.action);
+    IsarUint8List? _action;
+    if (value0 != null) {
+      _action = IsarBinaryWriter.utf8Encoder.convert(value0);
+    }
+    dynamicSize += (_action?.length ?? 0) as int;
+    final value1 = object.allowActions;
+    final _allowActions = value1;
+    final value2 =
+        _destinyInventoryItemDefinitionDestinyAnimationReferenceListConverter
+            .toIsar(object.animations);
+    dynamicSize += (value2?.length ?? 0) * 8;
+    List<IsarUint8List?>? bytesList2;
+    if (value2 != null) {
+      bytesList2 = [];
+      for (var str in value2) {
         final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList1.add(bytes);
+        bytesList2.add(bytes);
         dynamicSize += bytes.length as int;
       }
     }
-    final _animations = bytesList1;
-    final value2 = _destinyInventoryItemDefinitionDestinyBreakerTypeConverter
+    final _animations = bytesList2;
+    final value3 = _destinyInventoryItemDefinitionDestinyColorConverter
+        .toIsar(object.backgroundColor);
+    IsarUint8List? _backgroundColor;
+    if (value3 != null) {
+      _backgroundColor = IsarBinaryWriter.utf8Encoder.convert(value3);
+    }
+    dynamicSize += (_backgroundColor?.length ?? 0) as int;
+    final value4 = _destinyInventoryItemDefinitionDestinyBreakerTypeConverter
         .toIsar(object.breakerType);
-    final _breakerType = value2;
-    final value3 = object.breakerTypeHash;
-    final _breakerTypeHash = value3;
-    final value4 = _destinyInventoryItemDefinitionDestinyClassConverter
+    final _breakerType = value4;
+    final value5 = object.breakerTypeHash;
+    final _breakerTypeHash = value5;
+    final value6 = _destinyInventoryItemDefinitionDestinyClassConverter
         .toIsar(object.classType);
-    final _classType = value4;
-    final value5 = object.collectibleHash;
-    final _collectibleHash = value5;
-    final value6 = object.damageTypeHashes;
-    dynamicSize += (value6?.length ?? 0) * 8;
-    final _damageTypeHashes = value6;
-    final value7 = _destinyInventoryItemDefinitionDamageTypesConverter
+    final _classType = value6;
+    final value7 = object.collectibleHash;
+    final _collectibleHash = value7;
+    final value8 =
+        _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+            .toIsar(object.crafting);
+    IsarUint8List? _crafting;
+    if (value8 != null) {
+      _crafting = IsarBinaryWriter.utf8Encoder.convert(value8);
+    }
+    dynamicSize += (_crafting?.length ?? 0) as int;
+    final value9 = object.damageTypeHashes;
+    dynamicSize += (value9?.length ?? 0) * 8;
+    final _damageTypeHashes = value9;
+    final value10 = _destinyInventoryItemDefinitionDamageTypeListConverter
         .toIsar(object.damageTypes);
-    dynamicSize += (value7?.length ?? 0) * 8;
-    final _damageTypes = value7;
-    final value8 = _destinyInventoryItemDefinitionDamageTypeConverter
+    dynamicSize += (value10?.length ?? 0) * 8;
+    final _damageTypes = value10;
+    final value11 = _destinyInventoryItemDefinitionDamageTypeConverter
         .toIsar(object.defaultDamageType);
-    final _defaultDamageType = value8;
-    final value9 = object.defaultDamageTypeHash;
-    final _defaultDamageTypeHash = value9;
-    final value10 = object.displaySource;
+    final _defaultDamageType = value11;
+    final value12 = object.defaultDamageTypeHash;
+    final _defaultDamageTypeHash = value12;
+    final value13 =
+        _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties);
+    IsarUint8List? _displayProperties;
+    if (value13 != null) {
+      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value13);
+    }
+    dynamicSize += (_displayProperties?.length ?? 0) as int;
+    final value14 = object.displaySource;
     IsarUint8List? _displaySource;
-    if (value10 != null) {
-      _displaySource = IsarBinaryWriter.utf8Encoder.convert(value10);
+    if (value14 != null) {
+      _displaySource = IsarBinaryWriter.utf8Encoder.convert(value14);
     }
     dynamicSize += (_displaySource?.length ?? 0) as int;
-    final value11 = object.doesPostmasterPullHaveSideEffects;
-    final _doesPostmasterPullHaveSideEffects = value11;
-    final value12 = object.emblemObjectiveHash;
-    final _emblemObjectiveHash = value12;
-    final value13 = object.equippable;
-    final _equippable = value13;
-    final value14 = object.flavorText;
+    final value15 = object.doesPostmasterPullHaveSideEffects;
+    final _doesPostmasterPullHaveSideEffects = value15;
+    final value16 = object.emblemObjectiveHash;
+    final _emblemObjectiveHash = value16;
+    final value17 = object.equippable;
+    final _equippable = value17;
+    final value18 =
+        _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+            .toIsar(object.equippingBlock);
+    IsarUint8List? _equippingBlock;
+    if (value18 != null) {
+      _equippingBlock = IsarBinaryWriter.utf8Encoder.convert(value18);
+    }
+    dynamicSize += (_equippingBlock?.length ?? 0) as int;
+    final value19 = object.flavorText;
     IsarUint8List? _flavorText;
-    if (value14 != null) {
-      _flavorText = IsarBinaryWriter.utf8Encoder.convert(value14);
+    if (value19 != null) {
+      _flavorText = IsarBinaryWriter.utf8Encoder.convert(value19);
     }
     dynamicSize += (_flavorText?.length ?? 0) as int;
-    final value15 = object.iconWatermark;
+    final value20 =
+        _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+            .toIsar(object.gearset);
+    IsarUint8List? _gearset;
+    if (value20 != null) {
+      _gearset = IsarBinaryWriter.utf8Encoder.convert(value20);
+    }
+    dynamicSize += (_gearset?.length ?? 0) as int;
+    final value21 = object.iconWatermark;
     IsarUint8List? _iconWatermark;
-    if (value15 != null) {
-      _iconWatermark = IsarBinaryWriter.utf8Encoder.convert(value15);
+    if (value21 != null) {
+      _iconWatermark = IsarBinaryWriter.utf8Encoder.convert(value21);
     }
     dynamicSize += (_iconWatermark?.length ?? 0) as int;
-    final value16 = object.iconWatermarkShelved;
+    final value22 = object.iconWatermarkShelved;
     IsarUint8List? _iconWatermarkShelved;
-    if (value16 != null) {
-      _iconWatermarkShelved = IsarBinaryWriter.utf8Encoder.convert(value16);
+    if (value22 != null) {
+      _iconWatermarkShelved = IsarBinaryWriter.utf8Encoder.convert(value22);
     }
     dynamicSize += (_iconWatermarkShelved?.length ?? 0) as int;
-    final value17 = object.index;
-    final _index = value17;
-    final value18 = _destinyInventoryItemDefinitionClassListNullableConverter
-        .toIsar(object.investmentStats);
-    dynamicSize += (value18?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList18;
-    if (value18 != null) {
-      bytesList18 = [];
-      for (var str in value18) {
-        final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList18.add(bytes);
-        dynamicSize += bytes.length as int;
-      }
-    }
-    final _investmentStats = bytesList18;
-    final value19 = object.isWrapper;
-    final _isWrapper = value19;
-    final value20 = object.itemCategoryHashes;
-    dynamicSize += (value20?.length ?? 0) * 8;
-    final _itemCategoryHashes = value20;
-    final value21 = _destinyInventoryItemDefinitionDestinyItemSubTypeConverter
-        .toIsar(object.itemSubType);
-    final _itemSubType = value21;
-    final value22 = _destinyInventoryItemDefinitionDestinyItemTypeConverter
-        .toIsar(object.itemType);
-    final _itemType = value22;
-    final value23 = object.itemTypeAndTierDisplayName;
-    IsarUint8List? _itemTypeAndTierDisplayName;
-    if (value23 != null) {
-      _itemTypeAndTierDisplayName =
-          IsarBinaryWriter.utf8Encoder.convert(value23);
-    }
-    dynamicSize += (_itemTypeAndTierDisplayName?.length ?? 0) as int;
-    final value24 = object.itemTypeDisplayName;
-    IsarUint8List? _itemTypeDisplayName;
+    final value23 = object.index;
+    final _index = value23;
+    final value24 =
+        _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+            .toIsar(object.inventory);
+    IsarUint8List? _inventory;
     if (value24 != null) {
-      _itemTypeDisplayName = IsarBinaryWriter.utf8Encoder.convert(value24);
+      _inventory = IsarBinaryWriter.utf8Encoder.convert(value24);
     }
-    dynamicSize += (_itemTypeDisplayName?.length ?? 0) as int;
-    final value25 = _destinyInventoryItemDefinitionClassListNullableConverter
-        .toIsar(object.links);
+    dynamicSize += (_inventory?.length ?? 0) as int;
+    final value25 =
+        _destinyInventoryItemDefinitionDestinyItemInvestmentStatDefinitionListConverter
+            .toIsar(object.investmentStats);
     dynamicSize += (value25?.length ?? 0) * 8;
     List<IsarUint8List?>? bytesList25;
     if (value25 != null) {
@@ -613,59 +932,68 @@ class _DestinyInventoryItemDefinitionNativeAdapter
         dynamicSize += bytes.length as int;
       }
     }
-    final _links = bytesList25;
-    final value26 = object.loreHash;
-    final _loreHash = value26;
-    final value27 = object.nonTransferrable;
-    final _nonTransferrable = value27;
-    final value28 = _destinyInventoryItemDefinitionClassListNullableConverter
-        .toIsar(object.perks);
-    dynamicSize += (value28?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList28;
-    if (value28 != null) {
-      bytesList28 = [];
-      for (var str in value28) {
+    final _investmentStats = bytesList25;
+    final value26 = object.isWrapper;
+    final _isWrapper = value26;
+    final value27 = object.itemCategoryHashes;
+    dynamicSize += (value27?.length ?? 0) * 8;
+    final _itemCategoryHashes = value27;
+    final value28 = _destinyInventoryItemDefinitionDestinyItemSubTypeConverter
+        .toIsar(object.itemSubType);
+    final _itemSubType = value28;
+    final value29 = _destinyInventoryItemDefinitionDestinyItemTypeConverter
+        .toIsar(object.itemType);
+    final _itemType = value29;
+    final value30 = object.itemTypeAndTierDisplayName;
+    IsarUint8List? _itemTypeAndTierDisplayName;
+    if (value30 != null) {
+      _itemTypeAndTierDisplayName =
+          IsarBinaryWriter.utf8Encoder.convert(value30);
+    }
+    dynamicSize += (_itemTypeAndTierDisplayName?.length ?? 0) as int;
+    final value31 = object.itemTypeDisplayName;
+    IsarUint8List? _itemTypeDisplayName;
+    if (value31 != null) {
+      _itemTypeDisplayName = IsarBinaryWriter.utf8Encoder.convert(value31);
+    }
+    dynamicSize += (_itemTypeDisplayName?.length ?? 0) as int;
+    final value32 =
+        _destinyInventoryItemDefinitionHyperlinkReferenceListConverter
+            .toIsar(object.links);
+    dynamicSize += (value32?.length ?? 0) * 8;
+    List<IsarUint8List?>? bytesList32;
+    if (value32 != null) {
+      bytesList32 = [];
+      for (var str in value32) {
         final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList28.add(bytes);
+        bytesList32.add(bytes);
         dynamicSize += bytes.length as int;
       }
     }
-    final _perks = bytesList28;
-    final value29 = object.redacted;
-    final _redacted = value29;
-    final value30 = object.screenshot;
-    IsarUint8List? _screenshot;
-    if (value30 != null) {
-      _screenshot = IsarBinaryWriter.utf8Encoder.convert(value30);
-    }
-    dynamicSize += (_screenshot?.length ?? 0) as int;
-    final value31 = object.seasonHash;
-    final _seasonHash = value31;
-    final value32 = object.secondaryIcon;
-    IsarUint8List? _secondaryIcon;
-    if (value32 != null) {
-      _secondaryIcon = IsarBinaryWriter.utf8Encoder.convert(value32);
-    }
-    dynamicSize += (_secondaryIcon?.length ?? 0) as int;
-    final value33 = object.secondaryOverlay;
-    IsarUint8List? _secondaryOverlay;
-    if (value33 != null) {
-      _secondaryOverlay = IsarBinaryWriter.utf8Encoder.convert(value33);
-    }
-    dynamicSize += (_secondaryOverlay?.length ?? 0) as int;
-    final value34 = object.secondarySpecial;
-    IsarUint8List? _secondarySpecial;
+    final _links = bytesList32;
+    final value33 = object.loreHash;
+    final _loreHash = value33;
+    final value34 =
+        _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+            .toIsar(object.metrics);
+    IsarUint8List? _metrics;
     if (value34 != null) {
-      _secondarySpecial = IsarBinaryWriter.utf8Encoder.convert(value34);
+      _metrics = IsarBinaryWriter.utf8Encoder.convert(value34);
     }
-    dynamicSize += (_secondarySpecial?.length ?? 0) as int;
-    final value35 = _destinyInventoryItemDefinitionSpecialItemTypeConverter
-        .toIsar(object.specialItemType);
-    final _specialItemType = value35;
-    final value36 = object.summaryItemHash;
-    final _summaryItemHash = value36;
-    final value37 = _destinyInventoryItemDefinitionClassListNullableConverter
-        .toIsar(object.tooltipNotifications);
+    dynamicSize += (_metrics?.length ?? 0) as int;
+    final value35 = object.nonTransferrable;
+    final _nonTransferrable = value35;
+    final value36 =
+        _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+            .toIsar(object.objectives);
+    IsarUint8List? _objectives;
+    if (value36 != null) {
+      _objectives = IsarBinaryWriter.utf8Encoder.convert(value36);
+    }
+    dynamicSize += (_objectives?.length ?? 0) as int;
+    final value37 =
+        _destinyInventoryItemDefinitionDestinyItemPerkEntryDefinitionListConverter
+            .toIsar(object.perks);
     dynamicSize += (value37?.length ?? 0) * 8;
     List<IsarUint8List?>? bytesList37;
     if (value37 != null) {
@@ -676,82 +1004,246 @@ class _DestinyInventoryItemDefinitionNativeAdapter
         dynamicSize += bytes.length as int;
       }
     }
-    final _tooltipNotifications = bytesList37;
-    final value38 = object.tooltipStyle;
-    IsarUint8List? _tooltipStyle;
+    final _perks = bytesList37;
+    final value38 =
+        _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+            .toIsar(object.plug);
+    IsarUint8List? _plug;
     if (value38 != null) {
-      _tooltipStyle = IsarBinaryWriter.utf8Encoder.convert(value38);
+      _plug = IsarBinaryWriter.utf8Encoder.convert(value38);
     }
-    dynamicSize += (_tooltipStyle?.length ?? 0) as int;
-    final value39 = object.traitHashes;
-    dynamicSize += (value39?.length ?? 0) * 8;
-    final _traitHashes = value39;
-    final value40 = object.traitIds;
-    dynamicSize += (value40?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList40;
+    dynamicSize += (_plug?.length ?? 0) as int;
+    final value39 =
+        _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+            .toIsar(object.preview);
+    IsarUint8List? _preview;
+    if (value39 != null) {
+      _preview = IsarBinaryWriter.utf8Encoder.convert(value39);
+    }
+    dynamicSize += (_preview?.length ?? 0) as int;
+    final value40 =
+        _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+            .toIsar(object.quality);
+    IsarUint8List? _quality;
     if (value40 != null) {
-      bytesList40 = [];
-      for (var str in value40) {
+      _quality = IsarBinaryWriter.utf8Encoder.convert(value40);
+    }
+    dynamicSize += (_quality?.length ?? 0) as int;
+    final value41 = object.redacted;
+    final _redacted = value41;
+    final value42 =
+        _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+            .toIsar(object.sack);
+    IsarUint8List? _sack;
+    if (value42 != null) {
+      _sack = IsarBinaryWriter.utf8Encoder.convert(value42);
+    }
+    dynamicSize += (_sack?.length ?? 0) as int;
+    final value43 = object.screenshot;
+    IsarUint8List? _screenshot;
+    if (value43 != null) {
+      _screenshot = IsarBinaryWriter.utf8Encoder.convert(value43);
+    }
+    dynamicSize += (_screenshot?.length ?? 0) as int;
+    final value44 = object.seasonHash;
+    final _seasonHash = value44;
+    final value45 = object.secondaryIcon;
+    IsarUint8List? _secondaryIcon;
+    if (value45 != null) {
+      _secondaryIcon = IsarBinaryWriter.utf8Encoder.convert(value45);
+    }
+    dynamicSize += (_secondaryIcon?.length ?? 0) as int;
+    final value46 = object.secondaryOverlay;
+    IsarUint8List? _secondaryOverlay;
+    if (value46 != null) {
+      _secondaryOverlay = IsarBinaryWriter.utf8Encoder.convert(value46);
+    }
+    dynamicSize += (_secondaryOverlay?.length ?? 0) as int;
+    final value47 = object.secondarySpecial;
+    IsarUint8List? _secondarySpecial;
+    if (value47 != null) {
+      _secondarySpecial = IsarBinaryWriter.utf8Encoder.convert(value47);
+    }
+    dynamicSize += (_secondarySpecial?.length ?? 0) as int;
+    final value48 =
+        _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+            .toIsar(object.setData);
+    IsarUint8List? _setData;
+    if (value48 != null) {
+      _setData = IsarBinaryWriter.utf8Encoder.convert(value48);
+    }
+    dynamicSize += (_setData?.length ?? 0) as int;
+    final value49 =
+        _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+            .toIsar(object.sockets);
+    IsarUint8List? _sockets;
+    if (value49 != null) {
+      _sockets = IsarBinaryWriter.utf8Encoder.convert(value49);
+    }
+    dynamicSize += (_sockets?.length ?? 0) as int;
+    final value50 =
+        _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+            .toIsar(object.sourceData);
+    IsarUint8List? _sourceData;
+    if (value50 != null) {
+      _sourceData = IsarBinaryWriter.utf8Encoder.convert(value50);
+    }
+    dynamicSize += (_sourceData?.length ?? 0) as int;
+    final value51 = _destinyInventoryItemDefinitionSpecialItemTypeConverter
+        .toIsar(object.specialItemType);
+    final _specialItemType = value51;
+    final value52 =
+        _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+            .toIsar(object.stats);
+    IsarUint8List? _stats;
+    if (value52 != null) {
+      _stats = IsarBinaryWriter.utf8Encoder.convert(value52);
+    }
+    dynamicSize += (_stats?.length ?? 0) as int;
+    final value53 =
+        _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+            .toIsar(object.summary);
+    IsarUint8List? _summary;
+    if (value53 != null) {
+      _summary = IsarBinaryWriter.utf8Encoder.convert(value53);
+    }
+    dynamicSize += (_summary?.length ?? 0) as int;
+    final value54 = object.summaryItemHash;
+    final _summaryItemHash = value54;
+    final value55 =
+        _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+            .toIsar(object.talentGrid);
+    IsarUint8List? _talentGrid;
+    if (value55 != null) {
+      _talentGrid = IsarBinaryWriter.utf8Encoder.convert(value55);
+    }
+    dynamicSize += (_talentGrid?.length ?? 0) as int;
+    final value56 =
+        _destinyInventoryItemDefinitionDestinyItemTooltipNotificationListConverter
+            .toIsar(object.tooltipNotifications);
+    dynamicSize += (value56?.length ?? 0) * 8;
+    List<IsarUint8List?>? bytesList56;
+    if (value56 != null) {
+      bytesList56 = [];
+      for (var str in value56) {
         final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList40.add(bytes);
+        bytesList56.add(bytes);
         dynamicSize += bytes.length as int;
       }
     }
-    final _traitIds = bytesList40;
-    final value41 = object.uiItemDisplayStyle;
+    final _tooltipNotifications = bytesList56;
+    final value57 = object.tooltipStyle;
+    IsarUint8List? _tooltipStyle;
+    if (value57 != null) {
+      _tooltipStyle = IsarBinaryWriter.utf8Encoder.convert(value57);
+    }
+    dynamicSize += (_tooltipStyle?.length ?? 0) as int;
+    final value58 = object.traitHashes;
+    dynamicSize += (value58?.length ?? 0) * 8;
+    final _traitHashes = value58;
+    final value59 = object.traitIds;
+    dynamicSize += (value59?.length ?? 0) * 8;
+    List<IsarUint8List?>? bytesList59;
+    if (value59 != null) {
+      bytesList59 = [];
+      for (var str in value59) {
+        final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
+        bytesList59.add(bytes);
+        dynamicSize += bytes.length as int;
+      }
+    }
+    final _traitIds = bytesList59;
+    final value60 =
+        _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+            .toIsar(object.translationBlock);
+    IsarUint8List? _translationBlock;
+    if (value60 != null) {
+      _translationBlock = IsarBinaryWriter.utf8Encoder.convert(value60);
+    }
+    dynamicSize += (_translationBlock?.length ?? 0) as int;
+    final value61 = object.uiItemDisplayStyle;
     IsarUint8List? _uiItemDisplayStyle;
-    if (value41 != null) {
-      _uiItemDisplayStyle = IsarBinaryWriter.utf8Encoder.convert(value41);
+    if (value61 != null) {
+      _uiItemDisplayStyle = IsarBinaryWriter.utf8Encoder.convert(value61);
     }
     dynamicSize += (_uiItemDisplayStyle?.length ?? 0) as int;
+    final value62 =
+        _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+            .toIsar(object.value);
+    IsarUint8List? _value;
+    if (value62 != null) {
+      _value = IsarBinaryWriter.utf8Encoder.convert(value62);
+    }
+    dynamicSize += (_value?.length ?? 0) as int;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
     rawObj.buffer_length = size;
     final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
     final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBool(offsets[0], _allowActions);
-    writer.writeStringList(offsets[1], _animations);
-    writer.writeLong(offsets[2], _breakerType);
-    writer.writeLong(offsets[3], _breakerTypeHash);
-    writer.writeLong(offsets[4], _classType);
-    writer.writeLong(offsets[5], _collectibleHash);
-    writer.writeLongList(offsets[6], _damageTypeHashes);
-    writer.writeLongList(offsets[7], _damageTypes);
-    writer.writeLong(offsets[8], _defaultDamageType);
-    writer.writeLong(offsets[9], _defaultDamageTypeHash);
-    writer.writeBytes(offsets[10], _displaySource);
-    writer.writeBool(offsets[11], _doesPostmasterPullHaveSideEffects);
-    writer.writeLong(offsets[12], _emblemObjectiveHash);
-    writer.writeBool(offsets[13], _equippable);
-    writer.writeBytes(offsets[14], _flavorText);
-    writer.writeBytes(offsets[15], _iconWatermark);
-    writer.writeBytes(offsets[16], _iconWatermarkShelved);
-    writer.writeLong(offsets[17], _index);
-    writer.writeStringList(offsets[18], _investmentStats);
-    writer.writeBool(offsets[19], _isWrapper);
-    writer.writeLongList(offsets[20], _itemCategoryHashes);
-    writer.writeLong(offsets[21], _itemSubType);
-    writer.writeLong(offsets[22], _itemType);
-    writer.writeBytes(offsets[23], _itemTypeAndTierDisplayName);
-    writer.writeBytes(offsets[24], _itemTypeDisplayName);
-    writer.writeStringList(offsets[25], _links);
-    writer.writeLong(offsets[26], _loreHash);
-    writer.writeBool(offsets[27], _nonTransferrable);
-    writer.writeStringList(offsets[28], _perks);
-    writer.writeBool(offsets[29], _redacted);
-    writer.writeBytes(offsets[30], _screenshot);
-    writer.writeLong(offsets[31], _seasonHash);
-    writer.writeBytes(offsets[32], _secondaryIcon);
-    writer.writeBytes(offsets[33], _secondaryOverlay);
-    writer.writeBytes(offsets[34], _secondarySpecial);
-    writer.writeLong(offsets[35], _specialItemType);
-    writer.writeLong(offsets[36], _summaryItemHash);
-    writer.writeStringList(offsets[37], _tooltipNotifications);
-    writer.writeBytes(offsets[38], _tooltipStyle);
-    writer.writeLongList(offsets[39], _traitHashes);
-    writer.writeStringList(offsets[40], _traitIds);
-    writer.writeBytes(offsets[41], _uiItemDisplayStyle);
+    writer.writeBytes(offsets[0], _action);
+    writer.writeBool(offsets[1], _allowActions);
+    writer.writeStringList(offsets[2], _animations);
+    writer.writeBytes(offsets[3], _backgroundColor);
+    writer.writeLong(offsets[4], _breakerType);
+    writer.writeLong(offsets[5], _breakerTypeHash);
+    writer.writeLong(offsets[6], _classType);
+    writer.writeLong(offsets[7], _collectibleHash);
+    writer.writeBytes(offsets[8], _crafting);
+    writer.writeLongList(offsets[9], _damageTypeHashes);
+    writer.writeLongList(offsets[10], _damageTypes);
+    writer.writeLong(offsets[11], _defaultDamageType);
+    writer.writeLong(offsets[12], _defaultDamageTypeHash);
+    writer.writeBytes(offsets[13], _displayProperties);
+    writer.writeBytes(offsets[14], _displaySource);
+    writer.writeBool(offsets[15], _doesPostmasterPullHaveSideEffects);
+    writer.writeLong(offsets[16], _emblemObjectiveHash);
+    writer.writeBool(offsets[17], _equippable);
+    writer.writeBytes(offsets[18], _equippingBlock);
+    writer.writeBytes(offsets[19], _flavorText);
+    writer.writeBytes(offsets[20], _gearset);
+    writer.writeBytes(offsets[21], _iconWatermark);
+    writer.writeBytes(offsets[22], _iconWatermarkShelved);
+    writer.writeLong(offsets[23], _index);
+    writer.writeBytes(offsets[24], _inventory);
+    writer.writeStringList(offsets[25], _investmentStats);
+    writer.writeBool(offsets[26], _isWrapper);
+    writer.writeLongList(offsets[27], _itemCategoryHashes);
+    writer.writeLong(offsets[28], _itemSubType);
+    writer.writeLong(offsets[29], _itemType);
+    writer.writeBytes(offsets[30], _itemTypeAndTierDisplayName);
+    writer.writeBytes(offsets[31], _itemTypeDisplayName);
+    writer.writeStringList(offsets[32], _links);
+    writer.writeLong(offsets[33], _loreHash);
+    writer.writeBytes(offsets[34], _metrics);
+    writer.writeBool(offsets[35], _nonTransferrable);
+    writer.writeBytes(offsets[36], _objectives);
+    writer.writeStringList(offsets[37], _perks);
+    writer.writeBytes(offsets[38], _plug);
+    writer.writeBytes(offsets[39], _preview);
+    writer.writeBytes(offsets[40], _quality);
+    writer.writeBool(offsets[41], _redacted);
+    writer.writeBytes(offsets[42], _sack);
+    writer.writeBytes(offsets[43], _screenshot);
+    writer.writeLong(offsets[44], _seasonHash);
+    writer.writeBytes(offsets[45], _secondaryIcon);
+    writer.writeBytes(offsets[46], _secondaryOverlay);
+    writer.writeBytes(offsets[47], _secondarySpecial);
+    writer.writeBytes(offsets[48], _setData);
+    writer.writeBytes(offsets[49], _sockets);
+    writer.writeBytes(offsets[50], _sourceData);
+    writer.writeLong(offsets[51], _specialItemType);
+    writer.writeBytes(offsets[52], _stats);
+    writer.writeBytes(offsets[53], _summary);
+    writer.writeLong(offsets[54], _summaryItemHash);
+    writer.writeBytes(offsets[55], _talentGrid);
+    writer.writeStringList(offsets[56], _tooltipNotifications);
+    writer.writeBytes(offsets[57], _tooltipStyle);
+    writer.writeLongList(offsets[58], _traitHashes);
+    writer.writeStringList(offsets[59], _traitIds);
+    writer.writeBytes(offsets[60], _translationBlock);
+    writer.writeBytes(offsets[61], _uiItemDisplayStyle);
+    writer.writeBytes(offsets[62], _value);
   }
 
   @override
@@ -761,74 +1253,134 @@ class _DestinyInventoryItemDefinitionNativeAdapter
       IsarBinaryReader reader,
       List<int> offsets) {
     final object = DestinyInventoryItemDefinition();
-    object.allowActions = reader.readBoolOrNull(offsets[0]);
+    object.action =
+        _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[0]));
+    object.allowActions = reader.readBoolOrNull(offsets[1]);
     object.animations =
-        _destinyInventoryItemDefinitionClassListNullableConverter
-            .fromIsar(reader.readStringList(offsets[1]))
-            ?.cast<DestinyAnimationReference>();
+        _destinyInventoryItemDefinitionDestinyAnimationReferenceListConverter
+            .fromIsar(reader.readStringList(offsets[2]));
+    object.backgroundColor =
+        _destinyInventoryItemDefinitionDestinyColorConverter
+            .fromIsar(reader.readStringOrNull(offsets[3]));
     object.breakerType =
         _destinyInventoryItemDefinitionDestinyBreakerTypeConverter
-            .fromIsar(reader.readLongOrNull(offsets[2]));
-    object.breakerTypeHash = reader.readLongOrNull(offsets[3]);
+            .fromIsar(reader.readLongOrNull(offsets[4]));
+    object.breakerTypeHash = reader.readLongOrNull(offsets[5]);
     object.classType = _destinyInventoryItemDefinitionDestinyClassConverter
-        .fromIsar(reader.readLongOrNull(offsets[4]));
-    object.collectibleHash = reader.readLongOrNull(offsets[5]);
-    object.damageTypeHashes = reader.readLongList(offsets[6]);
-    object.damageTypes = _destinyInventoryItemDefinitionDamageTypesConverter
-        .fromIsar(reader.readLongList(offsets[7]));
+        .fromIsar(reader.readLongOrNull(offsets[6]));
+    object.collectibleHash = reader.readLongOrNull(offsets[7]);
+    object.crafting =
+        _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[8]));
+    object.damageTypeHashes = reader.readLongList(offsets[9]);
+    object.damageTypes = _destinyInventoryItemDefinitionDamageTypeListConverter
+        .fromIsar(reader.readLongList(offsets[10]));
     object.defaultDamageType =
         _destinyInventoryItemDefinitionDamageTypeConverter
-            .fromIsar(reader.readLongOrNull(offsets[8]));
-    object.defaultDamageTypeHash = reader.readLongOrNull(offsets[9]);
-    object.displaySource = reader.readStringOrNull(offsets[10]);
+            .fromIsar(reader.readLongOrNull(offsets[11]));
+    object.defaultDamageTypeHash = reader.readLongOrNull(offsets[12]);
+    object.displayProperties =
+        _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[13]));
+    object.displaySource = reader.readStringOrNull(offsets[14]);
     object.doesPostmasterPullHaveSideEffects =
-        reader.readBoolOrNull(offsets[11]);
-    object.emblemObjectiveHash = reader.readLongOrNull(offsets[12]);
-    object.equippable = reader.readBoolOrNull(offsets[13]);
-    object.flavorText = reader.readStringOrNull(offsets[14]);
+        reader.readBoolOrNull(offsets[15]);
+    object.emblemObjectiveHash = reader.readLongOrNull(offsets[16]);
+    object.equippable = reader.readBoolOrNull(offsets[17]);
+    object.equippingBlock =
+        _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[18]));
+    object.flavorText = reader.readStringOrNull(offsets[19]);
+    object.gearset =
+        _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[20]));
     object.hash = id;
-    object.iconWatermark = reader.readStringOrNull(offsets[15]);
-    object.iconWatermarkShelved = reader.readStringOrNull(offsets[16]);
-    object.index = reader.readLongOrNull(offsets[17]);
+    object.iconWatermark = reader.readStringOrNull(offsets[21]);
+    object.iconWatermarkShelved = reader.readStringOrNull(offsets[22]);
+    object.index = reader.readLongOrNull(offsets[23]);
+    object.inventory =
+        _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[24]));
     object.investmentStats =
-        _destinyInventoryItemDefinitionClassListNullableConverter
-            .fromIsar(reader.readStringList(offsets[18]))
-            ?.cast<DestinyItemInvestmentStatDefinition>();
-    object.isWrapper = reader.readBoolOrNull(offsets[19]);
-    object.itemCategoryHashes = reader.readLongList(offsets[20]);
+        _destinyInventoryItemDefinitionDestinyItemInvestmentStatDefinitionListConverter
+            .fromIsar(reader.readStringList(offsets[25]));
+    object.isWrapper = reader.readBoolOrNull(offsets[26]);
+    object.itemCategoryHashes = reader.readLongList(offsets[27]);
     object.itemSubType =
         _destinyInventoryItemDefinitionDestinyItemSubTypeConverter
-            .fromIsar(reader.readLongOrNull(offsets[21]));
+            .fromIsar(reader.readLongOrNull(offsets[28]));
     object.itemType = _destinyInventoryItemDefinitionDestinyItemTypeConverter
-        .fromIsar(reader.readLongOrNull(offsets[22]));
-    object.itemTypeAndTierDisplayName = reader.readStringOrNull(offsets[23]);
-    object.itemTypeDisplayName = reader.readStringOrNull(offsets[24]);
-    object.links = _destinyInventoryItemDefinitionClassListNullableConverter
-        .fromIsar(reader.readStringList(offsets[25]))
-        ?.cast<HyperlinkReference>();
-    object.loreHash = reader.readLongOrNull(offsets[26]);
-    object.nonTransferrable = reader.readBoolOrNull(offsets[27]);
-    object.perks = _destinyInventoryItemDefinitionClassListNullableConverter
-        .fromIsar(reader.readStringList(offsets[28]))
-        ?.cast<DestinyItemPerkEntryDefinition>();
-    object.redacted = reader.readBoolOrNull(offsets[29]);
-    object.screenshot = reader.readStringOrNull(offsets[30]);
-    object.seasonHash = reader.readLongOrNull(offsets[31]);
-    object.secondaryIcon = reader.readStringOrNull(offsets[32]);
-    object.secondaryOverlay = reader.readStringOrNull(offsets[33]);
-    object.secondarySpecial = reader.readStringOrNull(offsets[34]);
+        .fromIsar(reader.readLongOrNull(offsets[29]));
+    object.itemTypeAndTierDisplayName = reader.readStringOrNull(offsets[30]);
+    object.itemTypeDisplayName = reader.readStringOrNull(offsets[31]);
+    object.links =
+        _destinyInventoryItemDefinitionHyperlinkReferenceListConverter
+            .fromIsar(reader.readStringList(offsets[32]));
+    object.loreHash = reader.readLongOrNull(offsets[33]);
+    object.metrics =
+        _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[34]));
+    object.nonTransferrable = reader.readBoolOrNull(offsets[35]);
+    object.objectives =
+        _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[36]));
+    object.perks =
+        _destinyInventoryItemDefinitionDestinyItemPerkEntryDefinitionListConverter
+            .fromIsar(reader.readStringList(offsets[37]));
+    object.plug =
+        _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[38]));
+    object.preview =
+        _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[39]));
+    object.quality =
+        _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[40]));
+    object.redacted = reader.readBoolOrNull(offsets[41]);
+    object.sack =
+        _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[42]));
+    object.screenshot = reader.readStringOrNull(offsets[43]);
+    object.seasonHash = reader.readLongOrNull(offsets[44]);
+    object.secondaryIcon = reader.readStringOrNull(offsets[45]);
+    object.secondaryOverlay = reader.readStringOrNull(offsets[46]);
+    object.secondarySpecial = reader.readStringOrNull(offsets[47]);
+    object.setData =
+        _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[48]));
+    object.sockets =
+        _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[49]));
+    object.sourceData =
+        _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[50]));
     object.specialItemType =
         _destinyInventoryItemDefinitionSpecialItemTypeConverter
-            .fromIsar(reader.readLongOrNull(offsets[35]));
-    object.summaryItemHash = reader.readLongOrNull(offsets[36]);
+            .fromIsar(reader.readLongOrNull(offsets[51]));
+    object.stats =
+        _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[52]));
+    object.summary =
+        _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[53]));
+    object.summaryItemHash = reader.readLongOrNull(offsets[54]);
+    object.talentGrid =
+        _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[55]));
     object.tooltipNotifications =
-        _destinyInventoryItemDefinitionClassListNullableConverter
-            .fromIsar(reader.readStringList(offsets[37]))
-            ?.cast<DestinyItemTooltipNotification>();
-    object.tooltipStyle = reader.readStringOrNull(offsets[38]);
-    object.traitHashes = reader.readLongList(offsets[39]);
-    object.traitIds = reader.readStringList(offsets[40]);
-    object.uiItemDisplayStyle = reader.readStringOrNull(offsets[41]);
+        _destinyInventoryItemDefinitionDestinyItemTooltipNotificationListConverter
+            .fromIsar(reader.readStringList(offsets[56]));
+    object.tooltipStyle = reader.readStringOrNull(offsets[57]);
+    object.traitHashes = reader.readLongList(offsets[58]);
+    object.traitIds = reader.readStringList(offsets[59]);
+    object.translationBlock =
+        _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[60]));
+    object.uiItemDisplayStyle = reader.readStringOrNull(offsets[61]);
+    object.value =
+        _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[62]));
     return object;
   }
 
@@ -839,101 +1391,164 @@ class _DestinyInventoryItemDefinitionNativeAdapter
       case -1:
         return id as P;
       case 0:
-        return (reader.readBoolOrNull(offset)) as P;
+        return (_destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 1:
-        return (_destinyInventoryItemDefinitionClassListNullableConverter
-            .fromIsar(reader.readStringList(offset))) as P;
+        return (reader.readBoolOrNull(offset)) as P;
       case 2:
-        return (_destinyInventoryItemDefinitionDestinyBreakerTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
+        return (_destinyInventoryItemDefinitionDestinyAnimationReferenceListConverter
+            .fromIsar(reader.readStringList(offset))) as P;
       case 3:
-        return (reader.readLongOrNull(offset)) as P;
+        return (_destinyInventoryItemDefinitionDestinyColorConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 4:
-        return (_destinyInventoryItemDefinitionDestinyClassConverter
+        return (_destinyInventoryItemDefinitionDestinyBreakerTypeConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
       case 5:
         return (reader.readLongOrNull(offset)) as P;
       case 6:
-        return (reader.readLongList(offset)) as P;
+        return (_destinyInventoryItemDefinitionDestinyClassConverter
+            .fromIsar(reader.readLongOrNull(offset))) as P;
       case 7:
-        return (_destinyInventoryItemDefinitionDamageTypesConverter
-            .fromIsar(reader.readLongList(offset))) as P;
+        return (reader.readLongOrNull(offset)) as P;
       case 8:
+        return (_destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 9:
+        return (reader.readLongList(offset)) as P;
+      case 10:
+        return (_destinyInventoryItemDefinitionDamageTypeListConverter
+            .fromIsar(reader.readLongList(offset))) as P;
+      case 11:
         return (_destinyInventoryItemDefinitionDamageTypeConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 9:
-        return (reader.readLongOrNull(offset)) as P;
-      case 10:
-        return (reader.readStringOrNull(offset)) as P;
-      case 11:
-        return (reader.readBoolOrNull(offset)) as P;
       case 12:
         return (reader.readLongOrNull(offset)) as P;
       case 13:
-        return (reader.readBoolOrNull(offset)) as P;
+        return (_destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 14:
         return (reader.readStringOrNull(offset)) as P;
       case 15:
-        return (reader.readStringOrNull(offset)) as P;
-      case 16:
-        return (reader.readStringOrNull(offset)) as P;
-      case 17:
-        return (reader.readLongOrNull(offset)) as P;
-      case 18:
-        return (_destinyInventoryItemDefinitionClassListNullableConverter
-            .fromIsar(reader.readStringList(offset))) as P;
-      case 19:
         return (reader.readBoolOrNull(offset)) as P;
+      case 16:
+        return (reader.readLongOrNull(offset)) as P;
+      case 17:
+        return (reader.readBoolOrNull(offset)) as P;
+      case 18:
+        return (_destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 19:
+        return (reader.readStringOrNull(offset)) as P;
       case 20:
-        return (reader.readLongList(offset)) as P;
+        return (_destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 21:
-        return (_destinyInventoryItemDefinitionDestinyItemSubTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
+        return (reader.readStringOrNull(offset)) as P;
       case 22:
-        return (_destinyInventoryItemDefinitionDestinyItemTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
+        return (reader.readStringOrNull(offset)) as P;
       case 23:
-        return (reader.readStringOrNull(offset)) as P;
+        return (reader.readLongOrNull(offset)) as P;
       case 24:
-        return (reader.readStringOrNull(offset)) as P;
+        return (_destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 25:
-        return (_destinyInventoryItemDefinitionClassListNullableConverter
+        return (_destinyInventoryItemDefinitionDestinyItemInvestmentStatDefinitionListConverter
             .fromIsar(reader.readStringList(offset))) as P;
       case 26:
-        return (reader.readLongOrNull(offset)) as P;
+        return (reader.readBoolOrNull(offset)) as P;
       case 27:
-        return (reader.readBoolOrNull(offset)) as P;
+        return (reader.readLongList(offset)) as P;
       case 28:
-        return (_destinyInventoryItemDefinitionClassListNullableConverter
-            .fromIsar(reader.readStringList(offset))) as P;
+        return (_destinyInventoryItemDefinitionDestinyItemSubTypeConverter
+            .fromIsar(reader.readLongOrNull(offset))) as P;
       case 29:
-        return (reader.readBoolOrNull(offset)) as P;
+        return (_destinyInventoryItemDefinitionDestinyItemTypeConverter
+            .fromIsar(reader.readLongOrNull(offset))) as P;
       case 30:
         return (reader.readStringOrNull(offset)) as P;
       case 31:
-        return (reader.readLongOrNull(offset)) as P;
+        return (reader.readStringOrNull(offset)) as P;
       case 32:
-        return (reader.readStringOrNull(offset)) as P;
+        return (_destinyInventoryItemDefinitionHyperlinkReferenceListConverter
+            .fromIsar(reader.readStringList(offset))) as P;
       case 33:
-        return (reader.readStringOrNull(offset)) as P;
-      case 34:
-        return (reader.readStringOrNull(offset)) as P;
-      case 35:
-        return (_destinyInventoryItemDefinitionSpecialItemTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 36:
         return (reader.readLongOrNull(offset)) as P;
+      case 34:
+        return (_destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 35:
+        return (reader.readBoolOrNull(offset)) as P;
+      case 36:
+        return (_destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 37:
-        return (_destinyInventoryItemDefinitionClassListNullableConverter
+        return (_destinyInventoryItemDefinitionDestinyItemPerkEntryDefinitionListConverter
             .fromIsar(reader.readStringList(offset))) as P;
       case 38:
-        return (reader.readStringOrNull(offset)) as P;
+        return (_destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 39:
-        return (reader.readLongList(offset)) as P;
+        return (_destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 40:
-        return (reader.readStringList(offset)) as P;
+        return (_destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 41:
+        return (reader.readBoolOrNull(offset)) as P;
+      case 42:
+        return (_destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 43:
         return (reader.readStringOrNull(offset)) as P;
+      case 44:
+        return (reader.readLongOrNull(offset)) as P;
+      case 45:
+        return (reader.readStringOrNull(offset)) as P;
+      case 46:
+        return (reader.readStringOrNull(offset)) as P;
+      case 47:
+        return (reader.readStringOrNull(offset)) as P;
+      case 48:
+        return (_destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 49:
+        return (_destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 50:
+        return (_destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 51:
+        return (_destinyInventoryItemDefinitionSpecialItemTypeConverter
+            .fromIsar(reader.readLongOrNull(offset))) as P;
+      case 52:
+        return (_destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 53:
+        return (_destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 54:
+        return (reader.readLongOrNull(offset)) as P;
+      case 55:
+        return (_destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 56:
+        return (_destinyInventoryItemDefinitionDestinyItemTooltipNotificationListConverter
+            .fromIsar(reader.readStringList(offset))) as P;
+      case 57:
+        return (reader.readStringOrNull(offset)) as P;
+      case 58:
+        return (reader.readLongList(offset)) as P;
+      case 59:
+        return (reader.readStringList(offset)) as P;
+      case 60:
+        return (_destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 61:
+        return (reader.readStringOrNull(offset)) as P;
+      case 62:
+        return (_destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       default:
         throw 'Illegal propertyIndex';
     }
@@ -1036,6 +1651,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
     DestinyInventoryItemDefinition,
     DestinyInventoryItemDefinition,
     QFilterCondition> {
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> actionIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'action',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> actionEqualTo(
+    DestinyItemActionBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'action',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> actionGreaterThan(
+    DestinyItemActionBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'action',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> actionLessThan(
+    DestinyItemActionBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'action',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> actionBetween(
+    DestinyItemActionBlockDefinition? lower,
+    DestinyItemActionBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'action',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> actionStartsWith(
+    DestinyItemActionBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'action',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> actionEndsWith(
+    DestinyItemActionBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'action',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      actionContains(DestinyItemActionBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'action',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      actionMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'action',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterFilterCondition> allowActionsIsNull() {
     return addFilterConditionInternal(FilterCondition(
@@ -1176,6 +1926,124 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'animations',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> backgroundColorIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'backgroundColor',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> backgroundColorEqualTo(
+    DestinyColor? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'backgroundColor',
+      value: _destinyInventoryItemDefinitionDestinyColorConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> backgroundColorGreaterThan(
+    DestinyColor? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'backgroundColor',
+      value: _destinyInventoryItemDefinitionDestinyColorConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> backgroundColorLessThan(
+    DestinyColor? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'backgroundColor',
+      value: _destinyInventoryItemDefinitionDestinyColorConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> backgroundColorBetween(
+    DestinyColor? lower,
+    DestinyColor? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'backgroundColor',
+      lower: _destinyInventoryItemDefinitionDestinyColorConverter.toIsar(lower),
+      includeLower: includeLower,
+      upper: _destinyInventoryItemDefinitionDestinyColorConverter.toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> backgroundColorStartsWith(
+    DestinyColor value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'backgroundColor',
+      value: _destinyInventoryItemDefinitionDestinyColorConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> backgroundColorEndsWith(
+    DestinyColor value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'backgroundColor',
+      value: _destinyInventoryItemDefinitionDestinyColorConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      backgroundColorContains(DestinyColor value, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'backgroundColor',
+      value: _destinyInventoryItemDefinitionDestinyColorConverter.toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      backgroundColorMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'backgroundColor',
       value: pattern,
       caseSensitive: caseSensitive,
     ));
@@ -1423,6 +2291,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
       includeLower: includeLower,
       upper: upper,
       includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> craftingIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'crafting',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> craftingEqualTo(
+    DestinyItemCraftingBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'crafting',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> craftingGreaterThan(
+    DestinyItemCraftingBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'crafting',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> craftingLessThan(
+    DestinyItemCraftingBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'crafting',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> craftingBetween(
+    DestinyItemCraftingBlockDefinition? lower,
+    DestinyItemCraftingBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'crafting',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> craftingStartsWith(
+    DestinyItemCraftingBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'crafting',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> craftingEndsWith(
+    DestinyItemCraftingBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'crafting',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      craftingContains(DestinyItemCraftingBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'crafting',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      craftingMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'crafting',
+      value: pattern,
+      caseSensitive: caseSensitive,
     ));
   }
 
@@ -1685,6 +2688,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> displayPropertiesIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'displayProperties',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> displayPropertiesEqualTo(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'displayProperties',
+      value:
+          _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> displayPropertiesGreaterThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> displayPropertiesLessThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> displayPropertiesBetween(
+    DestinyDisplayPropertiesDefinition? lower,
+    DestinyDisplayPropertiesDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'displayProperties',
+      lower:
+          _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> displayPropertiesStartsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'displayProperties',
+      value:
+          _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> displayPropertiesEndsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'displayProperties',
+      value:
+          _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      displayPropertiesContains(DestinyDisplayPropertiesDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'displayProperties',
+      value:
+          _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      displayPropertiesMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'displayProperties',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterFilterCondition> displaySourceIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -1900,6 +3038,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> equippingBlockIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'equippingBlock',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> equippingBlockEqualTo(
+    DestinyEquippingBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'equippingBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> equippingBlockGreaterThan(
+    DestinyEquippingBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'equippingBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> equippingBlockLessThan(
+    DestinyEquippingBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'equippingBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> equippingBlockBetween(
+    DestinyEquippingBlockDefinition? lower,
+    DestinyEquippingBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'equippingBlock',
+      lower:
+          _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> equippingBlockStartsWith(
+    DestinyEquippingBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'equippingBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> equippingBlockEndsWith(
+    DestinyEquippingBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'equippingBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      equippingBlockContains(DestinyEquippingBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'equippingBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      equippingBlockMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'equippingBlock',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterFilterCondition> flavorTextIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -2012,6 +3285,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.matches,
       property: 'flavorText',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> gearsetIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'gearset',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> gearsetEqualTo(
+    DestinyItemGearsetBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'gearset',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> gearsetGreaterThan(
+    DestinyItemGearsetBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'gearset',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> gearsetLessThan(
+    DestinyItemGearsetBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'gearset',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> gearsetBetween(
+    DestinyItemGearsetBlockDefinition? lower,
+    DestinyItemGearsetBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'gearset',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> gearsetStartsWith(
+    DestinyItemGearsetBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'gearset',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> gearsetEndsWith(
+    DestinyItemGearsetBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'gearset',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      gearsetContains(DestinyItemGearsetBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'gearset',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      gearsetMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'gearset',
       value: pattern,
       caseSensitive: caseSensitive,
     ));
@@ -2370,6 +3778,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
       includeLower: includeLower,
       upper: upper,
       includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> inventoryIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'inventory',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> inventoryEqualTo(
+    DestinyItemInventoryBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'inventory',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> inventoryGreaterThan(
+    DestinyItemInventoryBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'inventory',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> inventoryLessThan(
+    DestinyItemInventoryBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'inventory',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> inventoryBetween(
+    DestinyItemInventoryBlockDefinition? lower,
+    DestinyItemInventoryBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'inventory',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> inventoryStartsWith(
+    DestinyItemInventoryBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'inventory',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> inventoryEndsWith(
+    DestinyItemInventoryBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'inventory',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      inventoryContains(DestinyItemInventoryBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'inventory',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      inventoryMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'inventory',
+      value: pattern,
+      caseSensitive: caseSensitive,
     ));
   }
 
@@ -3143,6 +4686,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> metricsIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'metrics',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> metricsEqualTo(
+    DestinyItemMetricBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'metrics',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> metricsGreaterThan(
+    DestinyItemMetricBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'metrics',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> metricsLessThan(
+    DestinyItemMetricBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'metrics',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> metricsBetween(
+    DestinyItemMetricBlockDefinition? lower,
+    DestinyItemMetricBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'metrics',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> metricsStartsWith(
+    DestinyItemMetricBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'metrics',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> metricsEndsWith(
+    DestinyItemMetricBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'metrics',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      metricsContains(DestinyItemMetricBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'metrics',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      metricsMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'metrics',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterFilterCondition> nonTransferrableIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -3157,6 +4835,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
       type: ConditionType.eq,
       property: 'nonTransferrable',
       value: value,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> objectivesIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'objectives',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> objectivesEqualTo(
+    DestinyItemObjectiveBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'objectives',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> objectivesGreaterThan(
+    DestinyItemObjectiveBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'objectives',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> objectivesLessThan(
+    DestinyItemObjectiveBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'objectives',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> objectivesBetween(
+    DestinyItemObjectiveBlockDefinition? lower,
+    DestinyItemObjectiveBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'objectives',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> objectivesStartsWith(
+    DestinyItemObjectiveBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'objectives',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> objectivesEndsWith(
+    DestinyItemObjectiveBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'objectives',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      objectivesContains(DestinyItemObjectiveBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'objectives',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      objectivesMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'objectives',
+      value: pattern,
+      caseSensitive: caseSensitive,
     ));
   }
 
@@ -3288,6 +5101,403 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> plugIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'plug',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> plugEqualTo(
+    DestinyItemPlugDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'plug',
+      value: _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> plugGreaterThan(
+    DestinyItemPlugDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'plug',
+      value: _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> plugLessThan(
+    DestinyItemPlugDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'plug',
+      value: _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> plugBetween(
+    DestinyItemPlugDefinition? lower,
+    DestinyItemPlugDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'plug',
+      lower: _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+          .toIsar(lower),
+      includeLower: includeLower,
+      upper: _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+          .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> plugStartsWith(
+    DestinyItemPlugDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'plug',
+      value: _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> plugEndsWith(
+    DestinyItemPlugDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'plug',
+      value: _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      plugContains(DestinyItemPlugDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'plug',
+      value: _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
+          .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      plugMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'plug',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> previewIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'preview',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> previewEqualTo(
+    DestinyItemPreviewBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'preview',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> previewGreaterThan(
+    DestinyItemPreviewBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'preview',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> previewLessThan(
+    DestinyItemPreviewBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'preview',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> previewBetween(
+    DestinyItemPreviewBlockDefinition? lower,
+    DestinyItemPreviewBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'preview',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> previewStartsWith(
+    DestinyItemPreviewBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'preview',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> previewEndsWith(
+    DestinyItemPreviewBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'preview',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      previewContains(DestinyItemPreviewBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'preview',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      previewMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'preview',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> qualityIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'quality',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> qualityEqualTo(
+    DestinyItemQualityBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'quality',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> qualityGreaterThan(
+    DestinyItemQualityBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'quality',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> qualityLessThan(
+    DestinyItemQualityBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'quality',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> qualityBetween(
+    DestinyItemQualityBlockDefinition? lower,
+    DestinyItemQualityBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'quality',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> qualityStartsWith(
+    DestinyItemQualityBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'quality',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> qualityEndsWith(
+    DestinyItemQualityBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'quality',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      qualityContains(DestinyItemQualityBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'quality',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      qualityMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'quality',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterFilterCondition> redactedIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -3302,6 +5512,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
       type: ConditionType.eq,
       property: 'redacted',
       value: value,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sackIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'sack',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sackEqualTo(
+    DestinyItemSackBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'sack',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sackGreaterThan(
+    DestinyItemSackBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'sack',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sackLessThan(
+    DestinyItemSackBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'sack',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sackBetween(
+    DestinyItemSackBlockDefinition? lower,
+    DestinyItemSackBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'sack',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sackStartsWith(
+    DestinyItemSackBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'sack',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sackEndsWith(
+    DestinyItemSackBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'sack',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      sackContains(DestinyItemSackBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'sack',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      sackMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'sack',
+      value: pattern,
+      caseSensitive: caseSensitive,
     ));
   }
 
@@ -3838,6 +6183,411 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> setDataIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'setData',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> setDataEqualTo(
+    DestinyItemSetBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'setData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> setDataGreaterThan(
+    DestinyItemSetBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'setData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> setDataLessThan(
+    DestinyItemSetBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'setData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> setDataBetween(
+    DestinyItemSetBlockDefinition? lower,
+    DestinyItemSetBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'setData',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> setDataStartsWith(
+    DestinyItemSetBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'setData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> setDataEndsWith(
+    DestinyItemSetBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'setData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      setDataContains(DestinyItemSetBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'setData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      setDataMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'setData',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> socketsIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'sockets',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> socketsEqualTo(
+    DestinyItemSocketBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'sockets',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> socketsGreaterThan(
+    DestinyItemSocketBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'sockets',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> socketsLessThan(
+    DestinyItemSocketBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'sockets',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> socketsBetween(
+    DestinyItemSocketBlockDefinition? lower,
+    DestinyItemSocketBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'sockets',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> socketsStartsWith(
+    DestinyItemSocketBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'sockets',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> socketsEndsWith(
+    DestinyItemSocketBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'sockets',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      socketsContains(DestinyItemSocketBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'sockets',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      socketsMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'sockets',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sourceDataIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'sourceData',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sourceDataEqualTo(
+    DestinyItemSourceBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'sourceData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sourceDataGreaterThan(
+    DestinyItemSourceBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'sourceData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sourceDataLessThan(
+    DestinyItemSourceBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'sourceData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sourceDataBetween(
+    DestinyItemSourceBlockDefinition? lower,
+    DestinyItemSourceBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'sourceData',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sourceDataStartsWith(
+    DestinyItemSourceBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'sourceData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> sourceDataEndsWith(
+    DestinyItemSourceBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'sourceData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      sourceDataContains(DestinyItemSourceBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'sourceData',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      sourceDataMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'sourceData',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterFilterCondition> specialItemTypeIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -3903,6 +6653,276 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> statsIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'stats',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> statsEqualTo(
+    DestinyItemStatBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'stats',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> statsGreaterThan(
+    DestinyItemStatBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'stats',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> statsLessThan(
+    DestinyItemStatBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'stats',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> statsBetween(
+    DestinyItemStatBlockDefinition? lower,
+    DestinyItemStatBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'stats',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> statsStartsWith(
+    DestinyItemStatBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'stats',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> statsEndsWith(
+    DestinyItemStatBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'stats',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      statsContains(DestinyItemStatBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'stats',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      statsMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'stats',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> summaryIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'summary',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> summaryEqualTo(
+    DestinyItemSummaryBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'summary',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> summaryGreaterThan(
+    DestinyItemSummaryBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'summary',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> summaryLessThan(
+    DestinyItemSummaryBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'summary',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> summaryBetween(
+    DestinyItemSummaryBlockDefinition? lower,
+    DestinyItemSummaryBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'summary',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> summaryStartsWith(
+    DestinyItemSummaryBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'summary',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> summaryEndsWith(
+    DestinyItemSummaryBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'summary',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      summaryContains(DestinyItemSummaryBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'summary',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      summaryMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'summary',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterFilterCondition> summaryItemHashIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -3959,6 +6979,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
       includeLower: includeLower,
       upper: upper,
       includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> talentGridIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'talentGrid',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> talentGridEqualTo(
+    DestinyItemTalentGridBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'talentGrid',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> talentGridGreaterThan(
+    DestinyItemTalentGridBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'talentGrid',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> talentGridLessThan(
+    DestinyItemTalentGridBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'talentGrid',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> talentGridBetween(
+    DestinyItemTalentGridBlockDefinition? lower,
+    DestinyItemTalentGridBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'talentGrid',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> talentGridStartsWith(
+    DestinyItemTalentGridBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'talentGrid',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> talentGridEndsWith(
+    DestinyItemTalentGridBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'talentGrid',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      talentGridContains(DestinyItemTalentGridBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'talentGrid',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      talentGridMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'talentGrid',
+      value: pattern,
+      caseSensitive: caseSensitive,
     ));
   }
 
@@ -4406,6 +7561,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> translationBlockIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'translationBlock',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> translationBlockEqualTo(
+    DestinyItemTranslationBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'translationBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> translationBlockGreaterThan(
+    DestinyItemTranslationBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'translationBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> translationBlockLessThan(
+    DestinyItemTranslationBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'translationBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> translationBlockBetween(
+    DestinyItemTranslationBlockDefinition? lower,
+    DestinyItemTranslationBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'translationBlock',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> translationBlockStartsWith(
+    DestinyItemTranslationBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'translationBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> translationBlockEndsWith(
+    DestinyItemTranslationBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'translationBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      translationBlockContains(DestinyItemTranslationBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'translationBlock',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      translationBlockMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'translationBlock',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterFilterCondition> uiItemDisplayStyleIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -4522,6 +7812,141 @@ extension DestinyInventoryItemDefinitionQueryFilter on QueryBuilder<
       caseSensitive: caseSensitive,
     ));
   }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> valueIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'value',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> valueEqualTo(
+    DestinyItemValueBlockDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'value',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> valueGreaterThan(
+    DestinyItemValueBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'value',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> valueLessThan(
+    DestinyItemValueBlockDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'value',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> valueBetween(
+    DestinyItemValueBlockDefinition? lower,
+    DestinyItemValueBlockDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'value',
+      lower:
+          _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> valueStartsWith(
+    DestinyItemValueBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'value',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterFilterCondition> valueEndsWith(
+    DestinyItemValueBlockDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'value',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      valueContains(DestinyItemValueBlockDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'value',
+      value:
+          _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+          QAfterFilterCondition>
+      valueMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'value',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
 }
 
 extension DestinyInventoryItemDefinitionQueryLinks on QueryBuilder<
@@ -4532,6 +7957,16 @@ extension DestinyInventoryItemDefinitionQueryLinks on QueryBuilder<
 extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
     DestinyInventoryItemDefinition, DestinyInventoryItemDefinition, QSortBy> {
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByAction() {
+    return addSortByInternal('action', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByActionDesc() {
+    return addSortByInternal('action', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByAllowActions() {
     return addSortByInternal('allowActions', Sort.asc);
   }
@@ -4539,6 +7974,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByAllowActionsDesc() {
     return addSortByInternal('allowActions', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByBackgroundColor() {
+    return addSortByInternal('backgroundColor', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByBackgroundColorDesc() {
+    return addSortByInternal('backgroundColor', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -4582,6 +8027,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByCrafting() {
+    return addSortByInternal('crafting', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByCraftingDesc() {
+    return addSortByInternal('crafting', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByDefaultDamageType() {
     return addSortByInternal('defaultDamageType', Sort.asc);
   }
@@ -4599,6 +8054,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByDefaultDamageTypeHashDesc() {
     return addSortByInternal('defaultDamageTypeHash', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -4642,6 +8107,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByEquippingBlock() {
+    return addSortByInternal('equippingBlock', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByEquippingBlockDesc() {
+    return addSortByInternal('equippingBlock', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByFlavorText() {
     return addSortByInternal('flavorText', Sort.asc);
   }
@@ -4649,6 +8124,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByFlavorTextDesc() {
     return addSortByInternal('flavorText', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByGearset() {
+    return addSortByInternal('gearset', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByGearsetDesc() {
+    return addSortByInternal('gearset', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -4689,6 +8174,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByIndexDesc() {
     return addSortByInternal('index', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByInventory() {
+    return addSortByInternal('inventory', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByInventoryDesc() {
+    return addSortByInternal('inventory', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -4752,6 +8247,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByMetrics() {
+    return addSortByInternal('metrics', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByMetricsDesc() {
+    return addSortByInternal('metrics', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByNonTransferrable() {
     return addSortByInternal('nonTransferrable', Sort.asc);
   }
@@ -4762,6 +8267,46 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByObjectives() {
+    return addSortByInternal('objectives', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByObjectivesDesc() {
+    return addSortByInternal('objectives', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByPlug() {
+    return addSortByInternal('plug', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByPlugDesc() {
+    return addSortByInternal('plug', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByPreview() {
+    return addSortByInternal('preview', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByPreviewDesc() {
+    return addSortByInternal('preview', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByQuality() {
+    return addSortByInternal('quality', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByQualityDesc() {
+    return addSortByInternal('quality', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByRedacted() {
     return addSortByInternal('redacted', Sort.asc);
   }
@@ -4769,6 +8314,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByRedactedDesc() {
     return addSortByInternal('redacted', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortBySack() {
+    return addSortByInternal('sack', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortBySackDesc() {
+    return addSortByInternal('sack', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -4822,6 +8377,36 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortBySetData() {
+    return addSortByInternal('setData', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortBySetDataDesc() {
+    return addSortByInternal('setData', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortBySockets() {
+    return addSortByInternal('sockets', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortBySocketsDesc() {
+    return addSortByInternal('sockets', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortBySourceData() {
+    return addSortByInternal('sourceData', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortBySourceDataDesc() {
+    return addSortByInternal('sourceData', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortBySpecialItemType() {
     return addSortByInternal('specialItemType', Sort.asc);
   }
@@ -4829,6 +8414,26 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortBySpecialItemTypeDesc() {
     return addSortByInternal('specialItemType', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByStats() {
+    return addSortByInternal('stats', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByStatsDesc() {
+    return addSortByInternal('stats', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortBySummary() {
+    return addSortByInternal('summary', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortBySummaryDesc() {
+    return addSortByInternal('summary', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -4842,6 +8447,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByTalentGrid() {
+    return addSortByInternal('talentGrid', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByTalentGridDesc() {
+    return addSortByInternal('talentGrid', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByTooltipStyle() {
     return addSortByInternal('tooltipStyle', Sort.asc);
   }
@@ -4849,6 +8464,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> sortByTooltipStyleDesc() {
     return addSortByInternal('tooltipStyle', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByTranslationBlock() {
+    return addSortByInternal('translationBlock', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByTranslationBlockDesc() {
+    return addSortByInternal('translationBlock', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -4860,12 +8485,32 @@ extension DestinyInventoryItemDefinitionQueryWhereSortBy on QueryBuilder<
       QAfterSortBy> sortByUiItemDisplayStyleDesc() {
     return addSortByInternal('uiItemDisplayStyle', Sort.desc);
   }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByValue() {
+    return addSortByInternal('value', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> sortByValueDesc() {
+    return addSortByInternal('value', Sort.desc);
+  }
 }
 
 extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
     DestinyInventoryItemDefinition,
     DestinyInventoryItemDefinition,
     QSortThenBy> {
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByAction() {
+    return addSortByInternal('action', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByActionDesc() {
+    return addSortByInternal('action', Sort.desc);
+  }
+
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByAllowActions() {
     return addSortByInternal('allowActions', Sort.asc);
@@ -4874,6 +8519,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByAllowActionsDesc() {
     return addSortByInternal('allowActions', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByBackgroundColor() {
+    return addSortByInternal('backgroundColor', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByBackgroundColorDesc() {
+    return addSortByInternal('backgroundColor', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -4917,6 +8572,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByCrafting() {
+    return addSortByInternal('crafting', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByCraftingDesc() {
+    return addSortByInternal('crafting', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByDefaultDamageType() {
     return addSortByInternal('defaultDamageType', Sort.asc);
   }
@@ -4934,6 +8599,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByDefaultDamageTypeHashDesc() {
     return addSortByInternal('defaultDamageTypeHash', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -4977,6 +8652,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByEquippingBlock() {
+    return addSortByInternal('equippingBlock', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByEquippingBlockDesc() {
+    return addSortByInternal('equippingBlock', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByFlavorText() {
     return addSortByInternal('flavorText', Sort.asc);
   }
@@ -4984,6 +8669,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByFlavorTextDesc() {
     return addSortByInternal('flavorText', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByGearset() {
+    return addSortByInternal('gearset', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByGearsetDesc() {
+    return addSortByInternal('gearset', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5024,6 +8719,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByIndexDesc() {
     return addSortByInternal('index', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByInventory() {
+    return addSortByInternal('inventory', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByInventoryDesc() {
+    return addSortByInternal('inventory', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5087,6 +8792,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByMetrics() {
+    return addSortByInternal('metrics', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByMetricsDesc() {
+    return addSortByInternal('metrics', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByNonTransferrable() {
     return addSortByInternal('nonTransferrable', Sort.asc);
   }
@@ -5097,6 +8812,46 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByObjectives() {
+    return addSortByInternal('objectives', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByObjectivesDesc() {
+    return addSortByInternal('objectives', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByPlug() {
+    return addSortByInternal('plug', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByPlugDesc() {
+    return addSortByInternal('plug', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByPreview() {
+    return addSortByInternal('preview', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByPreviewDesc() {
+    return addSortByInternal('preview', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByQuality() {
+    return addSortByInternal('quality', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByQualityDesc() {
+    return addSortByInternal('quality', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByRedacted() {
     return addSortByInternal('redacted', Sort.asc);
   }
@@ -5104,6 +8859,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByRedactedDesc() {
     return addSortByInternal('redacted', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenBySack() {
+    return addSortByInternal('sack', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenBySackDesc() {
+    return addSortByInternal('sack', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5157,6 +8922,36 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenBySetData() {
+    return addSortByInternal('setData', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenBySetDataDesc() {
+    return addSortByInternal('setData', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenBySockets() {
+    return addSortByInternal('sockets', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenBySocketsDesc() {
+    return addSortByInternal('sockets', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenBySourceData() {
+    return addSortByInternal('sourceData', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenBySourceDataDesc() {
+    return addSortByInternal('sourceData', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenBySpecialItemType() {
     return addSortByInternal('specialItemType', Sort.asc);
   }
@@ -5164,6 +8959,26 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenBySpecialItemTypeDesc() {
     return addSortByInternal('specialItemType', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByStats() {
+    return addSortByInternal('stats', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByStatsDesc() {
+    return addSortByInternal('stats', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenBySummary() {
+    return addSortByInternal('summary', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenBySummaryDesc() {
+    return addSortByInternal('summary', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5177,6 +8992,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByTalentGrid() {
+    return addSortByInternal('talentGrid', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByTalentGridDesc() {
+    return addSortByInternal('talentGrid', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByTooltipStyle() {
     return addSortByInternal('tooltipStyle', Sort.asc);
   }
@@ -5184,6 +9009,16 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QAfterSortBy> thenByTooltipStyleDesc() {
     return addSortByInternal('tooltipStyle', Sort.desc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByTranslationBlock() {
+    return addSortByInternal('translationBlock', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByTranslationBlockDesc() {
+    return addSortByInternal('translationBlock', Sort.desc);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5195,13 +9030,34 @@ extension DestinyInventoryItemDefinitionQueryWhereSortThenBy on QueryBuilder<
       QAfterSortBy> thenByUiItemDisplayStyleDesc() {
     return addSortByInternal('uiItemDisplayStyle', Sort.desc);
   }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByValue() {
+    return addSortByInternal('value', Sort.asc);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QAfterSortBy> thenByValueDesc() {
+    return addSortByInternal('value', Sort.desc);
+  }
 }
 
 extension DestinyInventoryItemDefinitionQueryWhereDistinct on QueryBuilder<
     DestinyInventoryItemDefinition, DestinyInventoryItemDefinition, QDistinct> {
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByAction({bool caseSensitive = true}) {
+    return addDistinctByInternal('action', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QDistinct> distinctByAllowActions() {
     return addDistinctByInternal('allowActions');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByBackgroundColor({bool caseSensitive = true}) {
+    return addDistinctByInternal('backgroundColor',
+        caseSensitive: caseSensitive);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5225,6 +9081,11 @@ extension DestinyInventoryItemDefinitionQueryWhereDistinct on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByCrafting({bool caseSensitive = true}) {
+    return addDistinctByInternal('crafting', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QDistinct> distinctByDefaultDamageType() {
     return addDistinctByInternal('defaultDamageType');
   }
@@ -5232,6 +9093,12 @@ extension DestinyInventoryItemDefinitionQueryWhereDistinct on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QDistinct> distinctByDefaultDamageTypeHash() {
     return addDistinctByInternal('defaultDamageTypeHash');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByDisplayProperties({bool caseSensitive = true}) {
+    return addDistinctByInternal('displayProperties',
+        caseSensitive: caseSensitive);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5255,8 +9122,19 @@ extension DestinyInventoryItemDefinitionQueryWhereDistinct on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByEquippingBlock({bool caseSensitive = true}) {
+    return addDistinctByInternal('equippingBlock',
+        caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QDistinct> distinctByFlavorText({bool caseSensitive = true}) {
     return addDistinctByInternal('flavorText', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByGearset({bool caseSensitive = true}) {
+    return addDistinctByInternal('gearset', caseSensitive: caseSensitive);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5278,6 +9156,11 @@ extension DestinyInventoryItemDefinitionQueryWhereDistinct on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QDistinct> distinctByIndex() {
     return addDistinctByInternal('index');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByInventory({bool caseSensitive = true}) {
+    return addDistinctByInternal('inventory', caseSensitive: caseSensitive);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5314,13 +9197,43 @@ extension DestinyInventoryItemDefinitionQueryWhereDistinct on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByMetrics({bool caseSensitive = true}) {
+    return addDistinctByInternal('metrics', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QDistinct> distinctByNonTransferrable() {
     return addDistinctByInternal('nonTransferrable');
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByObjectives({bool caseSensitive = true}) {
+    return addDistinctByInternal('objectives', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByPlug({bool caseSensitive = true}) {
+    return addDistinctByInternal('plug', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByPreview({bool caseSensitive = true}) {
+    return addDistinctByInternal('preview', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByQuality({bool caseSensitive = true}) {
+    return addDistinctByInternal('quality', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QDistinct> distinctByRedacted() {
     return addDistinctByInternal('redacted');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctBySack({bool caseSensitive = true}) {
+    return addDistinctByInternal('sack', caseSensitive: caseSensitive);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5351,8 +9264,33 @@ extension DestinyInventoryItemDefinitionQueryWhereDistinct on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctBySetData({bool caseSensitive = true}) {
+    return addDistinctByInternal('setData', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctBySockets({bool caseSensitive = true}) {
+    return addDistinctByInternal('sockets', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctBySourceData({bool caseSensitive = true}) {
+    return addDistinctByInternal('sourceData', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QDistinct> distinctBySpecialItemType() {
     return addDistinctByInternal('specialItemType');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByStats({bool caseSensitive = true}) {
+    return addDistinctByInternal('stats', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctBySummary({bool caseSensitive = true}) {
+    return addDistinctByInternal('summary', caseSensitive: caseSensitive);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5361,8 +9299,19 @@ extension DestinyInventoryItemDefinitionQueryWhereDistinct on QueryBuilder<
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByTalentGrid({bool caseSensitive = true}) {
+    return addDistinctByInternal('talentGrid', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
       QDistinct> distinctByTooltipStyle({bool caseSensitive = true}) {
     return addDistinctByInternal('tooltipStyle', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByTranslationBlock({bool caseSensitive = true}) {
+    return addDistinctByInternal('translationBlock',
+        caseSensitive: caseSensitive);
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
@@ -5370,12 +9319,22 @@ extension DestinyInventoryItemDefinitionQueryWhereDistinct on QueryBuilder<
     return addDistinctByInternal('uiItemDisplayStyle',
         caseSensitive: caseSensitive);
   }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyInventoryItemDefinition,
+      QDistinct> distinctByValue({bool caseSensitive = true}) {
+    return addDistinctByInternal('value', caseSensitive: caseSensitive);
+  }
 }
 
 extension DestinyInventoryItemDefinitionQueryProperty on QueryBuilder<
     DestinyInventoryItemDefinition,
     DestinyInventoryItemDefinition,
     QQueryProperty> {
+  QueryBuilder<DestinyInventoryItemDefinition,
+      DestinyItemActionBlockDefinition?, QQueryOperations> actionProperty() {
+    return addPropertyNameInternal('action');
+  }
+
   QueryBuilder<DestinyInventoryItemDefinition, bool?, QQueryOperations>
       allowActionsProperty() {
     return addPropertyNameInternal('allowActions');
@@ -5384,6 +9343,11 @@ extension DestinyInventoryItemDefinitionQueryProperty on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, List<DestinyAnimationReference>?,
       QQueryOperations> animationsProperty() {
     return addPropertyNameInternal('animations');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyColor?, QQueryOperations>
+      backgroundColorProperty() {
+    return addPropertyNameInternal('backgroundColor');
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, DestinyBreakerType?,
@@ -5406,6 +9370,13 @@ extension DestinyInventoryItemDefinitionQueryProperty on QueryBuilder<
     return addPropertyNameInternal('collectibleHash');
   }
 
+  QueryBuilder<
+      DestinyInventoryItemDefinition,
+      DestinyItemCraftingBlockDefinition?,
+      QQueryOperations> craftingProperty() {
+    return addPropertyNameInternal('crafting');
+  }
+
   QueryBuilder<DestinyInventoryItemDefinition, List<int>?, QQueryOperations>
       damageTypeHashesProperty() {
     return addPropertyNameInternal('damageTypeHashes');
@@ -5424,6 +9395,13 @@ extension DestinyInventoryItemDefinitionQueryProperty on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, int?, QQueryOperations>
       defaultDamageTypeHashProperty() {
     return addPropertyNameInternal('defaultDamageTypeHash');
+  }
+
+  QueryBuilder<
+      DestinyInventoryItemDefinition,
+      DestinyDisplayPropertiesDefinition?,
+      QQueryOperations> displayPropertiesProperty() {
+    return addPropertyNameInternal('displayProperties');
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, String?, QQueryOperations>
@@ -5446,9 +9424,19 @@ extension DestinyInventoryItemDefinitionQueryProperty on QueryBuilder<
     return addPropertyNameInternal('equippable');
   }
 
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyEquippingBlockDefinition?,
+      QQueryOperations> equippingBlockProperty() {
+    return addPropertyNameInternal('equippingBlock');
+  }
+
   QueryBuilder<DestinyInventoryItemDefinition, String?, QQueryOperations>
       flavorTextProperty() {
     return addPropertyNameInternal('flavorText');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition,
+      DestinyItemGearsetBlockDefinition?, QQueryOperations> gearsetProperty() {
+    return addPropertyNameInternal('gearset');
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, int?, QQueryOperations>
@@ -5469,6 +9457,13 @@ extension DestinyInventoryItemDefinitionQueryProperty on QueryBuilder<
   QueryBuilder<DestinyInventoryItemDefinition, int?, QQueryOperations>
       indexProperty() {
     return addPropertyNameInternal('index');
+  }
+
+  QueryBuilder<
+      DestinyInventoryItemDefinition,
+      DestinyItemInventoryBlockDefinition?,
+      QQueryOperations> inventoryProperty() {
+    return addPropertyNameInternal('inventory');
   }
 
   QueryBuilder<
@@ -5518,9 +9513,21 @@ extension DestinyInventoryItemDefinitionQueryProperty on QueryBuilder<
     return addPropertyNameInternal('loreHash');
   }
 
+  QueryBuilder<DestinyInventoryItemDefinition,
+      DestinyItemMetricBlockDefinition?, QQueryOperations> metricsProperty() {
+    return addPropertyNameInternal('metrics');
+  }
+
   QueryBuilder<DestinyInventoryItemDefinition, bool?, QQueryOperations>
       nonTransferrableProperty() {
     return addPropertyNameInternal('nonTransferrable');
+  }
+
+  QueryBuilder<
+      DestinyInventoryItemDefinition,
+      DestinyItemObjectiveBlockDefinition?,
+      QQueryOperations> objectivesProperty() {
+    return addPropertyNameInternal('objectives');
   }
 
   QueryBuilder<DestinyInventoryItemDefinition,
@@ -5528,9 +9535,29 @@ extension DestinyInventoryItemDefinitionQueryProperty on QueryBuilder<
     return addPropertyNameInternal('perks');
   }
 
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyItemPlugDefinition?,
+      QQueryOperations> plugProperty() {
+    return addPropertyNameInternal('plug');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition,
+      DestinyItemPreviewBlockDefinition?, QQueryOperations> previewProperty() {
+    return addPropertyNameInternal('preview');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition,
+      DestinyItemQualityBlockDefinition?, QQueryOperations> qualityProperty() {
+    return addPropertyNameInternal('quality');
+  }
+
   QueryBuilder<DestinyInventoryItemDefinition, bool?, QQueryOperations>
       redactedProperty() {
     return addPropertyNameInternal('redacted');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyItemSackBlockDefinition?,
+      QQueryOperations> sackProperty() {
+    return addPropertyNameInternal('sack');
   }
 
   QueryBuilder<DestinyInventoryItemDefinition, String?, QQueryOperations>
@@ -5558,14 +9585,48 @@ extension DestinyInventoryItemDefinitionQueryProperty on QueryBuilder<
     return addPropertyNameInternal('secondarySpecial');
   }
 
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyItemSetBlockDefinition?,
+      QQueryOperations> setDataProperty() {
+    return addPropertyNameInternal('setData');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition,
+      DestinyItemSocketBlockDefinition?, QQueryOperations> socketsProperty() {
+    return addPropertyNameInternal('sockets');
+  }
+
+  QueryBuilder<
+      DestinyInventoryItemDefinition,
+      DestinyItemSourceBlockDefinition?,
+      QQueryOperations> sourceDataProperty() {
+    return addPropertyNameInternal('sourceData');
+  }
+
   QueryBuilder<DestinyInventoryItemDefinition, SpecialItemType?,
       QQueryOperations> specialItemTypeProperty() {
     return addPropertyNameInternal('specialItemType');
   }
 
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyItemStatBlockDefinition?,
+      QQueryOperations> statsProperty() {
+    return addPropertyNameInternal('stats');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition,
+      DestinyItemSummaryBlockDefinition?, QQueryOperations> summaryProperty() {
+    return addPropertyNameInternal('summary');
+  }
+
   QueryBuilder<DestinyInventoryItemDefinition, int?, QQueryOperations>
       summaryItemHashProperty() {
     return addPropertyNameInternal('summaryItemHash');
+  }
+
+  QueryBuilder<
+      DestinyInventoryItemDefinition,
+      DestinyItemTalentGridBlockDefinition?,
+      QQueryOperations> talentGridProperty() {
+    return addPropertyNameInternal('talentGrid');
   }
 
   QueryBuilder<
@@ -5590,9 +9651,21 @@ extension DestinyInventoryItemDefinitionQueryProperty on QueryBuilder<
     return addPropertyNameInternal('traitIds');
   }
 
+  QueryBuilder<
+      DestinyInventoryItemDefinition,
+      DestinyItemTranslationBlockDefinition?,
+      QQueryOperations> translationBlockProperty() {
+    return addPropertyNameInternal('translationBlock');
+  }
+
   QueryBuilder<DestinyInventoryItemDefinition, String?, QQueryOperations>
       uiItemDisplayStyleProperty() {
     return addPropertyNameInternal('uiItemDisplayStyle');
+  }
+
+  QueryBuilder<DestinyInventoryItemDefinition, DestinyItemValueBlockDefinition?,
+      QQueryOperations> valueProperty() {
+    return addPropertyNameInternal('value');
   }
 }
 

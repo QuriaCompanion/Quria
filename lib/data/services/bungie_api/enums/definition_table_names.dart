@@ -34,7 +34,6 @@ import 'package:bungie_api/models/destiny_season_pass_definition.dart';
 import 'package:bungie_api/models/destiny_socket_category_definition.dart';
 import 'package:bungie_api/models/destiny_socket_type_definition.dart';
 import 'package:bungie_api/models/destiny_stat_group_definition.dart';
-import 'package:bungie_api/models/destiny_stat_group_definition.dart';
 import 'package:bungie_api/models/destiny_trait_category_definition.dart';
 import 'package:bungie_api/models/destiny_trait_definition.dart';
 import 'package:bungie_api/models/destiny_unlock_definition.dart';
@@ -43,9 +42,9 @@ import 'package:bungie_api/models/destiny_vendor_definition.dart';
 import 'package:bungie_api/models/destiny_vendor_group_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_energy_type_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_stat_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_collectible_definition.dart';
-import 'package:quria/data/models/bungie_api_dart/destiny_stat_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_plug_set_definition.dart';
@@ -54,6 +53,7 @@ import 'package:quria/data/models/bungie_api_dart/destiny_class_definition.dart'
 import 'package:quria/data/models/bungie_api_dart/destiny_damage_type_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
 
 @JsonSerializable()
 class DefinitionTableNames {
@@ -324,6 +324,32 @@ class DefinitionTableNames {
         throw Exception('Unknown type');
     }
   }
+
+  static Map<Type, Function> getDefinitions = {
+    DestinyClassDefinition: (ids) async =>
+        await StorageService.isar.destinyClassDefinitions.getAll(ids),
+    DestinyInventoryItemDefinition: (ids) async =>
+        await StorageService.isar.destinyInventoryItemDefinitions.getAll(ids),
+    DestinyDamageTypeDefinition: (ids) async =>
+        await StorageService.isar.destinyDamageTypeDefinitions.getAll(ids),
+    DestinyStatDefinition: (ids) async =>
+        await StorageService.isar.destinyStatDefinitions.getAll(ids),
+    DestinyTalentGridDefinition: (ids) async =>
+        await StorageService.isar.destinyTalentGridDefinitions.getAll(ids),
+    DestinySandboxPerkDefinition: (ids) async =>
+        await StorageService.isar.destinySandboxPerkDefinitions.getAll(ids),
+    DestinyEnergyTypeDefinition: (ids) async =>
+        await StorageService.isar.destinyEnergyTypeDefinitions.getAll(ids),
+    DestinyEquipmentSlotDefinition: (ids) async =>
+        await StorageService.isar.destinyEquipmentSlotDefinitions.getAll(ids),
+    DestinyPresentationNodeDefinition: (ids) async => await StorageService
+        .isar.destinyPresentationNodeDefinitions
+        .getAll(ids),
+    DestinyCollectibleDefinition: (ids) async =>
+        await StorageService.isar.destinyCollectibleDefinitions.getAll(ids),
+    DestinyPlugSetDefinition: (ids) async =>
+        await StorageService.isar.destinyPlugSetDefinitions.getAll(ids),
+  };
 
   static Map<Type, Function> identities = {
     DestinyPlaceDefinition: (json) => DestinyPlaceDefinition.fromJson(json),

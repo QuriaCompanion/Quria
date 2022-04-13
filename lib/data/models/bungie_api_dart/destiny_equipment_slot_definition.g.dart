@@ -18,7 +18,7 @@ extension GetDestinyEquipmentSlotDefinitionCollection on Isar {
 final DestinyEquipmentSlotDefinitionSchema = CollectionSchema(
   name: 'DestinyEquipmentSlotDefinition',
   schema:
-      '{"name":"DestinyEquipmentSlotDefinition","idName":"hash","properties":[{"name":"applyCustomArtDyes","type":"Bool"},{"name":"artDyeChannels","type":"StringList"},{"name":"bucketTypeHash","type":"Long"},{"name":"equipmentCategoryHash","type":"Long"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"}],"indexes":[],"links":[]}',
+      '{"name":"DestinyEquipmentSlotDefinition","idName":"hash","properties":[{"name":"applyCustomArtDyes","type":"Bool"},{"name":"artDyeChannels","type":"StringList"},{"name":"bucketTypeHash","type":"Long"},{"name":"displayProperties","type":"String"},{"name":"equipmentCategoryHash","type":"Long"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"}],"indexes":[],"links":[]}',
   nativeAdapter: const _DestinyEquipmentSlotDefinitionNativeAdapter(),
   webAdapter: const _DestinyEquipmentSlotDefinitionWebAdapter(),
   idName: 'hash',
@@ -26,9 +26,10 @@ final DestinyEquipmentSlotDefinitionSchema = CollectionSchema(
     'applyCustomArtDyes': 0,
     'artDyeChannels': 1,
     'bucketTypeHash': 2,
-    'equipmentCategoryHash': 3,
-    'index': 4,
-    'redacted': 5
+    'displayProperties': 3,
+    'equipmentCategoryHash': 4,
+    'index': 5,
+    'redacted': 6
   },
   listProperties: {'artDyeChannels'},
   indexIds: {},
@@ -48,8 +49,10 @@ final DestinyEquipmentSlotDefinitionSchema = CollectionSchema(
   version: 2,
 );
 
-const _destinyEquipmentSlotDefinitionClassListNullableConverter =
-    ClassListNullableConverter();
+const _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter =
+    DestinyArtDyeReferenceListConverter();
+const _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter =
+    DestinyDisplayPropertiesDefinitionConverter();
 
 class _DestinyEquipmentSlotDefinitionWebAdapter
     extends IsarWebTypeAdapter<DestinyEquipmentSlotDefinition> {
@@ -64,9 +67,14 @@ class _DestinyEquipmentSlotDefinitionWebAdapter
     IsarNative.jsObjectSet(
         jsObj,
         'artDyeChannels',
-        _destinyEquipmentSlotDefinitionClassListNullableConverter
+        _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
             .toIsar(object.artDyeChannels));
     IsarNative.jsObjectSet(jsObj, 'bucketTypeHash', object.bucketTypeHash);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'displayProperties',
+        _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties));
     IsarNative.jsObjectSet(
         jsObj, 'equipmentCategoryHash', object.equipmentCategoryHash);
     IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
@@ -83,13 +91,15 @@ class _DestinyEquipmentSlotDefinitionWebAdapter
     object.applyCustomArtDyes =
         IsarNative.jsObjectGet(jsObj, 'applyCustomArtDyes');
     object.artDyeChannels =
-        _destinyEquipmentSlotDefinitionClassListNullableConverter
+        _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
             .fromIsar((IsarNative.jsObjectGet(jsObj, 'artDyeChannels') as List?)
                 ?.map((e) => e ?? '')
                 .toList()
-                .cast<String>())
-            ?.cast<DestinyArtDyeReference>();
+                .cast<String>());
     object.bucketTypeHash = IsarNative.jsObjectGet(jsObj, 'bucketTypeHash');
+    object.displayProperties =
+        _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
     object.equipmentCategoryHash =
         IsarNative.jsObjectGet(jsObj, 'equipmentCategoryHash');
     object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
@@ -104,13 +114,16 @@ class _DestinyEquipmentSlotDefinitionWebAdapter
       case 'applyCustomArtDyes':
         return (IsarNative.jsObjectGet(jsObj, 'applyCustomArtDyes')) as P;
       case 'artDyeChannels':
-        return (_destinyEquipmentSlotDefinitionClassListNullableConverter
+        return (_destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
             .fromIsar((IsarNative.jsObjectGet(jsObj, 'artDyeChannels') as List?)
                 ?.map((e) => e ?? '')
                 .toList()
                 .cast<String>())) as P;
       case 'bucketTypeHash':
         return (IsarNative.jsObjectGet(jsObj, 'bucketTypeHash')) as P;
+      case 'displayProperties':
+        return (_destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
       case 'equipmentCategoryHash':
         return (IsarNative.jsObjectGet(jsObj, 'equipmentCategoryHash')) as P;
       case 'hash':
@@ -143,8 +156,9 @@ class _DestinyEquipmentSlotDefinitionNativeAdapter
     var dynamicSize = 0;
     final value0 = object.applyCustomArtDyes;
     final _applyCustomArtDyes = value0;
-    final value1 = _destinyEquipmentSlotDefinitionClassListNullableConverter
-        .toIsar(object.artDyeChannels);
+    final value1 =
+        _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
+            .toIsar(object.artDyeChannels);
     dynamicSize += (value1?.length ?? 0) * 8;
     List<IsarUint8List?>? bytesList1;
     if (value1 != null) {
@@ -158,12 +172,20 @@ class _DestinyEquipmentSlotDefinitionNativeAdapter
     final _artDyeChannels = bytesList1;
     final value2 = object.bucketTypeHash;
     final _bucketTypeHash = value2;
-    final value3 = object.equipmentCategoryHash;
-    final _equipmentCategoryHash = value3;
-    final value4 = object.index;
-    final _index = value4;
-    final value5 = object.redacted;
-    final _redacted = value5;
+    final value3 =
+        _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties);
+    IsarUint8List? _displayProperties;
+    if (value3 != null) {
+      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value3);
+    }
+    dynamicSize += (_displayProperties?.length ?? 0) as int;
+    final value4 = object.equipmentCategoryHash;
+    final _equipmentCategoryHash = value4;
+    final value5 = object.index;
+    final _index = value5;
+    final value6 = object.redacted;
+    final _redacted = value6;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
@@ -173,9 +195,10 @@ class _DestinyEquipmentSlotDefinitionNativeAdapter
     writer.writeBool(offsets[0], _applyCustomArtDyes);
     writer.writeStringList(offsets[1], _artDyeChannels);
     writer.writeLong(offsets[2], _bucketTypeHash);
-    writer.writeLong(offsets[3], _equipmentCategoryHash);
-    writer.writeLong(offsets[4], _index);
-    writer.writeBool(offsets[5], _redacted);
+    writer.writeBytes(offsets[3], _displayProperties);
+    writer.writeLong(offsets[4], _equipmentCategoryHash);
+    writer.writeLong(offsets[5], _index);
+    writer.writeBool(offsets[6], _redacted);
   }
 
   @override
@@ -187,14 +210,16 @@ class _DestinyEquipmentSlotDefinitionNativeAdapter
     final object = DestinyEquipmentSlotDefinition();
     object.applyCustomArtDyes = reader.readBoolOrNull(offsets[0]);
     object.artDyeChannels =
-        _destinyEquipmentSlotDefinitionClassListNullableConverter
-            .fromIsar(reader.readStringList(offsets[1]))
-            ?.cast<DestinyArtDyeReference>();
+        _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
+            .fromIsar(reader.readStringList(offsets[1]));
     object.bucketTypeHash = reader.readLongOrNull(offsets[2]);
-    object.equipmentCategoryHash = reader.readLongOrNull(offsets[3]);
+    object.displayProperties =
+        _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[3]));
+    object.equipmentCategoryHash = reader.readLongOrNull(offsets[4]);
     object.hash = id;
-    object.index = reader.readLongOrNull(offsets[4]);
-    object.redacted = reader.readBoolOrNull(offsets[5]);
+    object.index = reader.readLongOrNull(offsets[5]);
+    object.redacted = reader.readBoolOrNull(offsets[6]);
     return object;
   }
 
@@ -207,15 +232,18 @@ class _DestinyEquipmentSlotDefinitionNativeAdapter
       case 0:
         return (reader.readBoolOrNull(offset)) as P;
       case 1:
-        return (_destinyEquipmentSlotDefinitionClassListNullableConverter
+        return (_destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
             .fromIsar(reader.readStringList(offset))) as P;
       case 2:
         return (reader.readLongOrNull(offset)) as P;
       case 3:
-        return (reader.readLongOrNull(offset)) as P;
+        return (_destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 4:
         return (reader.readLongOrNull(offset)) as P;
       case 5:
+        return (reader.readLongOrNull(offset)) as P;
+      case 6:
         return (reader.readBoolOrNull(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -525,6 +553,141 @@ extension DestinyEquipmentSlotDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterFilterCondition> displayPropertiesIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'displayProperties',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterFilterCondition> displayPropertiesEqualTo(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'displayProperties',
+      value:
+          _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterFilterCondition> displayPropertiesGreaterThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterFilterCondition> displayPropertiesLessThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterFilterCondition> displayPropertiesBetween(
+    DestinyDisplayPropertiesDefinition? lower,
+    DestinyDisplayPropertiesDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'displayProperties',
+      lower:
+          _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterFilterCondition> displayPropertiesStartsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'displayProperties',
+      value:
+          _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterFilterCondition> displayPropertiesEndsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'displayProperties',
+      value:
+          _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+          QAfterFilterCondition>
+      displayPropertiesContains(DestinyDisplayPropertiesDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'displayProperties',
+      value:
+          _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+          QAfterFilterCondition>
+      displayPropertiesMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'displayProperties',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
       QAfterFilterCondition> equipmentCategoryHashIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -751,6 +914,16 @@ extension DestinyEquipmentSlotDefinitionQueryWhereSortBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterSortBy> sortByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterSortBy> sortByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
       QAfterSortBy> sortByEquipmentCategoryHash() {
     return addSortByInternal('equipmentCategoryHash', Sort.asc);
   }
@@ -816,6 +989,16 @@ extension DestinyEquipmentSlotDefinitionQueryWhereSortThenBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterSortBy> thenByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QAfterSortBy> thenByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
       QAfterSortBy> thenByEquipmentCategoryHash() {
     return addSortByInternal('equipmentCategoryHash', Sort.asc);
   }
@@ -869,6 +1052,12 @@ extension DestinyEquipmentSlotDefinitionQueryWhereDistinct on QueryBuilder<
   }
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
+      QDistinct> distinctByDisplayProperties({bool caseSensitive = true}) {
+    return addDistinctByInternal('displayProperties',
+        caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
       QDistinct> distinctByEquipmentCategoryHash() {
     return addDistinctByInternal('equipmentCategoryHash');
   }
@@ -906,6 +1095,13 @@ extension DestinyEquipmentSlotDefinitionQueryProperty on QueryBuilder<
   QueryBuilder<DestinyEquipmentSlotDefinition, int?, QQueryOperations>
       bucketTypeHashProperty() {
     return addPropertyNameInternal('bucketTypeHash');
+  }
+
+  QueryBuilder<
+      DestinyEquipmentSlotDefinition,
+      DestinyDisplayPropertiesDefinition?,
+      QQueryOperations> displayPropertiesProperty() {
+    return addPropertyNameInternal('displayProperties');
   }
 
   QueryBuilder<DestinyEquipmentSlotDefinition, int?, QQueryOperations>

@@ -19,7 +19,7 @@ class DestinyCollectibleDefinition {
 
   /// Many Destiny*Definition contracts - the "first order" entities of Destiny that have their own tables in the Manifest Database - also have displayable information. This is the base class for that display information.
   @JsonKey(name: 'displayProperties')
-  @ClassConverter<DestinyDisplayPropertiesDefinition>()
+  @DestinyDisplayPropertiesDefinitionConverter()
   DestinyDisplayPropertiesDefinition? displayProperties;
 
   /// Indicates whether the state of this Collectible is determined on a per-character or on an account-wide basis.
@@ -43,15 +43,15 @@ class DestinyCollectibleDefinition {
   int? itemHash;
 
   @JsonKey(name: 'acquisitionInfo')
-  @ClassConverter<DestinyCollectibleAcquisitionBlock>()
+  @DestinyCollectibleAcquisitionBlockConverter()
   DestinyCollectibleAcquisitionBlock? acquisitionInfo;
 
   @JsonKey(name: 'stateInfo')
-  @ClassConverter<DestinyCollectibleStateBlock>()
+  @DestinyCollectibleStateBlockConverter()
   DestinyCollectibleStateBlock? stateInfo;
 
   @JsonKey(name: 'presentationInfo')
-  @ClassConverter<DestinyPresentationChildBlock>()
+  @DestinyPresentationChildBlockConverter()
   DestinyPresentationChildBlock? presentationInfo;
 
   @JsonKey(

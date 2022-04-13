@@ -22,14 +22,13 @@ class DestinyPlugSetDefinition {
 
   /// If you want to show these plugs in isolation, these are the display properties for them.
   @JsonKey(name: 'displayProperties')
-  @ClassConverter<DestinyDisplayPropertiesDefinition>()
+  @DestinyDisplayPropertiesDefinitionConverter()
   DestinyDisplayPropertiesDefinition? displayProperties;
 
   /// This is a list of pre-determined plugs that can be plugged into this socket, without the character having the plug in their inventory.
   /// If this list is populated, you will not be allowed to plug an arbitrary item in the socket: you will only be able to choose from one of these reusable plugs.
   @JsonKey(name: 'reusablePlugItems')
-  @ClassListNullableConverter<
-      DestinyItemSocketEntryPlugItemRandomizedDefinition>()
+  @DestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter()
   List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? reusablePlugItems;
 
   /// Mostly for our debugging or reporting bugs, BNet is making "fake" plug sets in a desperate effort to reduce socket sizes.

@@ -17,18 +17,19 @@ extension GetDestinyEnergyTypeDefinitionCollection on Isar {
 final DestinyEnergyTypeDefinitionSchema = CollectionSchema(
   name: 'DestinyEnergyTypeDefinition',
   schema:
-      '{"name":"DestinyEnergyTypeDefinition","idName":"hash","properties":[{"name":"capacityStatHash","type":"Long"},{"name":"costStatHash","type":"Long"},{"name":"enumValue","type":"Long"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"showIcon","type":"Bool"},{"name":"transparentIconPath","type":"String"}],"indexes":[],"links":[]}',
+      '{"name":"DestinyEnergyTypeDefinition","idName":"hash","properties":[{"name":"capacityStatHash","type":"Long"},{"name":"costStatHash","type":"Long"},{"name":"displayProperties","type":"String"},{"name":"enumValue","type":"Long"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"showIcon","type":"Bool"},{"name":"transparentIconPath","type":"String"}],"indexes":[],"links":[]}',
   nativeAdapter: const _DestinyEnergyTypeDefinitionNativeAdapter(),
   webAdapter: const _DestinyEnergyTypeDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'capacityStatHash': 0,
     'costStatHash': 1,
-    'enumValue': 2,
-    'index': 3,
-    'redacted': 4,
-    'showIcon': 5,
-    'transparentIconPath': 6
+    'displayProperties': 2,
+    'enumValue': 3,
+    'index': 4,
+    'redacted': 5,
+    'showIcon': 6,
+    'transparentIconPath': 7
   },
   listProperties: {},
   indexIds: {},
@@ -48,6 +49,8 @@ final DestinyEnergyTypeDefinitionSchema = CollectionSchema(
   version: 2,
 );
 
+const _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter =
+    DestinyDisplayPropertiesDefinitionConverter();
 const _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter =
     DestinyEnergyTypeConverter();
 
@@ -61,6 +64,11 @@ class _DestinyEnergyTypeDefinitionWebAdapter
     final jsObj = IsarNative.newJsObject();
     IsarNative.jsObjectSet(jsObj, 'capacityStatHash', object.capacityStatHash);
     IsarNative.jsObjectSet(jsObj, 'costStatHash', object.costStatHash);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'displayProperties',
+        _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties));
     IsarNative.jsObjectSet(
         jsObj,
         'enumValue',
@@ -81,6 +89,9 @@ class _DestinyEnergyTypeDefinitionWebAdapter
     final object = DestinyEnergyTypeDefinition();
     object.capacityStatHash = IsarNative.jsObjectGet(jsObj, 'capacityStatHash');
     object.costStatHash = IsarNative.jsObjectGet(jsObj, 'costStatHash');
+    object.displayProperties =
+        _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
     object.enumValue = _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
         .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'));
     object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
@@ -99,6 +110,9 @@ class _DestinyEnergyTypeDefinitionWebAdapter
         return (IsarNative.jsObjectGet(jsObj, 'capacityStatHash')) as P;
       case 'costStatHash':
         return (IsarNative.jsObjectGet(jsObj, 'costStatHash')) as P;
+      case 'displayProperties':
+        return (_destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
       case 'enumValue':
         return (_destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'))) as P;
@@ -138,19 +152,27 @@ class _DestinyEnergyTypeDefinitionNativeAdapter
     final _capacityStatHash = value0;
     final value1 = object.costStatHash;
     final _costStatHash = value1;
-    final value2 = _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
+    final value2 =
+        _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties);
+    IsarUint8List? _displayProperties;
+    if (value2 != null) {
+      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
+    }
+    dynamicSize += (_displayProperties?.length ?? 0) as int;
+    final value3 = _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
         .toIsar(object.enumValue);
-    final _enumValue = value2;
-    final value3 = object.index;
-    final _index = value3;
-    final value4 = object.redacted;
-    final _redacted = value4;
-    final value5 = object.showIcon;
-    final _showIcon = value5;
-    final value6 = object.transparentIconPath;
+    final _enumValue = value3;
+    final value4 = object.index;
+    final _index = value4;
+    final value5 = object.redacted;
+    final _redacted = value5;
+    final value6 = object.showIcon;
+    final _showIcon = value6;
+    final value7 = object.transparentIconPath;
     IsarUint8List? _transparentIconPath;
-    if (value6 != null) {
-      _transparentIconPath = IsarBinaryWriter.utf8Encoder.convert(value6);
+    if (value7 != null) {
+      _transparentIconPath = IsarBinaryWriter.utf8Encoder.convert(value7);
     }
     dynamicSize += (_transparentIconPath?.length ?? 0) as int;
     final size = staticSize + dynamicSize;
@@ -161,11 +183,12 @@ class _DestinyEnergyTypeDefinitionNativeAdapter
     final writer = IsarBinaryWriter(buffer, staticSize);
     writer.writeLong(offsets[0], _capacityStatHash);
     writer.writeLong(offsets[1], _costStatHash);
-    writer.writeLong(offsets[2], _enumValue);
-    writer.writeLong(offsets[3], _index);
-    writer.writeBool(offsets[4], _redacted);
-    writer.writeBool(offsets[5], _showIcon);
-    writer.writeBytes(offsets[6], _transparentIconPath);
+    writer.writeBytes(offsets[2], _displayProperties);
+    writer.writeLong(offsets[3], _enumValue);
+    writer.writeLong(offsets[4], _index);
+    writer.writeBool(offsets[5], _redacted);
+    writer.writeBool(offsets[6], _showIcon);
+    writer.writeBytes(offsets[7], _transparentIconPath);
   }
 
   @override
@@ -177,13 +200,16 @@ class _DestinyEnergyTypeDefinitionNativeAdapter
     final object = DestinyEnergyTypeDefinition();
     object.capacityStatHash = reader.readLongOrNull(offsets[0]);
     object.costStatHash = reader.readLongOrNull(offsets[1]);
+    object.displayProperties =
+        _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[2]));
     object.enumValue = _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
-        .fromIsar(reader.readLongOrNull(offsets[2]));
+        .fromIsar(reader.readLongOrNull(offsets[3]));
     object.hash = id;
-    object.index = reader.readLongOrNull(offsets[3]);
-    object.redacted = reader.readBoolOrNull(offsets[4]);
-    object.showIcon = reader.readBoolOrNull(offsets[5]);
-    object.transparentIconPath = reader.readStringOrNull(offsets[6]);
+    object.index = reader.readLongOrNull(offsets[4]);
+    object.redacted = reader.readBoolOrNull(offsets[5]);
+    object.showIcon = reader.readBoolOrNull(offsets[6]);
+    object.transparentIconPath = reader.readStringOrNull(offsets[7]);
     return object;
   }
 
@@ -198,15 +224,18 @@ class _DestinyEnergyTypeDefinitionNativeAdapter
       case 1:
         return (reader.readLongOrNull(offset)) as P;
       case 2:
+        return (_destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 3:
         return (_destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 3:
-        return (reader.readLongOrNull(offset)) as P;
       case 4:
-        return (reader.readBoolOrNull(offset)) as P;
+        return (reader.readLongOrNull(offset)) as P;
       case 5:
         return (reader.readBoolOrNull(offset)) as P;
       case 6:
+        return (reader.readBoolOrNull(offset)) as P;
+      case 7:
         return (reader.readStringOrNull(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -425,6 +454,141 @@ extension DestinyEnergyTypeDefinitionQueryFilter on QueryBuilder<
       includeLower: includeLower,
       upper: upper,
       includeUpper: includeUpper,
+    ));
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterFilterCondition> displayPropertiesIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'displayProperties',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterFilterCondition> displayPropertiesEqualTo(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'displayProperties',
+      value:
+          _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterFilterCondition> displayPropertiesGreaterThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterFilterCondition> displayPropertiesLessThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterFilterCondition> displayPropertiesBetween(
+    DestinyDisplayPropertiesDefinition? lower,
+    DestinyDisplayPropertiesDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'displayProperties',
+      lower:
+          _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterFilterCondition> displayPropertiesStartsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'displayProperties',
+      value:
+          _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterFilterCondition> displayPropertiesEndsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'displayProperties',
+      value:
+          _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+          QAfterFilterCondition>
+      displayPropertiesContains(DestinyDisplayPropertiesDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'displayProperties',
+      value:
+          _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+          QAfterFilterCondition>
+      displayPropertiesMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'displayProperties',
+      value: pattern,
+      caseSensitive: caseSensitive,
     ));
   }
 
@@ -796,6 +960,16 @@ extension DestinyEnergyTypeDefinitionQueryWhereSortBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterSortBy> sortByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterSortBy> sortByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
       QAfterSortBy> sortByEnumValue() {
     return addSortByInternal('enumValue', Sort.asc);
   }
@@ -879,6 +1053,16 @@ extension DestinyEnergyTypeDefinitionQueryWhereSortThenBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterSortBy> thenByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QAfterSortBy> thenByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
       QAfterSortBy> thenByEnumValue() {
     return addSortByInternal('enumValue', Sort.asc);
   }
@@ -952,6 +1136,12 @@ extension DestinyEnergyTypeDefinitionQueryWhereDistinct on QueryBuilder<
   }
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
+      QDistinct> distinctByDisplayProperties({bool caseSensitive = true}) {
+    return addDistinctByInternal('displayProperties',
+        caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
       QDistinct> distinctByEnumValue() {
     return addDistinctByInternal('enumValue');
   }
@@ -993,6 +1183,11 @@ extension DestinyEnergyTypeDefinitionQueryProperty on QueryBuilder<
   QueryBuilder<DestinyEnergyTypeDefinition, int?, QQueryOperations>
       costStatHashProperty() {
     return addPropertyNameInternal('costStatHash');
+  }
+
+  QueryBuilder<DestinyEnergyTypeDefinition, DestinyDisplayPropertiesDefinition?,
+      QQueryOperations> displayPropertiesProperty() {
+    return addPropertyNameInternal('displayProperties');
   }
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyType?,

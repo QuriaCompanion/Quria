@@ -18,27 +18,30 @@ extension GetDestinyPresentationNodeDefinitionCollection on Isar {
 final DestinyPresentationNodeDefinitionSchema = CollectionSchema(
   name: 'DestinyPresentationNodeDefinition',
   schema:
-      '{"name":"DestinyPresentationNodeDefinition","idName":"hash","properties":[{"name":"completionRecordHash","type":"Long"},{"name":"disableChildSubscreenNavigation","type":"Bool"},{"name":"displayStyle","type":"Long"},{"name":"index","type":"Long"},{"name":"maxCategoryRecordScore","type":"Long"},{"name":"nodeType","type":"Long"},{"name":"objectiveHash","type":"Long"},{"name":"originalIcon","type":"String"},{"name":"parentNodeHashes","type":"LongList"},{"name":"presentationNodeType","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"rootViewIcon","type":"String"},{"name":"scope","type":"Long"},{"name":"screenStyle","type":"Long"},{"name":"traitHashes","type":"LongList"},{"name":"traitIds","type":"StringList"}],"indexes":[],"links":[]}',
+      '{"name":"DestinyPresentationNodeDefinition","idName":"hash","properties":[{"name":"children","type":"String"},{"name":"completionRecordHash","type":"Long"},{"name":"disableChildSubscreenNavigation","type":"Bool"},{"name":"displayProperties","type":"String"},{"name":"displayStyle","type":"Long"},{"name":"index","type":"Long"},{"name":"maxCategoryRecordScore","type":"Long"},{"name":"nodeType","type":"Long"},{"name":"objectiveHash","type":"Long"},{"name":"originalIcon","type":"String"},{"name":"parentNodeHashes","type":"LongList"},{"name":"presentationNodeType","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"requirements","type":"String"},{"name":"rootViewIcon","type":"String"},{"name":"scope","type":"Long"},{"name":"screenStyle","type":"Long"},{"name":"traitHashes","type":"LongList"},{"name":"traitIds","type":"StringList"}],"indexes":[],"links":[]}',
   nativeAdapter: const _DestinyPresentationNodeDefinitionNativeAdapter(),
   webAdapter: const _DestinyPresentationNodeDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
-    'completionRecordHash': 0,
-    'disableChildSubscreenNavigation': 1,
-    'displayStyle': 2,
-    'index': 3,
-    'maxCategoryRecordScore': 4,
-    'nodeType': 5,
-    'objectiveHash': 6,
-    'originalIcon': 7,
-    'parentNodeHashes': 8,
-    'presentationNodeType': 9,
-    'redacted': 10,
-    'rootViewIcon': 11,
-    'scope': 12,
-    'screenStyle': 13,
-    'traitHashes': 14,
-    'traitIds': 15
+    'children': 0,
+    'completionRecordHash': 1,
+    'disableChildSubscreenNavigation': 2,
+    'displayProperties': 3,
+    'displayStyle': 4,
+    'index': 5,
+    'maxCategoryRecordScore': 6,
+    'nodeType': 7,
+    'objectiveHash': 8,
+    'originalIcon': 9,
+    'parentNodeHashes': 10,
+    'presentationNodeType': 11,
+    'redacted': 12,
+    'requirements': 13,
+    'rootViewIcon': 14,
+    'scope': 15,
+    'screenStyle': 16,
+    'traitHashes': 17,
+    'traitIds': 18
   },
   listProperties: {'parentNodeHashes', 'traitHashes', 'traitIds'},
   indexIds: {},
@@ -58,10 +61,16 @@ final DestinyPresentationNodeDefinitionSchema = CollectionSchema(
   version: 2,
 );
 
+const _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter =
+    DestinyPresentationNodeChildrenBlockConverter();
+const _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter =
+    DestinyDisplayPropertiesDefinitionConverter();
 const _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter =
     DestinyPresentationDisplayStyleConverter();
 const _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter =
     DestinyPresentationNodeTypeConverter();
+const _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter =
+    DestinyPresentationNodeRequirementsBlockConverter();
 const _destinyPresentationNodeDefinitionDestinyScopeConverter =
     DestinyScopeConverter();
 const _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter =
@@ -76,9 +85,19 @@ class _DestinyPresentationNodeDefinitionWebAdapter
       DestinyPresentationNodeDefinition object) {
     final jsObj = IsarNative.newJsObject();
     IsarNative.jsObjectSet(
+        jsObj,
+        'children',
+        _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+            .toIsar(object.children));
+    IsarNative.jsObjectSet(
         jsObj, 'completionRecordHash', object.completionRecordHash);
     IsarNative.jsObjectSet(jsObj, 'disableChildSubscreenNavigation',
         object.disableChildSubscreenNavigation);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'displayProperties',
+        _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties));
     IsarNative.jsObjectSet(
         jsObj,
         'displayStyle',
@@ -102,6 +121,11 @@ class _DestinyPresentationNodeDefinitionWebAdapter
         _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
             .toIsar(object.presentationNodeType));
     IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+    IsarNative.jsObjectSet(
+        jsObj,
+        'requirements',
+        _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+            .toIsar(object.requirements));
     IsarNative.jsObjectSet(jsObj, 'rootViewIcon', object.rootViewIcon);
     IsarNative.jsObjectSet(
         jsObj,
@@ -123,10 +147,16 @@ class _DestinyPresentationNodeDefinitionWebAdapter
       IsarCollection<DestinyPresentationNodeDefinition> collection,
       dynamic jsObj) {
     final object = DestinyPresentationNodeDefinition();
+    object.children =
+        _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'children'));
     object.completionRecordHash =
         IsarNative.jsObjectGet(jsObj, 'completionRecordHash');
     object.disableChildSubscreenNavigation =
         IsarNative.jsObjectGet(jsObj, 'disableChildSubscreenNavigation');
+    object.displayProperties =
+        _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
     object.displayStyle =
         _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayStyle'));
@@ -148,6 +178,9 @@ class _DestinyPresentationNodeDefinitionWebAdapter
         _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationNodeType'));
     object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+    object.requirements =
+        _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'requirements'));
     object.rootViewIcon = IsarNative.jsObjectGet(jsObj, 'rootViewIcon');
     object.scope = _destinyPresentationNodeDefinitionDestinyScopeConverter
         .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'));
@@ -168,11 +201,17 @@ class _DestinyPresentationNodeDefinitionWebAdapter
   @override
   P deserializeProperty<P>(Object jsObj, String propertyName) {
     switch (propertyName) {
+      case 'children':
+        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'children'))) as P;
       case 'completionRecordHash':
         return (IsarNative.jsObjectGet(jsObj, 'completionRecordHash')) as P;
       case 'disableChildSubscreenNavigation':
         return (IsarNative.jsObjectGet(
             jsObj, 'disableChildSubscreenNavigation')) as P;
+      case 'displayProperties':
+        return (_destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
       case 'displayStyle':
         return (_destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
             .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayStyle'))) as P;
@@ -200,6 +239,9 @@ class _DestinyPresentationNodeDefinitionWebAdapter
                 IsarNative.jsObjectGet(jsObj, 'presentationNodeType'))) as P;
       case 'redacted':
         return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+      case 'requirements':
+        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+            .fromIsar(IsarNative.jsObjectGet(jsObj, 'requirements'))) as P;
       case 'rootViewIcon':
         return (IsarNative.jsObjectGet(jsObj, 'rootViewIcon')) as P;
       case 'scope':
@@ -241,89 +283,116 @@ class _DestinyPresentationNodeDefinitionNativeAdapter
       List<int> offsets,
       AdapterAlloc alloc) {
     var dynamicSize = 0;
-    final value0 = object.completionRecordHash;
-    final _completionRecordHash = value0;
-    final value1 = object.disableChildSubscreenNavigation;
-    final _disableChildSubscreenNavigation = value1;
-    final value2 =
+    final value0 =
+        _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+            .toIsar(object.children);
+    IsarUint8List? _children;
+    if (value0 != null) {
+      _children = IsarBinaryWriter.utf8Encoder.convert(value0);
+    }
+    dynamicSize += (_children?.length ?? 0) as int;
+    final value1 = object.completionRecordHash;
+    final _completionRecordHash = value1;
+    final value2 = object.disableChildSubscreenNavigation;
+    final _disableChildSubscreenNavigation = value2;
+    final value3 =
+        _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .toIsar(object.displayProperties);
+    IsarUint8List? _displayProperties;
+    if (value3 != null) {
+      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value3);
+    }
+    dynamicSize += (_displayProperties?.length ?? 0) as int;
+    final value4 =
         _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
             .toIsar(object.displayStyle);
-    final _displayStyle = value2;
-    final value3 = object.index;
-    final _index = value3;
-    final value4 = object.maxCategoryRecordScore;
-    final _maxCategoryRecordScore = value4;
-    final value5 =
+    final _displayStyle = value4;
+    final value5 = object.index;
+    final _index = value5;
+    final value6 = object.maxCategoryRecordScore;
+    final _maxCategoryRecordScore = value6;
+    final value7 =
         _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
             .toIsar(object.nodeType);
-    final _nodeType = value5;
-    final value6 = object.objectiveHash;
-    final _objectiveHash = value6;
-    final value7 = object.originalIcon;
+    final _nodeType = value7;
+    final value8 = object.objectiveHash;
+    final _objectiveHash = value8;
+    final value9 = object.originalIcon;
     IsarUint8List? _originalIcon;
-    if (value7 != null) {
-      _originalIcon = IsarBinaryWriter.utf8Encoder.convert(value7);
+    if (value9 != null) {
+      _originalIcon = IsarBinaryWriter.utf8Encoder.convert(value9);
     }
     dynamicSize += (_originalIcon?.length ?? 0) as int;
-    final value8 = object.parentNodeHashes;
-    dynamicSize += (value8?.length ?? 0) * 8;
-    final _parentNodeHashes = value8;
-    final value9 =
+    final value10 = object.parentNodeHashes;
+    dynamicSize += (value10?.length ?? 0) * 8;
+    final _parentNodeHashes = value10;
+    final value11 =
         _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
             .toIsar(object.presentationNodeType);
-    final _presentationNodeType = value9;
-    final value10 = object.redacted;
-    final _redacted = value10;
-    final value11 = object.rootViewIcon;
+    final _presentationNodeType = value11;
+    final value12 = object.redacted;
+    final _redacted = value12;
+    final value13 =
+        _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+            .toIsar(object.requirements);
+    IsarUint8List? _requirements;
+    if (value13 != null) {
+      _requirements = IsarBinaryWriter.utf8Encoder.convert(value13);
+    }
+    dynamicSize += (_requirements?.length ?? 0) as int;
+    final value14 = object.rootViewIcon;
     IsarUint8List? _rootViewIcon;
-    if (value11 != null) {
-      _rootViewIcon = IsarBinaryWriter.utf8Encoder.convert(value11);
+    if (value14 != null) {
+      _rootViewIcon = IsarBinaryWriter.utf8Encoder.convert(value14);
     }
     dynamicSize += (_rootViewIcon?.length ?? 0) as int;
-    final value12 = _destinyPresentationNodeDefinitionDestinyScopeConverter
+    final value15 = _destinyPresentationNodeDefinitionDestinyScopeConverter
         .toIsar(object.scope);
-    final _scope = value12;
-    final value13 =
+    final _scope = value15;
+    final value16 =
         _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
             .toIsar(object.screenStyle);
-    final _screenStyle = value13;
-    final value14 = object.traitHashes;
-    dynamicSize += (value14?.length ?? 0) * 8;
-    final _traitHashes = value14;
-    final value15 = object.traitIds;
-    dynamicSize += (value15?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList15;
-    if (value15 != null) {
-      bytesList15 = [];
-      for (var str in value15) {
+    final _screenStyle = value16;
+    final value17 = object.traitHashes;
+    dynamicSize += (value17?.length ?? 0) * 8;
+    final _traitHashes = value17;
+    final value18 = object.traitIds;
+    dynamicSize += (value18?.length ?? 0) * 8;
+    List<IsarUint8List?>? bytesList18;
+    if (value18 != null) {
+      bytesList18 = [];
+      for (var str in value18) {
         final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList15.add(bytes);
+        bytesList18.add(bytes);
         dynamicSize += bytes.length as int;
       }
     }
-    final _traitIds = bytesList15;
+    final _traitIds = bytesList18;
     final size = staticSize + dynamicSize;
 
     rawObj.buffer = alloc(size);
     rawObj.buffer_length = size;
     final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
     final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeLong(offsets[0], _completionRecordHash);
-    writer.writeBool(offsets[1], _disableChildSubscreenNavigation);
-    writer.writeLong(offsets[2], _displayStyle);
-    writer.writeLong(offsets[3], _index);
-    writer.writeLong(offsets[4], _maxCategoryRecordScore);
-    writer.writeLong(offsets[5], _nodeType);
-    writer.writeLong(offsets[6], _objectiveHash);
-    writer.writeBytes(offsets[7], _originalIcon);
-    writer.writeLongList(offsets[8], _parentNodeHashes);
-    writer.writeLong(offsets[9], _presentationNodeType);
-    writer.writeBool(offsets[10], _redacted);
-    writer.writeBytes(offsets[11], _rootViewIcon);
-    writer.writeLong(offsets[12], _scope);
-    writer.writeLong(offsets[13], _screenStyle);
-    writer.writeLongList(offsets[14], _traitHashes);
-    writer.writeStringList(offsets[15], _traitIds);
+    writer.writeBytes(offsets[0], _children);
+    writer.writeLong(offsets[1], _completionRecordHash);
+    writer.writeBool(offsets[2], _disableChildSubscreenNavigation);
+    writer.writeBytes(offsets[3], _displayProperties);
+    writer.writeLong(offsets[4], _displayStyle);
+    writer.writeLong(offsets[5], _index);
+    writer.writeLong(offsets[6], _maxCategoryRecordScore);
+    writer.writeLong(offsets[7], _nodeType);
+    writer.writeLong(offsets[8], _objectiveHash);
+    writer.writeBytes(offsets[9], _originalIcon);
+    writer.writeLongList(offsets[10], _parentNodeHashes);
+    writer.writeLong(offsets[11], _presentationNodeType);
+    writer.writeBool(offsets[12], _redacted);
+    writer.writeBytes(offsets[13], _requirements);
+    writer.writeBytes(offsets[14], _rootViewIcon);
+    writer.writeLong(offsets[15], _scope);
+    writer.writeLong(offsets[16], _screenStyle);
+    writer.writeLongList(offsets[17], _traitHashes);
+    writer.writeStringList(offsets[18], _traitIds);
   }
 
   @override
@@ -333,32 +402,41 @@ class _DestinyPresentationNodeDefinitionNativeAdapter
       IsarBinaryReader reader,
       List<int> offsets) {
     final object = DestinyPresentationNodeDefinition();
-    object.completionRecordHash = reader.readLongOrNull(offsets[0]);
-    object.disableChildSubscreenNavigation = reader.readBoolOrNull(offsets[1]);
+    object.children =
+        _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+            .fromIsar(reader.readStringOrNull(offsets[0]));
+    object.completionRecordHash = reader.readLongOrNull(offsets[1]);
+    object.disableChildSubscreenNavigation = reader.readBoolOrNull(offsets[2]);
+    object.displayProperties =
+        _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offsets[3]));
     object.displayStyle =
         _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
-            .fromIsar(reader.readLongOrNull(offsets[2]));
+            .fromIsar(reader.readLongOrNull(offsets[4]));
     object.hash = id;
-    object.index = reader.readLongOrNull(offsets[3]);
-    object.maxCategoryRecordScore = reader.readLongOrNull(offsets[4]);
+    object.index = reader.readLongOrNull(offsets[5]);
+    object.maxCategoryRecordScore = reader.readLongOrNull(offsets[6]);
     object.nodeType =
         _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(reader.readLongOrNull(offsets[5]));
-    object.objectiveHash = reader.readLongOrNull(offsets[6]);
-    object.originalIcon = reader.readStringOrNull(offsets[7]);
-    object.parentNodeHashes = reader.readLongList(offsets[8]);
+            .fromIsar(reader.readLongOrNull(offsets[7]));
+    object.objectiveHash = reader.readLongOrNull(offsets[8]);
+    object.originalIcon = reader.readStringOrNull(offsets[9]);
+    object.parentNodeHashes = reader.readLongList(offsets[10]);
     object.presentationNodeType =
         _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(reader.readLongOrNull(offsets[9]));
-    object.redacted = reader.readBoolOrNull(offsets[10]);
-    object.rootViewIcon = reader.readStringOrNull(offsets[11]);
+            .fromIsar(reader.readLongOrNull(offsets[11]));
+    object.redacted = reader.readBoolOrNull(offsets[12]);
+    object.requirements =
+        _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+            .fromIsar(reader.readStringOrNull(offsets[13]));
+    object.rootViewIcon = reader.readStringOrNull(offsets[14]);
     object.scope = _destinyPresentationNodeDefinitionDestinyScopeConverter
-        .fromIsar(reader.readLongOrNull(offsets[12]));
+        .fromIsar(reader.readLongOrNull(offsets[15]));
     object.screenStyle =
         _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
-            .fromIsar(reader.readLongOrNull(offsets[13]));
-    object.traitHashes = reader.readLongList(offsets[14]);
-    object.traitIds = reader.readStringList(offsets[15]);
+            .fromIsar(reader.readLongOrNull(offsets[16]));
+    object.traitHashes = reader.readLongList(offsets[17]);
+    object.traitIds = reader.readStringList(offsets[18]);
     return object;
   }
 
@@ -369,41 +447,50 @@ class _DestinyPresentationNodeDefinitionNativeAdapter
       case -1:
         return id as P;
       case 0:
-        return (reader.readLongOrNull(offset)) as P;
+        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
       case 1:
-        return (reader.readBoolOrNull(offset)) as P;
+        return (reader.readLongOrNull(offset)) as P;
       case 2:
+        return (reader.readBoolOrNull(offset)) as P;
+      case 3:
+        return (_destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 4:
         return (_destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 3:
-        return (reader.readLongOrNull(offset)) as P;
-      case 4:
-        return (reader.readLongOrNull(offset)) as P;
       case 5:
-        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
+        return (reader.readLongOrNull(offset)) as P;
       case 6:
         return (reader.readLongOrNull(offset)) as P;
       case 7:
-        return (reader.readStringOrNull(offset)) as P;
-      case 8:
-        return (reader.readLongList(offset)) as P;
-      case 9:
         return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 10:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 11:
+      case 8:
+        return (reader.readLongOrNull(offset)) as P;
+      case 9:
         return (reader.readStringOrNull(offset)) as P;
+      case 10:
+        return (reader.readLongList(offset)) as P;
+      case 11:
+        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+            .fromIsar(reader.readLongOrNull(offset))) as P;
       case 12:
+        return (reader.readBoolOrNull(offset)) as P;
+      case 13:
+        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+            .fromIsar(reader.readStringOrNull(offset))) as P;
+      case 14:
+        return (reader.readStringOrNull(offset)) as P;
+      case 15:
         return (_destinyPresentationNodeDefinitionDestinyScopeConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 13:
+      case 16:
         return (_destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
             .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 14:
+      case 17:
         return (reader.readLongList(offset)) as P;
-      case 15:
+      case 18:
         return (reader.readStringList(offset)) as P;
       default:
         throw 'Illegal propertyIndex';
@@ -517,6 +604,151 @@ extension DestinyPresentationNodeDefinitionQueryFilter on QueryBuilder<
   QueryBuilder<
       DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> childrenIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'children',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition, QAfterFilterCondition> childrenEqualTo(
+    DestinyPresentationNodeChildrenBlock? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'children',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> childrenGreaterThan(
+    DestinyPresentationNodeChildrenBlock? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'children',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> childrenLessThan(
+    DestinyPresentationNodeChildrenBlock? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'children',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition, QAfterFilterCondition> childrenBetween(
+    DestinyPresentationNodeChildrenBlock? lower,
+    DestinyPresentationNodeChildrenBlock? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'children',
+      lower:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> childrenStartsWith(
+    DestinyPresentationNodeChildrenBlock value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'children',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> childrenEndsWith(
+    DestinyPresentationNodeChildrenBlock value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'children',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
+          DestinyPresentationNodeDefinition, QAfterFilterCondition>
+      childrenContains(DestinyPresentationNodeChildrenBlock value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'children',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
+          DestinyPresentationNodeDefinition, QAfterFilterCondition>
+      childrenMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'children',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
       QAfterFilterCondition> completionRecordHashIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -602,6 +834,155 @@ extension DestinyPresentationNodeDefinitionQueryFilter on QueryBuilder<
       type: ConditionType.eq,
       property: 'disableChildSubscreenNavigation',
       value: value,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> displayPropertiesIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'displayProperties',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> displayPropertiesEqualTo(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'displayProperties',
+      value:
+          _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> displayPropertiesGreaterThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> displayPropertiesLessThan(
+    DestinyDisplayPropertiesDefinition? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'displayProperties',
+      value:
+          _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> displayPropertiesBetween(
+    DestinyDisplayPropertiesDefinition? lower,
+    DestinyDisplayPropertiesDefinition? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'displayProperties',
+      lower:
+          _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> displayPropertiesStartsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'displayProperties',
+      value:
+          _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> displayPropertiesEndsWith(
+    DestinyDisplayPropertiesDefinition value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'displayProperties',
+      value:
+          _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
+          DestinyPresentationNodeDefinition, QAfterFilterCondition>
+      displayPropertiesContains(DestinyDisplayPropertiesDefinition value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'displayProperties',
+      value:
+          _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
+          DestinyPresentationNodeDefinition, QAfterFilterCondition>
+      displayPropertiesMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'displayProperties',
+      value: pattern,
+      caseSensitive: caseSensitive,
     ));
   }
 
@@ -1344,6 +1725,155 @@ extension DestinyPresentationNodeDefinitionQueryFilter on QueryBuilder<
   QueryBuilder<
       DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> requirementsIsNull() {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.isNull,
+      property: 'requirements',
+      value: null,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> requirementsEqualTo(
+    DestinyPresentationNodeRequirementsBlock? value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.eq,
+      property: 'requirements',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> requirementsGreaterThan(
+    DestinyPresentationNodeRequirementsBlock? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.gt,
+      include: include,
+      property: 'requirements',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> requirementsLessThan(
+    DestinyPresentationNodeRequirementsBlock? value, {
+    bool caseSensitive = true,
+    bool include = false,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.lt,
+      include: include,
+      property: 'requirements',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> requirementsBetween(
+    DestinyPresentationNodeRequirementsBlock? lower,
+    DestinyPresentationNodeRequirementsBlock? upper, {
+    bool caseSensitive = true,
+    bool includeLower = true,
+    bool includeUpper = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition.between(
+      property: 'requirements',
+      lower:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+              .toIsar(lower),
+      includeLower: includeLower,
+      upper:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+              .toIsar(upper),
+      includeUpper: includeUpper,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> requirementsStartsWith(
+    DestinyPresentationNodeRequirementsBlock value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.startsWith,
+      property: 'requirements',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterFilterCondition> requirementsEndsWith(
+    DestinyPresentationNodeRequirementsBlock value, {
+    bool caseSensitive = true,
+  }) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.endsWith,
+      property: 'requirements',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
+          DestinyPresentationNodeDefinition, QAfterFilterCondition>
+      requirementsContains(DestinyPresentationNodeRequirementsBlock value,
+          {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.contains,
+      property: 'requirements',
+      value:
+          _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+              .toIsar(value),
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
+          DestinyPresentationNodeDefinition, QAfterFilterCondition>
+      requirementsMatches(String pattern, {bool caseSensitive = true}) {
+    return addFilterConditionInternal(FilterCondition(
+      type: ConditionType.matches,
+      property: 'requirements',
+      value: pattern,
+      caseSensitive: caseSensitive,
+    ));
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
       QAfterFilterCondition> rootViewIconIsNull() {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.isNull,
@@ -1855,6 +2385,16 @@ extension DestinyPresentationNodeDefinitionQueryWhereSortBy on QueryBuilder<
     DestinyPresentationNodeDefinition,
     DestinyPresentationNodeDefinition,
     QSortBy> {
+  QueryBuilder<DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition, QAfterSortBy> sortByChildren() {
+    return addSortByInternal('children', Sort.asc);
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition, QAfterSortBy> sortByChildrenDesc() {
+    return addSortByInternal('children', Sort.desc);
+  }
+
   QueryBuilder<
       DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition,
@@ -1881,6 +2421,20 @@ extension DestinyPresentationNodeDefinitionQueryWhereSortBy on QueryBuilder<
       DestinyPresentationNodeDefinition,
       QAfterSortBy> sortByDisableChildSubscreenNavigationDesc() {
     return addSortByInternal('disableChildSubscreenNavigation', Sort.desc);
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterSortBy> sortByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterSortBy> sortByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
   }
 
   QueryBuilder<DestinyPresentationNodeDefinition,
@@ -1988,6 +2542,18 @@ extension DestinyPresentationNodeDefinitionQueryWhereSortBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition, QAfterSortBy> sortByRequirements() {
+    return addSortByInternal('requirements', Sort.asc);
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterSortBy> sortByRequirementsDesc() {
+    return addSortByInternal('requirements', Sort.desc);
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition, QAfterSortBy> sortByRootViewIcon() {
     return addSortByInternal('rootViewIcon', Sort.asc);
   }
@@ -2024,6 +2590,16 @@ extension DestinyPresentationNodeDefinitionQueryWhereSortThenBy on QueryBuilder<
     DestinyPresentationNodeDefinition,
     DestinyPresentationNodeDefinition,
     QSortThenBy> {
+  QueryBuilder<DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition, QAfterSortBy> thenByChildren() {
+    return addSortByInternal('children', Sort.asc);
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition, QAfterSortBy> thenByChildrenDesc() {
+    return addSortByInternal('children', Sort.desc);
+  }
+
   QueryBuilder<
       DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition,
@@ -2050,6 +2626,20 @@ extension DestinyPresentationNodeDefinitionQueryWhereSortThenBy on QueryBuilder<
       DestinyPresentationNodeDefinition,
       QAfterSortBy> thenByDisableChildSubscreenNavigationDesc() {
     return addSortByInternal('disableChildSubscreenNavigation', Sort.desc);
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterSortBy> thenByDisplayProperties() {
+    return addSortByInternal('displayProperties', Sort.asc);
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterSortBy> thenByDisplayPropertiesDesc() {
+    return addSortByInternal('displayProperties', Sort.desc);
   }
 
   QueryBuilder<DestinyPresentationNodeDefinition,
@@ -2157,6 +2747,18 @@ extension DestinyPresentationNodeDefinitionQueryWhereSortThenBy on QueryBuilder<
   }
 
   QueryBuilder<DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition, QAfterSortBy> thenByRequirements() {
+    return addSortByInternal('requirements', Sort.asc);
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterSortBy> thenByRequirementsDesc() {
+    return addSortByInternal('requirements', Sort.desc);
+  }
+
+  QueryBuilder<DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition, QAfterSortBy> thenByRootViewIcon() {
     return addSortByInternal('rootViewIcon', Sort.asc);
   }
@@ -2196,6 +2798,13 @@ extension DestinyPresentationNodeDefinitionQueryWhereDistinct on QueryBuilder<
   QueryBuilder<
       DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition,
+      QDistinct> distinctByChildren({bool caseSensitive = true}) {
+    return addDistinctByInternal('children', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
       QDistinct> distinctByCompletionRecordHash() {
     return addDistinctByInternal('completionRecordHash');
   }
@@ -2205,6 +2814,14 @@ extension DestinyPresentationNodeDefinitionQueryWhereDistinct on QueryBuilder<
       DestinyPresentationNodeDefinition,
       QDistinct> distinctByDisableChildSubscreenNavigation() {
     return addDistinctByInternal('disableChildSubscreenNavigation');
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QDistinct> distinctByDisplayProperties({bool caseSensitive = true}) {
+    return addDistinctByInternal('displayProperties',
+        caseSensitive: caseSensitive);
   }
 
   QueryBuilder<DestinyPresentationNodeDefinition,
@@ -2261,6 +2878,13 @@ extension DestinyPresentationNodeDefinitionQueryWhereDistinct on QueryBuilder<
   QueryBuilder<
       DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition,
+      QDistinct> distinctByRequirements({bool caseSensitive = true}) {
+    return addDistinctByInternal('requirements', caseSensitive: caseSensitive);
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
       QDistinct> distinctByRootViewIcon({bool caseSensitive = true}) {
     return addDistinctByInternal('rootViewIcon', caseSensitive: caseSensitive);
   }
@@ -2280,6 +2904,13 @@ extension DestinyPresentationNodeDefinitionQueryProperty on QueryBuilder<
     DestinyPresentationNodeDefinition,
     DestinyPresentationNodeDefinition,
     QQueryProperty> {
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeChildrenBlock?,
+      QQueryOperations> childrenProperty() {
+    return addPropertyNameInternal('children');
+  }
+
   QueryBuilder<DestinyPresentationNodeDefinition, int?, QQueryOperations>
       completionRecordHashProperty() {
     return addPropertyNameInternal('completionRecordHash');
@@ -2288,6 +2919,13 @@ extension DestinyPresentationNodeDefinitionQueryProperty on QueryBuilder<
   QueryBuilder<DestinyPresentationNodeDefinition, bool?, QQueryOperations>
       disableChildSubscreenNavigationProperty() {
     return addPropertyNameInternal('disableChildSubscreenNavigation');
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyDisplayPropertiesDefinition?,
+      QQueryOperations> displayPropertiesProperty() {
+    return addPropertyNameInternal('displayProperties');
   }
 
   QueryBuilder<
@@ -2340,6 +2978,13 @@ extension DestinyPresentationNodeDefinitionQueryProperty on QueryBuilder<
   QueryBuilder<DestinyPresentationNodeDefinition, bool?, QQueryOperations>
       redactedProperty() {
     return addPropertyNameInternal('redacted');
+  }
+
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeRequirementsBlock?,
+      QQueryOperations> requirementsProperty() {
+    return addPropertyNameInternal('requirements');
   }
 
   QueryBuilder<DestinyPresentationNodeDefinition, String?, QQueryOperations>
