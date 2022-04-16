@@ -6,8 +6,8 @@ import 'package:bungie_api/models/user_membership_data.dart';
 import 'bungie_api.service.dart';
 
 class AccountService {
-  GroupUserInfoCard? _currentMembership;
-  UserMembershipData? _membershipData;
+  static GroupUserInfoCard? currentMembership;
+  static UserMembershipData? membershipData;
 
   static final AccountService _singleton = AccountService._internal();
 
@@ -32,7 +32,7 @@ class AccountService {
   }
 
   Future<UserMembershipData?> getMembershipData() async {
-    return _membershipData ?? await _getStoredMembershipData();
+    return membershipData ?? await _getStoredMembershipData();
   }
 
   Future<UserMembershipData?> _getStoredMembershipData() async {
@@ -42,23 +42,23 @@ class AccountService {
     if (json == null) {
       return null;
     }
-    UserMembershipData membershipData = UserMembershipData.fromJson(json);
+    membershipData = UserMembershipData.fromJson(json);
     return membershipData;
   }
 
   void reset() {
-    _currentMembership = null;
-    _membershipData = null;
+    currentMembership = null;
+    membershipData = null;
   }
 
   Future<GroupUserInfoCard?> getMembership() async {
-    if (_currentMembership == null) {
+    if (currentMembership == null) {
       var _membershipData = await _getStoredMembershipData();
       _membershipData ??= await updateMembershipData();
       var _membershipId = await getCurrentMembershipId();
-      _currentMembership = getMembershipById(_membershipData, _membershipId!);
+      currentMembership = getMembershipById(_membershipData, _membershipId!);
     }
-    return _currentMembership;
+    return currentMembership;
   }
 
   GroupUserInfoCard? getMembershipById(
@@ -70,7 +70,7 @@ class AccountService {
 
   Future<void> saveMembership(
       UserMembershipData membershipData, String membershipId) async {
-    _currentMembership = getMembershipById(membershipData, membershipId);
+    currentMembership = getMembershipById(membershipData, membershipId);
     await StorageService.setLocalStorage(
         'membershipData', membershipData.toJson());
     await StorageService.setLocalStorage('membershipId', membershipId);

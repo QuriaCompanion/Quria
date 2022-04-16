@@ -29,7 +29,7 @@ import 'package:quria/data/services/storage/storage.service.dart';
 class DisplayService {
   ProfileService profile = ProfileService();
   AccountService account = AccountService();
-  bool _isManifestUp = false;
+  static bool _isManifestUp = false;
 
   Future<List<DestinyInventoryItemDefinition>> getExotics(
       DestinyClass classType) async {
@@ -56,10 +56,10 @@ class DisplayService {
     return exoticItems;
   }
 
-  Future<bool> manifestLoader() async {
+  static Future<bool> manifestLoader() async {
     if (_isManifestUp) return true;
     await ManifestService.loadAllManifest();
-    await profile.loadProfile();
+    await ProfileService().loadProfile();
     _isManifestUp = true;
     return true;
   }
@@ -98,8 +98,7 @@ class DisplayService {
     } finally {}
   }
 
-  Future<ItemInfoHelper> getItemInfo(
-      String itemInstanceId, int itemHash) async {
+  ItemInfoHelper getItemInfo(String itemInstanceId, int itemHash) {
     DestinyInventoryItemDefinition itemDef = ManifestService
         .manifestParsed.destinyInventoryItemDefinition[itemHash]!;
     Map<String, DestinyStat>? stats =

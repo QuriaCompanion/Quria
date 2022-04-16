@@ -25,7 +25,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   void initState() {
     super.initState();
-    _future = display.manifestLoader();
+    _future = DisplayService.manifestLoader();
   }
 
   late double statArmorSpace;
