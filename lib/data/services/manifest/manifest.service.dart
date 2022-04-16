@@ -49,11 +49,36 @@ class ManifestService {
 
   static Future<void> loadAllManifest() async {
     if (await isManifestOutdated()) {
-      await compute(_storeManifests, await loadManifestInfo())
-          .then((value) async {
-        await mainManifestInfo();
-        saveManifestVersion();
+      final manifests =
+          await compute(_storeManifests, await loadManifestInfo());
+
+      await StorageService.isar.writeTxn((isar) async {
+        await isar.destinyInventoryItemDefinitions
+            .putAll(manifests[0] as List<DestinyInventoryItemDefinition>);
+        await isar.destinyClassDefinitions
+            .putAll(manifests[1] as List<DestinyClassDefinition>);
+        await isar.destinyDamageTypeDefinitions
+            .putAll(manifests[2] as List<DestinyDamageTypeDefinition>);
+        await isar.destinyStatDefinitions
+            .putAll(manifests[3] as List<DestinyStatDefinition>);
+        await isar.destinyTalentGridDefinitions
+            .putAll(manifests[4] as List<DestinyTalentGridDefinition>);
+        await isar.destinySandboxPerkDefinitions
+            .putAll(manifests[5] as List<DestinySandboxPerkDefinition>);
+        await isar.destinyEquipmentSlotDefinitions
+            .putAll(manifests[6] as List<DestinyEquipmentSlotDefinition>);
+        await isar.destinyPresentationNodeDefinitions
+            .putAll(manifests[7] as List<DestinyPresentationNodeDefinition>);
+        await isar.destinyEnergyTypeDefinitions
+            .putAll(manifests[8] as List<DestinyEnergyTypeDefinition>);
+        await isar.destinyPlugSetDefinitions
+            .putAll(manifests[9] as List<DestinyPlugSetDefinition>);
+        await isar.destinyCollectibleDefinitions
+            .putAll(manifests[10] as List<DestinyCollectibleDefinition>);
       });
+
+      await mainManifestInfo();
+      saveManifestVersion();
     } else {
       await mainManifestInfo();
     }
@@ -143,7 +168,7 @@ class ManifestService {
 /// types it correctly then stores them in isarDB
 ///
 /// promise of void
-Future<void> _storeManifests(DestinyManifest manifestInfo) async {
+Future<List> _storeManifests(DestinyManifest manifestInfo) async {
   Future<String> getManifestRemote<T>() async {
     String language = "fr";
     http.Response res = await http.get(Uri.parse(DestinyData.bungieLink +
@@ -163,7 +188,7 @@ Future<void> _storeManifests(DestinyManifest manifestInfo) async {
     return items;
   }
 
-  List manifests = await Future.wait([
+  return await Future.wait([
     typeData<DestinyInventoryItemDefinition>(),
     typeData<DestinyClassDefinition>(),
     typeData<DestinyDamageTypeDefinition>(),
@@ -176,71 +201,4 @@ Future<void> _storeManifests(DestinyManifest manifestInfo) async {
     typeData<DestinyPlugSetDefinition>(),
     typeData<DestinyCollectibleDefinition>(),
   ]);
-  if (!kIsWeb) {
-    Isar isar = await Isar.open(
-      relaxedDurability: true,
-      schemas: [
-        DestinyInventoryItemDefinitionSchema,
-        DestinyClassDefinitionSchema,
-        DestinyDamageTypeDefinitionSchema,
-        DestinyStatDefinitionSchema,
-        DestinyTalentGridDefinitionSchema,
-        DestinySandboxPerkDefinitionSchema,
-        DestinyEnergyTypeDefinitionSchema,
-        DestinyEquipmentSlotDefinitionSchema,
-        DestinyPresentationNodeDefinitionSchema,
-        DestinyCollectibleDefinitionSchema,
-        DestinyPlugSetDefinitionSchema,
-      ],
-    );
-    isar.writeTxn((isar) async {
-      await isar.destinyInventoryItemDefinitions
-          .putAll(manifests[0] as List<DestinyInventoryItemDefinition>);
-      await isar.destinyClassDefinitions
-          .putAll(manifests[1] as List<DestinyClassDefinition>);
-      await isar.destinyDamageTypeDefinitions
-          .putAll(manifests[2] as List<DestinyDamageTypeDefinition>);
-      await isar.destinyStatDefinitions
-          .putAll(manifests[3] as List<DestinyStatDefinition>);
-      await isar.destinyTalentGridDefinitions
-          .putAll(manifests[4] as List<DestinyTalentGridDefinition>);
-      await isar.destinySandboxPerkDefinitions
-          .putAll(manifests[5] as List<DestinySandboxPerkDefinition>);
-      await isar.destinyEquipmentSlotDefinitions
-          .putAll(manifests[6] as List<DestinyEquipmentSlotDefinition>);
-      await isar.destinyPresentationNodeDefinitions
-          .putAll(manifests[7] as List<DestinyPresentationNodeDefinition>);
-      await isar.destinyEnergyTypeDefinitions
-          .putAll(manifests[8] as List<DestinyEnergyTypeDefinition>);
-      await isar.destinyPlugSetDefinitions
-          .putAll(manifests[9] as List<DestinyPlugSetDefinition>);
-      await isar.destinyCollectibleDefinitions
-          .putAll(manifests[10] as List<DestinyCollectibleDefinition>);
-    });
-  } else {
-    StorageService.isar.writeTxn((isar) async {
-      await isar.destinyInventoryItemDefinitions
-          .putAll(manifests[0] as List<DestinyInventoryItemDefinition>);
-      await isar.destinyClassDefinitions
-          .putAll(manifests[1] as List<DestinyClassDefinition>);
-      await isar.destinyDamageTypeDefinitions
-          .putAll(manifests[2] as List<DestinyDamageTypeDefinition>);
-      await isar.destinyStatDefinitions
-          .putAll(manifests[3] as List<DestinyStatDefinition>);
-      await isar.destinyTalentGridDefinitions
-          .putAll(manifests[4] as List<DestinyTalentGridDefinition>);
-      await isar.destinySandboxPerkDefinitions
-          .putAll(manifests[5] as List<DestinySandboxPerkDefinition>);
-      await isar.destinyEquipmentSlotDefinitions
-          .putAll(manifests[6] as List<DestinyEquipmentSlotDefinition>);
-      await isar.destinyPresentationNodeDefinitions
-          .putAll(manifests[7] as List<DestinyPresentationNodeDefinition>);
-      await isar.destinyEnergyTypeDefinitions
-          .putAll(manifests[8] as List<DestinyEnergyTypeDefinition>);
-      await isar.destinyPlugSetDefinitions
-          .putAll(manifests[9] as List<DestinyPlugSetDefinition>);
-      await isar.destinyCollectibleDefinitions
-          .putAll(manifests[10] as List<DestinyCollectibleDefinition>);
-    });
-  }
 }
