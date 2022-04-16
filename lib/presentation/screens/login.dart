@@ -64,8 +64,8 @@ class LoginWidgetState extends State<LoginWidget> {
             text: textBodyBold('Se connecter', color: black),
             onPressed: () {
               loadingModal();
-              // authorizeClick(context);
-              yannisooLogin();
+              authorizeClick(context);
+//               yannisooLogin();
             },
             width: 250.0,
             height: 60),
