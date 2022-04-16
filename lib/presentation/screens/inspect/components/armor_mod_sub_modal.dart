@@ -24,7 +24,7 @@ class ArmorModSubModal extends StatelessWidget {
 
     if (mod.perks != null && mod.perks!.isNotEmpty) {
       perkItem = ManifestService
-          .manifestParsed.destinySandboxPerkDefinition?[mod.perks?[0].perkHash];
+          .manifestParsed.destinySandboxPerkDefinition[mod.perks?[0].perkHash];
     }
     return Container(
       height: MediaQuery.of(context).size.height * 0.75,
@@ -101,7 +101,7 @@ class ArmorModSubModal extends StatelessWidget {
                           fontSize: 20,
                           name: ManifestService
                                   .manifestParsed
-                                  .destinyStatDefinition![stat.statTypeHash]!
+                                  .destinyStatDefinition[stat.statTypeHash]!
                                   .displayProperties!
                                   .name ??
                               'error',

@@ -16,15 +16,15 @@ class ItemComponentSmart extends StatelessWidget {
   Widget build(BuildContext context) {
     final instanceInfo = ProfileService().getInstanceInfo(item.itemInstanceId!);
     final DestinyInventoryItemDefinition itemDef = ManifestService
-        .manifestParsed.destinyInventoryItemDefinition![item.itemHash]!;
+        .manifestParsed.destinyInventoryItemDefinition[item.itemHash]!;
     final String? elementIcon = ManifestService
             .manifestParsed
-            .destinyDamageTypeDefinition?[itemDef.defaultDamageTypeHash]
+            .destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]
             ?.displayProperties
             ?.icon ??
         ManifestService
             .manifestParsed
-            .destinyEnergyTypeDefinition?[instanceInfo.energy?.energyTypeHash]
+            .destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]
             ?.displayProperties
             ?.icon;
     final int powerLevel = instanceInfo.primaryStat!.value!;

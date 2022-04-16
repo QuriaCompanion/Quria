@@ -25,7 +25,7 @@ class _SubclassModModalState extends State<SubclassModModal> {
   Widget build(BuildContext context) {
     if (widget.mod.perks != null && widget.mod.perks!.isNotEmpty) {
       perkItem = ManifestService.manifestParsed
-          .destinySandboxPerkDefinition?[widget.mod.perks?[0].perkHash];
+          .destinySandboxPerkDefinition[widget.mod.perks?[0].perkHash];
     }
     return Container(
       height: MediaQuery.of(context).size.height * 0.75,
@@ -102,7 +102,7 @@ class _SubclassModModalState extends State<SubclassModModal> {
                           fontSize: 20,
                           name: ManifestService
                                   .manifestParsed
-                                  .destinyStatDefinition![stat.statTypeHash]!
+                                  .destinyStatDefinition[stat.statTypeHash]!
                                   .displayProperties!
                                   .name ??
                               'error',

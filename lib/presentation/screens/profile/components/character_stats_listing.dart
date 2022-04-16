@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/bungie_api/enums/grenade_cooldowns.dart';
-import 'package:quria/data/services/bungie_api/enums/melee_cooldowns.enum.dart';
-import 'package:quria/data/services/bungie_api/enums/super_coodowns.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
 
 class CharacterStatsListing extends StatefulWidget {
@@ -26,37 +23,21 @@ class CharacterStatsListing extends StatefulWidget {
 }
 
 class _CharacterStatsListingState extends State<CharacterStatsListing> {
-  late Map<String, dynamic> timerStat;
+  late Map<String, String> data;
   @override
   initState() {
     super.initState();
+    data = DisplayService().getStatsListing(widget.characterId, widget.stats);
+  }
+
+  @override
+  void didUpdateWidget(covariant CharacterStatsListing oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    data = DisplayService().getStatsListing(widget.characterId, widget.stats);
   }
 
   @override
   Widget build(BuildContext context) {
-    int disciplineTier =
-        (widget.stats[StatsStringHash.discipline]! / 10).floor();
-    int superTier = (widget.stats[StatsStringHash.intellect]! / 10).floor();
-    int strengthTier = (widget.stats[StatsStringHash.strength]! / 10).floor();
-
-    int grenadeHash =
-        ProfileService().getCurrentGrenadeHashForCharacter(widget.characterId)!;
-    int? grenadeTimer =
-        GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier];
-
-    int superHash =
-        ProfileService().getCurrentSuperHashForCharacter(widget.characterId)!;
-    int? superTimer = SuperCooldown.superMap[superHash]?[superTier];
-
-    int meleeHash =
-        ProfileService().getCurrentMeleeHashForCharacter(widget.characterId)!;
-    int? meleeTimer = MeleeCooldown.meleeMap[meleeHash]?[strengthTier];
-
-    timerStat = {
-      StatsStringHash.discipline: formatTime(grenadeTimer),
-      StatsStringHash.intellect: formatTime(superTimer),
-      StatsStringHash.strength: formatTime(meleeTimer),
-    };
     if (widget.direction == Axis.vertical) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -64,7 +45,7 @@ class _CharacterStatsListingState extends State<CharacterStatsListing> {
         children: [
           for (int i = 0; i < 6; i++)
             Tooltip(
-              message: timerStat[DestinyData.armorStats[i]] ?? '',
+              message: data[DestinyData.armorStats[i]] ?? '',
               child: VerticalStatisticDisplay(
                   value: widget.stats[DestinyData.armorStats[i]]!,
                   icon: DestinyData.statsIcon[i],
@@ -82,7 +63,7 @@ class _CharacterStatsListingState extends State<CharacterStatsListing> {
           children: [
             for (int i = 0; i < 6; i++)
               Tooltip(
-                message: timerStat[DestinyData.armorStats[i]] ?? '',
+                message: data[DestinyData.armorStats[i]] ?? '',
                 child: VerticalStatisticDisplay(
                     value: widget.stats[DestinyData.armorStats[i]]!,
                     icon: DestinyData.statsIcon[i],
@@ -94,12 +75,5 @@ class _CharacterStatsListingState extends State<CharacterStatsListing> {
         ),
       );
     }
-  }
-
-  String formatTime(time) {
-    var minutes = (time ~/ 60);
-    var seconds = time % 60;
-    if (minutes == 0) return "$seconds sec";
-    return "$minutes min $seconds sec";
   }
 }

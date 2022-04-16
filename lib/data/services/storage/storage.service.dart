@@ -3,6 +3,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:isar/isar.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_class_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_collectible_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_damage_type_definition.dart';
@@ -76,8 +77,14 @@ class StorageService {
     return;
   }
 
-  Future<Map<int, T>> getDefinitions<T>(List<int> hashes) async {
-    List<T> definitions = await DefinitionTableNames.getDefinitions[T]!(hashes);
-    return {for (int i = 0; i < hashes.length; i++) hashes[i]: definitions[i]};
+  static Future<void> getDefinitions<T>(List<int> hashes) async {
+    List<T?> definitions =
+        await DefinitionTableNames.getDefinitions[T]!(hashes);
+
+    for (int i = 0; i < hashes.length; i++) {
+      if (definitions[i] == null) continue;
+      T def = definitions[i]!;
+      AllDestinyManifestComponents.setField<T>(hashes[i], def);
+    }
   }
 }

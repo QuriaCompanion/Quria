@@ -36,7 +36,7 @@ class CharacterBannerInfo extends StatelessWidget {
               ),
               textH3(ManifestService
                       .manifestParsed
-                      .destinyClassDefinition![character.classHash]!
+                      .destinyClassDefinition[character.classHash]!
                       .genderedClassNamesByGenderHash![
                   character.genderHash.toString()]!),
             ],
@@ -53,7 +53,7 @@ class CharacterBannerInfo extends StatelessWidget {
                       image: NetworkImage(DestinyData.bungieLink +
                           ManifestService
                               .manifestParsed
-                              .destinyStatDefinition![StatsHash.power]!
+                              .destinyStatDefinition[StatsHash.power]!
                               .displayProperties!
                               .icon!),
                       color: yellow,

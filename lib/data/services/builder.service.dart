@@ -30,10 +30,9 @@ class BuilderService {
     BuilderHelper builder = BuilderHelper(
         statOrder: data.statOrder,
         exotic: ManifestService
-            .manifestParsed.destinyInventoryItemDefinition![data.exoticHash],
+            .manifestParsed.destinyInventoryItemDefinition[data.exoticHash],
         armors: armors,
-        manifest:
-            ManifestService.manifestParsed.destinyInventoryItemDefinition!,
+        manifest: ManifestService.manifestParsed.destinyInventoryItemDefinition,
         sockets: sockets,
         armorMods: data.armorMods,
         subclassMods: data.subclassMods,

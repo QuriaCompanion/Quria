@@ -27,13 +27,13 @@ class BungieActionsService {
       try {
         int slotTypeHash = ManifestService
             .manifestParsed
-            .destinyInventoryItemDefinition![itemHash]!
+            .destinyInventoryItemDefinition[itemHash]!
             .equippingBlock!
             .equipmentSlotTypeHash!;
-        List<DestinyItemComponent> slotItems = profile
-            .getItemsForCharacter(characterId, slotTypeHash)
-            .toSet()
-            .toList();
+        List<DestinyItemComponent> slotItems =
+            (profile.getItemsForCharacter(characterId, slotTypeHash))
+                .toSet()
+                .toList();
         if (slotItems.length <= 9) {
           await api.transferItem(slotItems.first.itemInstanceId!, characterId,
               itemHash: slotItems.first.itemHash,
@@ -66,10 +66,10 @@ class BungieActionsService {
     // transfer all items to character
     for (int i = 0; i < build.equipement.length; i++) {
       itemsIds.add(build.equipement[i].itemInstanceId);
-      socketsHashes.add(profile
-          .getItemSockets(build.equipement[i].itemInstanceId)!
-          .map((e) => e.plugHash)
-          .toList());
+      socketsHashes.add(
+          (profile.getItemSockets(build.equipement[i].itemInstanceId))
+              .map((e) => e.plugHash)
+              .toList());
       if (!characterInventory
           .map((e) => e.itemInstanceId)
           .contains(build.equipement[i].itemInstanceId)) {
@@ -82,8 +82,7 @@ class BungieActionsService {
     if (subclassId != null) {
       itemsIds.add(subclassId);
       if (subclassMods.isNotEmpty) {
-        subclassSocketsHashes.addAll(profile
-            .getItemSockets(subclassId)!
+        subclassSocketsHashes.addAll((profile.getItemSockets(subclassId))
             .map((e) => e.plugHash)
             .toList());
       }
@@ -98,7 +97,7 @@ class BungieActionsService {
         try {
           int hash = ManifestService
               .manifestParsed
-              .destinyInventoryItemDefinition![build.equipement[i].hash]!
+              .destinyInventoryItemDefinition[build.equipement[i].hash]!
               .sockets!
               .socketEntries![index]
               .singleInitialItemHash!;

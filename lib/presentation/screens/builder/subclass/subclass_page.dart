@@ -17,10 +17,16 @@ class SubclassPage extends StatefulWidget {
 }
 
 class _SubclassPageState extends State<SubclassPage> {
+  late List<DestinyItemComponent> data;
+
+  @override
+  void initState() {
+    super.initState();
+    data = ProfileService().getSubclassesForCharacter(widget.data.characterId);
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<DestinyItemComponent> subclasses =
-        ProfileService().getSubclassesForCharacter(widget.data.characterId);
     if (vw(context) < 850) {
       return ScaffoldSteps<ClassItemChoiceHelper>(
         route: routeClassItemChoice,
@@ -31,7 +37,7 @@ class _SubclassPageState extends State<SubclassPage> {
             subclassMods: []),
         body: SubclassMobileView(
           data: widget.data,
-          subclasses: subclasses,
+          subclasses: data,
         ),
       );
     } else {

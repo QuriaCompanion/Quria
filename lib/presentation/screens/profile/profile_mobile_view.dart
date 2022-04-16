@@ -34,11 +34,12 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                 image: NetworkImage(DestinyData.bungieLink +
                     ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition![
+                        .destinyInventoryItemDefinition[
                             widget.data.selectedCharacterSubclass.itemHash]!
                         .screenshot!),
                 child: ProfileMobileHeader(
                     stats: widget.data.selectedCharacter.stats,
+                    characterSuper: widget.data.characterSuper,
                     characterId: widget.data.selectedCharacter.characterId!),
               ),
             ],
@@ -84,16 +85,18 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
               in widget.data.selectedCharacterInventory.where((element) =>
                   ManifestService
                       .manifestParsed
-                      .destinyInventoryItemDefinition?[element.itemHash]
+                      .destinyInventoryItemDefinition[element.itemHash]
                       ?.itemType ==
                   currentFilter))
             Padding(
               padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
               child: Column(
                 children: [
-                  ProfileMobileItemCard(
-                    item: item,
-                    characterId: widget.data.selectedCharacter.characterId!,
+                  RepaintBoundary(
+                    child: ProfileMobileItemCard(
+                      item: item,
+                      characterId: widget.data.selectedCharacter.characterId!,
+                    ),
                   ),
                   Divider(
                     thickness: 1,

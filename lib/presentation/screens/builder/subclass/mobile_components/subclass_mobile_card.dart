@@ -20,7 +20,7 @@ class SubclassMobileCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final DestinyInventoryItemDefinition subclassDef = ManifestService
-        .manifestParsed.destinyInventoryItemDefinition![subclass.itemHash]!;
+        .manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!;
     return InkWell(
       onTap: () {
         subclassDef.talentGrid?.talentGridHash == 0

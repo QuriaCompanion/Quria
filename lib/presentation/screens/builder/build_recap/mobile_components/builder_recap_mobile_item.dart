@@ -66,8 +66,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
           pointsAvailable: armorModspace,
           afinityIcon: ManifestService
               .manifestParsed
-              .destinyEnergyTypeDefinition![
-                  instanceInfo.energy!.energyTypeHash]!
+              .destinyEnergyTypeDefinition[instanceInfo.energy!.energyTypeHash]!
               .displayProperties!
               .icon!,
         ),
@@ -83,7 +82,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
               child: ArmorModIconDisplay(
                 iconSize: 44,
                 socket: ManifestService.manifestParsed
-                    .destinyInventoryItemDefinition![item.mods!.hash]!,
+                    .destinyInventoryItemDefinition[item.mods!.hash]!,
               ),
             ),
             for (DestinyInventoryItemDefinition? mod in mods)
@@ -93,7 +92,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
                   child: ArmorModIconDisplay(
                     iconSize: 44,
                     socket: ManifestService.manifestParsed
-                        .destinyInventoryItemDefinition![mod.hash]!,
+                        .destinyInventoryItemDefinition[mod.hash]!,
                   ),
                 ),
           ],

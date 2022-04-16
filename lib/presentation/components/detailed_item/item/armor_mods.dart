@@ -47,29 +47,29 @@ class _ArmorModsState extends State<ArmorMods> {
             (element.isVisible!) &&
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
+                    .destinyInventoryItemDefinition[element.plugHash]
                     ?.plug
                     ?.plugCategoryHash !=
                 2973005342 &&
             !ManifestService
                 .manifestParsed
-                .destinyInventoryItemDefinition![element.plugHash]!
+                .destinyInventoryItemDefinition[element.plugHash]!
                 .plug!
                 .plugCategoryIdentifier!
                 .contains('masterworks.stat') &&
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
+                    .destinyInventoryItemDefinition[element.plugHash]
                     ?.itemType !=
                 DestinyItemType.Armor &&
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
+                    .destinyInventoryItemDefinition[element.plugHash]
                     ?.itemSubType !=
                 DestinyItemSubType.Ornament &&
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
+                    .destinyInventoryItemDefinition[element.plugHash]
                     ?.inventory
                     ?.tierType !=
                 TierType.Exotic)
@@ -80,11 +80,11 @@ class _ArmorModsState extends State<ArmorMods> {
           afinityIcon: widget.afinityIcon,
           pointsAvailable: ManifestService
               .manifestParsed
-              .destinyInventoryItemDefinition![widget.sockets
+              .destinyInventoryItemDefinition[widget.sockets
                   .firstWhere((element) =>
                       ManifestService
                           .manifestParsed
-                          .destinyInventoryItemDefinition![element.plugHash]
+                          .destinyInventoryItemDefinition[element.plugHash]
                           ?.plug
                           ?.plugCategoryIdentifier
                           ?.contains('masterworks.stat') ==
@@ -121,7 +121,7 @@ class _ArmorModsState extends State<ArmorMods> {
                         builder: (context) {
                           return ArmorModModal(
                             socket: ManifestService.manifestParsed
-                                    .destinyInventoryItemDefinition![
+                                    .destinyInventoryItemDefinition[
                                 socket.value.plugHash]!,
                             plugSetsHash: widget
                                 .item
@@ -144,9 +144,8 @@ class _ArmorModsState extends State<ArmorMods> {
                   },
                   child: ArmorModIconDisplay(
                     iconSize: mobileItemSize(context),
-                    socket: ManifestService
-                            .manifestParsed.destinyInventoryItemDefinition![
-                        socket.value.plugHash]!,
+                    socket: ManifestService.manifestParsed
+                        .destinyInventoryItemDefinition[socket.value.plugHash]!,
                   ),
                 ))
         ],

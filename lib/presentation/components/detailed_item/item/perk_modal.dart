@@ -96,7 +96,7 @@ class PerkModal extends StatelessWidget {
                           fontSize: 20,
                           name: ManifestService
                                   .manifestParsed
-                                  .destinyStatDefinition![stat.statTypeHash]!
+                                  .destinyStatDefinition[stat.statTypeHash]!
                                   .displayProperties!
                                   .name ??
                               'error',

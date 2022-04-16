@@ -5,6 +5,7 @@ import 'package:bungie_api/enums/destiny_energy_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
+import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_definition.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -116,6 +117,58 @@ extension ArmorStatIntExtension on armorStatInt {
       default:
         return 0;
     }
+  }
+}
+
+class Conditions {
+  static amorSockets(DestinyItemSocketState item) {
+    return (item.isVisible!) &&
+        ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[item.plugHash]
+                ?.plug
+                ?.plugCategoryHash !=
+            2973005342 &&
+        !ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[item.plugHash]!
+            .plug!
+            .plugCategoryIdentifier!
+            .contains('masterworks.stat') &&
+        ManifestService.manifestParsed
+                .destinyInventoryItemDefinition[item.plugHash]?.itemType !=
+            DestinyItemType.Armor &&
+        ManifestService.manifestParsed
+                .destinyInventoryItemDefinition[item.plugHash]?.itemSubType !=
+            DestinyItemSubType.Ornament &&
+        ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[item.plugHash]
+                ?.inventory
+                ?.tierType !=
+            TierType.Exotic;
+  }
+
+  static cosmeticSockets(DestinyItemSocketState item) {
+    return (item.isVisible!) &&
+            ManifestService.manifestParsed
+                    .destinyInventoryItemDefinition[item.plugHash]?.itemType ==
+                DestinyItemType.Armor ||
+        ManifestService.manifestParsed
+                .destinyInventoryItemDefinition[item.plugHash]?.itemSubType ==
+            DestinyItemSubType.Ornament ||
+        ManifestService.manifestParsed
+                .destinyInventoryItemDefinition[item.plugHash]?.itemSubType ==
+            DestinyItemSubType.Shader;
+  }
+
+  static perkSockets(DestinyItemSocketState item) {
+    return item.plugHash != null &&
+        DestinyData.perkCategoryHash.contains(ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[item.plugHash]!
+            .plug!
+            .plugCategoryHash!);
   }
 }
 
@@ -753,13 +806,13 @@ class DestinyData {
   static Map<DestinyAmmunitionType, DestinyPresentationNodeDefinition>
       ammoInfoByType = {
     DestinyAmmunitionType.Primary:
-        ManifestService.manifestParsed.destinyPresentationNodeDefinition![
+        ManifestService.manifestParsed.destinyPresentationNodeDefinition[
             ammoTypeHashes[DestinyAmmunitionType.Primary]]!,
     DestinyAmmunitionType.Special:
-        ManifestService.manifestParsed.destinyPresentationNodeDefinition![
+        ManifestService.manifestParsed.destinyPresentationNodeDefinition[
             ammoTypeHashes[DestinyAmmunitionType.Special]]!,
     DestinyAmmunitionType.Heavy:
-        ManifestService.manifestParsed.destinyPresentationNodeDefinition![
+        ManifestService.manifestParsed.destinyPresentationNodeDefinition[
             ammoTypeHashes[DestinyAmmunitionType.Heavy]]!,
   };
 

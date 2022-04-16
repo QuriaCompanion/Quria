@@ -30,7 +30,6 @@ class AppRouter {
       case routeLogin:
         return MaterialPageRoute(builder: (_) => LoginWidget());
       case routeProfile:
-        print("object");
         return MaterialPageRoute(builder: (_) => const ProfileWidget());
       case routeBuilderList:
         return MaterialPageRoute(builder: (_) => const TestWidget());

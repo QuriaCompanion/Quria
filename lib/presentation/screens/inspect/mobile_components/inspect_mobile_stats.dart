@@ -23,7 +23,7 @@ class InspectMobileStats extends StatelessWidget {
               fontSize: 20,
               name: ManifestService
                       .manifestParsed
-                      .destinyStatDefinition![statHash]!
+                      .destinyStatDefinition[statHash]!
                       .displayProperties!
                       .name ??
                   'error',

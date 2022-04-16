@@ -43,7 +43,7 @@ class ModsMobileSection extends StatelessWidget {
                           onSocketChange: (itemHash) {
                             onChange(
                                 ManifestService.manifestParsed
-                                    .destinyInventoryItemDefinition![itemHash]!,
+                                    .destinyInventoryItemDefinition[itemHash]!,
                                 item.key);
                           },
                         );

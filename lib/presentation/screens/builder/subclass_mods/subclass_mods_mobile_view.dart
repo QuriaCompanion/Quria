@@ -34,7 +34,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
 
     displayedSockets = widget.sockets!
         .map((e) => ManifestService
-            .manifestParsed.destinyInventoryItemDefinition![e.plugHash]!)
+            .manifestParsed.destinyInventoryItemDefinition[e.plugHash]!)
         .toList();
   }
 
@@ -159,13 +159,13 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                         onSocketChange: (itemHash) {
                                           if (!displayedSockets.contains(
                                               ManifestService.manifestParsed
-                                                      .destinyInventoryItemDefinition![
+                                                      .destinyInventoryItemDefinition[
                                                   itemHash]!)) {
                                             setState(() {
                                               displayedSockets[
                                                   7 + i] = ManifestService
                                                       .manifestParsed
-                                                      .destinyInventoryItemDefinition![
+                                                      .destinyInventoryItemDefinition[
                                                   itemHash]!;
                                             });
                                             widget.onChange(displayedSockets);

@@ -45,26 +45,26 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
   bool isOpen = false;
   @override
   Widget build(BuildContext context) {
-    perk = ManifestService.manifestParsed.destinyInventoryItemDefinition![widget
+    perk = ManifestService.manifestParsed.destinyInventoryItemDefinition[widget
         .item.sockets!.socketEntries
         ?.firstWhere((element) =>
             ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition?[
+                        .destinyInventoryItemDefinition[
                             element.singleInitialItemHash]
                         ?.plug
                         ?.plugCategoryHash ==
                     1744546145 &&
                 ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition?[
+                        .destinyInventoryItemDefinition[
                             element.singleInitialItemHash]
                         ?.inventory
                         ?.tierType ==
                     TierType.Exotic ||
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition?[
+                    .destinyInventoryItemDefinition[
                         element.singleInitialItemHash]
                     ?.hash ==
                 3268255645)

@@ -14,17 +14,17 @@ class InspectMobileExoticArmor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DestinyInventoryItemDefinition item =
-        ManifestService.manifestParsed.destinyInventoryItemDefinition![sockets
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[sockets
             ?.firstWhere((element) =>
                 ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition?[element.plugHash]
+                        .destinyInventoryItemDefinition[element.plugHash]
                         ?.plug
                         ?.plugCategoryHash ==
                     1744546145 &&
                 ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition?[element.plugHash]
+                        .destinyInventoryItemDefinition[element.plugHash]
                         ?.inventory
                         ?.tierType ==
                     TierType.Exotic)

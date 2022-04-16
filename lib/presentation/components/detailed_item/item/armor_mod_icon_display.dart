@@ -29,7 +29,7 @@ class ArmorModIconDisplay extends StatelessWidget {
           if (socket.investmentStats!.isNotEmpty &&
               ManifestService
                       .manifestParsed
-                      .destinyStatDefinition?[
+                      .destinyStatDefinition[
                           socket.investmentStats?[0].statTypeHash]
                       ?.displayProperties
                       ?.hasIcon ==
@@ -40,7 +40,7 @@ class ArmorModIconDisplay extends StatelessWidget {
               image: NetworkImage(DestinyData.bungieLink +
                   ManifestService
                       .manifestParsed
-                      .destinyStatDefinition![
+                      .destinyStatDefinition[
                           socket.investmentStats![0].statTypeHash]!
                       .displayProperties!
                       .icon!),

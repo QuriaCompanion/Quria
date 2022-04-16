@@ -38,7 +38,7 @@ class ItemNamedDescription extends StatelessWidget {
         textBodyRegular(isMasterwork
             ? ManifestService
                     .manifestParsed
-                    .destinyStatDefinition![
+                    .destinyStatDefinition[
                         item.investmentStats![0].statTypeHash]
                     ?.displayProperties
                     ?.name ??

@@ -73,7 +73,7 @@ class _ArmorModModalState extends State<ArmorModModal> {
                               builder: (context) {
                                 return ArmorModSubModal(
                                   mod: ManifestService.manifestParsed
-                                          .destinyInventoryItemDefinition![
+                                          .destinyInventoryItemDefinition[
                                       plug.plugItemHash]!,
                                   onSocketsChanged: () {
                                     Navigator.pop(context);
@@ -85,7 +85,7 @@ class _ArmorModModalState extends State<ArmorModModal> {
                         child: ModWithTypeName(
                             iconSize: mobileItemSize(context),
                             item: ManifestService.manifestParsed
-                                    .destinyInventoryItemDefinition![
+                                    .destinyInventoryItemDefinition[
                                 plug.plugItemHash]!),
                       ),
                     ),

@@ -26,24 +26,24 @@ class _InspectMobileIntrinsicsState extends State<InspectMobileIntrinsics> {
             element.plugHash != null &&
                 ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition?[element.plugHash]
+                        .destinyInventoryItemDefinition[element.plugHash]
                         ?.displayProperties
                         ?.icon !=
                     null &&
                 DestinyData.modCategoryHash.contains(ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition![element.plugHash]!
+                    .destinyInventoryItemDefinition[element.plugHash]!
                     .plug!
                     .plugCategoryHash) ||
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition![element.plugHash]
+                    .destinyInventoryItemDefinition[element.plugHash]
                     ?.plug
                     ?.plugStyle ==
                 PlugUiStyles.Masterwork ||
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition![element.plugHash]
+                    .destinyInventoryItemDefinition[element.plugHash]
                     ?.plug
                     ?.plugCategoryIdentifier
                     ?.contains('masterworks.stat') ==
@@ -62,7 +62,7 @@ class _InspectMobileIntrinsicsState extends State<InspectMobileIntrinsics> {
         child: ItemNamedDescription(
             iconSize: iconSize,
             item: ManifestService.manifestParsed
-                .destinyInventoryItemDefinition![socket.plugHash]!),
+                .destinyInventoryItemDefinition[socket.plugHash]!),
       ));
     }
     return Column(

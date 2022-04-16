@@ -77,8 +77,7 @@ class _InspectWidgetState extends State<InspectWidget> {
                       for (int statHash in DestinyData.linearStatBySubType[
                           ManifestService
                               .manifestParsed
-                              .destinyInventoryItemDefinition![
-                                  widget.item.hash]!
+                              .destinyInventoryItemDefinition[widget.item.hash]!
                               .itemSubType!]!)
                         StatProgressBar(
                             width: itemMainInfoWidth,
@@ -86,13 +85,13 @@ class _InspectWidgetState extends State<InspectWidget> {
                             padding: childPadding,
                             name: ManifestService
                                     .manifestParsed
-                                    .destinyStatDefinition![statHash]!
+                                    .destinyStatDefinition[statHash]!
                                     .displayProperties!
                                     .name ??
                                 'error',
                             value: ManifestService
                                     .manifestParsed
-                                    .destinyInventoryItemDefinition![
+                                    .destinyInventoryItemDefinition[
                                         widget.item.hash]!
                                     .stats
                                     ?.stats![statHash.toString()]
@@ -100,7 +99,7 @@ class _InspectWidgetState extends State<InspectWidget> {
                                 0,
                             type: ManifestService
                                 .manifestParsed
-                                .destinyInventoryItemDefinition![
+                                .destinyInventoryItemDefinition[
                                     widget.item.hash]!
                                 .itemType!),
                     ],
@@ -159,7 +158,7 @@ class _InspectWidgetState extends State<InspectWidget> {
                 for (int statHash in DestinyData.linearStatBySubType[
                     ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition![widget.item.hash]!
+                        .destinyInventoryItemDefinition[widget.item.hash]!
                         .itemSubType!]!)
                   StatProgressBar(
                       width: vw(context) - padding * 2,
@@ -167,21 +166,20 @@ class _InspectWidgetState extends State<InspectWidget> {
                       padding: childPadding,
                       name: ManifestService
                               .manifestParsed
-                              .destinyStatDefinition![statHash]!
+                              .destinyStatDefinition[statHash]!
                               .displayProperties!
                               .name ??
                           'error',
                       value: ManifestService
                               .manifestParsed
-                              .destinyInventoryItemDefinition![
-                                  widget.item.hash]!
+                              .destinyInventoryItemDefinition[widget.item.hash]!
                               .stats
                               ?.stats![statHash.toString()]
                               ?.value ??
                           0,
                       type: ManifestService
                           .manifestParsed
-                          .destinyInventoryItemDefinition![widget.item.hash]!
+                          .destinyInventoryItemDefinition[widget.item.hash]!
                           .itemType!),
                 WeaponDetailsHiddenStats(
                   width: vw(context) - padding * 2,

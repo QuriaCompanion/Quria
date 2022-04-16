@@ -68,12 +68,12 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                             builder: (context) {
                               return SubclassModModal(
                                   mod: ManifestService.manifestParsed
-                                      .destinyInventoryItemDefinition![plug]!,
+                                      .destinyInventoryItemDefinition[plug]!,
                                   onSocketChange: () {
                                     setState(() {
                                       widget.onSocketChange(ManifestService
                                               .manifestParsed
-                                              .destinyInventoryItemDefinition![
+                                              .destinyInventoryItemDefinition[
                                           plug]!);
                                     });
                                   });
@@ -81,13 +81,13 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                       },
                       onLongPress: () {
                         widget.onSocketChange(ManifestService.manifestParsed
-                            .destinyInventoryItemDefinition![plug]!);
+                            .destinyInventoryItemDefinition[plug]!);
                       },
                       child: pictureBordered(
                           image: NetworkImage(DestinyData.bungieLink +
                               ManifestService
                                   .manifestParsed
-                                  .destinyInventoryItemDefinition![plug]!
+                                  .destinyInventoryItemDefinition[plug]!
                                   .displayProperties!
                                   .icon!),
                           size: 44),
