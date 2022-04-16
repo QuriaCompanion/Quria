@@ -62,7 +62,7 @@ class ManifestService {
   /// gets main informations from the store
   /// and puts them in the manifestParsed
   static Future<void> mainManifestInfo() async {
-    Future.wait([
+    await Future.wait([
       StorageService.isar.destinyClassDefinitions.where().findAll().then(
           (value) =>
               AllDestinyManifestComponents.setValue<DestinyClassDefinition>({
