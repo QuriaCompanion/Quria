@@ -2,7 +2,7 @@ import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_investment_stat_definition.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_item_sockets_component.dart';
@@ -30,10 +30,9 @@ class BuilderService {
     BuilderHelper builder = BuilderHelper(
         statOrder: data.statOrder,
         exotic: ManifestService
-            .manifestParsed.destinyInventoryItemDefinition![data.exoticHash],
+            .manifestParsed.destinyInventoryItemDefinition[data.exoticHash],
         armors: armors,
-        manifest:
-            ManifestService.manifestParsed.destinyInventoryItemDefinition!,
+        manifest: ManifestService.manifestParsed.destinyInventoryItemDefinition,
         sockets: sockets,
         armorMods: data.armorMods,
         subclassMods: data.subclassMods,

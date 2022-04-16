@@ -1,9 +1,9 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
-import 'package:bungie_api/models/destiny_sandbox_perk_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definition.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
 import 'package:quria/presentation/components/detailed_item/item/stat_progress_bar.dart';
@@ -24,7 +24,7 @@ class ArmorModSubModal extends StatelessWidget {
 
     if (mod.perks != null && mod.perks!.isNotEmpty) {
       perkItem = ManifestService
-          .manifestParsed.destinySandboxPerkDefinition?[mod.perks?[0].perkHash];
+          .manifestParsed.destinySandboxPerkDefinition[mod.perks?[0].perkHash];
     }
     return Container(
       height: MediaQuery.of(context).size.height * 0.75,
@@ -101,7 +101,7 @@ class ArmorModSubModal extends StatelessWidget {
                           fontSize: 20,
                           name: ManifestService
                                   .manifestParsed
-                                  .destinyStatDefinition![stat.statTypeHash]!
+                                  .destinyStatDefinition[stat.statTypeHash]!
                                   .displayProperties!
                                   .name ??
                               'error',

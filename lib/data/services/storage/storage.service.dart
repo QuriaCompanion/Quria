@@ -1,7 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:isar/isar.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_class_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_collectible_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_damage_type_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_energy_type_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_plug_set_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_stat_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
+import 'package:quria/data/services/bungie_api/enums/definition_table_names.dart';
 
 /// StorageService is to be called using static methods.
 ///
@@ -10,10 +24,27 @@ import 'package:path_provider/path_provider.dart';
 /// It uses the LocalStorage package to store data in the local storage.
 class StorageService {
   static late final LocalStorage _storage;
-
+  static late Isar isar;
   static init() async {
     _storage = LocalStorage('Quria');
-    Hive.initFlutter();
+
+    isar = await Isar.open(
+      relaxedDurability: true,
+      schemas: [
+        DestinyInventoryItemDefinitionSchema,
+        DestinyClassDefinitionSchema,
+        DestinyDamageTypeDefinitionSchema,
+        DestinyStatDefinitionSchema,
+        DestinyTalentGridDefinitionSchema,
+        DestinySandboxPerkDefinitionSchema,
+        DestinyEnergyTypeDefinitionSchema,
+        DestinyEquipmentSlotDefinitionSchema,
+        DestinyPresentationNodeDefinitionSchema,
+        DestinyCollectibleDefinitionSchema,
+        DestinyPlugSetDefinitionSchema,
+      ],
+      directory: kIsWeb ? null : (await getApplicationSupportDirectory()).path,
+    );
   }
 
   static isolateInit() async {
@@ -46,43 +77,14 @@ class StorageService {
     return;
   }
 
-  /// Given a [box] and [Map] as [values], stores every [values] in the [box].
-  static Future<void> setDatabase<T>(Box box, values) async {
-    await box.putAll(values);
-    return;
-  }
+  static Future<void> getDefinitions<T>(List<int> hashes) async {
+    List<T?> definitions =
+        await DefinitionTableNames.getDefinitions[T]!(hashes);
 
-  /// Given a [box], a [key] and a [value], stores the [value] in the [box].
-  ///
-  /// can be awaited if necessary.
-  static Future<void> setDatabaseItem<T>(LazyBox box, String key, value) async {
-    await box.put(key, value);
-    return;
-  }
-
-  /// Given a type [T] returns a Box named after the type.
-  ///
-  /// If the Box does not exist, it creates it.
-  static Future<LazyBox> openBox<T>(String boxName) async {
-    return Hive.openLazyBox(boxName);
-  }
-
-  /// Given a [box] it closes said box.
-  ///
-  /// helps avoid unnecessary memory leaks.
-  static closeBox(Box box) async {
-    await box.close();
-  }
-
-  /// Given a [box] and a [key] returns the manifest as a [String]
-  ///
-  /// The String still need to be parsed to be used.
-  static dynamic getDatabaseItem(LazyBox box, String key) async {
-    return await box.get(key);
-  }
-
-  /// Given a [box] returns every item in the [box].
-  static Map<dynamic, dynamic> getDatabase(Box box) {
-    return box.toMap();
+    for (int i = 0; i < hashes.length; i++) {
+      if (definitions[i] == null) continue;
+      T def = definitions[i]!;
+      AllDestinyManifestComponents.setField<T>(hashes[i], def);
+    }
   }
 }

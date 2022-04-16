@@ -30,7 +30,7 @@ class ProfileItemSectionWidget extends StatelessWidget {
               in data.selectedCharacterInventory.where((element) =>
                   ManifestService
                       .manifestParsed
-                      .destinyInventoryItemDefinition![element.itemHash]!
+                      .destinyInventoryItemDefinition[element.itemHash]!
                       .equippingBlock!
                       .equipmentSlotTypeHash ==
                   3284755031))
@@ -42,7 +42,7 @@ class ProfileItemSectionWidget extends StatelessWidget {
             .where((element) =>
                 ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition![element.itemHash]!
+                    .destinyInventoryItemDefinition[element.itemHash]!
                     .itemType ==
                 itemType))
           ProfileItemCard(

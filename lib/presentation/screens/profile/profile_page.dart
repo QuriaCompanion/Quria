@@ -1,13 +1,8 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
-import 'package:bungie_api/models/destiny_character_component.dart';
-import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
-import 'package:quria/data/services/bungie_api/account.service.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
-import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
@@ -24,16 +19,13 @@ class ProfileWidget extends StatefulWidget {
 
 class _ProfileWidgetState extends State<ProfileWidget> {
   final display = DisplayService();
-  final storage = StorageService();
-  final account = AccountService();
-  final profile = ProfileService();
-  late Future<void> _future;
-  int index = 0;
+  late ProfileHelper data;
+  late Future _future;
   DestinyItemType currentFilter = DestinyItemType.Weapon;
   @override
   void initState() {
     super.initState();
-    _future = display.getProfileData(index);
+    _future = display.manifestLoader();
   }
 
   late double statArmorSpace;
@@ -48,8 +40,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   late double imageSize;
   late double iconSize;
   late double verticalStatWidth;
-  late ProfileHelper data;
   bool choosingCharacter = false;
+  int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -85,21 +77,9 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     }
     return FutureBuilder(
         future: _future,
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        builder: ((context, snapshot) {
           if (snapshot.hasData) {
-            List<DestinyCharacterComponent> characters =
-                profile.getCharacters();
-            DestinyCharacterComponent selectedCharacter = characters[index];
-            List<DestinyItemComponent> equipement =
-                profile.getCharacterEquipment(selectedCharacter.characterId!);
-            DestinyItemComponent selectedCharacterSubclass = profile
-                .getCurrentSubClassForCharacter(selectedCharacter.characterId!);
-            data = ProfileHelper(
-                characters: characters,
-                selectedCharacter: selectedCharacter,
-                selectedCharacterInventory: equipement,
-                selectedCharacterSubclass: selectedCharacterSubclass,
-                selectedCharacterIndex: index);
+            data = display.getProfileData(index);
             if (vw(context) > 850) {
               return Column(
                 children: [],
@@ -113,21 +93,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                       index = newIndex;
                     });
                   },
-                  body: ProfileMobileView(data: data));
+                  body: RepaintBoundary(child: ProfileMobileView(data: data)));
             }
-          } else {
-            return Container(
-                height: vh(context),
-                width: vw(context),
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover, image: splashBackground)),
-                child: Loader(
-                  splashColor: Colors.transparent,
-                  animationSize: vw(context) * 0.5,
-                ));
           }
-        });
+          return Container(
+              height: vh(context),
+              width: vw(context),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: splashBackground)),
+              child: Loader(
+                splashColor: Colors.transparent,
+                animationSize: vw(context) * 0.5,
+              ));
+        }));
   }
 
   // Widget webView(BuildContext context, ProfileHelper data) {

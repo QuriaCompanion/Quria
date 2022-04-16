@@ -24,7 +24,7 @@ class WeaponDetailsHiddenStats extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool isBottomShown = ManifestService
             .manifestParsed
-            .destinyInventoryItemDefinition?[hash]
+            .destinyInventoryItemDefinition[hash]
             ?.stats
             ?.stats?[StatsStringHash.recoil]
             ?.value !=
@@ -45,49 +45,49 @@ class WeaponDetailsHiddenStats extends StatelessWidget {
               if (stats?[StatsStringHash.ammunition]?.value != null ||
                   ManifestService
                           .manifestParsed
-                          .destinyInventoryItemDefinition?[hash]
+                          .destinyInventoryItemDefinition[hash]
                           ?.stats
                           ?.stats?[StatsStringHash.ammunition]
                           ?.value !=
                       null)
                 Text(
-                  'Munitions: ${stats?[StatsStringHash.ammunition]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition?[hash]?.stats?.stats?[StatsStringHash.ammunition]?.value}',
+                  'Munitions: ${stats?[StatsStringHash.ammunition]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition[hash]?.stats?.stats?[StatsStringHash.ammunition]?.value}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
               if (stats?[StatsStringHash.rpm]?.value != null ||
                   ManifestService
                           .manifestParsed
-                          .destinyInventoryItemDefinition?[hash]
+                          .destinyInventoryItemDefinition[hash]
                           ?.stats
                           ?.stats?[StatsStringHash.rpm]
                           ?.value !=
                       null)
                 Text(
-                  'CPM: ${stats?[StatsStringHash.rpm]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition?[hash]?.stats?.stats?[StatsStringHash.rpm]?.value}',
+                  'CPM: ${stats?[StatsStringHash.rpm]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition[hash]?.stats?.stats?[StatsStringHash.rpm]?.value}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
               if (stats?[StatsStringHash.chargeTime]?.value != null ||
                   ManifestService
                           .manifestParsed
-                          .destinyInventoryItemDefinition?[hash]
+                          .destinyInventoryItemDefinition[hash]
                           ?.stats
                           ?.stats?[StatsStringHash.chargeTime]
                           ?.value !=
                       null)
                 Text(
-                  'Temps de charge: ${stats?[StatsStringHash.chargeTime]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition?[hash]?.stats?.stats?[StatsStringHash.chargeTime]?.value}',
+                  'Temps de charge: ${stats?[StatsStringHash.chargeTime]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition[hash]?.stats?.stats?[StatsStringHash.chargeTime]?.value}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
               if (stats?[StatsStringHash.magazine]?.value != null ||
                   ManifestService
                           .manifestParsed
-                          .destinyInventoryItemDefinition?[hash]
+                          .destinyInventoryItemDefinition[hash]
                           ?.stats
                           ?.stats?[StatsStringHash.magazine]
                           ?.value !=
                       null)
                 Text(
-                  'Chargeur: ${stats?[StatsStringHash.magazine]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition?[hash]?.stats?.stats?[StatsStringHash.magazine]?.value}',
+                  'Chargeur: ${stats?[StatsStringHash.magazine]?.value ?? ManifestService.manifestParsed.destinyInventoryItemDefinition[hash]?.stats?.stats?[StatsStringHash.magazine]?.value}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
             ],
@@ -98,11 +98,11 @@ class WeaponDetailsHiddenStats extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Zoom: ${ManifestService.manifestParsed.destinyInventoryItemDefinition?[hash]?.stats?.stats?[StatsStringHash.zoom]?.value}',
+                  'Zoom: ${ManifestService.manifestParsed.destinyInventoryItemDefinition[hash]?.stats?.stats?[StatsStringHash.zoom]?.value}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 ),
                 Text(
-                  'Direction du recul: ${ManifestService.manifestParsed.destinyInventoryItemDefinition?[hash]?.stats?.stats?[StatsStringHash.recoil]?.value}',
+                  'Direction du recul: ${ManifestService.manifestParsed.destinyInventoryItemDefinition[hash]?.stats?.stats?[StatsStringHash.recoil]?.value}',
                   style: TextStyle(color: textColor, fontSize: fontSize),
                 )
               ],

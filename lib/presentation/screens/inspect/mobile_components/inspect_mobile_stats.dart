@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -23,7 +23,7 @@ class InspectMobileStats extends StatelessWidget {
               fontSize: 20,
               name: ManifestService
                       .manifestParsed
-                      .destinyStatDefinition![statHash]!
+                      .destinyStatDefinition[statHash]!
                       .displayProperties!
                       .name ??
                   'error',

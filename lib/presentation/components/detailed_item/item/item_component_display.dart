@@ -1,5 +1,4 @@
-import 'package:bungie_api/enums/destiny_item_type.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +7,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/components/detailed_item/item/perk_item_display.dart';
+import 'package:quria/presentation/components/detailed_item/item/item_component_display_perks.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -19,7 +17,7 @@ class ItemComponentDisplay extends StatefulWidget {
   final String elementIcon;
   final String characterId;
   final int powerLevel;
-  final List<DestinyItemSocketState>? perks;
+  final List<DestinyItemSocketState> perks;
   final List<DestinyItemSocketState> cosmetics;
   final List<DestinyItemSocketState> armorSockets;
 
@@ -65,7 +63,6 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
   @override
   Widget build(BuildContext context) {
     double iconSize = vw(context) / 6.69;
-    double smallIconSize = vw(context) / 11.9;
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -144,78 +141,22 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
             ),
           )
         ]),
-        Visibility(
-          visible: !dropDownActivated,
-          child: Column(
+        if (!dropDownActivated)
+          Column(
             children: [
               const Divider(
                 thickness: 0.5,
                 height: 25,
                 color: greyLight,
               ),
-              Row(
-                children: [
-                  for (DestinyItemSocketState perk in widget.perks!)
-                    Container(
-                        width: smallIconSize,
-                        height: smallIconSize,
-                        margin: const EdgeInsets.only(right: 10),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                        ),
-                        child: PerkItemDisplay(
-                          selected: true,
-                          perk: ManifestService.manifestParsed
-                              .destinyInventoryItemDefinition![perk.plugHash]!,
-                          iconSize: smallIconSize,
-                        )),
-                  if (widget.itemDef.itemType == DestinyItemType.Armor)
-                    for (DestinyItemSocketState socket in widget.armorSockets)
-                      Container(
-                        width: smallIconSize,
-                        height: smallIconSize,
-                        margin: const EdgeInsets.only(right: 10),
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.rectangle,
-                        ),
-                        child: Image(
-                          image: NetworkImage(DestinyData.bungieLink +
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition![
-                                      socket.plugHash]!
-                                  .displayProperties!
-                                  .icon!),
-                        ),
-                      ),
-                  const Spacer(),
-                  Row(
-                    children: [
-                      for (DestinyItemSocketState socket in widget.cosmetics)
-                        Container(
-                          width: smallIconSize,
-                          height: smallIconSize,
-                          margin: const EdgeInsets.only(right: 10),
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.rectangle,
-                          ),
-                          child: Image(
-                            image: NetworkImage(DestinyData.bungieLink +
-                                ManifestService
-                                    .manifestParsed
-                                    .destinyInventoryItemDefinition![
-                                        socket.plugHash]!
-                                    .displayProperties!
-                                    .icon!),
-                          ),
-                        ),
-                    ],
-                  )
-                ],
+              ItemComponentDisplayPerks(
+                perks: widget.perks,
+                cosmetics: widget.cosmetics,
+                itemDef: widget.itemDef,
+                armorSockets: widget.armorSockets,
               )
             ],
-          ),
-        )
+          )
       ],
     );
   }
