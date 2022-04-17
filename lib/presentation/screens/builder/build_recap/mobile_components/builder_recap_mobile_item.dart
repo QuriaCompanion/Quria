@@ -64,6 +64,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
       children: [
         ArmorAfinity(
           pointsAvailable: armorModspace,
+          remaining: 10 - armorModspace,
           afinityIcon: ManifestService
               .manifestParsed
               .destinyEnergyTypeDefinition[instanceInfo.energy!.energyTypeHash]!

@@ -64,6 +64,34 @@ class DisplayService {
     return true;
   }
 
+  int remainingModPoints(int base, Map<int, DestinyItemSocketState> mods) {
+    int remaining = base;
+    for (final modState in mods.values) {
+      DestinyInventoryItemDefinition? mod = ManifestService
+          .manifestParsed.destinyInventoryItemDefinition[modState.plugHash];
+      // check if the mod has bonus stats
+      if (mod != null &&
+          mod.investmentStats != null &&
+          mod.investmentStats!.isNotEmpty) {
+        // loops through the bonus stats
+        for (var stat in mod.investmentStats!) {
+          // if it has a cost to the armor it reduces the armor mod space
+          if (stat.statTypeHash == 3779394102 ||
+              stat.statTypeHash == 3344745325 ||
+              stat.statTypeHash == 107977982 ||
+              stat.statTypeHash == 3950461274 ||
+              stat.statTypeHash == 998798867 ||
+              stat.statTypeHash == 2399985800 ||
+              stat.statTypeHash == 3176563510 ||
+              stat.statTypeHash == 3578062600) {
+            remaining -= stat.value!;
+          }
+        }
+      }
+    }
+    return remaining;
+  }
+
   ProfileHelper getProfileData(int index) {
     try {
       List<DestinyCharacterComponent> characters = profile.getCharacters();
