@@ -9,6 +9,7 @@ import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_
 import 'package:quria/presentation/screens/inspect/inspect_mobile_armor_info.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_info.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_header.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class MobileInspect extends StatefulWidget {
   final InspectData data;
@@ -35,6 +36,12 @@ class _MobileInspectState extends State<MobileInspect> {
       extendBodyBehindAppBar: true,
       backgroundColor: black,
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context)
+              .pushNamed(routeHome)
+              .then((value) => setState(() {})),
+        ),
         backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
