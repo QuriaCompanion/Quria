@@ -82,7 +82,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
             ),
           ),
           for (DestinyItemComponent item
-              in widget.data.selectedCharacterInventory.where((element) =>
+              in widget.data.selectedCharacterEquipment.where((element) =>
                   ManifestService
                       .manifestParsed
                       .destinyInventoryItemDefinition[element.itemHash]
@@ -96,6 +96,20 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                     child: ProfileMobileItemCard(
                       item: item,
                       characterId: widget.data.selectedCharacter.characterId!,
+                      inventory: widget.data.selectedCharacterInventory
+                          .where((element) =>
+                              ManifestService
+                                  .manifestParsed
+                                  .destinyInventoryItemDefinition[
+                                      element.itemHash]
+                                  ?.equippingBlock
+                                  ?.equipmentSlotTypeHash ==
+                              ManifestService
+                                  .manifestParsed
+                                  .destinyInventoryItemDefinition[item.itemHash]
+                                  ?.equippingBlock
+                                  ?.equipmentSlotTypeHash)
+                          .toList(),
                     ),
                   ),
                   Divider(

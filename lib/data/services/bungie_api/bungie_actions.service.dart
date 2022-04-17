@@ -16,15 +16,32 @@ class BungieActionsService {
   }
   BungieActionsService._internal();
 
-  Future<void> transferItem(String itemId, String characterId,
-      {int? itemHash, int? stackSize, bool? transferToVault}) async {
+  Future<void> transferItem(String itemId, String? characterId,
+      {int? itemHash, int? stackSize}) async {
     try {
-      await api.transferItem(itemId, characterId,
-          itemHash: itemHash,
-          stackSize: stackSize,
-          transferToVault: transferToVault);
+      final owner = profile.getItemOwner(itemId);
+      if (owner == characterId || characterId == null) {
+        await api
+            .transferItem(itemId, owner,
+                itemHash: itemHash,
+                stackSize: stackSize,
+                transferToVault: characterId == null)
+            .then((value) => profile.moveItem(itemId, characterId, false));
+      } else {
+        await api
+            .transferItem(itemId, owner,
+                itemHash: itemHash, stackSize: stackSize, transferToVault: true)
+            .then((value) => profile.moveItem(itemId, null, false));
+        await api
+            .transferItem(itemId, characterId,
+                itemHash: itemHash,
+                stackSize: stackSize,
+                transferToVault: false)
+            .then((value) => profile.moveItem(itemId, characterId, false));
+      }
     } catch (e) {
       try {
+        if (characterId == null) rethrow;
         int slotTypeHash = ManifestService
             .manifestParsed
             .destinyInventoryItemDefinition[itemHash]!
@@ -35,15 +52,46 @@ class BungieActionsService {
                 .toSet()
                 .toList();
         if (slotItems.length <= 9) {
-          await api.transferItem(slotItems.first.itemInstanceId!, characterId,
-              itemHash: slotItems.first.itemHash,
-              stackSize: 1,
-              transferToVault: true);
-          await api.transferItem(itemId, characterId,
-              itemHash: itemHash,
-              stackSize: stackSize,
-              transferToVault: transferToVault);
+          await api
+              .transferItem(slotItems.first.itemInstanceId!, characterId,
+                  itemHash: slotItems.first.itemHash,
+                  stackSize: 1,
+                  transferToVault: true)
+              .then((value) => profile.moveItem(itemId, null, false));
+          await api
+              .transferItem(itemId, characterId,
+                  itemHash: itemHash,
+                  stackSize: stackSize,
+                  transferToVault: false)
+              .then((value) => profile.moveItem(itemId, characterId, false));
         }
+      } catch (e) {
+        rethrow;
+      }
+    }
+  }
+
+  Future<void> equipItem({
+    required String itemId,
+    required String characterId,
+    required int itemHash,
+  }) async {
+    try {
+      await api.equipItem(itemId, characterId).then(
+          (value) => profile.moveItem(itemId, characterId, true),
+          onError: (_) => null);
+    } catch (e) {
+      try {
+        await transferItem(
+          itemId,
+          characterId,
+          itemHash: itemHash,
+          stackSize: 1,
+        ).then((value) => profile.moveItem(itemId, characterId, false),
+            onError: (_) => null);
+        await api.equipItem(itemId, characterId).then(
+            (value) => profile.moveItem(itemId, characterId, true),
+            onError: (_) => null);
       } catch (e) {
         rethrow;
       }
@@ -73,10 +121,12 @@ class BungieActionsService {
       if (!characterInventory
           .map((e) => e.itemInstanceId)
           .contains(build.equipement[i].itemInstanceId)) {
-        await transferItem(build.equipement[i].itemInstanceId, characterId,
-            itemHash: build.equipement[i].hash,
-            stackSize: 1,
-            transferToVault: false);
+        await transferItem(
+          build.equipement[i].itemInstanceId,
+          characterId,
+          itemHash: build.equipement[i].hash,
+          stackSize: 1,
+        );
       }
     }
     if (subclassId != null) {
@@ -88,7 +138,11 @@ class BungieActionsService {
       }
     }
     // equip all items
-    await api.equipItems(itemsIds, characterId);
+    await api.equipItems(itemsIds, characterId).then((value) {
+      for (final id in itemsIds) {
+        profile.moveItem(id, characterId, false);
+      }
+    }, onError: (_) => null);
 
     // remove all mods
     // TODO: what if armor has 5 slots?

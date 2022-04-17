@@ -764,7 +764,67 @@ class ProfileService {
     return items;
   }
 
-  String getItemOwner(String itemInstanceId) {
+  void moveItem(String instanceId, String? newLocation, bool equip) {
+    DestinyItemComponent? itemComponent = getItemByInstanceId(instanceId);
+    if (itemComponent == null) return;
+    final previousItem = _profile?.characterEquipment?.data?[newLocation]?.items
+        ?.firstWhere((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[element.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash ==
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[itemComponent.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash);
+    final previousIndex = _profile
+        ?.characterEquipment?.data?[newLocation]?.items
+        ?.indexWhere((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[element.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash ==
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[itemComponent.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash);
+
+    String? previousLocation = getItemOwner(instanceId);
+    if (previousLocation == null) {
+      _profile!.profileInventory!.data!.items!.remove(itemComponent);
+    } else if (equip) {
+      _profile!.characterInventories!.data![previousLocation]!.items!
+          .remove(itemComponent);
+      _profile!.characterEquipment!.data![previousLocation]!.items!
+          .remove(previousItem);
+    } else {
+      _profile!.characterInventories!.data![previousLocation]!.items!
+          .remove(itemComponent);
+    }
+    if (newLocation == null) {
+      _profile!.profileInventory!.data!.items!.add(itemComponent);
+    } else if (equip) {
+      _profile!.characterInventories!.data![newLocation]!.items!
+          .add(previousItem!);
+      _profile!.characterEquipment!.data![newLocation]!.items!
+          .insert(previousIndex!, itemComponent);
+    } else {
+      _profile!.characterInventories!.data![newLocation]!.items!
+          .add(itemComponent);
+    }
+  }
+
+  DestinyItemComponent? getItemByInstanceId(String instanceId) {
+    List<DestinyItemComponent> items = getItemsByInstanceId([instanceId]);
+    if (items.isEmpty) return null;
+    return items[0];
+  }
+
+  String? getItemOwner(String itemInstanceId) {
     String? owner;
     _profile!.characterEquipment!.data!.forEach((charId, inventory) {
       bool has =
@@ -773,7 +833,7 @@ class ProfileService {
         owner = charId;
       }
     });
-    if (owner != null) return owner!;
+    if (owner != null) return owner;
     _profile!.characterInventories!.data!.forEach((charId, inventory) {
       bool has =
           inventory.items!.any((item) => item.itemInstanceId == itemInstanceId);
@@ -781,7 +841,14 @@ class ProfileService {
         owner = charId;
       }
     });
-    return owner!;
+    return owner;
+  }
+
+  bool isItemEquipped(String itemInstanceId) {
+    String? owner = getItemOwner(itemInstanceId);
+    if (owner == null) return false;
+    return _profile!.characterEquipment!.data![owner]!.items!
+        .any((item) => item.itemInstanceId == itemInstanceId);
   }
 
   DestinyArtifactProfileScoped getArtifactProgression() {

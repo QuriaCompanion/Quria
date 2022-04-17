@@ -4,6 +4,7 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 class ProfileHelper {
   List<DestinyCharacterComponent> characters;
   DestinyCharacterComponent selectedCharacter;
+  List<DestinyItemComponent> selectedCharacterEquipment;
   List<DestinyItemComponent> selectedCharacterInventory;
   DestinyItemComponent selectedCharacterSubclass;
   String characterSuper;
@@ -11,6 +12,7 @@ class ProfileHelper {
   ProfileHelper(
       {required this.characters,
       required this.selectedCharacter,
+      required this.selectedCharacterEquipment,
       required this.selectedCharacterInventory,
       required this.selectedCharacterSubclass,
       required this.characterSuper,

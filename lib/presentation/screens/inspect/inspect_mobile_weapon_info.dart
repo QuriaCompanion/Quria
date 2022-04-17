@@ -39,7 +39,11 @@ class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       mobileSection(context,
-          title: "Actions rapides", child: const InspectMobileActions()),
+          title: "Actions rapides",
+          child: InspectMobileActions(
+            itemHash: widget.item.hash!,
+            instanceId: widget.instanceId,
+          )),
       mobileSection(context,
           title: "Statistiques",
           child: InspectMobileStats(item: widget.item, stats: widget.stats)),

@@ -70,6 +70,8 @@ class DisplayService {
       DestinyCharacterComponent selectedCharacter = characters[index];
       List<DestinyItemComponent> equipement =
           profile.getCharacterEquipment(selectedCharacter.characterId!);
+      List<DestinyItemComponent> inventory =
+          profile.getCharacterInventory(selectedCharacter.characterId!);
       DestinyItemComponent selectedCharacterSubclass = profile
           .getCurrentSubClassForCharacter(selectedCharacter.characterId!);
       int? superHash = profile
@@ -89,7 +91,8 @@ class DisplayService {
       return ProfileHelper(
           characters: characters,
           selectedCharacter: selectedCharacter,
-          selectedCharacterInventory: equipement,
+          selectedCharacterEquipment: equipement,
+          selectedCharacterInventory: inventory,
           selectedCharacterSubclass: selectedCharacterSubclass,
           characterSuper: characterSuper,
           selectedCharacterIndex: index);
