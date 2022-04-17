@@ -98,7 +98,6 @@ class ArmorModSubModal extends StatelessWidget {
                     for (var stat in mod.investmentStats!) {
                       list.add(StatProgressBar(
                           width: vw(context),
-                          fontSize: 20,
                           name: ManifestService
                                   .manifestParsed
                                   .destinyStatDefinition[stat.statTypeHash]!

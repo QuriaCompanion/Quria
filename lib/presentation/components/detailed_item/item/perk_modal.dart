@@ -93,7 +93,6 @@ class PerkModal extends StatelessWidget {
                     for (var stat in perk.investmentStats!) {
                       list.add(StatProgressBar(
                           width: vw(context),
-                          fontSize: 20,
                           name: ManifestService
                                   .manifestParsed
                                   .destinyStatDefinition[stat.statTypeHash]!

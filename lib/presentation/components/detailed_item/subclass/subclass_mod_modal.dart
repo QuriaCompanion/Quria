@@ -99,7 +99,6 @@ class _SubclassModModalState extends State<SubclassModModal> {
                     for (var stat in widget.mod.investmentStats!) {
                       list.add(StatProgressBar(
                           width: vw(context),
-                          fontSize: 20,
                           name: ManifestService
                                   .manifestParsed
                                   .destinyStatDefinition[stat.statTypeHash]!

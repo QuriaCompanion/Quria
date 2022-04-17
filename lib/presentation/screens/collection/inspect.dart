@@ -81,7 +81,6 @@ class _InspectWidgetState extends State<InspectWidget> {
                               .itemSubType!]!)
                         StatProgressBar(
                             width: itemMainInfoWidth,
-                            fontSize: fontSize,
                             padding: childPadding,
                             name: ManifestService
                                     .manifestParsed
@@ -162,7 +161,6 @@ class _InspectWidgetState extends State<InspectWidget> {
                         .itemSubType!]!)
                   StatProgressBar(
                       width: vw(context) - padding * 2,
-                      fontSize: fontSize,
                       padding: childPadding,
                       name: ManifestService
                               .manifestParsed
