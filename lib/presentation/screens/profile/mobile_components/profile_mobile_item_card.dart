@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -84,7 +82,6 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
       if (isOpen)
         for (final item in widget.inventory)
           Builder(builder: (context) {
-            inspect(item);
             final dataItem = DisplayService()
                 .getCardData(item.itemInstanceId!, item.itemHash);
             return Padding(
