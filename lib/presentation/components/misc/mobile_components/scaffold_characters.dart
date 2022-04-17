@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/presentation/components/Header/mobile_components/mobile_character_choice.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
@@ -32,19 +33,28 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
       extendBody: true,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        leading: Builder(builder: (context) {
-          return IconButton(
-            alignment: Alignment.topCenter,
-            padding: EdgeInsets.only(
-              top: MediaQuery.of(context).padding.top + globalPadding(context),
-            ),
-            icon: Icon(
-              Icons.menu,
-              size: appBarItem(context),
-            ),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          );
-        }),
+        leading: Builder(
+          builder: (context) {
+            return InkWell(
+              onTap: () => Scaffold.of(context).openDrawer(),
+              child: Container(
+                alignment: Alignment.topCenter,
+                padding: EdgeInsets.only(
+                  top: MediaQuery.of(context).padding.top +
+                      globalPadding(context),
+                ),
+                child: SizedBox(
+                  width: appBarItem(context),
+                  height: appBarItem(context),
+                  child: SvgPicture.asset(
+                    "assets/icons/Menu.svg",
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            );
+          },
+        ),
         toolbarHeight: choosingCharacter
             ? ((globalPadding(context) * 4) + (appBarItem(context)) * 3)
             : (globalPadding(context) * 2) + appBarItem(context),
@@ -64,19 +74,20 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
                     top: MediaQuery.of(context).padding.top +
                         globalPadding(context)),
                 child: MobileCharacterChoice(
-                    callback: (newIndex) {
-                      setState(() {
-                        widget.onCharacterChange(newIndex);
-                        choosingCharacter = !choosingCharacter;
-                      });
-                    },
-                    choosingCharacter: () {
-                      setState(() {
-                        choosingCharacter = !choosingCharacter;
-                      });
-                    },
-                    index: widget.selectedCharacterIndex,
-                    characters: widget.characters),
+                  callback: (newIndex) {
+                    setState(() {
+                      widget.onCharacterChange(newIndex);
+                      choosingCharacter = !choosingCharacter;
+                    });
+                  },
+                  choosingCharacter: () {
+                    setState(() {
+                      choosingCharacter = !choosingCharacter;
+                    });
+                  },
+                  index: widget.selectedCharacterIndex,
+                  characters: widget.characters,
+                ),
               ),
             ),
           ),

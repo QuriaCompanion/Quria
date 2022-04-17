@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/auth.service.dart';
@@ -77,8 +78,7 @@ class _BurgerState extends State<Burger> {
                         },
                         child: Row(
                           children: [
-                            const Icon(Icons.person_outline_outlined,
-                                color: Colors.white),
+                            SvgPicture.asset("assets/icons/Perso-1.svg"),
                             const SizedBox(width: 18),
                             textBodyHighRegular("Personnage"),
                           ],
@@ -92,17 +92,16 @@ class _BurgerState extends State<Burger> {
                         },
                         child: Row(
                           children: [
-                            const Icon(Icons.star_border, color: Colors.white),
+                            SvgPicture.asset("assets/icons/Quria.svg"),
                             const SizedBox(width: 18),
-                            textBodyHighRegular("Builds"),
+                            textBodyHighRegular("Builder Quria"),
                           ],
                         ),
                       ),
                       const SizedBox(height: 32),
                       Row(
                         children: [
-                          const Icon(Icons.check_box_outline_blank,
-                              color: Colors.white),
+                          SvgPicture.asset("assets/icons/Coffre.svg"),
                           const SizedBox(width: 18),
                           textBodyHighRegular("Coffre"),
                         ],
@@ -110,7 +109,7 @@ class _BurgerState extends State<Burger> {
                       const SizedBox(height: 32),
                       Row(
                         children: [
-                          const Icon(Icons.layers, color: Colors.white),
+                          SvgPicture.asset("assets/icons/Collection.svg"),
                           const SizedBox(width: 18),
                           textBodyHighRegular("Collections"),
                         ],
@@ -118,8 +117,7 @@ class _BurgerState extends State<Burger> {
                       const SizedBox(height: 32),
                       Row(
                         children: [
-                          const Icon(Icons.settings_outlined,
-                              color: Colors.white),
+                          SvgPicture.asset("assets/icons/Settings.svg"),
                           const SizedBox(width: 18),
                           textBodyHighRegular("ParamÃ¨tres"),
                         ],
@@ -140,8 +138,7 @@ class _BurgerState extends State<Burger> {
                     },
                     child: Row(
                       children: [
-                        const Icon(Icons.power_settings_new,
-                            color: Colors.white),
+                        SvgPicture.asset("assets/icons/Off.svg"),
                         const SizedBox(width: 18),
                         textBodyHighRegular("DÃ©connexion"),
                       ],

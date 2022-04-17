@@ -17,12 +17,14 @@ class ModWithTypeName extends StatelessWidget {
       children: [
         ArmorModIconDisplay(iconSize: iconSize, socket: item),
         SizedBox(width: globalPadding(context)),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            textBodyRegular(item.displayProperties!.name!),
-            textCaption(item.itemTypeDisplayName!, color: greyLight),
-          ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              textBodyRegular(item.displayProperties!.name!),
+              textCaption(item.itemTypeDisplayName!, color: greyLight),
+            ],
+          ),
         ),
       ],
     );

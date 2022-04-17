@@ -78,24 +78,28 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Image(
-                      width: mobileItemSize(context),
-                      height: mobileItemSize(context),
-                      image: NetworkImage(DestinyData.bungieLink +
-                          widget.item.displayProperties!.icon!)),
-                  SizedBox(width: globalPadding(context) / 2),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      textBodyBold(widget.item.displayProperties!.name!),
-                      SizedBox(height: globalPadding(context) / 3),
-                      textCaption(widget.item.itemTypeDisplayName!,
-                          color: greyLight),
-                    ],
-                  )
-                ],
+              Expanded(
+                child: Row(
+                  children: [
+                    Image(
+                        width: mobileItemSize(context),
+                        height: mobileItemSize(context),
+                        image: NetworkImage(DestinyData.bungieLink +
+                            widget.item.displayProperties!.icon!)),
+                    SizedBox(width: globalPadding(context) / 2),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          textBodyBold(widget.item.displayProperties!.name!),
+                          SizedBox(height: globalPadding(context) / 3),
+                          textCaption(widget.item.itemTypeDisplayName!,
+                              color: greyLight),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
               IconButton(
                 onPressed: () {

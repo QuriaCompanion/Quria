@@ -25,15 +25,16 @@ class ModDisplay extends StatelessWidget {
       children: [
         ArmorModIconDisplay(iconSize: iconSize, socket: item),
         SizedBox(width: padding),
-        SizedBox(
-          width: width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              textBodyRegular(item.displayProperties!.name!),
-              textCaption(item.displayProperties!.description!,
-                  color: greyLight),
-            ],
+        Expanded(
+          child: SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                textBodyRegular(item.displayProperties!.name!),
+                textCaption(item.displayProperties!.description!,
+                    color: greyLight),
+              ],
+            ),
           ),
         ),
       ],
