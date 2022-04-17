@@ -39,11 +39,11 @@ class _MobileInspectState extends State<MobileInspect> {
       appBar: AppBar(
         leading: IconButton(
           icon: SvgPicture.asset(
-            "assets/icons/Menu.svg",
+            "assets/icons/Prev.svg",
             color: Colors.white,
           ),
           onPressed: () => Navigator.of(context)
-              .pushNamed(routeHome)
+              .pushNamed(routeProfile)
               .then((value) => setState(() {})),
         ),
         backgroundColor: Colors.transparent,

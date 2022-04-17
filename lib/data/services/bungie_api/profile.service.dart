@@ -539,8 +539,10 @@ class ProfileService {
                   .plugCategoryHash!)) {
             List<DestinyInventoryItemDefinition> plugDefitions = [];
             for (DestinyItemPlugBase plug in plug) {
-              plugDefitions.add(ManifestService.manifestParsed
-                  .destinyInventoryItemDefinition[plug.plugItemHash]!);
+              final plugDef = ManifestService.manifestParsed
+                  .destinyInventoryItemDefinition[plug.plugItemHash];
+              if (plugDef == null) continue;
+              plugDefitions.add(plugDef);
             }
             perks.add(plugDefitions);
           }
