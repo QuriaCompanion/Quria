@@ -7,7 +7,7 @@ import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
-import 'package:quria/presentation/screens/profile/mobile_components/profil_mobile_item_card.dart';
+import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_item_card.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_header.dart';
 
 class ProfileMobileView extends StatefulWidget {

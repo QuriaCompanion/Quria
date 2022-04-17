@@ -98,8 +98,10 @@ class DisplayService {
       DestinyCharacterComponent selectedCharacter = characters[index];
       List<DestinyItemComponent> equipement =
           profile.getCharacterEquipment(selectedCharacter.characterId!);
-      List<DestinyItemComponent> inventory =
-          profile.getCharacterInventory(selectedCharacter.characterId!);
+      List<DestinyItemComponent> inventory = profile
+          .getCharacterInventory(selectedCharacter.characterId!)
+          .where((element) => element.bucketHash != 215593132)
+          .toList();
       DestinyItemComponent selectedCharacterSubclass = profile
           .getCurrentSubClassForCharacter(selectedCharacter.characterId!);
       int? superHash = profile
