@@ -25,8 +25,7 @@ class AccountService {
   }
 
   Future<UserMembershipData?> updateMembershipData() async {
-    UserMembershipData? membershipData =
-        await BungieApiService().getMemberships();
+    membershipData = await BungieApiService().getMemberships();
     await StorageService.setLocalStorage('membershipData', membershipData);
     return membershipData;
   }
@@ -39,9 +38,7 @@ class AccountService {
     Map<String, dynamic>? json =
         await StorageService.getLocalStorage('membershipData')
             as Map<String, dynamic>?;
-    if (json == null) {
-      return null;
-    }
+    if (json == null) return null;
     membershipData = UserMembershipData.fromJson(json);
     return membershipData;
   }

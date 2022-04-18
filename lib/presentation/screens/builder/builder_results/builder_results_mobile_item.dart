@@ -8,6 +8,7 @@ import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
+import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
@@ -121,7 +122,16 @@ class BuilderResultsMobileItem extends StatelessWidget {
               ),
               RoundedButton(
                 text: textBodyMedium('Enregistrer', color: Colors.white),
-                onPressed: () {},
+                onPressed: () {
+                  showMaterialModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      isDismissible: false,
+                      expand: false,
+                      builder: (context) {
+                        return const InProgressModal();
+                      });
+                },
                 textColor: Colors.white,
                 buttonColor: grey,
                 width: vw(context) * 0.4,

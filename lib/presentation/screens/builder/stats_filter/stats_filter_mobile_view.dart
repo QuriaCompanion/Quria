@@ -46,24 +46,28 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: SizedBox(
-                            height: 48,
+                            height: 35 + globalPadding(context),
                             child: Center(child: textH3(i.toString()))),
                       ),
                   ],
                 ),
               ),
               SizedBox(
+                width: vw(context) * 0.8,
+                height: (43 + globalPadding(context)) * 6,
+                child: FilterWidget(
+                  items: widget.filters,
+                  onFilterChanged: (list) {
+                    widget.onFilterChanged(list);
+                  },
                   width: vw(context) * 0.8,
-                  height: 400,
-                  child: FilterWidget(
-                    items: widget.filters,
-                    onFilterChanged: (list) {
-                      widget.onFilterChanged(list);
-                    },
-                    width: vw(context) * 0.8,
-                  )),
+                ),
+              ),
             ],
           ),
+        ),
+        SizedBox(
+          height: globalPadding(context) * 4,
         )
       ],
     );
