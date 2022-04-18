@@ -43,12 +43,14 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
               context: context,
               builder: (context) {
                 return PerkModal(
-                    perk: widget.perk,
-                    instanceId: widget.instanceId,
-                    onSocketsChanged: (newSockets) =>
-                        widget.onSocketsChanged(newSockets),
-                    characterId: widget.characterId,
-                    index: widget.index);
+                  isSelected: selected,
+                  perk: widget.perk,
+                  instanceId: widget.instanceId,
+                  onSocketsChanged: (newSockets) =>
+                      widget.onSocketsChanged(newSockets),
+                  characterId: widget.characterId,
+                  index: widget.index,
+                );
               });
         },
         onLongPress: () {

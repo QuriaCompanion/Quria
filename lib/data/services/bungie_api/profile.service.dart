@@ -157,7 +157,8 @@ class ProfileService {
     lastUpdated = DateTime.now();
     final List<int> inventoryItemIds = [];
     final List<int> talentIds = [];
-
+    inventoryItemIds
+        .addAll([3473581026, 2771648715, 549825413, 4287863773, 3500810712]);
     if (response == null) {
       return _profile;
     }
@@ -554,14 +555,17 @@ class ProfileService {
                   ?.displayProperties
                   ?.icon !=
               null &&
-          DestinyData.perkCategoryHash.contains(ManifestService
-              .manifestParsed
-              .destinyInventoryItemDefinition[socket.plugHash]!
-              .plug!
-              .plugCategoryHash!) &&
-          !perks.any((element) => element.contains(ManifestService
-              .manifestParsed
-              .destinyInventoryItemDefinition[socket.plugHash]!))) {
+          DestinyData.perkCategoryHash.contains(
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[socket.plugHash]!
+                .plug!
+                .plugCategoryHash!,
+          ) &&
+          !perks.any((element) => element.contains(
+                ManifestService.manifestParsed
+                    .destinyInventoryItemDefinition[socket.plugHash]!,
+              ))) {
         perks.add([
           ManifestService
               .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!

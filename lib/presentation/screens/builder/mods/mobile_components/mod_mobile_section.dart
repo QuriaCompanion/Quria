@@ -36,7 +36,7 @@ class ModsMobileSection extends StatelessWidget {
                       expand: false,
                       context: context,
                       builder: (context) {
-                        return ArmorModModal(
+                        return ArmorModsModal(
                           socket: item.value!,
                           plugSetsHash:
                               scoketEntries[item.key].reusablePlugSetHash!,

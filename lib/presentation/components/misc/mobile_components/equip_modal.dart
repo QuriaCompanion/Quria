@@ -25,59 +25,68 @@ class EquipModal extends StatelessWidget {
           characters.where((element) => element.characterId != owner).toList();
     }
 
-    return Container(
-      height: vh(context) * 0.5,
-      decoration: const BoxDecoration(
-        color: black,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-      ),
-      child: Column(children: [
-        Padding(
-          padding: EdgeInsets.all(globalPadding(context)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              textH2("Equiper"),
-              InkWell(
-                onTap: () => Navigator.pop(context),
-                child: const CircleAvatar(
-                  backgroundColor: blackLight,
-                  child: Icon(Icons.clear, size: 20, color: Colors.white),
+    return SingleChildScrollView(
+      child: Container(
+        decoration: const BoxDecoration(
+          color: black,
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(10),
+          ),
+        ),
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.all(globalPadding(context)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  textH2("Equiper"),
+                  InkWell(
+                    onTap: () => Navigator.pop(context),
+                    child: const CircleAvatar(
+                      backgroundColor: blackLight,
+                      child: Icon(Icons.clear, size: 20, color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Divider(
+              color: blackLight,
+              height: globalPadding(context),
+              thickness: 1,
+            ),
+            for (final character in characters)
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: globalPadding(context) / 2,
+                  horizontal: globalPadding(context),
+                ),
+                child: InkWell(
+                  onTap: () async {
+                    Navigator.pop(context);
+                    await BungieActionsService().equipItem(
+                        itemId: instanceId,
+                        characterId: character.characterId!,
+                        itemHash: itemHash);
+                  },
+                  child: CharacterTransferItem(
+                      imageLink: DestinyData.bungieLink + character.emblemPath!,
+                      name: ManifestService
+                              .manifestParsed
+                              .destinyClassDefinition[character.classHash]!
+                              .genderedClassNamesByGenderHash![
+                          character.genderHash.toString()]!,
+                      powerLevel: character.light,
+                      icon: "assets/icons/Equip.svg"),
                 ),
               ),
-            ],
-          ),
-        ),
-        Divider(
-          color: blackLight,
-          height: globalPadding(context),
-          thickness: 1,
-        ),
-        for (final character in characters)
-          Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: globalPadding(context) / 2,
-                horizontal: globalPadding(context)),
-            child: InkWell(
-              onTap: () async {
-                Navigator.pop(context);
-                await BungieActionsService().equipItem(
-                    itemId: instanceId,
-                    characterId: character.characterId!,
-                    itemHash: itemHash);
-              },
-              child: CharacterTransferItem(
-                  imageLink: DestinyData.bungieLink + character.emblemPath!,
-                  name: ManifestService
-                          .manifestParsed
-                          .destinyClassDefinition[character.classHash]!
-                          .genderedClassNamesByGenderHash![
-                      character.genderHash.toString()]!,
-                  powerLevel: character.light,
-                  icon: "assets/icons/Equip.svg"),
+            SizedBox(
+              height: globalPadding(context) / 2,
             ),
-          ),
-      ]),
+          ],
+        ),
+      ),
     );
   }
 }

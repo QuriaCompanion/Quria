@@ -137,7 +137,7 @@ class _ArmorModsState extends State<ArmorMods> {
                         expand: true,
                         context: context,
                         builder: (context) {
-                          return ArmorModModal(
+                          return ArmorModsModal(
                             socket: ManifestService.manifestParsed
                                     .destinyInventoryItemDefinition[
                                 socket.value.plugHash]!,

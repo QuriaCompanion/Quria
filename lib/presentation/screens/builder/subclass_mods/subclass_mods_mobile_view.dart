@@ -149,7 +149,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                     expand: true,
                                     context: context,
                                     builder: (context) {
-                                      return ArmorModModal(
+                                      return ArmorModsModal(
                                         socket: displayedSockets[7 + i],
                                         plugSetsHash: widget
                                             .subclass
