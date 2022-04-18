@@ -25,7 +25,7 @@ class ClassItemChoiceMobileView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 textH1("Choisis ton objet de classe"),
-                textBodyRegular("Selectionne l'objet de classe de ton build."),
+                textBodyRegular("SÃ©lectionne l'objet de classe de ton build."),
               ],
             )),
         Padding(

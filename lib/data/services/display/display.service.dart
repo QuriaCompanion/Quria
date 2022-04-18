@@ -1,5 +1,6 @@
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:bungie_api/enums/plug_ui_styles.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -197,8 +198,36 @@ class DisplayService {
 
     final List<DestinyItemSocketState> armorSockets =
         sockets.where((element) => Conditions.amorSockets(element)).toList();
-    final List<DestinyItemSocketState> cosmetics = sockets
-        .where((element) => Conditions.cosmeticSockets(element))
+    final List<DestinyItemSocketState> intristics = sockets
+        .where((element) =>
+            element.plugHash != null &&
+                ManifestService
+                        .manifestParsed
+                        .destinyInventoryItemDefinition[element.plugHash]
+                        ?.displayProperties
+                        ?.icon !=
+                    null &&
+                DestinyData.modCategoryHash.contains(
+                  ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition[element.plugHash]!
+                      .plug!
+                      .plugCategoryHash,
+                ) ||
+            (itemDef.itemType == DestinyItemType.Weapon &&
+                (ManifestService
+                            .manifestParsed
+                            .destinyInventoryItemDefinition[element.plugHash]
+                            ?.plug
+                            ?.plugStyle ==
+                        PlugUiStyles.Masterwork ||
+                    ManifestService
+                            .manifestParsed
+                            .destinyInventoryItemDefinition[element.plugHash]
+                            ?.plug
+                            ?.plugCategoryIdentifier
+                            ?.contains('masterworks.stat') ==
+                        true)))
         .toList();
 
     return ItemCardHelper(
@@ -207,12 +236,11 @@ class DisplayService {
         elementIcon: elementIcon ?? "",
         powerLevel: powerLevel,
         perks: perks,
-        cosmetics: cosmetics,
+        intristics: intristics,
         armorSockets: armorSockets);
   }
 
-  Future<DestinyInventoryItemDefinition> getPerk(
-      DestinyInventoryItemDefinition item) async {
+  DestinyInventoryItemDefinition getPerk(DestinyInventoryItemDefinition item) {
     return ManifestService.manifestParsed.destinyInventoryItemDefinition[item
         .sockets!.socketEntries
         ?.firstWhere((element) =>

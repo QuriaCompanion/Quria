@@ -24,7 +24,7 @@ class ExoticMobileView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textH1("Choisis un exotique"),
+                textH1("Choisis un Ã©xotique"),
                 textBodyRegular(
                     "Il sert de base pour la construction de ton build."),
               ],

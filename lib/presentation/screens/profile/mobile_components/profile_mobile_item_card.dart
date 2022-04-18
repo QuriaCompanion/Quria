@@ -70,7 +70,7 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
           elementIcon: data.elementIcon,
           powerLevel: data.powerLevel,
           perks: data.perks,
-          cosmetics: data.cosmetics,
+          cosmetics: data.intristics,
           armorSockets: data.armorSockets,
           characterId: widget.characterId),
       if (isOpen)
@@ -93,7 +93,7 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
                   elementIcon: dataItem.elementIcon,
                   powerLevel: dataItem.powerLevel,
                   perks: dataItem.perks,
-                  cosmetics: dataItem.cosmetics,
+                  cosmetics: dataItem.intristics,
                   armorSockets: dataItem.armorSockets,
                   characterId: widget.characterId),
             );

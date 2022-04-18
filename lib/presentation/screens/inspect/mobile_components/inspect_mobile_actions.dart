@@ -28,7 +28,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
         children: [
           QuickAction(
               icon: "assets/icons/Equip.svg",
-              title: "Equiper",
+              title: "Ãquiper",
               onTap: () {
                 showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,
@@ -42,7 +42,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
               }),
           QuickAction(
               icon: "assets/icons/Transfer.svg",
-              title: "Transferer",
+              title: "TransfÃ©rer",
               onTap: () {
                 showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,

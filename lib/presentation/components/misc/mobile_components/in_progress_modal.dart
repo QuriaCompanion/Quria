@@ -9,17 +9,18 @@ class InProgressModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-          decoration: const BoxDecoration(
-            color: black,
-            borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-          ),
-          child: Column(children: [
+        decoration: const BoxDecoration(
+          color: black,
+          borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+        ),
+        child: Column(
+          children: [
             Padding(
               padding: EdgeInsets.all(globalPadding(context)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  textH2("Transferer"),
+                  textH2("En cours de construction"),
                   InkWell(
                     onTap: () => Navigator.pop(context),
                     child: const CircleAvatar(
@@ -35,10 +36,13 @@ class InProgressModal extends StatelessWidget {
               height: globalPadding(context),
               thickness: 1,
             ),
-            Center(
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: globalPadding(context)),
               child: textBodyBold("Ca arrive bientot!"),
-            )
-          ])),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

@@ -64,7 +64,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 textH1("Configure ta doctrine"),
-                textBodyRegular("Choisis tes Ã©lements de doctrine."),
+                textBodyRegular("Choisis tes Ã©lÃ©ments de doctrine."),
               ],
             )),
         Padding(

@@ -8,7 +8,7 @@ class ItemCardHelper {
   final String elementIcon;
   final int powerLevel;
   final List<DestinyItemSocketState> perks;
-  final List<DestinyItemSocketState> cosmetics;
+  final List<DestinyItemSocketState> intristics;
   final List<DestinyItemSocketState> armorSockets;
 
   ItemCardHelper({
@@ -17,7 +17,7 @@ class ItemCardHelper {
     required this.elementIcon,
     required this.powerLevel,
     required this.perks,
-    required this.cosmetics,
+    required this.intristics,
     required this.armorSockets,
   });
 }

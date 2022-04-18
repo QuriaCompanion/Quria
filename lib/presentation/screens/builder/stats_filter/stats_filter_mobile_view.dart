@@ -29,7 +29,7 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
               children: [
                 textH1("Priorise tes statistiques"),
                 textBodyRegular(
-                    "Classe les statistiques par ordre de preference."),
+                    "Classe les statistiques par ordre de prÃ©fÃ©rence."),
               ],
             )),
         Padding(

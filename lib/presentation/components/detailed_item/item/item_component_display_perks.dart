@@ -45,8 +45,12 @@ class ItemComponentDisplayPerks extends StatelessWidget {
               width: smallIconSize,
               height: smallIconSize,
               margin: const EdgeInsets.only(right: 10),
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
+                border: Border.all(
+                  color: Colors.white,
+                  width: 1,
+                ),
               ),
               child: Image(
                 image: NetworkImage(DestinyData.bungieLink +
@@ -65,8 +69,12 @@ class ItemComponentDisplayPerks extends StatelessWidget {
                 width: smallIconSize,
                 height: smallIconSize,
                 margin: const EdgeInsets.only(right: 10),
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1,
+                  ),
                 ),
                 child: Image(
                   image: NetworkImage(DestinyData.bungieLink +

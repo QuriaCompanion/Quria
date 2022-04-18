@@ -35,8 +35,7 @@ class BuilderResultsMobileView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 textH1("Builds recommandÃ©s"),
-                textBodyRegular(
-                    "Voici des builds adaptÃ©s a ce que tu recherches."),
+                textBodyRegular("Voici les meilleurs rÃ©sultats."),
               ],
             )),
         Column(children: [

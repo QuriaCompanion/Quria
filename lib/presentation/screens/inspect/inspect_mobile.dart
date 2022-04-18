@@ -6,7 +6,6 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/itemInfoHelper.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
-import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_armor_info.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_info.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_header.dart';
@@ -61,41 +60,41 @@ class _MobileInspectState extends State<MobileInspect> {
                 power: data.powerLevel,
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(
-                  top: globalPadding(context),
-                  bottom: globalPadding(context) * 2),
-              child: SizedBox(
-                height: 45,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    InkWell(
-                        onTap: () {
-                          setState(() {
-                            selected = "Informations";
-                          });
-                        },
-                        child: MobileNavItem(
-                          selected: selected == "Informations",
-                          value: "Informations",
-                          width: 171,
-                        )),
-                    InkWell(
-                        onTap: () {
-                          setState(() {
-                            selected = "Recomendations";
-                          });
-                        },
-                        child: MobileNavItem(
-                          selected: "Recomendations" == selected,
-                          value: "Recomendations",
-                          width: 171,
-                        )),
-                  ],
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(
+            //       top: globalPadding(context),
+            //       bottom: globalPadding(context) * 2),
+            //   child: SizedBox(
+            //     height: 45,
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            //       children: [
+            //         InkWell(
+            //             onTap: () {
+            //               setState(() {
+            //                 selected = "Informations";
+            //               });
+            //             },
+            //             child: MobileNavItem(
+            //               selected: selected == "Informations",
+            //               value: "Informations",
+            //               width: 171,
+            //             )),
+            //         InkWell(
+            //             onTap: () {
+            //               setState(() {
+            //                 selected = "Recomendations";
+            //               });
+            //             },
+            //             child: MobileNavItem(
+            //               selected: "Recomendations" == selected,
+            //               value: "Recomendations",
+            //               width: 171,
+            //             )),
+            //       ],
+            //     ),
+            //   ),
+            // ),
             Padding(
               padding: EdgeInsets.only(
                   left: globalPadding(context),
