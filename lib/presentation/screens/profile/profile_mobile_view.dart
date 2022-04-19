@@ -31,16 +31,21 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
             children: [
               mobileHeader(
                 context,
-                image: NetworkImage(DestinyData.bungieLink +
-                    ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[
-                            widget.data.selectedCharacterSubclass.itemHash]!
-                        .screenshot!),
+                image: NetworkImage(
+                  DestinyData.bungieLink +
+                      ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition[
+                              widget.data.selectedCharacterSubclass.itemHash]!
+                          .screenshot!,
+                ),
                 child: ProfileMobileHeader(
-                    stats: widget.data.selectedCharacter.stats,
-                    characterSuper: widget.data.characterSuper,
-                    characterId: widget.data.selectedCharacter.characterId!),
+                  stats: widget.data.selectedCharacter.stats,
+                  characterSuper: widget.data.characterSuper,
+                  subclassId:
+                      widget.data.selectedCharacterSubclass.itemInstanceId!,
+                  characterId: widget.data.selectedCharacter.characterId!,
+                ),
               ),
             ],
           ),

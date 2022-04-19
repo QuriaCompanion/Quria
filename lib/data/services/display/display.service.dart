@@ -323,7 +323,13 @@ class DisplayService {
         .map((e) => ManifestService
             .manifestParsed.destinyInventoryItemDefinition[e.plugHash]!)
         .toList();
-    return SocketsHelper(sockets: sockets, displayedSockets: displayedSockets);
+    final def = ManifestService.manifestParsed.destinyInventoryItemDefinition[
+        ProfileService().getItemByInstanceId(subclassInstanceId)?.itemHash];
+    return SocketsHelper(
+      sockets: sockets,
+      displayedSockets: displayedSockets,
+      def: def,
+    );
   }
 
   Iterable<DestinyInventoryItemDefinition>? _getWeapons(

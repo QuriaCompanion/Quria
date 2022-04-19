@@ -19,6 +19,7 @@ import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_p
 import 'package:quria/presentation/screens/collection/collection.dart';
 import 'package:quria/presentation/screens/collection/inspect.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile.dart';
+import 'package:quria/presentation/screens/inspect_subclass/inspect_subclass_page.dart';
 import 'package:quria/presentation/screens/login.dart';
 import 'package:quria/presentation/screens/profile/profile_page.dart';
 import 'package:quria/presentation/screens/testds/test.dart';
@@ -78,6 +79,10 @@ class AppRouter {
       case routeSubclassMod:
         final SubclassModHelper data = settings.arguments as SubclassModHelper;
         return MaterialPageRoute(builder: (_) => SubclassModsPage(data: data));
+      case routeInspectSubclass:
+        final String data = settings.arguments as String;
+        return MaterialPageRoute(
+            builder: (_) => InspectSubclassPage(instanceId: data));
       default:
         return MaterialPageRoute(builder: (_) => LoginWidget());
     }

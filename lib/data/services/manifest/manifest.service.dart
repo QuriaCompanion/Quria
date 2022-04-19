@@ -49,8 +49,7 @@ class ManifestService {
 
   static Future<void> loadAllManifest() async {
     if (await isManifestOutdated()) {
-      final manifests =
-          await compute(_storeManifests, await loadManifestInfo());
+      final manifests = await compute(_typeManifests, await loadManifestInfo());
 
       await StorageService.isar.writeTxn((isar) async {
         await isar.destinyInventoryItemDefinitions
@@ -168,7 +167,7 @@ class ManifestService {
 /// types it correctly then stores them in isarDB
 ///
 /// promise of void
-Future<List> _storeManifests(DestinyManifest manifestInfo) async {
+Future<List> _typeManifests(DestinyManifest manifestInfo) async {
   Future<String> getManifestRemote<T>() async {
     String language = "fr";
     http.Response res = await http.get(Uri.parse(DestinyData.bungieLink +
