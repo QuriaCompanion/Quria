@@ -1,8 +1,10 @@
-import 'package:bungie_api/destiny2.dart';
+import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
+import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/mobile_components/talent_grid_mobile_item.dart';
 

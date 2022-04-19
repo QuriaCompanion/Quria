@@ -19,17 +19,17 @@ class MobileInspectCosmetics extends StatelessWidget {
         for (DestinyItemSocketState socket in sockets.where((element) =>
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
+                    .destinyInventoryItemDefinition[element.plugHash]
                     ?.itemType ==
                 DestinyItemType.Armor ||
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
+                    .destinyInventoryItemDefinition[element.plugHash]
                     ?.itemSubType ==
                 DestinyItemSubType.Ornament ||
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition?[element.plugHash]
+                    .destinyInventoryItemDefinition[element.plugHash]
                     ?.itemSubType ==
                 DestinyItemSubType.Shader))
           Padding(
@@ -37,7 +37,7 @@ class MobileInspectCosmetics extends StatelessWidget {
             child: ItemWithTypeName(
                 iconSize: mobileItemSize(context),
                 item: ManifestService.manifestParsed
-                    .destinyInventoryItemDefinition![socket.plugHash]!),
+                    .destinyInventoryItemDefinition[socket.plugHash]!),
           )
       ],
     );

@@ -1,4 +1,6 @@
-import 'package:bungie_api/destiny2.dart';
+import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
+import 'package:bungie_api/models/destiny_talent_node.dart';
+import 'package:bungie_api/models/destiny_talent_node_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';

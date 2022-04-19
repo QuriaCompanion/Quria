@@ -27,10 +27,10 @@ class ProfileItemSectionWidget extends StatelessWidget {
       children: [
         if (isWeaponSide)
           for (DestinyItemComponent equipement
-              in data.selectedCharacterInventory.where((element) =>
+              in data.selectedCharacterEquipment.where((element) =>
                   ManifestService
                       .manifestParsed
-                      .destinyInventoryItemDefinition![element.itemHash]!
+                      .destinyInventoryItemDefinition[element.itemHash]!
                       .equippingBlock!
                       .equipmentSlotTypeHash ==
                   3284755031))
@@ -38,11 +38,11 @@ class ProfileItemSectionWidget extends StatelessWidget {
                 margin: itemSectionSpacing,
                 sizes: sizes,
                 displayedItem: equipement),
-        for (DestinyItemComponent equipement in data.selectedCharacterInventory
+        for (DestinyItemComponent equipement in data.selectedCharacterEquipment
             .where((element) =>
                 ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition![element.itemHash]!
+                    .destinyInventoryItemDefinition[element.itemHash]!
                     .itemType ==
                 itemType))
           ProfileItemCard(

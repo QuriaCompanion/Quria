@@ -7,7 +7,7 @@ import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
-import 'package:quria/presentation/screens/profile/mobile_components/profil_mobile_item_card.dart';
+import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_item_card.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_header.dart';
 
 class ProfileMobileView extends StatefulWidget {
@@ -31,15 +31,21 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
             children: [
               mobileHeader(
                 context,
-                image: NetworkImage(DestinyData.bungieLink +
-                    ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition![
-                            widget.data.selectedCharacterSubclass.itemHash]!
-                        .screenshot!),
+                image: NetworkImage(
+                  DestinyData.bungieLink +
+                      ManifestService
+                          .manifestParsed
+                          .destinyInventoryItemDefinition[
+                              widget.data.selectedCharacterSubclass.itemHash]!
+                          .screenshot!,
+                ),
                 child: ProfileMobileHeader(
-                    stats: widget.data.selectedCharacter.stats,
-                    characterId: widget.data.selectedCharacter.characterId!),
+                  stats: widget.data.selectedCharacter.stats,
+                  characterSuper: widget.data.characterSuper,
+                  subclassId:
+                      widget.data.selectedCharacterSubclass.itemInstanceId!,
+                  characterId: widget.data.selectedCharacter.characterId!,
+                ),
               ),
             ],
           ),
@@ -81,19 +87,35 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
             ),
           ),
           for (DestinyItemComponent item
-              in widget.data.selectedCharacterInventory.where((element) =>
+              in widget.data.selectedCharacterEquipment.where((element) =>
                   ManifestService
                       .manifestParsed
-                      .destinyInventoryItemDefinition?[element.itemHash]
+                      .destinyInventoryItemDefinition[element.itemHash]
                       ?.itemType ==
                   currentFilter))
             Padding(
               padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
               child: Column(
                 children: [
-                  ProfileMobileItemCard(
-                    item: item,
-                    characterId: widget.data.selectedCharacter.characterId!,
+                  RepaintBoundary(
+                    child: ProfileMobileItemCard(
+                      item: item,
+                      characterId: widget.data.selectedCharacter.characterId!,
+                      inventory: widget.data.selectedCharacterInventory
+                          .where((element) =>
+                              ManifestService
+                                  .manifestParsed
+                                  .destinyInventoryItemDefinition[
+                                      element.itemHash]
+                                  ?.equippingBlock
+                                  ?.equipmentSlotTypeHash ==
+                              ManifestService
+                                  .manifestParsed
+                                  .destinyInventoryItemDefinition[item.itemHash]
+                                  ?.equippingBlock
+                                  ?.equipmentSlotTypeHash)
+                          .toList(),
+                    ),
                   ),
                   Divider(
                     thickness: 1,

@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
@@ -35,8 +35,7 @@ class BuilderResultsMobileView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 textH1("Builds recommandÃ©s"),
-                textBodyRegular(
-                    "Voici des builds adaptÃ©s a ce que tu recherches."),
+                textBodyRegular("Voici les meilleurs rÃ©sultats."),
               ],
             )),
         Column(children: [

@@ -1,13 +1,10 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
-import 'package:bungie_api/models/destiny_item_socket_state.dart';
-import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
-import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/classItemChoiceHelper.model.dart';
+import 'package:quria/data/models/helpers/socketsHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassModHelper.model.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
-import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_steps.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -21,23 +18,20 @@ class SubclassModsPage extends StatefulWidget {
 }
 
 class _SubclassModsPageState extends State<SubclassModsPage> {
-  List<DestinyItemSocketState>? sockets;
-  DestinyTalentGridDefinition? talentGrid;
-  DestinyItemTalentGridComponent? oldSubclass;
+  late SocketsHelper data;
   List<DestinyInventoryItemDefinition> chosenSockets = [];
-
   @override
   void initState() {
     super.initState();
-    sockets = ProfileService().getItemSockets(widget.data.subclassInstanceId);
-    chosenSockets = sockets!
-        .map((e) => ManifestService
-            .manifestParsed.destinyInventoryItemDefinition![e.plugHash]!)
-        .toList();
+    data = DisplayService().getSubclassMods(widget.data.subclassInstanceId);
   }
 
   @override
   Widget build(BuildContext context) {
+    final sockets = data.sockets;
+    if (chosenSockets.isEmpty) {
+      chosenSockets = data.displayedSockets;
+    }
     if (vw(context) < 850) {
       return ScaffoldSteps<ClassItemChoiceHelper>(
           route: routeClassItemChoice,

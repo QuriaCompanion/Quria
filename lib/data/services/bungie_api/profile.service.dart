@@ -8,7 +8,8 @@ import 'package:bungie_api/models/destiny_character_activities_component.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_character_progression_component.dart';
 import 'package:bungie_api/models/destiny_collectible_component.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:bungie_api/models/destiny_plug_sets_component.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
@@ -23,12 +24,15 @@ import 'package:bungie_api/models/destiny_profile_response.dart';
 import 'package:bungie_api/models/destiny_record_component.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:bungie_api/models/destiny_talent_node.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:bungie_api/enums/destiny_component_type.dart';
 import 'package:bungie_api/enums/destiny_scope.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:collection/collection.dart';
 
 enum LastLoadedFrom { server, cache }
 
@@ -151,10 +155,80 @@ class ProfileService {
     DestinyProfileResponse? response;
     response = await _api.getCurrentProfile(components);
     lastUpdated = DateTime.now();
-
+    final List<int> inventoryItemIds = [];
+    final List<int> talentIds = [];
+    inventoryItemIds
+        .addAll([3473581026, 2771648715, 549825413, 4287863773, 3500810712]);
     if (response == null) {
       return _profile;
     }
+    for (List<DestinyItemPlug> sockets
+        in response.profilePlugSets!.data!.plugs!.values) {
+      for (DestinyItemPlug socket in sockets) {
+        if (socket.plugItemHash != null) {
+          inventoryItemIds.add(socket.plugItemHash!);
+        }
+      }
+    }
+    for (DestinyPlugSetsComponent characterPlugSet
+        in response.characterPlugSets!.data!.values) {
+      for (List<DestinyItemPlug> sockets in characterPlugSet.plugs!.values) {
+        for (DestinyItemPlug socket in sockets) {
+          if (socket.plugItemHash != null) {
+            inventoryItemIds.add(socket.plugItemHash!);
+          }
+        }
+      }
+    }
+    if (response.profileInventory?.data?.items != null) {
+      for (final item in response.profileInventory!.data!.items!) {
+        if (item.itemHash != null) {
+          inventoryItemIds.add(item.itemHash!);
+        }
+      }
+    }
+    if (response.characterInventories?.data != null) {
+      for (final character in response.characterInventories!.data!.values) {
+        if (character.items != null) {
+          for (final item in character.items!) {
+            if (item.itemHash != null) {
+              inventoryItemIds.add(item.itemHash!);
+            }
+          }
+        }
+      }
+    }
+    if (response.characterEquipment?.data != null) {
+      for (final character in response.characterEquipment!.data!.values) {
+        if (character.items != null) {
+          for (final item in character.items!) {
+            if (item.itemHash != null) {
+              inventoryItemIds.add(item.itemHash!);
+            }
+          }
+        }
+      }
+    }
+    if (response.itemComponents?.sockets?.data != null) {
+      for (final socketGroup
+          in response.itemComponents!.sockets!.data!.values) {
+        for (final socket in socketGroup.sockets!) {
+          if (socket.plugHash != null) {
+            inventoryItemIds.add(socket.plugHash!);
+          }
+        }
+      }
+    }
+    if (response.itemComponents?.talentGrids != null) {
+      for (final talent in response.itemComponents!.talentGrids!.data!.values) {
+        if (talent.talentGridHash != null) {
+          talentIds.add(talent.talentGridHash!);
+        }
+      }
+    }
+    await StorageService.getDefinitions<DestinyInventoryItemDefinition>(
+        inventoryItemIds);
+    await StorageService.getDefinitions<DestinyTalentGridDefinition>(talentIds);
     if (_profile == null) {
       _profile = response;
       return _profile;
@@ -246,7 +320,6 @@ class ProfileService {
       return _profile;
     }
     DestinyProfileResponse? response = await fetchProfileData();
-    startAutomaticUpdater();
     _profile = response;
     return response;
   }
@@ -270,7 +343,7 @@ class ProfileService {
         .where((element) =>
             ManifestService
                 .manifestParsed
-                .destinyInventoryItemDefinition?[element.itemHash]
+                .destinyInventoryItemDefinition[element.itemHash]
                 ?.equippingBlock
                 ?.equipmentSlotTypeHash ==
             3284755031)
@@ -285,7 +358,7 @@ class ProfileService {
         .where((element) =>
             ManifestService
                 .manifestParsed
-                .destinyInventoryItemDefinition?[element.itemHash]
+                .destinyInventoryItemDefinition[element.itemHash]
                 ?.equippingBlock
                 ?.equipmentSlotTypeHash ==
             slotTypeHash)
@@ -298,7 +371,7 @@ class ProfileService {
     return character.firstWhere((element) =>
         ManifestService
             .manifestParsed
-            .destinyInventoryItemDefinition?[element.itemHash]
+            .destinyInventoryItemDefinition[element.itemHash]
             ?.equippingBlock
             ?.equipmentSlotTypeHash ==
         3284755031);
@@ -306,31 +379,32 @@ class ProfileService {
 
   int? getCurrentGrenadeHashForCharacter(String characterId) {
     DestinyItemComponent subclass = getCurrentSubClassForCharacter(characterId);
-
-    DestinyItemSocketState? newGrenade =
-        getItemSockets(subclass.itemInstanceId!)?.firstWhere((element) =>
-            ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition?[element.plugHash]
-                ?.plug
-                ?.plugCategoryIdentifier
-                ?.contains("grenade") ??
-            false);
+    List<DestinyItemSocketState>? sockets =
+        getItemSockets(subclass.itemInstanceId!);
+    DestinyItemSocketState? newGrenade = sockets.firstWhereOrNull((element) =>
+        ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[element.plugHash]
+            ?.plug
+            ?.plugCategoryIdentifier
+            ?.contains("grenade") ??
+        false);
     if (newGrenade != null) {
       return ManifestService.manifestParsed
-          .destinyInventoryItemDefinition?[newGrenade.plugHash]?.hash;
+          .destinyInventoryItemDefinition[newGrenade.plugHash]?.hash;
     }
     DestinyItemTalentGridComponent? oldSubclass =
         getTalentGrid(subclass.itemInstanceId!);
 
-    DestinyTalentNode? oldGrenade = oldSubclass?.nodes?.firstWhere((element) =>
-        element.isActivated == true && element.nodeIndex == 7 ||
-        element.nodeIndex == 8 ||
-        element.nodeIndex == 9);
+    DestinyTalentNode? oldGrenade = oldSubclass?.nodes?.firstWhereOrNull(
+        (element) =>
+            element.isActivated == true && element.nodeIndex == 7 ||
+            element.nodeIndex == 8 ||
+            element.nodeIndex == 9);
     if (oldGrenade != null) {
       return ManifestService
           .manifestParsed
-          .destinyTalentGridDefinition?[oldSubclass!.talentGridHash]!
+          .destinyTalentGridDefinition[oldSubclass!.talentGridHash]!
           .nodes?[oldGrenade.nodeIndex!]
           .steps?[0]
           .nodeStepHash;
@@ -341,31 +415,32 @@ class ProfileService {
   int? getCurrentMeleeHashForCharacter(String characterId) {
     DestinyItemComponent? subclass =
         getCurrentSubClassForCharacter(characterId);
-
-    DestinyItemSocketState? newMelee = getItemSockets(subclass.itemInstanceId!)
-        ?.firstWhere((element) =>
-            ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition?[element.plugHash]
-                ?.plug
-                ?.plugCategoryIdentifier
-                ?.contains("melee") ??
-            false);
+    List<DestinyItemSocketState>? sockets =
+        getItemSockets(subclass.itemInstanceId!);
+    DestinyItemSocketState? newMelee = sockets.firstWhereOrNull((element) =>
+        ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[element.plugHash]
+            ?.plug
+            ?.plugCategoryIdentifier
+            ?.contains("melee") ??
+        false);
     if (newMelee != null) {
       return ManifestService.manifestParsed
-          .destinyInventoryItemDefinition?[newMelee.plugHash]?.hash;
+          .destinyInventoryItemDefinition[newMelee.plugHash]?.hash;
     }
     DestinyItemTalentGridComponent? oldSubclass =
         getTalentGrid(subclass.itemInstanceId!);
 
-    DestinyTalentNode? oldMelee = oldSubclass?.nodes?.firstWhere((element) =>
-        element.isActivated == true && element.nodeIndex == 11 ||
-        element.nodeIndex == 15 ||
-        element.nodeIndex == 21);
+    DestinyTalentNode? oldMelee = oldSubclass?.nodes?.firstWhereOrNull(
+        (element) =>
+            element.isActivated == true && element.nodeIndex == 11 ||
+            element.nodeIndex == 15 ||
+            element.nodeIndex == 21);
     if (oldMelee != null) {
       return ManifestService
           .manifestParsed
-          .destinyTalentGridDefinition?[oldSubclass!.talentGridHash]!
+          .destinyTalentGridDefinition[oldSubclass!.talentGridHash]!
           .nodes?[oldMelee.nodeIndex!]
           .steps?[0]
           .nodeStepHash;
@@ -376,31 +451,32 @@ class ProfileService {
   int? getCurrentSuperHashForCharacter(String characterId) {
     DestinyItemComponent? subclass =
         getCurrentSubClassForCharacter(characterId);
-
-    DestinyItemSocketState? newSuper = getItemSockets(subclass.itemInstanceId!)
-        ?.firstWhere((element) =>
-            ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition?[element.plugHash]
-                ?.plug
-                ?.plugCategoryIdentifier
-                ?.contains("super") ??
-            false);
+    List<DestinyItemSocketState>? sockets =
+        getItemSockets(subclass.itemInstanceId!);
+    DestinyItemSocketState? newSuper = sockets.firstWhereOrNull((element) =>
+        ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[element.plugHash]
+            ?.plug
+            ?.plugCategoryIdentifier
+            ?.contains("super") ??
+        false);
 
     if (newSuper != null) {
       return ManifestService.manifestParsed
-          .destinyInventoryItemDefinition?[newSuper.plugHash]?.hash;
+          .destinyInventoryItemDefinition[newSuper.plugHash]?.hash;
     }
     DestinyItemTalentGridComponent? oldSubclass =
         getTalentGrid(subclass.itemInstanceId!);
 
-    DestinyTalentNode? oldSuper = oldSubclass?.nodes?.firstWhere((element) =>
-        element.isActivated == true && element.nodeIndex == 10 ||
-        element.nodeIndex == 20);
+    DestinyTalentNode? oldSuper = oldSubclass?.nodes?.firstWhereOrNull(
+        (element) =>
+            element.isActivated == true && element.nodeIndex == 10 ||
+            element.nodeIndex == 20);
     if (oldSuper != null) {
       return ManifestService
           .manifestParsed
-          .destinyTalentGridDefinition?[oldSubclass!.talentGridHash]!
+          .destinyTalentGridDefinition[oldSubclass!.talentGridHash]!
           .nodes?[oldSuper.nodeIndex!]
           .steps?[0]
           .nodeStepHash;
@@ -412,19 +488,22 @@ class ProfileService {
     return _profile!.itemComponents!.sockets!.data!;
   }
 
-  List<DestinyItemSocketState>? getItemSockets(String itemInstanceId) {
+  List<DestinyItemSocketState> getItemSockets(String itemInstanceId) {
     try {
-      return _profile!.itemComponents!.sockets!.data![itemInstanceId]?.sockets;
+      return _profile!
+              .itemComponents!.sockets!.data![itemInstanceId]?.sockets ??
+          [];
     } catch (e) {
       rethrow;
     }
   }
 
-  Map<String, List<DestinyItemPlugBase>>? getItemReusablePlugs(
+  Map<String, List<DestinyItemPlugBase>> getItemReusablePlugs(
       String itemInstanceId) {
     try {
       return _profile!
-          .itemComponents?.reusablePlugs?.data?[itemInstanceId]?.plugs;
+              .itemComponents?.reusablePlugs?.data?[itemInstanceId]?.plugs ??
+          {};
     } catch (e) {
       rethrow;
     }
@@ -442,7 +521,7 @@ class ProfileService {
 
   String getDropLocation(int hash) {
     return ManifestService
-            .manifestParsed.destinyCollectibleDefinition![hash]?.sourceString ??
+            .manifestParsed.destinyCollectibleDefinition[hash]?.sourceString ??
         "Source inconnu";
   }
 
@@ -456,13 +535,15 @@ class ProfileService {
           if (plug.any((element) => element.plugItemHash == socket.plugHash) &&
               DestinyData.perkCategoryHash.contains(ManifestService
                   .manifestParsed
-                  .destinyInventoryItemDefinition?[socket.plugHash]!
+                  .destinyInventoryItemDefinition[socket.plugHash]!
                   .plug!
                   .plugCategoryHash!)) {
             List<DestinyInventoryItemDefinition> plugDefitions = [];
             for (DestinyItemPlugBase plug in plug) {
-              plugDefitions.add(ManifestService.manifestParsed
-                  .destinyInventoryItemDefinition![plug.plugItemHash]!);
+              final plugDef = ManifestService.manifestParsed
+                  .destinyInventoryItemDefinition[plug.plugItemHash];
+              if (plugDef == null) continue;
+              plugDefitions.add(plugDef);
             }
             perks.add(plugDefitions);
           }
@@ -470,21 +551,24 @@ class ProfileService {
       }
       if (ManifestService
                   .manifestParsed
-                  .destinyInventoryItemDefinition?[socket.plugHash]
+                  .destinyInventoryItemDefinition[socket.plugHash]
                   ?.displayProperties
                   ?.icon !=
               null &&
-          DestinyData.perkCategoryHash.contains(ManifestService
-              .manifestParsed
-              .destinyInventoryItemDefinition?[socket.plugHash]!
-              .plug!
-              .plugCategoryHash!) &&
-          !perks.any((element) => element.contains(ManifestService
-              .manifestParsed
-              .destinyInventoryItemDefinition![socket.plugHash]!))) {
+          DestinyData.perkCategoryHash.contains(
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[socket.plugHash]!
+                .plug!
+                .plugCategoryHash!,
+          ) &&
+          !perks.any((element) => element.contains(
+                ManifestService.manifestParsed
+                    .destinyInventoryItemDefinition[socket.plugHash]!,
+              ))) {
         perks.add([
           ManifestService
-              .manifestParsed.destinyInventoryItemDefinition![socket.plugHash]!
+              .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!
         ]);
       }
     }
@@ -567,13 +651,6 @@ class ProfileService {
     return list;
   }
 
-  String getCharacterIdByClass(DestinyClass classType) {
-    DestinyCharacterComponent character = _profile!.characters!.data!.values
-        .toList()
-        .firstWhere((element) => element.classType == classType);
-    return character.characterId!;
-  }
-
   DestinyCharacterComponent? getCharacter(String characterId) {
     return _profile!.characters?.data![characterId];
   }
@@ -582,7 +659,7 @@ class ProfileService {
     return _profile!.characterEquipment!.data![charcterId]!.items!.where(
         (element) =>
             ManifestService.manifestParsed
-                .destinyInventoryItemDefinition![element.itemHash]!.itemType ==
+                .destinyInventoryItemDefinition[element.itemHash]!.itemType ==
             DestinyItemType.Armor);
   }
 
@@ -693,7 +770,67 @@ class ProfileService {
     return items;
   }
 
-  String getItemOwner(String itemInstanceId) {
+  void moveItem(String instanceId, String? newLocation, bool equip) {
+    DestinyItemComponent? itemComponent = getItemByInstanceId(instanceId);
+    if (itemComponent == null) return;
+    final previousItem = _profile?.characterEquipment?.data?[newLocation]?.items
+        ?.firstWhere((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[element.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash ==
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[itemComponent.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash);
+    final previousIndex = _profile
+        ?.characterEquipment?.data?[newLocation]?.items
+        ?.indexWhere((element) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[element.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash ==
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[itemComponent.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash);
+
+    String? previousLocation = getItemOwner(instanceId);
+    if (previousLocation == null) {
+      _profile!.profileInventory!.data!.items!.remove(itemComponent);
+    } else if (equip) {
+      _profile!.characterInventories!.data![previousLocation]!.items!
+          .remove(itemComponent);
+      _profile!.characterEquipment!.data![previousLocation]!.items!
+          .remove(previousItem);
+    } else {
+      _profile!.characterInventories!.data![previousLocation]!.items!
+          .remove(itemComponent);
+    }
+    if (newLocation == null) {
+      _profile!.profileInventory!.data!.items!.add(itemComponent);
+    } else if (equip) {
+      _profile!.characterInventories!.data![newLocation]!.items!
+          .add(previousItem!);
+      _profile!.characterEquipment!.data![newLocation]!.items!
+          .insert(previousIndex!, itemComponent);
+    } else {
+      _profile!.characterInventories!.data![newLocation]!.items!
+          .add(itemComponent);
+    }
+  }
+
+  DestinyItemComponent? getItemByInstanceId(String instanceId) {
+    List<DestinyItemComponent> items = getItemsByInstanceId([instanceId]);
+    if (items.isEmpty) return null;
+    return items[0];
+  }
+
+  String? getItemOwner(String itemInstanceId) {
     String? owner;
     _profile!.characterEquipment!.data!.forEach((charId, inventory) {
       bool has =
@@ -702,7 +839,7 @@ class ProfileService {
         owner = charId;
       }
     });
-    if (owner != null) return owner!;
+    if (owner != null) return owner;
     _profile!.characterInventories!.data!.forEach((charId, inventory) {
       bool has =
           inventory.items!.any((item) => item.itemInstanceId == itemInstanceId);
@@ -710,7 +847,14 @@ class ProfileService {
         owner = charId;
       }
     });
-    return owner!;
+    return owner;
+  }
+
+  bool isItemEquipped(String itemInstanceId) {
+    String? owner = getItemOwner(itemInstanceId);
+    if (owner == null) return false;
+    return _profile!.characterEquipment!.data![owner]!.items!
+        .any((item) => item.itemInstanceId == itemInstanceId);
   }
 
   DestinyArtifactProfileScoped getArtifactProgression() {
@@ -731,70 +875,23 @@ class ProfileService {
 
   List<DestinyItemComponent> getAllArmorForClass(DestinyClass classType,
       {DestinyItemSubType? itemSubType}) {
-    List<DestinyItemComponent> allItems = [];
-    Iterable<String>? charIds =
-        getCharacters().map((char) => char.characterId!);
-    for (var charId in charIds) {
-      allItems.addAll(getCharacterEquipment(charId)
-          .where((element) =>
+    List<DestinyItemComponent> allItems = getAllItems();
+    final List<DestinyItemComponent> neededItem = allItems.where((item) {
+      return ManifestService.manifestParsed
+                  .destinyInventoryItemDefinition[item.itemHash]?.classType ==
+              classType &&
+          ManifestService.manifestParsed
+                  .destinyInventoryItemDefinition[item.itemHash]?.itemType ==
+              DestinyItemType.Armor &&
+          (itemSubType == null ||
               ManifestService
                       .manifestParsed
-                      .destinyInventoryItemDefinition?[element.itemHash]
-                      ?.classType ==
-                  classType &&
-              ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition?[element.itemHash]
-                      ?.itemType ==
-                  DestinyItemType.Armor &&
-              (itemSubType == null ||
-                  ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition?[element.itemHash]
-                          ?.itemSubType ==
-                      itemSubType))
-          .map((item) => item));
-      allItems.addAll(getCharacterInventory(charId)
-          .where((element) =>
-              ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition?[element.itemHash]
-                      ?.classType ==
-                  classType &&
-              ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition?[element.itemHash]
-                      ?.itemType ==
-                  DestinyItemType.Armor &&
-              (itemSubType == null ||
-                  ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition?[element.itemHash]
-                          ?.itemSubType ==
-                      itemSubType))
-          .map((item) => item));
-    }
-    allItems.addAll(getProfileInventory()
-        .where((element) =>
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition?[element.itemHash]
-                    ?.classType ==
-                classType &&
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition?[element.itemHash]
-                    ?.itemType ==
-                DestinyItemType.Armor &&
-            (itemSubType == null ||
-                ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition?[element.itemHash]
-                        ?.itemSubType ==
-                    itemSubType))
-        .map((item) => item));
+                      .destinyInventoryItemDefinition[item.itemHash]
+                      ?.itemSubType ==
+                  itemSubType);
+    }).toList();
 
-    return allItems;
+    return neededItem;
   }
 }
 

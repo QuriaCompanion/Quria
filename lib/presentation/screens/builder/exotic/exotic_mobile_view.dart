@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
@@ -24,7 +24,7 @@ class ExoticMobileView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textH1("Choisis un exotique"),
+                textH1("Choisis un Ã©xotique"),
                 textBodyRegular(
                     "Il sert de base pour la construction de ton build."),
               ],

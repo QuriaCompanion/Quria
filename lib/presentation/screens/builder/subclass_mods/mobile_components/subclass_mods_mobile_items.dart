@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -7,7 +7,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/components/detailed_item/subclass/subclass_mod_modal.dart';
+import 'package:quria/presentation/components/detailed_item/item/mod_modal.dart';
 
 class SubclassMobileItems extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
@@ -66,14 +66,14 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                             expand: false,
                             context: context,
                             builder: (context) {
-                              return SubclassModModal(
+                              return ModModal(
                                   mod: ManifestService.manifestParsed
-                                      .destinyInventoryItemDefinition![plug]!,
+                                      .destinyInventoryItemDefinition[plug]!,
                                   onSocketChange: () {
                                     setState(() {
                                       widget.onSocketChange(ManifestService
                                               .manifestParsed
-                                              .destinyInventoryItemDefinition![
+                                              .destinyInventoryItemDefinition[
                                           plug]!);
                                     });
                                   });
@@ -81,13 +81,13 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                       },
                       onLongPress: () {
                         widget.onSocketChange(ManifestService.manifestParsed
-                            .destinyInventoryItemDefinition![plug]!);
+                            .destinyInventoryItemDefinition[plug]!);
                       },
                       child: pictureBordered(
                           image: NetworkImage(DestinyData.bungieLink +
                               ManifestService
                                   .manifestParsed
-                                  .destinyInventoryItemDefinition![plug]!
+                                  .destinyInventoryItemDefinition[plug]!
                                   .displayProperties!
                                   .icon!),
                           size: 44),

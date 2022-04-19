@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_entry_plug_item_randomized_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/helpers/inspectHelper.model.dart';
@@ -32,7 +32,7 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
     final List<DestinyItemSocketEntryPlugItemRandomizedDefinition> sockets =
         ManifestService
             .manifestParsed
-            .destinyPlugSetDefinition![widget.item.sockets!
+            .destinyPlugSetDefinition[widget.item.sockets!
                 .socketEntries![widget.index].randomizedPlugSetHash]!
             .reusablePlugItems!;
     return Column(
@@ -50,22 +50,22 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                     switch (widget.index) {
                       case 1:
                         widget.selectedPerks.firstColumn = ManifestService
-                                .manifestParsed.destinyInventoryItemDefinition![
+                                .manifestParsed.destinyInventoryItemDefinition[
                             sockets[i].plugItemHash]!;
                         break;
                       case 2:
                         widget.selectedPerks.secondColumn = ManifestService
-                                .manifestParsed.destinyInventoryItemDefinition![
+                                .manifestParsed.destinyInventoryItemDefinition[
                             sockets[i].plugItemHash]!;
                         break;
                       case 3:
                         widget.selectedPerks.thirdColumn = ManifestService
-                                .manifestParsed.destinyInventoryItemDefinition![
+                                .manifestParsed.destinyInventoryItemDefinition[
                             sockets[i].plugItemHash]!;
                         break;
                       case 4:
                         widget.selectedPerks.fourthColumn = ManifestService
-                                .manifestParsed.destinyInventoryItemDefinition![
+                                .manifestParsed.destinyInventoryItemDefinition[
                             sockets[i].plugItemHash]!;
                         break;
                     }
@@ -73,9 +73,8 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                 },
                 child: PerkItemDisplay(
                   selected: selectedIndex == i,
-                  perk: ManifestService
-                          .manifestParsed.destinyInventoryItemDefinition![
-                      sockets[i].plugItemHash]!,
+                  perk: ManifestService.manifestParsed
+                      .destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
                   iconSize: widget.iconSize,
                 ),
               ),
@@ -84,10 +83,9 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                 .randomizedPlugSetHash ==
             null)
           PerkItemDisplay(
-            perk:
-                ManifestService.manifestParsed.destinyInventoryItemDefinition![
-                    widget.item.sockets?.socketEntries?[widget.index]
-                        .singleInitialItemHash]!,
+            perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
+                widget.item.sockets?.socketEntries?[widget.index]
+                    .singleInitialItemHash]!,
             iconSize: widget.iconSize,
           )
       ],

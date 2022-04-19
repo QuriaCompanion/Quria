@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -34,7 +34,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
 
     displayedSockets = widget.sockets!
         .map((e) => ManifestService
-            .manifestParsed.destinyInventoryItemDefinition![e.plugHash]!)
+            .manifestParsed.destinyInventoryItemDefinition[e.plugHash]!)
         .toList();
   }
 
@@ -64,7 +64,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 textH1("Configure ta doctrine"),
-                textBodyRegular("Choisis tes Ã©lements de doctrine."),
+                textBodyRegular("Choisis tes Ã©lÃ©ments de doctrine."),
               ],
             )),
         Padding(
@@ -149,7 +149,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                     expand: true,
                                     context: context,
                                     builder: (context) {
-                                      return ArmorModModal(
+                                      return ArmorModsModal(
                                         socket: displayedSockets[7 + i],
                                         plugSetsHash: widget
                                             .subclass
@@ -159,13 +159,13 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                         onSocketChange: (itemHash) {
                                           if (!displayedSockets.contains(
                                               ManifestService.manifestParsed
-                                                      .destinyInventoryItemDefinition![
+                                                      .destinyInventoryItemDefinition[
                                                   itemHash]!)) {
                                             setState(() {
                                               displayedSockets[
                                                   7 + i] = ManifestService
                                                       .manifestParsed
-                                                      .destinyInventoryItemDefinition![
+                                                      .destinyInventoryItemDefinition[
                                                   itemHash]!;
                                             });
                                             widget.onChange(displayedSockets);

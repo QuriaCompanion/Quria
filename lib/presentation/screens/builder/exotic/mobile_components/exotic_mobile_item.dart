@@ -1,5 +1,5 @@
 import 'package:bungie_api/enums/tier_type.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:quria/constants/styles.dart';
@@ -45,26 +45,26 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
   bool isOpen = false;
   @override
   Widget build(BuildContext context) {
-    perk = ManifestService.manifestParsed.destinyInventoryItemDefinition![widget
+    perk = ManifestService.manifestParsed.destinyInventoryItemDefinition[widget
         .item.sockets!.socketEntries
         ?.firstWhere((element) =>
             ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition?[
+                        .destinyInventoryItemDefinition[
                             element.singleInitialItemHash]
                         ?.plug
                         ?.plugCategoryHash ==
                     1744546145 &&
                 ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition?[
+                        .destinyInventoryItemDefinition[
                             element.singleInitialItemHash]
                         ?.inventory
                         ?.tierType ==
                     TierType.Exotic ||
             ManifestService
                     .manifestParsed
-                    .destinyInventoryItemDefinition?[
+                    .destinyInventoryItemDefinition[
                         element.singleInitialItemHash]
                     ?.hash ==
                 3268255645)
@@ -78,24 +78,28 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  Image(
-                      width: mobileItemSize(context),
-                      height: mobileItemSize(context),
-                      image: NetworkImage(DestinyData.bungieLink +
-                          widget.item.displayProperties!.icon!)),
-                  SizedBox(width: globalPadding(context) / 2),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      textBodyBold(widget.item.displayProperties!.name!),
-                      SizedBox(height: globalPadding(context) / 3),
-                      textCaption(widget.item.itemTypeDisplayName!,
-                          color: greyLight),
-                    ],
-                  )
-                ],
+              Expanded(
+                child: Row(
+                  children: [
+                    Image(
+                        width: mobileItemSize(context),
+                        height: mobileItemSize(context),
+                        image: NetworkImage(DestinyData.bungieLink +
+                            widget.item.displayProperties!.icon!)),
+                    SizedBox(width: globalPadding(context) / 2),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          textBodyBold(widget.item.displayProperties!.name!),
+                          SizedBox(height: globalPadding(context) / 3),
+                          textCaption(widget.item.itemTypeDisplayName!,
+                              color: greyLight),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
               IconButton(
                 onPressed: () {

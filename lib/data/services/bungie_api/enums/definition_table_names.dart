@@ -1,53 +1,82 @@
-import 'package:bungie_api/models/destiny_energy_type_definition.dart';
-import 'package:bungie_api/models/destiny_metric_definition.dart';
-import 'package:bungie_api/models/destiny_milestone_reward_entry_definition.dart';
-import 'package:bungie_api/models/destiny_place_definition.dart';
 import 'package:bungie_api/models/destiny_activity_definition.dart';
-import 'package:bungie_api/models/destiny_activity_type_definition.dart';
-import 'package:bungie_api/models/destiny_class_definition.dart';
-import 'package:bungie_api/models/destiny_gender_definition.dart';
-import 'package:bungie_api/models/destiny_inventory_bucket_definition.dart';
-import 'package:bungie_api/models/destiny_power_cap_definition.dart';
-import 'package:bungie_api/models/destiny_race_definition.dart';
-import 'package:bungie_api/models/destiny_season_definition.dart';
-import 'package:bungie_api/models/destiny_season_pass_definition.dart';
-import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
-import 'package:bungie_api/models/destiny_trait_definition.dart';
-import 'package:bungie_api/models/destiny_unlock_definition.dart';
-import 'package:bungie_api/models/destiny_material_requirement_set_definition.dart';
-import 'package:bungie_api/models/destiny_sandbox_perk_definition.dart';
-import 'package:bungie_api/models/destiny_stat_group_definition.dart';
-import 'package:bungie_api/models/destiny_faction_definition.dart';
-import 'package:bungie_api/models/destiny_vendor_group_definition.dart';
-import 'package:bungie_api/models/destiny_reward_source_definition.dart';
-import 'package:bungie_api/models/destiny_item_category_definition.dart';
-import 'package:bungie_api/models/destiny_damage_type_definition.dart';
-import 'package:bungie_api/models/destiny_activity_mode_definition.dart';
 import 'package:bungie_api/models/destiny_activity_graph_definition.dart';
-import 'package:bungie_api/models/destiny_collectible_definition.dart';
-import 'package:bungie_api/models/destiny_stat_definition.dart';
-import 'package:bungie_api/models/destiny_item_tier_type_definition.dart';
-import 'package:bungie_api/models/destiny_presentation_node_definition.dart';
-import 'package:bungie_api/models/destiny_record_definition.dart';
+import 'package:bungie_api/models/destiny_activity_mode_definition.dart';
+import 'package:bungie_api/models/destiny_activity_modifier_definition.dart';
+import 'package:bungie_api/models/destiny_activity_type_definition.dart';
+import 'package:bungie_api/models/destiny_checklist_definition.dart';
 import 'package:bungie_api/models/destiny_destination_definition.dart';
-import 'package:bungie_api/models/destiny_equipment_slot_definition.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:bungie_api/models/destiny_faction_definition.dart';
+import 'package:bungie_api/models/destiny_gender_definition.dart';
+import 'package:bungie_api/models/destiny_historical_stats_definition.dart';
+import 'package:bungie_api/models/destiny_inventory_bucket_definition.dart';
+import 'package:bungie_api/models/destiny_item_category_definition.dart';
+import 'package:bungie_api/models/destiny_item_tier_type_definition.dart';
 import 'package:bungie_api/models/destiny_location_definition.dart';
 import 'package:bungie_api/models/destiny_lore_definition.dart';
+import 'package:bungie_api/models/destiny_material_requirement_set_definition.dart';
+import 'package:bungie_api/models/destiny_metric_definition.dart';
+import 'package:bungie_api/models/destiny_milestone_definition.dart';
+import 'package:bungie_api/models/destiny_milestone_reward_entry_definition.dart';
 import 'package:bungie_api/models/destiny_objective_definition.dart';
+import 'package:bungie_api/models/destiny_place_definition.dart';
+import 'package:bungie_api/models/destiny_power_cap_definition.dart';
 import 'package:bungie_api/models/destiny_progression_definition.dart';
 import 'package:bungie_api/models/destiny_progression_level_requirement_definition.dart';
+import 'package:bungie_api/models/destiny_race_definition.dart';
+import 'package:bungie_api/models/destiny_record_definition.dart';
+import 'package:bungie_api/models/destiny_report_reason_category_definition.dart';
+import 'package:bungie_api/models/destiny_reward_source_definition.dart';
+import 'package:bungie_api/models/destiny_season_definition.dart';
+import 'package:bungie_api/models/destiny_season_pass_definition.dart';
 import 'package:bungie_api/models/destiny_socket_category_definition.dart';
 import 'package:bungie_api/models/destiny_socket_type_definition.dart';
+import 'package:bungie_api/models/destiny_stat_group_definition.dart';
+import 'package:bungie_api/models/destiny_trait_definition.dart';
+import 'package:bungie_api/models/destiny_unlock_definition.dart';
 import 'package:bungie_api/models/destiny_vendor_definition.dart';
-import 'package:bungie_api/models/destiny_milestone_definition.dart';
-import 'package:bungie_api/models/destiny_activity_modifier_definition.dart';
-import 'package:bungie_api/models/destiny_report_reason_category_definition.dart';
-import 'package:bungie_api/models/destiny_plug_set_definition.dart';
-import 'package:bungie_api/models/destiny_checklist_definition.dart';
-import 'package:bungie_api/models/destiny_historical_stats_definition.dart';
+import 'package:bungie_api/models/destiny_vendor_group_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_energy_type_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_stat_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_collectible_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_plug_set_definition.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_class_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_damage_type_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
 
+@JsonSerializable()
 class DefinitionTableNames {
+  static Map<Type, Function> getDefinitions = {
+    DestinyClassDefinition: (ids) async =>
+        await StorageService.isar.destinyClassDefinitions.getAll(ids),
+    DestinyInventoryItemDefinition: (ids) async =>
+        await StorageService.isar.destinyInventoryItemDefinitions.getAll(ids),
+    DestinyDamageTypeDefinition: (ids) async =>
+        await StorageService.isar.destinyDamageTypeDefinitions.getAll(ids),
+    DestinyStatDefinition: (ids) async =>
+        await StorageService.isar.destinyStatDefinitions.getAll(ids),
+    DestinyTalentGridDefinition: (ids) async =>
+        await StorageService.isar.destinyTalentGridDefinitions.getAll(ids),
+    DestinySandboxPerkDefinition: (ids) async =>
+        await StorageService.isar.destinySandboxPerkDefinitions.getAll(ids),
+    DestinyEnergyTypeDefinition: (ids) async =>
+        await StorageService.isar.destinyEnergyTypeDefinitions.getAll(ids),
+    DestinyEquipmentSlotDefinition: (ids) async =>
+        await StorageService.isar.destinyEquipmentSlotDefinitions.getAll(ids),
+    DestinyPresentationNodeDefinition: (ids) async => await StorageService
+        .isar.destinyPresentationNodeDefinitions
+        .getAll(ids),
+    DestinyCollectibleDefinition: (ids) async =>
+        await StorageService.isar.destinyCollectibleDefinitions.getAll(ids),
+    DestinyPlugSetDefinition: (ids) async =>
+        await StorageService.isar.destinyPlugSetDefinitions.getAll(ids),
+  };
+
   static Map<Type, Function> identities = {
     DestinyPlaceDefinition: (json) => DestinyPlaceDefinition.fromJson(json),
     DestinyActivityDefinition: (json) =>

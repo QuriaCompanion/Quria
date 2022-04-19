@@ -35,7 +35,7 @@ class CharacterBanner extends StatelessWidget {
             AutoSizeText(
                 ManifestService
                         .manifestParsed
-                        .destinyClassDefinition![character.classHash]!
+                        .destinyClassDefinition[character.classHash]!
                         .genderedClassNamesByGenderHash![
                     character.genderHash.toString()]!,
                 style: TextStyle(
@@ -52,7 +52,7 @@ class CharacterBanner extends StatelessWidget {
                   image: NetworkImage(DestinyData.bungieLink +
                       ManifestService
                           .manifestParsed
-                          .destinyStatDefinition![StatsHash.power]!
+                          .destinyStatDefinition[StatsHash.power]!
                           .displayProperties!
                           .icon!),
                   color: Colors.yellow,
