@@ -377,6 +377,11 @@ class ProfileService {
         3284755031);
   }
 
+  int? getItemPowerLevel(String instanceId) {
+    final instanceInfo = ProfileService().getInstanceInfo(instanceId);
+    return instanceInfo.primaryStat?.value;
+  }
+
   int? getCurrentGrenadeHashForCharacter(String characterId) {
     DestinyItemComponent subclass = getCurrentSubClassForCharacter(characterId);
     List<DestinyItemSocketState>? sockets =
@@ -410,6 +415,22 @@ class ProfileService {
           .nodeStepHash;
     }
     return null;
+  }
+
+  String getItemElement(DestinyItemComponent item) {
+    final itemDef = ManifestService
+        .manifestParsed.destinyInventoryItemDefinition[item.itemHash];
+    final instanceInfo = getInstanceInfo(item.itemInstanceId!);
+    return ManifestService
+            .manifestParsed
+            .destinyDamageTypeDefinition[itemDef?.defaultDamageTypeHash]
+            ?.displayProperties
+            ?.icon ??
+        ManifestService
+            .manifestParsed
+            .destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]!
+            .displayProperties!
+            .icon!;
   }
 
   int? getCurrentMeleeHashForCharacter(String characterId) {

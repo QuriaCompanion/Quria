@@ -21,12 +21,12 @@ class _ExoticWidgetState extends State<ExoticWidget> {
   final DisplayService display = DisplayService();
   late Future<List<DestinyInventoryItemDefinition>> _future;
   bool isLoading = true;
-  int selectedCharacterIndex = 0;
   String searchName = "";
   @override
   void initState() {
     super.initState();
-    final currentCharacter = ProfileService().getCharacters()[0];
+    final currentCharacter =
+        ProfileService().getCharacters()[DisplayService.characterIndex];
     _future = display.getExotics(currentCharacter.classType!);
   }
 
@@ -54,15 +54,16 @@ class _ExoticWidgetState extends State<ExoticWidget> {
           if (vw(context) < 850) {
             return ScaffoldCharacters(
               characters: characters,
-              selectedCharacterIndex: selectedCharacterIndex,
               onCharacterChange: (int index) {
                 setState(() {
-                  selectedCharacterIndex = index;
-                  _future = display.getExotics(characters[index].classType!);
+                  DisplayService.characterIndex = index;
+                  _future = display.getExotics(
+                      characters[DisplayService.characterIndex].classType!);
                 });
               },
               body: ExoticMobileView(
-                characterId: characters[selectedCharacterIndex].characterId!,
+                characterId:
+                    characters[DisplayService.characterIndex].characterId!,
                 exotics: snapshot.data!,
               ),
             );

@@ -8,7 +8,6 @@ import 'package:bungie_api/models/destiny_destination_definition.dart';
 import 'package:bungie_api/models/destiny_faction_definition.dart';
 import 'package:bungie_api/models/destiny_gender_definition.dart';
 import 'package:bungie_api/models/destiny_historical_stats_definition.dart';
-import 'package:bungie_api/models/destiny_inventory_bucket_definition.dart';
 import 'package:bungie_api/models/destiny_item_category_definition.dart';
 import 'package:bungie_api/models/destiny_item_tier_type_definition.dart';
 import 'package:bungie_api/models/destiny_location_definition.dart';
@@ -36,6 +35,7 @@ import 'package:bungie_api/models/destiny_unlock_definition.dart';
 import 'package:bungie_api/models/destiny_vendor_definition.dart';
 import 'package:bungie_api/models/destiny_vendor_group_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_energy_type_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_bucket_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_stat_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
@@ -75,6 +75,8 @@ class DefinitionTableNames {
         await StorageService.isar.destinyCollectibleDefinitions.getAll(ids),
     DestinyPlugSetDefinition: (ids) async =>
         await StorageService.isar.destinyPlugSetDefinitions.getAll(ids),
+    DestinyInventoryBucketDefinition: (ids) async =>
+        await StorageService.isar.destinyInventoryBucketDefinitions.getAll(ids),
   };
 
   static Map<Type, Function> identities = {

@@ -6,6 +6,7 @@ import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
 
 class EquipModal extends StatelessWidget {
@@ -65,10 +66,18 @@ class EquipModal extends StatelessWidget {
                 child: InkWell(
                   onTap: () async {
                     Navigator.pop(context);
-                    await BungieActionsService().equipItem(
-                        itemId: instanceId,
-                        characterId: character.characterId!,
-                        itemHash: itemHash);
+                    try {
+                      await BungieActionsService().equipItem(
+                          itemId: instanceId,
+                          characterId: character.characterId!,
+                          itemHash: itemHash);
+                    } catch (_) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const ErrorDialog();
+                          });
+                    }
                   },
                   child: CharacterTransferItem(
                       imageLink: DestinyData.bungieLink + character.emblemPath!,

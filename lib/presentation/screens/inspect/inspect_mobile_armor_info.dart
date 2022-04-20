@@ -14,7 +14,7 @@ import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mob
 class InspectMobileArmorInfo extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
   final String instanceId;
-  final String characterId;
+  final String? characterId;
   final List<DestinyItemSocketState> sockets;
   final Map<String, DestinyStat>? stats;
   final String afinityIcon;

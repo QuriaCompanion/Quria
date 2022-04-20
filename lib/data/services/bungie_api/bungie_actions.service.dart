@@ -20,9 +20,9 @@ class BungieActionsService {
       {int? itemHash, int? stackSize}) async {
     try {
       final owner = profile.getItemOwner(itemId);
-      if (owner == characterId || characterId == null) {
+      if (owner == characterId || owner == null) {
         await api
-            .transferItem(itemId, owner,
+            .transferItem(itemId, characterId ?? owner,
                 itemHash: itemHash,
                 stackSize: stackSize,
                 transferToVault: characterId == null)

@@ -9,7 +9,6 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_armor_info.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_info.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_header.dart';
-import 'package:quria/presentation/var/routes.dart';
 
 class MobileInspect extends StatefulWidget {
   final InspectData data;
@@ -41,9 +40,7 @@ class _MobileInspectState extends State<MobileInspect> {
             "assets/icons/Prev.svg",
             color: Colors.white,
           ),
-          onPressed: () => Navigator.of(context)
-              .pushNamed(routeProfile)
-              .then((value) => setState(() {})),
+          onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: Colors.transparent,
       ),
@@ -104,7 +101,7 @@ class _MobileInspectState extends State<MobileInspect> {
                   ? InspectMobileWeaponInfo(
                       item: data.itemDef,
                       stats: data.stats,
-                      characterId: widget.data.characterId!,
+                      characterId: widget.data.characterId,
                       instanceId: widget.data.instanceId,
                       sockets: data.sockets,
                       plugs: data.plugs)
@@ -112,7 +109,7 @@ class _MobileInspectState extends State<MobileInspect> {
                       item: data.itemDef,
                       stats: data.stats,
                       instanceId: widget.data.instanceId,
-                      characterId: widget.data.characterId!,
+                      characterId: widget.data.characterId,
                       sockets: data.sockets,
                       afinityIcon: data.afinityIcon!),
             )

@@ -16,6 +16,7 @@ const String routeSubclassMod = "/subclass-mod";
 const String routeMod = "/mod";
 const String routeBuilderRecap = "/builder-recap";
 const String routeClassItemChoice = "/class-item-choice";
+const String routeVault = "/vault";
 const String routeInspectSubclass = "/inspect-subclass";
 
 final navKey = GlobalKey<NavigatorState>();

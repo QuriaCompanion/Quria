@@ -29,7 +29,8 @@ class _ModModalState extends State<ModModal> {
     return SingleChildScrollView(
       child: Container(
         decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(24)), color: black),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+            color: black),
         child: Column(children: [
           Padding(
             padding: EdgeInsets.only(

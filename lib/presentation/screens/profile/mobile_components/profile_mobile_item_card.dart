@@ -2,6 +2,7 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/itemCardHelper.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display.dart';
@@ -10,10 +11,12 @@ class ProfileMobileItemCard extends StatefulWidget {
   final DestinyItemComponent item;
   final String characterId;
   final List<DestinyItemComponent> inventory;
+  final void Function(InspectData) onClick;
   const ProfileMobileItemCard(
       {Key? key,
       required this.characterId,
       required this.inventory,
+      required this.onClick,
       required this.item})
       : super(key: key);
 
@@ -65,6 +68,9 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
         ),
       ),
       ItemComponentDisplay(
+          onClick: (inspectData) {
+            widget.onClick(inspectData);
+          },
           item: widget.item,
           itemDef: data.itemDef,
           elementIcon: data.elementIcon,
@@ -88,6 +94,9 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
               padding:
                   EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
               child: ItemComponentDisplay(
+                  onClick: (inspectData) {
+                    widget.onClick(inspectData);
+                  },
                   item: item,
                   itemDef: dataItem.itemDef,
                   elementIcon: dataItem.elementIcon,

@@ -14,6 +14,7 @@ import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/exoticHelper.model.dart';
+import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/models/helpers/itemCardHelper.model.dart';
 import 'package:quria/data/models/helpers/itemInfoHelper.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
@@ -31,6 +32,7 @@ class DisplayService {
   ProfileService profile = ProfileService();
   AccountService account = AccountService();
   static bool _isManifestUp = false;
+  static int characterIndex = 0;
 
   Future<List<DestinyInventoryItemDefinition>> getExotics(
       DestinyClass classType) async {
@@ -55,6 +57,13 @@ class DisplayService {
     }
 
     return exoticItems;
+  }
+
+  Future<VaultHelper> getVault() async {
+    await manifestLoader();
+    final characters = profile.getCharacters();
+    final inventory = profile.getProfileInventory();
+    return VaultHelper(characters: characters, vaultItems: inventory);
   }
 
   static Future<bool> manifestLoader() async {
