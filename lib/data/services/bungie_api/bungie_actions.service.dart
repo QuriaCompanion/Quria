@@ -77,9 +77,18 @@ class BungieActionsService {
     required int itemHash,
   }) async {
     try {
-      await api.equipItem(itemId, characterId).then(
-          (value) => profile.moveItem(itemId, characterId, true),
-          onError: (_) => null);
+      final owner = profile.getItemOwner(itemId);
+      if (owner == characterId) {
+        await api.equipItem(itemId, characterId).then(
+            (value) => profile.moveItem(itemId, characterId, true),
+            onError: (_) => null);
+      } else {
+        await transferItem(itemId, characterId,
+            itemHash: itemHash, stackSize: 1);
+        await api.equipItem(itemId, characterId).then(
+            (value) => profile.moveItem(itemId, characterId, true),
+            onError: (_) => null);
+      }
     } catch (e) {
       try {
         await transferItem(
