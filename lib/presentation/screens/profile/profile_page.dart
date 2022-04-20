@@ -6,6 +6,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 @immutable
 class ProfileWidget extends StatefulWidget {
@@ -41,7 +42,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   late double iconSize;
   late double verticalStatWidth;
   bool choosingCharacter = false;
-  int index = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         future: _future,
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
-            data = display.getProfileData(index);
+            data = display.getProfileData(DisplayService.characterIndex);
             if (vw(context) > 850) {
               return Column(
                 children: [],
@@ -87,13 +87,19 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             } else {
               return ScaffoldCharacters(
                   characters: data.characters,
-                  selectedCharacterIndex: data.selectedCharacterIndex,
                   onCharacterChange: (newIndex) {
                     setState(() {
-                      index = newIndex;
+                      DisplayService.characterIndex = newIndex;
                     });
                   },
-                  body: RepaintBoundary(child: ProfileMobileView(data: data)));
+                  body: RepaintBoundary(
+                      child: ProfileMobileView(
+                          data: data,
+                          onClick: (inspectData) {
+                            Navigator.pushNamed(context, routeInspectMobile,
+                                    arguments: inspectData)
+                                .then((_) => setState(() {}));
+                          })));
             }
           }
           return Container(

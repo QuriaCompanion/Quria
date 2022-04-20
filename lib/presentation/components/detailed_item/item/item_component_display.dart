@@ -9,7 +9,6 @@ import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display_perks.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
-import 'package:quria/presentation/var/routes.dart';
 
 class ItemComponentDisplay extends StatefulWidget {
   final DestinyItemComponent item;
@@ -20,6 +19,7 @@ class ItemComponentDisplay extends StatefulWidget {
   final List<DestinyItemSocketState> perks;
   final List<DestinyItemSocketState> cosmetics;
   final List<DestinyItemSocketState> armorSockets;
+  final void Function(InspectData) onClick;
 
   const ItemComponentDisplay(
       {required this.item,
@@ -30,6 +30,7 @@ class ItemComponentDisplay extends StatefulWidget {
       required this.cosmetics,
       required this.characterId,
       required this.armorSockets,
+      required this.onClick,
       Key? key})
       : super(key: key);
 
@@ -68,11 +69,10 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           InkWell(
             onTap: () {
-              Navigator.pushNamed(context, routeInspectMobile,
-                  arguments: InspectData(
-                      hash: widget.item.itemHash!,
-                      characterId: widget.characterId,
-                      instanceId: widget.item.itemInstanceId!));
+              widget.onClick(InspectData(
+                  hash: widget.item.itemHash!,
+                  characterId: widget.characterId,
+                  instanceId: widget.item.itemInstanceId!));
             },
             child: Row(
               children: [

@@ -86,6 +86,54 @@ class DestinyPresentationNodeTypeConverter
   }
 }
 
+class BucketScopeConverter extends TypeConverter<BucketScope?, int?> {
+  const BucketScopeConverter();
+
+  @override
+  BucketScope? fromIsar(int? object) {
+    if (object == null) return null;
+    return decodeBucketScope(object);
+  }
+
+  @override
+  int? toIsar(BucketScope? object) {
+    if (object == null) return null;
+    return encodeBucketScope(object);
+  }
+}
+
+class BucketCategoryConverter extends TypeConverter<BucketCategory?, int?> {
+  const BucketCategoryConverter();
+
+  @override
+  BucketCategory? fromIsar(int? object) {
+    if (object == null) return null;
+    return decodeBucketCategory(object);
+  }
+
+  @override
+  int? toIsar(BucketCategory? object) {
+    if (object == null) return null;
+    return encodeBucketCategory(object);
+  }
+}
+
+class ItemLocationConverter extends TypeConverter<ItemLocation?, int?> {
+  const ItemLocationConverter();
+
+  @override
+  ItemLocation? fromIsar(int? object) {
+    if (object == null) return null;
+    return decodeItemLocation(object);
+  }
+
+  @override
+  int? toIsar(ItemLocation? object) {
+    if (object == null) return null;
+    return encodeItemLocation(object);
+  }
+}
+
 class DamageTypeConverter extends TypeConverter<DamageType?, int?> {
   const DamageTypeConverter();
 

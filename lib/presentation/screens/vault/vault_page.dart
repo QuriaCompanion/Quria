@@ -15,7 +15,6 @@ class VaultPage extends StatefulWidget {
 
 class _VaultPageState extends State<VaultPage> {
   late Future<VaultHelper> _future;
-  int index = 0;
 
   @override
   void initState() {
@@ -33,12 +32,18 @@ class _VaultPageState extends State<VaultPage> {
               return ScaffoldCharacters(
                   onCharacterChange: (newIndex) {
                     setState(() {
-                      index = newIndex;
+                      DisplayService.characterIndex = newIndex;
                     });
                   },
                   characters: snapshot.data!.characters,
-                  selectedCharacterIndex: index,
-                  body: VaultMobileView(data: snapshot.data!));
+                  body: VaultMobileView(
+                    data: snapshot.data!,
+                    characterClass: snapshot.data!
+                        .characters[DisplayService.characterIndex].classType!,
+                    onTransfer: () {
+                      setState(() {});
+                    },
+                  ));
             } else {
               return Container();
             }

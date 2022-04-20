@@ -51,6 +51,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
                       return TransferModal(
                         itemHash: widget.itemHash,
                         instanceId: widget.instanceId,
+                        onTransfer: () {},
                       );
                     });
               }),

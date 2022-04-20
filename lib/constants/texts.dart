@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
-Widget textH1(String child, {color = Colors.white, maxLines = 1}) {
+Widget textH1(String child, {color = Colors.white, utf8 = true, maxLines = 1}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     maxLines: maxLines,
     style: TextStyle(
@@ -16,9 +16,9 @@ Widget textH1(String child, {color = Colors.white, maxLines = 1}) {
   );
 }
 
-Widget textH2(String child, {color = Colors.white}) {
+Widget textH2(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
       fontSize: 18,
@@ -28,9 +28,9 @@ Widget textH2(String child, {color = Colors.white}) {
   );
 }
 
-Widget textQuria(String child, {color = Colors.white}) {
+Widget textQuria(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
       fontSize: 26,
@@ -40,9 +40,9 @@ Widget textQuria(String child, {color = Colors.white}) {
   );
 }
 
-Widget textCompanion(String child, {color = Colors.white}) {
+Widget textCompanion(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
       fontSize: 30,
@@ -52,9 +52,9 @@ Widget textCompanion(String child, {color = Colors.white}) {
   );
 }
 
-Widget textConnect(String child, {color = Colors.white}) {
+Widget textConnect(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
       fontSize: 14,
@@ -64,9 +64,9 @@ Widget textConnect(String child, {color = Colors.white}) {
   );
 }
 
-Widget textH3(String child, {color = Colors.white}) {
+Widget textH3(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
       fontSize: 16,
@@ -76,9 +76,9 @@ Widget textH3(String child, {color = Colors.white}) {
   );
 }
 
-Widget textBodyBold(String child, {color = Colors.white}) {
+Widget textBodyBold(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     maxLines: 15,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
@@ -89,9 +89,9 @@ Widget textBodyBold(String child, {color = Colors.white}) {
   );
 }
 
-Widget textBodyMedium(String child, {color = Colors.white}) {
+Widget textBodyMedium(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     maxLines: 15,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
@@ -102,9 +102,10 @@ Widget textBodyMedium(String child, {color = Colors.white}) {
   );
 }
 
-Widget textBodyHighRegular(String child, {color = Colors.white}) {
+Widget textBodyHighRegular(String child,
+    {Color color = Colors.white, bool utf8 = true}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     maxLines: 15,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
@@ -115,10 +116,12 @@ Widget textBodyHighRegular(String child, {color = Colors.white}) {
   );
 }
 
-Widget textBodyRegular(String child, {color = Colors.white}) {
+Widget textBodyRegular(String child,
+    {color = Colors.white, utf8 = true, center = false}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     maxLines: 15,
+    textAlign: center ? TextAlign.center : null,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
       fontSize: 14,
@@ -128,9 +131,9 @@ Widget textBodyRegular(String child, {color = Colors.white}) {
   );
 }
 
-Widget textCaptionBold(String child, {color = Colors.white}) {
+Widget textCaptionBold(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
       fontSize: 12,
@@ -140,14 +143,27 @@ Widget textCaptionBold(String child, {color = Colors.white}) {
   );
 }
 
-Widget textCaption(String child, {color = Colors.white}) {
+Widget textCaption(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
-    utf8Decode(child),
+    utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     maxLines: 15,
     style: TextStyle(
       fontSize: 12,
       fontWeight: FontWeight.w400,
+      color: color,
+    ),
+  );
+}
+
+Widget textIcon(String child, {color = Colors.white, utf8 = true}) {
+  return AutoSizeText(
+    utf8 ? utf8Decode(child) : child,
+    overflow: TextOverflow.ellipsis,
+    maxLines: 15,
+    style: TextStyle(
+      fontSize: 10,
+      fontWeight: FontWeight.w700,
       color: color,
     ),
   );

@@ -3,16 +3,23 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_item_card.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_header.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class ProfileMobileView extends StatefulWidget {
   final ProfileHelper data;
-  const ProfileMobileView({required this.data, Key? key}) : super(key: key);
+  final void Function(InspectData) onClick;
+  const ProfileMobileView({
+    required this.data,
+    required this.onClick,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ProfileMobileView> createState() => _ProfileMobileViewState();
@@ -55,10 +62,8 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                 bottom: globalPadding(context) * 2),
             child: SizedBox(
               height: 45,
-              child: ListView(
-                padding:
-                    EdgeInsets.symmetric(horizontal: globalPadding(context)),
-                scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   InkWell(
                       onTap: () {
@@ -69,7 +74,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Weapon,
                         value: "Armes",
-                        width: 171,
+                        width: vw(context) * 0.29,
                       )),
                   InkWell(
                       onTap: () {
@@ -80,7 +85,16 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Armor,
                         value: "Armure",
-                        width: 171,
+                        width: vw(context) * 0.29,
+                      )),
+                  InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, routeVault);
+                      },
+                      child: MobileNavItem(
+                        selected: false,
+                        value: "Coffre",
+                        width: vw(context) * 0.29,
                       )),
                 ],
               ),
@@ -99,6 +113,9 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                 children: [
                   RepaintBoundary(
                     child: ProfileMobileItemCard(
+                      onClick: (inspectData) {
+                        widget.onClick(inspectData);
+                      },
                       item: item,
                       characterId: widget.data.selectedCharacter.characterId!,
                       inventory: widget.data.selectedCharacterInventory

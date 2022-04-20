@@ -5,20 +5,28 @@ import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
 
-class TransferModal extends StatelessWidget {
+class TransferModal extends StatefulWidget {
   final String instanceId;
   final int itemHash;
+  final void Function() onTransfer;
   const TransferModal({
     required this.instanceId,
     required this.itemHash,
+    required this.onTransfer,
     Key? key,
   }) : super(key: key);
 
   @override
+  State<TransferModal> createState() => _TransferModalState();
+}
+
+class _TransferModalState extends State<TransferModal> {
+  @override
   Widget build(BuildContext context) {
-    final owner = ProfileService().getItemOwner(instanceId);
+    final owner = ProfileService().getItemOwner(widget.instanceId);
     final characters = ProfileService()
         .getCharacters()
         .where((element) => element.characterId != owner);
@@ -69,12 +77,24 @@ class TransferModal extends StatelessWidget {
                 child: InkWell(
                   onTap: () async {
                     Navigator.pop(context);
-                    await BungieActionsService().transferItem(
-                      instanceId,
-                      character.characterId!,
-                      stackSize: 1,
-                      itemHash: itemHash,
-                    );
+                    try {
+                      await BungieActionsService()
+                          .transferItem(
+                        widget.instanceId,
+                        character.characterId!,
+                        stackSize: 1,
+                        itemHash: widget.itemHash,
+                      )
+                          .then((_) {
+                        widget.onTransfer();
+                      });
+                    } catch (_) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const ErrorDialog();
+                          });
+                    }
                   },
                   child: CharacterTransferItem(
                     imageLink: DestinyData.bungieLink + character.emblemPath!,
@@ -97,12 +117,21 @@ class TransferModal extends StatelessWidget {
                 child: InkWell(
                   onTap: () async {
                     Navigator.pop(context);
-                    await BungieActionsService().transferItem(
-                      instanceId,
-                      null,
-                      stackSize: 1,
-                      itemHash: itemHash,
-                    );
+
+                    try {
+                      await BungieActionsService().transferItem(
+                        widget.instanceId,
+                        null,
+                        stackSize: 1,
+                        itemHash: widget.itemHash,
+                      );
+                    } catch (_) {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const ErrorDialog();
+                          });
+                    }
                   },
                   child: const CharacterTransferItem(
                     imageLink:

@@ -32,6 +32,7 @@ class DisplayService {
   ProfileService profile = ProfileService();
   AccountService account = AccountService();
   static bool _isManifestUp = false;
+  static int characterIndex = 0;
 
   Future<List<DestinyInventoryItemDefinition>> getExotics(
       DestinyClass classType) async {
@@ -59,7 +60,7 @@ class DisplayService {
   }
 
   Future<VaultHelper> getVault() async {
-    await profile.loadProfile();
+    await manifestLoader();
     final characters = profile.getCharacters();
     final inventory = profile.getProfileInventory();
     return VaultHelper(characters: characters, vaultItems: inventory);

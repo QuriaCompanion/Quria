@@ -9,6 +9,7 @@ import 'package:quria/data/models/bungie_api_dart/destiny_collectible_definition
 import 'package:quria/data/models/bungie_api_dart/destiny_damage_type_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_energy_type_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_bucket_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_plug_set_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_definition.dart';
@@ -42,6 +43,7 @@ class StorageService {
         DestinyPresentationNodeDefinitionSchema,
         DestinyCollectibleDefinitionSchema,
         DestinyPlugSetDefinitionSchema,
+        DestinyInventoryBucketDefinitionSchema,
       ],
       directory: kIsWeb ? null : (await getApplicationSupportDirectory()).path,
     );

@@ -1,21 +1,25 @@
-import 'package:bungie_api/enums/destiny_item_sub_type.dart';
+import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
-import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/vaultHelper.model.dart';
-import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
-import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_header.dart';
 import 'package:quria/presentation/screens/vault/mobile_components/vault_mobile_header.dart';
 import 'package:quria/presentation/screens/vault/mobile_components/vault_mobile_list.dart';
-import 'package:quria/presentation/screens/vault/mobile_components/vault_mobile_section.dart';
+import 'package:quria/presentation/var/routes.dart';
 
+@immutable
 class VaultMobileView extends StatefulWidget {
-  VaultHelper data;
-  VaultMobileView({required this.data, Key? key}) : super(key: key);
+  final VaultHelper data;
+  final DestinyClass characterClass;
+  final void Function() onTransfer;
+  const VaultMobileView({
+    required this.data,
+    required this.characterClass,
+    required this.onTransfer,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<VaultMobileView> createState() => _VaultMobileView();
@@ -29,7 +33,7 @@ class _VaultMobileView extends State<VaultMobileView> {
       child: Column(
         children: [
           mobileHeader(context,
-              image: NetworkImage('imageLink'),
+              image: const AssetImage('assets/img/vault.png'),
               child: const VaultMobileHeader(name: "Coffre")),
           Padding(
             padding: EdgeInsets.only(
@@ -51,7 +55,7 @@ class _VaultMobileView extends State<VaultMobileView> {
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Weapon,
                         value: "Armes",
-                        width: 114,
+                        width: vw(context) * 0.29,
                       )),
                   InkWell(
                       onTap: () {
@@ -62,25 +66,27 @@ class _VaultMobileView extends State<VaultMobileView> {
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Armor,
                         value: "Armure",
-                        width: 114,
+                        width: vw(context) * 0.29,
                       )),
                   InkWell(
                       onTap: () {
-                        setState(() {
-                          // currentFilter = DestinyItemType.Armor;
-                        });
+                        Navigator.pushNamed(context, routeProfile);
                       },
                       child: MobileNavItem(
-                        selected: currentFilter == DestinyItemType.Armor,
-                        value: "Inventaire",
-                        width: 114,
+                        selected: false,
+                        value: "Personnage",
+                        width: vw(context) * 0.29,
                       )),
                 ],
               ),
             ),
           ),
           VaultMobileList(
-              data: widget.data.vaultItems, currentFilter: currentFilter)
+            data: widget.data.vaultItems,
+            currentFilter: currentFilter,
+            classType: widget.characterClass,
+            onTransfer: () => widget.onTransfer(),
+          ),
         ],
       ),
     );
