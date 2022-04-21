@@ -32,7 +32,8 @@ class DisplayService {
   ProfileService profile = ProfileService();
   AccountService account = AccountService();
   // TODO: create a new one for profile Data
-  static bool _isManifestUp = false;
+  static bool isManifestUp = false;
+  static bool isProfileUp = false;
   static int characterIndex = 0;
 
   Future<List<DestinyInventoryItemDefinition>> getExotics(
@@ -68,10 +69,20 @@ class DisplayService {
   }
 
   static Future<bool> manifestLoader() async {
-    if (_isManifestUp) return true;
+    if (isManifestUp) return true;
     await ManifestService.loadAllManifest();
+    return true;
+  }
+
+  static Future<bool> profileLoader() async {
+    if (isProfileUp) return true;
     await ProfileService().loadProfile();
-    _isManifestUp = true;
+    return true;
+  }
+
+  static Future<bool> loadManifestAndProfile() async {
+    await manifestLoader();
+    await profileLoader();
     return true;
   }
 
@@ -103,10 +114,10 @@ class DisplayService {
     return remaining;
   }
 
-  ProfileHelper getProfileData(int index) {
+  ProfileHelper getProfileData() {
     try {
       List<DestinyCharacterComponent> characters = profile.getCharacters();
-      DestinyCharacterComponent selectedCharacter = characters[index];
+      DestinyCharacterComponent selectedCharacter = characters[characterIndex];
       List<DestinyItemComponent> equipement =
           profile.getCharacterEquipment(selectedCharacter.characterId!);
       List<DestinyItemComponent> inventory = profile
@@ -136,7 +147,7 @@ class DisplayService {
           selectedCharacterInventory: inventory,
           selectedCharacterSubclass: selectedCharacterSubclass,
           characterSuper: characterSuper,
-          selectedCharacterIndex: index);
+          selectedCharacterIndex: characterIndex);
     } catch (e) {
       rethrow;
     } finally {}

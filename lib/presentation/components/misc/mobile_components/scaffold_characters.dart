@@ -4,7 +4,6 @@ import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/Header/mobile_components/mobile_character_choice.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 
@@ -84,7 +83,6 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
                       choosingCharacter = !choosingCharacter;
                     });
                   },
-                  index: DisplayService.characterIndex,
                   characters: widget.characters,
                 ),
               ),

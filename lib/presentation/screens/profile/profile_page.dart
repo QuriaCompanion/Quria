@@ -26,7 +26,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   void initState() {
     super.initState();
-    _future = DisplayService.manifestLoader();
+    _future = DisplayService.loadManifestAndProfile();
   }
 
   late double statArmorSpace;
@@ -79,7 +79,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         future: _future,
         builder: ((context, snapshot) {
           if (snapshot.hasData) {
-            data = display.getProfileData(DisplayService.characterIndex);
+            data = display.getProfileData();
             if (vw(context) > 850) {
               return Column(
                 children: [],

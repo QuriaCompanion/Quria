@@ -62,7 +62,6 @@ class _MobileNavBarCharacterChoiceState
               choosingCharacter = !choosingCharacter;
             });
           },
-          index: widget.index,
           characters: widget.characters),
     );
   }
