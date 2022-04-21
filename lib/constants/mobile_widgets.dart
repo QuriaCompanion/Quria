@@ -10,9 +10,7 @@ Widget mobileHeader(BuildContext context,
     height: vw(context) * 0.9,
     decoration: BoxDecoration(
         image: DecorationImage(
-            alignment: Alignment.topRight,
-            fit: BoxFit.fitHeight,
-            image: image)),
+            alignment: Alignment.topRight, fit: BoxFit.cover, image: image)),
     child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(

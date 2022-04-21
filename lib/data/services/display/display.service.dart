@@ -31,6 +31,7 @@ import 'package:quria/data/services/storage/storage.service.dart';
 class DisplayService {
   ProfileService profile = ProfileService();
   AccountService account = AccountService();
+  // TODO: create a new one for profile Data
   static bool _isManifestUp = false;
   static int characterIndex = 0;
 

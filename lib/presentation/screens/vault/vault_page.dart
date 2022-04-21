@@ -3,6 +3,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
+import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/screens/vault/vault_mobile_view.dart';
 
 class VaultPage extends StatefulWidget {
@@ -28,11 +29,15 @@ class _VaultPageState extends State<VaultPage> {
         builder: (context, AsyncSnapshot<VaultHelper> snapshot) {
           if (snapshot.hasData) {
             if (vw(context) < 850) {
-              return VaultMobileView(
-                data: snapshot.data!,
-                onTransfer: () {
-                  setState(() {});
-                },
+              return Scaffold(
+                backgroundColor: black,
+                drawer: const Burger(),
+                body: VaultMobileView(
+                  data: snapshot.data!,
+                  onTransfer: () {
+                    setState(() {});
+                  },
+                ),
               );
             } else {
               return Container();
