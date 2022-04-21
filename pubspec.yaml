@@ -36,6 +36,7 @@ dependencies:
   dropdown_below: ^1.0.3
   sleek_circular_slider : ^2.0.1
   auto_size_text: ^3.0.0
+  sliver_tools: ^0.2.5
   isolated_worker: ^0.1.0
   flutter:
     sdk: flutter
