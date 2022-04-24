@@ -3,15 +3,14 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:bungie_api/enums/destiny_ammunition_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
+import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/collection_filter.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
-import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/components/misc/named_item.dart';
 import 'package:quria/presentation/components/misc/search_bar.dart';
 import 'package:quria/presentation/screens/collection/collection_mobile_view.dart';
@@ -43,7 +42,6 @@ class _CollectionWidgetState extends State<CollectionWidget> {
     currentAmmoType = DestinyAmmunitionType.Primary;
     searchName = '';
     isLoading = true;
-    int selectedCharacterIndex = 0;
   }
 
   double filterHeight = 900;
@@ -103,7 +101,7 @@ class _CollectionWidgetState extends State<CollectionWidget> {
                 //     characters: characters,
                 //     selectedCharacterIndex: selectedCharacterIndex,
                 //     body: const CollectionMobileView());
-                return CollectionMobileView();
+                return const CollectionMobileView();
               } else {
                 return Container(
                   padding: EdgeInsets.only(

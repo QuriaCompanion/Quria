@@ -73,7 +73,7 @@ class _CategoryWidget extends State<CategoryWidget> {
               alignment: Alignment.center,
               child: textBodyBold(widget.category)));
     } else {
-      return Container(
+      return SizedBox(
           width: vw(context) * 0.321,
           height: vh(context) * 0.05,
           child: Container(

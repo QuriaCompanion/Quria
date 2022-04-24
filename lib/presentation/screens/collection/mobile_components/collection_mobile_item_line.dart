@@ -3,11 +3,10 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 
 class CollectionMobileItemLine extends StatefulWidget {
-  final logo;
   final String name;
   final bool isFirst;
   const CollectionMobileItemLine(
-      {Key? key, required this.logo, required this.name, required this.isFirst})
+      {Key? key, required this.name, required this.isFirst})
       : super(key: key);
   @override
   State<StatefulWidget> createState() => _CollectionMobileItemLineState();

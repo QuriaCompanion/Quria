@@ -67,7 +67,7 @@ class _CollectionMobileItemSectionState
             borderRadius: BorderRadius.all(Radius.circular(8))),
         child: Column(
           children: [
-            Container(
+            SizedBox(
               height: vh(context) * 0.073,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -99,14 +99,12 @@ class _CollectionMobileItemSectionState
             ),
             if (!dropDownActivated)
               Column(
-                children: [
-                  const CollectionMobileItemLine(
-                    logo: 'test',
+                children: const [
+                  CollectionMobileItemLine(
                     name: 'test',
                     isFirst: true,
                   ),
-                  const CollectionMobileItemLine(
-                    logo: 'test',
+                  CollectionMobileItemLine(
                     name: 'test',
                     isFirst: false,
                   )

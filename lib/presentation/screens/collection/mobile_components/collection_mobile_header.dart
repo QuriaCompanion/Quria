@@ -28,12 +28,12 @@ class _CollectionMobileHeaderState extends State<CollectionMobileHeader> {
         ProfileService().getCurrentSuperHashForCharacter(widget.characterId)!;
     String characterSuper = ManifestService
             .manifestParsed
-            .destinyInventoryItemDefinition![superHash]
+            .destinyInventoryItemDefinition[superHash]
             ?.displayProperties
             ?.icon ??
         ManifestService
             .manifestParsed
-            .destinySandboxPerkDefinition![
+            .destinySandboxPerkDefinition[
                 DestinyData.superNodeToSandbox[superHash]]
             ?.displayProperties
             ?.icon ??

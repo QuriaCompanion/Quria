@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/constants/texts.dart';
 import 'package:quria/presentation/screens/collection/mobile_components/collection_mobile_categories.dart';
 import 'package:quria/presentation/screens/collection/mobile_components/collection_mobile_item_section.dart';
 
@@ -16,7 +15,6 @@ class CollectionMobileContent extends StatefulWidget {
 class _CollectionMobileContentState extends State<CollectionMobileContent> {
   @override
   Widget build(BuildContext context) {
-    double cardMargin = 8;
     return Column(children: [
       CollectionMobileCategories(
         categorySelected: 'category 1',
