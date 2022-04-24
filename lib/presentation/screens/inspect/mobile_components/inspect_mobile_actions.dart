@@ -6,6 +6,7 @@ import 'package:quria/presentation/components/misc/mobile_components/in_progress
 import 'package:quria/presentation/components/misc/mobile_components/transfer_modal.dart';
 
 import 'package:quria/presentation/components/misc/quick_action.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class InspectMobileActions extends StatefulWidget {
   final String instanceId;
@@ -70,12 +71,8 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
               icon: "assets/icons/Collection.svg",
               title: "Collection",
               onTap: () {
-                showMaterialModalBottomSheet(
-                    backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (context) {
-                      return const InProgressModal();
-                    });
+                Navigator.pushNamed(context, routeCollectionItem,
+                    arguments: widget.itemHash);
               }),
         ],
       ),

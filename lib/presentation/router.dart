@@ -17,6 +17,7 @@ import 'package:quria/presentation/screens/builder/stats_filter/stats_filter_pag
 import 'package:quria/presentation/screens/builder/subclass/subclass_page.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_page.dart';
 import 'package:quria/presentation/screens/collection/collection.dart';
+import 'package:quria/presentation/screens/collection/collection_item/collection_item_page.dart';
 import 'package:quria/presentation/screens/collection/inspect.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile.dart';
 import 'package:quria/presentation/screens/inspect_subclass/inspect_subclass_page.dart';
@@ -86,6 +87,10 @@ class AppRouter {
         final String data = settings.arguments as String;
         return MaterialPageRoute(
             builder: (_) => InspectSubclassPage(instanceId: data));
+      case routeCollectionItem:
+        final int data = settings.arguments as int;
+        return MaterialPageRoute(
+            builder: (_) => CollectionItemPage(itemHash: data));
       default:
         return MaterialPageRoute(builder: (_) => LoginWidget());
     }

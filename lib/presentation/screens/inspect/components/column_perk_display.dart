@@ -1,3 +1,4 @@
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_entry_plug_item_randomized_definition.dart';
 import 'package:flutter/material.dart';
@@ -7,19 +8,14 @@ import 'package:quria/presentation/components/detailed_item/item/perk_item_displ
 
 class ColumnPerkDisplay extends StatefulWidget {
   const ColumnPerkDisplay({
-    Key? key,
     required this.item,
     required this.index,
-    required this.padding,
     required this.selectedPerks,
-    required this.iconSize,
+    Key? key,
   }) : super(key: key);
-
   final DestinyInventoryItemDefinition item;
   final int index;
-  final double padding;
   final InspectHelper selectedPerks;
-  final double iconSize;
 
   @override
   State<ColumnPerkDisplay> createState() => _ColumnPerkDisplayState();
@@ -29,20 +25,21 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final List<DestinyItemSocketEntryPlugItemRandomizedDefinition> sockets =
+    final List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? sockets =
         ManifestService
             .manifestParsed
             .destinyPlugSetDefinition[widget.item.sockets!
-                .socketEntries![widget.index].randomizedPlugSetHash]!
-            .reusablePlugItems!;
+                .socketEntries?[widget.index].randomizedPlugSetHash]
+            ?.reusablePlugItems;
     return Column(
       children: [
         if (widget.item.sockets?.socketEntries?[widget.index]
                 .randomizedPlugSetHash !=
             null)
-          for (int i = 0; i < sockets.length; i++)
+          for (int i = 0; i < sockets!.length; i++)
             Padding(
-              padding: EdgeInsets.symmetric(vertical: widget.padding),
+              padding:
+                  EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
               child: InkWell(
                 onTap: () {
                   setState(() {
@@ -75,7 +72,7 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                   selected: selectedIndex == i,
                   perk: ManifestService.manifestParsed
                       .destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
-                  iconSize: widget.iconSize,
+                  iconSize: mobileItemSize(context),
                 ),
               ),
             ),
@@ -86,7 +83,8 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
             perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
                 widget.item.sockets?.socketEntries?[widget.index]
                     .singleInitialItemHash]!,
-            iconSize: widget.iconSize,
+            iconSize: mobileItemSize(context),
+            selected: true,
           )
       ],
     );

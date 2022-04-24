@@ -118,10 +118,9 @@ class _InspectWidgetState extends State<InspectWidget> {
                 children: [
                   SizedBox(height: imageSize),
                   PerkList(
-                      selectedPerks: selectedPerks,
-                      item: widget.item,
-                      iconSize: iconSize,
-                      padding: childPadding)
+                    selectedPerks: selectedPerks,
+                    item: widget.item,
+                  )
                 ],
               ),
             )
@@ -186,15 +185,10 @@ class _InspectWidgetState extends State<InspectWidget> {
                   hash: widget.item.hash!,
                 ),
                 SizedBox(
-                  child: PerkList(
-                      selectedPerks: selectedPerks,
-                      item: widget.item,
-                      iconSize: vw(context) / 7,
-                      padding: (vw(context) -
-                              ((vw(context) / 7) * 4) -
-                              padding * 2) /
-                          8),
-                )
+                    child: PerkList(
+                  selectedPerks: selectedPerks,
+                  item: widget.item,
+                ))
               ],
             ),
           )),

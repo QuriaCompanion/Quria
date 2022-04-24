@@ -11,7 +11,7 @@ import 'package:quria/presentation/components/detailed_item/item/stat_progress_b
 class InspectMobileStats extends StatelessWidget {
   final DestinyInventoryItemDefinition item;
   final Map<String, DestinyStat>? stats;
-  const InspectMobileStats({required this.item, required this.stats, Key? key})
+  const InspectMobileStats({required this.item, this.stats, Key? key})
       : super(key: key);
 
   @override
@@ -31,11 +31,19 @@ class InspectMobileStats extends StatelessWidget {
             type: item.itemType,
           ),
         Builder(builder: (context) {
-          final unusedStats = stats?.keys.where((statHash) => !DestinyData
-              .linearStatBySubType[item.itemSubType]!
-              .contains(int.parse(statHash)));
+          List<String> unusedStats = [];
+          if (stats != null) {
+            unusedStats.addAll(stats!.keys.where((statHash) => !DestinyData
+                .linearStatBySubType[item.itemSubType]!
+                .contains(int.parse(statHash))));
+          }
+          // else {
+          //   unusedStats.addAll(item.stats!.stats!.keys.where((statHash) =>
+          //       !DestinyData.linearStatBySubType[item.itemSubType]!
+          //           .contains(int.parse(statHash))));
+          // }
           int armorTotal = 0;
-          if (item.itemType == DestinyItemType.Armor) {
+          if (item.itemType == DestinyItemType.Armor && stats != null) {
             for (int statHash
                 in DestinyData.linearStatBySubType[item.itemSubType]!) {
               armorTotal += stats![statHash.toString()]!.value!;
@@ -44,13 +52,13 @@ class InspectMobileStats extends StatelessWidget {
 
           return Column(
             children: [
-              for (String? statHash in unusedStats!)
+              for (String statHash in unusedStats)
                 StatNoBar(
                   width: vw(context),
                   fontSize: 20,
                   name: ManifestService
                           .manifestParsed
-                          .destinyStatDefinition[int.parse(statHash!)]
+                          .destinyStatDefinition[int.parse(statHash)]
                           ?.displayProperties
                           ?.name ??
                       'error',

@@ -31,7 +31,6 @@ import 'package:quria/data/services/storage/storage.service.dart';
 class DisplayService {
   ProfileService profile = ProfileService();
   AccountService account = AccountService();
-  // TODO: create a new one for profile Data
   static bool isManifestUp = false;
   static bool isProfileUp = false;
   static int characterIndex = 0;
@@ -214,8 +213,9 @@ class DisplayService {
 
     List<DestinyItemSocketState> sockets =
         profile.getItemSockets(itemInstanceId);
-    final List<DestinyItemSocketState> perks =
-        sockets.where((element) => Conditions.perkSockets(element)).toList();
+    final List<DestinyItemSocketState> perks = sockets
+        .where((element) => Conditions.perkSockets(element.plugHash))
+        .toList();
 
     final List<DestinyItemSocketState> armorSockets =
         sockets.where((element) => Conditions.amorSockets(element)).toList();
@@ -286,6 +286,31 @@ class DisplayService {
                     ?.hash ==
                 3268255645)
         .singleInitialItemHash]!;
+  }
+
+  Future<DestinyInventoryItemDefinition?> getCollectionItem(
+      int itemHash) async {
+    List<int> ids = [itemHash];
+    final item =
+        await StorageService.isar.destinyInventoryItemDefinitions.get(itemHash);
+    for (final sockets in item!.sockets!.socketEntries!) {
+      if (ManifestService
+              .manifestParsed
+              .destinyPlugSetDefinition[sockets.randomizedPlugSetHash]
+              ?.reusablePlugItems ==
+          null) continue;
+      if (sockets.singleInitialItemHash != null) {
+        ids.add(sockets.singleInitialItemHash!);
+      }
+      for (final plug in ManifestService
+          .manifestParsed
+          .destinyPlugSetDefinition[sockets.randomizedPlugSetHash]!
+          .reusablePlugItems!) {
+        if (plug.plugItemHash != null) ids.add(plug.plugItemHash!);
+      }
+    }
+    await StorageService.getDefinitions<DestinyInventoryItemDefinition>(ids);
+    return item;
   }
 
   Map<String, String> getStatsListing(

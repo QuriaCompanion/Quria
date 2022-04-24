@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:isar/isar.dart';
 import 'package:localstorage/localstorage.dart';
 import 'package:path_provider/path_provider.dart';
@@ -47,13 +46,6 @@ class StorageService {
       ],
       directory: kIsWeb ? null : (await getApplicationSupportDirectory()).path,
     );
-  }
-
-  static isolateInit() async {
-    if (!kIsWeb) {
-      final directory = await getApplicationDocumentsDirectory();
-      Hive.init(directory.path + '/Quria');
-    }
   }
 
   /// Given a storage [key] and a [value], stores the [value] in localStorage.

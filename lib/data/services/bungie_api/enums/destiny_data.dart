@@ -162,13 +162,10 @@ class Conditions {
             DestinyItemSubType.Shader;
   }
 
-  static perkSockets(DestinyItemSocketState item) {
-    return item.plugHash != null &&
-        DestinyData.perkCategoryHash.contains(ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition[item.plugHash]!
-            .plug!
-            .plugCategoryHash!);
+  static perkSockets(int? item) {
+    return item != null &&
+        DestinyData.perkCategoryHash.contains(ManifestService.manifestParsed
+            .destinyInventoryItemDefinition[item]?.plug?.plugCategoryHash);
   }
 }
 
@@ -196,7 +193,7 @@ class DestinyData {
     2718120384,
     577918720,
     3886533313,
-    3962145884
+    3962145884,
   ];
 
   static const List<int> modCategoryHash = [
