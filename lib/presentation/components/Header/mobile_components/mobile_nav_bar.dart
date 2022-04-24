@@ -1,5 +1,6 @@
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/presentation/components/Header/mobile_components/mobile_character_choice.dart';
 
@@ -25,16 +26,28 @@ class _MobileNavBarCharacterChoiceState
   @override
   AppBar build(BuildContext context) {
     return AppBar(
-      leading: Builder(builder: (context) {
-        return IconButton(
-          alignment: Alignment.topCenter,
-          padding: EdgeInsets.only(
-            top: (56 - (vw(context) * 0.064)) / 2,
-          ),
-          icon: const Icon(Icons.menu),
-          onPressed: () => Scaffold.of(context).openDrawer(),
-        );
-      }),
+      leading: Builder(
+        builder: (context) {
+          return InkWell(
+            onTap: () => Scaffold.of(context).openDrawer(),
+            child: Container(
+              alignment: Alignment.topCenter,
+              padding: EdgeInsets.only(
+                top:
+                    MediaQuery.of(context).padding.top + globalPadding(context),
+              ),
+              child: SizedBox(
+                width: appBarItem(context),
+                height: appBarItem(context),
+                child: SvgPicture.asset(
+                  "assets/icons/Menu.svg",
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          );
+        },
+      ),
       toolbarHeight: choosingCharacter ? 130 : 56,
       backgroundColor: Colors.transparent,
       flexibleSpace: MobileCharacterChoice(
@@ -49,7 +62,6 @@ class _MobileNavBarCharacterChoiceState
               choosingCharacter = !choosingCharacter;
             });
           },
-          index: widget.index,
           characters: widget.characters),
     );
   }

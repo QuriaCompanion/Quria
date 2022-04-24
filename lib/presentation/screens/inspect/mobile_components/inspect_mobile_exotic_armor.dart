@@ -1,5 +1,5 @@
 import 'package:bungie_api/enums/tier_type.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -14,17 +14,17 @@ class InspectMobileExoticArmor extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DestinyInventoryItemDefinition item =
-        ManifestService.manifestParsed.destinyInventoryItemDefinition![sockets
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[sockets
             ?.firstWhere((element) =>
                 ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition?[element.plugHash]
+                        .destinyInventoryItemDefinition[element.plugHash]
                         ?.plug
                         ?.plugCategoryHash ==
                     1744546145 &&
                 ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition?[element.plugHash]
+                        .destinyInventoryItemDefinition[element.plugHash]
                         ?.inventory
                         ?.tierType ==
                     TierType.Exotic)

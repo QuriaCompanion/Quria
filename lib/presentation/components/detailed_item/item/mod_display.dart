@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -25,15 +25,16 @@ class ModDisplay extends StatelessWidget {
       children: [
         ArmorModIconDisplay(iconSize: iconSize, socket: item),
         SizedBox(width: padding),
-        SizedBox(
-          width: width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              textBodyRegular(item.displayProperties!.name!),
-              textCaption(item.displayProperties!.description!,
-                  color: greyLight),
-            ],
+        Expanded(
+          child: SizedBox(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                textBodyRegular(item.displayProperties!.name!),
+                textCaption(item.displayProperties!.description!,
+                    color: greyLight),
+              ],
+            ),
           ),
         ),
       ],

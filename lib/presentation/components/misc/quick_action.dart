@@ -15,10 +15,10 @@ class QuickAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap(),
-      child: SizedBox(
-        height: vw(context) * 0.2,
+    return SizedBox(
+      height: vw(context) * 0.2,
+      child: InkWell(
+        onTap: () => onTap(),
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

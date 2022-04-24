@@ -1,6 +1,8 @@
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import "package:universal_html/html.dart" as html;
 import 'dart:developer';
@@ -37,9 +39,9 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   void initState() {
     super.initState();
-    // widget.auth.getToken().then((value) => {
-    //       if (value != null) {checkMembership()}
-    //     });
+    widget.auth.getToken().then((value) => {
+          if (value != null) {checkMembership()}
+        });
 
     getInitialUri().then((value) {
       if (!value.toString().contains('code=')) {
@@ -56,50 +58,46 @@ class LoginWidgetState extends State<LoginWidget> {
     return Scaffold(
       backgroundColor: black,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      // floatingActionButton: Padding(
-      //   padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
-      //   child: RoundedButton(
-      //       text: textBodyBold('Se connecter', color: black),
-      //       onPressed: () {
-      //         authorizeClick(context);
-      //       },
-      //       width: 250.0,
-      //       height: 60),
-      // ),
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
         child: RoundedButton(
-            text: textBodyBold('se connecter:dev', color: black),
+            text: textBodyBold('Se connecter', color: black),
             onPressed: () {
-              yannisooLogin();
+              loadingModal();
+              authorizeClick(context);
+              // yannisooLogin();
             },
             width: 250.0,
             height: 60),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              textQuria("QURIA"),
-              SvgPicture.asset(
-                "assets/img/Quria.svg",
-                width: 50,
-                height: 50,
-              )
-            ],
-          ),
-          textCompanion("D2 COMPANION"),
-          SizedBox(
-            width: vw(context) * 0.4,
-            child: Divider(
-              height: globalPadding(context) * 2.5,
-              color: Colors.white,
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                textQuria("QURIA"),
+                SvgPicture.asset(
+                  "assets/img/Quria.svg",
+                  width: 50,
+                  height: 50,
+                )
+              ],
             ),
-          ),
-          textConnect("CONNECTEZ-VOUS POUR CONTINUER"),
-        ],
+            textCompanion("D2 COMPANION"),
+            SizedBox(
+              width: vw(context) * 0.4,
+              child: Divider(
+                height: globalPadding(context) * 2.5,
+                color: Colors.white,
+              ),
+            ),
+            textConnect("CONNECTEZ-VOUS POUR CONTINUER"),
+          ],
+        ),
       ),
     );
   }
@@ -113,6 +111,7 @@ class LoginWidgetState extends State<LoginWidget> {
         html.window.location.assign(authorizationEndpoint);
       });
     } on OAuthException catch (e) {
+      Navigator.of(context).pop();
       bool isIOS = Platform.isIOS;
       String platformMessage =
           "If this keeps happening, please try to login with a mainstream browser.";
@@ -167,7 +166,7 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membership == null) {
       showSelectMembership();
     }
-    Navigator.pushNamed(context, routeProfile);
+    Navigator.pushReplacementNamed(context, routeProfile);
   }
 
   void showSelectMembership() async {
@@ -179,10 +178,23 @@ class LoginWidgetState extends State<LoginWidget> {
     }
   }
 
+  void loadingModal() {
+    showMaterialModalBottomSheet(
+        context: context,
+        backgroundColor: Colors.transparent,
+        isDismissible: false,
+        expand: false,
+        builder: (context) {
+          return const LoadingModal(
+            text1: "Connexion en cours",
+            text2: "Veuillez patienter ...",
+          );
+        });
+  }
+
   void yannisooLogin() async {
     final AuthService auth = AuthService();
     final AccountService account = AccountService();
-    final ProfileService profile = ProfileService();
     BungieNetToken token = BungieNetToken.fromJson({
       'access_token':
           "CKz7AxKGAgAgeUtts6Ss0etJ4v74fspqQMJUw03kC5u0Mzy45BRlG8bgAAAAUS2EA1MTJ4wTlOMk5lAdPMc/JaJEBKmobmBLYLxraR9MuZgC3HRldFkjaJBOjpgUCm/DrSpR6QKYXPADmrxXluNAsIqvtdBkRG+jC1PFjkp3lesmfN87OzON3594IbRotxBMe+WvAzjpcNSsu70lJPcuy2uCfYCp5DWjhkhF6hem2TBG1/4GytKb1zVZA7iXqPIYfzwJlGkNI0ibJ8xdjCJCLxu9c4GQZzoff6rLNPcBk+hfQnVyft0xEKYXBLDg7PaV6s3In7uYCfSBMkG/Xa2nyDcD3lWrVQDUDn4+6ww=",
@@ -195,7 +207,6 @@ class LoginWidgetState extends State<LoginWidget> {
 
     if (await auth.getToken() == null) await auth.saveToken(token);
     await account.getMembership();
-    await profile.loadProfile();
-    Navigator.pushNamed(context, routeProfile);
+    Navigator.pushReplacementNamed(context, routeProfile);
   }
 }

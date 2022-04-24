@@ -20,6 +20,7 @@ const subclassHeader = AssetImage("assets/img/Subclass.png");
 const modsHeader = AssetImage("assets/img/mods.png");
 const buildHeader = AssetImage("assets/img/build.png");
 const collectionHeader = AssetImage("assets/img/collection.png");
+const splashBackground = AssetImage("assets/img/base_background.png");
 
 double globalPadding(BuildContext context) {
   return vw(context) * 0.04266;
@@ -35,6 +36,16 @@ double vw(BuildContext context) {
 
 double vh(BuildContext context) {
   return MediaQuery.of(context).size.height;
+}
+
+double appBarItem(BuildContext context) {
+  return vw(context) * 0.064;
+}
+
+double appBarHeight(BuildContext context) {
+  return MediaQuery.of(context).padding.top +
+      (globalPadding(context) * 2) +
+      appBarItem(context);
 }
 
 const Color backgroundColor = black;

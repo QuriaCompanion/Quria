@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -16,15 +16,15 @@ class ItemComponentSmart extends StatelessWidget {
   Widget build(BuildContext context) {
     final instanceInfo = ProfileService().getInstanceInfo(item.itemInstanceId!);
     final DestinyInventoryItemDefinition itemDef = ManifestService
-        .manifestParsed.destinyInventoryItemDefinition![item.itemHash]!;
+        .manifestParsed.destinyInventoryItemDefinition[item.itemHash]!;
     final String? elementIcon = ManifestService
             .manifestParsed
-            .destinyDamageTypeDefinition?[itemDef.defaultDamageTypeHash]
+            .destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]
             ?.displayProperties
             ?.icon ??
         ManifestService
             .manifestParsed
-            .destinyEnergyTypeDefinition?[instanceInfo.energy?.energyTypeHash]
+            .destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]
             ?.displayProperties
             ?.icon;
     final int powerLevel = instanceInfo.primaryStat!.value!;
@@ -45,11 +45,7 @@ class ItemComponentSmart extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              textH3(ManifestService
-                  .manifestParsed
-                  .destinyInventoryItemDefinition![item.itemHash]!
-                  .displayProperties!
-                  .name!),
+              textH3(itemDef.displayProperties!.name!),
               Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [

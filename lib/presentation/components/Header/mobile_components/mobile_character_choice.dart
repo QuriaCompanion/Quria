@@ -1,17 +1,16 @@
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner_info.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/mobile_character_banner.dart';
 
 class MobileCharacterChoice extends StatefulWidget {
   final Function(int) callback;
   final Function choosingCharacter;
-  final int index;
   final List<DestinyCharacterComponent> characters;
   const MobileCharacterChoice(
       {required this.callback,
-      required this.index,
       required this.characters,
       required this.choosingCharacter,
       Key? key})
@@ -23,30 +22,32 @@ class MobileCharacterChoice extends StatefulWidget {
 
 class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
   bool choosingCharacter = false;
-  List<int> order = [0, 1, 2];
 
   @override
   Widget build(BuildContext context) {
+    List order = [];
+    if (DisplayService.characterIndex == 0) {
+      order = [DisplayService.characterIndex, 1, 2];
+    } else if (DisplayService.characterIndex == 1) {
+      order = [DisplayService.characterIndex, 0, 2];
+    } else if (DisplayService.characterIndex == 2) {
+      order = [DisplayService.characterIndex, 0, 1];
+    }
     return Column(
       children: [
-        Container(
-          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-          width: vw(context),
-          child: SizedBox(
-            height: 56,
-            child: Center(
-              child: MobileCharacterBanner(
-                  chooseCharacter: () {
-                    setState(() {
-                      choosingCharacter = !choosingCharacter;
-                      widget.choosingCharacter();
-                    });
-                  },
-                  characterIndex: widget.index,
-                  characters: widget.characters),
-            ),
+        MobileCharacterBanner(
+            chooseCharacter: () {
+              setState(() {
+                choosingCharacter = !choosingCharacter;
+                widget.choosingCharacter();
+              });
+            },
+            characterIndex: DisplayService.characterIndex,
+            characters: widget.characters),
+        if (choosingCharacter && widget.characters.length > 1)
+          SizedBox(
+            height: globalPadding(context),
           ),
-        ),
         if (choosingCharacter && widget.characters.length > 1)
           InkWell(
             onTap: () {
@@ -64,14 +65,14 @@ class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
                   character: widget.characters[order[1]],
                 ),
                 SizedBox(
-                  width: vw(context) * 0.064,
+                  width: appBarItem(context),
                 )
               ],
             ),
           ),
         if (choosingCharacter && widget.characters.length > 2)
           SizedBox(
-            height: (56 - (vw(context) * 0.064)) / 2,
+            height: globalPadding(context),
           ),
         if (choosingCharacter && widget.characters.length > 2)
           InkWell(
@@ -90,7 +91,7 @@ class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
                   character: widget.characters[order[2]],
                 ),
                 SizedBox(
-                  width: vw(context) * 0.064,
+                  width: appBarItem(context),
                 )
               ],
             ),

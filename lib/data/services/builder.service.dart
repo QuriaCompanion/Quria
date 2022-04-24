@@ -2,7 +2,7 @@ import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_investment_stat_definition.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_item_sockets_component.dart';
@@ -30,10 +30,9 @@ class BuilderService {
     BuilderHelper builder = BuilderHelper(
         statOrder: data.statOrder,
         exotic: ManifestService
-            .manifestParsed.destinyInventoryItemDefinition![data.exoticHash],
+            .manifestParsed.destinyInventoryItemDefinition[data.exoticHash],
         armors: armors,
-        manifest:
-            ManifestService.manifestParsed.destinyInventoryItemDefinition!,
+        manifest: ManifestService.manifestParsed.destinyInventoryItemDefinition,
         sockets: sockets,
         armorMods: data.armorMods,
         subclassMods: data.subclassMods,
@@ -367,26 +366,33 @@ class BuilderService {
             List<Armor> armors = [
               Armor(
                   hash: helmet.itemHash!,
+                  displayHash: helmet.overrideStyleItemHash ?? helmet.itemHash!,
                   itemInstanceId: helmet.itemInstanceId!,
                   mods: optionalModsResult.modSelected[0],
                   type: 0),
               Armor(
                   hash: gauntlet.itemHash!,
+                  displayHash:
+                      gauntlet.overrideStyleItemHash ?? gauntlet.itemHash!,
                   itemInstanceId: gauntlet.itemInstanceId!,
                   mods: optionalModsResult.modSelected[1],
                   type: 1),
               Armor(
                   hash: chest.itemHash!,
+                  displayHash: chest.overrideStyleItemHash ?? chest.itemHash!,
                   itemInstanceId: chest.itemInstanceId!,
                   mods: optionalModsResult.modSelected[2],
                   type: 2),
               Armor(
                   hash: leg.itemHash!,
+                  displayHash: leg.overrideStyleItemHash ?? leg.itemHash!,
                   itemInstanceId: leg.itemInstanceId!,
                   mods: optionalModsResult.modSelected[3],
                   type: 3),
               Armor(
                   hash: builderHelper.classItem.itemHash!,
+                  displayHash: builderHelper.classItem.overrideStyleItemHash ??
+                      builderHelper.classItem.itemHash!,
                   itemInstanceId: builderHelper.classItem.itemInstanceId!,
                   mods: optionalModsResult.modSelected[4],
                   type: 4)

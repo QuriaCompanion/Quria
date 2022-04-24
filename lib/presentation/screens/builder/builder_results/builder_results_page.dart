@@ -53,11 +53,15 @@ class _BuilderResultsPageState extends State<BuilderResultsPage> {
             }
           } else {
             return Container(
-              decoration: greyTransparentBackground,
-              child: const Loader(
-                  waitingMessage:
-                      'Veuillez patienter nous recherchons les meilleurs builds pour vous!'),
-            );
+                height: vh(context),
+                width: vw(context),
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        fit: BoxFit.cover, image: splashBackground)),
+                child: Loader(
+                  splashColor: Colors.transparent,
+                  animationSize: vw(context) * 0.5,
+                ));
           }
         });
   }

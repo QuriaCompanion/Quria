@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -64,10 +64,10 @@ class BuilderRecapMobileItem extends StatelessWidget {
       children: [
         ArmorAfinity(
           pointsAvailable: armorModspace,
+          remaining: 10 - armorModspace,
           afinityIcon: ManifestService
               .manifestParsed
-              .destinyEnergyTypeDefinition![
-                  instanceInfo.energy!.energyTypeHash]!
+              .destinyEnergyTypeDefinition[instanceInfo.energy!.energyTypeHash]!
               .displayProperties!
               .icon!,
         ),
@@ -75,14 +75,15 @@ class BuilderRecapMobileItem extends StatelessWidget {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ItemIcon(displayHash: item.hash, imageSize: vw(context) * 0.192),
+            ItemIcon(
+                displayHash: item.displayHash, imageSize: vw(context) * 0.192),
             Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: globalPadding(context) / 2),
               child: ArmorModIconDisplay(
                 iconSize: 44,
                 socket: ManifestService.manifestParsed
-                    .destinyInventoryItemDefinition![item.mods!.hash]!,
+                    .destinyInventoryItemDefinition[item.mods!.hash]!,
               ),
             ),
             for (DestinyInventoryItemDefinition? mod in mods)
@@ -92,7 +93,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
                   child: ArmorModIconDisplay(
                     iconSize: 44,
                     socket: ManifestService.manifestParsed
-                        .destinyInventoryItemDefinition![mod.hash]!,
+                        .destinyInventoryItemDefinition[mod.hash]!,
                   ),
                 ),
           ],

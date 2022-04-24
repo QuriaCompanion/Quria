@@ -6,9 +6,11 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 class ArmorAfinity extends StatelessWidget {
   final String afinityIcon;
   final int pointsAvailable;
+  final int remaining;
   const ArmorAfinity({
     required this.afinityIcon,
     required this.pointsAvailable,
+    required this.remaining,
     Key? key,
   }) : super(key: key);
   @override
@@ -40,8 +42,7 @@ class ArmorAfinity extends StatelessWidget {
                       textH2(pointsAvailable.toString()),
                     ],
                   ),
-                  textBodyRegular(
-                      'InutilisÃ©: ' + (10 - pointsAvailable).toString()),
+                  textBodyRegular('InutilisÃ©: $remaining'),
                 ],
               ),
             )),

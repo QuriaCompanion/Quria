@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -43,12 +43,14 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
               context: context,
               builder: (context) {
                 return PerkModal(
-                    perk: widget.perk,
-                    instanceId: widget.instanceId,
-                    onSocketsChanged: (newSockets) =>
-                        widget.onSocketsChanged(newSockets),
-                    characterId: widget.characterId,
-                    index: widget.index);
+                  isSelected: selected,
+                  perk: widget.perk,
+                  instanceId: widget.instanceId,
+                  onSocketsChanged: (newSockets) =>
+                      widget.onSocketsChanged(newSockets),
+                  characterId: widget.characterId,
+                  index: widget.index,
+                );
               });
         },
         onLongPress: () {

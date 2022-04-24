@@ -39,11 +39,8 @@ class AuthService {
 
   Future<BungieNetToken?> _getStoredToken() async {
     var json = await StorageService.getLocalStorage('bungie_token');
-    try {
-      return BungieNetToken.fromJson(json);
-    } catch (e) {
-      return null;
-    }
+    if (json == null) return null;
+    return BungieNetToken.fromJson(json);
   }
 
   Future<void> _setStoredToken(BungieNetToken token) async {

@@ -13,6 +13,7 @@ class CharacterBannerInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
+      height: vw(context) * 0.064,
       width: vw(context) * 0.5,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -22,8 +23,8 @@ class CharacterBannerInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                width: vw(context) * 0.064,
-                height: vw(context) * 0.064,
+                width: appBarItem(context),
+                height: appBarItem(context),
                 child: Image(
                   image: NetworkImage(
                       DestinyData.bungieLink + character.emblemPath!),
@@ -35,7 +36,7 @@ class CharacterBannerInfo extends StatelessWidget {
               ),
               textH3(ManifestService
                       .manifestParsed
-                      .destinyClassDefinition![character.classHash]!
+                      .destinyClassDefinition[character.classHash]!
                       .genderedClassNamesByGenderHash![
                   character.genderHash.toString()]!),
             ],
@@ -46,13 +47,13 @@ class CharacterBannerInfo extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   SizedBox(
-                    width: vw(context) * 0.064,
-                    height: vw(context) * 0.064,
+                    width: appBarItem(context),
+                    height: appBarItem(context),
                     child: Image(
                       image: NetworkImage(DestinyData.bungieLink +
                           ManifestService
                               .manifestParsed
-                              .destinyStatDefinition![StatsHash.power]!
+                              .destinyStatDefinition[StatsHash.power]!
                               .displayProperties!
                               .icon!),
                       color: yellow,

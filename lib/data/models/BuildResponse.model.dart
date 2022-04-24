@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 
 class BuildResponse {
   final List<Build> builds;
@@ -30,12 +30,14 @@ class Stats {
 class Armor {
   int hash;
   String itemInstanceId;
+  int displayHash;
   int type;
 
   DestinyInventoryItemDefinition? mods;
   Armor(
       {required this.hash,
       required this.itemInstanceId,
+      required this.displayHash,
       required this.type,
       this.mods});
 }

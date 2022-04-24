@@ -1,4 +1,4 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/inspectHelper.model.dart';
@@ -77,22 +77,20 @@ class _InspectWidgetState extends State<InspectWidget> {
                       for (int statHash in DestinyData.linearStatBySubType[
                           ManifestService
                               .manifestParsed
-                              .destinyInventoryItemDefinition![
-                                  widget.item.hash]!
+                              .destinyInventoryItemDefinition[widget.item.hash]!
                               .itemSubType!]!)
                         StatProgressBar(
                             width: itemMainInfoWidth,
-                            fontSize: fontSize,
                             padding: childPadding,
                             name: ManifestService
                                     .manifestParsed
-                                    .destinyStatDefinition![statHash]!
+                                    .destinyStatDefinition[statHash]!
                                     .displayProperties!
                                     .name ??
                                 'error',
                             value: ManifestService
                                     .manifestParsed
-                                    .destinyInventoryItemDefinition![
+                                    .destinyInventoryItemDefinition[
                                         widget.item.hash]!
                                     .stats
                                     ?.stats![statHash.toString()]
@@ -100,7 +98,7 @@ class _InspectWidgetState extends State<InspectWidget> {
                                 0,
                             type: ManifestService
                                 .manifestParsed
-                                .destinyInventoryItemDefinition![
+                                .destinyInventoryItemDefinition[
                                     widget.item.hash]!
                                 .itemType!),
                     ],
@@ -120,10 +118,9 @@ class _InspectWidgetState extends State<InspectWidget> {
                 children: [
                   SizedBox(height: imageSize),
                   PerkList(
-                      selectedPerks: selectedPerks,
-                      item: widget.item,
-                      iconSize: iconSize,
-                      padding: childPadding)
+                    selectedPerks: selectedPerks,
+                    item: widget.item,
+                  )
                 ],
               ),
             )
@@ -159,29 +156,27 @@ class _InspectWidgetState extends State<InspectWidget> {
                 for (int statHash in DestinyData.linearStatBySubType[
                     ManifestService
                         .manifestParsed
-                        .destinyInventoryItemDefinition![widget.item.hash]!
+                        .destinyInventoryItemDefinition[widget.item.hash]!
                         .itemSubType!]!)
                   StatProgressBar(
                       width: vw(context) - padding * 2,
-                      fontSize: fontSize,
                       padding: childPadding,
                       name: ManifestService
                               .manifestParsed
-                              .destinyStatDefinition![statHash]!
+                              .destinyStatDefinition[statHash]!
                               .displayProperties!
                               .name ??
                           'error',
                       value: ManifestService
                               .manifestParsed
-                              .destinyInventoryItemDefinition![
-                                  widget.item.hash]!
+                              .destinyInventoryItemDefinition[widget.item.hash]!
                               .stats
                               ?.stats![statHash.toString()]
                               ?.value ??
                           0,
                       type: ManifestService
                           .manifestParsed
-                          .destinyInventoryItemDefinition![widget.item.hash]!
+                          .destinyInventoryItemDefinition[widget.item.hash]!
                           .itemType!),
                 WeaponDetailsHiddenStats(
                   width: vw(context) - padding * 2,
@@ -190,15 +185,10 @@ class _InspectWidgetState extends State<InspectWidget> {
                   hash: widget.item.hash!,
                 ),
                 SizedBox(
-                  child: PerkList(
-                      selectedPerks: selectedPerks,
-                      item: widget.item,
-                      iconSize: vw(context) / 7,
-                      padding: (vw(context) -
-                              ((vw(context) / 7) * 4) -
-                              padding * 2) /
-                          8),
-                )
+                    child: PerkList(
+                  selectedPerks: selectedPerks,
+                  item: widget.item,
+                ))
               ],
             ),
           )),

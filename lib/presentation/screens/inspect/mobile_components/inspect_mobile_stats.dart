@@ -1,15 +1,17 @@
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/detailed_item/item/stat_no_bar.dart';
 import 'package:quria/presentation/components/detailed_item/item/stat_progress_bar.dart';
 
 class InspectMobileStats extends StatelessWidget {
   final DestinyInventoryItemDefinition item;
   final Map<String, DestinyStat>? stats;
-  const InspectMobileStats({required this.item, required this.stats, Key? key})
+  const InspectMobileStats({required this.item, this.stats, Key? key})
       : super(key: key);
 
   @override
@@ -19,18 +21,63 @@ class InspectMobileStats extends StatelessWidget {
       children: [
         for (int statHash in DestinyData.linearStatBySubType[item.itemSubType]!)
           StatProgressBar(
-              width: vw(context),
-              fontSize: 20,
-              name: ManifestService
-                      .manifestParsed
-                      .destinyStatDefinition![statHash]!
-                      .displayProperties!
-                      .name ??
-                  'error',
-              value: stats?[statHash.toString()]?.value ??
-                  item.stats?.stats?[statHash.toString()]?.value ??
-                  0,
-              type: item.itemType),
+            width: vw(context),
+            name: ManifestService.manifestParsed
+                    .destinyStatDefinition[statHash]!.displayProperties!.name ??
+                'error',
+            value: stats?[statHash.toString()]?.value ??
+                item.stats?.stats?[statHash.toString()]?.value ??
+                0,
+            type: item.itemType,
+          ),
+        Builder(builder: (context) {
+          List<String> unusedStats = [];
+          if (stats != null) {
+            unusedStats.addAll(stats!.keys.where((statHash) => !DestinyData
+                .linearStatBySubType[item.itemSubType]!
+                .contains(int.parse(statHash))));
+          }
+          // else {
+          //   unusedStats.addAll(item.stats!.stats!.keys.where((statHash) =>
+          //       !DestinyData.linearStatBySubType[item.itemSubType]!
+          //           .contains(int.parse(statHash))));
+          // }
+          int armorTotal = 0;
+          if (item.itemType == DestinyItemType.Armor && stats != null) {
+            for (int statHash
+                in DestinyData.linearStatBySubType[item.itemSubType]!) {
+              armorTotal += stats![statHash.toString()]!.value!;
+            }
+          }
+
+          return Column(
+            children: [
+              for (String statHash in unusedStats)
+                StatNoBar(
+                  width: vw(context),
+                  fontSize: 20,
+                  name: ManifestService
+                          .manifestParsed
+                          .destinyStatDefinition[int.parse(statHash)]
+                          ?.displayProperties
+                          ?.name ??
+                      'error',
+                  value: stats?[statHash.toString()]?.value ??
+                      item.stats?.stats?[statHash.toString()]?.value ??
+                      0,
+                  type: item.itemType,
+                ),
+              if (item.itemType == DestinyItemType.Armor)
+                StatNoBar(
+                  width: vw(context),
+                  fontSize: 20,
+                  name: 'Total',
+                  value: armorTotal,
+                  type: item.itemType,
+                )
+            ],
+          );
+        })
       ],
     );
   }

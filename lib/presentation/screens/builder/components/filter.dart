@@ -6,16 +6,14 @@ import 'package:quria/data/models/helpers/filterHelper.model.dart';
 
 class FilterWidget extends StatefulWidget {
   final double width;
-  final double itemHeight;
   final List<FilterHelper> items;
   final Function(List<FilterHelper>) onFilterChanged;
-  const FilterWidget(
-      {required this.width,
-      required this.onFilterChanged,
-      required this.items,
-      this.itemHeight = 44,
-      Key? key})
-      : super(key: key);
+  const FilterWidget({
+    required this.width,
+    required this.onFilterChanged,
+    required this.items,
+    Key? key,
+  }) : super(key: key);
 
   @override
   _FilterWidgetState createState() => _FilterWidgetState();
@@ -44,6 +42,8 @@ class _FilterWidgetState extends State<FilterWidget> {
         for (int index = 0; index < widget.items.length; index++)
           Container(
             key: ValueKey(widget.items[index].name),
+            height: 35 + globalPadding(context),
+            padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
             decoration: BoxDecoration(
                 color: blackLight, borderRadius: BorderRadius.circular(8)),
             margin: const EdgeInsets.only(bottom: 8),
@@ -53,18 +53,21 @@ class _FilterWidgetState extends State<FilterWidget> {
                 child: ListTile(
                   horizontalTitleGap: 0,
                   minVerticalPadding: 0,
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                   leading: SvgPicture.asset(
                     "assets/icons/${widget.items[index].icon}",
+                    height: 35,
                     color: Colors.white,
                   ),
                   trailing: const Icon(
                     Icons.drag_handle,
                     color: Colors.white,
                   ),
-                  title: textBodyBold(
-                    widget.items[index].name,
+                  title: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: textBodyBold(
+                      widget.items[index].name,
+                    ),
                   ),
                   dense: true,
                   isThreeLine: false,

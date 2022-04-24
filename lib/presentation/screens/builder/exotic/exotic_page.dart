@@ -1,12 +1,13 @@
 import 'dart:async';
 
 import 'package:bungie_api/models/destiny_character_component.dart';
-import 'package:bungie_api/models/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
+import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_mobile_view.dart';
 
@@ -21,12 +22,12 @@ class _ExoticWidgetState extends State<ExoticWidget> {
   final DisplayService display = DisplayService();
   late Future<List<DestinyInventoryItemDefinition>> _future;
   bool isLoading = true;
-  int selectedCharacterIndex = 0;
   String searchName = "";
   @override
   void initState() {
     super.initState();
-    final currentCharacter = ProfileService().getCharacters()[0];
+    final currentCharacter =
+        ProfileService().getCharacters()[DisplayService.characterIndex];
     _future = display.getExotics(currentCharacter.classType!);
   }
 
@@ -40,20 +41,24 @@ class _ExoticWidgetState extends State<ExoticWidget> {
             ProfileService().getCharacters();
         if (snapshot.hasData) isLoading = false;
         if (isLoading) {
-          return const Loader();
+          return Container(
+              height: vh(context),
+              width: vw(context),
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      fit: BoxFit.cover, image: splashBackground)),
+              child: Loader(
+                splashColor: Colors.transparent,
+                animationSize: vw(context) * 0.5,
+              ));
         } else {
           if (vw(context) < 850) {
-            return ScaffoldCharacters(
-              characters: characters,
-              selectedCharacterIndex: selectedCharacterIndex,
-              onCharacterChange: (int index) {
-                setState(() {
-                  selectedCharacterIndex = index;
-                  _future = display.getExotics(characters[index].classType!);
-                });
-              },
+            return Scaffold(
+              backgroundColor: black,
+              drawer: const Burger(),
               body: ExoticMobileView(
-                characterId: characters[selectedCharacterIndex].characterId!,
+                characterId:
+                    characters[DisplayService.characterIndex].characterId!,
                 exotics: snapshot.data!,
               ),
             );

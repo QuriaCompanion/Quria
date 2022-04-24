@@ -8,18 +8,16 @@ class StatProgressBar extends StatelessWidget {
   final int value;
   final DestinyItemType? type;
   final double width;
-  final double fontSize;
   final double padding;
   final double height;
   const StatProgressBar({
-    Key? key,
     required this.name,
     required this.value,
-    required this.fontSize,
     this.width = 600,
     this.type = DestinyItemType.Weapon,
     this.padding = 8,
     this.height = 20,
+    Key? key,
   }) : super(key: key);
 
   @override

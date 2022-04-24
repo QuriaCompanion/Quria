@@ -1,6 +1,4 @@
-// ignore_for_file: file_names
-
-import 'package:bungie_api/destiny2.dart';
+import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:uuid/uuid.dart';

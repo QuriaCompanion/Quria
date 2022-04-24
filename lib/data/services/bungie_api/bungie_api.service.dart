@@ -119,7 +119,7 @@ class BungieApiService {
     return response.response;
   }
 
-  Future<int?> transferItem(String itemId, String characterId,
+  Future<int?> transferItem(String itemId, String? characterId,
       {int? itemHash, int? stackSize, bool? transferToVault}) async {
     BungieNetToken? token = await auth.getToken();
     GroupUserInfoCard? membership = await accountService.getMembership();
