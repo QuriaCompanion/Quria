@@ -40,7 +40,6 @@ class _VaultMobileView extends State<VaultMobileView> {
               DisplayService.characterIndex = newIndex;
             });
           },
-          characters: widget.data.characters,
         ),
         SliverList(
           delegate: SliverChildBuilderDelegate(

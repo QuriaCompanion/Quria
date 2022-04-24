@@ -7,6 +7,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
+import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_mobile_view.dart';
 
@@ -52,15 +53,9 @@ class _ExoticWidgetState extends State<ExoticWidget> {
               ));
         } else {
           if (vw(context) < 850) {
-            return ScaffoldCharacters(
-              characters: characters,
-              onCharacterChange: (int index) {
-                setState(() {
-                  DisplayService.characterIndex = index;
-                  _future = display.getExotics(
-                      characters[DisplayService.characterIndex].classType!);
-                });
-              },
+            return Scaffold(
+              backgroundColor: black,
+              drawer: const Burger(),
               body: ExoticMobileView(
                 characterId:
                     characters[DisplayService.characterIndex].characterId!,
