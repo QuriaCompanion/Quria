@@ -10,6 +10,7 @@ import 'package:bungie_api/models/destiny_item_socket_entry_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:flutter/foundation.dart';
+import 'package:isar/isar.dart';
 import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
@@ -359,8 +360,12 @@ class DisplayService {
     return exoticItems;
   }
 
-  Future<Iterable<DestinyInventoryItemDefinition>?> collectionLoop() async {
-    return compute(_getWeapons, ManifestService.manifestParsed);
+  Future<Iterable<DestinyInventoryItemDefinition>> getCollectionByType(
+      DestinyItemType type) async {
+    return await StorageService.isar.destinyInventoryItemDefinitions
+        .filter()
+        .itemTypeEqualTo(type)
+        .findAll();
   }
 
   SocketsHelper getSubclassMods(String subclassInstanceId) {
@@ -376,16 +381,5 @@ class DisplayService {
       displayedSockets: displayedSockets,
       def: def,
     );
-  }
-
-  Iterable<DestinyInventoryItemDefinition>? _getWeapons(
-      AllDestinyManifestComponents manifest) {
-    List<DestinyInventoryItemDefinition>? weapons = manifest
-        .destinyInventoryItemDefinition.values
-        .where(((element) => element.itemType == DestinyItemType.Weapon))
-        .toList();
-    weapons.sort((a, b) =>
-        a.inventory!.tierType!.index.compareTo(b.inventory!.tierType!.index));
-    return weapons.reversed;
   }
 }

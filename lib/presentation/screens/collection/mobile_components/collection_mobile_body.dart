@@ -18,7 +18,7 @@ class _CollectionMobileBodyState extends State<CollectionMobileBody> {
     double cardMargin = 8;
     if (widget.collectionSelected != '') {
       return const CollectionMobileContent(
-        categories: ['category 1', 'category 1', 'category 1'],
+        categories: ['Cinétiques', 'category 1', 'category 1'],
       );
     } else {
       return Column(
