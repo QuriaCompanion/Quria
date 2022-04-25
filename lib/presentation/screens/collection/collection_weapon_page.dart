@@ -6,6 +6,7 @@ import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definit
 import 'package:quria/data/services/bungie_api/enums/collection_filter.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
+import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/screens/collection/collection_mobile_view.dart';
 
 class CollectionWeaponPage extends StatefulWidget {
@@ -33,7 +34,10 @@ class _CollectionWeaponPageState extends State<CollectionWeaponPage> {
             AsyncSnapshot<Iterable<DestinyInventoryItemDefinition>> snapshot) {
           if (snapshot.hasData) {
             if (vw(context) < 850) {
-              return CollectionMobileView(items: snapshot.data!);
+              return Scaffold(
+                  drawer: const Burger(),
+                  backgroundColor: black,
+                  body: CollectionMobileView(items: snapshot.data!));
             } else {
               return Container();
             }

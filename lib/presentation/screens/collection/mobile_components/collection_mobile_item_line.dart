@@ -1,38 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
-class CollectionMobileItemLine extends StatefulWidget {
-  final String name;
-  final bool isFirst;
-  const CollectionMobileItemLine(
-      {Key? key, required this.name, required this.isFirst})
-      : super(key: key);
-  @override
-  State<StatefulWidget> createState() => _CollectionMobileItemLineState();
-}
+class CollectionItemLine extends StatelessWidget {
+  final DestinyInventoryItemDefinition item;
+  const CollectionItemLine({required this.item, Key? key}) : super(key: key);
 
-class _CollectionMobileItemLineState extends State<CollectionMobileItemLine> {
-  double cardMargin = 8;
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Row(
       children: [
         Container(
-          margin: EdgeInsets.only(top: cardMargin),
-          padding: EdgeInsets.only(top: cardMargin),
+          width: mobileItemSize(context),
+          height: mobileItemSize(context),
           decoration: BoxDecoration(
-              border: widget.isFirst
-                  ? const Border(top: BorderSide(color: grey, width: 2))
-                  : null),
-          child: Row(children: [
-            Container(
-                height: vw(context) * 0.15,
-                padding: EdgeInsets.all(cardMargin),
-                child: const Image(image: modsHeader)),
-            textH3(widget.name)
-          ]),
-        )
+            border: Border.all(color: Colors.white),
+          ),
+          child: Stack(
+            children: [
+              Image(
+                image: NetworkImage(
+                    DestinyData.bungieLink + item.displayProperties!.icon!),
+                height: mobileItemSize(context),
+                width: mobileItemSize(context),
+                fit: BoxFit.fill,
+              ),
+              if (item.iconWatermark != null)
+                Image(
+                  image: NetworkImage(
+                    DestinyData.bungieLink + item.iconWatermark!,
+                  ),
+                  height: mobileItemSize(context),
+                  width: mobileItemSize(context),
+                  fit: BoxFit.fill,
+                ),
+            ],
+          ),
+        ),
+        SizedBox(width: globalPadding(context)),
+        textH3(item.displayProperties?.name ?? ""),
       ],
     );
   }

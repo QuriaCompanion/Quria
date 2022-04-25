@@ -16,7 +16,6 @@ import 'package:quria/presentation/screens/builder/mods/mods_page.dart';
 import 'package:quria/presentation/screens/builder/stats_filter/stats_filter_page.dart';
 import 'package:quria/presentation/screens/builder/subclass/subclass_page.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_page.dart';
-import 'package:quria/presentation/screens/collection/collection.dart';
 import 'package:quria/presentation/screens/collection/collection_item/collection_item_page.dart';
 import 'package:quria/presentation/screens/collection/collection_weapon_page.dart';
 import 'package:quria/presentation/screens/collection/inspect.dart';
