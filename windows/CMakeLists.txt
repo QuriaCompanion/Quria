@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.14)
 project(quria LANGUAGES CXX)
 
-set(BINARY_NAME "quria")
+set(BINARY_NAME "QuriaCompanion")
 
 cmake_policy(SET CMP0063 NEW)
 
