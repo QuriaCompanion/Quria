@@ -8,7 +8,6 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
-import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_mobile_view.dart';
 
 class ExoticWidget extends StatefulWidget {

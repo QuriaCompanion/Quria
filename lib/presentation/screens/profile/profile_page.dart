@@ -82,7 +82,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             data = display.getProfileData();
             if (vw(context) > 850) {
               return Column(
-                children: [],
+                children: const [],
               );
             } else {
               return ScaffoldCharacters(

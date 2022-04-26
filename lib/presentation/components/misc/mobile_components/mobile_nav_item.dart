@@ -19,7 +19,7 @@ class MobileNavItem extends StatelessWidget {
           color: selected ? blackLight : black,
           borderRadius: BorderRadius.circular(99)),
       child: Center(
-        child: textBodyBold(value),
+        child: textBodyBold(value, utf8: false),
       ),
     );
   }

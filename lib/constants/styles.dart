@@ -19,6 +19,7 @@ const exoticHeader = AssetImage("assets/img/Exotic.png");
 const subclassHeader = AssetImage("assets/img/Subclass.png");
 const modsHeader = AssetImage("assets/img/mods.png");
 const buildHeader = AssetImage("assets/img/build.png");
+const collectionHeader = AssetImage("assets/img/collection.png");
 const splashBackground = AssetImage("assets/img/base_background.png");
 
 double globalPadding(BuildContext context) {
