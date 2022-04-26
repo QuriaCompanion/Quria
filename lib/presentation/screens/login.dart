@@ -172,7 +172,6 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membership == null) {
       showSelectMembership();
     }
-    print("membership");
     Navigator.pushReplacementNamed(context, routeProfile);
   }
 
