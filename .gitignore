@@ -8,7 +8,11 @@
 .buildlog/
 .history
 .svn/
-
+CERTIFICATE.pfx
+quria.crt
+quria.key
+quria.csr
+UsershuntsworkcoursQuriaupload-keystore.jks
 # IntelliJ related
 *.iml
 *.ipr
@@ -44,3 +48,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/app/build.gradle
