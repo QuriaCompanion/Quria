@@ -28,6 +28,7 @@ import 'package:bungie_api/responses/destiny_profile_response_response.dart';
 import 'package:bungie_api/responses/destiny_vendors_response_response.dart';
 import 'package:bungie_api/responses/int32_response.dart';
 import 'package:bungie_api/responses/user_membership_data_response.dart';
+import 'package:flutter/foundation.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:http/http.dart' as http;
@@ -53,15 +54,18 @@ class BungieApiService {
   }
 
   static String? get clientSecret {
-    return "RVWOYmsG93EwUFekyNcVsMc-WoQIRM11AdMyQ-HoT0o";
+    if (kIsWeb) return "RVWOYmsG93EwUFekyNcVsMc-WoQIRM11AdMyQ-HoT0o";
+    return "lBsMpYu9FS4mr2k.OehferZifIpdEpMKBpXTzzeOuEg";
   }
 
   static String? get apiKey {
-    return "8e66dfa160d24a67aa33dfe141c95468";
+    if (kIsWeb) return "8e66dfa160d24a67aa33dfe141c95468";
+    return "cb4b462f9f8b4b00a43242c6d56afcad";
   }
 
   static String? get clientId {
-    return "36906";
+    if (kIsWeb) return "36906";
+    return "40171";
   }
 
   static Future<DestinyManifestResponse> getManifestInfo() {

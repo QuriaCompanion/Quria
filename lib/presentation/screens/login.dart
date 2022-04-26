@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
@@ -104,12 +105,17 @@ class LoginWidgetState extends State<LoginWidget> {
 
   void authorizeClick(BuildContext context) async {
     try {
-      WidgetsBinding.instance?.addPostFrameCallback((_) {
-        String clientId = BungieApiService.clientId!;
-        final authorizationEndpoint =
-            "https://www.bungie.net/fr/OAuth/Authorize?client_id=$clientId&response_type=code";
-        html.window.location.assign(authorizationEndpoint);
-      });
+      if (kIsWeb) {
+        WidgetsBinding.instance?.addPostFrameCallback((_) {
+          String clientId = BungieApiService.clientId!;
+          final authorizationEndpoint =
+              "https://www.bungie.net/fr/OAuth/Authorize?client_id=$clientId&response_type=code";
+          html.window.location.assign(authorizationEndpoint);
+        });
+      } else {
+        String code = await widget.auth.authorize(widget.forceReauth);
+        authCode(code);
+      }
     } on OAuthException catch (e) {
       Navigator.of(context).pop();
       bool isIOS = Platform.isIOS;
@@ -166,6 +172,7 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membership == null) {
       showSelectMembership();
     }
+    print("membership");
     Navigator.pushReplacementNamed(context, routeProfile);
   }
 
