@@ -10,7 +10,7 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: ghostBackground,
+        decoration: blackBackground,
         child: child,
       ),
     );

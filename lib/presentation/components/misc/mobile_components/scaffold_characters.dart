@@ -91,7 +91,7 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
         ),
       ),
       body: Container(
-        decoration: ghostBackground,
+        decoration: blackBackground,
         child: SingleChildScrollView(
           child: widget.body,
         ),

@@ -33,28 +33,22 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              mobileHeader(
-                context,
-                image: NetworkImage(
-                  DestinyData.bungieLink +
-                      ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition[
-                              widget.data.selectedCharacterSubclass.itemHash]!
-                          .screenshot!,
-                ),
-                child: ProfileMobileHeader(
-                  stats: widget.data.selectedCharacter.stats,
-                  characterSuper: widget.data.characterSuper,
-                  subclassId:
-                      widget.data.selectedCharacterSubclass.itemInstanceId!,
-                  characterId: widget.data.selectedCharacter.characterId!,
-                ),
-              ),
-            ],
+          mobileHeader(
+            context,
+            image: NetworkImage(
+              DestinyData.bungieLink +
+                  ManifestService
+                      .manifestParsed
+                      .destinyInventoryItemDefinition[
+                          widget.data.selectedCharacterSubclass.itemHash]!
+                      .screenshot!,
+            ),
+            child: ProfileMobileHeader(
+              stats: widget.data.selectedCharacter.stats,
+              characterSuper: widget.data.characterSuper,
+              subclassId: widget.data.selectedCharacterSubclass.itemInstanceId!,
+              characterId: widget.data.selectedCharacter.characterId!,
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(

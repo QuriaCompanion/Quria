@@ -92,4 +92,4 @@ BoxDecoration regularShadow = BoxDecoration(
 );
 const String ghostLink =
     "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg";
-const BoxDecoration ghostBackground = BoxDecoration(color: black);
+const BoxDecoration blackBackground = BoxDecoration(color: black);
