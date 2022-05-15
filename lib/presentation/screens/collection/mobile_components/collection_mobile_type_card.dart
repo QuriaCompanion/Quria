@@ -36,7 +36,7 @@ class CollectionMobileTypeCard extends StatelessWidget {
         SizedBox(
           height: cardMargin * 0.5,
         ),
-        textCaption(number.toString() + '/' + total.toString(), color: grey)
+        textCaption('$number/$total', color: grey)
       ]),
     );
   }

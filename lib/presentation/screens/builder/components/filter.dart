@@ -16,10 +16,10 @@ class FilterWidget extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _FilterWidgetState createState() => _FilterWidgetState();
+  FilterWidgetState createState() => FilterWidgetState();
 }
 
-class _FilterWidgetState extends State<FilterWidget> {
+class FilterWidgetState extends State<FilterWidget> {
   @override
   void initState() {
     super.initState();

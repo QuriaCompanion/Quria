@@ -6,21 +6,17 @@ part of 'destiny_sandbox_perk_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinySandboxPerkDefinitionCollection on Isar {
   IsarCollection<DestinySandboxPerkDefinition>
-      get destinySandboxPerkDefinitions {
-    return getCollection('DestinySandboxPerkDefinition');
-  }
+      get destinySandboxPerkDefinitions => getCollection();
 }
 
-final DestinySandboxPerkDefinitionSchema = CollectionSchema(
+const DestinySandboxPerkDefinitionSchema = CollectionSchema(
   name: 'DestinySandboxPerkDefinition',
   schema:
       '{"name":"DestinySandboxPerkDefinition","idName":"hash","properties":[{"name":"damageType","type":"Long"},{"name":"damageTypeHash","type":"Long"},{"name":"displayProperties","type":"String"},{"name":"index","type":"Long"},{"name":"isDisplayable","type":"Bool"},{"name":"perkGroups","type":"String"},{"name":"perkIdentifier","type":"String"},{"name":"redacted","type":"Bool"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinySandboxPerkDefinitionNativeAdapter(),
-  webAdapter: const _DestinySandboxPerkDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'damageType': 0,
@@ -34,21 +30,39 @@ final DestinySandboxPerkDefinitionSchema = CollectionSchema(
   },
   listProperties: {},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.hash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.hash;
-    }
-  },
-  setId: (obj, id) => obj.hash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinySandboxPerkDefinitionGetId,
+  setId: _destinySandboxPerkDefinitionSetId,
+  getLinks: _destinySandboxPerkDefinitionGetLinks,
+  attachLinks: _destinySandboxPerkDefinitionAttachLinks,
+  serializeNative: _destinySandboxPerkDefinitionSerializeNative,
+  deserializeNative: _destinySandboxPerkDefinitionDeserializeNative,
+  deserializePropNative: _destinySandboxPerkDefinitionDeserializePropNative,
+  serializeWeb: _destinySandboxPerkDefinitionSerializeWeb,
+  deserializeWeb: _destinySandboxPerkDefinitionDeserializeWeb,
+  deserializePropWeb: _destinySandboxPerkDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinySandboxPerkDefinitionGetId(DestinySandboxPerkDefinition object) {
+  if (object.hash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.hash;
+  }
+}
+
+void _destinySandboxPerkDefinitionSetId(
+    DestinySandboxPerkDefinition object, int id) {
+  object.hash = id;
+}
+
+List<IsarLinkBase> _destinySandboxPerkDefinitionGetLinks(
+    DestinySandboxPerkDefinition object) {
+  return [];
+}
 
 const _destinySandboxPerkDefinitionDamageTypeConverter = DamageTypeConverter();
 const _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter =
@@ -56,294 +70,257 @@ const _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter =
 const _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter =
     DestinyTalentNodeStepGroupsConverter();
 
-class _DestinySandboxPerkDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinySandboxPerkDefinition> {
-  const _DestinySandboxPerkDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinySandboxPerkDefinition> collection,
-      DestinySandboxPerkDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(
-        jsObj,
-        'damageType',
-        _destinySandboxPerkDefinitionDamageTypeConverter
-            .toIsar(object.damageType));
-    IsarNative.jsObjectSet(jsObj, 'damageTypeHash', object.damageTypeHash);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayProperties',
-        _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties));
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(jsObj, 'isDisplayable', object.isDisplayable);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'perkGroups',
-        _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
-            .toIsar(object.perkGroups));
-    IsarNative.jsObjectSet(jsObj, 'perkIdentifier', object.perkIdentifier);
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    return jsObj;
+void _destinySandboxPerkDefinitionSerializeNative(
+    IsarCollection<DestinySandboxPerkDefinition> collection,
+    IsarRawObject rawObj,
+    DestinySandboxPerkDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 = _destinySandboxPerkDefinitionDamageTypeConverter
+      .toIsar(object.damageType);
+  final damageType = value0;
+  final value1 = object.damageTypeHash;
+  final damageTypeHash = value1;
+  final value2 =
+      _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties);
+  IsarUint8List? displayProperties;
+  if (value2 != null) {
+    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
   }
-
-  @override
-  DestinySandboxPerkDefinition deserialize(
-      IsarCollection<DestinySandboxPerkDefinition> collection, dynamic jsObj) {
-    final object = DestinySandboxPerkDefinition();
-    object.damageType = _destinySandboxPerkDefinitionDamageTypeConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'damageType'));
-    object.damageTypeHash = IsarNative.jsObjectGet(jsObj, 'damageTypeHash');
-    object.displayProperties =
-        _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.isDisplayable = IsarNative.jsObjectGet(jsObj, 'isDisplayable');
-    object.perkGroups =
-        _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'perkGroups'));
-    object.perkIdentifier = IsarNative.jsObjectGet(jsObj, 'perkIdentifier');
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    return object;
+  dynamicSize += (displayProperties?.length ?? 0) as int;
+  final value3 = object.index;
+  final index = value3;
+  final value4 = object.isDisplayable;
+  final isDisplayable = value4;
+  final value5 =
+      _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .toIsar(object.perkGroups);
+  IsarUint8List? perkGroups;
+  if (value5 != null) {
+    perkGroups = IsarBinaryWriter.utf8Encoder.convert(value5);
   }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'damageType':
-        return (_destinySandboxPerkDefinitionDamageTypeConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'damageType'))) as P;
-      case 'damageTypeHash':
-        return (IsarNative.jsObjectGet(jsObj, 'damageTypeHash')) as P;
-      case 'displayProperties':
-        return (_destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'isDisplayable':
-        return (IsarNative.jsObjectGet(jsObj, 'isDisplayable')) as P;
-      case 'perkGroups':
-        return (_destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'perkGroups'))) as P;
-      case 'perkIdentifier':
-        return (IsarNative.jsObjectGet(jsObj, 'perkIdentifier')) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      default:
-        throw 'Illegal propertyName';
-    }
+  dynamicSize += (perkGroups?.length ?? 0) as int;
+  final value6 = object.perkIdentifier;
+  IsarUint8List? perkIdentifier;
+  if (value6 != null) {
+    perkIdentifier = IsarBinaryWriter.utf8Encoder.convert(value6);
   }
+  dynamicSize += (perkIdentifier?.length ?? 0) as int;
+  final value7 = object.redacted;
+  final redacted = value7;
+  final size = staticSize + dynamicSize;
 
-  @override
-  void attachLinks(Isar isar, int id, DestinySandboxPerkDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeLong(offsets[0], damageType);
+  writer.writeLong(offsets[1], damageTypeHash);
+  writer.writeBytes(offsets[2], displayProperties);
+  writer.writeLong(offsets[3], index);
+  writer.writeBool(offsets[4], isDisplayable);
+  writer.writeBytes(offsets[5], perkGroups);
+  writer.writeBytes(offsets[6], perkIdentifier);
+  writer.writeBool(offsets[7], redacted);
 }
 
-class _DestinySandboxPerkDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinySandboxPerkDefinition> {
-  const _DestinySandboxPerkDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinySandboxPerkDefinition> collection,
-      IsarRawObject rawObj,
-      DestinySandboxPerkDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 = _destinySandboxPerkDefinitionDamageTypeConverter
-        .toIsar(object.damageType);
-    final _damageType = value0;
-    final value1 = object.damageTypeHash;
-    final _damageTypeHash = value1;
-    final value2 =
-        _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties);
-    IsarUint8List? _displayProperties;
-    if (value2 != null) {
-      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
-    }
-    dynamicSize += (_displayProperties?.length ?? 0) as int;
-    final value3 = object.index;
-    final _index = value3;
-    final value4 = object.isDisplayable;
-    final _isDisplayable = value4;
-    final value5 =
-        _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
-            .toIsar(object.perkGroups);
-    IsarUint8List? _perkGroups;
-    if (value5 != null) {
-      _perkGroups = IsarBinaryWriter.utf8Encoder.convert(value5);
-    }
-    dynamicSize += (_perkGroups?.length ?? 0) as int;
-    final value6 = object.perkIdentifier;
-    IsarUint8List? _perkIdentifier;
-    if (value6 != null) {
-      _perkIdentifier = IsarBinaryWriter.utf8Encoder.convert(value6);
-    }
-    dynamicSize += (_perkIdentifier?.length ?? 0) as int;
-    final value7 = object.redacted;
-    final _redacted = value7;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeLong(offsets[0], _damageType);
-    writer.writeLong(offsets[1], _damageTypeHash);
-    writer.writeBytes(offsets[2], _displayProperties);
-    writer.writeLong(offsets[3], _index);
-    writer.writeBool(offsets[4], _isDisplayable);
-    writer.writeBytes(offsets[5], _perkGroups);
-    writer.writeBytes(offsets[6], _perkIdentifier);
-    writer.writeBool(offsets[7], _redacted);
-  }
-
-  @override
-  DestinySandboxPerkDefinition deserialize(
-      IsarCollection<DestinySandboxPerkDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinySandboxPerkDefinition();
-    object.damageType = _destinySandboxPerkDefinitionDamageTypeConverter
-        .fromIsar(reader.readLongOrNull(offsets[0]));
-    object.damageTypeHash = reader.readLongOrNull(offsets[1]);
-    object.displayProperties =
-        _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offsets[2]));
-    object.hash = id;
-    object.index = reader.readLongOrNull(offsets[3]);
-    object.isDisplayable = reader.readBoolOrNull(offsets[4]);
-    object.perkGroups =
-        _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
-            .fromIsar(reader.readStringOrNull(offsets[5]));
-    object.perkIdentifier = reader.readStringOrNull(offsets[6]);
-    object.redacted = reader.readBoolOrNull(offsets[7]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (_destinySandboxPerkDefinitionDamageTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 1:
-        return (reader.readLongOrNull(offset)) as P;
-      case 2:
-        return (_destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 3:
-        return (reader.readLongOrNull(offset)) as P;
-      case 4:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 5:
-        return (_destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 6:
-        return (reader.readStringOrNull(offset)) as P;
-      case 7:
-        return (reader.readBoolOrNull(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinySandboxPerkDefinition object) {}
+DestinySandboxPerkDefinition _destinySandboxPerkDefinitionDeserializeNative(
+    IsarCollection<DestinySandboxPerkDefinition> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = DestinySandboxPerkDefinition();
+  object.damageType = _destinySandboxPerkDefinitionDamageTypeConverter
+      .fromIsar(reader.readLongOrNull(offsets[0]));
+  object.damageTypeHash = reader.readLongOrNull(offsets[1]);
+  object.displayProperties =
+      _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offsets[2]));
+  object.hash = id;
+  object.index = reader.readLongOrNull(offsets[3]);
+  object.isDisplayable = reader.readBoolOrNull(offsets[4]);
+  object.perkGroups =
+      _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .fromIsar(reader.readStringOrNull(offsets[5]));
+  object.perkIdentifier = reader.readStringOrNull(offsets[6]);
+  object.redacted = reader.readBoolOrNull(offsets[7]);
+  return object;
 }
+
+P _destinySandboxPerkDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (_destinySandboxPerkDefinitionDamageTypeConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 1:
+      return (reader.readLongOrNull(offset)) as P;
+    case 2:
+      return (_destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 3:
+      return (reader.readLongOrNull(offset)) as P;
+    case 4:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 5:
+      return (_destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 6:
+      return (reader.readStringOrNull(offset)) as P;
+    case 7:
+      return (reader.readBoolOrNull(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinySandboxPerkDefinitionSerializeWeb(
+    IsarCollection<DestinySandboxPerkDefinition> collection,
+    DestinySandboxPerkDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(
+      jsObj,
+      'damageType',
+      _destinySandboxPerkDefinitionDamageTypeConverter
+          .toIsar(object.damageType));
+  IsarNative.jsObjectSet(jsObj, 'damageTypeHash', object.damageTypeHash);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayProperties',
+      _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties));
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(jsObj, 'isDisplayable', object.isDisplayable);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'perkGroups',
+      _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .toIsar(object.perkGroups));
+  IsarNative.jsObjectSet(jsObj, 'perkIdentifier', object.perkIdentifier);
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  return jsObj;
+}
+
+DestinySandboxPerkDefinition _destinySandboxPerkDefinitionDeserializeWeb(
+    IsarCollection<DestinySandboxPerkDefinition> collection, dynamic jsObj) {
+  final object = DestinySandboxPerkDefinition();
+  object.damageType = _destinySandboxPerkDefinitionDamageTypeConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'damageType'));
+  object.damageTypeHash = IsarNative.jsObjectGet(jsObj, 'damageTypeHash');
+  object.displayProperties =
+      _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.isDisplayable = IsarNative.jsObjectGet(jsObj, 'isDisplayable');
+  object.perkGroups =
+      _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'perkGroups'));
+  object.perkIdentifier = IsarNative.jsObjectGet(jsObj, 'perkIdentifier');
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  return object;
+}
+
+P _destinySandboxPerkDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'damageType':
+      return (_destinySandboxPerkDefinitionDamageTypeConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'damageType'))) as P;
+    case 'damageTypeHash':
+      return (IsarNative.jsObjectGet(jsObj, 'damageTypeHash')) as P;
+    case 'displayProperties':
+      return (_destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'isDisplayable':
+      return (IsarNative.jsObjectGet(jsObj, 'isDisplayable')) as P;
+    case 'perkGroups':
+      return (_destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'perkGroups'))) as P;
+    case 'perkIdentifier':
+      return (IsarNative.jsObjectGet(jsObj, 'perkIdentifier')) as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinySandboxPerkDefinitionAttachLinks(
+    IsarCollection col, int id, DestinySandboxPerkDefinition object) {}
 
 extension DestinySandboxPerkDefinitionQueryWhereSort on QueryBuilder<
     DestinySandboxPerkDefinition, DestinySandboxPerkDefinition, QWhere> {
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QAfterWhere> anyHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension DestinySandboxPerkDefinitionQueryWhere on QueryBuilder<
     DestinySandboxPerkDefinition, DestinySandboxPerkDefinition, QWhereClause> {
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
-      QAfterWhereClause> hashEqualTo(int? hash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
+      QAfterWhereClause> hashEqualTo(int hash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: hash,
       includeLower: true,
-      upper: [hash],
+      upper: hash,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
-      QAfterWhereClause> hashNotEqualTo(int? hash) {
+      QAfterWhereClause> hashNotEqualTo(int hash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
-      QAfterWhereClause> hashGreaterThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
-      includeLower: include,
-    ));
+      QAfterWhereClause> hashGreaterThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: hash, includeLower: include),
+    );
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
-      QAfterWhereClause> hashLessThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [hash],
-      includeUpper: include,
-    ));
+      QAfterWhereClause> hashLessThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: hash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QAfterWhereClause> hashBetween(
-    int? lowerHash,
-    int? upperHash, {
+    int lowerHash,
+    int upperHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerHash,
       includeLower: includeLower,
-      upper: [upperHash],
+      upper: upperHash,
       includeUpper: includeUpper,
     ));
   }
@@ -618,7 +595,7 @@ extension DestinySandboxPerkDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
-      QAfterFilterCondition> hashEqualTo(int? value) {
+      QAfterFilterCondition> hashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hash',
@@ -628,7 +605,7 @@ extension DestinySandboxPerkDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QAfterFilterCondition> hashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -641,7 +618,7 @@ extension DestinySandboxPerkDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QAfterFilterCondition> hashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -654,8 +631,8 @@ extension DestinySandboxPerkDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinySandboxPerkDefinition, DestinySandboxPerkDefinition,
       QAfterFilterCondition> hashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

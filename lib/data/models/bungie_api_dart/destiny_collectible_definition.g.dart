@@ -1,26 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 part of 'destiny_collectible_definition.dart';
 
 // **************************************************************************
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinyCollectibleDefinitionCollection on Isar {
   IsarCollection<DestinyCollectibleDefinition>
-      get destinyCollectibleDefinitions {
-    return getCollection('DestinyCollectibleDefinition');
-  }
+      get destinyCollectibleDefinitions => getCollection();
 }
 
-final DestinyCollectibleDefinitionSchema = CollectionSchema(
+const DestinyCollectibleDefinitionSchema = CollectionSchema(
   name: 'DestinyCollectibleDefinition',
   schema:
       '{"name":"DestinyCollectibleDefinition","idName":"itemHash","properties":[{"name":"acquisitionInfo","type":"String"},{"name":"displayProperties","type":"String"},{"name":"hash","type":"Long"},{"name":"index","type":"Long"},{"name":"parentNodeHashes","type":"LongList"},{"name":"presentationInfo","type":"String"},{"name":"presentationNodeType","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"scope","type":"Long"},{"name":"sourceHash","type":"Long"},{"name":"sourceString","type":"String"},{"name":"stateInfo","type":"String"},{"name":"traitHashes","type":"LongList"},{"name":"traitIds","type":"StringList"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinyCollectibleDefinitionNativeAdapter(),
-  webAdapter: const _DestinyCollectibleDefinitionWebAdapter(),
   idName: 'itemHash',
   propertyIds: {
     'acquisitionInfo': 0,
@@ -40,21 +38,39 @@ final DestinyCollectibleDefinitionSchema = CollectionSchema(
   },
   listProperties: {'parentNodeHashes', 'traitHashes', 'traitIds'},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.itemHash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.itemHash;
-    }
-  },
-  setId: (obj, id) => obj.itemHash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinyCollectibleDefinitionGetId,
+  setId: _destinyCollectibleDefinitionSetId,
+  getLinks: _destinyCollectibleDefinitionGetLinks,
+  attachLinks: _destinyCollectibleDefinitionAttachLinks,
+  serializeNative: _destinyCollectibleDefinitionSerializeNative,
+  deserializeNative: _destinyCollectibleDefinitionDeserializeNative,
+  deserializePropNative: _destinyCollectibleDefinitionDeserializePropNative,
+  serializeWeb: _destinyCollectibleDefinitionSerializeWeb,
+  deserializeWeb: _destinyCollectibleDefinitionDeserializeWeb,
+  deserializePropWeb: _destinyCollectibleDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinyCollectibleDefinitionGetId(DestinyCollectibleDefinition object) {
+  if (object.itemHash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.itemHash;
+  }
+}
+
+void _destinyCollectibleDefinitionSetId(
+    DestinyCollectibleDefinition object, int id) {
+  object.itemHash = id;
+}
+
+List<IsarLinkBase> _destinyCollectibleDefinitionGetLinks(
+    DestinyCollectibleDefinition object) {
+  return [];
+}
 
 const _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter =
     DestinyCollectibleAcquisitionBlockConverter();
@@ -69,430 +85,392 @@ const _destinyCollectibleDefinitionDestinyScopeConverter =
 const _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter =
     DestinyCollectibleStateBlockConverter();
 
-class _DestinyCollectibleDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinyCollectibleDefinition> {
-  const _DestinyCollectibleDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinyCollectibleDefinition> collection,
-      DestinyCollectibleDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(
-        jsObj,
-        'acquisitionInfo',
-        _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
-            .toIsar(object.acquisitionInfo));
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayProperties',
-        _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties));
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(jsObj, 'itemHash', object.itemHash);
-    IsarNative.jsObjectSet(jsObj, 'parentNodeHashes', object.parentNodeHashes);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'presentationInfo',
-        _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
-            .toIsar(object.presentationInfo));
-    IsarNative.jsObjectSet(
-        jsObj,
-        'presentationNodeType',
-        _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
-            .toIsar(object.presentationNodeType));
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'scope',
-        _destinyCollectibleDefinitionDestinyScopeConverter
-            .toIsar(object.scope));
-    IsarNative.jsObjectSet(jsObj, 'sourceHash', object.sourceHash);
-    IsarNative.jsObjectSet(jsObj, 'sourceString', object.sourceString);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'stateInfo',
-        _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
-            .toIsar(object.stateInfo));
-    IsarNative.jsObjectSet(jsObj, 'traitHashes', object.traitHashes);
-    IsarNative.jsObjectSet(jsObj, 'traitIds', object.traitIds);
-    return jsObj;
+void _destinyCollectibleDefinitionSerializeNative(
+    IsarCollection<DestinyCollectibleDefinition> collection,
+    IsarRawObject rawObj,
+    DestinyCollectibleDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 =
+      _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+          .toIsar(object.acquisitionInfo);
+  IsarUint8List? _acquisitionInfo;
+  if (value0 != null) {
+    _acquisitionInfo = IsarBinaryWriter.utf8Encoder.convert(value0);
   }
-
-  @override
-  DestinyCollectibleDefinition deserialize(
-      IsarCollection<DestinyCollectibleDefinition> collection, dynamic jsObj) {
-    final object = DestinyCollectibleDefinition();
-    object.acquisitionInfo =
-        _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'acquisitionInfo'));
-    object.displayProperties =
-        _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.itemHash = IsarNative.jsObjectGet(jsObj, 'itemHash');
-    object.parentNodeHashes =
-        (IsarNative.jsObjectGet(jsObj, 'parentNodeHashes') as List?)
-            ?.map((e) => e ?? double.negativeInfinity)
-            .toList()
-            .cast<int>();
-    object.presentationInfo =
-        _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationInfo'));
-    object.presentationNodeType =
-        _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationNodeType'));
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    object.scope = _destinyCollectibleDefinitionDestinyScopeConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'));
-    object.sourceHash = IsarNative.jsObjectGet(jsObj, 'sourceHash');
-    object.sourceString = IsarNative.jsObjectGet(jsObj, 'sourceString');
-    object.stateInfo =
-        _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'stateInfo'));
-    object.traitHashes = (IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
-        ?.map((e) => e ?? double.negativeInfinity)
-        .toList()
-        .cast<int>();
-    object.traitIds = (IsarNative.jsObjectGet(jsObj, 'traitIds') as List?)
-        ?.map((e) => e ?? '')
-        .toList()
-        .cast<String>();
-    return object;
+  dynamicSize += (_acquisitionInfo?.length ?? 0) as int;
+  final value1 =
+      _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties);
+  IsarUint8List? _displayProperties;
+  if (value1 != null) {
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value1);
   }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'acquisitionInfo':
-        return (_destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'acquisitionInfo'))) as P;
-      case 'displayProperties':
-        return (_destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'itemHash':
-        return (IsarNative.jsObjectGet(jsObj, 'itemHash')) as P;
-      case 'parentNodeHashes':
-        return ((IsarNative.jsObjectGet(jsObj, 'parentNodeHashes') as List?)
-            ?.map((e) => e ?? double.negativeInfinity)
-            .toList()
-            .cast<int>()) as P;
-      case 'presentationInfo':
-        return (_destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationInfo'))) as P;
-      case 'presentationNodeType':
-        return (_destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(
-                IsarNative.jsObjectGet(jsObj, 'presentationNodeType'))) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      case 'scope':
-        return (_destinyCollectibleDefinitionDestinyScopeConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'))) as P;
-      case 'sourceHash':
-        return (IsarNative.jsObjectGet(jsObj, 'sourceHash')) as P;
-      case 'sourceString':
-        return (IsarNative.jsObjectGet(jsObj, 'sourceString')) as P;
-      case 'stateInfo':
-        return (_destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'stateInfo'))) as P;
-      case 'traitHashes':
-        return ((IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
-            ?.map((e) => e ?? double.negativeInfinity)
-            .toList()
-            .cast<int>()) as P;
-      case 'traitIds':
-        return ((IsarNative.jsObjectGet(jsObj, 'traitIds') as List?)
-            ?.map((e) => e ?? '')
-            .toList()
-            .cast<String>()) as P;
-      default:
-        throw 'Illegal propertyName';
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
+  final value2 = object.hash;
+  final _hash = value2;
+  final value3 = object.index;
+  final _index = value3;
+  final value4 = object.parentNodeHashes;
+  dynamicSize += (value4?.length ?? 0) * 8;
+  final _parentNodeHashes = value4;
+  final value5 =
+      _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .toIsar(object.presentationInfo);
+  IsarUint8List? _presentationInfo;
+  if (value5 != null) {
+    _presentationInfo = IsarBinaryWriter.utf8Encoder.convert(value5);
+  }
+  dynamicSize += (_presentationInfo?.length ?? 0) as int;
+  final value6 =
+      _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
+          .toIsar(object.presentationNodeType);
+  final _presentationNodeType = value6;
+  final value7 = object.redacted;
+  final _redacted = value7;
+  final value8 =
+      _destinyCollectibleDefinitionDestinyScopeConverter.toIsar(object.scope);
+  final _scope = value8;
+  final value9 = object.sourceHash;
+  final _sourceHash = value9;
+  final value10 = object.sourceString;
+  IsarUint8List? _sourceString;
+  if (value10 != null) {
+    _sourceString = IsarBinaryWriter.utf8Encoder.convert(value10);
+  }
+  dynamicSize += (_sourceString?.length ?? 0) as int;
+  final value11 =
+      _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .toIsar(object.stateInfo);
+  IsarUint8List? _stateInfo;
+  if (value11 != null) {
+    _stateInfo = IsarBinaryWriter.utf8Encoder.convert(value11);
+  }
+  dynamicSize += (_stateInfo?.length ?? 0) as int;
+  final value12 = object.traitHashes;
+  dynamicSize += (value12?.length ?? 0) * 8;
+  final _traitHashes = value12;
+  final value13 = object.traitIds;
+  dynamicSize += (value13?.length ?? 0) * 8;
+  List<IsarUint8List?>? bytesList13;
+  if (value13 != null) {
+    bytesList13 = [];
+    for (var str in value13) {
+      final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
+      bytesList13.add(bytes);
+      dynamicSize += bytes.length as int;
     }
   }
+  final _traitIds = bytesList13;
+  final size = staticSize + dynamicSize;
 
-  @override
-  void attachLinks(Isar isar, int id, DestinyCollectibleDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBytes(offsets[0], _acquisitionInfo);
+  writer.writeBytes(offsets[1], _displayProperties);
+  writer.writeLong(offsets[2], _hash);
+  writer.writeLong(offsets[3], _index);
+  writer.writeLongList(offsets[4], _parentNodeHashes);
+  writer.writeBytes(offsets[5], _presentationInfo);
+  writer.writeLong(offsets[6], _presentationNodeType);
+  writer.writeBool(offsets[7], _redacted);
+  writer.writeLong(offsets[8], _scope);
+  writer.writeLong(offsets[9], _sourceHash);
+  writer.writeBytes(offsets[10], _sourceString);
+  writer.writeBytes(offsets[11], _stateInfo);
+  writer.writeLongList(offsets[12], _traitHashes);
+  writer.writeStringList(offsets[13], _traitIds);
 }
 
-class _DestinyCollectibleDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinyCollectibleDefinition> {
-  const _DestinyCollectibleDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinyCollectibleDefinition> collection,
-      IsarRawObject rawObj,
-      DestinyCollectibleDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 =
-        _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
-            .toIsar(object.acquisitionInfo);
-    IsarUint8List? _acquisitionInfo;
-    if (value0 != null) {
-      _acquisitionInfo = IsarBinaryWriter.utf8Encoder.convert(value0);
-    }
-    dynamicSize += (_acquisitionInfo?.length ?? 0) as int;
-    final value1 =
-        _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties);
-    IsarUint8List? _displayProperties;
-    if (value1 != null) {
-      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value1);
-    }
-    dynamicSize += (_displayProperties?.length ?? 0) as int;
-    final value2 = object.hash;
-    final _hash = value2;
-    final value3 = object.index;
-    final _index = value3;
-    final value4 = object.parentNodeHashes;
-    dynamicSize += (value4?.length ?? 0) * 8;
-    final _parentNodeHashes = value4;
-    final value5 =
-        _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
-            .toIsar(object.presentationInfo);
-    IsarUint8List? _presentationInfo;
-    if (value5 != null) {
-      _presentationInfo = IsarBinaryWriter.utf8Encoder.convert(value5);
-    }
-    dynamicSize += (_presentationInfo?.length ?? 0) as int;
-    final value6 =
-        _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
-            .toIsar(object.presentationNodeType);
-    final _presentationNodeType = value6;
-    final value7 = object.redacted;
-    final _redacted = value7;
-    final value8 =
-        _destinyCollectibleDefinitionDestinyScopeConverter.toIsar(object.scope);
-    final _scope = value8;
-    final value9 = object.sourceHash;
-    final _sourceHash = value9;
-    final value10 = object.sourceString;
-    IsarUint8List? _sourceString;
-    if (value10 != null) {
-      _sourceString = IsarBinaryWriter.utf8Encoder.convert(value10);
-    }
-    dynamicSize += (_sourceString?.length ?? 0) as int;
-    final value11 =
-        _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
-            .toIsar(object.stateInfo);
-    IsarUint8List? _stateInfo;
-    if (value11 != null) {
-      _stateInfo = IsarBinaryWriter.utf8Encoder.convert(value11);
-    }
-    dynamicSize += (_stateInfo?.length ?? 0) as int;
-    final value12 = object.traitHashes;
-    dynamicSize += (value12?.length ?? 0) * 8;
-    final _traitHashes = value12;
-    final value13 = object.traitIds;
-    dynamicSize += (value13?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList13;
-    if (value13 != null) {
-      bytesList13 = [];
-      for (var str in value13) {
-        final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList13.add(bytes);
-        dynamicSize += bytes.length as int;
-      }
-    }
-    final _traitIds = bytesList13;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBytes(offsets[0], _acquisitionInfo);
-    writer.writeBytes(offsets[1], _displayProperties);
-    writer.writeLong(offsets[2], _hash);
-    writer.writeLong(offsets[3], _index);
-    writer.writeLongList(offsets[4], _parentNodeHashes);
-    writer.writeBytes(offsets[5], _presentationInfo);
-    writer.writeLong(offsets[6], _presentationNodeType);
-    writer.writeBool(offsets[7], _redacted);
-    writer.writeLong(offsets[8], _scope);
-    writer.writeLong(offsets[9], _sourceHash);
-    writer.writeBytes(offsets[10], _sourceString);
-    writer.writeBytes(offsets[11], _stateInfo);
-    writer.writeLongList(offsets[12], _traitHashes);
-    writer.writeStringList(offsets[13], _traitIds);
-  }
-
-  @override
-  DestinyCollectibleDefinition deserialize(
-      IsarCollection<DestinyCollectibleDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinyCollectibleDefinition();
-    object.acquisitionInfo =
-        _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
-            .fromIsar(reader.readStringOrNull(offsets[0]));
-    object.displayProperties =
-        _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offsets[1]));
-    object.hash = reader.readLongOrNull(offsets[2]);
-    object.index = reader.readLongOrNull(offsets[3]);
-    object.itemHash = id;
-    object.parentNodeHashes = reader.readLongList(offsets[4]);
-    object.presentationInfo =
-        _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
-            .fromIsar(reader.readStringOrNull(offsets[5]));
-    object.presentationNodeType =
-        _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(reader.readLongOrNull(offsets[6]));
-    object.redacted = reader.readBoolOrNull(offsets[7]);
-    object.scope = _destinyCollectibleDefinitionDestinyScopeConverter
-        .fromIsar(reader.readLongOrNull(offsets[8]));
-    object.sourceHash = reader.readLongOrNull(offsets[9]);
-    object.sourceString = reader.readStringOrNull(offsets[10]);
-    object.stateInfo =
-        _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
-            .fromIsar(reader.readStringOrNull(offsets[11]));
-    object.traitHashes = reader.readLongList(offsets[12]);
-    object.traitIds = reader.readStringList(offsets[13]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (_destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 1:
-        return (_destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 2:
-        return (reader.readLongOrNull(offset)) as P;
-      case 3:
-        return (reader.readLongOrNull(offset)) as P;
-      case 4:
-        return (reader.readLongList(offset)) as P;
-      case 5:
-        return (_destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 6:
-        return (_destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 7:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 8:
-        return (_destinyCollectibleDefinitionDestinyScopeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 9:
-        return (reader.readLongOrNull(offset)) as P;
-      case 10:
-        return (reader.readStringOrNull(offset)) as P;
-      case 11:
-        return (_destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 12:
-        return (reader.readLongList(offset)) as P;
-      case 13:
-        return (reader.readStringList(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyCollectibleDefinition object) {}
+DestinyCollectibleDefinition _destinyCollectibleDefinitionDeserializeNative(
+    IsarCollection<DestinyCollectibleDefinition> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = DestinyCollectibleDefinition();
+  object.acquisitionInfo =
+      _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+          .fromIsar(reader.readStringOrNull(offsets[0]));
+  object.displayProperties =
+      _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offsets[1]));
+  object.hash = reader.readLongOrNull(offsets[2]);
+  object.index = reader.readLongOrNull(offsets[3]);
+  object.itemHash = id;
+  object.parentNodeHashes = reader.readLongList(offsets[4]);
+  object.presentationInfo =
+      _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .fromIsar(reader.readStringOrNull(offsets[5]));
+  object.presentationNodeType =
+      _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
+          .fromIsar(reader.readLongOrNull(offsets[6]));
+  object.redacted = reader.readBoolOrNull(offsets[7]);
+  object.scope = _destinyCollectibleDefinitionDestinyScopeConverter
+      .fromIsar(reader.readLongOrNull(offsets[8]));
+  object.sourceHash = reader.readLongOrNull(offsets[9]);
+  object.sourceString = reader.readStringOrNull(offsets[10]);
+  object.stateInfo =
+      _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .fromIsar(reader.readStringOrNull(offsets[11]));
+  object.traitHashes = reader.readLongList(offsets[12]);
+  object.traitIds = reader.readStringList(offsets[13]);
+  return object;
 }
+
+P _destinyCollectibleDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (_destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 1:
+      return (_destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 2:
+      return (reader.readLongOrNull(offset)) as P;
+    case 3:
+      return (reader.readLongOrNull(offset)) as P;
+    case 4:
+      return (reader.readLongList(offset)) as P;
+    case 5:
+      return (_destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 6:
+      return (_destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 7:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 8:
+      return (_destinyCollectibleDefinitionDestinyScopeConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 9:
+      return (reader.readLongOrNull(offset)) as P;
+    case 10:
+      return (reader.readStringOrNull(offset)) as P;
+    case 11:
+      return (_destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 12:
+      return (reader.readLongList(offset)) as P;
+    case 13:
+      return (reader.readStringList(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinyCollectibleDefinitionSerializeWeb(
+    IsarCollection<DestinyCollectibleDefinition> collection,
+    DestinyCollectibleDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(
+      jsObj,
+      'acquisitionInfo',
+      _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+          .toIsar(object.acquisitionInfo));
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayProperties',
+      _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties));
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(jsObj, 'itemHash', object.itemHash);
+  IsarNative.jsObjectSet(jsObj, 'parentNodeHashes', object.parentNodeHashes);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'presentationInfo',
+      _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .toIsar(object.presentationInfo));
+  IsarNative.jsObjectSet(
+      jsObj,
+      'presentationNodeType',
+      _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
+          .toIsar(object.presentationNodeType));
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  IsarNative.jsObjectSet(jsObj, 'scope',
+      _destinyCollectibleDefinitionDestinyScopeConverter.toIsar(object.scope));
+  IsarNative.jsObjectSet(jsObj, 'sourceHash', object.sourceHash);
+  IsarNative.jsObjectSet(jsObj, 'sourceString', object.sourceString);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'stateInfo',
+      _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .toIsar(object.stateInfo));
+  IsarNative.jsObjectSet(jsObj, 'traitHashes', object.traitHashes);
+  IsarNative.jsObjectSet(jsObj, 'traitIds', object.traitIds);
+  return jsObj;
+}
+
+DestinyCollectibleDefinition _destinyCollectibleDefinitionDeserializeWeb(
+    IsarCollection<DestinyCollectibleDefinition> collection, dynamic jsObj) {
+  final object = DestinyCollectibleDefinition();
+  object.acquisitionInfo =
+      _destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'acquisitionInfo'));
+  object.displayProperties =
+      _destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.itemHash = IsarNative.jsObjectGet(jsObj, 'itemHash');
+  object.parentNodeHashes =
+      (IsarNative.jsObjectGet(jsObj, 'parentNodeHashes') as List?)
+          ?.map((e) => e ?? double.negativeInfinity)
+          .toList()
+          .cast<int>();
+  object.presentationInfo =
+      _destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationInfo'));
+  object.presentationNodeType =
+      _destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationNodeType'));
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  object.scope = _destinyCollectibleDefinitionDestinyScopeConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'));
+  object.sourceHash = IsarNative.jsObjectGet(jsObj, 'sourceHash');
+  object.sourceString = IsarNative.jsObjectGet(jsObj, 'sourceString');
+  object.stateInfo =
+      _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'stateInfo'));
+  object.traitHashes = (IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
+      ?.map((e) => e ?? double.negativeInfinity)
+      .toList()
+      .cast<int>();
+  object.traitIds = (IsarNative.jsObjectGet(jsObj, 'traitIds') as List?)
+      ?.map((e) => e ?? '')
+      .toList()
+      .cast<String>();
+  return object;
+}
+
+P _destinyCollectibleDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'acquisitionInfo':
+      return (_destinyCollectibleDefinitionDestinyCollectibleAcquisitionBlockConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'acquisitionInfo'))) as P;
+    case 'displayProperties':
+      return (_destinyCollectibleDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'itemHash':
+      return (IsarNative.jsObjectGet(jsObj, 'itemHash')) as P;
+    case 'parentNodeHashes':
+      return ((IsarNative.jsObjectGet(jsObj, 'parentNodeHashes') as List?)
+          ?.map((e) => e ?? double.negativeInfinity)
+          .toList()
+          .cast<int>()) as P;
+    case 'presentationInfo':
+      return (_destinyCollectibleDefinitionDestinyPresentationChildBlockConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationInfo'))) as P;
+    case 'presentationNodeType':
+      return (_destinyCollectibleDefinitionDestinyPresentationNodeTypeConverter
+              .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationNodeType')))
+          as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    case 'scope':
+      return (_destinyCollectibleDefinitionDestinyScopeConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'))) as P;
+    case 'sourceHash':
+      return (IsarNative.jsObjectGet(jsObj, 'sourceHash')) as P;
+    case 'sourceString':
+      return (IsarNative.jsObjectGet(jsObj, 'sourceString')) as P;
+    case 'stateInfo':
+      return (_destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'stateInfo'))) as P;
+    case 'traitHashes':
+      return ((IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
+          ?.map((e) => e ?? double.negativeInfinity)
+          .toList()
+          .cast<int>()) as P;
+    case 'traitIds':
+      return ((IsarNative.jsObjectGet(jsObj, 'traitIds') as List?)
+          ?.map((e) => e ?? '')
+          .toList()
+          .cast<String>()) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinyCollectibleDefinitionAttachLinks(
+    IsarCollection col, int id, DestinyCollectibleDefinition object) {}
 
 extension DestinyCollectibleDefinitionQueryWhereSort on QueryBuilder<
     DestinyCollectibleDefinition, DestinyCollectibleDefinition, QWhere> {
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterWhere> anyItemHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension DestinyCollectibleDefinitionQueryWhere on QueryBuilder<
     DestinyCollectibleDefinition, DestinyCollectibleDefinition, QWhereClause> {
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
-      QAfterWhereClause> itemHashEqualTo(int? itemHash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [itemHash],
+      QAfterWhereClause> itemHashEqualTo(int itemHash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: itemHash,
       includeLower: true,
-      upper: [itemHash],
+      upper: itemHash,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
-      QAfterWhereClause> itemHashNotEqualTo(int? itemHash) {
+      QAfterWhereClause> itemHashNotEqualTo(int itemHash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [itemHash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [itemHash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: itemHash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: itemHash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [itemHash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [itemHash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: itemHash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: itemHash, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
-      QAfterWhereClause> itemHashGreaterThan(
-    int? itemHash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [itemHash],
-      includeLower: include,
-    ));
+          QAfterWhereClause>
+      itemHashGreaterThan(int itemHash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: itemHash, includeLower: include),
+    );
   }
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
-      QAfterWhereClause> itemHashLessThan(
-    int? itemHash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [itemHash],
-      includeUpper: include,
-    ));
+          QAfterWhereClause>
+      itemHashLessThan(int itemHash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: itemHash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterWhereClause> itemHashBetween(
-    int? lowerItemHash,
-    int? upperItemHash, {
+    int lowerItemHash,
+    int upperItemHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerItemHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerItemHash,
       includeLower: includeLower,
-      upper: [upperItemHash],
+      upper: upperItemHash,
       includeUpper: includeUpper,
     ));
   }
@@ -902,7 +880,7 @@ extension DestinyCollectibleDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
-      QAfterFilterCondition> itemHashEqualTo(int? value) {
+      QAfterFilterCondition> itemHashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'itemHash',
@@ -912,7 +890,7 @@ extension DestinyCollectibleDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterFilterCondition> itemHashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -925,7 +903,7 @@ extension DestinyCollectibleDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterFilterCondition> itemHashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -938,8 +916,8 @@ extension DestinyCollectibleDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyCollectibleDefinition, DestinyCollectibleDefinition,
       QAfterFilterCondition> itemHashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

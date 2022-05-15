@@ -50,10 +50,10 @@ class AccountService {
 
   Future<GroupUserInfoCard?> getMembership() async {
     if (currentMembership == null) {
-      var _membershipData = await _getStoredMembershipData();
-      _membershipData ??= await updateMembershipData();
-      var _membershipId = await getCurrentMembershipId();
-      currentMembership = getMembershipById(_membershipData, _membershipId!);
+      var membershipData = await _getStoredMembershipData();
+      membershipData ??= await updateMembershipData();
+      var membershipId = await getCurrentMembershipId();
+      currentMembership = getMembershipById(membershipData, membershipId!);
     }
     return currentMembership;
   }

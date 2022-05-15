@@ -6,20 +6,17 @@ part of 'destiny_stat_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinyStatDefinitionCollection on Isar {
-  IsarCollection<DestinyStatDefinition> get destinyStatDefinitions {
-    return getCollection('DestinyStatDefinition');
-  }
+  IsarCollection<DestinyStatDefinition> get destinyStatDefinitions =>
+      getCollection();
 }
 
-final DestinyStatDefinitionSchema = CollectionSchema(
+const DestinyStatDefinitionSchema = CollectionSchema(
   name: 'DestinyStatDefinition',
   schema:
       '{"name":"DestinyStatDefinition","idName":"hash","properties":[{"name":"displayProperties","type":"String"},{"name":"hasComputedBlock","type":"Bool"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"statCategory","type":"Long"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinyStatDefinitionNativeAdapter(),
-  webAdapter: const _DestinyStatDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'displayProperties': 0,
@@ -30,265 +27,245 @@ final DestinyStatDefinitionSchema = CollectionSchema(
   },
   listProperties: {},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.hash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.hash;
-    }
-  },
-  setId: (obj, id) => obj.hash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinyStatDefinitionGetId,
+  setId: _destinyStatDefinitionSetId,
+  getLinks: _destinyStatDefinitionGetLinks,
+  attachLinks: _destinyStatDefinitionAttachLinks,
+  serializeNative: _destinyStatDefinitionSerializeNative,
+  deserializeNative: _destinyStatDefinitionDeserializeNative,
+  deserializePropNative: _destinyStatDefinitionDeserializePropNative,
+  serializeWeb: _destinyStatDefinitionSerializeWeb,
+  deserializeWeb: _destinyStatDefinitionDeserializeWeb,
+  deserializePropWeb: _destinyStatDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinyStatDefinitionGetId(DestinyStatDefinition object) {
+  if (object.hash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.hash;
+  }
+}
+
+void _destinyStatDefinitionSetId(DestinyStatDefinition object, int id) {
+  object.hash = id;
+}
+
+List<IsarLinkBase> _destinyStatDefinitionGetLinks(
+    DestinyStatDefinition object) {
+  return [];
+}
 
 const _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter =
     DestinyDisplayPropertiesDefinitionConverter();
 const _destinyStatDefinitionDestinyStatCategoryConverter =
     DestinyStatCategoryConverter();
 
-class _DestinyStatDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinyStatDefinition> {
-  const _DestinyStatDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinyStatDefinition> collection,
-      DestinyStatDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayProperties',
-        _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties));
-    IsarNative.jsObjectSet(jsObj, 'hasComputedBlock', object.hasComputedBlock);
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'statCategory',
-        _destinyStatDefinitionDestinyStatCategoryConverter
-            .toIsar(object.statCategory));
-    return jsObj;
+void _destinyStatDefinitionSerializeNative(
+    IsarCollection<DestinyStatDefinition> collection,
+    IsarRawObject rawObj,
+    DestinyStatDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 =
+      _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties);
+  IsarUint8List? displayProperties;
+  if (value0 != null) {
+    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
   }
+  dynamicSize += (displayProperties?.length ?? 0) as int;
+  final value1 = object.hasComputedBlock;
+  final hasComputedBlock = value1;
+  final value2 = object.index;
+  final index = value2;
+  final value3 = object.redacted;
+  final redacted = value3;
+  final value4 = _destinyStatDefinitionDestinyStatCategoryConverter
+      .toIsar(object.statCategory);
+  final statCategory = value4;
+  final size = staticSize + dynamicSize;
 
-  @override
-  DestinyStatDefinition deserialize(
-      IsarCollection<DestinyStatDefinition> collection, dynamic jsObj) {
-    final object = DestinyStatDefinition();
-    object.displayProperties =
-        _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
-    object.hasComputedBlock = IsarNative.jsObjectGet(jsObj, 'hasComputedBlock');
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    object.statCategory = _destinyStatDefinitionDestinyStatCategoryConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'statCategory'));
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'displayProperties':
-        return (_destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
-      case 'hasComputedBlock':
-        return (IsarNative.jsObjectGet(jsObj, 'hasComputedBlock')) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      case 'statCategory':
-        return (_destinyStatDefinitionDestinyStatCategoryConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'statCategory'))) as P;
-      default:
-        throw 'Illegal propertyName';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyStatDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBytes(offsets[0], displayProperties);
+  writer.writeBool(offsets[1], hasComputedBlock);
+  writer.writeLong(offsets[2], index);
+  writer.writeBool(offsets[3], redacted);
+  writer.writeLong(offsets[4], statCategory);
 }
 
-class _DestinyStatDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinyStatDefinition> {
-  const _DestinyStatDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinyStatDefinition> collection,
-      IsarRawObject rawObj,
-      DestinyStatDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 =
-        _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties);
-    IsarUint8List? _displayProperties;
-    if (value0 != null) {
-      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
-    }
-    dynamicSize += (_displayProperties?.length ?? 0) as int;
-    final value1 = object.hasComputedBlock;
-    final _hasComputedBlock = value1;
-    final value2 = object.index;
-    final _index = value2;
-    final value3 = object.redacted;
-    final _redacted = value3;
-    final value4 = _destinyStatDefinitionDestinyStatCategoryConverter
-        .toIsar(object.statCategory);
-    final _statCategory = value4;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBytes(offsets[0], _displayProperties);
-    writer.writeBool(offsets[1], _hasComputedBlock);
-    writer.writeLong(offsets[2], _index);
-    writer.writeBool(offsets[3], _redacted);
-    writer.writeLong(offsets[4], _statCategory);
-  }
-
-  @override
-  DestinyStatDefinition deserialize(
-      IsarCollection<DestinyStatDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinyStatDefinition();
-    object.displayProperties =
-        _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offsets[0]));
-    object.hasComputedBlock = reader.readBoolOrNull(offsets[1]);
-    object.hash = id;
-    object.index = reader.readLongOrNull(offsets[2]);
-    object.redacted = reader.readBoolOrNull(offsets[3]);
-    object.statCategory = _destinyStatDefinitionDestinyStatCategoryConverter
-        .fromIsar(reader.readLongOrNull(offsets[4]));
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (_destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 1:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 2:
-        return (reader.readLongOrNull(offset)) as P;
-      case 3:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 4:
-        return (_destinyStatDefinitionDestinyStatCategoryConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyStatDefinition object) {}
+DestinyStatDefinition _destinyStatDefinitionDeserializeNative(
+    IsarCollection<DestinyStatDefinition> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = DestinyStatDefinition();
+  object.displayProperties =
+      _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offsets[0]));
+  object.hasComputedBlock = reader.readBoolOrNull(offsets[1]);
+  object.hash = id;
+  object.index = reader.readLongOrNull(offsets[2]);
+  object.redacted = reader.readBoolOrNull(offsets[3]);
+  object.statCategory = _destinyStatDefinitionDestinyStatCategoryConverter
+      .fromIsar(reader.readLongOrNull(offsets[4]));
+  return object;
 }
+
+P _destinyStatDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (_destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 1:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 2:
+      return (reader.readLongOrNull(offset)) as P;
+    case 3:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 4:
+      return (_destinyStatDefinitionDestinyStatCategoryConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinyStatDefinitionSerializeWeb(
+    IsarCollection<DestinyStatDefinition> collection,
+    DestinyStatDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayProperties',
+      _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties));
+  IsarNative.jsObjectSet(jsObj, 'hasComputedBlock', object.hasComputedBlock);
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'statCategory',
+      _destinyStatDefinitionDestinyStatCategoryConverter
+          .toIsar(object.statCategory));
+  return jsObj;
+}
+
+DestinyStatDefinition _destinyStatDefinitionDeserializeWeb(
+    IsarCollection<DestinyStatDefinition> collection, dynamic jsObj) {
+  final object = DestinyStatDefinition();
+  object.displayProperties =
+      _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
+  object.hasComputedBlock = IsarNative.jsObjectGet(jsObj, 'hasComputedBlock');
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  object.statCategory = _destinyStatDefinitionDestinyStatCategoryConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'statCategory'));
+  return object;
+}
+
+P _destinyStatDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'displayProperties':
+      return (_destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
+    case 'hasComputedBlock':
+      return (IsarNative.jsObjectGet(jsObj, 'hasComputedBlock')) as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    case 'statCategory':
+      return (_destinyStatDefinitionDestinyStatCategoryConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'statCategory'))) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinyStatDefinitionAttachLinks(
+    IsarCollection col, int id, DestinyStatDefinition object) {}
 
 extension DestinyStatDefinitionQueryWhereSort
     on QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QWhere> {
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterWhere>
       anyHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension DestinyStatDefinitionQueryWhere on QueryBuilder<DestinyStatDefinition,
     DestinyStatDefinition, QWhereClause> {
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterWhereClause>
-      hashEqualTo(int? hash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
+      hashEqualTo(int hash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: hash,
       includeLower: true,
-      upper: [hash],
+      upper: hash,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterWhereClause>
-      hashNotEqualTo(int? hash) {
+      hashNotEqualTo(int hash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterWhereClause>
-      hashGreaterThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
-      includeLower: include,
-    ));
+      hashGreaterThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: hash, includeLower: include),
+    );
   }
 
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterWhereClause>
-      hashLessThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [hash],
-      includeUpper: include,
-    ));
+      hashLessThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: hash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition, QAfterWhereClause>
       hashBetween(
-    int? lowerHash,
-    int? upperHash, {
+    int lowerHash,
+    int upperHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerHash,
       includeLower: includeLower,
-      upper: [upperHash],
+      upper: upperHash,
       includeUpper: includeUpper,
     ));
   }
@@ -451,7 +428,7 @@ extension DestinyStatDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
-      QAfterFilterCondition> hashEqualTo(int? value) {
+      QAfterFilterCondition> hashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hash',
@@ -461,7 +438,7 @@ extension DestinyStatDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
       QAfterFilterCondition> hashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -474,7 +451,7 @@ extension DestinyStatDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
       QAfterFilterCondition> hashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -487,8 +464,8 @@ extension DestinyStatDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyStatDefinition, DestinyStatDefinition,
       QAfterFilterCondition> hashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

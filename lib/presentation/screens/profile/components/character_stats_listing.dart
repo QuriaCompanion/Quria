@@ -19,10 +19,10 @@ class CharacterStatsListing extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _CharacterStatsListingState createState() => _CharacterStatsListingState();
+  CharacterStatsListingState createState() => CharacterStatsListingState();
 }
 
-class _CharacterStatsListingState extends State<CharacterStatsListing> {
+class CharacterStatsListingState extends State<CharacterStatsListing> {
   late Map<String, String> data;
   @override
   initState() {

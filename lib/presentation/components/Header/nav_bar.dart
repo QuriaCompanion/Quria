@@ -5,10 +5,10 @@ import 'components/nav_item.dart';
 class NavBarWidget extends StatefulWidget {
   const NavBarWidget({Key? key}) : super(key: key);
   @override
-  _NavBarWidgetState createState() => _NavBarWidgetState();
+  NavBarWidgetState createState() => NavBarWidgetState();
 }
 
-class _NavBarWidgetState extends State<NavBarWidget> {
+class NavBarWidgetState extends State<NavBarWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(

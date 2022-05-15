@@ -14,10 +14,10 @@ class ExoticWidget extends StatefulWidget {
   const ExoticWidget({Key? key}) : super(key: key);
 
   @override
-  _ExoticWidgetState createState() => _ExoticWidgetState();
+  ExoticWidgetState createState() => ExoticWidgetState();
 }
 
-class _ExoticWidgetState extends State<ExoticWidget> {
+class ExoticWidgetState extends State<ExoticWidget> {
   final DisplayService display = DisplayService();
   late Future<List<DestinyInventoryItemDefinition>> _future;
   bool isLoading = true;

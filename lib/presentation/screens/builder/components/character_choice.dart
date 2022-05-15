@@ -9,10 +9,10 @@ class CharacterChoice extends StatefulWidget {
       : super(key: key);
 
   @override
-  _CharacterChoiceState createState() => _CharacterChoiceState();
+  CharacterChoiceState createState() => CharacterChoiceState();
 }
 
-class _CharacterChoiceState extends State<CharacterChoice> {
+class CharacterChoiceState extends State<CharacterChoice> {
   @override
   Widget build(BuildContext context) {
     return Row(

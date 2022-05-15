@@ -1,3 +1,4 @@
+import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -15,7 +16,6 @@ import 'package:uni_links/uni_links.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:bungie_api/helpers/oauth.dart';
-import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:bungie_api/models/user_membership_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -185,6 +185,7 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membership == null) {
       showSelectMembership();
     }
+    if (!mounted) return;
     Navigator.pushReplacementNamed(context, routeProfile);
   }
 
@@ -226,6 +227,7 @@ class LoginWidgetState extends State<LoginWidget> {
 
     if (await auth.getToken() == null) await auth.saveToken(token);
     await account.getMembership();
+    if (!mounted) return;
     Navigator.pushReplacementNamed(context, routeProfile);
   }
 }

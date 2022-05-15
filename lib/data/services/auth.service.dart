@@ -1,9 +1,5 @@
 import 'dart:async';
 import 'package:quria/data/services/bungie_api/account.service.dart';
-import 'package:universal_io/io.dart';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:uni_links/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -105,7 +101,7 @@ class AuthService {
     if (uri?.queryParameters == null) return null;
     if (uri!.queryParameters.containsKey("code") ||
         uri.queryParameters.containsKey("error")) {
-      closeWebView();
+      closeInAppWebView();
     }
 
     if (uri.queryParameters.containsKey("code")) {
@@ -121,14 +117,14 @@ class AuthService {
   Future<String> authorize([bool forceReauth = true]) async {
     var browser = BungieAuthBrowser();
     OAuth.openOAuth(browser, BungieApiService.clientId!, "fr", forceReauth);
-    Stream<String?> _stream = linkStream;
+    Stream<String?> stream = linkStream;
     Completer<String> completer = Completer();
 
-    linkStreamSub = _stream.listen((link) {
+    linkStreamSub = stream.listen((link) {
       Uri uri = Uri.parse(link!);
       if (uri.queryParameters.containsKey("code") ||
           uri.queryParameters.containsKey("error")) {
-        closeWebView();
+        closeInAppWebView();
         linkStreamSub.cancel();
       }
       if (uri.queryParameters.containsKey("code")) {
@@ -158,13 +154,6 @@ class BungieAuthBrowser implements OAuthBrowser {
 
   @override
   dynamic open(String url) async {
-    if (kIsWeb) {
-      await launch(url);
-    } else if (Platform.isIOS) {
-      await launch(url,
-          forceSafariVC: true, statusBarBrightness: Brightness.light);
-    } else {
-      await launch(url, forceSafariVC: true);
-    }
+    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
   }
 }

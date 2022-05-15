@@ -3,7 +3,6 @@
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 ///
@@ -37,32 +36,32 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static FirebaseOptions web = FirebaseOptions(
-    apiKey: dotenv.env['FIREBASE_WEB_API_KEY'] as String,
-    appId: dotenv.env['FIREBASE_WEB_APP_ID'] as String,
-    messagingSenderId: dotenv.env['FIREBASE_WEB_MESSAGING_SENDER_ID'] as String,
-    projectId: dotenv.env['FIREBASE_WEB_PROJECT_ID'] as String,
-    authDomain: dotenv.env['FIREBASE_WEB_AUTH_DOMAIN'] as String,
-    storageBucket: dotenv.env['FIREBASE_WEB_STORAGE_BUCKET'] as String,
-    measurementId: dotenv.env['FIREBASE_WEB_MEASUREMENT_ID'] as String,
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyAHPZS_6edfw4AVLW4VM1_hhkxrVUk9Mr0',
+    appId: '1:653536181122:web:c81569f39c669fc18eed9b',
+    messagingSenderId: '653536181122',
+    projectId: 'quriacompanion-13944',
+    authDomain: 'quriacompanion-13944.firebaseapp.com',
+    storageBucket: 'quriacompanion-13944.appspot.com',
+    measurementId: 'G-RW0ENQMR23',
   );
 
-  static FirebaseOptions android = FirebaseOptions(
-    apiKey: dotenv.env['FIREBASE_ANDROID_API_KEY'] as String,
-    appId: dotenv.env['FIREBASE_ANDROID_APP_ID'] as String,
-    messagingSenderId:
-        dotenv.env['FIREBASE_ANDROID_MESSAGING_SENDER_ID'] as String,
-    projectId: dotenv.env['FIREBASE_ANDROID_PROJECT_ID'] as String,
-    storageBucket: dotenv.env['FIREBASE_ANDROID_STORAGE_BUCKET'] as String,
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyDX67qhm1B6JeRhZ1zcLKfuU_wx6FBriFM',
+    appId: '1:653536181122:android:651521385f728d098eed9b',
+    messagingSenderId: '653536181122',
+    projectId: 'quriacompanion-13944',
+    storageBucket: 'quriacompanion-13944.appspot.com',
   );
 
-  static FirebaseOptions ios = FirebaseOptions(
-    apiKey: dotenv.env['FIREBASE_IOS_API_KEY'] as String,
-    appId: dotenv.env['FIREBASE_IOS_APP_ID'] as String,
-    messagingSenderId: dotenv.env['FIREBASE_IOS_MESSAGING_SENDER_ID'] as String,
-    projectId: dotenv.env['FIREBASE_IOS_PROJECT_ID'] as String,
-    storageBucket: dotenv.env['FIREBASE_IOS_STORAGE_BUCKET'] as String,
-    iosClientId: dotenv.env['FIREBASE_IOS_CLIENT_ID'] as String,
-    iosBundleId: dotenv.env['FIREBASE_IOS_BUNDLE_ID'] as String,
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDkDPScW8QD1NXA34WgFwJvnZ9pt5P8jfs',
+    appId: '1:653536181122:ios:6341e6a82f0095f18eed9b',
+    messagingSenderId: '653536181122',
+    projectId: 'quriacompanion-13944',
+    storageBucket: 'quriacompanion-13944.appspot.com',
+    iosClientId:
+        '653536181122-jqc4vj7f6a5l38jjtg6a2clrvjgilqmp.apps.googleusercontent.com',
+    iosBundleId: 'com.example.quria',
   );
 }
