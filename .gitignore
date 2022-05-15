@@ -36,10 +36,6 @@ UsershuntsworkcoursQuriaupload-keystore.jks
 /build/
 
 
-#firebase related
-/lib/firebase_options.dart
-/ios/firebase_app_id_file.json
-/android/app/google-services.json
 
 # Web related
 lib/generated_plugin_registrant.dart
