@@ -41,7 +41,7 @@ class BuilderRecapMobileView extends StatelessWidget {
                   child: BuilderRecapMobileActions(
                 onAction: (action) async {
                   switch (action) {
-                    case quick_actions.equip:
+                    case QuickActions.equip:
                       var bl = BottomLoader(context,
                           isDismissible: false, loader: const Loader());
                       bl.display();
@@ -55,7 +55,7 @@ class BuilderRecapMobileView extends StatelessWidget {
                           )
                           .then((value) => bl.close());
                       break;
-                    case quick_actions.save:
+                    case QuickActions.save:
                       showMaterialModalBottomSheet(
                           context: context,
                           backgroundColor: Colors.transparent,
@@ -65,7 +65,7 @@ class BuilderRecapMobileView extends StatelessWidget {
                             return const InProgressModal();
                           });
                       break;
-                    case quick_actions.share:
+                    case QuickActions.share:
                       showMaterialModalBottomSheet(
                           context: context,
                           backgroundColor: Colors.transparent,

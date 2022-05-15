@@ -1,6 +1,8 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/firebase_options.dart';
 import 'package:quria/presentation/components/app.dart';
 import 'package:quria/presentation/router.dart';
 import 'package:quria/presentation/screens/login.dart';
@@ -16,7 +18,9 @@ void main() async {
   //         appId: '1:653536181122:web:c81569f39c669fc18eed9b',
   //         messagingSenderId: '653536181122',
   //         projectId: 'quriacompanion-13944'));
-
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await dotenv.load(fileName: ".env");
   runApp(QuriaApp(
     router: AppRouter(),

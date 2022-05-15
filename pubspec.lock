@@ -43,13 +43,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0"
-  bloc:
-    dependency: "direct main"
-    description:
-      name: bloc
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.2.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -203,7 +196,7 @@ packages:
       name: collection
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.15.0"
+    version: "1.16.0"
   convert:
     dependency: transitive
     description:
@@ -232,13 +225,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.17.1"
-  cubit:
-    dependency: "direct main"
-    description:
-      name: cubit
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -267,13 +253,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
-  dropdown_below:
-    dependency: "direct main"
-    description:
-      name: dropdown_below
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   ffi:
     dependency: transitive
     description:
@@ -321,13 +300,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_bloc:
-    dependency: "direct main"
-    description:
-      name: flutter_bloc
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "7.3.3"
   flutter_dotenv:
     dependency: "direct main"
     description:
@@ -396,27 +368,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  hive:
-    dependency: "direct main"
-    description:
-      name: hive
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.5"
-  hive_flutter:
-    dependency: "direct main"
-    description:
-      name: hive_flutter
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.0"
-  hive_generator:
-    dependency: "direct dev"
-    description:
-      name: hive_generator
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.2"
   html:
     dependency: transitive
     description:
@@ -480,20 +431,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.1"
-  isolated_worker:
-    dependency: "direct main"
-    description:
-      name: isolated_worker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
   js:
     dependency: transitive
     description:
       name: js
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.3"
+    version: "0.6.4"
   json_annotation:
     dependency: "direct main"
     description:
@@ -549,7 +493,7 @@ packages:
       name: material_color_utilities
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.3"
+    version: "0.1.4"
   meta:
     dependency: transitive
     description:
@@ -578,13 +522,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.5.1"
-  nested:
-    dependency: transitive
-    description:
-      name: nested
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.0"
   node_preamble:
     dependency: transitive
     description:
@@ -592,13 +529,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
-  oauth2:
-    dependency: "direct main"
-    description:
-      name: oauth2
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.0"
   package_config:
     dependency: transitive
     description:
@@ -718,13 +648,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.2.4"
-  provider:
-    dependency: transitive
-    description:
-      name: provider
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "6.0.2"
   pub_semver:
     dependency: transitive
     description:
@@ -1002,7 +925,7 @@ packages:
       name: vector_math
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   vm_service:
     dependency: transitive
     description:
@@ -1060,5 +983,5 @@ packages:
     source: hosted
     version: "3.1.0"
 sdks:
-  dart: ">=2.16.0 <3.0.0"
+  dart: ">=2.17.0-0 <3.0.0"
   flutter: ">=2.5.0"
