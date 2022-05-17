@@ -104,23 +104,31 @@ class LoginWidgetState extends State<LoginWidget> {
     );
   }
 
+  void redirect() async {
+    if (kIsWeb) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        String clientId = BungieApiService.clientId!;
+        final authorizationEndpoint =
+            "https://www.bungie.net/fr/OAuth/Authorize?client_id=$clientId&response_type=code";
+        html.window.location.assign(authorizationEndpoint);
+      });
+    } else {
+      String code = await widget.auth.authorize(widget.forceReauth);
+      authCode(code);
+    }
+  }
+
   void authorizeClick(BuildContext context) async {
     try {
       try {
-        if (await widget.auth.getToken() != null) {
-          return checkMembership();
+        try {
+          if (await widget.auth.getToken() != null) {
+            return checkMembership();
+          }
+        } catch (_) {
+          redirect();
         }
-        if (kIsWeb) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            String clientId = BungieApiService.clientId!;
-            final authorizationEndpoint =
-                "https://www.bungie.net/fr/OAuth/Authorize?client_id=$clientId&response_type=code";
-            html.window.location.assign(authorizationEndpoint);
-          });
-        } else {
-          String code = await widget.auth.authorize(widget.forceReauth);
-          authCode(code);
-        }
+        redirect();
       } on OAuthException catch (e) {
         Navigator.of(context).pop();
         bool isIOS = Platform.isIOS;

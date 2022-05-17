@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
+import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/firebase_options.dart';
 import 'package:quria/presentation/components/app.dart';
@@ -27,15 +30,25 @@ class QuriaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(fontFamily: 'Inter'),
-      debugShowCheckedModeBanner: false,
-      home: LoginWidget(),
-      onGenerateRoute: AppRouter.generateRoute,
-      builder: (_, child) => AppView(
-        child: child!,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<BuilderExoticProvider>(
+          create: (context) => BuilderExoticProvider(),
+        ),
+        ChangeNotifierProvider<BuilderStatsFilterProvider>(
+          create: (context) => BuilderStatsFilterProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(fontFamily: 'Inter'),
+        debugShowCheckedModeBanner: false,
+        home: LoginWidget(),
+        onGenerateRoute: AppRouter.generateRoute,
+        builder: (_, child) => AppView(
+          child: child!,
+        ),
+        navigatorKey: navKey,
       ),
-      navigatorKey: navKey,
     );
   }
 }

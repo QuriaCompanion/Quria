@@ -6,11 +6,7 @@ import 'package:quria/data/models/helpers/filterHelper.model.dart';
 import 'package:quria/presentation/screens/builder/components/filter.dart';
 
 class StatsFilterMobileView extends StatefulWidget {
-  final List<FilterHelper> filters;
-  final Function(List<FilterHelper>) onFilterChanged;
-  const StatsFilterMobileView(
-      {required this.filters, required this.onFilterChanged, Key? key})
-      : super(key: key);
+  const StatsFilterMobileView({Key? key}) : super(key: key);
 
   @override
   State<StatsFilterMobileView> createState() => _StatsFilterMobileViewState();
@@ -29,7 +25,8 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
               children: [
                 textH1("Priorise tes statistiques"),
                 textBodyRegular(
-                    "Classe les statistiques par ordre de prÃ©fÃ©rence."),
+                    "Classe les statistiques par ordre de préférence.",
+                    utf8: false),
               ],
             )),
         Padding(
@@ -52,15 +49,11 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
                   ],
                 ),
               ),
-              SizedBox(
-                width: vw(context) * 0.8,
-                height: (43 + globalPadding(context)) * 6,
-                child: FilterWidget(
-                  items: widget.filters,
-                  onFilterChanged: (list) {
-                    widget.onFilterChanged(list);
-                  },
+              RepaintBoundary(
+                child: SizedBox(
                   width: vw(context) * 0.8,
+                  height: (43 + globalPadding(context)) * 6,
+                  child: FilterWidget(),
                 ),
               ),
             ],

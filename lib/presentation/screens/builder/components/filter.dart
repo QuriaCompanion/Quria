@@ -1,47 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/filterHelper.model.dart';
+import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 
-class FilterWidget extends StatefulWidget {
-  final double width;
-  final List<FilterHelper> items;
-  final Function(List<FilterHelper>) onFilterChanged;
-  const FilterWidget({
-    required this.width,
-    required this.onFilterChanged,
-    required this.items,
-    Key? key,
-  }) : super(key: key);
-
-  @override
-  FilterWidgetState createState() => FilterWidgetState();
-}
-
-class FilterWidgetState extends State<FilterWidget> {
-  @override
-  void initState() {
-    super.initState();
-  }
+class FilterWidget extends StatelessWidget {
+  const FilterWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<FilterHelper> filters =
+        Provider.of<BuilderStatsFilterProvider>(context).filters;
+
     return ReorderableListView(
       onReorder: (int oldIndex, int newIndex) {
-        setState(() {
-          if (oldIndex < newIndex) {
-            newIndex--;
-          }
-          final FilterHelper item = widget.items.removeAt(oldIndex);
-          widget.items.insert(newIndex, item);
-          widget.onFilterChanged(widget.items);
-        });
+        Provider.of<BuilderStatsFilterProvider>(context, listen: false)
+            .setStatsFilter(oldIndex, newIndex);
       },
       children: [
-        for (int index = 0; index < widget.items.length; index++)
+        for (int index = 0; index < filters.length; index++)
           Container(
-            key: ValueKey(widget.items[index].name),
+            key: ValueKey(filters[index].name),
             height: 35 + globalPadding(context),
             padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
             decoration: BoxDecoration(
@@ -55,7 +36,7 @@ class FilterWidgetState extends State<FilterWidget> {
                   minVerticalPadding: 0,
                   contentPadding: const EdgeInsets.symmetric(horizontal: 10),
                   leading: SvgPicture.asset(
-                    "assets/icons/${widget.items[index].icon}",
+                    "assets/icons/${filters[index].icon}",
                     height: 35,
                     color: Colors.white,
                   ),
@@ -66,7 +47,7 @@ class FilterWidgetState extends State<FilterWidget> {
                   title: Padding(
                     padding: const EdgeInsets.only(left: 8),
                     child: textBodyBold(
-                      widget.items[index].name,
+                      filters[index].name,
                     ),
                   ),
                   dense: true,
