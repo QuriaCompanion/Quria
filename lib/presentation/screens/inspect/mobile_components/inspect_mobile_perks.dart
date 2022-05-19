@@ -39,16 +39,18 @@ class _InspectMobilePerksState extends State<InspectMobilePerks> {
 
     return Column(children: [
       Container(
-          padding:
-              EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
-          decoration: const BoxDecoration(
-              color: blackLight,
-              borderRadius: BorderRadius.all(Radius.circular(8))),
-          width: double.infinity,
-          child: Center(
-            child: textCaption(
-                'Taper pour plus de dÃ©tails, maintenir pour Ã©quiper'),
-          )),
+        padding: EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
+        decoration: const BoxDecoration(
+            color: blackLight,
+            borderRadius: BorderRadius.all(Radius.circular(8))),
+        width: double.infinity,
+        child: Center(
+          child: textCaption(
+            'Taper pour plus de détails, maintenir pour équiper',
+            utf8: false,
+          ),
+        ),
+      ),
       SizedBox(height: globalPadding(context)),
       Builder(builder: (context) {
         List<Widget> list = <Widget>[];

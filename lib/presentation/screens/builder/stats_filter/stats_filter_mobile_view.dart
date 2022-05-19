@@ -33,6 +33,23 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
               ],
             )),
         Padding(
+          padding: EdgeInsets.all(globalPadding(context)),
+          child: Container(
+            padding:
+                EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
+            decoration: const BoxDecoration(
+                color: blackLight,
+                borderRadius: BorderRadius.all(Radius.circular(8))),
+            width: double.infinity,
+            child: Center(
+              child: textCaption(
+                "Maintenez puis faites glisser changer l'ordre",
+                utf8: false,
+              ),
+            ),
+          ),
+        ),
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,

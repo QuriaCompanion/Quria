@@ -28,6 +28,7 @@ class FilterWidgetState extends State<FilterWidget> {
   @override
   Widget build(BuildContext context) {
     return ReorderableListView(
+      padding: EdgeInsets.zero,
       onReorder: (int oldIndex, int newIndex) {
         setState(() {
           if (oldIndex < newIndex) {
@@ -42,8 +43,7 @@ class FilterWidgetState extends State<FilterWidget> {
         for (int index = 0; index < widget.items.length; index++)
           Container(
             key: ValueKey(widget.items[index].name),
-            height: 35 + globalPadding(context),
-            padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
+            padding: EdgeInsets.zero,
             decoration: BoxDecoration(
                 color: blackLight, borderRadius: BorderRadius.circular(8)),
             margin: const EdgeInsets.only(bottom: 8),
@@ -53,7 +53,8 @@ class FilterWidgetState extends State<FilterWidget> {
                 child: ListTile(
                   horizontalTitleGap: 0,
                   minVerticalPadding: 0,
-                  contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                  contentPadding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 0),
                   leading: SvgPicture.asset(
                     "assets/icons/${widget.items[index].icon}",
                     height: 35,
@@ -64,7 +65,7 @@ class FilterWidgetState extends State<FilterWidget> {
                     color: Colors.white,
                   ),
                   title: Padding(
-                    padding: const EdgeInsets.only(left: 8),
+                    padding: const EdgeInsets.only(left: 8, top: 0, bottom: 0),
                     child: textBodyBold(
                       widget.items[index].name,
                     ),
