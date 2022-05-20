@@ -6,20 +6,17 @@ part of 'destiny_energy_type_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinyEnergyTypeDefinitionCollection on Isar {
-  IsarCollection<DestinyEnergyTypeDefinition> get destinyEnergyTypeDefinitions {
-    return getCollection('DestinyEnergyTypeDefinition');
-  }
+  IsarCollection<DestinyEnergyTypeDefinition>
+      get destinyEnergyTypeDefinitions => getCollection();
 }
 
-final DestinyEnergyTypeDefinitionSchema = CollectionSchema(
+const DestinyEnergyTypeDefinitionSchema = CollectionSchema(
   name: 'DestinyEnergyTypeDefinition',
   schema:
       '{"name":"DestinyEnergyTypeDefinition","idName":"hash","properties":[{"name":"capacityStatHash","type":"Long"},{"name":"costStatHash","type":"Long"},{"name":"displayProperties","type":"String"},{"name":"enumValue","type":"Long"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"showIcon","type":"Bool"},{"name":"transparentIconPath","type":"String"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinyEnergyTypeDefinitionNativeAdapter(),
-  webAdapter: const _DestinyEnergyTypeDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'capacityStatHash': 0,
@@ -33,301 +30,282 @@ final DestinyEnergyTypeDefinitionSchema = CollectionSchema(
   },
   listProperties: {},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.hash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.hash;
-    }
-  },
-  setId: (obj, id) => obj.hash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinyEnergyTypeDefinitionGetId,
+  setId: _destinyEnergyTypeDefinitionSetId,
+  getLinks: _destinyEnergyTypeDefinitionGetLinks,
+  attachLinks: _destinyEnergyTypeDefinitionAttachLinks,
+  serializeNative: _destinyEnergyTypeDefinitionSerializeNative,
+  deserializeNative: _destinyEnergyTypeDefinitionDeserializeNative,
+  deserializePropNative: _destinyEnergyTypeDefinitionDeserializePropNative,
+  serializeWeb: _destinyEnergyTypeDefinitionSerializeWeb,
+  deserializeWeb: _destinyEnergyTypeDefinitionDeserializeWeb,
+  deserializePropWeb: _destinyEnergyTypeDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinyEnergyTypeDefinitionGetId(DestinyEnergyTypeDefinition object) {
+  if (object.hash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.hash;
+  }
+}
+
+void _destinyEnergyTypeDefinitionSetId(
+    DestinyEnergyTypeDefinition object, int id) {
+  object.hash = id;
+}
+
+List<IsarLinkBase> _destinyEnergyTypeDefinitionGetLinks(
+    DestinyEnergyTypeDefinition object) {
+  return [];
+}
 
 const _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter =
     DestinyDisplayPropertiesDefinitionConverter();
 const _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter =
     DestinyEnergyTypeConverter();
 
-class _DestinyEnergyTypeDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinyEnergyTypeDefinition> {
-  const _DestinyEnergyTypeDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinyEnergyTypeDefinition> collection,
-      DestinyEnergyTypeDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(jsObj, 'capacityStatHash', object.capacityStatHash);
-    IsarNative.jsObjectSet(jsObj, 'costStatHash', object.costStatHash);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayProperties',
-        _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties));
-    IsarNative.jsObjectSet(
-        jsObj,
-        'enumValue',
-        _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
-            .toIsar(object.enumValue));
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    IsarNative.jsObjectSet(jsObj, 'showIcon', object.showIcon);
-    IsarNative.jsObjectSet(
-        jsObj, 'transparentIconPath', object.transparentIconPath);
-    return jsObj;
+void _destinyEnergyTypeDefinitionSerializeNative(
+    IsarCollection<DestinyEnergyTypeDefinition> collection,
+    IsarRawObject rawObj,
+    DestinyEnergyTypeDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 = object.capacityStatHash;
+  final _capacityStatHash = value0;
+  final value1 = object.costStatHash;
+  final _costStatHash = value1;
+  final value2 =
+      _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties);
+  IsarUint8List? _displayProperties;
+  if (value2 != null) {
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
   }
-
-  @override
-  DestinyEnergyTypeDefinition deserialize(
-      IsarCollection<DestinyEnergyTypeDefinition> collection, dynamic jsObj) {
-    final object = DestinyEnergyTypeDefinition();
-    object.capacityStatHash = IsarNative.jsObjectGet(jsObj, 'capacityStatHash');
-    object.costStatHash = IsarNative.jsObjectGet(jsObj, 'costStatHash');
-    object.displayProperties =
-        _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
-    object.enumValue = _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'));
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    object.showIcon = IsarNative.jsObjectGet(jsObj, 'showIcon');
-    object.transparentIconPath =
-        IsarNative.jsObjectGet(jsObj, 'transparentIconPath');
-    return object;
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
+  final value3 = _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
+      .toIsar(object.enumValue);
+  final _enumValue = value3;
+  final value4 = object.index;
+  final _index = value4;
+  final value5 = object.redacted;
+  final _redacted = value5;
+  final value6 = object.showIcon;
+  final _showIcon = value6;
+  final value7 = object.transparentIconPath;
+  IsarUint8List? _transparentIconPath;
+  if (value7 != null) {
+    _transparentIconPath = IsarBinaryWriter.utf8Encoder.convert(value7);
   }
+  dynamicSize += (_transparentIconPath?.length ?? 0) as int;
+  final size = staticSize + dynamicSize;
 
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'capacityStatHash':
-        return (IsarNative.jsObjectGet(jsObj, 'capacityStatHash')) as P;
-      case 'costStatHash':
-        return (IsarNative.jsObjectGet(jsObj, 'costStatHash')) as P;
-      case 'displayProperties':
-        return (_destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
-      case 'enumValue':
-        return (_destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'))) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      case 'showIcon':
-        return (IsarNative.jsObjectGet(jsObj, 'showIcon')) as P;
-      case 'transparentIconPath':
-        return (IsarNative.jsObjectGet(jsObj, 'transparentIconPath')) as P;
-      default:
-        throw 'Illegal propertyName';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyEnergyTypeDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeLong(offsets[0], _capacityStatHash);
+  writer.writeLong(offsets[1], _costStatHash);
+  writer.writeBytes(offsets[2], _displayProperties);
+  writer.writeLong(offsets[3], _enumValue);
+  writer.writeLong(offsets[4], _index);
+  writer.writeBool(offsets[5], _redacted);
+  writer.writeBool(offsets[6], _showIcon);
+  writer.writeBytes(offsets[7], _transparentIconPath);
 }
 
-class _DestinyEnergyTypeDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinyEnergyTypeDefinition> {
-  const _DestinyEnergyTypeDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinyEnergyTypeDefinition> collection,
-      IsarRawObject rawObj,
-      DestinyEnergyTypeDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 = object.capacityStatHash;
-    final _capacityStatHash = value0;
-    final value1 = object.costStatHash;
-    final _costStatHash = value1;
-    final value2 =
-        _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties);
-    IsarUint8List? _displayProperties;
-    if (value2 != null) {
-      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
-    }
-    dynamicSize += (_displayProperties?.length ?? 0) as int;
-    final value3 = _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
-        .toIsar(object.enumValue);
-    final _enumValue = value3;
-    final value4 = object.index;
-    final _index = value4;
-    final value5 = object.redacted;
-    final _redacted = value5;
-    final value6 = object.showIcon;
-    final _showIcon = value6;
-    final value7 = object.transparentIconPath;
-    IsarUint8List? _transparentIconPath;
-    if (value7 != null) {
-      _transparentIconPath = IsarBinaryWriter.utf8Encoder.convert(value7);
-    }
-    dynamicSize += (_transparentIconPath?.length ?? 0) as int;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeLong(offsets[0], _capacityStatHash);
-    writer.writeLong(offsets[1], _costStatHash);
-    writer.writeBytes(offsets[2], _displayProperties);
-    writer.writeLong(offsets[3], _enumValue);
-    writer.writeLong(offsets[4], _index);
-    writer.writeBool(offsets[5], _redacted);
-    writer.writeBool(offsets[6], _showIcon);
-    writer.writeBytes(offsets[7], _transparentIconPath);
-  }
-
-  @override
-  DestinyEnergyTypeDefinition deserialize(
-      IsarCollection<DestinyEnergyTypeDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinyEnergyTypeDefinition();
-    object.capacityStatHash = reader.readLongOrNull(offsets[0]);
-    object.costStatHash = reader.readLongOrNull(offsets[1]);
-    object.displayProperties =
-        _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offsets[2]));
-    object.enumValue = _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
-        .fromIsar(reader.readLongOrNull(offsets[3]));
-    object.hash = id;
-    object.index = reader.readLongOrNull(offsets[4]);
-    object.redacted = reader.readBoolOrNull(offsets[5]);
-    object.showIcon = reader.readBoolOrNull(offsets[6]);
-    object.transparentIconPath = reader.readStringOrNull(offsets[7]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (reader.readLongOrNull(offset)) as P;
-      case 1:
-        return (reader.readLongOrNull(offset)) as P;
-      case 2:
-        return (_destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 3:
-        return (_destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 4:
-        return (reader.readLongOrNull(offset)) as P;
-      case 5:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 6:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 7:
-        return (reader.readStringOrNull(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyEnergyTypeDefinition object) {}
+DestinyEnergyTypeDefinition _destinyEnergyTypeDefinitionDeserializeNative(
+    IsarCollection<DestinyEnergyTypeDefinition> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = DestinyEnergyTypeDefinition();
+  object.capacityStatHash = reader.readLongOrNull(offsets[0]);
+  object.costStatHash = reader.readLongOrNull(offsets[1]);
+  object.displayProperties =
+      _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offsets[2]));
+  object.enumValue = _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
+      .fromIsar(reader.readLongOrNull(offsets[3]));
+  object.hash = id;
+  object.index = reader.readLongOrNull(offsets[4]);
+  object.redacted = reader.readBoolOrNull(offsets[5]);
+  object.showIcon = reader.readBoolOrNull(offsets[6]);
+  object.transparentIconPath = reader.readStringOrNull(offsets[7]);
+  return object;
 }
+
+P _destinyEnergyTypeDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (reader.readLongOrNull(offset)) as P;
+    case 1:
+      return (reader.readLongOrNull(offset)) as P;
+    case 2:
+      return (_destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 3:
+      return (_destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 4:
+      return (reader.readLongOrNull(offset)) as P;
+    case 5:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 6:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 7:
+      return (reader.readStringOrNull(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinyEnergyTypeDefinitionSerializeWeb(
+    IsarCollection<DestinyEnergyTypeDefinition> collection,
+    DestinyEnergyTypeDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'capacityStatHash', object.capacityStatHash);
+  IsarNative.jsObjectSet(jsObj, 'costStatHash', object.costStatHash);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayProperties',
+      _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties));
+  IsarNative.jsObjectSet(
+      jsObj,
+      'enumValue',
+      _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
+          .toIsar(object.enumValue));
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  IsarNative.jsObjectSet(jsObj, 'showIcon', object.showIcon);
+  IsarNative.jsObjectSet(
+      jsObj, 'transparentIconPath', object.transparentIconPath);
+  return jsObj;
+}
+
+DestinyEnergyTypeDefinition _destinyEnergyTypeDefinitionDeserializeWeb(
+    IsarCollection<DestinyEnergyTypeDefinition> collection, dynamic jsObj) {
+  final object = DestinyEnergyTypeDefinition();
+  object.capacityStatHash = IsarNative.jsObjectGet(jsObj, 'capacityStatHash');
+  object.costStatHash = IsarNative.jsObjectGet(jsObj, 'costStatHash');
+  object.displayProperties =
+      _destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
+  object.enumValue = _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'));
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  object.showIcon = IsarNative.jsObjectGet(jsObj, 'showIcon');
+  object.transparentIconPath =
+      IsarNative.jsObjectGet(jsObj, 'transparentIconPath');
+  return object;
+}
+
+P _destinyEnergyTypeDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'capacityStatHash':
+      return (IsarNative.jsObjectGet(jsObj, 'capacityStatHash')) as P;
+    case 'costStatHash':
+      return (IsarNative.jsObjectGet(jsObj, 'costStatHash')) as P;
+    case 'displayProperties':
+      return (_destinyEnergyTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
+    case 'enumValue':
+      return (_destinyEnergyTypeDefinitionDestinyEnergyTypeConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'))) as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    case 'showIcon':
+      return (IsarNative.jsObjectGet(jsObj, 'showIcon')) as P;
+    case 'transparentIconPath':
+      return (IsarNative.jsObjectGet(jsObj, 'transparentIconPath')) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinyEnergyTypeDefinitionAttachLinks(
+    IsarCollection col, int id, DestinyEnergyTypeDefinition object) {}
 
 extension DestinyEnergyTypeDefinitionQueryWhereSort on QueryBuilder<
     DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition, QWhere> {
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
       QAfterWhere> anyHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension DestinyEnergyTypeDefinitionQueryWhere on QueryBuilder<
     DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition, QWhereClause> {
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
-      QAfterWhereClause> hashEqualTo(int? hash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
+      QAfterWhereClause> hashEqualTo(int hash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: hash,
       includeLower: true,
-      upper: [hash],
+      upper: hash,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
-      QAfterWhereClause> hashNotEqualTo(int? hash) {
+      QAfterWhereClause> hashNotEqualTo(int hash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
-      QAfterWhereClause> hashGreaterThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
-      includeLower: include,
-    ));
+      QAfterWhereClause> hashGreaterThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: hash, includeLower: include),
+    );
   }
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
-      QAfterWhereClause> hashLessThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [hash],
-      includeUpper: include,
-    ));
+      QAfterWhereClause> hashLessThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: hash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
       QAfterWhereClause> hashBetween(
-    int? lowerHash,
-    int? upperHash, {
+    int lowerHash,
+    int upperHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerHash,
       includeLower: includeLower,
-      upper: [upperHash],
+      upper: upperHash,
       includeUpper: includeUpper,
     ));
   }
@@ -667,7 +645,7 @@ extension DestinyEnergyTypeDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
-      QAfterFilterCondition> hashEqualTo(int? value) {
+      QAfterFilterCondition> hashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hash',
@@ -677,7 +655,7 @@ extension DestinyEnergyTypeDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
       QAfterFilterCondition> hashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -690,7 +668,7 @@ extension DestinyEnergyTypeDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
       QAfterFilterCondition> hashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -703,8 +681,8 @@ extension DestinyEnergyTypeDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyEnergyTypeDefinition, DestinyEnergyTypeDefinition,
       QAfterFilterCondition> hashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

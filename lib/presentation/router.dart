@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
@@ -30,69 +32,70 @@ import 'package:quria/presentation/var/routes.dart';
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case routeLogin:
-        return MaterialPageRoute(builder: (_) => LoginWidget());
-      case routeProfile:
-        return MaterialPageRoute(builder: (_) => const ProfileWidget());
-      case routeBuilderList:
-        return MaterialPageRoute(builder: (_) => const TestWidget());
-      case routeFilter:
-        final StatsFilterHelper data = settings.arguments as StatsFilterHelper;
-        return MaterialPageRoute(builder: (_) => StatsFilterPage(data: data));
-      case routeBuilder:
-        final BuilderPreparation data =
-            settings.arguments as BuilderPreparation;
-        return MaterialPageRoute(
-            builder: (_) => BuilderResultsPage(data: data));
-      case routeBuilderRecap:
-        final BuilderRecapHelper data =
-            settings.arguments as BuilderRecapHelper;
-        return MaterialPageRoute(builder: (_) => BuilderRecapPage(data: data));
-      case routeInspectMobile:
-        final InspectData data = settings.arguments as InspectData;
-        return MaterialPageRoute(builder: (_) => MobileInspect(data: data));
-      case routeExotic:
-        return MaterialPageRoute(builder: (_) => const ExoticWidget());
-      case routeSubclass:
-        final SubclassHelper data = settings.arguments as SubclassHelper;
-        return MaterialPageRoute(
-            builder: (_) => SubclassPage(
-                  data: data,
-                ));
-      case routeClassItemChoice:
-        final ClassItemChoiceHelper data =
-            settings.arguments as ClassItemChoiceHelper;
-        return MaterialPageRoute(
-            builder: (_) => ClassItemChoicePage(
-                  data: data,
-                ));
-      case routeMod:
-        final ModHelper data = settings.arguments as ModHelper;
-        return MaterialPageRoute(
-            builder: (_) => ModsPage(
-                  data: data,
-                ));
-      case routeVault:
-        return MaterialPageRoute(builder: (_) => const VaultPage());
-      case routeCollection:
-        return MaterialPageRoute(builder: (_) => const CollectionWeaponPage());
-      case routeInspect:
-        final DestinyInventoryItemDefinition item =
-            settings.arguments as DestinyInventoryItemDefinition;
-        return MaterialPageRoute(builder: (_) => InspectWidget(item: item));
-      case routeSubclassMod:
-        final SubclassModHelper data = settings.arguments as SubclassModHelper;
-        return MaterialPageRoute(builder: (_) => SubclassModsPage(data: data));
-      case routeInspectSubclass:
-        final String data = settings.arguments as String;
-        return MaterialPageRoute(
-            builder: (_) => InspectSubclassPage(instanceId: data));
-      case routeCollectionItem:
-        final int data = settings.arguments as int;
-        return MaterialPageRoute(
-            builder: (_) => CollectionItemPage(itemHash: data));
+      // case routeLogin:
+      //   return MaterialPageRoute(builder: (_) => LoginWidget());
+      // case routeProfile:
+      //   return MaterialPageRoute(builder: (_) => const ProfileWidget());
+      // case routeBuilderList:
+      //   return MaterialPageRoute(builder: (_) => const TestWidget());
+      // case routeFilter:
+      //   final StatsFilterHelper data = settings.arguments as StatsFilterHelper;
+      //   return MaterialPageRoute(builder: (_) => StatsFilterPage(data: data));
+      // case routeBuilder:
+      //   final BuilderPreparation data =
+      //       settings.arguments as BuilderPreparation;
+      //   return MaterialPageRoute(
+      //       builder: (_) => BuilderResultsPage(data: data));
+      // case routeBuilderRecap:
+      //   final BuilderRecapHelper data =
+      //       settings.arguments as BuilderRecapHelper;
+      //   return MaterialPageRoute(builder: (_) => BuilderRecapPage(data: data));
+      // case routeInspectMobile:
+      //   final InspectData data = settings.arguments as InspectData;
+      //   return MaterialPageRoute(builder: (_) => MobileInspect(data: data));
+      // case routeExotic:
+      //   return MaterialPageRoute(builder: (_) => const ExoticWidget());
+      // case routeSubclass:
+      //   final SubclassHelper data = settings.arguments as SubclassHelper;
+      //   return MaterialPageRoute(
+      //       builder: (_) => SubclassPage(
+      //             data: data,
+      //           ));
+      // case routeClassItemChoice:
+      //   final ClassItemChoiceHelper data =
+      //       settings.arguments as ClassItemChoiceHelper;
+      //   return MaterialPageRoute(
+      //       builder: (_) => ClassItemChoicePage(
+      //             data: data,
+      //           ));
+      // case routeMod:
+      //   final ModHelper data = settings.arguments as ModHelper;
+      //   return MaterialPageRoute(
+      //       builder: (_) => ModsPage(
+      //             data: data,
+      //           ));
+      // case routeVault:
+      //   return MaterialPageRoute(builder: (_) => const VaultPage());
+      // case routeCollection:
+      //   return MaterialPageRoute(builder: (_) => const CollectionWeaponPage());
+      // case routeInspect:
+      //   final DestinyInventoryItemDefinition item =
+      //       settings.arguments as DestinyInventoryItemDefinition;
+      //   return MaterialPageRoute(builder: (_) => InspectWidget(item: item));
+      // case routeSubclassMod:
+      //   final SubclassModHelper data = settings.arguments as SubclassModHelper;
+      //   return MaterialPageRoute(builder: (_) => SubclassModsPage(data: data));
+      // case routeInspectSubclass:
+      //   final String data = settings.arguments as String;
+      //   return MaterialPageRoute(
+      //       builder: (_) => InspectSubclassPage(instanceId: data));
+      // case routeCollectionItem:
+      //   final int data = settings.arguments as int;
+      //   return MaterialPageRoute(
+      //       builder: (_) => CollectionItemPage(itemHash: data));
       default:
-        return MaterialPageRoute(builder: (_) => LoginWidget());
+        return MaterialPageRoute(builder: (_) => const CollectionWeaponPage());
+      // return MaterialPageRoute(builder: (_) => LoginWidget());
     }
   }
 }

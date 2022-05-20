@@ -8,6 +8,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/screens/collection/collection_mobile_view.dart';
+import 'package:quria/presentation/screens/collection/collection_web_view.dart';
 
 class CollectionWeaponPage extends StatefulWidget {
   const CollectionWeaponPage({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class _CollectionWeaponPageState extends State<CollectionWeaponPage> {
                   backgroundColor: black,
                   body: CollectionMobileView(items: snapshot.data!));
             } else {
-              return Container();
+              return CollectionWebView(items: snapshot.data!);
             }
           } else {
             return const Loader();

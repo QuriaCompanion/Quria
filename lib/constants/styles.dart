@@ -21,6 +21,7 @@ const modsHeader = AssetImage("assets/img/mods.png");
 const buildHeader = AssetImage("assets/img/build.png");
 const collectionHeader = AssetImage("assets/img/collection.png");
 const splashBackground = AssetImage("assets/img/base_background.png");
+const splashBackgroundWeb = AssetImage("assets/img/splash_large.png");
 
 double globalPadding(BuildContext context) {
   return vw(context) * 0.04266;

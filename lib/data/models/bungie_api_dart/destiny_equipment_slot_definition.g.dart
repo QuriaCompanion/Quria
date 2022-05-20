@@ -6,21 +6,17 @@ part of 'destiny_equipment_slot_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinyEquipmentSlotDefinitionCollection on Isar {
   IsarCollection<DestinyEquipmentSlotDefinition>
-      get destinyEquipmentSlotDefinitions {
-    return getCollection('DestinyEquipmentSlotDefinition');
-  }
+      get destinyEquipmentSlotDefinitions => getCollection();
 }
 
-final DestinyEquipmentSlotDefinitionSchema = CollectionSchema(
+const DestinyEquipmentSlotDefinitionSchema = CollectionSchema(
   name: 'DestinyEquipmentSlotDefinition',
   schema:
       '{"name":"DestinyEquipmentSlotDefinition","idName":"hash","properties":[{"name":"applyCustomArtDyes","type":"Bool"},{"name":"artDyeChannels","type":"StringList"},{"name":"bucketTypeHash","type":"Long"},{"name":"displayProperties","type":"String"},{"name":"equipmentCategoryHash","type":"Long"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinyEquipmentSlotDefinitionNativeAdapter(),
-  webAdapter: const _DestinyEquipmentSlotDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'applyCustomArtDyes': 0,
@@ -33,232 +29,233 @@ final DestinyEquipmentSlotDefinitionSchema = CollectionSchema(
   },
   listProperties: {'artDyeChannels'},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.hash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.hash;
-    }
-  },
-  setId: (obj, id) => obj.hash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinyEquipmentSlotDefinitionGetId,
+  setId: _destinyEquipmentSlotDefinitionSetId,
+  getLinks: _destinyEquipmentSlotDefinitionGetLinks,
+  attachLinks: _destinyEquipmentSlotDefinitionAttachLinks,
+  serializeNative: _destinyEquipmentSlotDefinitionSerializeNative,
+  deserializeNative: _destinyEquipmentSlotDefinitionDeserializeNative,
+  deserializePropNative: _destinyEquipmentSlotDefinitionDeserializePropNative,
+  serializeWeb: _destinyEquipmentSlotDefinitionSerializeWeb,
+  deserializeWeb: _destinyEquipmentSlotDefinitionDeserializeWeb,
+  deserializePropWeb: _destinyEquipmentSlotDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinyEquipmentSlotDefinitionGetId(
+    DestinyEquipmentSlotDefinition object) {
+  if (object.hash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.hash;
+  }
+}
+
+void _destinyEquipmentSlotDefinitionSetId(
+    DestinyEquipmentSlotDefinition object, int id) {
+  object.hash = id;
+}
+
+List<IsarLinkBase> _destinyEquipmentSlotDefinitionGetLinks(
+    DestinyEquipmentSlotDefinition object) {
+  return [];
+}
 
 const _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter =
     DestinyArtDyeReferenceListConverter();
 const _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter =
     DestinyDisplayPropertiesDefinitionConverter();
 
-class _DestinyEquipmentSlotDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinyEquipmentSlotDefinition> {
-  const _DestinyEquipmentSlotDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinyEquipmentSlotDefinition> collection,
-      DestinyEquipmentSlotDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(
-        jsObj, 'applyCustomArtDyes', object.applyCustomArtDyes);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'artDyeChannels',
-        _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
-            .toIsar(object.artDyeChannels));
-    IsarNative.jsObjectSet(jsObj, 'bucketTypeHash', object.bucketTypeHash);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayProperties',
-        _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties));
-    IsarNative.jsObjectSet(
-        jsObj, 'equipmentCategoryHash', object.equipmentCategoryHash);
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    return jsObj;
-  }
-
-  @override
-  DestinyEquipmentSlotDefinition deserialize(
-      IsarCollection<DestinyEquipmentSlotDefinition> collection,
-      dynamic jsObj) {
-    final object = DestinyEquipmentSlotDefinition();
-    object.applyCustomArtDyes =
-        IsarNative.jsObjectGet(jsObj, 'applyCustomArtDyes');
-    object.artDyeChannels =
-        _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
-            .fromIsar((IsarNative.jsObjectGet(jsObj, 'artDyeChannels') as List?)
-                ?.map((e) => e ?? '')
-                .toList()
-                .cast<String>());
-    object.bucketTypeHash = IsarNative.jsObjectGet(jsObj, 'bucketTypeHash');
-    object.displayProperties =
-        _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
-    object.equipmentCategoryHash =
-        IsarNative.jsObjectGet(jsObj, 'equipmentCategoryHash');
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'applyCustomArtDyes':
-        return (IsarNative.jsObjectGet(jsObj, 'applyCustomArtDyes')) as P;
-      case 'artDyeChannels':
-        return (_destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
-            .fromIsar((IsarNative.jsObjectGet(jsObj, 'artDyeChannels') as List?)
-                ?.map((e) => e ?? '')
-                .toList()
-                .cast<String>())) as P;
-      case 'bucketTypeHash':
-        return (IsarNative.jsObjectGet(jsObj, 'bucketTypeHash')) as P;
-      case 'displayProperties':
-        return (_destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
-      case 'equipmentCategoryHash':
-        return (IsarNative.jsObjectGet(jsObj, 'equipmentCategoryHash')) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      default:
-        throw 'Illegal propertyName';
+void _destinyEquipmentSlotDefinitionSerializeNative(
+    IsarCollection<DestinyEquipmentSlotDefinition> collection,
+    IsarRawObject rawObj,
+    DestinyEquipmentSlotDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 = object.applyCustomArtDyes;
+  final _applyCustomArtDyes = value0;
+  final value1 =
+      _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
+          .toIsar(object.artDyeChannels);
+  dynamicSize += (value1?.length ?? 0) * 8;
+  List<IsarUint8List?>? bytesList1;
+  if (value1 != null) {
+    bytesList1 = [];
+    for (var str in value1) {
+      final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
+      bytesList1.add(bytes);
+      dynamicSize += bytes.length as int;
     }
   }
+  final _artDyeChannels = bytesList1;
+  final value2 = object.bucketTypeHash;
+  final _bucketTypeHash = value2;
+  final value3 =
+      _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties);
+  IsarUint8List? _displayProperties;
+  if (value3 != null) {
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value3);
+  }
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
+  final value4 = object.equipmentCategoryHash;
+  final _equipmentCategoryHash = value4;
+  final value5 = object.index;
+  final _index = value5;
+  final value6 = object.redacted;
+  final _redacted = value6;
+  final size = staticSize + dynamicSize;
 
-  @override
-  void attachLinks(Isar isar, int id, DestinyEquipmentSlotDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBool(offsets[0], _applyCustomArtDyes);
+  writer.writeStringList(offsets[1], _artDyeChannels);
+  writer.writeLong(offsets[2], _bucketTypeHash);
+  writer.writeBytes(offsets[3], _displayProperties);
+  writer.writeLong(offsets[4], _equipmentCategoryHash);
+  writer.writeLong(offsets[5], _index);
+  writer.writeBool(offsets[6], _redacted);
 }
 
-class _DestinyEquipmentSlotDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinyEquipmentSlotDefinition> {
-  const _DestinyEquipmentSlotDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinyEquipmentSlotDefinition> collection,
-      IsarRawObject rawObj,
-      DestinyEquipmentSlotDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 = object.applyCustomArtDyes;
-    final _applyCustomArtDyes = value0;
-    final value1 =
-        _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
-            .toIsar(object.artDyeChannels);
-    dynamicSize += (value1?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList1;
-    if (value1 != null) {
-      bytesList1 = [];
-      for (var str in value1) {
-        final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList1.add(bytes);
-        dynamicSize += bytes.length as int;
-      }
-    }
-    final _artDyeChannels = bytesList1;
-    final value2 = object.bucketTypeHash;
-    final _bucketTypeHash = value2;
-    final value3 =
-        _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties);
-    IsarUint8List? _displayProperties;
-    if (value3 != null) {
-      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value3);
-    }
-    dynamicSize += (_displayProperties?.length ?? 0) as int;
-    final value4 = object.equipmentCategoryHash;
-    final _equipmentCategoryHash = value4;
-    final value5 = object.index;
-    final _index = value5;
-    final value6 = object.redacted;
-    final _redacted = value6;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBool(offsets[0], _applyCustomArtDyes);
-    writer.writeStringList(offsets[1], _artDyeChannels);
-    writer.writeLong(offsets[2], _bucketTypeHash);
-    writer.writeBytes(offsets[3], _displayProperties);
-    writer.writeLong(offsets[4], _equipmentCategoryHash);
-    writer.writeLong(offsets[5], _index);
-    writer.writeBool(offsets[6], _redacted);
-  }
-
-  @override
-  DestinyEquipmentSlotDefinition deserialize(
-      IsarCollection<DestinyEquipmentSlotDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinyEquipmentSlotDefinition();
-    object.applyCustomArtDyes = reader.readBoolOrNull(offsets[0]);
-    object.artDyeChannels =
-        _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
-            .fromIsar(reader.readStringList(offsets[1]));
-    object.bucketTypeHash = reader.readLongOrNull(offsets[2]);
-    object.displayProperties =
-        _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offsets[3]));
-    object.equipmentCategoryHash = reader.readLongOrNull(offsets[4]);
-    object.hash = id;
-    object.index = reader.readLongOrNull(offsets[5]);
-    object.redacted = reader.readBoolOrNull(offsets[6]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 1:
-        return (_destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
-            .fromIsar(reader.readStringList(offset))) as P;
-      case 2:
-        return (reader.readLongOrNull(offset)) as P;
-      case 3:
-        return (_destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 4:
-        return (reader.readLongOrNull(offset)) as P;
-      case 5:
-        return (reader.readLongOrNull(offset)) as P;
-      case 6:
-        return (reader.readBoolOrNull(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyEquipmentSlotDefinition object) {}
+DestinyEquipmentSlotDefinition _destinyEquipmentSlotDefinitionDeserializeNative(
+    IsarCollection<DestinyEquipmentSlotDefinition> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = DestinyEquipmentSlotDefinition();
+  object.applyCustomArtDyes = reader.readBoolOrNull(offsets[0]);
+  object.artDyeChannels =
+      _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
+          .fromIsar(reader.readStringList(offsets[1]));
+  object.bucketTypeHash = reader.readLongOrNull(offsets[2]);
+  object.displayProperties =
+      _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offsets[3]));
+  object.equipmentCategoryHash = reader.readLongOrNull(offsets[4]);
+  object.hash = id;
+  object.index = reader.readLongOrNull(offsets[5]);
+  object.redacted = reader.readBoolOrNull(offsets[6]);
+  return object;
 }
+
+P _destinyEquipmentSlotDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 1:
+      return (_destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
+          .fromIsar(reader.readStringList(offset))) as P;
+    case 2:
+      return (reader.readLongOrNull(offset)) as P;
+    case 3:
+      return (_destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 4:
+      return (reader.readLongOrNull(offset)) as P;
+    case 5:
+      return (reader.readLongOrNull(offset)) as P;
+    case 6:
+      return (reader.readBoolOrNull(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinyEquipmentSlotDefinitionSerializeWeb(
+    IsarCollection<DestinyEquipmentSlotDefinition> collection,
+    DestinyEquipmentSlotDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(
+      jsObj, 'applyCustomArtDyes', object.applyCustomArtDyes);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'artDyeChannels',
+      _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
+          .toIsar(object.artDyeChannels));
+  IsarNative.jsObjectSet(jsObj, 'bucketTypeHash', object.bucketTypeHash);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayProperties',
+      _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties));
+  IsarNative.jsObjectSet(
+      jsObj, 'equipmentCategoryHash', object.equipmentCategoryHash);
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  return jsObj;
+}
+
+DestinyEquipmentSlotDefinition _destinyEquipmentSlotDefinitionDeserializeWeb(
+    IsarCollection<DestinyEquipmentSlotDefinition> collection, dynamic jsObj) {
+  final object = DestinyEquipmentSlotDefinition();
+  object.applyCustomArtDyes =
+      IsarNative.jsObjectGet(jsObj, 'applyCustomArtDyes');
+  object.artDyeChannels =
+      _destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
+          .fromIsar((IsarNative.jsObjectGet(jsObj, 'artDyeChannels') as List?)
+              ?.map((e) => e ?? '')
+              .toList()
+              .cast<String>());
+  object.bucketTypeHash = IsarNative.jsObjectGet(jsObj, 'bucketTypeHash');
+  object.displayProperties =
+      _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
+  object.equipmentCategoryHash =
+      IsarNative.jsObjectGet(jsObj, 'equipmentCategoryHash');
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  return object;
+}
+
+P _destinyEquipmentSlotDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'applyCustomArtDyes':
+      return (IsarNative.jsObjectGet(jsObj, 'applyCustomArtDyes')) as P;
+    case 'artDyeChannels':
+      return (_destinyEquipmentSlotDefinitionDestinyArtDyeReferenceListConverter
+          .fromIsar((IsarNative.jsObjectGet(jsObj, 'artDyeChannels') as List?)
+              ?.map((e) => e ?? '')
+              .toList()
+              .cast<String>())) as P;
+    case 'bucketTypeHash':
+      return (IsarNative.jsObjectGet(jsObj, 'bucketTypeHash')) as P;
+    case 'displayProperties':
+      return (_destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
+    case 'equipmentCategoryHash':
+      return (IsarNative.jsObjectGet(jsObj, 'equipmentCategoryHash')) as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinyEquipmentSlotDefinitionAttachLinks(
+    IsarCollection col, int id, DestinyEquipmentSlotDefinition object) {}
 
 extension DestinyEquipmentSlotDefinitionQueryWhereSort on QueryBuilder<
     DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition, QWhere> {
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
       QAfterWhere> anyHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
@@ -267,77 +264,57 @@ extension DestinyEquipmentSlotDefinitionQueryWhere on QueryBuilder<
     DestinyEquipmentSlotDefinition,
     QWhereClause> {
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
-      QAfterWhereClause> hashEqualTo(int? hash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
+      QAfterWhereClause> hashEqualTo(int hash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: hash,
       includeLower: true,
-      upper: [hash],
+      upper: hash,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
-      QAfterWhereClause> hashNotEqualTo(int? hash) {
+      QAfterWhereClause> hashNotEqualTo(int hash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
-      QAfterWhereClause> hashGreaterThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
-      includeLower: include,
-    ));
+      QAfterWhereClause> hashGreaterThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: hash, includeLower: include),
+    );
   }
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
-      QAfterWhereClause> hashLessThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [hash],
-      includeUpper: include,
-    ));
+      QAfterWhereClause> hashLessThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: hash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
       QAfterWhereClause> hashBetween(
-    int? lowerHash,
-    int? upperHash, {
+    int lowerHash,
+    int upperHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerHash,
       includeLower: includeLower,
-      upper: [upperHash],
+      upper: upperHash,
       includeUpper: includeUpper,
     ));
   }
@@ -757,7 +734,7 @@ extension DestinyEquipmentSlotDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
-      QAfterFilterCondition> hashEqualTo(int? value) {
+      QAfterFilterCondition> hashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hash',
@@ -767,7 +744,7 @@ extension DestinyEquipmentSlotDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
       QAfterFilterCondition> hashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -780,7 +757,7 @@ extension DestinyEquipmentSlotDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
       QAfterFilterCondition> hashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -793,8 +770,8 @@ extension DestinyEquipmentSlotDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyEquipmentSlotDefinition, DestinyEquipmentSlotDefinition,
       QAfterFilterCondition> hashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

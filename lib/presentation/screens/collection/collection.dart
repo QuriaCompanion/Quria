@@ -36,7 +36,7 @@
 //   @override
 //   void initState() {
 //     super.initState();
-//     // _future = DisplayService().collectionLoop();
+//     _future = DisplayService().collectionLoop();
 //     currentType = DestinyItemSubType.AutoRifle;
 //     currentFilter = CollectionFilter.primary;
 //     currentAmmoType = DestinyAmmunitionType.Primary;
@@ -101,7 +101,7 @@
 //                 //     characters: characters,
 //                 //     selectedCharacterIndex: selectedCharacterIndex,
 //                 //     body: const CollectionMobileView());
-//                 return const CollectionMobileView();
+//                 // return const CollectionMobileView();
 //               } else {
 //                 return Container(
 //                   padding: EdgeInsets.only(
@@ -219,6 +219,7 @@
 //                       ]),
 //                 );
 //               }
+//               return Text('test');
 //             }
 //           }),
 //     );

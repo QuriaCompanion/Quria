@@ -6,20 +6,17 @@ part of 'destiny_talent_grid_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinyTalentGridDefinitionCollection on Isar {
-  IsarCollection<DestinyTalentGridDefinition> get destinyTalentGridDefinitions {
-    return getCollection('DestinyTalentGridDefinition');
-  }
+  IsarCollection<DestinyTalentGridDefinition>
+      get destinyTalentGridDefinitions => getCollection();
 }
 
-final DestinyTalentGridDefinitionSchema = CollectionSchema(
+const DestinyTalentGridDefinitionSchema = CollectionSchema(
   name: 'DestinyTalentGridDefinition',
   schema:
       '{"name":"DestinyTalentGridDefinition","idName":"hash","properties":[{"name":"exclusiveSets","type":"StringList"},{"name":"gridLevelPerColumn","type":"Long"},{"name":"groups","type":"String"},{"name":"independentNodeIndexes","type":"LongList"},{"name":"index","type":"Long"},{"name":"maxGridLevel","type":"Long"},{"name":"nodeCategories","type":"StringList"},{"name":"nodes","type":"StringList"},{"name":"progressionHash","type":"Long"},{"name":"redacted","type":"Bool"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinyTalentGridDefinitionNativeAdapter(),
-  webAdapter: const _DestinyTalentGridDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'exclusiveSets': 0,
@@ -40,21 +37,39 @@ final DestinyTalentGridDefinitionSchema = CollectionSchema(
     'nodes'
   },
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.hash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.hash;
-    }
-  },
-  setId: (obj, id) => obj.hash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinyTalentGridDefinitionGetId,
+  setId: _destinyTalentGridDefinitionSetId,
+  getLinks: _destinyTalentGridDefinitionGetLinks,
+  attachLinks: _destinyTalentGridDefinitionAttachLinks,
+  serializeNative: _destinyTalentGridDefinitionSerializeNative,
+  deserializeNative: _destinyTalentGridDefinitionDeserializeNative,
+  deserializePropNative: _destinyTalentGridDefinitionDeserializePropNative,
+  serializeWeb: _destinyTalentGridDefinitionSerializeWeb,
+  deserializeWeb: _destinyTalentGridDefinitionDeserializeWeb,
+  deserializePropWeb: _destinyTalentGridDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinyTalentGridDefinitionGetId(DestinyTalentGridDefinition object) {
+  if (object.hash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.hash;
+  }
+}
+
+void _destinyTalentGridDefinitionSetId(
+    DestinyTalentGridDefinition object, int id) {
+  object.hash = id;
+}
+
+List<IsarLinkBase> _destinyTalentGridDefinitionGetLinks(
+    DestinyTalentGridDefinition object) {
+  return [];
+}
 
 const _destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter =
     DestinyTalentNodeExclusiveSetDefinitionListConverter();
@@ -65,381 +80,343 @@ const _destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter =
 const _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter =
     DestinyTalentNodeDefinitionListConverter();
 
-class _DestinyTalentGridDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinyTalentGridDefinition> {
-  const _DestinyTalentGridDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinyTalentGridDefinition> collection,
-      DestinyTalentGridDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(
-        jsObj,
-        'exclusiveSets',
-        _destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
-            .toIsar(object.exclusiveSets));
-    IsarNative.jsObjectSet(
-        jsObj, 'gridLevelPerColumn', object.gridLevelPerColumn);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'groups',
-        _destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
-            .toIsar(object.groups));
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(
-        jsObj, 'independentNodeIndexes', object.independentNodeIndexes);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(jsObj, 'maxGridLevel', object.maxGridLevel);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'nodeCategories',
-        _destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
-            .toIsar(object.nodeCategories));
-    IsarNative.jsObjectSet(
-        jsObj,
-        'nodes',
-        _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
-            .toIsar(object.nodes));
-    IsarNative.jsObjectSet(jsObj, 'progressionHash', object.progressionHash);
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    return jsObj;
-  }
-
-  @override
-  DestinyTalentGridDefinition deserialize(
-      IsarCollection<DestinyTalentGridDefinition> collection, dynamic jsObj) {
-    final object = DestinyTalentGridDefinition();
-    object.exclusiveSets =
-        _destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
-            .fromIsar((IsarNative.jsObjectGet(jsObj, 'exclusiveSets') as List?)
-                ?.map((e) => e ?? '')
-                .toList()
-                .cast<String>());
-    object.gridLevelPerColumn =
-        IsarNative.jsObjectGet(jsObj, 'gridLevelPerColumn');
-    object.groups =
-        _destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'groups'));
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.independentNodeIndexes =
-        (IsarNative.jsObjectGet(jsObj, 'independentNodeIndexes') as List?)
-            ?.map((e) => e ?? double.negativeInfinity)
-            .toList()
-            .cast<int>();
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.maxGridLevel = IsarNative.jsObjectGet(jsObj, 'maxGridLevel');
-    object.nodeCategories =
-        _destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
-            .fromIsar((IsarNative.jsObjectGet(jsObj, 'nodeCategories') as List?)
-                ?.map((e) => e ?? '')
-                .toList()
-                .cast<String>());
-    object.nodes =
-        _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
-            .fromIsar((IsarNative.jsObjectGet(jsObj, 'nodes') as List?)
-                ?.map((e) => e ?? '')
-                .toList()
-                .cast<String>());
-    object.progressionHash = IsarNative.jsObjectGet(jsObj, 'progressionHash');
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'exclusiveSets':
-        return (_destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
-            .fromIsar((IsarNative.jsObjectGet(jsObj, 'exclusiveSets') as List?)
-                ?.map((e) => e ?? '')
-                .toList()
-                .cast<String>())) as P;
-      case 'gridLevelPerColumn':
-        return (IsarNative.jsObjectGet(jsObj, 'gridLevelPerColumn')) as P;
-      case 'groups':
-        return (_destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'groups'))) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'independentNodeIndexes':
-        return ((IsarNative.jsObjectGet(jsObj, 'independentNodeIndexes')
-                as List?)
-            ?.map((e) => e ?? double.negativeInfinity)
-            .toList()
-            .cast<int>()) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'maxGridLevel':
-        return (IsarNative.jsObjectGet(jsObj, 'maxGridLevel')) as P;
-      case 'nodeCategories':
-        return (_destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
-            .fromIsar((IsarNative.jsObjectGet(jsObj, 'nodeCategories') as List?)
-                ?.map((e) => e ?? '')
-                .toList()
-                .cast<String>())) as P;
-      case 'nodes':
-        return (_destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
-            .fromIsar((IsarNative.jsObjectGet(jsObj, 'nodes') as List?)
-                ?.map((e) => e ?? '')
-                .toList()
-                .cast<String>())) as P;
-      case 'progressionHash':
-        return (IsarNative.jsObjectGet(jsObj, 'progressionHash')) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      default:
-        throw 'Illegal propertyName';
+void _destinyTalentGridDefinitionSerializeNative(
+    IsarCollection<DestinyTalentGridDefinition> collection,
+    IsarRawObject rawObj,
+    DestinyTalentGridDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 =
+      _destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
+          .toIsar(object.exclusiveSets);
+  dynamicSize += (value0?.length ?? 0) * 8;
+  List<IsarUint8List?>? bytesList0;
+  if (value0 != null) {
+    bytesList0 = [];
+    for (var str in value0) {
+      final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
+      bytesList0.add(bytes);
+      dynamicSize += bytes.length as int;
     }
   }
+  final _exclusiveSets = bytesList0;
+  final value1 = object.gridLevelPerColumn;
+  final _gridLevelPerColumn = value1;
+  final value2 =
+      _destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
+          .toIsar(object.groups);
+  IsarUint8List? _groups;
+  if (value2 != null) {
+    _groups = IsarBinaryWriter.utf8Encoder.convert(value2);
+  }
+  dynamicSize += (_groups?.length ?? 0) as int;
+  final value3 = object.independentNodeIndexes;
+  dynamicSize += (value3?.length ?? 0) * 8;
+  final _independentNodeIndexes = value3;
+  final value4 = object.index;
+  final _index = value4;
+  final value5 = object.maxGridLevel;
+  final _maxGridLevel = value5;
+  final value6 =
+      _destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
+          .toIsar(object.nodeCategories);
+  dynamicSize += (value6?.length ?? 0) * 8;
+  List<IsarUint8List?>? bytesList6;
+  if (value6 != null) {
+    bytesList6 = [];
+    for (var str in value6) {
+      final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
+      bytesList6.add(bytes);
+      dynamicSize += bytes.length as int;
+    }
+  }
+  final _nodeCategories = bytesList6;
+  final value7 =
+      _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
+          .toIsar(object.nodes);
+  dynamicSize += (value7?.length ?? 0) * 8;
+  List<IsarUint8List?>? bytesList7;
+  if (value7 != null) {
+    bytesList7 = [];
+    for (var str in value7) {
+      final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
+      bytesList7.add(bytes);
+      dynamicSize += bytes.length as int;
+    }
+  }
+  final _nodes = bytesList7;
+  final value8 = object.progressionHash;
+  final _progressionHash = value8;
+  final value9 = object.redacted;
+  final _redacted = value9;
+  final size = staticSize + dynamicSize;
 
-  @override
-  void attachLinks(Isar isar, int id, DestinyTalentGridDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeStringList(offsets[0], _exclusiveSets);
+  writer.writeLong(offsets[1], _gridLevelPerColumn);
+  writer.writeBytes(offsets[2], _groups);
+  writer.writeLongList(offsets[3], _independentNodeIndexes);
+  writer.writeLong(offsets[4], _index);
+  writer.writeLong(offsets[5], _maxGridLevel);
+  writer.writeStringList(offsets[6], _nodeCategories);
+  writer.writeStringList(offsets[7], _nodes);
+  writer.writeLong(offsets[8], _progressionHash);
+  writer.writeBool(offsets[9], _redacted);
 }
 
-class _DestinyTalentGridDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinyTalentGridDefinition> {
-  const _DestinyTalentGridDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinyTalentGridDefinition> collection,
-      IsarRawObject rawObj,
-      DestinyTalentGridDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 =
-        _destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
-            .toIsar(object.exclusiveSets);
-    dynamicSize += (value0?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList0;
-    if (value0 != null) {
-      bytesList0 = [];
-      for (var str in value0) {
-        final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList0.add(bytes);
-        dynamicSize += bytes.length as int;
-      }
-    }
-    final _exclusiveSets = bytesList0;
-    final value1 = object.gridLevelPerColumn;
-    final _gridLevelPerColumn = value1;
-    final value2 =
-        _destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
-            .toIsar(object.groups);
-    IsarUint8List? _groups;
-    if (value2 != null) {
-      _groups = IsarBinaryWriter.utf8Encoder.convert(value2);
-    }
-    dynamicSize += (_groups?.length ?? 0) as int;
-    final value3 = object.independentNodeIndexes;
-    dynamicSize += (value3?.length ?? 0) * 8;
-    final _independentNodeIndexes = value3;
-    final value4 = object.index;
-    final _index = value4;
-    final value5 = object.maxGridLevel;
-    final _maxGridLevel = value5;
-    final value6 =
-        _destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
-            .toIsar(object.nodeCategories);
-    dynamicSize += (value6?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList6;
-    if (value6 != null) {
-      bytesList6 = [];
-      for (var str in value6) {
-        final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList6.add(bytes);
-        dynamicSize += bytes.length as int;
-      }
-    }
-    final _nodeCategories = bytesList6;
-    final value7 =
-        _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
-            .toIsar(object.nodes);
-    dynamicSize += (value7?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList7;
-    if (value7 != null) {
-      bytesList7 = [];
-      for (var str in value7) {
-        final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList7.add(bytes);
-        dynamicSize += bytes.length as int;
-      }
-    }
-    final _nodes = bytesList7;
-    final value8 = object.progressionHash;
-    final _progressionHash = value8;
-    final value9 = object.redacted;
-    final _redacted = value9;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeStringList(offsets[0], _exclusiveSets);
-    writer.writeLong(offsets[1], _gridLevelPerColumn);
-    writer.writeBytes(offsets[2], _groups);
-    writer.writeLongList(offsets[3], _independentNodeIndexes);
-    writer.writeLong(offsets[4], _index);
-    writer.writeLong(offsets[5], _maxGridLevel);
-    writer.writeStringList(offsets[6], _nodeCategories);
-    writer.writeStringList(offsets[7], _nodes);
-    writer.writeLong(offsets[8], _progressionHash);
-    writer.writeBool(offsets[9], _redacted);
-  }
-
-  @override
-  DestinyTalentGridDefinition deserialize(
-      IsarCollection<DestinyTalentGridDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinyTalentGridDefinition();
-    object.exclusiveSets =
-        _destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
-            .fromIsar(reader.readStringList(offsets[0]));
-    object.gridLevelPerColumn = reader.readLongOrNull(offsets[1]);
-    object.groups =
-        _destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
-            .fromIsar(reader.readStringOrNull(offsets[2]));
-    object.hash = id;
-    object.independentNodeIndexes = reader.readLongList(offsets[3]);
-    object.index = reader.readLongOrNull(offsets[4]);
-    object.maxGridLevel = reader.readLongOrNull(offsets[5]);
-    object.nodeCategories =
-        _destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
-            .fromIsar(reader.readStringList(offsets[6]));
-    object.nodes =
-        _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
-            .fromIsar(reader.readStringList(offsets[7]));
-    object.progressionHash = reader.readLongOrNull(offsets[8]);
-    object.redacted = reader.readBoolOrNull(offsets[9]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (_destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
-            .fromIsar(reader.readStringList(offset))) as P;
-      case 1:
-        return (reader.readLongOrNull(offset)) as P;
-      case 2:
-        return (_destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 3:
-        return (reader.readLongList(offset)) as P;
-      case 4:
-        return (reader.readLongOrNull(offset)) as P;
-      case 5:
-        return (reader.readLongOrNull(offset)) as P;
-      case 6:
-        return (_destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
-            .fromIsar(reader.readStringList(offset))) as P;
-      case 7:
-        return (_destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
-            .fromIsar(reader.readStringList(offset))) as P;
-      case 8:
-        return (reader.readLongOrNull(offset)) as P;
-      case 9:
-        return (reader.readBoolOrNull(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyTalentGridDefinition object) {}
+DestinyTalentGridDefinition _destinyTalentGridDefinitionDeserializeNative(
+    IsarCollection<DestinyTalentGridDefinition> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = DestinyTalentGridDefinition();
+  object.exclusiveSets =
+      _destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
+          .fromIsar(reader.readStringList(offsets[0]));
+  object.gridLevelPerColumn = reader.readLongOrNull(offsets[1]);
+  object.groups =
+      _destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
+          .fromIsar(reader.readStringOrNull(offsets[2]));
+  object.hash = id;
+  object.independentNodeIndexes = reader.readLongList(offsets[3]);
+  object.index = reader.readLongOrNull(offsets[4]);
+  object.maxGridLevel = reader.readLongOrNull(offsets[5]);
+  object.nodeCategories =
+      _destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
+          .fromIsar(reader.readStringList(offsets[6]));
+  object.nodes =
+      _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
+          .fromIsar(reader.readStringList(offsets[7]));
+  object.progressionHash = reader.readLongOrNull(offsets[8]);
+  object.redacted = reader.readBoolOrNull(offsets[9]);
+  return object;
 }
+
+P _destinyTalentGridDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (_destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
+          .fromIsar(reader.readStringList(offset))) as P;
+    case 1:
+      return (reader.readLongOrNull(offset)) as P;
+    case 2:
+      return (_destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 3:
+      return (reader.readLongList(offset)) as P;
+    case 4:
+      return (reader.readLongOrNull(offset)) as P;
+    case 5:
+      return (reader.readLongOrNull(offset)) as P;
+    case 6:
+      return (_destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
+          .fromIsar(reader.readStringList(offset))) as P;
+    case 7:
+      return (_destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
+          .fromIsar(reader.readStringList(offset))) as P;
+    case 8:
+      return (reader.readLongOrNull(offset)) as P;
+    case 9:
+      return (reader.readBoolOrNull(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinyTalentGridDefinitionSerializeWeb(
+    IsarCollection<DestinyTalentGridDefinition> collection,
+    DestinyTalentGridDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(
+      jsObj,
+      'exclusiveSets',
+      _destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
+          .toIsar(object.exclusiveSets));
+  IsarNative.jsObjectSet(
+      jsObj, 'gridLevelPerColumn', object.gridLevelPerColumn);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'groups',
+      _destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
+          .toIsar(object.groups));
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(
+      jsObj, 'independentNodeIndexes', object.independentNodeIndexes);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(jsObj, 'maxGridLevel', object.maxGridLevel);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'nodeCategories',
+      _destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
+          .toIsar(object.nodeCategories));
+  IsarNative.jsObjectSet(
+      jsObj,
+      'nodes',
+      _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
+          .toIsar(object.nodes));
+  IsarNative.jsObjectSet(jsObj, 'progressionHash', object.progressionHash);
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  return jsObj;
+}
+
+DestinyTalentGridDefinition _destinyTalentGridDefinitionDeserializeWeb(
+    IsarCollection<DestinyTalentGridDefinition> collection, dynamic jsObj) {
+  final object = DestinyTalentGridDefinition();
+  object.exclusiveSets =
+      _destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
+          .fromIsar((IsarNative.jsObjectGet(jsObj, 'exclusiveSets') as List?)
+              ?.map((e) => e ?? '')
+              .toList()
+              .cast<String>());
+  object.gridLevelPerColumn =
+      IsarNative.jsObjectGet(jsObj, 'gridLevelPerColumn');
+  object.groups =
+      _destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'groups'));
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.independentNodeIndexes =
+      (IsarNative.jsObjectGet(jsObj, 'independentNodeIndexes') as List?)
+          ?.map((e) => e ?? double.negativeInfinity)
+          .toList()
+          .cast<int>();
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.maxGridLevel = IsarNative.jsObjectGet(jsObj, 'maxGridLevel');
+  object.nodeCategories =
+      _destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
+          .fromIsar((IsarNative.jsObjectGet(jsObj, 'nodeCategories') as List?)
+              ?.map((e) => e ?? '')
+              .toList()
+              .cast<String>());
+  object.nodes =
+      _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
+          .fromIsar((IsarNative.jsObjectGet(jsObj, 'nodes') as List?)
+              ?.map((e) => e ?? '')
+              .toList()
+              .cast<String>());
+  object.progressionHash = IsarNative.jsObjectGet(jsObj, 'progressionHash');
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  return object;
+}
+
+P _destinyTalentGridDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'exclusiveSets':
+      return (_destinyTalentGridDefinitionDestinyTalentNodeExclusiveSetDefinitionListConverter
+          .fromIsar((IsarNative.jsObjectGet(jsObj, 'exclusiveSets') as List?)
+              ?.map((e) => e ?? '')
+              .toList()
+              .cast<String>())) as P;
+    case 'gridLevelPerColumn':
+      return (IsarNative.jsObjectGet(jsObj, 'gridLevelPerColumn')) as P;
+    case 'groups':
+      return (_destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'groups'))) as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'independentNodeIndexes':
+      return ((IsarNative.jsObjectGet(jsObj, 'independentNodeIndexes') as List?)
+          ?.map((e) => e ?? double.negativeInfinity)
+          .toList()
+          .cast<int>()) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'maxGridLevel':
+      return (IsarNative.jsObjectGet(jsObj, 'maxGridLevel')) as P;
+    case 'nodeCategories':
+      return (_destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
+          .fromIsar((IsarNative.jsObjectGet(jsObj, 'nodeCategories') as List?)
+              ?.map((e) => e ?? '')
+              .toList()
+              .cast<String>())) as P;
+    case 'nodes':
+      return (_destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
+          .fromIsar((IsarNative.jsObjectGet(jsObj, 'nodes') as List?)
+              ?.map((e) => e ?? '')
+              .toList()
+              .cast<String>())) as P;
+    case 'progressionHash':
+      return (IsarNative.jsObjectGet(jsObj, 'progressionHash')) as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinyTalentGridDefinitionAttachLinks(
+    IsarCollection col, int id, DestinyTalentGridDefinition object) {}
 
 extension DestinyTalentGridDefinitionQueryWhereSort on QueryBuilder<
     DestinyTalentGridDefinition, DestinyTalentGridDefinition, QWhere> {
   QueryBuilder<DestinyTalentGridDefinition, DestinyTalentGridDefinition,
       QAfterWhere> anyHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension DestinyTalentGridDefinitionQueryWhere on QueryBuilder<
     DestinyTalentGridDefinition, DestinyTalentGridDefinition, QWhereClause> {
   QueryBuilder<DestinyTalentGridDefinition, DestinyTalentGridDefinition,
-      QAfterWhereClause> hashEqualTo(int? hash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
+      QAfterWhereClause> hashEqualTo(int hash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: hash,
       includeLower: true,
-      upper: [hash],
+      upper: hash,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<DestinyTalentGridDefinition, DestinyTalentGridDefinition,
-      QAfterWhereClause> hashNotEqualTo(int? hash) {
+      QAfterWhereClause> hashNotEqualTo(int hash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<DestinyTalentGridDefinition, DestinyTalentGridDefinition,
-      QAfterWhereClause> hashGreaterThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
-      includeLower: include,
-    ));
+      QAfterWhereClause> hashGreaterThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: hash, includeLower: include),
+    );
   }
 
   QueryBuilder<DestinyTalentGridDefinition, DestinyTalentGridDefinition,
-      QAfterWhereClause> hashLessThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [hash],
-      includeUpper: include,
-    ));
+      QAfterWhereClause> hashLessThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: hash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinyTalentGridDefinition, DestinyTalentGridDefinition,
       QAfterWhereClause> hashBetween(
-    int? lowerHash,
-    int? upperHash, {
+    int lowerHash,
+    int upperHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerHash,
       includeLower: includeLower,
-      upper: [upperHash],
+      upper: upperHash,
       includeUpper: includeUpper,
     ));
   }
@@ -773,7 +750,7 @@ extension DestinyTalentGridDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyTalentGridDefinition, DestinyTalentGridDefinition,
-      QAfterFilterCondition> hashEqualTo(int? value) {
+      QAfterFilterCondition> hashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hash',
@@ -783,7 +760,7 @@ extension DestinyTalentGridDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyTalentGridDefinition, DestinyTalentGridDefinition,
       QAfterFilterCondition> hashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -796,7 +773,7 @@ extension DestinyTalentGridDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyTalentGridDefinition, DestinyTalentGridDefinition,
       QAfterFilterCondition> hashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -809,8 +786,8 @@ extension DestinyTalentGridDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyTalentGridDefinition, DestinyTalentGridDefinition,
       QAfterFilterCondition> hashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

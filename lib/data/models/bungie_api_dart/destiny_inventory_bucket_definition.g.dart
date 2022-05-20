@@ -6,21 +6,17 @@ part of 'destiny_inventory_bucket_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinyInventoryBucketDefinitionCollection on Isar {
   IsarCollection<DestinyInventoryBucketDefinition>
-      get destinyInventoryBucketDefinitions {
-    return getCollection('DestinyInventoryBucketDefinition');
-  }
+      get destinyInventoryBucketDefinitions => getCollection();
 }
 
-final DestinyInventoryBucketDefinitionSchema = CollectionSchema(
+const DestinyInventoryBucketDefinitionSchema = CollectionSchema(
   name: 'DestinyInventoryBucketDefinition',
   schema:
       '{"name":"DestinyInventoryBucketDefinition","idName":"hash","properties":[{"name":"bucketOrder","type":"Long"},{"name":"category","type":"Long"},{"name":"displayProperties","type":"String"},{"name":"enabled","type":"Bool"},{"name":"fifo","type":"Bool"},{"name":"hasTransferDestination","type":"Bool"},{"name":"index","type":"Long"},{"name":"itemCount","type":"Long"},{"name":"location","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"scope","type":"Long"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinyInventoryBucketDefinitionNativeAdapter(),
-  webAdapter: const _DestinyInventoryBucketDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'bucketOrder': 0,
@@ -37,21 +33,40 @@ final DestinyInventoryBucketDefinitionSchema = CollectionSchema(
   },
   listProperties: {},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.hash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.hash;
-    }
-  },
-  setId: (obj, id) => obj.hash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinyInventoryBucketDefinitionGetId,
+  setId: _destinyInventoryBucketDefinitionSetId,
+  getLinks: _destinyInventoryBucketDefinitionGetLinks,
+  attachLinks: _destinyInventoryBucketDefinitionAttachLinks,
+  serializeNative: _destinyInventoryBucketDefinitionSerializeNative,
+  deserializeNative: _destinyInventoryBucketDefinitionDeserializeNative,
+  deserializePropNative: _destinyInventoryBucketDefinitionDeserializePropNative,
+  serializeWeb: _destinyInventoryBucketDefinitionSerializeWeb,
+  deserializeWeb: _destinyInventoryBucketDefinitionDeserializeWeb,
+  deserializePropWeb: _destinyInventoryBucketDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinyInventoryBucketDefinitionGetId(
+    DestinyInventoryBucketDefinition object) {
+  if (object.hash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.hash;
+  }
+}
+
+void _destinyInventoryBucketDefinitionSetId(
+    DestinyInventoryBucketDefinition object, int id) {
+  object.hash = id;
+}
+
+List<IsarLinkBase> _destinyInventoryBucketDefinitionGetLinks(
+    DestinyInventoryBucketDefinition object) {
+  return [];
+}
 
 const _destinyInventoryBucketDefinitionBucketCategoryConverter =
     BucketCategoryConverter();
@@ -62,244 +77,227 @@ const _destinyInventoryBucketDefinitionItemLocationConverter =
 const _destinyInventoryBucketDefinitionBucketScopeConverter =
     BucketScopeConverter();
 
-class _DestinyInventoryBucketDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinyInventoryBucketDefinition> {
-  const _DestinyInventoryBucketDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinyInventoryBucketDefinition> collection,
-      DestinyInventoryBucketDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(jsObj, 'bucketOrder', object.bucketOrder);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'category',
-        _destinyInventoryBucketDefinitionBucketCategoryConverter
-            .toIsar(object.category));
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayProperties',
-        _destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties));
-    IsarNative.jsObjectSet(jsObj, 'enabled', object.enabled);
-    IsarNative.jsObjectSet(jsObj, 'fifo', object.fifo);
-    IsarNative.jsObjectSet(
-        jsObj, 'hasTransferDestination', object.hasTransferDestination);
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(jsObj, 'itemCount', object.itemCount);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'location',
-        _destinyInventoryBucketDefinitionItemLocationConverter
-            .toIsar(object.location));
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'scope',
-        _destinyInventoryBucketDefinitionBucketScopeConverter
-            .toIsar(object.scope));
-    return jsObj;
+void _destinyInventoryBucketDefinitionSerializeNative(
+    IsarCollection<DestinyInventoryBucketDefinition> collection,
+    IsarRawObject rawObj,
+    DestinyInventoryBucketDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 = object.bucketOrder;
+  final _bucketOrder = value0;
+  final value1 = _destinyInventoryBucketDefinitionBucketCategoryConverter
+      .toIsar(object.category);
+  final _category = value1;
+  final value2 =
+      _destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties);
+  IsarUint8List? _displayProperties;
+  if (value2 != null) {
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
   }
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
+  final value3 = object.enabled;
+  final _enabled = value3;
+  final value4 = object.fifo;
+  final _fifo = value4;
+  final value5 = object.hasTransferDestination;
+  final _hasTransferDestination = value5;
+  final value6 = object.index;
+  final _index = value6;
+  final value7 = object.itemCount;
+  final _itemCount = value7;
+  final value8 = _destinyInventoryBucketDefinitionItemLocationConverter
+      .toIsar(object.location);
+  final _location = value8;
+  final value9 = object.redacted;
+  final _redacted = value9;
+  final value10 = _destinyInventoryBucketDefinitionBucketScopeConverter
+      .toIsar(object.scope);
+  final _scope = value10;
+  final size = staticSize + dynamicSize;
 
-  @override
-  DestinyInventoryBucketDefinition deserialize(
-      IsarCollection<DestinyInventoryBucketDefinition> collection,
-      dynamic jsObj) {
-    final object = DestinyInventoryBucketDefinition();
-    object.bucketOrder = IsarNative.jsObjectGet(jsObj, 'bucketOrder');
-    object.category = _destinyInventoryBucketDefinitionBucketCategoryConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'category'));
-    object.displayProperties =
-        _destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
-    object.enabled = IsarNative.jsObjectGet(jsObj, 'enabled');
-    object.fifo = IsarNative.jsObjectGet(jsObj, 'fifo');
-    object.hasTransferDestination =
-        IsarNative.jsObjectGet(jsObj, 'hasTransferDestination');
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.itemCount = IsarNative.jsObjectGet(jsObj, 'itemCount');
-    object.location = _destinyInventoryBucketDefinitionItemLocationConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'location'));
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    object.scope = _destinyInventoryBucketDefinitionBucketScopeConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'));
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'bucketOrder':
-        return (IsarNative.jsObjectGet(jsObj, 'bucketOrder')) as P;
-      case 'category':
-        return (_destinyInventoryBucketDefinitionBucketCategoryConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'category'))) as P;
-      case 'displayProperties':
-        return (_destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
-      case 'enabled':
-        return (IsarNative.jsObjectGet(jsObj, 'enabled')) as P;
-      case 'fifo':
-        return (IsarNative.jsObjectGet(jsObj, 'fifo')) as P;
-      case 'hasTransferDestination':
-        return (IsarNative.jsObjectGet(jsObj, 'hasTransferDestination')) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'itemCount':
-        return (IsarNative.jsObjectGet(jsObj, 'itemCount')) as P;
-      case 'location':
-        return (_destinyInventoryBucketDefinitionItemLocationConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'location'))) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      case 'scope':
-        return (_destinyInventoryBucketDefinitionBucketScopeConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'))) as P;
-      default:
-        throw 'Illegal propertyName';
-    }
-  }
-
-  @override
-  void attachLinks(
-      Isar isar, int id, DestinyInventoryBucketDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeLong(offsets[0], _bucketOrder);
+  writer.writeLong(offsets[1], _category);
+  writer.writeBytes(offsets[2], _displayProperties);
+  writer.writeBool(offsets[3], _enabled);
+  writer.writeBool(offsets[4], _fifo);
+  writer.writeBool(offsets[5], _hasTransferDestination);
+  writer.writeLong(offsets[6], _index);
+  writer.writeLong(offsets[7], _itemCount);
+  writer.writeLong(offsets[8], _location);
+  writer.writeBool(offsets[9], _redacted);
+  writer.writeLong(offsets[10], _scope);
 }
 
-class _DestinyInventoryBucketDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinyInventoryBucketDefinition> {
-  const _DestinyInventoryBucketDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinyInventoryBucketDefinition> collection,
-      IsarRawObject rawObj,
-      DestinyInventoryBucketDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 = object.bucketOrder;
-    final _bucketOrder = value0;
-    final value1 = _destinyInventoryBucketDefinitionBucketCategoryConverter
-        .toIsar(object.category);
-    final _category = value1;
-    final value2 =
-        _destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties);
-    IsarUint8List? _displayProperties;
-    if (value2 != null) {
-      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
-    }
-    dynamicSize += (_displayProperties?.length ?? 0) as int;
-    final value3 = object.enabled;
-    final _enabled = value3;
-    final value4 = object.fifo;
-    final _fifo = value4;
-    final value5 = object.hasTransferDestination;
-    final _hasTransferDestination = value5;
-    final value6 = object.index;
-    final _index = value6;
-    final value7 = object.itemCount;
-    final _itemCount = value7;
-    final value8 = _destinyInventoryBucketDefinitionItemLocationConverter
-        .toIsar(object.location);
-    final _location = value8;
-    final value9 = object.redacted;
-    final _redacted = value9;
-    final value10 = _destinyInventoryBucketDefinitionBucketScopeConverter
-        .toIsar(object.scope);
-    final _scope = value10;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeLong(offsets[0], _bucketOrder);
-    writer.writeLong(offsets[1], _category);
-    writer.writeBytes(offsets[2], _displayProperties);
-    writer.writeBool(offsets[3], _enabled);
-    writer.writeBool(offsets[4], _fifo);
-    writer.writeBool(offsets[5], _hasTransferDestination);
-    writer.writeLong(offsets[6], _index);
-    writer.writeLong(offsets[7], _itemCount);
-    writer.writeLong(offsets[8], _location);
-    writer.writeBool(offsets[9], _redacted);
-    writer.writeLong(offsets[10], _scope);
-  }
-
-  @override
-  DestinyInventoryBucketDefinition deserialize(
-      IsarCollection<DestinyInventoryBucketDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinyInventoryBucketDefinition();
-    object.bucketOrder = reader.readLongOrNull(offsets[0]);
-    object.category = _destinyInventoryBucketDefinitionBucketCategoryConverter
-        .fromIsar(reader.readLongOrNull(offsets[1]));
-    object.displayProperties =
-        _destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offsets[2]));
-    object.enabled = reader.readBoolOrNull(offsets[3]);
-    object.fifo = reader.readBoolOrNull(offsets[4]);
-    object.hasTransferDestination = reader.readBoolOrNull(offsets[5]);
-    object.hash = id;
-    object.index = reader.readLongOrNull(offsets[6]);
-    object.itemCount = reader.readLongOrNull(offsets[7]);
-    object.location = _destinyInventoryBucketDefinitionItemLocationConverter
-        .fromIsar(reader.readLongOrNull(offsets[8]));
-    object.redacted = reader.readBoolOrNull(offsets[9]);
-    object.scope = _destinyInventoryBucketDefinitionBucketScopeConverter
-        .fromIsar(reader.readLongOrNull(offsets[10]));
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (reader.readLongOrNull(offset)) as P;
-      case 1:
-        return (_destinyInventoryBucketDefinitionBucketCategoryConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 2:
-        return (_destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 3:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 4:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 5:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 6:
-        return (reader.readLongOrNull(offset)) as P;
-      case 7:
-        return (reader.readLongOrNull(offset)) as P;
-      case 8:
-        return (_destinyInventoryBucketDefinitionItemLocationConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 9:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 10:
-        return (_destinyInventoryBucketDefinitionBucketScopeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(
-      Isar isar, int id, DestinyInventoryBucketDefinition object) {}
+DestinyInventoryBucketDefinition
+    _destinyInventoryBucketDefinitionDeserializeNative(
+        IsarCollection<DestinyInventoryBucketDefinition> collection,
+        int id,
+        IsarBinaryReader reader,
+        List<int> offsets) {
+  final object = DestinyInventoryBucketDefinition();
+  object.bucketOrder = reader.readLongOrNull(offsets[0]);
+  object.category = _destinyInventoryBucketDefinitionBucketCategoryConverter
+      .fromIsar(reader.readLongOrNull(offsets[1]));
+  object.displayProperties =
+      _destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offsets[2]));
+  object.enabled = reader.readBoolOrNull(offsets[3]);
+  object.fifo = reader.readBoolOrNull(offsets[4]);
+  object.hasTransferDestination = reader.readBoolOrNull(offsets[5]);
+  object.hash = id;
+  object.index = reader.readLongOrNull(offsets[6]);
+  object.itemCount = reader.readLongOrNull(offsets[7]);
+  object.location = _destinyInventoryBucketDefinitionItemLocationConverter
+      .fromIsar(reader.readLongOrNull(offsets[8]));
+  object.redacted = reader.readBoolOrNull(offsets[9]);
+  object.scope = _destinyInventoryBucketDefinitionBucketScopeConverter
+      .fromIsar(reader.readLongOrNull(offsets[10]));
+  return object;
 }
+
+P _destinyInventoryBucketDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (reader.readLongOrNull(offset)) as P;
+    case 1:
+      return (_destinyInventoryBucketDefinitionBucketCategoryConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 2:
+      return (_destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 3:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 4:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 5:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 6:
+      return (reader.readLongOrNull(offset)) as P;
+    case 7:
+      return (reader.readLongOrNull(offset)) as P;
+    case 8:
+      return (_destinyInventoryBucketDefinitionItemLocationConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 9:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 10:
+      return (_destinyInventoryBucketDefinitionBucketScopeConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinyInventoryBucketDefinitionSerializeWeb(
+    IsarCollection<DestinyInventoryBucketDefinition> collection,
+    DestinyInventoryBucketDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'bucketOrder', object.bucketOrder);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'category',
+      _destinyInventoryBucketDefinitionBucketCategoryConverter
+          .toIsar(object.category));
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayProperties',
+      _destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties));
+  IsarNative.jsObjectSet(jsObj, 'enabled', object.enabled);
+  IsarNative.jsObjectSet(jsObj, 'fifo', object.fifo);
+  IsarNative.jsObjectSet(
+      jsObj, 'hasTransferDestination', object.hasTransferDestination);
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(jsObj, 'itemCount', object.itemCount);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'location',
+      _destinyInventoryBucketDefinitionItemLocationConverter
+          .toIsar(object.location));
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'scope',
+      _destinyInventoryBucketDefinitionBucketScopeConverter
+          .toIsar(object.scope));
+  return jsObj;
+}
+
+DestinyInventoryBucketDefinition
+    _destinyInventoryBucketDefinitionDeserializeWeb(
+        IsarCollection<DestinyInventoryBucketDefinition> collection,
+        dynamic jsObj) {
+  final object = DestinyInventoryBucketDefinition();
+  object.bucketOrder = IsarNative.jsObjectGet(jsObj, 'bucketOrder');
+  object.category = _destinyInventoryBucketDefinitionBucketCategoryConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'category'));
+  object.displayProperties =
+      _destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
+  object.enabled = IsarNative.jsObjectGet(jsObj, 'enabled');
+  object.fifo = IsarNative.jsObjectGet(jsObj, 'fifo');
+  object.hasTransferDestination =
+      IsarNative.jsObjectGet(jsObj, 'hasTransferDestination');
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.itemCount = IsarNative.jsObjectGet(jsObj, 'itemCount');
+  object.location = _destinyInventoryBucketDefinitionItemLocationConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'location'));
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  object.scope = _destinyInventoryBucketDefinitionBucketScopeConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'));
+  return object;
+}
+
+P _destinyInventoryBucketDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'bucketOrder':
+      return (IsarNative.jsObjectGet(jsObj, 'bucketOrder')) as P;
+    case 'category':
+      return (_destinyInventoryBucketDefinitionBucketCategoryConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'category'))) as P;
+    case 'displayProperties':
+      return (_destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
+    case 'enabled':
+      return (IsarNative.jsObjectGet(jsObj, 'enabled')) as P;
+    case 'fifo':
+      return (IsarNative.jsObjectGet(jsObj, 'fifo')) as P;
+    case 'hasTransferDestination':
+      return (IsarNative.jsObjectGet(jsObj, 'hasTransferDestination')) as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'itemCount':
+      return (IsarNative.jsObjectGet(jsObj, 'itemCount')) as P;
+    case 'location':
+      return (_destinyInventoryBucketDefinitionItemLocationConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'location'))) as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    case 'scope':
+      return (_destinyInventoryBucketDefinitionBucketScopeConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'))) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinyInventoryBucketDefinitionAttachLinks(
+    IsarCollection col, int id, DestinyInventoryBucketDefinition object) {}
 
 extension DestinyInventoryBucketDefinitionQueryWhereSort on QueryBuilder<
     DestinyInventoryBucketDefinition,
@@ -307,7 +305,7 @@ extension DestinyInventoryBucketDefinitionQueryWhereSort on QueryBuilder<
     QWhere> {
   QueryBuilder<DestinyInventoryBucketDefinition,
       DestinyInventoryBucketDefinition, QAfterWhere> anyHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
@@ -318,12 +316,11 @@ extension DestinyInventoryBucketDefinitionQueryWhere on QueryBuilder<
   QueryBuilder<
       DestinyInventoryBucketDefinition,
       DestinyInventoryBucketDefinition,
-      QAfterWhereClause> hashEqualTo(int? hash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
+      QAfterWhereClause> hashEqualTo(int hash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: hash,
       includeLower: true,
-      upper: [hash],
+      upper: hash,
       includeUpper: true,
     ));
   }
@@ -331,66 +328,51 @@ extension DestinyInventoryBucketDefinitionQueryWhere on QueryBuilder<
   QueryBuilder<
       DestinyInventoryBucketDefinition,
       DestinyInventoryBucketDefinition,
-      QAfterWhereClause> hashNotEqualTo(int? hash) {
+      QAfterWhereClause> hashNotEqualTo(int hash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      );
     }
   }
 
-  QueryBuilder<DestinyInventoryBucketDefinition,
-      DestinyInventoryBucketDefinition, QAfterWhereClause> hashGreaterThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
-      includeLower: include,
-    ));
+  QueryBuilder<
+      DestinyInventoryBucketDefinition,
+      DestinyInventoryBucketDefinition,
+      QAfterWhereClause> hashGreaterThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: hash, includeLower: include),
+    );
   }
 
-  QueryBuilder<DestinyInventoryBucketDefinition,
-      DestinyInventoryBucketDefinition, QAfterWhereClause> hashLessThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [hash],
-      includeUpper: include,
-    ));
+  QueryBuilder<
+      DestinyInventoryBucketDefinition,
+      DestinyInventoryBucketDefinition,
+      QAfterWhereClause> hashLessThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: hash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinyInventoryBucketDefinition,
       DestinyInventoryBucketDefinition, QAfterWhereClause> hashBetween(
-    int? lowerHash,
-    int? upperHash, {
+    int lowerHash,
+    int upperHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerHash,
       includeLower: includeLower,
-      upper: [upperHash],
+      upper: upperHash,
       includeUpper: includeUpper,
     ));
   }
@@ -764,7 +746,7 @@ extension DestinyInventoryBucketDefinitionQueryFilter on QueryBuilder<
   QueryBuilder<
       DestinyInventoryBucketDefinition,
       DestinyInventoryBucketDefinition,
-      QAfterFilterCondition> hashEqualTo(int? value) {
+      QAfterFilterCondition> hashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hash',
@@ -774,7 +756,7 @@ extension DestinyInventoryBucketDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyInventoryBucketDefinition,
       DestinyInventoryBucketDefinition, QAfterFilterCondition> hashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -787,7 +769,7 @@ extension DestinyInventoryBucketDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyInventoryBucketDefinition,
       DestinyInventoryBucketDefinition, QAfterFilterCondition> hashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -800,8 +782,8 @@ extension DestinyInventoryBucketDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyInventoryBucketDefinition,
       DestinyInventoryBucketDefinition, QAfterFilterCondition> hashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

@@ -64,9 +64,9 @@ class LoginWidgetState extends State<LoginWidget> {
         child: RoundedButton(
             text: textBodyBold('Se connecter', color: black),
             onPressed: () {
-              loadingModal();
-              authorizeClick(context);
-              // yannisooLogin();
+              // loadingModal();
+              // authorizeClick(context);
+              yannisooLogin();
             },
             width: 250.0,
             height: 60),

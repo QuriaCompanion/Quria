@@ -6,21 +6,17 @@ part of 'destiny_presentation_node_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinyPresentationNodeDefinitionCollection on Isar {
   IsarCollection<DestinyPresentationNodeDefinition>
-      get destinyPresentationNodeDefinitions {
-    return getCollection('DestinyPresentationNodeDefinition');
-  }
+      get destinyPresentationNodeDefinitions => getCollection();
 }
 
-final DestinyPresentationNodeDefinitionSchema = CollectionSchema(
+const DestinyPresentationNodeDefinitionSchema = CollectionSchema(
   name: 'DestinyPresentationNodeDefinition',
   schema:
       '{"name":"DestinyPresentationNodeDefinition","idName":"hash","properties":[{"name":"children","type":"String"},{"name":"completionRecordHash","type":"Long"},{"name":"disableChildSubscreenNavigation","type":"Bool"},{"name":"displayProperties","type":"String"},{"name":"displayStyle","type":"Long"},{"name":"index","type":"Long"},{"name":"maxCategoryRecordScore","type":"Long"},{"name":"nodeType","type":"Long"},{"name":"objectiveHash","type":"Long"},{"name":"originalIcon","type":"String"},{"name":"parentNodeHashes","type":"LongList"},{"name":"presentationNodeType","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"requirements","type":"String"},{"name":"rootViewIcon","type":"String"},{"name":"scope","type":"Long"},{"name":"screenStyle","type":"Long"},{"name":"traitHashes","type":"LongList"},{"name":"traitIds","type":"StringList"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinyPresentationNodeDefinitionNativeAdapter(),
-  webAdapter: const _DestinyPresentationNodeDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'children': 0,
@@ -45,21 +41,41 @@ final DestinyPresentationNodeDefinitionSchema = CollectionSchema(
   },
   listProperties: {'parentNodeHashes', 'traitHashes', 'traitIds'},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.hash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.hash;
-    }
-  },
-  setId: (obj, id) => obj.hash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinyPresentationNodeDefinitionGetId,
+  setId: _destinyPresentationNodeDefinitionSetId,
+  getLinks: _destinyPresentationNodeDefinitionGetLinks,
+  attachLinks: _destinyPresentationNodeDefinitionAttachLinks,
+  serializeNative: _destinyPresentationNodeDefinitionSerializeNative,
+  deserializeNative: _destinyPresentationNodeDefinitionDeserializeNative,
+  deserializePropNative:
+      _destinyPresentationNodeDefinitionDeserializePropNative,
+  serializeWeb: _destinyPresentationNodeDefinitionSerializeWeb,
+  deserializeWeb: _destinyPresentationNodeDefinitionDeserializeWeb,
+  deserializePropWeb: _destinyPresentationNodeDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinyPresentationNodeDefinitionGetId(
+    DestinyPresentationNodeDefinition object) {
+  if (object.hash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.hash;
+  }
+}
+
+void _destinyPresentationNodeDefinitionSetId(
+    DestinyPresentationNodeDefinition object, int id) {
+  object.hash = id;
+}
+
+List<IsarLinkBase> _destinyPresentationNodeDefinitionGetLinks(
+    DestinyPresentationNodeDefinition object) {
+  return [];
+}
 
 const _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter =
     DestinyPresentationNodeChildrenBlockConverter();
@@ -76,431 +92,414 @@ const _destinyPresentationNodeDefinitionDestinyScopeConverter =
 const _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter =
     DestinyPresentationScreenStyleConverter();
 
-class _DestinyPresentationNodeDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinyPresentationNodeDefinition> {
-  const _DestinyPresentationNodeDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinyPresentationNodeDefinition> collection,
-      DestinyPresentationNodeDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(
-        jsObj,
-        'children',
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
-            .toIsar(object.children));
-    IsarNative.jsObjectSet(
-        jsObj, 'completionRecordHash', object.completionRecordHash);
-    IsarNative.jsObjectSet(jsObj, 'disableChildSubscreenNavigation',
-        object.disableChildSubscreenNavigation);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayProperties',
-        _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties));
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayStyle',
-        _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
-            .toIsar(object.displayStyle));
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(
-        jsObj, 'maxCategoryRecordScore', object.maxCategoryRecordScore);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'nodeType',
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .toIsar(object.nodeType));
-    IsarNative.jsObjectSet(jsObj, 'objectiveHash', object.objectiveHash);
-    IsarNative.jsObjectSet(jsObj, 'originalIcon', object.originalIcon);
-    IsarNative.jsObjectSet(jsObj, 'parentNodeHashes', object.parentNodeHashes);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'presentationNodeType',
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .toIsar(object.presentationNodeType));
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'requirements',
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
-            .toIsar(object.requirements));
-    IsarNative.jsObjectSet(jsObj, 'rootViewIcon', object.rootViewIcon);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'scope',
-        _destinyPresentationNodeDefinitionDestinyScopeConverter
-            .toIsar(object.scope));
-    IsarNative.jsObjectSet(
-        jsObj,
-        'screenStyle',
-        _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
-            .toIsar(object.screenStyle));
-    IsarNative.jsObjectSet(jsObj, 'traitHashes', object.traitHashes);
-    IsarNative.jsObjectSet(jsObj, 'traitIds', object.traitIds);
-    return jsObj;
+void _destinyPresentationNodeDefinitionSerializeNative(
+    IsarCollection<DestinyPresentationNodeDefinition> collection,
+    IsarRawObject rawObj,
+    DestinyPresentationNodeDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+          .toIsar(object.children);
+  IsarUint8List? _children;
+  if (value0 != null) {
+    _children = IsarBinaryWriter.utf8Encoder.convert(value0);
   }
-
-  @override
-  DestinyPresentationNodeDefinition deserialize(
-      IsarCollection<DestinyPresentationNodeDefinition> collection,
-      dynamic jsObj) {
-    final object = DestinyPresentationNodeDefinition();
-    object.children =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'children'));
-    object.completionRecordHash =
-        IsarNative.jsObjectGet(jsObj, 'completionRecordHash');
-    object.disableChildSubscreenNavigation =
-        IsarNative.jsObjectGet(jsObj, 'disableChildSubscreenNavigation');
-    object.displayProperties =
-        _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
-    object.displayStyle =
-        _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayStyle'));
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.maxCategoryRecordScore =
-        IsarNative.jsObjectGet(jsObj, 'maxCategoryRecordScore');
-    object.nodeType =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'nodeType'));
-    object.objectiveHash = IsarNative.jsObjectGet(jsObj, 'objectiveHash');
-    object.originalIcon = IsarNative.jsObjectGet(jsObj, 'originalIcon');
-    object.parentNodeHashes =
-        (IsarNative.jsObjectGet(jsObj, 'parentNodeHashes') as List?)
-            ?.map((e) => e ?? double.negativeInfinity)
-            .toList()
-            .cast<int>();
-    object.presentationNodeType =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationNodeType'));
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    object.requirements =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'requirements'));
-    object.rootViewIcon = IsarNative.jsObjectGet(jsObj, 'rootViewIcon');
-    object.scope = _destinyPresentationNodeDefinitionDestinyScopeConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'));
-    object.screenStyle =
-        _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'screenStyle'));
-    object.traitHashes = (IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
-        ?.map((e) => e ?? double.negativeInfinity)
-        .toList()
-        .cast<int>();
-    object.traitIds = (IsarNative.jsObjectGet(jsObj, 'traitIds') as List?)
-        ?.map((e) => e ?? '')
-        .toList()
-        .cast<String>();
-    return object;
+  dynamicSize += (_children?.length ?? 0) as int;
+  final value1 = object.completionRecordHash;
+  final _completionRecordHash = value1;
+  final value2 = object.disableChildSubscreenNavigation;
+  final _disableChildSubscreenNavigation = value2;
+  final value3 =
+      _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties);
+  IsarUint8List? _displayProperties;
+  if (value3 != null) {
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value3);
   }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'children':
-        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'children'))) as P;
-      case 'completionRecordHash':
-        return (IsarNative.jsObjectGet(jsObj, 'completionRecordHash')) as P;
-      case 'disableChildSubscreenNavigation':
-        return (IsarNative.jsObjectGet(
-            jsObj, 'disableChildSubscreenNavigation')) as P;
-      case 'displayProperties':
-        return (_destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
-      case 'displayStyle':
-        return (_destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayStyle'))) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'maxCategoryRecordScore':
-        return (IsarNative.jsObjectGet(jsObj, 'maxCategoryRecordScore')) as P;
-      case 'nodeType':
-        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'nodeType'))) as P;
-      case 'objectiveHash':
-        return (IsarNative.jsObjectGet(jsObj, 'objectiveHash')) as P;
-      case 'originalIcon':
-        return (IsarNative.jsObjectGet(jsObj, 'originalIcon')) as P;
-      case 'parentNodeHashes':
-        return ((IsarNative.jsObjectGet(jsObj, 'parentNodeHashes') as List?)
-            ?.map((e) => e ?? double.negativeInfinity)
-            .toList()
-            .cast<int>()) as P;
-      case 'presentationNodeType':
-        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(
-                IsarNative.jsObjectGet(jsObj, 'presentationNodeType'))) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      case 'requirements':
-        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'requirements'))) as P;
-      case 'rootViewIcon':
-        return (IsarNative.jsObjectGet(jsObj, 'rootViewIcon')) as P;
-      case 'scope':
-        return (_destinyPresentationNodeDefinitionDestinyScopeConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'))) as P;
-      case 'screenStyle':
-        return (_destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'screenStyle'))) as P;
-      case 'traitHashes':
-        return ((IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
-            ?.map((e) => e ?? double.negativeInfinity)
-            .toList()
-            .cast<int>()) as P;
-      case 'traitIds':
-        return ((IsarNative.jsObjectGet(jsObj, 'traitIds') as List?)
-            ?.map((e) => e ?? '')
-            .toList()
-            .cast<String>()) as P;
-      default:
-        throw 'Illegal propertyName';
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
+  final value4 =
+      _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
+          .toIsar(object.displayStyle);
+  final _displayStyle = value4;
+  final value5 = object.index;
+  final _index = value5;
+  final value6 = object.maxCategoryRecordScore;
+  final _maxCategoryRecordScore = value6;
+  final value7 =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .toIsar(object.nodeType);
+  final _nodeType = value7;
+  final value8 = object.objectiveHash;
+  final _objectiveHash = value8;
+  final value9 = object.originalIcon;
+  IsarUint8List? _originalIcon;
+  if (value9 != null) {
+    _originalIcon = IsarBinaryWriter.utf8Encoder.convert(value9);
+  }
+  dynamicSize += (_originalIcon?.length ?? 0) as int;
+  final value10 = object.parentNodeHashes;
+  dynamicSize += (value10?.length ?? 0) * 8;
+  final _parentNodeHashes = value10;
+  final value11 =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .toIsar(object.presentationNodeType);
+  final _presentationNodeType = value11;
+  final value12 = object.redacted;
+  final _redacted = value12;
+  final value13 =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+          .toIsar(object.requirements);
+  IsarUint8List? _requirements;
+  if (value13 != null) {
+    _requirements = IsarBinaryWriter.utf8Encoder.convert(value13);
+  }
+  dynamicSize += (_requirements?.length ?? 0) as int;
+  final value14 = object.rootViewIcon;
+  IsarUint8List? _rootViewIcon;
+  if (value14 != null) {
+    _rootViewIcon = IsarBinaryWriter.utf8Encoder.convert(value14);
+  }
+  dynamicSize += (_rootViewIcon?.length ?? 0) as int;
+  final value15 = _destinyPresentationNodeDefinitionDestinyScopeConverter
+      .toIsar(object.scope);
+  final _scope = value15;
+  final value16 =
+      _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
+          .toIsar(object.screenStyle);
+  final _screenStyle = value16;
+  final value17 = object.traitHashes;
+  dynamicSize += (value17?.length ?? 0) * 8;
+  final _traitHashes = value17;
+  final value18 = object.traitIds;
+  dynamicSize += (value18?.length ?? 0) * 8;
+  List<IsarUint8List?>? bytesList18;
+  if (value18 != null) {
+    bytesList18 = [];
+    for (var str in value18) {
+      final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
+      bytesList18.add(bytes);
+      dynamicSize += bytes.length as int;
     }
   }
+  final _traitIds = bytesList18;
+  final size = staticSize + dynamicSize;
 
-  @override
-  void attachLinks(
-      Isar isar, int id, DestinyPresentationNodeDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBytes(offsets[0], _children);
+  writer.writeLong(offsets[1], _completionRecordHash);
+  writer.writeBool(offsets[2], _disableChildSubscreenNavigation);
+  writer.writeBytes(offsets[3], _displayProperties);
+  writer.writeLong(offsets[4], _displayStyle);
+  writer.writeLong(offsets[5], _index);
+  writer.writeLong(offsets[6], _maxCategoryRecordScore);
+  writer.writeLong(offsets[7], _nodeType);
+  writer.writeLong(offsets[8], _objectiveHash);
+  writer.writeBytes(offsets[9], _originalIcon);
+  writer.writeLongList(offsets[10], _parentNodeHashes);
+  writer.writeLong(offsets[11], _presentationNodeType);
+  writer.writeBool(offsets[12], _redacted);
+  writer.writeBytes(offsets[13], _requirements);
+  writer.writeBytes(offsets[14], _rootViewIcon);
+  writer.writeLong(offsets[15], _scope);
+  writer.writeLong(offsets[16], _screenStyle);
+  writer.writeLongList(offsets[17], _traitHashes);
+  writer.writeStringList(offsets[18], _traitIds);
 }
 
-class _DestinyPresentationNodeDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinyPresentationNodeDefinition> {
-  const _DestinyPresentationNodeDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinyPresentationNodeDefinition> collection,
-      IsarRawObject rawObj,
-      DestinyPresentationNodeDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
-            .toIsar(object.children);
-    IsarUint8List? _children;
-    if (value0 != null) {
-      _children = IsarBinaryWriter.utf8Encoder.convert(value0);
-    }
-    dynamicSize += (_children?.length ?? 0) as int;
-    final value1 = object.completionRecordHash;
-    final _completionRecordHash = value1;
-    final value2 = object.disableChildSubscreenNavigation;
-    final _disableChildSubscreenNavigation = value2;
-    final value3 =
-        _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties);
-    IsarUint8List? _displayProperties;
-    if (value3 != null) {
-      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value3);
-    }
-    dynamicSize += (_displayProperties?.length ?? 0) as int;
-    final value4 =
-        _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
-            .toIsar(object.displayStyle);
-    final _displayStyle = value4;
-    final value5 = object.index;
-    final _index = value5;
-    final value6 = object.maxCategoryRecordScore;
-    final _maxCategoryRecordScore = value6;
-    final value7 =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .toIsar(object.nodeType);
-    final _nodeType = value7;
-    final value8 = object.objectiveHash;
-    final _objectiveHash = value8;
-    final value9 = object.originalIcon;
-    IsarUint8List? _originalIcon;
-    if (value9 != null) {
-      _originalIcon = IsarBinaryWriter.utf8Encoder.convert(value9);
-    }
-    dynamicSize += (_originalIcon?.length ?? 0) as int;
-    final value10 = object.parentNodeHashes;
-    dynamicSize += (value10?.length ?? 0) * 8;
-    final _parentNodeHashes = value10;
-    final value11 =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .toIsar(object.presentationNodeType);
-    final _presentationNodeType = value11;
-    final value12 = object.redacted;
-    final _redacted = value12;
-    final value13 =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
-            .toIsar(object.requirements);
-    IsarUint8List? _requirements;
-    if (value13 != null) {
-      _requirements = IsarBinaryWriter.utf8Encoder.convert(value13);
-    }
-    dynamicSize += (_requirements?.length ?? 0) as int;
-    final value14 = object.rootViewIcon;
-    IsarUint8List? _rootViewIcon;
-    if (value14 != null) {
-      _rootViewIcon = IsarBinaryWriter.utf8Encoder.convert(value14);
-    }
-    dynamicSize += (_rootViewIcon?.length ?? 0) as int;
-    final value15 = _destinyPresentationNodeDefinitionDestinyScopeConverter
-        .toIsar(object.scope);
-    final _scope = value15;
-    final value16 =
-        _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
-            .toIsar(object.screenStyle);
-    final _screenStyle = value16;
-    final value17 = object.traitHashes;
-    dynamicSize += (value17?.length ?? 0) * 8;
-    final _traitHashes = value17;
-    final value18 = object.traitIds;
-    dynamicSize += (value18?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList18;
-    if (value18 != null) {
-      bytesList18 = [];
-      for (var str in value18) {
-        final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList18.add(bytes);
-        dynamicSize += bytes.length as int;
-      }
-    }
-    final _traitIds = bytesList18;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBytes(offsets[0], _children);
-    writer.writeLong(offsets[1], _completionRecordHash);
-    writer.writeBool(offsets[2], _disableChildSubscreenNavigation);
-    writer.writeBytes(offsets[3], _displayProperties);
-    writer.writeLong(offsets[4], _displayStyle);
-    writer.writeLong(offsets[5], _index);
-    writer.writeLong(offsets[6], _maxCategoryRecordScore);
-    writer.writeLong(offsets[7], _nodeType);
-    writer.writeLong(offsets[8], _objectiveHash);
-    writer.writeBytes(offsets[9], _originalIcon);
-    writer.writeLongList(offsets[10], _parentNodeHashes);
-    writer.writeLong(offsets[11], _presentationNodeType);
-    writer.writeBool(offsets[12], _redacted);
-    writer.writeBytes(offsets[13], _requirements);
-    writer.writeBytes(offsets[14], _rootViewIcon);
-    writer.writeLong(offsets[15], _scope);
-    writer.writeLong(offsets[16], _screenStyle);
-    writer.writeLongList(offsets[17], _traitHashes);
-    writer.writeStringList(offsets[18], _traitIds);
-  }
-
-  @override
-  DestinyPresentationNodeDefinition deserialize(
-      IsarCollection<DestinyPresentationNodeDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinyPresentationNodeDefinition();
-    object.children =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
-            .fromIsar(reader.readStringOrNull(offsets[0]));
-    object.completionRecordHash = reader.readLongOrNull(offsets[1]);
-    object.disableChildSubscreenNavigation = reader.readBoolOrNull(offsets[2]);
-    object.displayProperties =
-        _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offsets[3]));
-    object.displayStyle =
-        _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
-            .fromIsar(reader.readLongOrNull(offsets[4]));
-    object.hash = id;
-    object.index = reader.readLongOrNull(offsets[5]);
-    object.maxCategoryRecordScore = reader.readLongOrNull(offsets[6]);
-    object.nodeType =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(reader.readLongOrNull(offsets[7]));
-    object.objectiveHash = reader.readLongOrNull(offsets[8]);
-    object.originalIcon = reader.readStringOrNull(offsets[9]);
-    object.parentNodeHashes = reader.readLongList(offsets[10]);
-    object.presentationNodeType =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(reader.readLongOrNull(offsets[11]));
-    object.redacted = reader.readBoolOrNull(offsets[12]);
-    object.requirements =
-        _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
-            .fromIsar(reader.readStringOrNull(offsets[13]));
-    object.rootViewIcon = reader.readStringOrNull(offsets[14]);
-    object.scope = _destinyPresentationNodeDefinitionDestinyScopeConverter
-        .fromIsar(reader.readLongOrNull(offsets[15]));
-    object.screenStyle =
-        _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
-            .fromIsar(reader.readLongOrNull(offsets[16]));
-    object.traitHashes = reader.readLongList(offsets[17]);
-    object.traitIds = reader.readStringList(offsets[18]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 1:
-        return (reader.readLongOrNull(offset)) as P;
-      case 2:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 3:
-        return (_destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 4:
-        return (_destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 5:
-        return (reader.readLongOrNull(offset)) as P;
-      case 6:
-        return (reader.readLongOrNull(offset)) as P;
-      case 7:
-        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 8:
-        return (reader.readLongOrNull(offset)) as P;
-      case 9:
-        return (reader.readStringOrNull(offset)) as P;
-      case 10:
-        return (reader.readLongList(offset)) as P;
-      case 11:
-        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 12:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 13:
-        return (_destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 14:
-        return (reader.readStringOrNull(offset)) as P;
-      case 15:
-        return (_destinyPresentationNodeDefinitionDestinyScopeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 16:
-        return (_destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 17:
-        return (reader.readLongList(offset)) as P;
-      case 18:
-        return (reader.readStringList(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(
-      Isar isar, int id, DestinyPresentationNodeDefinition object) {}
+DestinyPresentationNodeDefinition
+    _destinyPresentationNodeDefinitionDeserializeNative(
+        IsarCollection<DestinyPresentationNodeDefinition> collection,
+        int id,
+        IsarBinaryReader reader,
+        List<int> offsets) {
+  final object = DestinyPresentationNodeDefinition();
+  object.children =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+          .fromIsar(reader.readStringOrNull(offsets[0]));
+  object.completionRecordHash = reader.readLongOrNull(offsets[1]);
+  object.disableChildSubscreenNavigation = reader.readBoolOrNull(offsets[2]);
+  object.displayProperties =
+      _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offsets[3]));
+  object.displayStyle =
+      _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
+          .fromIsar(reader.readLongOrNull(offsets[4]));
+  object.hash = id;
+  object.index = reader.readLongOrNull(offsets[5]);
+  object.maxCategoryRecordScore = reader.readLongOrNull(offsets[6]);
+  object.nodeType =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .fromIsar(reader.readLongOrNull(offsets[7]));
+  object.objectiveHash = reader.readLongOrNull(offsets[8]);
+  object.originalIcon = reader.readStringOrNull(offsets[9]);
+  object.parentNodeHashes = reader.readLongList(offsets[10]);
+  object.presentationNodeType =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .fromIsar(reader.readLongOrNull(offsets[11]));
+  object.redacted = reader.readBoolOrNull(offsets[12]);
+  object.requirements =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+          .fromIsar(reader.readStringOrNull(offsets[13]));
+  object.rootViewIcon = reader.readStringOrNull(offsets[14]);
+  object.scope = _destinyPresentationNodeDefinitionDestinyScopeConverter
+      .fromIsar(reader.readLongOrNull(offsets[15]));
+  object.screenStyle =
+      _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
+          .fromIsar(reader.readLongOrNull(offsets[16]));
+  object.traitHashes = reader.readLongList(offsets[17]);
+  object.traitIds = reader.readStringList(offsets[18]);
+  return object;
 }
+
+P _destinyPresentationNodeDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (_destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 1:
+      return (reader.readLongOrNull(offset)) as P;
+    case 2:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 3:
+      return (_destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 4:
+      return (_destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 5:
+      return (reader.readLongOrNull(offset)) as P;
+    case 6:
+      return (reader.readLongOrNull(offset)) as P;
+    case 7:
+      return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 8:
+      return (reader.readLongOrNull(offset)) as P;
+    case 9:
+      return (reader.readStringOrNull(offset)) as P;
+    case 10:
+      return (reader.readLongList(offset)) as P;
+    case 11:
+      return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 12:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 13:
+      return (_destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 14:
+      return (reader.readStringOrNull(offset)) as P;
+    case 15:
+      return (_destinyPresentationNodeDefinitionDestinyScopeConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 16:
+      return (_destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 17:
+      return (reader.readLongList(offset)) as P;
+    case 18:
+      return (reader.readStringList(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinyPresentationNodeDefinitionSerializeWeb(
+    IsarCollection<DestinyPresentationNodeDefinition> collection,
+    DestinyPresentationNodeDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(
+      jsObj,
+      'children',
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+          .toIsar(object.children));
+  IsarNative.jsObjectSet(
+      jsObj, 'completionRecordHash', object.completionRecordHash);
+  IsarNative.jsObjectSet(jsObj, 'disableChildSubscreenNavigation',
+      object.disableChildSubscreenNavigation);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayProperties',
+      _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties));
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayStyle',
+      _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
+          .toIsar(object.displayStyle));
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(
+      jsObj, 'maxCategoryRecordScore', object.maxCategoryRecordScore);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'nodeType',
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .toIsar(object.nodeType));
+  IsarNative.jsObjectSet(jsObj, 'objectiveHash', object.objectiveHash);
+  IsarNative.jsObjectSet(jsObj, 'originalIcon', object.originalIcon);
+  IsarNative.jsObjectSet(jsObj, 'parentNodeHashes', object.parentNodeHashes);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'presentationNodeType',
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .toIsar(object.presentationNodeType));
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'requirements',
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+          .toIsar(object.requirements));
+  IsarNative.jsObjectSet(jsObj, 'rootViewIcon', object.rootViewIcon);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'scope',
+      _destinyPresentationNodeDefinitionDestinyScopeConverter
+          .toIsar(object.scope));
+  IsarNative.jsObjectSet(
+      jsObj,
+      'screenStyle',
+      _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
+          .toIsar(object.screenStyle));
+  IsarNative.jsObjectSet(jsObj, 'traitHashes', object.traitHashes);
+  IsarNative.jsObjectSet(jsObj, 'traitIds', object.traitIds);
+  return jsObj;
+}
+
+DestinyPresentationNodeDefinition
+    _destinyPresentationNodeDefinitionDeserializeWeb(
+        IsarCollection<DestinyPresentationNodeDefinition> collection,
+        dynamic jsObj) {
+  final object = DestinyPresentationNodeDefinition();
+  object.children =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'children'));
+  object.completionRecordHash =
+      IsarNative.jsObjectGet(jsObj, 'completionRecordHash');
+  object.disableChildSubscreenNavigation =
+      IsarNative.jsObjectGet(jsObj, 'disableChildSubscreenNavigation');
+  object.displayProperties =
+      _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
+  object.displayStyle =
+      _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayStyle'));
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.maxCategoryRecordScore =
+      IsarNative.jsObjectGet(jsObj, 'maxCategoryRecordScore');
+  object.nodeType =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'nodeType'));
+  object.objectiveHash = IsarNative.jsObjectGet(jsObj, 'objectiveHash');
+  object.originalIcon = IsarNative.jsObjectGet(jsObj, 'originalIcon');
+  object.parentNodeHashes =
+      (IsarNative.jsObjectGet(jsObj, 'parentNodeHashes') as List?)
+          ?.map((e) => e ?? double.negativeInfinity)
+          .toList()
+          .cast<int>();
+  object.presentationNodeType =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationNodeType'));
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  object.requirements =
+      _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'requirements'));
+  object.rootViewIcon = IsarNative.jsObjectGet(jsObj, 'rootViewIcon');
+  object.scope = _destinyPresentationNodeDefinitionDestinyScopeConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'));
+  object.screenStyle =
+      _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'screenStyle'));
+  object.traitHashes = (IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
+      ?.map((e) => e ?? double.negativeInfinity)
+      .toList()
+      .cast<int>();
+  object.traitIds = (IsarNative.jsObjectGet(jsObj, 'traitIds') as List?)
+      ?.map((e) => e ?? '')
+      .toList()
+      .cast<String>();
+  return object;
+}
+
+P _destinyPresentationNodeDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'children':
+      return (_destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'children'))) as P;
+    case 'completionRecordHash':
+      return (IsarNative.jsObjectGet(jsObj, 'completionRecordHash')) as P;
+    case 'disableChildSubscreenNavigation':
+      return (IsarNative.jsObjectGet(jsObj, 'disableChildSubscreenNavigation'))
+          as P;
+    case 'displayProperties':
+      return (_destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
+    case 'displayStyle':
+      return (_destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayStyle'))) as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'maxCategoryRecordScore':
+      return (IsarNative.jsObjectGet(jsObj, 'maxCategoryRecordScore')) as P;
+    case 'nodeType':
+      return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'nodeType'))) as P;
+    case 'objectiveHash':
+      return (IsarNative.jsObjectGet(jsObj, 'objectiveHash')) as P;
+    case 'originalIcon':
+      return (IsarNative.jsObjectGet(jsObj, 'originalIcon')) as P;
+    case 'parentNodeHashes':
+      return ((IsarNative.jsObjectGet(jsObj, 'parentNodeHashes') as List?)
+          ?.map((e) => e ?? double.negativeInfinity)
+          .toList()
+          .cast<int>()) as P;
+    case 'presentationNodeType':
+      return (_destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
+              .fromIsar(IsarNative.jsObjectGet(jsObj, 'presentationNodeType')))
+          as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    case 'requirements':
+      return (_destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'requirements'))) as P;
+    case 'rootViewIcon':
+      return (IsarNative.jsObjectGet(jsObj, 'rootViewIcon')) as P;
+    case 'scope':
+      return (_destinyPresentationNodeDefinitionDestinyScopeConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'scope'))) as P;
+    case 'screenStyle':
+      return (_destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'screenStyle'))) as P;
+    case 'traitHashes':
+      return ((IsarNative.jsObjectGet(jsObj, 'traitHashes') as List?)
+          ?.map((e) => e ?? double.negativeInfinity)
+          .toList()
+          .cast<int>()) as P;
+    case 'traitIds':
+      return ((IsarNative.jsObjectGet(jsObj, 'traitIds') as List?)
+          ?.map((e) => e ?? '')
+          .toList()
+          .cast<String>()) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinyPresentationNodeDefinitionAttachLinks(
+    IsarCollection col, int id, DestinyPresentationNodeDefinition object) {}
 
 extension DestinyPresentationNodeDefinitionQueryWhereSort on QueryBuilder<
     DestinyPresentationNodeDefinition,
@@ -508,7 +507,7 @@ extension DestinyPresentationNodeDefinitionQueryWhereSort on QueryBuilder<
     QWhere> {
   QueryBuilder<DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition, QAfterWhere> anyHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
@@ -519,12 +518,11 @@ extension DestinyPresentationNodeDefinitionQueryWhere on QueryBuilder<
   QueryBuilder<
       DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition,
-      QAfterWhereClause> hashEqualTo(int? hash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
+      QAfterWhereClause> hashEqualTo(int hash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: hash,
       includeLower: true,
-      upper: [hash],
+      upper: hash,
       includeUpper: true,
     ));
   }
@@ -532,66 +530,51 @@ extension DestinyPresentationNodeDefinitionQueryWhere on QueryBuilder<
   QueryBuilder<
       DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition,
-      QAfterWhereClause> hashNotEqualTo(int? hash) {
+      QAfterWhereClause> hashNotEqualTo(int hash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      );
     }
   }
 
-  QueryBuilder<DestinyPresentationNodeDefinition,
-      DestinyPresentationNodeDefinition, QAfterWhereClause> hashGreaterThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
-      includeLower: include,
-    ));
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterWhereClause> hashGreaterThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: hash, includeLower: include),
+    );
   }
 
-  QueryBuilder<DestinyPresentationNodeDefinition,
-      DestinyPresentationNodeDefinition, QAfterWhereClause> hashLessThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [hash],
-      includeUpper: include,
-    ));
+  QueryBuilder<
+      DestinyPresentationNodeDefinition,
+      DestinyPresentationNodeDefinition,
+      QAfterWhereClause> hashLessThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: hash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition, QAfterWhereClause> hashBetween(
-    int? lowerHash,
-    int? upperHash, {
+    int lowerHash,
+    int upperHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerHash,
       includeLower: includeLower,
-      upper: [upperHash],
+      upper: upperHash,
       includeUpper: includeUpper,
     ));
   }
@@ -1077,7 +1060,7 @@ extension DestinyPresentationNodeDefinitionQueryFilter on QueryBuilder<
   QueryBuilder<
       DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition,
-      QAfterFilterCondition> hashEqualTo(int? value) {
+      QAfterFilterCondition> hashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hash',
@@ -1087,7 +1070,7 @@ extension DestinyPresentationNodeDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition, QAfterFilterCondition> hashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -1100,7 +1083,7 @@ extension DestinyPresentationNodeDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition, QAfterFilterCondition> hashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -1113,8 +1096,8 @@ extension DestinyPresentationNodeDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyPresentationNodeDefinition,
       DestinyPresentationNodeDefinition, QAfterFilterCondition> hashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

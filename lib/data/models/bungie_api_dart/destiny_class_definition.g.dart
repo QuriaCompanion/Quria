@@ -6,20 +6,17 @@ part of 'destiny_class_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinyClassDefinitionCollection on Isar {
-  IsarCollection<DestinyClassDefinition> get destinyClassDefinitions {
-    return getCollection('DestinyClassDefinition');
-  }
+  IsarCollection<DestinyClassDefinition> get destinyClassDefinitions =>
+      getCollection();
 }
 
-final DestinyClassDefinitionSchema = CollectionSchema(
+const DestinyClassDefinitionSchema = CollectionSchema(
   name: 'DestinyClassDefinition',
   schema:
       '{"name":"DestinyClassDefinition","idName":"hash","properties":[{"name":"classType","type":"Long"},{"name":"displayProperties","type":"String"},{"name":"genderedClassNames","type":"String"},{"name":"genderedClassNamesByGenderHash","type":"String"},{"name":"index","type":"Long"},{"name":"mentorVendorHash","type":"Long"},{"name":"redacted","type":"Bool"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinyClassDefinitionNativeAdapter(),
-  webAdapter: const _DestinyClassDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'classType': 0,
@@ -32,308 +29,288 @@ final DestinyClassDefinitionSchema = CollectionSchema(
   },
   listProperties: {},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.hash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.hash;
-    }
-  },
-  setId: (obj, id) => obj.hash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinyClassDefinitionGetId,
+  setId: _destinyClassDefinitionSetId,
+  getLinks: _destinyClassDefinitionGetLinks,
+  attachLinks: _destinyClassDefinitionAttachLinks,
+  serializeNative: _destinyClassDefinitionSerializeNative,
+  deserializeNative: _destinyClassDefinitionDeserializeNative,
+  deserializePropNative: _destinyClassDefinitionDeserializePropNative,
+  serializeWeb: _destinyClassDefinitionSerializeWeb,
+  deserializeWeb: _destinyClassDefinitionDeserializeWeb,
+  deserializePropWeb: _destinyClassDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinyClassDefinitionGetId(DestinyClassDefinition object) {
+  if (object.hash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.hash;
+  }
+}
+
+void _destinyClassDefinitionSetId(DestinyClassDefinition object, int id) {
+  object.hash = id;
+}
+
+List<IsarLinkBase> _destinyClassDefinitionGetLinks(
+    DestinyClassDefinition object) {
+  return [];
+}
 
 const _destinyClassDefinitionDestinyClassConverter = DestinyClassConverter();
 const _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter =
     DestinyDisplayPropertiesDefinitionConverter();
 const _destinyClassDefinitionMapConverter = MapConverter();
 
-class _DestinyClassDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinyClassDefinition> {
-  const _DestinyClassDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinyClassDefinition> collection,
-      DestinyClassDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(jsObj, 'classType',
-        _destinyClassDefinitionDestinyClassConverter.toIsar(object.classType));
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayProperties',
-        _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties));
-    IsarNative.jsObjectSet(jsObj, 'genderedClassNames',
-        _destinyClassDefinitionMapConverter.toIsar(object.genderedClassNames));
-    IsarNative.jsObjectSet(
-        jsObj,
-        'genderedClassNamesByGenderHash',
-        _destinyClassDefinitionMapConverter
-            .toIsar(object.genderedClassNamesByGenderHash));
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(jsObj, 'mentorVendorHash', object.mentorVendorHash);
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    return jsObj;
+void _destinyClassDefinitionSerializeNative(
+    IsarCollection<DestinyClassDefinition> collection,
+    IsarRawObject rawObj,
+    DestinyClassDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 =
+      _destinyClassDefinitionDestinyClassConverter.toIsar(object.classType);
+  final _classType = value0;
+  final value1 =
+      _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties);
+  IsarUint8List? _displayProperties;
+  if (value1 != null) {
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value1);
   }
-
-  @override
-  DestinyClassDefinition deserialize(
-      IsarCollection<DestinyClassDefinition> collection, dynamic jsObj) {
-    final object = DestinyClassDefinition();
-    object.classType = _destinyClassDefinitionDestinyClassConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'classType'));
-    object.displayProperties =
-        _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
-    object.genderedClassNames = _destinyClassDefinitionMapConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'genderedClassNames'));
-    object.genderedClassNamesByGenderHash =
-        _destinyClassDefinitionMapConverter.fromIsar(
-            IsarNative.jsObjectGet(jsObj, 'genderedClassNamesByGenderHash'));
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.mentorVendorHash = IsarNative.jsObjectGet(jsObj, 'mentorVendorHash');
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    return object;
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
+  final value2 =
+      _destinyClassDefinitionMapConverter.toIsar(object.genderedClassNames);
+  IsarUint8List? _genderedClassNames;
+  if (value2 != null) {
+    _genderedClassNames = IsarBinaryWriter.utf8Encoder.convert(value2);
   }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'classType':
-        return (_destinyClassDefinitionDestinyClassConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'classType'))) as P;
-      case 'displayProperties':
-        return (_destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
-      case 'genderedClassNames':
-        return (_destinyClassDefinitionMapConverter.fromIsar(
-            IsarNative.jsObjectGet(jsObj, 'genderedClassNames'))) as P;
-      case 'genderedClassNamesByGenderHash':
-        return (_destinyClassDefinitionMapConverter.fromIsar(
-            IsarNative.jsObjectGet(
-                jsObj, 'genderedClassNamesByGenderHash'))) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'mentorVendorHash':
-        return (IsarNative.jsObjectGet(jsObj, 'mentorVendorHash')) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      default:
-        throw 'Illegal propertyName';
-    }
+  dynamicSize += (_genderedClassNames?.length ?? 0) as int;
+  final value3 = _destinyClassDefinitionMapConverter
+      .toIsar(object.genderedClassNamesByGenderHash);
+  IsarUint8List? _genderedClassNamesByGenderHash;
+  if (value3 != null) {
+    _genderedClassNamesByGenderHash =
+        IsarBinaryWriter.utf8Encoder.convert(value3);
   }
+  dynamicSize += (_genderedClassNamesByGenderHash?.length ?? 0) as int;
+  final value4 = object.index;
+  final _index = value4;
+  final value5 = object.mentorVendorHash;
+  final _mentorVendorHash = value5;
+  final value6 = object.redacted;
+  final _redacted = value6;
+  final size = staticSize + dynamicSize;
 
-  @override
-  void attachLinks(Isar isar, int id, DestinyClassDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeLong(offsets[0], _classType);
+  writer.writeBytes(offsets[1], _displayProperties);
+  writer.writeBytes(offsets[2], _genderedClassNames);
+  writer.writeBytes(offsets[3], _genderedClassNamesByGenderHash);
+  writer.writeLong(offsets[4], _index);
+  writer.writeLong(offsets[5], _mentorVendorHash);
+  writer.writeBool(offsets[6], _redacted);
 }
 
-class _DestinyClassDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinyClassDefinition> {
-  const _DestinyClassDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinyClassDefinition> collection,
-      IsarRawObject rawObj,
-      DestinyClassDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 =
-        _destinyClassDefinitionDestinyClassConverter.toIsar(object.classType);
-    final _classType = value0;
-    final value1 =
-        _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties);
-    IsarUint8List? _displayProperties;
-    if (value1 != null) {
-      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value1);
-    }
-    dynamicSize += (_displayProperties?.length ?? 0) as int;
-    final value2 =
-        _destinyClassDefinitionMapConverter.toIsar(object.genderedClassNames);
-    IsarUint8List? _genderedClassNames;
-    if (value2 != null) {
-      _genderedClassNames = IsarBinaryWriter.utf8Encoder.convert(value2);
-    }
-    dynamicSize += (_genderedClassNames?.length ?? 0) as int;
-    final value3 = _destinyClassDefinitionMapConverter
-        .toIsar(object.genderedClassNamesByGenderHash);
-    IsarUint8List? _genderedClassNamesByGenderHash;
-    if (value3 != null) {
-      _genderedClassNamesByGenderHash =
-          IsarBinaryWriter.utf8Encoder.convert(value3);
-    }
-    dynamicSize += (_genderedClassNamesByGenderHash?.length ?? 0) as int;
-    final value4 = object.index;
-    final _index = value4;
-    final value5 = object.mentorVendorHash;
-    final _mentorVendorHash = value5;
-    final value6 = object.redacted;
-    final _redacted = value6;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeLong(offsets[0], _classType);
-    writer.writeBytes(offsets[1], _displayProperties);
-    writer.writeBytes(offsets[2], _genderedClassNames);
-    writer.writeBytes(offsets[3], _genderedClassNamesByGenderHash);
-    writer.writeLong(offsets[4], _index);
-    writer.writeLong(offsets[5], _mentorVendorHash);
-    writer.writeBool(offsets[6], _redacted);
-  }
-
-  @override
-  DestinyClassDefinition deserialize(
-      IsarCollection<DestinyClassDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinyClassDefinition();
-    object.classType = _destinyClassDefinitionDestinyClassConverter
-        .fromIsar(reader.readLongOrNull(offsets[0]));
-    object.displayProperties =
-        _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offsets[1]));
-    object.genderedClassNames = _destinyClassDefinitionMapConverter
-        .fromIsar(reader.readStringOrNull(offsets[2]));
-    object.genderedClassNamesByGenderHash = _destinyClassDefinitionMapConverter
-        .fromIsar(reader.readStringOrNull(offsets[3]));
-    object.hash = id;
-    object.index = reader.readLongOrNull(offsets[4]);
-    object.mentorVendorHash = reader.readLongOrNull(offsets[5]);
-    object.redacted = reader.readBoolOrNull(offsets[6]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (_destinyClassDefinitionDestinyClassConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 1:
-        return (_destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 2:
-        return (_destinyClassDefinitionMapConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 3:
-        return (_destinyClassDefinitionMapConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 4:
-        return (reader.readLongOrNull(offset)) as P;
-      case 5:
-        return (reader.readLongOrNull(offset)) as P;
-      case 6:
-        return (reader.readBoolOrNull(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyClassDefinition object) {}
+DestinyClassDefinition _destinyClassDefinitionDeserializeNative(
+    IsarCollection<DestinyClassDefinition> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = DestinyClassDefinition();
+  object.classType = _destinyClassDefinitionDestinyClassConverter
+      .fromIsar(reader.readLongOrNull(offsets[0]));
+  object.displayProperties =
+      _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offsets[1]));
+  object.genderedClassNames = _destinyClassDefinitionMapConverter
+      .fromIsar(reader.readStringOrNull(offsets[2]));
+  object.genderedClassNamesByGenderHash = _destinyClassDefinitionMapConverter
+      .fromIsar(reader.readStringOrNull(offsets[3]));
+  object.hash = id;
+  object.index = reader.readLongOrNull(offsets[4]);
+  object.mentorVendorHash = reader.readLongOrNull(offsets[5]);
+  object.redacted = reader.readBoolOrNull(offsets[6]);
+  return object;
 }
+
+P _destinyClassDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (_destinyClassDefinitionDestinyClassConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 1:
+      return (_destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 2:
+      return (_destinyClassDefinitionMapConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 3:
+      return (_destinyClassDefinitionMapConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 4:
+      return (reader.readLongOrNull(offset)) as P;
+    case 5:
+      return (reader.readLongOrNull(offset)) as P;
+    case 6:
+      return (reader.readBoolOrNull(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinyClassDefinitionSerializeWeb(
+    IsarCollection<DestinyClassDefinition> collection,
+    DestinyClassDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(jsObj, 'classType',
+      _destinyClassDefinitionDestinyClassConverter.toIsar(object.classType));
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayProperties',
+      _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties));
+  IsarNative.jsObjectSet(jsObj, 'genderedClassNames',
+      _destinyClassDefinitionMapConverter.toIsar(object.genderedClassNames));
+  IsarNative.jsObjectSet(
+      jsObj,
+      'genderedClassNamesByGenderHash',
+      _destinyClassDefinitionMapConverter
+          .toIsar(object.genderedClassNamesByGenderHash));
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(jsObj, 'mentorVendorHash', object.mentorVendorHash);
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  return jsObj;
+}
+
+DestinyClassDefinition _destinyClassDefinitionDeserializeWeb(
+    IsarCollection<DestinyClassDefinition> collection, dynamic jsObj) {
+  final object = DestinyClassDefinition();
+  object.classType = _destinyClassDefinitionDestinyClassConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'classType'));
+  object.displayProperties =
+      _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
+  object.genderedClassNames = _destinyClassDefinitionMapConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'genderedClassNames'));
+  object.genderedClassNamesByGenderHash =
+      _destinyClassDefinitionMapConverter.fromIsar(
+          IsarNative.jsObjectGet(jsObj, 'genderedClassNamesByGenderHash'));
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.mentorVendorHash = IsarNative.jsObjectGet(jsObj, 'mentorVendorHash');
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  return object;
+}
+
+P _destinyClassDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'classType':
+      return (_destinyClassDefinitionDestinyClassConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'classType'))) as P;
+    case 'displayProperties':
+      return (_destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
+    case 'genderedClassNames':
+      return (_destinyClassDefinitionMapConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'genderedClassNames'))) as P;
+    case 'genderedClassNamesByGenderHash':
+      return (_destinyClassDefinitionMapConverter.fromIsar(
+              IsarNative.jsObjectGet(jsObj, 'genderedClassNamesByGenderHash')))
+          as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'mentorVendorHash':
+      return (IsarNative.jsObjectGet(jsObj, 'mentorVendorHash')) as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinyClassDefinitionAttachLinks(
+    IsarCollection col, int id, DestinyClassDefinition object) {}
 
 extension DestinyClassDefinitionQueryWhereSort
     on QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QWhere> {
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition, QAfterWhere>
       anyHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension DestinyClassDefinitionQueryWhere on QueryBuilder<
     DestinyClassDefinition, DestinyClassDefinition, QWhereClause> {
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
-      QAfterWhereClause> hashEqualTo(int? hash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
+      QAfterWhereClause> hashEqualTo(int hash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: hash,
       includeLower: true,
-      upper: [hash],
+      upper: hash,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
-      QAfterWhereClause> hashNotEqualTo(int? hash) {
+      QAfterWhereClause> hashNotEqualTo(int hash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
-      QAfterWhereClause> hashGreaterThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
-      includeLower: include,
-    ));
+      QAfterWhereClause> hashGreaterThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: hash, includeLower: include),
+    );
   }
 
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
-      QAfterWhereClause> hashLessThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [hash],
-      includeUpper: include,
-    ));
+      QAfterWhereClause> hashLessThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: hash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
       QAfterWhereClause> hashBetween(
-    int? lowerHash,
-    int? upperHash, {
+    int lowerHash,
+    int upperHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerHash,
       includeLower: includeLower,
-      upper: [upperHash],
+      upper: upperHash,
       includeUpper: includeUpper,
     ));
   }
@@ -777,7 +754,7 @@ extension DestinyClassDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
-      QAfterFilterCondition> hashEqualTo(int? value) {
+      QAfterFilterCondition> hashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hash',
@@ -787,7 +764,7 @@ extension DestinyClassDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
       QAfterFilterCondition> hashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -800,7 +777,7 @@ extension DestinyClassDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
       QAfterFilterCondition> hashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -813,8 +790,8 @@ extension DestinyClassDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyClassDefinition, DestinyClassDefinition,
       QAfterFilterCondition> hashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
