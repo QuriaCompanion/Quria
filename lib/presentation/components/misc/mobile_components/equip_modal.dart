@@ -8,6 +8,7 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
+import 'package:quria/presentation/var/keys.dart';
 
 class EquipModal extends StatelessWidget {
   final String instanceId;
@@ -67,17 +68,28 @@ class EquipModal extends StatelessWidget {
                   onTap: () async {
                     Navigator.pop(context);
                     try {
-                      await BungieActionsService().equipItem(
-                          itemId: instanceId,
-                          characterId: character.characterId!,
-                          itemHash: itemHash);
-                    } catch (_) {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return const ErrorDialog();
-                          });
-                    }
+                      await BungieActionsService()
+                          .equipItem(
+                              itemId: instanceId,
+                              characterId: character.characterId!,
+                              itemHash: itemHash)
+                          .onError((_, __) {
+                        showDialog(
+                            context: scaffoldKey.currentContext!,
+                            builder: (context) {
+                              return const ErrorDialog();
+                            });
+                      }).then((_) =>
+                              ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                                  .showSnackBar(SnackBar(
+                                content: textBodyMedium(
+                                  "L'item a bien été équipé",
+                                  utf8: false,
+                                  color: Colors.white,
+                                ),
+                                backgroundColor: Colors.green,
+                              )));
+                    } catch (_) {}
                   },
                   child: CharacterTransferItem(
                       imageLink: DestinyData.bungieLink + character.emblemPath!,

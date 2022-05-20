@@ -7,6 +7,8 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
+import 'package:quria/presentation/components/misc/mobile_components/snackbar.dart';
+import 'package:quria/presentation/var/keys.dart';
 
 class TransferModal extends StatefulWidget {
   final String instanceId;
@@ -86,11 +88,20 @@ class _TransferModalState extends State<TransferModal> {
                         itemHash: widget.itemHash,
                       )
                           .then((_) {
+                        ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                            .showSnackBar(SnackBar(
+                          content: textBodyMedium(
+                            "L'item a bien été tranféré",
+                            utf8: false,
+                            color: Colors.white,
+                          ),
+                          backgroundColor: Colors.green,
+                        ));
                         widget.onTransfer();
                       });
                     } catch (_) {
                       showDialog(
-                          context: context,
+                          context: scaffoldKey.currentContext!,
                           builder: (context) {
                             return const ErrorDialog();
                           });
