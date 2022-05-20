@@ -27,6 +27,7 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: black,
       drawer: const Burger(),
       extendBody: true,
       extendBodyBehindAppBar: true,

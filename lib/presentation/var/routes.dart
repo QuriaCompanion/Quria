@@ -19,5 +19,6 @@ const String routeClassItemChoice = "/class-item-choice";
 const String routeVault = "/vault";
 const String routeInspectSubclass = "/inspect-subclass";
 const String routeCollectionItem = "/collection-item";
+const String routePageSettings = "/settings";
 
 final navKey = GlobalKey<NavigatorState>();

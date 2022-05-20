@@ -23,6 +23,7 @@ import 'package:quria/presentation/screens/inspect/inspect_mobile.dart';
 import 'package:quria/presentation/screens/inspect_subclass/inspect_subclass_page.dart';
 import 'package:quria/presentation/screens/login.dart';
 import 'package:quria/presentation/screens/profile/profile_page.dart';
+import 'package:quria/presentation/screens/settings/settings_page.dart';
 import 'package:quria/presentation/screens/testds/test.dart';
 import 'package:quria/presentation/screens/vault/vault_page.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -87,6 +88,8 @@ class AppRouter {
         final String data = settings.arguments as String;
         return MaterialPageRoute(
             builder: (_) => InspectSubclassPage(instanceId: data));
+      case routePageSettings:
+        return MaterialPageRoute(builder: (_) => const SettingsPage());
       case routeCollectionItem:
         final int data = settings.arguments as int;
         return MaterialPageRoute(
