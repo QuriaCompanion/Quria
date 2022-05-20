@@ -1,4 +1,4 @@
-enum quick_actions {
+enum QuickActions {
   equip,
   save,
   share,

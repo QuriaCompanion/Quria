@@ -77,7 +77,7 @@ class StorageService {
 
     for (int i = 0; i < hashes.length; i++) {
       if (definitions[i] == null) continue;
-      T def = definitions[i]!;
+      T def = definitions[i] as T;
       AllDestinyManifestComponents.setField<T>(hashes[i], def);
     }
   }

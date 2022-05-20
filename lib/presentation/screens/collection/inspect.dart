@@ -15,10 +15,10 @@ class InspectWidget extends StatefulWidget {
   const InspectWidget({required this.item, Key? key}) : super(key: key);
 
   @override
-  _InspectWidgetState createState() => _InspectWidgetState();
+  InspectWidgetState createState() => InspectWidgetState();
 }
 
-class _InspectWidgetState extends State<InspectWidget> {
+class InspectWidgetState extends State<InspectWidget> {
   double imageSize = 150;
   double fontSize = 20;
   double itemMainInfoPadding = 15;

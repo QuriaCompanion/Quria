@@ -6,20 +6,17 @@ part of 'destiny_plug_set_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinyPlugSetDefinitionCollection on Isar {
-  IsarCollection<DestinyPlugSetDefinition> get destinyPlugSetDefinitions {
-    return getCollection('DestinyPlugSetDefinition');
-  }
+  IsarCollection<DestinyPlugSetDefinition> get destinyPlugSetDefinitions =>
+      getCollection();
 }
 
-final DestinyPlugSetDefinitionSchema = CollectionSchema(
+const DestinyPlugSetDefinitionSchema = CollectionSchema(
   name: 'DestinyPlugSetDefinition',
   schema:
       '{"name":"DestinyPlugSetDefinition","idName":"hash","properties":[{"name":"displayProperties","type":"String"},{"name":"index","type":"Long"},{"name":"isFakePlugSet","type":"Bool"},{"name":"redacted","type":"Bool"},{"name":"reusablePlugItems","type":"StringList"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinyPlugSetDefinitionNativeAdapter(),
-  webAdapter: const _DestinyPlugSetDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'displayProperties': 0,
@@ -30,286 +27,266 @@ final DestinyPlugSetDefinitionSchema = CollectionSchema(
   },
   listProperties: {'reusablePlugItems'},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.hash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.hash;
-    }
-  },
-  setId: (obj, id) => obj.hash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinyPlugSetDefinitionGetId,
+  setId: _destinyPlugSetDefinitionSetId,
+  getLinks: _destinyPlugSetDefinitionGetLinks,
+  attachLinks: _destinyPlugSetDefinitionAttachLinks,
+  serializeNative: _destinyPlugSetDefinitionSerializeNative,
+  deserializeNative: _destinyPlugSetDefinitionDeserializeNative,
+  deserializePropNative: _destinyPlugSetDefinitionDeserializePropNative,
+  serializeWeb: _destinyPlugSetDefinitionSerializeWeb,
+  deserializeWeb: _destinyPlugSetDefinitionDeserializeWeb,
+  deserializePropWeb: _destinyPlugSetDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinyPlugSetDefinitionGetId(DestinyPlugSetDefinition object) {
+  if (object.hash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.hash;
+  }
+}
+
+void _destinyPlugSetDefinitionSetId(DestinyPlugSetDefinition object, int id) {
+  object.hash = id;
+}
+
+List<IsarLinkBase> _destinyPlugSetDefinitionGetLinks(
+    DestinyPlugSetDefinition object) {
+  return [];
+}
 
 const _destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter =
     DestinyDisplayPropertiesDefinitionConverter();
 const _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter =
     DestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter();
 
-class _DestinyPlugSetDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinyPlugSetDefinition> {
-  const _DestinyPlugSetDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinyPlugSetDefinition> collection,
-      DestinyPlugSetDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayProperties',
-        _destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties));
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(jsObj, 'isFakePlugSet', object.isFakePlugSet);
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    IsarNative.jsObjectSet(
-        jsObj,
-        'reusablePlugItems',
-        _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
-            .toIsar(object.reusablePlugItems));
-    return jsObj;
+void _destinyPlugSetDefinitionSerializeNative(
+    IsarCollection<DestinyPlugSetDefinition> collection,
+    IsarRawObject rawObj,
+    DestinyPlugSetDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 =
+      _destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties);
+  IsarUint8List? displayProperties;
+  if (value0 != null) {
+    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
   }
-
-  @override
-  DestinyPlugSetDefinition deserialize(
-      IsarCollection<DestinyPlugSetDefinition> collection, dynamic jsObj) {
-    final object = DestinyPlugSetDefinition();
-    object.displayProperties =
-        _destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.isFakePlugSet = IsarNative.jsObjectGet(jsObj, 'isFakePlugSet');
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    object.reusablePlugItems =
-        _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
-            .fromIsar(
-                (IsarNative.jsObjectGet(jsObj, 'reusablePlugItems') as List?)
-                    ?.map((e) => e ?? '')
-                    .toList()
-                    .cast<String>());
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'displayProperties':
-        return (_destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'isFakePlugSet':
-        return (IsarNative.jsObjectGet(jsObj, 'isFakePlugSet')) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      case 'reusablePlugItems':
-        return (_destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
-            .fromIsar(
-                (IsarNative.jsObjectGet(jsObj, 'reusablePlugItems') as List?)
-                    ?.map((e) => e ?? '')
-                    .toList()
-                    .cast<String>())) as P;
-      default:
-        throw 'Illegal propertyName';
+  dynamicSize += (displayProperties?.length ?? 0) as int;
+  final value1 = object.index;
+  final index = value1;
+  final value2 = object.isFakePlugSet;
+  final isFakePlugSet = value2;
+  final value3 = object.redacted;
+  final redacted = value3;
+  final value4 =
+      _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
+          .toIsar(object.reusablePlugItems);
+  dynamicSize += (value4?.length ?? 0) * 8;
+  List<IsarUint8List?>? bytesList4;
+  if (value4 != null) {
+    bytesList4 = [];
+    for (var str in value4) {
+      final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
+      bytesList4.add(bytes);
+      dynamicSize += bytes.length as int;
     }
   }
+  final reusablePlugItems = bytesList4;
+  final size = staticSize + dynamicSize;
 
-  @override
-  void attachLinks(Isar isar, int id, DestinyPlugSetDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBytes(offsets[0], displayProperties);
+  writer.writeLong(offsets[1], index);
+  writer.writeBool(offsets[2], isFakePlugSet);
+  writer.writeBool(offsets[3], redacted);
+  writer.writeStringList(offsets[4], reusablePlugItems);
 }
 
-class _DestinyPlugSetDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinyPlugSetDefinition> {
-  const _DestinyPlugSetDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinyPlugSetDefinition> collection,
-      IsarRawObject rawObj,
-      DestinyPlugSetDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 =
-        _destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties);
-    IsarUint8List? _displayProperties;
-    if (value0 != null) {
-      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
-    }
-    dynamicSize += (_displayProperties?.length ?? 0) as int;
-    final value1 = object.index;
-    final _index = value1;
-    final value2 = object.isFakePlugSet;
-    final _isFakePlugSet = value2;
-    final value3 = object.redacted;
-    final _redacted = value3;
-    final value4 =
-        _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
-            .toIsar(object.reusablePlugItems);
-    dynamicSize += (value4?.length ?? 0) * 8;
-    List<IsarUint8List?>? bytesList4;
-    if (value4 != null) {
-      bytesList4 = [];
-      for (var str in value4) {
-        final bytes = IsarBinaryWriter.utf8Encoder.convert(str);
-        bytesList4.add(bytes);
-        dynamicSize += bytes.length as int;
-      }
-    }
-    final _reusablePlugItems = bytesList4;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBytes(offsets[0], _displayProperties);
-    writer.writeLong(offsets[1], _index);
-    writer.writeBool(offsets[2], _isFakePlugSet);
-    writer.writeBool(offsets[3], _redacted);
-    writer.writeStringList(offsets[4], _reusablePlugItems);
-  }
-
-  @override
-  DestinyPlugSetDefinition deserialize(
-      IsarCollection<DestinyPlugSetDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinyPlugSetDefinition();
-    object.displayProperties =
-        _destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offsets[0]));
-    object.hash = id;
-    object.index = reader.readLongOrNull(offsets[1]);
-    object.isFakePlugSet = reader.readBoolOrNull(offsets[2]);
-    object.redacted = reader.readBoolOrNull(offsets[3]);
-    object.reusablePlugItems =
-        _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
-            .fromIsar(reader.readStringList(offsets[4]));
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (_destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 1:
-        return (reader.readLongOrNull(offset)) as P;
-      case 2:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 3:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 4:
-        return (_destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
-            .fromIsar(reader.readStringList(offset))) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyPlugSetDefinition object) {}
+DestinyPlugSetDefinition _destinyPlugSetDefinitionDeserializeNative(
+    IsarCollection<DestinyPlugSetDefinition> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = DestinyPlugSetDefinition();
+  object.displayProperties =
+      _destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offsets[0]));
+  object.hash = id;
+  object.index = reader.readLongOrNull(offsets[1]);
+  object.isFakePlugSet = reader.readBoolOrNull(offsets[2]);
+  object.redacted = reader.readBoolOrNull(offsets[3]);
+  object.reusablePlugItems =
+      _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
+          .fromIsar(reader.readStringList(offsets[4]));
+  return object;
 }
+
+P _destinyPlugSetDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (_destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 1:
+      return (reader.readLongOrNull(offset)) as P;
+    case 2:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 3:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 4:
+      return (_destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
+          .fromIsar(reader.readStringList(offset))) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinyPlugSetDefinitionSerializeWeb(
+    IsarCollection<DestinyPlugSetDefinition> collection,
+    DestinyPlugSetDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayProperties',
+      _destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties));
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(jsObj, 'isFakePlugSet', object.isFakePlugSet);
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  IsarNative.jsObjectSet(
+      jsObj,
+      'reusablePlugItems',
+      _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
+          .toIsar(object.reusablePlugItems));
+  return jsObj;
+}
+
+DestinyPlugSetDefinition _destinyPlugSetDefinitionDeserializeWeb(
+    IsarCollection<DestinyPlugSetDefinition> collection, dynamic jsObj) {
+  final object = DestinyPlugSetDefinition();
+  object.displayProperties =
+      _destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.isFakePlugSet = IsarNative.jsObjectGet(jsObj, 'isFakePlugSet');
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  object.reusablePlugItems =
+      _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
+          .fromIsar(
+              (IsarNative.jsObjectGet(jsObj, 'reusablePlugItems') as List?)
+                  ?.map((e) => e ?? '')
+                  .toList()
+                  .cast<String>());
+  return object;
+}
+
+P _destinyPlugSetDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'displayProperties':
+      return (_destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'isFakePlugSet':
+      return (IsarNative.jsObjectGet(jsObj, 'isFakePlugSet')) as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    case 'reusablePlugItems':
+      return (_destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
+          .fromIsar(
+              (IsarNative.jsObjectGet(jsObj, 'reusablePlugItems') as List?)
+                  ?.map((e) => e ?? '')
+                  .toList()
+                  .cast<String>())) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinyPlugSetDefinitionAttachLinks(
+    IsarCollection col, int id, DestinyPlugSetDefinition object) {}
 
 extension DestinyPlugSetDefinitionQueryWhereSort on QueryBuilder<
     DestinyPlugSetDefinition, DestinyPlugSetDefinition, QWhere> {
   QueryBuilder<DestinyPlugSetDefinition, DestinyPlugSetDefinition, QAfterWhere>
       anyHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension DestinyPlugSetDefinitionQueryWhere on QueryBuilder<
     DestinyPlugSetDefinition, DestinyPlugSetDefinition, QWhereClause> {
   QueryBuilder<DestinyPlugSetDefinition, DestinyPlugSetDefinition,
-      QAfterWhereClause> hashEqualTo(int? hash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
+      QAfterWhereClause> hashEqualTo(int hash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: hash,
       includeLower: true,
-      upper: [hash],
+      upper: hash,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<DestinyPlugSetDefinition, DestinyPlugSetDefinition,
-      QAfterWhereClause> hashNotEqualTo(int? hash) {
+      QAfterWhereClause> hashNotEqualTo(int hash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<DestinyPlugSetDefinition, DestinyPlugSetDefinition,
-      QAfterWhereClause> hashGreaterThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
-      includeLower: include,
-    ));
+      QAfterWhereClause> hashGreaterThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: hash, includeLower: include),
+    );
   }
 
   QueryBuilder<DestinyPlugSetDefinition, DestinyPlugSetDefinition,
-      QAfterWhereClause> hashLessThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [hash],
-      includeUpper: include,
-    ));
+      QAfterWhereClause> hashLessThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: hash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinyPlugSetDefinition, DestinyPlugSetDefinition,
       QAfterWhereClause> hashBetween(
-    int? lowerHash,
-    int? upperHash, {
+    int lowerHash,
+    int upperHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerHash,
       includeLower: includeLower,
-      upper: [upperHash],
+      upper: upperHash,
       includeUpper: includeUpper,
     ));
   }
@@ -462,7 +439,7 @@ extension DestinyPlugSetDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyPlugSetDefinition, DestinyPlugSetDefinition,
-      QAfterFilterCondition> hashEqualTo(int? value) {
+      QAfterFilterCondition> hashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hash',
@@ -472,7 +449,7 @@ extension DestinyPlugSetDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyPlugSetDefinition, DestinyPlugSetDefinition,
       QAfterFilterCondition> hashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -485,7 +462,7 @@ extension DestinyPlugSetDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyPlugSetDefinition, DestinyPlugSetDefinition,
       QAfterFilterCondition> hashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -498,8 +475,8 @@ extension DestinyPlugSetDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyPlugSetDefinition, DestinyPlugSetDefinition,
       QAfterFilterCondition> hashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

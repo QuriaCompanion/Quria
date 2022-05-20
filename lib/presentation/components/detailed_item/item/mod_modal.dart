@@ -124,13 +124,13 @@ class _ModModalState extends State<ModModal> {
                     Navigator.pop(context);
                     widget.onSocketChange();
                   },
-                  child: textBodyMedium("Equiper", color: black),
                   style: ElevatedButton.styleFrom(
                       primary: Colors.white,
                       fixedSize: Size(vw(context) - globalPadding(context) * 2,
                           (vw(context) - globalPadding(context) * 2) * 0.147),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
+                  child: textBodyMedium("Equiper", color: black),
                 ),
                 SizedBox(
                   height: globalPadding(context),

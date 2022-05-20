@@ -74,7 +74,7 @@ class StatsStringHash {
   static const String shieldDuration = "1842278586";
 }
 
-enum armorStatInt {
+enum ArmorStatInt {
   mobility,
   resilience,
   recovery,
@@ -82,16 +82,17 @@ enum armorStatInt {
   discipline,
   strength,
 }
-enum classLogo { titan, hunter, warlock }
 
-extension ClassLogoLink on classLogo {
+enum ClassLogo { titan, hunter, warlock }
+
+extension ClassLogoLink on ClassLogo {
   String get link {
     switch (this) {
-      case classLogo.titan:
+      case ClassLogo.titan:
         return "https://www.bungie.net/common/destiny2_content/icons/8956751663b4394cd41076f93d2dd0d6.png";
-      case classLogo.hunter:
+      case ClassLogo.hunter:
         return "https://www.bungie.net/common/destiny2_content/icons/e7324e8c29c5314b8bce166ff167859d.png";
-      case classLogo.warlock:
+      case ClassLogo.warlock:
         return "https://www.bungie.net/common/destiny2_content/icons/bf7b2848d2f5fbebbf350d418b8ec148.png";
       default:
         return "0";
@@ -99,20 +100,20 @@ extension ClassLogoLink on classLogo {
   }
 }
 
-extension ArmorStatIntExtension on armorStatInt {
+extension ArmorStatIntExtension on ArmorStatInt {
   int get value {
     switch (this) {
-      case armorStatInt.mobility:
+      case ArmorStatInt.mobility:
         return 0;
-      case armorStatInt.resilience:
+      case ArmorStatInt.resilience:
         return 1;
-      case armorStatInt.recovery:
+      case ArmorStatInt.recovery:
         return 2;
-      case armorStatInt.intellect:
+      case ArmorStatInt.intellect:
         return 3;
-      case armorStatInt.discipline:
+      case ArmorStatInt.discipline:
         return 4;
-      case armorStatInt.strength:
+      case ArmorStatInt.strength:
         return 5;
       default:
         return 0;

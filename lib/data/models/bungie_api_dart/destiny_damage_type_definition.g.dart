@@ -6,20 +6,17 @@ part of 'destiny_damage_type_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
 
 extension GetDestinyDamageTypeDefinitionCollection on Isar {
-  IsarCollection<DestinyDamageTypeDefinition> get destinyDamageTypeDefinitions {
-    return getCollection('DestinyDamageTypeDefinition');
-  }
+  IsarCollection<DestinyDamageTypeDefinition>
+      get destinyDamageTypeDefinitions => getCollection();
 }
 
-final DestinyDamageTypeDefinitionSchema = CollectionSchema(
+const DestinyDamageTypeDefinitionSchema = CollectionSchema(
   name: 'DestinyDamageTypeDefinition',
   schema:
       '{"name":"DestinyDamageTypeDefinition","idName":"hash","properties":[{"name":"displayProperties","type":"String"},{"name":"enumValue","type":"Long"},{"name":"index","type":"Long"},{"name":"redacted","type":"Bool"},{"name":"showIcon","type":"Bool"},{"name":"transparentIconPath","type":"String"}],"indexes":[],"links":[]}',
-  nativeAdapter: const _DestinyDamageTypeDefinitionNativeAdapter(),
-  webAdapter: const _DestinyDamageTypeDefinitionWebAdapter(),
   idName: 'hash',
   propertyIds: {
     'displayProperties': 0,
@@ -31,280 +28,258 @@ final DestinyDamageTypeDefinitionSchema = CollectionSchema(
   },
   listProperties: {},
   indexIds: {},
-  indexTypes: {},
+  indexValueTypes: {},
   linkIds: {},
-  backlinkIds: {},
-  linkedCollections: [],
-  getId: (obj) {
-    if (obj.hash == Isar.autoIncrement) {
-      return null;
-    } else {
-      return obj.hash;
-    }
-  },
-  setId: (obj, id) => obj.hash = id,
-  getLinks: (obj) => [],
-  version: 2,
+  backlinkLinkNames: {},
+  getId: _destinyDamageTypeDefinitionGetId,
+  setId: _destinyDamageTypeDefinitionSetId,
+  getLinks: _destinyDamageTypeDefinitionGetLinks,
+  attachLinks: _destinyDamageTypeDefinitionAttachLinks,
+  serializeNative: _destinyDamageTypeDefinitionSerializeNative,
+  deserializeNative: _destinyDamageTypeDefinitionDeserializeNative,
+  deserializePropNative: _destinyDamageTypeDefinitionDeserializePropNative,
+  serializeWeb: _destinyDamageTypeDefinitionSerializeWeb,
+  deserializeWeb: _destinyDamageTypeDefinitionDeserializeWeb,
+  deserializePropWeb: _destinyDamageTypeDefinitionDeserializePropWeb,
+  version: 3,
 );
+
+int? _destinyDamageTypeDefinitionGetId(DestinyDamageTypeDefinition object) {
+  if (object.hash == Isar.autoIncrement) {
+    return null;
+  } else {
+    return object.hash;
+  }
+}
+
+void _destinyDamageTypeDefinitionSetId(
+    DestinyDamageTypeDefinition object, int id) {
+  object.hash = id;
+}
+
+List<IsarLinkBase> _destinyDamageTypeDefinitionGetLinks(
+    DestinyDamageTypeDefinition object) {
+  return [];
+}
 
 const _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter =
     DestinyDisplayPropertiesDefinitionConverter();
 const _destinyDamageTypeDefinitionDamageTypeConverter = DamageTypeConverter();
 
-class _DestinyDamageTypeDefinitionWebAdapter
-    extends IsarWebTypeAdapter<DestinyDamageTypeDefinition> {
-  const _DestinyDamageTypeDefinitionWebAdapter();
-
-  @override
-  Object serialize(IsarCollection<DestinyDamageTypeDefinition> collection,
-      DestinyDamageTypeDefinition object) {
-    final jsObj = IsarNative.newJsObject();
-    IsarNative.jsObjectSet(
-        jsObj,
-        'displayProperties',
-        _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties));
-    IsarNative.jsObjectSet(
-        jsObj,
-        'enumValue',
-        _destinyDamageTypeDefinitionDamageTypeConverter
-            .toIsar(object.enumValue));
-    IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
-    IsarNative.jsObjectSet(jsObj, 'index', object.index);
-    IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
-    IsarNative.jsObjectSet(jsObj, 'showIcon', object.showIcon);
-    IsarNative.jsObjectSet(
-        jsObj, 'transparentIconPath', object.transparentIconPath);
-    return jsObj;
+void _destinyDamageTypeDefinitionSerializeNative(
+    IsarCollection<DestinyDamageTypeDefinition> collection,
+    IsarRawObject rawObj,
+    DestinyDamageTypeDefinition object,
+    int staticSize,
+    List<int> offsets,
+    AdapterAlloc alloc) {
+  var dynamicSize = 0;
+  final value0 =
+      _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties);
+  IsarUint8List? displayProperties;
+  if (value0 != null) {
+    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
   }
-
-  @override
-  DestinyDamageTypeDefinition deserialize(
-      IsarCollection<DestinyDamageTypeDefinition> collection, dynamic jsObj) {
-    final object = DestinyDamageTypeDefinition();
-    object.displayProperties =
-        _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
-    object.enumValue = _destinyDamageTypeDefinitionDamageTypeConverter
-        .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'));
-    object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
-    object.index = IsarNative.jsObjectGet(jsObj, 'index');
-    object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
-    object.showIcon = IsarNative.jsObjectGet(jsObj, 'showIcon');
-    object.transparentIconPath =
-        IsarNative.jsObjectGet(jsObj, 'transparentIconPath');
-    return object;
+  dynamicSize += (displayProperties?.length ?? 0) as int;
+  final value1 =
+      _destinyDamageTypeDefinitionDamageTypeConverter.toIsar(object.enumValue);
+  final enumValue = value1;
+  final value2 = object.index;
+  final index = value2;
+  final value3 = object.redacted;
+  final redacted = value3;
+  final value4 = object.showIcon;
+  final showIcon = value4;
+  final value5 = object.transparentIconPath;
+  IsarUint8List? transparentIconPath;
+  if (value5 != null) {
+    transparentIconPath = IsarBinaryWriter.utf8Encoder.convert(value5);
   }
+  dynamicSize += (transparentIconPath?.length ?? 0) as int;
+  final size = staticSize + dynamicSize;
 
-  @override
-  P deserializeProperty<P>(Object jsObj, String propertyName) {
-    switch (propertyName) {
-      case 'displayProperties':
-        return (_destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
-      case 'enumValue':
-        return (_destinyDamageTypeDefinitionDamageTypeConverter
-            .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'))) as P;
-      case 'hash':
-        return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
-      case 'index':
-        return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
-      case 'redacted':
-        return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
-      case 'showIcon':
-        return (IsarNative.jsObjectGet(jsObj, 'showIcon')) as P;
-      case 'transparentIconPath':
-        return (IsarNative.jsObjectGet(jsObj, 'transparentIconPath')) as P;
-      default:
-        throw 'Illegal propertyName';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyDamageTypeDefinition object) {}
+  rawObj.buffer = alloc(size);
+  rawObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  final writer = IsarBinaryWriter(buffer, staticSize);
+  writer.writeBytes(offsets[0], displayProperties);
+  writer.writeLong(offsets[1], enumValue);
+  writer.writeLong(offsets[2], index);
+  writer.writeBool(offsets[3], redacted);
+  writer.writeBool(offsets[4], showIcon);
+  writer.writeBytes(offsets[5], transparentIconPath);
 }
 
-class _DestinyDamageTypeDefinitionNativeAdapter
-    extends IsarNativeTypeAdapter<DestinyDamageTypeDefinition> {
-  const _DestinyDamageTypeDefinitionNativeAdapter();
-
-  @override
-  void serialize(
-      IsarCollection<DestinyDamageTypeDefinition> collection,
-      IsarRawObject rawObj,
-      DestinyDamageTypeDefinition object,
-      int staticSize,
-      List<int> offsets,
-      AdapterAlloc alloc) {
-    var dynamicSize = 0;
-    final value0 =
-        _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .toIsar(object.displayProperties);
-    IsarUint8List? _displayProperties;
-    if (value0 != null) {
-      _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
-    }
-    dynamicSize += (_displayProperties?.length ?? 0) as int;
-    final value1 = _destinyDamageTypeDefinitionDamageTypeConverter
-        .toIsar(object.enumValue);
-    final _enumValue = value1;
-    final value2 = object.index;
-    final _index = value2;
-    final value3 = object.redacted;
-    final _redacted = value3;
-    final value4 = object.showIcon;
-    final _showIcon = value4;
-    final value5 = object.transparentIconPath;
-    IsarUint8List? _transparentIconPath;
-    if (value5 != null) {
-      _transparentIconPath = IsarBinaryWriter.utf8Encoder.convert(value5);
-    }
-    dynamicSize += (_transparentIconPath?.length ?? 0) as int;
-    final size = staticSize + dynamicSize;
-
-    rawObj.buffer = alloc(size);
-    rawObj.buffer_length = size;
-    final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
-    final writer = IsarBinaryWriter(buffer, staticSize);
-    writer.writeBytes(offsets[0], _displayProperties);
-    writer.writeLong(offsets[1], _enumValue);
-    writer.writeLong(offsets[2], _index);
-    writer.writeBool(offsets[3], _redacted);
-    writer.writeBool(offsets[4], _showIcon);
-    writer.writeBytes(offsets[5], _transparentIconPath);
-  }
-
-  @override
-  DestinyDamageTypeDefinition deserialize(
-      IsarCollection<DestinyDamageTypeDefinition> collection,
-      int id,
-      IsarBinaryReader reader,
-      List<int> offsets) {
-    final object = DestinyDamageTypeDefinition();
-    object.displayProperties =
-        _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offsets[0]));
-    object.enumValue = _destinyDamageTypeDefinitionDamageTypeConverter
-        .fromIsar(reader.readLongOrNull(offsets[1]));
-    object.hash = id;
-    object.index = reader.readLongOrNull(offsets[2]);
-    object.redacted = reader.readBoolOrNull(offsets[3]);
-    object.showIcon = reader.readBoolOrNull(offsets[4]);
-    object.transparentIconPath = reader.readStringOrNull(offsets[5]);
-    return object;
-  }
-
-  @override
-  P deserializeProperty<P>(
-      int id, IsarBinaryReader reader, int propertyIndex, int offset) {
-    switch (propertyIndex) {
-      case -1:
-        return id as P;
-      case 0:
-        return (_destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
-            .fromIsar(reader.readStringOrNull(offset))) as P;
-      case 1:
-        return (_destinyDamageTypeDefinitionDamageTypeConverter
-            .fromIsar(reader.readLongOrNull(offset))) as P;
-      case 2:
-        return (reader.readLongOrNull(offset)) as P;
-      case 3:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 4:
-        return (reader.readBoolOrNull(offset)) as P;
-      case 5:
-        return (reader.readStringOrNull(offset)) as P;
-      default:
-        throw 'Illegal propertyIndex';
-    }
-  }
-
-  @override
-  void attachLinks(Isar isar, int id, DestinyDamageTypeDefinition object) {}
+DestinyDamageTypeDefinition _destinyDamageTypeDefinitionDeserializeNative(
+    IsarCollection<DestinyDamageTypeDefinition> collection,
+    int id,
+    IsarBinaryReader reader,
+    List<int> offsets) {
+  final object = DestinyDamageTypeDefinition();
+  object.displayProperties =
+      _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offsets[0]));
+  object.enumValue = _destinyDamageTypeDefinitionDamageTypeConverter
+      .fromIsar(reader.readLongOrNull(offsets[1]));
+  object.hash = id;
+  object.index = reader.readLongOrNull(offsets[2]);
+  object.redacted = reader.readBoolOrNull(offsets[3]);
+  object.showIcon = reader.readBoolOrNull(offsets[4]);
+  object.transparentIconPath = reader.readStringOrNull(offsets[5]);
+  return object;
 }
+
+P _destinyDamageTypeDefinitionDeserializePropNative<P>(
+    int id, IsarBinaryReader reader, int propertyIndex, int offset) {
+  switch (propertyIndex) {
+    case -1:
+      return id as P;
+    case 0:
+      return (_destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(reader.readStringOrNull(offset))) as P;
+    case 1:
+      return (_destinyDamageTypeDefinitionDamageTypeConverter
+          .fromIsar(reader.readLongOrNull(offset))) as P;
+    case 2:
+      return (reader.readLongOrNull(offset)) as P;
+    case 3:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 4:
+      return (reader.readBoolOrNull(offset)) as P;
+    case 5:
+      return (reader.readStringOrNull(offset)) as P;
+    default:
+      throw 'Illegal propertyIndex';
+  }
+}
+
+dynamic _destinyDamageTypeDefinitionSerializeWeb(
+    IsarCollection<DestinyDamageTypeDefinition> collection,
+    DestinyDamageTypeDefinition object) {
+  final jsObj = IsarNative.newJsObject();
+  IsarNative.jsObjectSet(
+      jsObj,
+      'displayProperties',
+      _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .toIsar(object.displayProperties));
+  IsarNative.jsObjectSet(jsObj, 'enumValue',
+      _destinyDamageTypeDefinitionDamageTypeConverter.toIsar(object.enumValue));
+  IsarNative.jsObjectSet(jsObj, 'hash', object.hash);
+  IsarNative.jsObjectSet(jsObj, 'index', object.index);
+  IsarNative.jsObjectSet(jsObj, 'redacted', object.redacted);
+  IsarNative.jsObjectSet(jsObj, 'showIcon', object.showIcon);
+  IsarNative.jsObjectSet(
+      jsObj, 'transparentIconPath', object.transparentIconPath);
+  return jsObj;
+}
+
+DestinyDamageTypeDefinition _destinyDamageTypeDefinitionDeserializeWeb(
+    IsarCollection<DestinyDamageTypeDefinition> collection, dynamic jsObj) {
+  final object = DestinyDamageTypeDefinition();
+  object.displayProperties =
+      _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'));
+  object.enumValue = _destinyDamageTypeDefinitionDamageTypeConverter
+      .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'));
+  object.hash = IsarNative.jsObjectGet(jsObj, 'hash');
+  object.index = IsarNative.jsObjectGet(jsObj, 'index');
+  object.redacted = IsarNative.jsObjectGet(jsObj, 'redacted');
+  object.showIcon = IsarNative.jsObjectGet(jsObj, 'showIcon');
+  object.transparentIconPath =
+      IsarNative.jsObjectGet(jsObj, 'transparentIconPath');
+  return object;
+}
+
+P _destinyDamageTypeDefinitionDeserializePropWeb<P>(
+    Object jsObj, String propertyName) {
+  switch (propertyName) {
+    case 'displayProperties':
+      return (_destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'displayProperties'))) as P;
+    case 'enumValue':
+      return (_destinyDamageTypeDefinitionDamageTypeConverter
+          .fromIsar(IsarNative.jsObjectGet(jsObj, 'enumValue'))) as P;
+    case 'hash':
+      return (IsarNative.jsObjectGet(jsObj, 'hash')) as P;
+    case 'index':
+      return (IsarNative.jsObjectGet(jsObj, 'index')) as P;
+    case 'redacted':
+      return (IsarNative.jsObjectGet(jsObj, 'redacted')) as P;
+    case 'showIcon':
+      return (IsarNative.jsObjectGet(jsObj, 'showIcon')) as P;
+    case 'transparentIconPath':
+      return (IsarNative.jsObjectGet(jsObj, 'transparentIconPath')) as P;
+    default:
+      throw 'Illegal propertyName';
+  }
+}
+
+void _destinyDamageTypeDefinitionAttachLinks(
+    IsarCollection col, int id, DestinyDamageTypeDefinition object) {}
 
 extension DestinyDamageTypeDefinitionQueryWhereSort on QueryBuilder<
     DestinyDamageTypeDefinition, DestinyDamageTypeDefinition, QWhere> {
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
       QAfterWhere> anyHash() {
-    return addWhereClauseInternal(const WhereClause(indexName: null));
+    return addWhereClauseInternal(const IdWhereClause.any());
   }
 }
 
 extension DestinyDamageTypeDefinitionQueryWhere on QueryBuilder<
     DestinyDamageTypeDefinition, DestinyDamageTypeDefinition, QWhereClause> {
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
-      QAfterWhereClause> hashEqualTo(int? hash) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
+      QAfterWhereClause> hashEqualTo(int hash) {
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: hash,
       includeLower: true,
-      upper: [hash],
+      upper: hash,
       includeUpper: true,
     ));
   }
 
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
-      QAfterWhereClause> hashNotEqualTo(int? hash) {
+      QAfterWhereClause> hashNotEqualTo(int hash) {
     if (whereSortInternal == Sort.asc) {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      );
     } else {
-      return addWhereClauseInternal(WhereClause(
-        indexName: null,
-        lower: [hash],
-        includeLower: false,
-      )).addWhereClauseInternal(WhereClause(
-        indexName: null,
-        upper: [hash],
-        includeUpper: false,
-      ));
+      return addWhereClauseInternal(
+        IdWhereClause.greaterThan(lower: hash, includeLower: false),
+      ).addWhereClauseInternal(
+        IdWhereClause.lessThan(upper: hash, includeUpper: false),
+      );
     }
   }
 
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
-      QAfterWhereClause> hashGreaterThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [hash],
-      includeLower: include,
-    ));
+      QAfterWhereClause> hashGreaterThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.greaterThan(lower: hash, includeLower: include),
+    );
   }
 
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
-      QAfterWhereClause> hashLessThan(
-    int? hash, {
-    bool include = false,
-  }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      upper: [hash],
-      includeUpper: include,
-    ));
+      QAfterWhereClause> hashLessThan(int hash, {bool include = false}) {
+    return addWhereClauseInternal(
+      IdWhereClause.lessThan(upper: hash, includeUpper: include),
+    );
   }
 
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
       QAfterWhereClause> hashBetween(
-    int? lowerHash,
-    int? upperHash, {
+    int lowerHash,
+    int upperHash, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {
-    return addWhereClauseInternal(WhereClause(
-      indexName: null,
-      lower: [lowerHash],
+    return addWhereClauseInternal(IdWhereClause.between(
+      lower: lowerHash,
       includeLower: includeLower,
-      upper: [upperHash],
+      upper: upperHash,
       includeUpper: includeUpper,
     ));
   }
@@ -519,7 +494,7 @@ extension DestinyDamageTypeDefinitionQueryFilter on QueryBuilder<
   }
 
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
-      QAfterFilterCondition> hashEqualTo(int? value) {
+      QAfterFilterCondition> hashEqualTo(int value) {
     return addFilterConditionInternal(FilterCondition(
       type: ConditionType.eq,
       property: 'hash',
@@ -529,7 +504,7 @@ extension DestinyDamageTypeDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
       QAfterFilterCondition> hashGreaterThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -542,7 +517,7 @@ extension DestinyDamageTypeDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
       QAfterFilterCondition> hashLessThan(
-    int? value, {
+    int value, {
     bool include = false,
   }) {
     return addFilterConditionInternal(FilterCondition(
@@ -555,8 +530,8 @@ extension DestinyDamageTypeDefinitionQueryFilter on QueryBuilder<
 
   QueryBuilder<DestinyDamageTypeDefinition, DestinyDamageTypeDefinition,
       QAfterFilterCondition> hashBetween(
-    int? lower,
-    int? upper, {
+    int lower,
+    int upper, {
     bool includeLower = true,
     bool includeUpper = true,
   }) {

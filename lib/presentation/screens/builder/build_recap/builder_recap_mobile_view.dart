@@ -4,11 +4,10 @@ import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
-import 'package:bottom_loader/bottom_loader.dart';
 import 'package:quria/data/services/bungie_api/enums/quick_actions.enum.dart';
 import 'package:quria/data/models/helpers/builderRecapHelper.model.dart';
-import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
+import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/screens/builder/build_recap/mobile_components/builder_recap_mobile_actions.dart';
 import 'package:quria/presentation/screens/builder/build_recap/mobile_components/builder_recap_mobile_item.dart';
 
@@ -41,10 +40,18 @@ class BuilderRecapMobileView extends StatelessWidget {
                   child: BuilderRecapMobileActions(
                 onAction: (action) async {
                   switch (action) {
-                    case quick_actions.equip:
-                      var bl = BottomLoader(context,
-                          isDismissible: false, loader: const Loader());
-                      bl.display();
+                    case QuickActions.equip:
+                      showMaterialModalBottomSheet(
+                          context: context,
+                          backgroundColor: Colors.transparent,
+                          isDismissible: false,
+                          expand: false,
+                          builder: (context) {
+                            return const LoadingModal(
+                              text1: "Nous equipons votre equipement.",
+                              text2: "Cela peut prendre du temps ...",
+                            );
+                          });
                       BungieActionsService()
                           .equipBuild(
                             build: data.build,
@@ -53,9 +60,9 @@ class BuilderRecapMobileView extends StatelessWidget {
                             subclassMods: data.subclassMods,
                             subclassId: data.subclassId,
                           )
-                          .then((value) => bl.close());
+                          .then((_) => Navigator.pop(context));
                       break;
-                    case quick_actions.save:
+                    case QuickActions.save:
                       showMaterialModalBottomSheet(
                           context: context,
                           backgroundColor: Colors.transparent,
@@ -65,7 +72,7 @@ class BuilderRecapMobileView extends StatelessWidget {
                             return const InProgressModal();
                           });
                       break;
-                    case quick_actions.share:
+                    case QuickActions.share:
                       showMaterialModalBottomSheet(
                           context: context,
                           backgroundColor: Colors.transparent,

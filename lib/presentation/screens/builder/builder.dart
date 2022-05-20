@@ -11,10 +11,10 @@ class BuilderWidget extends StatefulWidget {
   const BuilderWidget({Key? key, required this.data}) : super(key: key);
 
   @override
-  _BuilderWidgetState createState() => _BuilderWidgetState();
+  BuilderWidgetState createState() => BuilderWidgetState();
 }
 
-class _BuilderWidgetState extends State<BuilderWidget> {
+class BuilderWidgetState extends State<BuilderWidget> {
   late Future<List<Build>> _future;
   final manifest = ManifestService();
   double singleBuildWidth = 600;

@@ -1,8 +1,10 @@
+import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import "package:universal_html/html.dart" as html;
@@ -14,7 +16,6 @@ import 'package:uni_links/uni_links.dart';
 import 'package:universal_io/io.dart';
 
 import 'package:bungie_api/helpers/oauth.dart';
-import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:bungie_api/models/user_membership_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -105,57 +106,69 @@ class LoginWidgetState extends State<LoginWidget> {
 
   void authorizeClick(BuildContext context) async {
     try {
-      if (kIsWeb) {
-        WidgetsBinding.instance?.addPostFrameCallback((_) {
-          String clientId = BungieApiService.clientId!;
-          final authorizationEndpoint =
-              "https://www.bungie.net/fr/OAuth/Authorize?client_id=$clientId&response_type=code";
-          html.window.location.assign(authorizationEndpoint);
-        });
-      } else {
-        String code = await widget.auth.authorize(widget.forceReauth);
-        authCode(code);
+      try {
+        if (await widget.auth.getToken() != null) {
+          return checkMembership();
+        }
+        if (kIsWeb) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            String clientId = BungieApiService.clientId!;
+            final authorizationEndpoint =
+                "https://www.bungie.net/fr/OAuth/Authorize?client_id=$clientId&response_type=code";
+            html.window.location.assign(authorizationEndpoint);
+          });
+        } else {
+          String code = await widget.auth.authorize(widget.forceReauth);
+          authCode(code);
+        }
+      } on OAuthException catch (e) {
+        Navigator.of(context).pop();
+        bool isIOS = Platform.isIOS;
+        String platformMessage =
+            "If this keeps happening, please try to login with a mainstream browser.";
+        if (isIOS) {
+          platformMessage =
+              "Please dont open the auth process in another safari window, this could prevent you from getting logged in.";
+        }
+        showDialog(
+            context: context,
+            builder: (context) => AlertDialog(
+                  actions: <Widget>[
+                    MaterialButton(
+                      textColor: Colors.blueGrey.shade300,
+                      child: const Text("OK"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    )
+                  ],
+                  title: Text(e.error),
+                  content: Container(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(mainAxisSize: MainAxisSize.min, children: [
+                        Text(
+                          e.errorDescription ?? "error",
+                          textAlign: TextAlign.center,
+                        ),
+                        Text(
+                          platformMessage,
+                          textAlign: TextAlign.center,
+                        )
+                      ])),
+                ));
       }
-    } on OAuthException catch (e) {
+      WidgetsBinding.instance.renderView.automaticSystemUiAdjustment = false;
+      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          statusBarBrightness: Brightness.dark));
+    } catch (_) {
       Navigator.of(context).pop();
-      bool isIOS = Platform.isIOS;
-      String platformMessage =
-          "If this keeps happening, please try to login with a mainstream browser.";
-      if (isIOS) {
-        platformMessage =
-            "Please dont open the auth process in another safari window, this could prevent you from getting logged in.";
-      }
       showDialog(
           context: context,
-          builder: (context) => AlertDialog(
-                actions: <Widget>[
-                  MaterialButton(
-                    textColor: Colors.blueGrey.shade300,
-                    child: const Text("OK"),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  )
-                ],
-                title: Text(e.error),
-                content: Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Column(mainAxisSize: MainAxisSize.min, children: [
-                      Text(
-                        e.errorDescription ?? "error",
-                        textAlign: TextAlign.center,
-                      ),
-                      Text(
-                        platformMessage,
-                        textAlign: TextAlign.center,
-                      )
-                    ])),
-              ));
+          builder: (context) {
+            return const ErrorDialog();
+          });
     }
-    WidgetsBinding.instance!.renderView.automaticSystemUiAdjustment = false;
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: Colors.transparent,
-        statusBarBrightness: Brightness.dark));
   }
 
   authCode(String code) async {
@@ -172,6 +185,7 @@ class LoginWidgetState extends State<LoginWidget> {
     if (membership == null) {
       showSelectMembership();
     }
+    if (!mounted) return;
     Navigator.pushReplacementNamed(context, routeProfile);
   }
 
@@ -213,6 +227,7 @@ class LoginWidgetState extends State<LoginWidget> {
 
     if (await auth.getToken() == null) await auth.saveToken(token);
     await account.getMembership();
+    if (!mounted) return;
     Navigator.pushReplacementNamed(context, routeProfile);
   }
 }

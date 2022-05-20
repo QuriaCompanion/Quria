@@ -142,7 +142,6 @@ class PerkModal extends StatelessWidget {
                           },
                         );
                       },
-                      child: textBodyMedium("Equiper", color: black),
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,
                         fixedSize: Size(
@@ -153,6 +152,7 @@ class PerkModal extends StatelessWidget {
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
+                      child: textBodyMedium("Equiper", color: black),
                     ),
                   SizedBox(
                     height: globalPadding(context),

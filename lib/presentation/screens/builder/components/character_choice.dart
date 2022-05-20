@@ -9,10 +9,10 @@ class CharacterChoice extends StatefulWidget {
       : super(key: key);
 
   @override
-  _CharacterChoiceState createState() => _CharacterChoiceState();
+  CharacterChoiceState createState() => CharacterChoiceState();
 }
 
-class _CharacterChoiceState extends State<CharacterChoice> {
+class CharacterChoiceState extends State<CharacterChoice> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -22,17 +22,17 @@ class _CharacterChoiceState extends State<CharacterChoice> {
             onTap: () {
               widget.callback(DestinyClass.Warlock);
             },
-            child: Image(image: NetworkImage(classLogo.warlock.link))),
+            child: Image(image: NetworkImage(ClassLogo.warlock.link))),
         InkWell(
             onTap: () {
               widget.callback(DestinyClass.Hunter);
             },
-            child: Image(image: NetworkImage(classLogo.hunter.link))),
+            child: Image(image: NetworkImage(ClassLogo.hunter.link))),
         InkWell(
             onTap: () {
               widget.callback(DestinyClass.Titan);
             },
-            child: Image(image: NetworkImage(classLogo.titan.link))),
+            child: Image(image: NetworkImage(ClassLogo.titan.link))),
       ],
     );
   }

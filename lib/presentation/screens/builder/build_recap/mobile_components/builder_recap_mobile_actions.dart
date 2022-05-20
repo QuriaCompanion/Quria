@@ -3,7 +3,7 @@ import 'package:quria/data/services/bungie_api/enums/quick_actions.enum.dart';
 import 'package:quria/presentation/components/misc/quick_action.dart';
 
 class BuilderRecapMobileActions extends StatelessWidget {
-  final Function(quick_actions) onAction;
+  final Function(QuickActions) onAction;
   const BuilderRecapMobileActions({required this.onAction, Key? key})
       : super(key: key);
 
@@ -16,16 +16,16 @@ class BuilderRecapMobileActions extends StatelessWidget {
             icon: "assets/icons/Equip.svg",
             title: "Equiper",
             onTap: () {
-              onAction(quick_actions.equip);
+              onAction(QuickActions.equip);
             }),
         QuickAction(
             icon: "assets/icons/Save.svg",
             title: "Sauvegarder",
-            onTap: () => onAction(quick_actions.save)),
+            onTap: () => onAction(QuickActions.save)),
         QuickAction(
             icon: "assets/icons/Share.svg",
             title: "Partager",
-            onTap: () => onAction(quick_actions.share)),
+            onTap: () => onAction(QuickActions.share)),
       ],
     );
   }

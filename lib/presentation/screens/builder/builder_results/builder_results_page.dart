@@ -13,10 +13,10 @@ class BuilderResultsPage extends StatefulWidget {
   const BuilderResultsPage({Key? key, required this.data}) : super(key: key);
 
   @override
-  _BuilderResultsPageState createState() => _BuilderResultsPageState();
+  BuilderResultsPageState createState() => BuilderResultsPageState();
 }
 
-class _BuilderResultsPageState extends State<BuilderResultsPage> {
+class BuilderResultsPageState extends State<BuilderResultsPage> {
   late Future<List<Build>> _future;
   final manifest = ManifestService();
   double singleBuildWidth = 600;

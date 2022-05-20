@@ -24,13 +24,13 @@ class RoundedButton extends StatelessWidget {
       onPressed: () {
         onPressed();
       },
-      child: text,
       style: ElevatedButton.styleFrom(
           primary: buttonColor,
           onPrimary: black,
           fixedSize: Size(width, height),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
+      child: text,
     );
   }
 }
