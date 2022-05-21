@@ -83,7 +83,6 @@ class EquipModal extends StatelessWidget {
                         backgroundColor: Colors.green,
                       ));
                     }, onError: (_) {
-                      print("error");
                       showDialog(
                           context: scaffoldKey.currentContext!,
                           builder: (context) {
