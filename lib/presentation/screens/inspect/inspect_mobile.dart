@@ -9,6 +9,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_armor_info.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_info.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_header.dart';
+import 'package:quria/presentation/var/keys.dart';
 
 class MobileInspect extends StatefulWidget {
   final InspectData data;
@@ -32,6 +33,7 @@ class _MobileInspectState extends State<MobileInspect> {
     final ItemInfoHelper data =
         DisplayService().getItemInfo(widget.data.instanceId, widget.data.hash);
     return Scaffold(
+      key: scaffoldKey,
       extendBodyBehindAppBar: true,
       backgroundColor: black,
       appBar: AppBar(
