@@ -1,5 +1,4 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
-import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
