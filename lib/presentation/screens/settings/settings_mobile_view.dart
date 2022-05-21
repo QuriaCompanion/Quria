@@ -55,6 +55,26 @@ class SettingsMobileView extends StatelessWidget {
             ),
           ),
           divider,
+          ListTile(
+            onTap: () {
+              launchUrl(Uri.parse("https://twitter.com/quriacompanion"),
+                  mode: LaunchMode.externalApplication);
+            },
+            leading: SvgPicture.asset(
+              "assets/icons/twitter.svg",
+              width: 35,
+              height: 35,
+            ),
+            title: textBodyHighRegular(
+              "QuriaCompanion sur twitter",
+              utf8: false,
+            ),
+            subtitle: textBodyMedium(
+              "Si vous avez besoin de nous contacter!",
+              utf8: false,
+            ),
+          ),
+          divider,
         ],
       ),
     );

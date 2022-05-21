@@ -4,6 +4,7 @@ import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/data/models/helpers/builderRecapHelper.model.dart';
 import 'package:quria/data/models/helpers/classItemChoiceHelper.model.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
+import 'package:quria/data/models/helpers/inspectSubclassHelper.model.dart';
 import 'package:quria/data/models/helpers/modHelper.model.dart';
 import 'package:quria/data/models/helpers/statsFilterHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassHelper.model.dart';
@@ -85,9 +86,10 @@ class AppRouter {
         final SubclassModHelper data = settings.arguments as SubclassModHelper;
         return MaterialPageRoute(builder: (_) => SubclassModsPage(data: data));
       case routeInspectSubclass:
-        final String data = settings.arguments as String;
+        final InspectSubclassHelper data =
+            settings.arguments as InspectSubclassHelper;
         return MaterialPageRoute(
-            builder: (_) => InspectSubclassPage(instanceId: data));
+            builder: (_) => InspectSubclassPage(data: data));
       case routePageSettings:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
       case routeCollectionItem:

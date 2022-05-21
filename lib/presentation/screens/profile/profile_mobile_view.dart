@@ -29,6 +29,17 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
   DestinyItemType currentFilter = DestinyItemType.Weapon;
   @override
   Widget build(BuildContext context) {
+    String icon = widget.data.isNewSubclass
+        ? ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[
+                widget.data.selectedCharacterSubclass.itemHash]!
+            .screenshot!
+        : ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[
+                widget.data.selectedCharacterSubclass.itemHash]!
+            .secondaryIcon!;
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -36,18 +47,14 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
           mobileHeader(
             context,
             image: NetworkImage(
-              DestinyData.bungieLink +
-                  ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition[
-                          widget.data.selectedCharacterSubclass.itemHash]!
-                      .screenshot!,
+              DestinyData.bungieLink + icon,
             ),
             child: ProfileMobileHeader(
               stats: widget.data.selectedCharacter.stats,
               characterSuper: widget.data.characterSuper,
               subclassId: widget.data.selectedCharacterSubclass.itemInstanceId!,
               characterId: widget.data.selectedCharacter.characterId!,
+              isNewSubclass: widget.data.isNewSubclass,
             ),
           ),
           Padding(
