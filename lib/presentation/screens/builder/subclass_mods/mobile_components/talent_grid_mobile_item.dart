@@ -1,4 +1,3 @@
-import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
 import 'package:bungie_api/models/destiny_talent_node.dart';
 import 'package:bungie_api/models/destiny_talent_node_definition.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +8,9 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 class TalentGridMobileItem extends StatelessWidget {
   final List<DestinyTalentNodeDefinition> talentGridNodes;
   final List<DestinyTalentNode> talentGridComponent;
-  final Function(DestinyItemTalentGridComponent) onChange;
   const TalentGridMobileItem(
       {required this.talentGridNodes,
       required this.talentGridComponent,
-      required this.onChange,
       Key? key})
       : super(key: key);
 

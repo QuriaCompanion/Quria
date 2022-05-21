@@ -65,7 +65,7 @@ class ScaffoldBurgerAndBackOption extends StatelessWidget {
         ),
       ),
       body: Container(
-        decoration: ghostBackground,
+        decoration: blackBackground,
         child: SingleChildScrollView(
           child: body,
         ),

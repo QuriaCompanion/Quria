@@ -77,7 +77,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     }
     return FutureBuilder(
         future: _future,
-        builder: ((context, snapshot) {
+        builder: ((context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             data = display.getProfileData();
             if (vw(context) > 850) {
@@ -86,32 +86,36 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               );
             } else {
               return ScaffoldCharacters(
-                  characters: data.characters,
-                  onCharacterChange: (newIndex) {
-                    setState(() {
-                      DisplayService.characterIndex = newIndex;
-                    });
-                  },
-                  body: RepaintBoundary(
-                      child: ProfileMobileView(
-                          data: data,
-                          onClick: (inspectData) {
-                            Navigator.pushNamed(context, routeInspectMobile,
-                                    arguments: inspectData)
-                                .then((_) => setState(() {}));
-                          })));
+                characters: data.characters,
+                // give a function parameter to the child which is executed in the parent
+                onCharacterChange: (newIndex) {
+                  setState(() {
+                    DisplayService.characterIndex = newIndex;
+                  });
+                },
+                body: RepaintBoundary(
+                  child: ProfileMobileView(
+                      data: data,
+                      onClick: (inspectData) {
+                        Navigator.pushNamed(context, routeInspectMobile,
+                                arguments: inspectData)
+                            .then((_) => setState(() {}));
+                      }),
+                ),
+              );
             }
           }
           return Container(
-              height: vh(context),
-              width: vw(context),
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover, image: splashBackground)),
-              child: Loader(
-                splashColor: Colors.transparent,
-                animationSize: vw(context) * 0.5,
-              ));
+            height: vh(context),
+            width: vw(context),
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover, image: splashBackground)),
+            child: Loader(
+              splashColor: Colors.transparent,
+              animationSize: vw(context) * 0.5,
+            ),
+          );
         }));
   }
 

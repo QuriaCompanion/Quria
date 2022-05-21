@@ -9,10 +9,8 @@ class AppView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: ghostBackground,
-        child: child,
-      ),
+      backgroundColor: black,
+      body: child,
     );
   }
 }
