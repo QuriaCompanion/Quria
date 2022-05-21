@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsMobileView extends StatelessWidget {
@@ -16,7 +18,22 @@ class SettingsMobileView extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              // TODO: implement manifest wipe
+              StorageService.resetManifest().then((value) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  content: textBodyMedium(
+                    "Les données du manifeste ont bien été supprimé!",
+                    utf8: false,
+                    color: Colors.white,
+                  ),
+                  backgroundColor: Colors.green,
+                ));
+              }, onError: (_) {
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const ErrorDialog();
+                    });
+              });
             },
             child: ListTile(
               leading: const Icon(
