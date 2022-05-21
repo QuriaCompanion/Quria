@@ -48,6 +48,7 @@ class FilterWidgetState extends State<FilterWidget> {
                 color: blackLight, borderRadius: BorderRadius.circular(8)),
             margin: const EdgeInsets.only(bottom: 8),
             clipBehavior: Clip.hardEdge,
+            height: 48,
             child: ReorderableDragStartListener(
                 index: index,
                 child: ListTile(

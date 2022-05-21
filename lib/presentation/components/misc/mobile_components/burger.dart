@@ -114,10 +114,10 @@ class _BurgerState extends State<Burger> {
                       ),
                       const SizedBox(height: 32),
                       InkWell(
-                           onTap: () {
-                                  Navigator.pop(context);
-                                  Navigator.pushNamed(context, routeCollection);
-                                },
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, routeCollection);
+                        },
                         child: Row(
                           children: [
                             SvgPicture.asset("assets/icons/Collection.svg"),
@@ -127,12 +127,18 @@ class _BurgerState extends State<Burger> {
                         ),
                       ),
                       const SizedBox(height: 32),
-                      Row(
-                        children: [
-                          SvgPicture.asset("assets/icons/Settings.svg"),
-                          const SizedBox(width: 18),
-                          textBodyHighRegular("ParamÃ¨tres"),
-                        ],
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, routePageSettings);
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/icons/Settings.svg"),
+                            const SizedBox(width: 18),
+                            textBodyHighRegular("ParamÃ¨tres"),
+                          ],
+                        ),
                       ),
                     ],
                   ),
