@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
@@ -79,15 +81,15 @@ class BungieActionsService {
     try {
       final owner = profile.getItemOwner(itemId);
       if (owner == characterId) {
-        await api.equipItem(itemId, characterId).then(
-            (value) => profile.moveItem(itemId, characterId, true),
-            onError: (_) => null);
+        await api
+            .equipItem(itemId, characterId)
+            .then((value) => profile.moveItem(itemId, characterId, true));
       } else {
         await transferItem(itemId, characterId,
             itemHash: itemHash, stackSize: 1);
-        await api.equipItem(itemId, characterId).then(
-            (value) => profile.moveItem(itemId, characterId, true),
-            onError: (_) => null);
+        await api
+            .equipItem(itemId, characterId)
+            .then((value) => profile.moveItem(itemId, characterId, true));
       }
     } catch (e) {
       try {
@@ -96,11 +98,10 @@ class BungieActionsService {
           characterId,
           itemHash: itemHash,
           stackSize: 1,
-        ).then((value) => profile.moveItem(itemId, characterId, false),
-            onError: (_) => null);
-        await api.equipItem(itemId, characterId).then(
-            (value) => profile.moveItem(itemId, characterId, true),
-            onError: (_) => null);
+        ).then((value) => profile.moveItem(itemId, characterId, false));
+        await api
+            .equipItem(itemId, characterId)
+            .then((value) => profile.moveItem(itemId, characterId, true));
       } catch (e) {
         rethrow;
       }

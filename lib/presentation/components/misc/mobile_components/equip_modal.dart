@@ -67,29 +67,29 @@ class EquipModal extends StatelessWidget {
                 child: InkWell(
                   onTap: () async {
                     Navigator.pop(context);
-                    try {
-                      await BungieActionsService()
-                          .equipItem(
-                              itemId: instanceId,
-                              characterId: character.characterId!,
-                              itemHash: itemHash)
-                          .onError((_, __) {
-                        showDialog(
-                            context: scaffoldKey.currentContext!,
-                            builder: (context) {
-                              return const ErrorDialog();
-                            });
-                      }).then((_) =>
-                              ScaffoldMessenger.of(scaffoldKey.currentContext!)
-                                  .showSnackBar(SnackBar(
-                                content: textBodyMedium(
-                                  "L'item a bien été équipé",
-                                  utf8: false,
-                                  color: Colors.white,
-                                ),
-                                backgroundColor: Colors.green,
-                              )));
-                    } catch (_) {}
+                    await BungieActionsService()
+                        .equipItem(
+                            itemId: instanceId,
+                            characterId: character.characterId!,
+                            itemHash: itemHash)
+                        .then((_) {
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                          .showSnackBar(SnackBar(
+                        content: textBodyMedium(
+                          "L'item a bien été équipé",
+                          utf8: false,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.green,
+                      ));
+                    }, onError: (_) {
+                      print("error");
+                      showDialog(
+                          context: scaffoldKey.currentContext!,
+                          builder: (context) {
+                            return const ErrorDialog();
+                          });
+                    });
                   },
                   child: CharacterTransferItem(
                       imageLink: DestinyData.bungieLink + character.emblemPath!,

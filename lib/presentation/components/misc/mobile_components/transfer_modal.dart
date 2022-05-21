@@ -7,7 +7,6 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
-import 'package:quria/presentation/components/misc/mobile_components/snackbar.dart';
 import 'package:quria/presentation/var/keys.dart';
 
 class TransferModal extends StatefulWidget {
@@ -79,33 +78,31 @@ class _TransferModalState extends State<TransferModal> {
                 child: InkWell(
                   onTap: () async {
                     Navigator.pop(context);
-                    try {
-                      await BungieActionsService()
-                          .transferItem(
-                        widget.instanceId,
-                        character.characterId!,
-                        stackSize: 1,
-                        itemHash: widget.itemHash,
-                      )
-                          .then((_) {
-                        ScaffoldMessenger.of(scaffoldKey.currentContext!)
-                            .showSnackBar(SnackBar(
-                          content: textBodyMedium(
-                            "L'item a bien été tranféré",
-                            utf8: false,
-                            color: Colors.white,
-                          ),
-                          backgroundColor: Colors.green,
-                        ));
-                        widget.onTransfer();
-                      });
-                    } catch (_) {
+                    await BungieActionsService()
+                        .transferItem(
+                      widget.instanceId,
+                      character.characterId!,
+                      stackSize: 1,
+                      itemHash: widget.itemHash,
+                    )
+                        .then((_) {
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                          .showSnackBar(SnackBar(
+                        content: textBodyMedium(
+                          "L'item a bien été tranféré",
+                          utf8: false,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.green,
+                      ));
+                      widget.onTransfer();
+                    }, onError: (_) {
                       showDialog(
                           context: scaffoldKey.currentContext!,
                           builder: (context) {
                             return const ErrorDialog();
                           });
-                    }
+                    });
                   },
                   child: CharacterTransferItem(
                     imageLink: DestinyData.bungieLink + character.emblemPath!,
