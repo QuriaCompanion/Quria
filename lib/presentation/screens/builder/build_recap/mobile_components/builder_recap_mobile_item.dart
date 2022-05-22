@@ -96,7 +96,9 @@ class BuilderRecapMobileItem extends StatelessWidget {
               child: ArmorModIconDisplay(
                 iconSize: 44,
                 socket: ManifestService.manifestParsed
-                    .destinyInventoryItemDefinition[item.mods!.hash]!,
+                        .destinyInventoryItemDefinition[item.mods?.hash] ??
+                    ManifestService.manifestParsed
+                        .destinyInventoryItemDefinition[481675395]!,
               ),
             ),
             for (DestinyInventoryItemDefinition? mod in mods)
@@ -106,7 +108,9 @@ class BuilderRecapMobileItem extends StatelessWidget {
                   child: ArmorModIconDisplay(
                     iconSize: 44,
                     socket: ManifestService.manifestParsed
-                        .destinyInventoryItemDefinition[mod.hash]!,
+                            .destinyInventoryItemDefinition[mod.hash] ??
+                        ManifestService.manifestParsed
+                            .destinyInventoryItemDefinition[481675395]!,
                   ),
                 ),
           ],

@@ -45,7 +45,7 @@ class BuilderPreparation {
 }
 
 class BuilderOptionalMods {
-  final List<DestinyInventoryItemDefinition> modSelected;
+  final List<DestinyInventoryItemDefinition?> modSelected;
   final Map<int, int> statValues;
 
   BuilderOptionalMods({
