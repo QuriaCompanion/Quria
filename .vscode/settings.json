@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "desktop",
         "devops",
-        "builder"
+        "builder",
+        "vault"
     ]
 }
