@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:isar/isar.dart';
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/plug_ui_styles.dart';
@@ -9,8 +11,6 @@ import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_entry_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
-import 'package:flutter/foundation.dart';
-import 'package:isar/isar.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/exoticHelper.model.dart';
@@ -329,8 +329,12 @@ class DisplayService {
     int disciplineTier = (stats[StatsStringHash.discipline]! / 10).floor();
     int superTier = (stats[StatsStringHash.intellect]! / 10).floor();
     int strengthTier = (stats[StatsStringHash.strength]! / 10).floor();
+    if (disciplineTier > 10) disciplineTier = 10;
+    if (superTier > 10) superTier = 10;
+    if (strengthTier > 10) strengthTier = 10;
 
     int? grenadeHash = profile.getCurrentGrenadeHashForCharacter(characterId);
+
     int? grenadeTimer =
         GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier];
 
