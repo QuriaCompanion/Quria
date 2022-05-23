@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/models/helpers/filterHelper.model.dart';
 import 'package:quria/presentation/screens/builder/components/filter.dart';
 
 class StatsFilterMobileView extends StatefulWidget {
