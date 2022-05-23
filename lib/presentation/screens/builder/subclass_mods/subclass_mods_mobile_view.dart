@@ -14,7 +14,7 @@ import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.da
 class SubclassModsMobileView extends StatefulWidget {
   final List<DestinyItemSocketState>? sockets;
   final DestinyInventoryItemDefinition subclass;
-  final void Function(List<DestinyInventoryItemDefinition>) onChange;
+  final void Function(List<DestinyInventoryItemDefinition>, int) onChange;
   const SubclassModsMobileView(
       {required this.sockets,
       required this.subclass,
@@ -94,9 +94,12 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                             setState(() {
                               displayedSockets[i] = newSocket;
                             });
-                            widget.onChange(displayedSockets
-                                .take(7 + aspectOne + aspectTwo)
-                                .toList());
+                            widget.onChange(
+                              displayedSockets
+                                  .take(7 + aspectOne + aspectTwo)
+                                  .toList(),
+                              i,
+                            );
                           }
                         },
                         plugSetHash: widget.subclass.sockets!.socketEntries![i]
@@ -116,6 +119,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                 displayedSockets
                                     .take(7 + aspectOne + aspectTwo)
                                     .toList(),
+                                5,
                               );
                             }
                           },
@@ -131,9 +135,12 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                               setState(() {
                                 displayedSockets[6] = newSocket;
                               });
-                              widget.onChange(displayedSockets
-                                  .take(7 + aspectOne + aspectTwo)
-                                  .toList());
+                              widget.onChange(
+                                displayedSockets
+                                    .take(7 + aspectOne + aspectTwo)
+                                    .toList(),
+                                6,
+                              );
                             }
                           },
                           plugSetHash: widget.subclass.sockets!
@@ -175,9 +182,12 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                                     .destinyInventoryItemDefinition[
                                                 itemHash]!;
                                           });
-                                          widget.onChange(displayedSockets
-                                              .take(7 + aspectOne + aspectTwo)
-                                              .toList());
+                                          widget.onChange(
+                                            displayedSockets
+                                                .take(7 + aspectOne + aspectTwo)
+                                                .toList(),
+                                            7 + i,
+                                          );
                                         }
                                       },
                                     );

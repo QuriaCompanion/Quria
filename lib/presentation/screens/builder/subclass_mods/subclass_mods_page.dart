@@ -45,7 +45,7 @@ class _SubclassModsPageState extends State<SubclassModsPage> {
           body: SubclassModsMobileView(
             sockets: sockets,
             subclass: widget.data.subclass,
-            onChange: (mods) {
+            onChange: (mods, i) {
               setState(() {
                 chosenSockets = mods;
               });

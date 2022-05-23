@@ -5,9 +5,11 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/inspectSubclassHelper.model.dart';
 import 'package:quria/data/models/helpers/socketsHelper.model.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_base.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_mobile_view.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/talent_grid_mobile_view.dart';
@@ -39,7 +41,20 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
           return Builder(builder: (context) {
             if (widget.data.isNewSubclass) {
               return SubclassModsMobileView(
-                onChange: (mods) => {},
+                onChange: (mods, index) async {
+                  await BungieApiService()
+                      .insertSocketPlugFree(
+                        widget.data.subclassId,
+                        mods[index].hash!,
+                        index,
+                        widget.data.characterId,
+                      )
+                      .onError((error, stackTrace) => showDialog(
+                          context: context,
+                          builder: (context) {
+                            return const ErrorDialog();
+                          }));
+                },
                 sockets: sockets.sockets,
                 subclass: sockets.def!,
               );
