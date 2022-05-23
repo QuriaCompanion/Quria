@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/models/helpers/inspectSubclassHelper.model.dart';
 import 'dart:math' as math;
 
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -11,12 +12,14 @@ class ProfileMobileHeader extends StatefulWidget {
   final String characterSuper;
   final String subclassId;
   final Map<String, int>? stats;
+  final bool isNewSubclass;
 
   const ProfileMobileHeader({
     required this.stats,
     required this.characterId,
     required this.characterSuper,
     required this.subclassId,
+    required this.isNewSubclass,
     Key? key,
   }) : super(key: key);
 
@@ -37,7 +40,10 @@ class _ProfileMobileHeaderState extends State<ProfileMobileHeader> {
             onTap: () {
               Navigator.of(context).pushNamed(
                 routeInspectSubclass,
-                arguments: widget.subclassId,
+                arguments: InspectSubclassHelper(
+                  isNewSubclass: widget.isNewSubclass,
+                  subclassId: widget.subclassId,
+                ),
               );
             },
             child: Stack(

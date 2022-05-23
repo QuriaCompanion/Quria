@@ -30,6 +30,23 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
               ],
             )),
         Padding(
+          padding: EdgeInsets.all(globalPadding(context)),
+          child: Container(
+            padding:
+                EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
+            decoration: const BoxDecoration(
+                color: blackLight,
+                borderRadius: BorderRadius.all(Radius.circular(8))),
+            width: double.infinity,
+            child: Center(
+              child: textCaption(
+                "Maintenez puis faites glisser changer l'ordre",
+                utf8: false,
+              ),
+            ),
+          ),
+        ),
+        Padding(
           padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,7 +60,7 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: SizedBox(
-                            height: 35 + globalPadding(context),
+                            height: 48,
                             child: Center(child: textH3(i.toString()))),
                       ),
                   ],
@@ -52,8 +69,8 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
               RepaintBoundary(
                 child: SizedBox(
                   width: vw(context) * 0.8,
-                  height: (43 + globalPadding(context)) * 6,
-                  child: FilterWidget(),
+                  height: 56 * 6,
+                  child: const FilterWidget(),
                 ),
               ),
             ],
