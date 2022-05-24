@@ -14,7 +14,8 @@ import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.da
 class SubclassModsMobileView extends StatefulWidget {
   final List<DestinyItemSocketState>? sockets;
   final DestinyInventoryItemDefinition subclass;
-  final void Function(List<DestinyInventoryItemDefinition>, int) onChange;
+  final Future<void> Function(List<DestinyInventoryItemDefinition>, int)
+      onChange;
   const SubclassModsMobileView(
       {required this.sockets,
       required this.subclass,
@@ -91,15 +92,18 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                         item: displayedSockets[i],
                         onSocketChange: (newSocket) {
                           if (!displayedSockets.contains(newSocket)) {
-                            setState(() {
-                              displayedSockets[i] = newSocket;
-                            });
-                            widget.onChange(
+                            widget
+                                .onChange(
                               displayedSockets
                                   .take(7 + aspectOne + aspectTwo)
                                   .toList(),
-                              i,
-                            );
+                              6,
+                            )
+                                .then((_) {
+                              setState(() {
+                                displayedSockets[i] = newSocket;
+                              });
+                            }, onError: (_) => null);
                           }
                         },
                         plugSetHash: widget.subclass.sockets!.socketEntries![i]
@@ -112,15 +116,18 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                           item: displayedSockets[5],
                           onSocketChange: (newSocket) {
                             if (!displayedSockets.contains(newSocket)) {
-                              setState(() {
-                                displayedSockets[5] = newSocket;
-                              });
-                              widget.onChange(
+                              widget
+                                  .onChange(
                                 displayedSockets
                                     .take(7 + aspectOne + aspectTwo)
                                     .toList(),
                                 5,
-                              );
+                              )
+                                  .then((_) {
+                                setState(() {
+                                  displayedSockets[5] = newSocket;
+                                });
+                              }, onError: (_) => null);
                             }
                           },
                           plugSetHash: widget.subclass.sockets!
@@ -132,15 +139,18 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                           item: displayedSockets[6],
                           onSocketChange: (newSocket) {
                             if (!displayedSockets.contains(newSocket)) {
-                              setState(() {
-                                displayedSockets[6] = newSocket;
-                              });
-                              widget.onChange(
+                              widget
+                                  .onChange(
                                 displayedSockets
                                     .take(7 + aspectOne + aspectTwo)
                                     .toList(),
                                 6,
-                              );
+                              )
+                                  .then((_) {
+                                setState(() {
+                                  displayedSockets[6] = newSocket;
+                                });
+                              }, onError: (_) => null);
                             }
                           },
                           plugSetHash: widget.subclass.sockets!
@@ -175,19 +185,22 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                             ManifestService.manifestParsed
                                                     .destinyInventoryItemDefinition[
                                                 itemHash]!)) {
-                                          setState(() {
-                                            displayedSockets[
-                                                7 + i] = ManifestService
-                                                    .manifestParsed
-                                                    .destinyInventoryItemDefinition[
-                                                itemHash]!;
-                                          });
-                                          widget.onChange(
+                                          widget
+                                              .onChange(
                                             displayedSockets
                                                 .take(7 + aspectOne + aspectTwo)
                                                 .toList(),
-                                            7 + i,
-                                          );
+                                            6,
+                                          )
+                                              .then((_) {
+                                            setState(() {
+                                              displayedSockets[
+                                                  7 + i] = ManifestService
+                                                      .manifestParsed
+                                                      .destinyInventoryItemDefinition[
+                                                  itemHash]!;
+                                            });
+                                          }, onError: (_) => null);
                                         }
                                       },
                                     );

@@ -335,19 +335,19 @@ class DisplayService {
 
     int? grenadeHash = profile.getCurrentGrenadeHashForCharacter(characterId);
 
-    int? grenadeTimer =
-        GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier];
+    int grenadeTimer =
+        GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier] ?? 0;
 
     int? superHash = profile.getCurrentSuperHashForCharacter(characterId);
-    int? superTimer = SuperCooldown.superMap[superHash]?[superTier];
+    int superTimer = SuperCooldown.superMap[superHash]?[superTier] ?? 0;
 
     int? meleeHash = profile.getCurrentMeleeHashForCharacter(characterId);
-    int? meleeTimer = MeleeCooldown.meleeMap[meleeHash]?[strengthTier];
+    int meleeTimer = MeleeCooldown.meleeMap[meleeHash]?[strengthTier] ?? 0;
 
     return {
-      StatsStringHash.discipline: formatTime(grenadeTimer!),
-      StatsStringHash.intellect: formatTime(superTimer!),
-      StatsStringHash.strength: formatTime(meleeTimer!),
+      StatsStringHash.discipline: formatTime(grenadeTimer),
+      StatsStringHash.intellect: formatTime(superTimer),
+      StatsStringHash.strength: formatTime(meleeTimer),
     };
   }
 
