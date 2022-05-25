@@ -1,5 +1,6 @@
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
@@ -185,11 +186,18 @@ class LoginWidgetState extends State<LoginWidget> {
     GroupUserInfoCard? membership = await widget.account.getMembership();
     if (membership == null) {
       UserMembershipData? membershipData = await widget.api.getMemberships();
-      if (membershipData?.destinyMemberships?.length != 1) {
+      if (membershipData?.destinyMemberships?.firstWhereOrNull(
+                  (element) => element.crossSaveOverride != null) ==
+              null &&
+          membershipData?.destinyMemberships?.length != 1) {
         return chooseMembership(membershipData);
       }
-      await widget.account.saveMembership(
-          membershipData!, membershipData.destinyMemberships![0].membershipId!);
+      String membershipId = membershipData?.destinyMemberships
+              ?.firstWhereOrNull((element) => element.crossSaveOverride != null)
+              ?.membershipId ??
+          membershipData!.destinyMemberships![0].membershipId!;
+
+      await widget.account.saveMembership(membershipData!, membershipId);
     }
     if (!mounted) return;
     Navigator.pushReplacementNamed(context, routeProfile);
