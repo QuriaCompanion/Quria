@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
@@ -183,19 +184,15 @@ class LoginWidgetState extends State<LoginWidget> {
   void checkMembership() async {
     GroupUserInfoCard? membership = await widget.account.getMembership();
     if (membership == null) {
-      showSelectMembership();
-    }
-    if (!mounted) return;
-    Navigator.pushReplacementNamed(context, routeProfile);
-  }
-
-  void showSelectMembership() async {
-    UserMembershipData? membershipData = await widget.api.getMemberships();
-
-    if (membershipData?.destinyMemberships?.length == 1) {
+      UserMembershipData? membershipData = await widget.api.getMemberships();
+      if (membershipData?.destinyMemberships?.length != 1) {
+        return chooseMembership(membershipData);
+      }
       await widget.account.saveMembership(
           membershipData!, membershipData.destinyMemberships![0].membershipId!);
     }
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, routeProfile);
   }
 
   void loadingModal() {
@@ -210,6 +207,25 @@ class LoginWidgetState extends State<LoginWidget> {
             text2: "Veuillez patienter ...",
           );
         });
+  }
+
+  void chooseMembership(UserMembershipData? membershipData) {
+    try {
+      showDialog(
+          context: context,
+          builder: (context) {
+            return ChooseMembership(
+                memberships: membershipData!.destinyMemberships!,
+                onSelected: (membership) {
+                  Navigator.of(context).pop();
+                  widget.account.saveMembership(membershipData, membership);
+                  Navigator.pushReplacementNamed(context, routeProfile);
+                  return;
+                });
+          });
+    } catch (_) {
+      rethrow;
+    }
   }
 
   void yannisooLogin() async {
