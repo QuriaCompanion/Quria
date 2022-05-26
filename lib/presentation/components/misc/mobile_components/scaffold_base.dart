@@ -25,7 +25,7 @@ class ScaffoldBase extends StatelessWidget {
         backgroundColor: Colors.transparent,
       ),
       body: Container(
-        decoration: ghostBackground,
+        decoration: blackBackground,
         child: SingleChildScrollView(
           child: body,
         ),

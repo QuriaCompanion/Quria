@@ -139,6 +139,9 @@ class DisplayService {
               ?.displayProperties
               ?.icon ??
           "";
+      bool isNewSubclass = ManifestService
+              .manifestParsed.destinyInventoryItemDefinition[superHash] !=
+          null;
       return ProfileHelper(
           characters: characters,
           selectedCharacter: selectedCharacter,
@@ -146,7 +149,8 @@ class DisplayService {
           selectedCharacterInventory: inventory,
           selectedCharacterSubclass: selectedCharacterSubclass,
           characterSuper: characterSuper,
-          selectedCharacterIndex: characterIndex);
+          selectedCharacterIndex: characterIndex,
+          isNewSubclass: isNewSubclass);
     } catch (e) {
       rethrow;
     } finally {}

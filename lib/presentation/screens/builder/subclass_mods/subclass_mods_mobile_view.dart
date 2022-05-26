@@ -40,8 +40,8 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
 
   @override
   Widget build(BuildContext context) {
-    int? aspectOne;
-    int? aspectTwo;
+    int aspectOne = 0;
+    int aspectTwo = 0;
     if (displayedSockets.isNotEmpty) {
       aspectOne =
           displayedSockets[5].investmentStats?.firstWhereIndexedOrNull((i, _) {
@@ -94,7 +94,9 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                             setState(() {
                               displayedSockets[i] = newSocket;
                             });
-                            widget.onChange(displayedSockets);
+                            widget.onChange(displayedSockets
+                                .take(7 + aspectOne + aspectTwo)
+                                .toList());
                           }
                         },
                         plugSetHash: widget.subclass.sockets!.socketEntries![i]
@@ -110,7 +112,11 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                               setState(() {
                                 displayedSockets[5] = newSocket;
                               });
-                              widget.onChange(displayedSockets);
+                              widget.onChange(
+                                displayedSockets
+                                    .take(7 + aspectOne + aspectTwo)
+                                    .toList(),
+                              );
                             }
                           },
                           plugSetHash: widget.subclass.sockets!
@@ -125,66 +131,69 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                               setState(() {
                                 displayedSockets[6] = newSocket;
                               });
-                              widget.onChange(displayedSockets);
+                              widget.onChange(displayedSockets
+                                  .take(7 + aspectOne + aspectTwo)
+                                  .toList());
                             }
                           },
                           plugSetHash: widget.subclass.sockets!
                               .socketEntries![6].reusablePlugSetHash!),
                     ],
                   )),
-              if (aspectOne != null && aspectTwo != null)
-                mobileSectionInverted(context,
-                    title: "Fragments",
-                    child: Row(
-                      children: [
-                        for (int i = 0; i < aspectOne + aspectTwo; i++)
-                          Padding(
-                            padding: i != 4
-                                ? EdgeInsets.only(right: globalPadding(context))
-                                : EdgeInsets.zero,
-                            child: InkWell(
-                              onTap: () {
-                                showMaterialModalBottomSheet(
-                                    backgroundColor: Colors.transparent,
-                                    expand: true,
-                                    context: context,
-                                    builder: (context) {
-                                      return ArmorModsModal(
-                                        socket: displayedSockets[7 + i],
-                                        plugSetsHash: widget
-                                            .subclass
-                                            .sockets!
-                                            .socketEntries![7 + i]
-                                            .reusablePlugSetHash!,
-                                        onSocketChange: (itemHash) {
-                                          if (!displayedSockets.contains(
-                                              ManifestService.manifestParsed
-                                                      .destinyInventoryItemDefinition[
-                                                  itemHash]!)) {
-                                            setState(() {
-                                              displayedSockets[
-                                                  7 + i] = ManifestService
-                                                      .manifestParsed
-                                                      .destinyInventoryItemDefinition[
-                                                  itemHash]!;
-                                            });
-                                            widget.onChange(displayedSockets);
-                                          }
-                                        },
-                                      );
-                                    });
-                              },
-                              child: pictureBordered(
-                                image: NetworkImage(DestinyData.bungieLink +
-                                    displayedSockets[7 + i]
-                                        .displayProperties!
-                                        .icon!),
-                                size: mobileItemSize(context),
-                              ),
+              mobileSectionInverted(context,
+                  title: "Fragments",
+                  child: Row(
+                    children: [
+                      for (int i = 0; i < aspectOne + aspectTwo; i++)
+                        Padding(
+                          padding: i != 4
+                              ? EdgeInsets.only(right: globalPadding(context))
+                              : EdgeInsets.zero,
+                          child: InkWell(
+                            onTap: () {
+                              showMaterialModalBottomSheet(
+                                  backgroundColor: Colors.transparent,
+                                  expand: true,
+                                  context: context,
+                                  builder: (context) {
+                                    return ArmorModsModal(
+                                      socket: displayedSockets[7 + i],
+                                      plugSetsHash: widget
+                                          .subclass
+                                          .sockets!
+                                          .socketEntries![7 + i]
+                                          .reusablePlugSetHash!,
+                                      onSocketChange: (itemHash) {
+                                        if (!displayedSockets.contains(
+                                            ManifestService.manifestParsed
+                                                    .destinyInventoryItemDefinition[
+                                                itemHash]!)) {
+                                          setState(() {
+                                            displayedSockets[
+                                                7 + i] = ManifestService
+                                                    .manifestParsed
+                                                    .destinyInventoryItemDefinition[
+                                                itemHash]!;
+                                          });
+                                          widget.onChange(displayedSockets
+                                              .take(7 + aspectOne + aspectTwo)
+                                              .toList());
+                                        }
+                                      },
+                                    );
+                                  });
+                            },
+                            child: pictureBordered(
+                              image: NetworkImage(DestinyData.bungieLink +
+                                  displayedSockets[7 + i]
+                                      .displayProperties!
+                                      .icon!),
+                              size: mobileItemSize(context),
                             ),
                           ),
-                      ],
-                    )),
+                        ),
+                    ],
+                  )),
               SizedBox(
                 height: globalPadding(context) * 4,
               ),

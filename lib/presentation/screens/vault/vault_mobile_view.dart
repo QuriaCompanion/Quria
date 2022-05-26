@@ -4,6 +4,7 @@ import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
+import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_appbar.dart';
@@ -139,6 +140,11 @@ class _VaultMobileView extends State<VaultMobileView> {
                       widget.data.characters[DisplayService.characterIndex]
                           .classType))
           .toList();
+      items.sort((a, b) {
+        int first = ProfileService().getItemPowerLevel(b.itemInstanceId!) ?? 0;
+        return first.compareTo(
+            ProfileService().getItemPowerLevel(a.itemInstanceId!) ?? 0);
+      });
       sections.add(
         VaultMobileSection(
           vaultItems: items,

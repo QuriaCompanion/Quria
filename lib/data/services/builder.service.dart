@@ -82,7 +82,7 @@ class BuilderService {
         List<int> statOrder,
         Map<int, DestinyInventoryItemDefinition> manifest) {
       // this will be the list of optional mods that will be added to the build pre calculated
-      final List<DestinyInventoryItemDefinition> modSelected = [];
+      final List<DestinyInventoryItemDefinition?> modSelected = [];
 
       // this is every mods that can be used for each stat
       Map<int, Map<bool, DestinyInventoryItemDefinition>> armordModValues = {
@@ -112,9 +112,9 @@ class BuilderService {
         },
       };
       // remaining points that are not yet used for each armor slot
-      for (var remaining in armorModspace) {
+      for (int i = 0; i < armorModspace.length; i++) {
         // if there are still some points available
-        if (remaining > 0) {
+        if (armorModspace[i] > 0) {
           // then we loop through the stat by priority order
 
           for (var statHash in statOrder) {
@@ -124,7 +124,7 @@ class BuilderService {
               // ex: if the stat is at 55 you only need a minor mod (+5 to reach next tier)
               // also check if the cost of the mod is not higher than the remaining points
               if ((statistics[statHash]! % 10) > 5 &&
-                  remaining >=
+                  armorModspace[i] >=
                       armordModValues[statHash]![false]!
                           .investmentStats![0]
                           .value!) {
@@ -136,7 +136,7 @@ class BuilderService {
                 break;
               }
               // if a regular mod is required it checks if the cost of the mod is not higher than the remaining points
-              if (remaining >=
+              if (armorModspace[i] >=
                   armordModValues[statHash]![true]!
                       .investmentStats![0]
                       .value!) {
@@ -150,6 +150,7 @@ class BuilderService {
             }
           }
         }
+        if (modSelected.length < i + 1) modSelected.add(null);
       }
       // return selecterd mods and the new stat values
       return BuilderOptionalMods(
@@ -188,11 +189,12 @@ class BuilderService {
     //instanciate armor mod space (starts at 10 points for each armor assuming everything is masterworked)
     List<int> armorModspace = [10, 10, 10, 10, 10];
     // loops through the armor mods
-    for (var armor in builderHelper.armorMods.asMap().entries) {
+    for (int i = 0; i < builderHelper.armorMods.length; i++) {
       // check if there is an armor in this slot
-      if (armor.value.items.isNotEmpty) {
+      if (builderHelper.armorMods[i].items.isNotEmpty) {
         // loops through the mods in this armor
-        for (DestinyInventoryItemDefinition? mod in armor.value.items) {
+        for (DestinyInventoryItemDefinition? mod
+            in builderHelper.armorMods[i].items) {
           // check if the mod has bonus stats
           if (mod != null &&
               mod.investmentStats != null &&
@@ -218,7 +220,7 @@ class BuilderService {
                   stat.statTypeHash == 2399985800 ||
                   stat.statTypeHash == 3176563510 ||
                   stat.statTypeHash == 3578062600) {
-                armorModspace[armor.key] -= stat.value!;
+                armorModspace[i] -= stat.value!;
               }
             }
           }
@@ -336,30 +338,9 @@ class BuilderService {
             statistics[StatsHash.strength] =
                 statistics[StatsHash.strength]! + modBonus[StatsHash.strength]!;
 
-            BuilderOptionalMods optionalModsResult = optionalMods(statistics,
-                armorModspace, builderHelper.statOrder, builderHelper.manifest);
-            statistics = optionalModsResult.statValues;
-            statTiers[StatsHash.mobility] =
-                (statistics[StatsHash.mobility]! / 10).floor();
-            statTiers[StatsHash.resilience] =
-                (statistics[StatsHash.resilience]! / 10).floor();
-            statTiers[StatsHash.recovery] =
-                (statistics[StatsHash.recovery]! / 10).floor();
-            statTiers[StatsHash.discipline] =
-                (statistics[StatsHash.discipline]! / 10).floor();
-            statTiers[StatsHash.intellect] =
-                (statistics[StatsHash.intellect]! / 10).floor();
-            statTiers[StatsHash.strength] =
-                (statistics[StatsHash.strength]! / 10).floor();
-            int finalTier = statTiers[StatsHash.mobility]! +
-                statTiers[StatsHash.resilience]! +
-                statTiers[StatsHash.recovery]! +
-                statTiers[StatsHash.discipline]! +
-                statTiers[StatsHash.intellect]! +
-                statTiers[StatsHash.strength]!;
             Stats stats = Stats(
                 base: baseTier,
-                max: finalTier,
+                max: baseTier,
                 ordering: statTiers,
                 statistics: statistics);
 
@@ -368,33 +349,33 @@ class BuilderService {
                   hash: helmet.itemHash!,
                   displayHash: helmet.overrideStyleItemHash ?? helmet.itemHash!,
                   itemInstanceId: helmet.itemInstanceId!,
-                  mods: optionalModsResult.modSelected[0],
+                  mods: null,
                   type: 0),
               Armor(
                   hash: gauntlet.itemHash!,
                   displayHash:
                       gauntlet.overrideStyleItemHash ?? gauntlet.itemHash!,
                   itemInstanceId: gauntlet.itemInstanceId!,
-                  mods: optionalModsResult.modSelected[1],
+                  mods: null,
                   type: 1),
               Armor(
                   hash: chest.itemHash!,
                   displayHash: chest.overrideStyleItemHash ?? chest.itemHash!,
                   itemInstanceId: chest.itemInstanceId!,
-                  mods: optionalModsResult.modSelected[2],
+                  mods: null,
                   type: 2),
               Armor(
                   hash: leg.itemHash!,
                   displayHash: leg.overrideStyleItemHash ?? leg.itemHash!,
                   itemInstanceId: leg.itemInstanceId!,
-                  mods: optionalModsResult.modSelected[3],
+                  mods: null,
                   type: 3),
               Armor(
                   hash: builderHelper.classItem.itemHash!,
                   displayHash: builderHelper.classItem.overrideStyleItemHash ??
                       builderHelper.classItem.itemHash!,
                   itemInstanceId: builderHelper.classItem.itemInstanceId!,
-                  mods: optionalModsResult.modSelected[4],
+                  mods: null,
                   type: 4)
             ];
             builds.add(Build(
@@ -408,6 +389,39 @@ class BuilderService {
           }
         }
       }
+    }
+    for (Build build in builds) {
+      BuilderOptionalMods optionalModsResult = optionalMods(
+          build.stats.statistics,
+          armorModspace,
+          builderHelper.statOrder,
+          builderHelper.manifest);
+      build.stats.statistics = optionalModsResult.statValues;
+      Map<int, int> statTiers = {};
+      statTiers[StatsHash.mobility] =
+          (build.stats.statistics[StatsHash.mobility]! / 10).floor();
+      statTiers[StatsHash.resilience] =
+          (build.stats.statistics[StatsHash.resilience]! / 10).floor();
+      statTiers[StatsHash.recovery] =
+          (build.stats.statistics[StatsHash.recovery]! / 10).floor();
+      statTiers[StatsHash.discipline] =
+          (build.stats.statistics[StatsHash.discipline]! / 10).floor();
+      statTiers[StatsHash.intellect] =
+          (build.stats.statistics[StatsHash.intellect]! / 10).floor();
+      statTiers[StatsHash.strength] =
+          (build.stats.statistics[StatsHash.strength]! / 10).floor();
+      int finalTier = statTiers[StatsHash.mobility]! +
+          statTiers[StatsHash.resilience]! +
+          statTiers[StatsHash.recovery]! +
+          statTiers[StatsHash.discipline]! +
+          statTiers[StatsHash.intellect]! +
+          statTiers[StatsHash.strength]!;
+      build.stats.max = finalTier;
+      build.equipement[0].mods = optionalModsResult.modSelected[0];
+      build.equipement[1].mods = optionalModsResult.modSelected[1];
+      build.equipement[2].mods = optionalModsResult.modSelected[2];
+      build.equipement[3].mods = optionalModsResult.modSelected[3];
+      build.equipement[4].mods = optionalModsResult.modSelected[4];
     }
     builds = builds.getRange(0, 50).toList();
     builds.sort((a, b) {

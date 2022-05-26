@@ -79,15 +79,15 @@ class BungieActionsService {
     try {
       final owner = profile.getItemOwner(itemId);
       if (owner == characterId) {
-        await api.equipItem(itemId, characterId).then(
-            (value) => profile.moveItem(itemId, characterId, true),
-            onError: (_) => null);
+        await api
+            .equipItem(itemId, characterId)
+            .then((value) => profile.moveItem(itemId, characterId, true));
       } else {
         await transferItem(itemId, characterId,
             itemHash: itemHash, stackSize: 1);
-        await api.equipItem(itemId, characterId).then(
-            (value) => profile.moveItem(itemId, characterId, true),
-            onError: (_) => null);
+        await api
+            .equipItem(itemId, characterId)
+            .then((value) => profile.moveItem(itemId, characterId, true));
       }
     } catch (e) {
       try {
@@ -96,11 +96,10 @@ class BungieActionsService {
           characterId,
           itemHash: itemHash,
           stackSize: 1,
-        ).then((value) => profile.moveItem(itemId, characterId, false),
-            onError: (_) => null);
-        await api.equipItem(itemId, characterId).then(
-            (value) => profile.moveItem(itemId, characterId, true),
-            onError: (_) => null);
+        ).then((value) => profile.moveItem(itemId, characterId, false));
+        await api
+            .equipItem(itemId, characterId)
+            .then((value) => profile.moveItem(itemId, characterId, true));
       } catch (e) {
         rethrow;
       }

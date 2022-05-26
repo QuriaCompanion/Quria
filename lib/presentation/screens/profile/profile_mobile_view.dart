@@ -29,32 +29,33 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
   DestinyItemType currentFilter = DestinyItemType.Weapon;
   @override
   Widget build(BuildContext context) {
+    String icon = widget.data.isNewSubclass
+        ? ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[
+                widget.data.selectedCharacterSubclass.itemHash]!
+            .screenshot!
+        : ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[
+                widget.data.selectedCharacterSubclass.itemHash]!
+            .secondaryIcon!;
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              mobileHeader(
-                context,
-                image: NetworkImage(
-                  DestinyData.bungieLink +
-                      ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition[
-                              widget.data.selectedCharacterSubclass.itemHash]!
-                          .screenshot!,
-                ),
-                child: ProfileMobileHeader(
-                  stats: widget.data.selectedCharacter.stats,
-                  characterSuper: widget.data.characterSuper,
-                  subclassId:
-                      widget.data.selectedCharacterSubclass.itemInstanceId!,
-                  characterId: widget.data.selectedCharacter.characterId!,
-                ),
-              ),
-            ],
+          mobileHeader(
+            context,
+            image: NetworkImage(
+              DestinyData.bungieLink + icon,
+            ),
+            child: ProfileMobileHeader(
+              stats: widget.data.selectedCharacter.stats,
+              characterSuper: widget.data.characterSuper,
+              subclassId: widget.data.selectedCharacterSubclass.itemInstanceId!,
+              characterId: widget.data.selectedCharacter.characterId!,
+              isNewSubclass: widget.data.isNewSubclass,
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(
