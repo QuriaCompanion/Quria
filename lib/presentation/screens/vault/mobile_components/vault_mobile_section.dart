@@ -76,8 +76,7 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                   child: ItemIcon(
                     displayHash: item.overrideStyleItemHash ?? item.itemHash!,
                     imageSize: vw(context) * 0.148,
-                    element: DestinyData.bungieLink +
-                        ProfileService().getItemElement(item),
+                    element: ProfileService().getItemElement(item),
                     powerLevel: ProfileService()
                         .getItemPowerLevel(item.itemInstanceId!),
                   ),

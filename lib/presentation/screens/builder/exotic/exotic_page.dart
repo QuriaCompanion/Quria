@@ -51,7 +51,7 @@ class ExoticWidgetState extends State<ExoticWidget> {
                 animationSize: vw(context) * 0.5,
               ));
         } else {
-          if (vw(context) < 850) {
+          if (vw(context) < 1000) {
             return Scaffold(
               backgroundColor: black,
               drawer: const Burger(),

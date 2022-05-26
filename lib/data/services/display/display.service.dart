@@ -116,7 +116,19 @@ class DisplayService {
   ProfileHelper getProfileData() {
     try {
       List<DestinyCharacterComponent> characters = profile.getCharacters();
-      DestinyCharacterComponent selectedCharacter = characters[characterIndex];
+      DestinyCharacterComponent? selectedCharacter;
+      if (characters.isEmpty) {
+        return ProfileHelper(
+            characters: characters,
+            selectedCharacter: null,
+            selectedCharacterEquipment: [],
+            selectedCharacterInventory: [],
+            selectedCharacterSubclass: null,
+            characterSuper: null,
+            selectedCharacterIndex: characterIndex,
+            isNewSubclass: true);
+      }
+      selectedCharacter = characters[characterIndex];
       List<DestinyItemComponent> equipement =
           profile.getCharacterEquipment(selectedCharacter.characterId!);
       List<DestinyItemComponent> inventory = profile
@@ -163,7 +175,7 @@ class DisplayService {
         profile.getPrecalculatedStats(itemInstanceId);
     DestinyItemInstanceComponent instanceInfo =
         profile.getInstanceInfo(itemInstanceId);
-    int powerLevel = instanceInfo.primaryStat!.value!;
+    int? powerLevel = instanceInfo.primaryStat?.value;
     String imageLink = DestinyData.bungieLink + itemDef.screenshot!;
     String? elementIcon = ManifestService
             .manifestParsed
@@ -213,7 +225,7 @@ class DisplayService {
             ?.displayProperties
             ?.icon;
 
-    final int powerLevel = instanceInfo.primaryStat!.value!;
+    final int? powerLevel = instanceInfo.primaryStat?.value;
 
     List<DestinyItemSocketState> sockets =
         profile.getItemSockets(itemInstanceId);
@@ -258,7 +270,7 @@ class DisplayService {
     return ItemCardHelper(
         itemCategory: itemCategory,
         itemDef: itemDef,
-        elementIcon: elementIcon ?? "",
+        elementIcon: elementIcon,
         powerLevel: powerLevel,
         perks: perks,
         intristics: intristics,

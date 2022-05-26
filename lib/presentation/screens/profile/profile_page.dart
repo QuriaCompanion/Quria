@@ -2,7 +2,10 @@ import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
+import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
+import 'package:quria/presentation/components/misc/choose_membership.dart';
+import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
@@ -80,7 +83,30 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         builder: ((context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
             data = display.getProfileData();
-            if (vw(context) > 850) {
+            if (data.characters.isEmpty) {
+              return Column(
+                children: [
+                  ErrorDialog(
+                    errorMessage:
+                        "Vous n'avez pas de personnage sur cette plateforme veuillez changer de plateforme",
+                    child: ChooseMembership(
+                        memberships:
+                            AccountService.membershipData!.destinyMemberships!,
+                        onSelected: (membership) async {
+                          AccountService()
+                              .saveMembership(
+                                  AccountService.membershipData!, membership)
+                              .then((_) {
+                            DisplayService.isProfileUp = false;
+                            Navigator.pushReplacementNamed(
+                                context, routeProfile);
+                          });
+                        }),
+                  ),
+                ],
+              );
+            }
+            if (vw(context) > 1000) {
               return Column(
                 children: const [],
               );

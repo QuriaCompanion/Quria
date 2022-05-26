@@ -193,9 +193,12 @@ class LoginWidgetState extends State<LoginWidget> {
         return chooseMembership(membershipData);
       }
       String membershipId = membershipData?.destinyMemberships
-              ?.firstWhereOrNull((element) => element.crossSaveOverride != null)
+              ?.firstWhereOrNull((element) =>
+                  element.crossSaveOverride == element.membershipType)
               ?.membershipId ??
-          membershipData!.destinyMemberships![0].membershipId!;
+          membershipData!.destinyMemberships!
+              .firstWhere((element) => element.membershipId != null)
+              .membershipId!;
 
       await widget.account.saveMembership(membershipData!, membershipId);
     }
@@ -240,13 +243,13 @@ class LoginWidgetState extends State<LoginWidget> {
     final AuthService auth = AuthService();
     final AccountService account = AccountService();
     BungieNetToken token = BungieNetToken.fromJson({
-      'access_token':
-          "CKz7AxKGAgAgeUtts6Ss0etJ4v74fspqQMJUw03kC5u0Mzy45BRlG8bgAAAAUS2EA1MTJ4wTlOMk5lAdPMc/JaJEBKmobmBLYLxraR9MuZgC3HRldFkjaJBOjpgUCm/DrSpR6QKYXPADmrxXluNAsIqvtdBkRG+jC1PFjkp3lesmfN87OzON3594IbRotxBMe+WvAzjpcNSsu70lJPcuy2uCfYCp5DWjhkhF6hem2TBG1/4GytKb1zVZA7iXqPIYfzwJlGkNI0ibJ8xdjCJCLxu9c4GQZzoff6rLNPcBk+hfQnVyft0xEKYXBLDg7PaV6s3In7uYCfSBMkG/Xa2nyDcD3lWrVQDUDn4+6ww=",
-      'expires_in': 3600,
-      'membership_id': "11319478",
-      'refresh_expires_in': 7776000,
-      'refresh_token':
-          "CKz7AxKGAgAghSc565zJ3/6Z3QOWGqhr5vjUPZFkn35tLnqoqXByZRTgAAAAVy6LETOkAR+zjX4+PP8eB6XnoqVqd0u6SAk4lkJ6jSSm7dh2bxuydpGnGXAE3PvRL8ZzvA0qboKU/hG67i3tju180xeAJqLIXKOwHliZe+6LM7bv6tg32+Qk7w5c5pk/RpfzgDgp2qQTyf7K+PXJ7Tm/TIDtamDDVNfDIq6QDjeF8sxZPPTiR4LgHzBUHWG7zUGEi6Obcn9CRSTRGmBQHcROgdaaJSEDKb99M/soU5xr+27VK1KsQkFS6XMN60u3BF/CY+ofcYS/luYxfWHKRay/SIgdsn2NNWi85NHQ1Sk="
+      "access_token":
+          "CJuVBBKGAgAgIBzh0g5Snr7GGWorsznREcBvQiZkrfI9lblhLh8dJV7gAAAAwXukbO5Hs3OnuYyeO7vUmpJGlKrqOtkhARN28AOsfYrle/j+kYJg93LGmKuEVy3wTTNJNBoYAnJ9hhhMivhi3l46l+jXBN8bJA0DDFUmX0SFOzhihjovUN8Zv8w8MOL4d1wkD+KH6kfgA8DIcCESA74USgTGu2j+yaG0wSsnxHkQo4u9iKSL8U/QaM6+C7vt2WIX5RXS5Idm0KrOXJmc6mjYD3l40KWsz2GoDfAf2xV4KwrCdx37mkxwankWUPWIRd7lz+EkVagx4rOz5p5nBGXXFSWnVqSF3e007d0KECc=",
+      "expires_in": 3600,
+      "refresh_token":
+          "CJuVBBKGAgAgo/eRoMfrUl4/Dntfyj+Wx6H0sfOIb6tLeX9pEmzUWS3gAAAAjygPOsim+PmUG0IrLana5NK0TN6Cmks6evZ5XfYQpNoRMYWRN290oEW7E/zHqQ2T1OjeIw9LTgOmdn6/hfvK1p9Qn/TPgb/IBE8KmxJMoYf9WbFAw8JZAHPufiyX9PKAIEE6eyjNmGm4wjiUxVCusHIccdVW94sNRhRwHxTzCk92bfai/GVrhh8fxT+qwDhzQp4Yvs/NZQ3001ivJIZKp1QZiAtC+TlKhA1gkqK99kKwLMoDy/wegmtpSuoIF3qw/KAUoLCzGztojxdLDBa3VFwKiKWU6bH3KeuYqTf6vS4=",
+      "refresh_expires_in": 7776000,
+      "membership_id": "5699852"
     });
 
     if (await auth.getToken() == null) await auth.saveToken(token);

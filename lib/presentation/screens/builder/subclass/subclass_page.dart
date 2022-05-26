@@ -27,7 +27,7 @@ class _SubclassPageState extends State<SubclassPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (vw(context) < 850) {
+    if (vw(context) < 1000) {
       return ScaffoldSteps<ClassItemChoiceHelper>(
         route: routeClassItemChoice,
         arguments: ClassItemChoiceHelper(

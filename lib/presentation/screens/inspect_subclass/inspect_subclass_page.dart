@@ -38,7 +38,7 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (vw(context) < 850) {
+    if (vw(context) < 1000) {
       return ScaffoldBase(
         body: Builder(builder: (context) {
           return Builder(builder: (context) {

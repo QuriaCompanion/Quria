@@ -40,6 +40,7 @@ class StatsHash {
   static const int precision = 1591432999;
   static const int power = 1935470627;
   static const int shieldDuration = 1842278586;
+  static const int airborneEffectiveness = 2714457168;
 }
 
 class StatsStringHash {
@@ -72,6 +73,7 @@ class StatsStringHash {
   static const String precision = "1591432999";
   static const String power = "1935470627";
   static const String shieldDuration = "1842278586";
+  static const String airborneEffectiveness = "2714457168";
 }
 
 enum ArmorStatInt {
@@ -312,7 +314,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     //shotgun
     DestinyItemSubType.Shotgun: [
@@ -321,7 +324,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     // machinegun
     DestinyItemSubType.Machinegun: [
@@ -330,7 +334,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     //hand cannon
     DestinyItemSubType.HandCannon: [
@@ -339,7 +344,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     //rocket launcher
     DestinyItemSubType.RocketLauncher: [
@@ -348,7 +354,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     //fusion rifle
     DestinyItemSubType.FusionRifle: [
@@ -357,7 +364,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     //sniper rifle
     DestinyItemSubType.SniperRifle: [
@@ -366,7 +374,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     //pulse rifle
     DestinyItemSubType.PulseRifle: [
@@ -375,7 +384,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     //scout rifle
     DestinyItemSubType.ScoutRifle: [
@@ -384,7 +394,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     // sidearm
     DestinyItemSubType.Sidearm: [
@@ -393,7 +404,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     // sword
     DestinyItemSubType.Sword: [
@@ -420,7 +432,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     // grenade launcher
     DestinyItemSubType.GrenadeLauncher: [
@@ -429,7 +442,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     // submachine gun
     DestinyItemSubType.SubmachineGun: [
@@ -438,7 +452,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     // trace rifle
     DestinyItemSubType.TraceRifle: [
@@ -447,7 +462,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     // helmet armor
     DestinyItemSubType.HelmetArmor: [
@@ -501,7 +517,8 @@ class DestinyData {
       StatsStringHash.stability,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
     // Glaive
     DestinyItemSubType.Glaive: [
@@ -510,7 +527,8 @@ class DestinyData {
       StatsStringHash.shieldDuration,
       StatsStringHash.handling,
       StatsStringHash.reloadSpeed,
-      StatsStringHash.aimAssist
+      StatsStringHash.aimAssist,
+      StatsStringHash.airborneEffectiveness
     ],
   };
 
@@ -522,7 +540,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     //shotgun
     DestinyItemSubType.Shotgun: [
@@ -531,7 +550,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     // machinegun
     DestinyItemSubType.Machinegun: [
@@ -540,7 +560,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     //hand cannon
     DestinyItemSubType.HandCannon: [
@@ -549,7 +570,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     //rocket launcher
     DestinyItemSubType.RocketLauncher: [
@@ -558,7 +580,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     //fusion rifle
     DestinyItemSubType.FusionRifle: [
@@ -567,7 +590,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     //sniper rifle
     DestinyItemSubType.SniperRifle: [
@@ -576,7 +600,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     //pulse rifle
     DestinyItemSubType.PulseRifle: [
@@ -585,7 +610,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     //scout rifle
     DestinyItemSubType.ScoutRifle: [
@@ -594,7 +620,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     // sidearm
     DestinyItemSubType.Sidearm: [
@@ -603,7 +630,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     // sword
     DestinyItemSubType.Sword: [
@@ -630,7 +658,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     // grenade launcher
     DestinyItemSubType.GrenadeLauncher: [
@@ -639,7 +668,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     // submachine gun
     DestinyItemSubType.SubmachineGun: [
@@ -648,7 +678,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     // trace rifle
     DestinyItemSubType.TraceRifle: [
@@ -657,7 +688,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     // helmet armor
     DestinyItemSubType.HelmetArmor: [
@@ -666,7 +698,7 @@ class DestinyData {
       StatsHash.recovery,
       StatsHash.discipline,
       StatsHash.intellect,
-      StatsHash.strength
+      StatsHash.strength,
     ],
     // gauntlets armor
     DestinyItemSubType.GauntletsArmor: [
@@ -675,7 +707,7 @@ class DestinyData {
       StatsHash.recovery,
       StatsHash.discipline,
       StatsHash.intellect,
-      StatsHash.strength
+      StatsHash.strength,
     ],
     // chest armor
     DestinyItemSubType.ChestArmor: [
@@ -684,7 +716,7 @@ class DestinyData {
       StatsHash.recovery,
       StatsHash.discipline,
       StatsHash.intellect,
-      StatsHash.strength
+      StatsHash.strength,
     ],
     // leg armor
     DestinyItemSubType.LegArmor: [
@@ -693,7 +725,7 @@ class DestinyData {
       StatsHash.recovery,
       StatsHash.discipline,
       StatsHash.intellect,
-      StatsHash.strength
+      StatsHash.strength,
     ],
     // class armor
     DestinyItemSubType.ClassArmor: [
@@ -702,7 +734,7 @@ class DestinyData {
       StatsHash.recovery,
       StatsHash.discipline,
       StatsHash.intellect,
-      StatsHash.strength
+      StatsHash.strength,
     ],
     // bow
     DestinyItemSubType.Bow: [
@@ -711,7 +743,8 @@ class DestinyData {
       StatsHash.stability,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
     // Glaive
     DestinyItemSubType.Glaive: [
@@ -720,7 +753,8 @@ class DestinyData {
       StatsHash.shieldDuration,
       StatsHash.handling,
       StatsHash.reloadSpeed,
-      StatsHash.aimAssist
+      StatsHash.aimAssist,
+      StatsHash.airborneEffectiveness
     ],
   };
 

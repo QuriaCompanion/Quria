@@ -33,7 +33,7 @@ class InspectWidgetState extends State<InspectWidget> {
       imageSize = 100;
       iconSize = 50;
     }
-    if (vw(context) < 850) {
+    if (vw(context) < 1000) {
       return mobileView();
     }
     return Container(

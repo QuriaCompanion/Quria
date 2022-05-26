@@ -33,7 +33,7 @@ class _CollectionWeaponPageState extends State<CollectionWeaponPage> {
         builder: (context,
             AsyncSnapshot<Iterable<DestinyInventoryItemDefinition>> snapshot) {
           if (snapshot.hasData) {
-            if (vw(context) < 850) {
+            if (vw(context) < 1000) {
               return Scaffold(
                   drawer: const Burger(),
                   backgroundColor: black,
