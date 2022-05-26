@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/helpers/filterHelper.model.dart';
 import 'package:quria/data/models/helpers/statsFilterHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassHelper.model.dart';
-import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_steps.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -29,7 +26,7 @@ class _StatsFilterPageState extends State<StatsFilterPage> {
           characterId: widget.data.characterId,
           statOrder: [],
         ),
-        body: StatsFilterMobileView(),
+        body: const StatsFilterMobileView(),
       );
     } else {
       return Container();
