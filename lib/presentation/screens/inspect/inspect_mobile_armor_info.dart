@@ -17,7 +17,7 @@ class InspectMobileArmorInfo extends StatefulWidget {
   final String? characterId;
   final List<DestinyItemSocketState> sockets;
   final Map<String, DestinyStat>? stats;
-  final String afinityIcon;
+  final String? afinityIcon;
 
   const InspectMobileArmorInfo(
       {required this.item,
@@ -50,14 +50,15 @@ class _InspectMobileArmorInfoState extends State<InspectMobileArmorInfo> {
         mobileSection(context,
             title: "Attribut exotique",
             child: InspectMobileExoticArmor(sockets: widget.sockets)),
-      mobileSection(context,
-          title: "Mods d'armure",
-          child: ArmorMods(
-              instanceId: widget.instanceId,
-              afinityIcon: widget.afinityIcon,
-              sockets: widget.sockets,
-              characterId: widget.characterId,
-              item: widget.item)),
+      if (widget.afinityIcon != null)
+        mobileSection(context,
+            title: "Mods d'armure",
+            child: ArmorMods(
+                instanceId: widget.instanceId,
+                afinityIcon: widget.afinityIcon!,
+                sockets: widget.sockets,
+                characterId: widget.characterId,
+                item: widget.item)),
       mobileSection(context,
           title: "CosmÃ©tiques",
           child: MobileInspectCosmetics(sockets: widget.sockets)),

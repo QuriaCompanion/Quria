@@ -3,11 +3,11 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 
 class ProfileHelper {
   List<DestinyCharacterComponent> characters;
-  DestinyCharacterComponent selectedCharacter;
+  DestinyCharacterComponent? selectedCharacter;
   List<DestinyItemComponent> selectedCharacterEquipment;
   List<DestinyItemComponent> selectedCharacterInventory;
-  DestinyItemComponent selectedCharacterSubclass;
-  String characterSuper;
+  DestinyItemComponent? selectedCharacterSubclass;
+  String? characterSuper;
   int selectedCharacterIndex;
   bool isNewSubclass;
   ProfileHelper({

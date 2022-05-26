@@ -113,7 +113,7 @@ class _ModsPageState extends State<ModsPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (vw(context) < 850) {
+    if (vw(context) < 1000) {
       return ScaffoldSteps<BuilderPreparation>(
         route: routeBuilder,
         arguments: BuilderPreparation(

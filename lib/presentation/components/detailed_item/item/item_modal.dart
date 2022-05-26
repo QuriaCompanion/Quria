@@ -62,15 +62,18 @@ class ItemModal extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                  width: 12,
-                                  height: 12,
-                                  margin: const EdgeInsets.only(right: 5),
-                                  child: Image(
-                                    image: NetworkImage(DestinyData.bungieLink +
-                                        data.elementIcon),
-                                  )),
-                              textBodyBold(data.powerLevel.toString()),
+                              if (data.elementIcon != null)
+                                Container(
+                                    width: 12,
+                                    height: 12,
+                                    margin: const EdgeInsets.only(right: 5),
+                                    child: Image(
+                                      image: NetworkImage(
+                                          DestinyData.bungieLink +
+                                              data.elementIcon!),
+                                    )),
+                              if (data.powerLevel != null)
+                                textBodyBold(data.powerLevel.toString()),
                               divider,
                               textBodyRegular(
                                   data.itemDef.itemTypeDisplayName!),

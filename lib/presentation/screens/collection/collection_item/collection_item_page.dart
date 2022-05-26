@@ -30,7 +30,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
       builder:
           ((context, AsyncSnapshot<DestinyInventoryItemDefinition?> snapshot) {
         if (snapshot.hasData) {
-          if (vw(context) < 850) {
+          if (vw(context) < 1000) {
             return ScaffoldBurgerAndBackOption(
                 body: CollectionItemMobileView(data: snapshot.data!));
           } else {

@@ -32,7 +32,7 @@ class _SubclassModsPageState extends State<SubclassModsPage> {
     if (chosenSockets.isEmpty) {
       chosenSockets = data.displayedSockets;
     }
-    if (vw(context) < 850) {
+    if (vw(context) < 1000) {
       return ScaffoldSteps<ClassItemChoiceHelper>(
           route: routeClassItemChoice,
           arguments: ClassItemChoiceHelper(
@@ -45,7 +45,7 @@ class _SubclassModsPageState extends State<SubclassModsPage> {
           body: SubclassModsMobileView(
             sockets: sockets,
             subclass: widget.data.subclass,
-            onChange: (mods) {
+            onChange: (mods, i) async {
               setState(() {
                 chosenSockets = mods;
               });

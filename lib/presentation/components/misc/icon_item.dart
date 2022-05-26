@@ -71,7 +71,9 @@ class ItemIcon extends StatelessWidget {
                     if (element != null)
                       Padding(
                         padding: const EdgeInsets.only(left: 4),
-                        child: Image(image: NetworkImage(element!)),
+                        child: Image(
+                            image: NetworkImage(
+                                DestinyData.bungieLink + element!)),
                       ),
                     textIcon(powerLevel.toString())
                   ],

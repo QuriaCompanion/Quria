@@ -18,7 +18,7 @@ class StatsFilterPage extends StatefulWidget {
 class _StatsFilterPageState extends State<StatsFilterPage> {
   @override
   Widget build(BuildContext context) {
-    if (vw(context) < 850) {
+    if (vw(context) < 1000) {
       return ScaffoldSteps<SubclassHelper>(
         route: routeSubclass,
         arguments: SubclassHelper(

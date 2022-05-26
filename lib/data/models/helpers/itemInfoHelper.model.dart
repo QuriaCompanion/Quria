@@ -6,7 +6,7 @@ import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definit
 class ItemInfoHelper {
   final DestinyInventoryItemDefinition itemDef;
   final Map<String, DestinyStat>? stats;
-  final int powerLevel;
+  final int? powerLevel;
   final String imageLink;
   final String? elementIcon;
   final Map<String, List<DestinyItemPlugBase>>? plugs;

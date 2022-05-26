@@ -33,12 +33,12 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
         ? ManifestService
             .manifestParsed
             .destinyInventoryItemDefinition[
-                widget.data.selectedCharacterSubclass.itemHash]!
+                widget.data.selectedCharacterSubclass!.itemHash]!
             .screenshot!
         : ManifestService
             .manifestParsed
             .destinyInventoryItemDefinition[
-                widget.data.selectedCharacterSubclass.itemHash]!
+                widget.data.selectedCharacterSubclass!.itemHash]!
             .secondaryIcon!;
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -50,10 +50,11 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
               DestinyData.bungieLink + icon,
             ),
             child: ProfileMobileHeader(
-              stats: widget.data.selectedCharacter.stats,
-              characterSuper: widget.data.characterSuper,
-              subclassId: widget.data.selectedCharacterSubclass.itemInstanceId!,
-              characterId: widget.data.selectedCharacter.characterId!,
+              stats: widget.data.selectedCharacter!.stats,
+              characterSuper: widget.data.characterSuper!,
+              subclassId:
+                  widget.data.selectedCharacterSubclass!.itemInstanceId!,
+              characterId: widget.data.selectedCharacter!.characterId!,
               isNewSubclass: widget.data.isNewSubclass,
             ),
           ),
@@ -118,7 +119,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                         widget.onClick(inspectData);
                       },
                       item: item,
-                      characterId: widget.data.selectedCharacter.characterId!,
+                      characterId: widget.data.selectedCharacter!.characterId!,
                       inventory: widget.data.selectedCharacterInventory
                           .where((element) =>
                               ManifestService

@@ -32,7 +32,7 @@ class _ClassItemChoicePageState extends State<ClassItemChoicePage> {
 
   @override
   Widget build(BuildContext context) {
-    if (vw(context) < 850) {
+    if (vw(context) < 1000) {
       return ScaffoldBurgerAndBackOption(
           body: ClassItemChoiceMobileView(
               data: widget.data, classItems: classItems));

@@ -41,9 +41,9 @@ class _ProfileMobileHeaderState extends State<ProfileMobileHeader> {
               Navigator.of(context).pushNamed(
                 routeInspectSubclass,
                 arguments: InspectSubclassHelper(
-                  isNewSubclass: widget.isNewSubclass,
-                  subclassId: widget.subclassId,
-                ),
+                    isNewSubclass: widget.isNewSubclass,
+                    subclassId: widget.subclassId,
+                    characterId: widget.characterId),
               );
             },
             child: Stack(

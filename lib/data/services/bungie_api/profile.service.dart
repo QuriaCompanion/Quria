@@ -419,7 +419,7 @@ class ProfileService {
     return null;
   }
 
-  String getItemElement(DestinyItemComponent item) {
+  String? getItemElement(DestinyItemComponent item) {
     final itemDef = ManifestService
         .manifestParsed.destinyInventoryItemDefinition[item.itemHash];
     final instanceInfo = getInstanceInfo(item.itemInstanceId!);
@@ -430,9 +430,9 @@ class ProfileService {
             ?.icon ??
         ManifestService
             .manifestParsed
-            .destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]!
-            .displayProperties!
-            .icon!;
+            .destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]
+            ?.displayProperties
+            ?.icon;
   }
 
   int? getCurrentMeleeHashForCharacter(String characterId) {

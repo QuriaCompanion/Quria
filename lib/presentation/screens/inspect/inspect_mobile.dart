@@ -54,7 +54,7 @@ class _MobileInspectState extends State<MobileInspect> {
               image: NetworkImage(data.imageLink),
               child: InspectMobileHeader(
                 name: data.itemDef.displayProperties!.name!,
-                iconElement: data.elementIcon!,
+                iconElement: data.elementIcon,
                 type: data.itemDef.itemTypeDisplayName!,
                 power: data.powerLevel,
               ),
@@ -113,7 +113,7 @@ class _MobileInspectState extends State<MobileInspect> {
                       instanceId: widget.data.instanceId,
                       characterId: widget.data.characterId,
                       sockets: data.sockets,
-                      afinityIcon: data.afinityIcon!),
+                      afinityIcon: data.afinityIcon),
             )
           ],
         ),

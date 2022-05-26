@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:isar/isar.dart';
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/plug_ui_styles.dart';
@@ -9,8 +11,6 @@ import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_entry_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
-import 'package:flutter/foundation.dart';
-import 'package:isar/isar.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/exoticHelper.model.dart';
@@ -116,7 +116,19 @@ class DisplayService {
   ProfileHelper getProfileData() {
     try {
       List<DestinyCharacterComponent> characters = profile.getCharacters();
-      DestinyCharacterComponent selectedCharacter = characters[characterIndex];
+      DestinyCharacterComponent? selectedCharacter;
+      if (characters.isEmpty) {
+        return ProfileHelper(
+            characters: characters,
+            selectedCharacter: null,
+            selectedCharacterEquipment: [],
+            selectedCharacterInventory: [],
+            selectedCharacterSubclass: null,
+            characterSuper: null,
+            selectedCharacterIndex: characterIndex,
+            isNewSubclass: true);
+      }
+      selectedCharacter = characters[characterIndex];
       List<DestinyItemComponent> equipement =
           profile.getCharacterEquipment(selectedCharacter.characterId!);
       List<DestinyItemComponent> inventory = profile
@@ -163,7 +175,7 @@ class DisplayService {
         profile.getPrecalculatedStats(itemInstanceId);
     DestinyItemInstanceComponent instanceInfo =
         profile.getInstanceInfo(itemInstanceId);
-    int powerLevel = instanceInfo.primaryStat!.value!;
+    int? powerLevel = instanceInfo.primaryStat?.value;
     String imageLink = DestinyData.bungieLink + itemDef.screenshot!;
     String? elementIcon = ManifestService
             .manifestParsed
@@ -213,7 +225,7 @@ class DisplayService {
             ?.displayProperties
             ?.icon;
 
-    final int powerLevel = instanceInfo.primaryStat!.value!;
+    final int? powerLevel = instanceInfo.primaryStat?.value;
 
     List<DestinyItemSocketState> sockets =
         profile.getItemSockets(itemInstanceId);
@@ -258,7 +270,7 @@ class DisplayService {
     return ItemCardHelper(
         itemCategory: itemCategory,
         itemDef: itemDef,
-        elementIcon: elementIcon ?? "",
+        elementIcon: elementIcon,
         powerLevel: powerLevel,
         perks: perks,
         intristics: intristics,
@@ -329,21 +341,25 @@ class DisplayService {
     int disciplineTier = (stats[StatsStringHash.discipline]! / 10).floor();
     int superTier = (stats[StatsStringHash.intellect]! / 10).floor();
     int strengthTier = (stats[StatsStringHash.strength]! / 10).floor();
+    if (disciplineTier > 10) disciplineTier = 10;
+    if (superTier > 10) superTier = 10;
+    if (strengthTier > 10) strengthTier = 10;
 
     int? grenadeHash = profile.getCurrentGrenadeHashForCharacter(characterId);
-    int? grenadeTimer =
-        GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier];
+
+    int grenadeTimer =
+        GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier] ?? 0;
 
     int? superHash = profile.getCurrentSuperHashForCharacter(characterId);
-    int? superTimer = SuperCooldown.superMap[superHash]?[superTier];
+    int superTimer = SuperCooldown.superMap[superHash]?[superTier] ?? 0;
 
     int? meleeHash = profile.getCurrentMeleeHashForCharacter(characterId);
-    int? meleeTimer = MeleeCooldown.meleeMap[meleeHash]?[strengthTier];
+    int meleeTimer = MeleeCooldown.meleeMap[meleeHash]?[strengthTier] ?? 0;
 
     return {
-      StatsStringHash.discipline: formatTime(grenadeTimer!),
-      StatsStringHash.intellect: formatTime(superTimer!),
-      StatsStringHash.strength: formatTime(meleeTimer!),
+      StatsStringHash.discipline: formatTime(grenadeTimer),
+      StatsStringHash.intellect: formatTime(superTimer),
+      StatsStringHash.strength: formatTime(meleeTimer),
     };
   }
 

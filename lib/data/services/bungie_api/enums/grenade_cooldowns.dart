@@ -4,26 +4,27 @@ class GrenadeCooldown {
     1399217: tier2, //glacier
     3078181438: tier3, //arcbolt
     3811945819: tier3, //lightning
-    4256932443: tier3, //incendiary
+    2581086849: tier3, //incendiary
     1399219: tier3, //coldsnap
     1547656727: tier3, //magnetic
     2265076177: tier3, //suppressor
+    2216698406: tier3, //solar
     328872098: tier4, //skip
     1016030582: tier4, //vortex
     1255073825: tier4, //spike
     2809141585: tier4, //voidwall
     79448980: tier4, //pulse
-    3322650917: tier4, //thermite
-    1397213608: tier4, //solar
+    3969294337: tier4, //thermite
     1514173218: tier4, //scatter
-    2909653089: tier5, //swarm
-    455260043: tier5, //tripmine
+    3199702642: tier5, //swarm
+    2946990961: tier5, //tripmine
     3844755601: tier5, //flashbang
     3347197644: tier5, //storm
     3232422679: tier5, //axion
-    2995804739: tier6, //fusion
+    1013086087: tier6, //fusion
     1399216: tier7, //duskfield
-    2927723086: tier7, //firebolt
+    2202441959: tier7, //firebolt
+    1841016428: tier7, //healing
   };
 
   static const Map<int, int> tier1 = {

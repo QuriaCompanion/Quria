@@ -60,8 +60,9 @@ class BuilderService {
       Iterable<DestinyItemSocketState>? plugs =
           sockets?.where(((element) => element.isVisible == false));
       // get the inventory def for given sockets
+      if (plugs == null || plugs.isEmpty) return investmentStats;
       Iterable<DestinyInventoryItemDefinition?> plm =
-          plugs!.map((e) => builderHelper.manifest[e.plugHash]);
+          plugs.map((e) => builderHelper.manifest[e.plugHash]);
       // foreach inventory def, get the stats and adds the to investmentStats
       for (DestinyInventoryItemDefinition? entry in plm) {
         if (entry?.investmentStats != null) {

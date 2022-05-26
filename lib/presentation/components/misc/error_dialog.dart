@@ -4,13 +4,19 @@ import 'package:quria/constants/texts.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 
 class ErrorDialog extends StatelessWidget {
-  const ErrorDialog({Key? key}) : super(key: key);
+  final String errorMessage;
+  final Widget? child;
+  const ErrorDialog({
+    this.errorMessage =
+        "Une erreur est surevenue, veuillez réessayer plus tard",
+    this.child,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        height: vh(context) * 0.5,
         width: vw(context) * 0.75,
         decoration: const BoxDecoration(
           color: blackLight,
@@ -26,14 +32,14 @@ class ErrorDialog extends StatelessWidget {
                   child: Image(image: AssetImage('assets/img/error.png'))),
               textH3("Aïe, coup dur", utf8: false),
               Center(
-                child: textBodyRegular(
-                    "Une erreur est surevenue, veuillez réessayer plus tard",
-                    utf8: false,
-                    center: true),
+                child: textBodyRegular(errorMessage, utf8: false, center: true),
               ),
-              RoundedButton(
+              if (child != null) child!,
+              if (child == null)
+                RoundedButton(
                   text: textBodyMedium("C'est compris", color: black),
-                  onPressed: () => Navigator.pop(context)),
+                  onPressed: () => Navigator.pop(context),
+                ),
               SizedBox(height: globalPadding(context)),
             ]),
       ),
