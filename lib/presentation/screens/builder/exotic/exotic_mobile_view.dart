@@ -5,7 +5,6 @@ import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/statsFilterHelper.model.dart';
-import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_appbar.dart';
 import 'package:quria/presentation/screens/builder/exotic/mobile_components/exotic_mobile_item.dart';
 import 'package:quria/presentation/var/routes.dart';
