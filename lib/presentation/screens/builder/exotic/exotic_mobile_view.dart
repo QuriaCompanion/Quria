@@ -13,9 +13,13 @@ import 'package:quria/presentation/var/routes.dart';
 class ExoticMobileView extends StatefulWidget {
   final List<DestinyInventoryItemDefinition> exotics;
   final String characterId;
-  const ExoticMobileView(
-      {required this.exotics, required this.characterId, Key? key})
-      : super(key: key);
+  final Function(int) onCharacterChange;
+  const ExoticMobileView({
+    required this.exotics,
+    required this.characterId,
+    required this.onCharacterChange,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ExoticMobileView> createState() => _ExoticMobileViewState();
@@ -28,9 +32,7 @@ class _ExoticMobileViewState extends State<ExoticMobileView> {
       slivers: [
         CharacterAppbar(
           onCharacterChange: (newIndex) {
-            setState(() {
-              DisplayService.characterIndex = newIndex;
-            });
+            widget.onCharacterChange(newIndex);
           },
         ),
         SliverList(
