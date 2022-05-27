@@ -424,7 +424,9 @@ class BuilderService {
       build.equipement[3].mods = optionalModsResult.modSelected[3];
       build.equipement[4].mods = optionalModsResult.modSelected[4];
     }
-    builds = builds.getRange(0, 50).toList();
+    if (builds.length > 50) {
+      builds = builds.getRange(0, 50).toList();
+    }
     builds.sort((a, b) {
       int tiers = a.stats.max.compareTo(b.stats.max);
       if (tiers != 0) return tiers;
