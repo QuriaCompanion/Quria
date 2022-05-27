@@ -3,7 +3,7 @@
     "details": "Détails",
     "equip": "équiper",
     "unused": "Inutilisé",
-    "mods_tips": "Taper pour Ã©quiper un autre mod",
+    "mods_tips": "Taper pour équiper un autre mod",
     "collections": "Collections",
     "profile": "Profile",
     "builder": "Builder",
@@ -15,10 +15,10 @@
     "searching": "Recherche...",
     "character": "Personnage",
     "vault": "Coffre",
-    "settings": "Paramètre",
+    "settings": "Paramètres",
     "login": "Se connecter",
     "logout": "Déconnexion",
-    "login_splash": "Login to keep going",
+    "login_splash": "CONNECTE-TOI POUR CONTINUER",
     "quria_builder": "Builder Quria",
     "equipping": "We are equipping your character",
     "long_action": "This action can take a while ...",
@@ -85,5 +85,7 @@
     "manifest_delete_caption": "Dans le cas ou vous avez un problème sur l'application",
     "support": "Si vous souhaitez nous soutenir!",
     "twitter": "Suivez nous sur Twitter",
-    "twitter_caption": "Pour nous contacter ou avoir les dernières infos"
+    "twitter_caption": "Pour nous contacter ou avoir les dernières infos",
+    "change_platform": "Changer de platforme",
+    "change_platform_caption": "Si vous avez une autre plateforme"
 }

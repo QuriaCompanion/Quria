@@ -5,6 +5,8 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -164,6 +166,8 @@ class _BurgerState extends State<Burger> {
                   child: InkWell(
                     onTap: () {
                       StorageService.purgeLocalStorage();
+                      DisplayService.isProfileUp = false;
+                      ProfileService().reset();
                       Navigator.pushNamed(context, routeLogin);
                     },
                     child: Row(

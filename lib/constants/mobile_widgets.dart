@@ -56,6 +56,7 @@ Widget mobileSection(
 
 Widget mobileSectionInverted(
   BuildContext context, {
+  bool utf8 = true,
   required String title,
   required Widget child,
 }) {
@@ -64,7 +65,7 @@ Widget mobileSectionInverted(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        textH2(title, utf8: false),
+        textH2(title, utf8: utf8),
         SizedBox(
           height: globalPadding(context) / 2,
         ),

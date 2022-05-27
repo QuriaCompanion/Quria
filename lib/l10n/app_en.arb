@@ -18,7 +18,7 @@
     "settings": "Settings",
     "login": "Login",
     "logout": "Logout",
-    "login_splash": "Login to keep going",
+    "login_splash": "LOGIN TO CONTINUE",
     "quria_builder": "Quria Builder",
     "equipping": "We are equipping your character",
     "long_action": "This action can take a while ...",
@@ -85,5 +85,7 @@
     "manifest_delete_caption": "In case there is an issue in the app",
     "support": "If you wanna support us",
     "twitter": "Follow us on Twitter",
-    "twitter_caption": "Follow us on Twitter to keep in touch!"
+    "twitter_caption": "Follow us on Twitter to keep in touch!",
+    "change_platform": "Change platform",
+    "change_platform_caption": "If you have a different platform"
 }

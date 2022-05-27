@@ -134,6 +134,10 @@ class ProfileService {
     return _profile;
   }
 
+  reset() {
+    _profile = null;
+  }
+
   void startAutomaticUpdater() async {
     if (_lastLoadedFrom == LastLoadedFrom.cache) {
       await fetchProfileData(components: ProfileComponentGroups.everything);

@@ -1,4 +1,3 @@
-import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/data/models/helpers/builderRecapHelper.model.dart';
