@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -42,7 +43,8 @@ class ArmorAfinity extends StatelessWidget {
                       textH2(pointsAvailable.toString()),
                     ],
                   ),
-                  textBodyRegular('InutilisÃ©: $remaining'),
+                  textBodyRegular(
+                      '${AppLocalizations.of(context)!.unused}: $remaining'),
                 ],
               ),
             )),

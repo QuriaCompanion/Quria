@@ -3,6 +3,7 @@ import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_actions.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_cosmetics.dart';
@@ -39,30 +40,30 @@ class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       mobileSection(context,
-          title: "Actions rapides",
+          title: AppLocalizations.of(context)!.quick_actions,
           child: InspectMobileActions(
             itemHash: widget.item.hash!,
             instanceId: widget.instanceId,
           )),
       mobileSection(context,
-          title: "Statistiques",
+          title: AppLocalizations.of(context)!.statistics,
           child: InspectMobileStats(item: widget.item, stats: widget.stats)),
       mobileSection(context,
-          title: "Attributs de l'arme",
+          title: AppLocalizations.of(context)!.perks,
           child: InspectMobilePerks(
               instanceId: widget.instanceId,
               sockets: widget.sockets,
               plugs: widget.plugs,
               characterId: widget.characterId)),
       mobileSection(context,
-          title: "Mods et attributs intrinsÃ¨ques",
+          title: AppLocalizations.of(context)!.mods_and_intrinsics,
           child: InspectMobileIntrinsics(sockets: widget.sockets)),
       mobileSection(context,
-          title: "CosmÃ©tiques",
+          title: AppLocalizations.of(context)!.cosmetics,
           child: MobileInspectCosmetics(sockets: widget.sockets!)),
       if (widget.item.collectibleHash != null)
         mobileSection(context,
-            title: "Obtention",
+            title: AppLocalizations.of(context)!.origin,
             child: InspectMobileOrigin(
                 collectionHash: widget.item.collectibleHash)),
     ]);

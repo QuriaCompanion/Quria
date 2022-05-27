@@ -34,21 +34,6 @@ class VerticalStatisticDisplay extends StatelessWidget {
               child: Center(child: textCaptionBold('$value')),
             ),
           ],
-        )
-        // child: Row(
-        //   mainAxisAlignment: mainAxisAlignment,
-        //   children: [
-        //
-        //     SizedBox(
-        //       width: width * 0.5,
-        //       child: AutoSizeText('$value',
-        //           textAlign: TextAlign.center,
-        //           maxLines: 1,
-        //           minFontSize: 5,
-        //           style: TextStyle(color: Colors.white70, fontSize: fontsize)),
-        //     )
-        //   ],
-        // ),
-        );
+        ));
   }
 }

@@ -1,6 +1,7 @@
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -49,7 +50,10 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                   mobileHeader(
                     context,
                     image: collectionHeader,
-                    child: textH1("Armes"),
+                    child: textH1(
+                      AppLocalizations.of(context)!.weapons,
+                      utf8: false,
+                    ),
                   ),
                   Padding(
                     padding: EdgeInsets.only(
@@ -71,7 +75,7 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                               child: MobileNavItem(
                                 selected: selectedBucket ==
                                     InventoryBucket.kineticWeapons,
-                                value: "Cinétique",
+                                value: AppLocalizations.of(context)!.kinetic,
                                 width: vw(context) * 0.29,
                               )),
                           InkWell(
@@ -85,7 +89,7 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                               child: MobileNavItem(
                                 selected: selectedBucket ==
                                     InventoryBucket.energyWeapons,
-                                value: "Énergétique",
+                                value: AppLocalizations.of(context)!.energy,
                                 width: vw(context) * 0.29,
                               )),
                           InkWell(
@@ -98,7 +102,7 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                               child: MobileNavItem(
                                 selected: selectedBucket ==
                                     InventoryBucket.powerWeapons,
-                                value: "Puissante",
+                                value: AppLocalizations.of(context)!.power,
                                 width: vw(context) * 0.29,
                               )),
                         ],

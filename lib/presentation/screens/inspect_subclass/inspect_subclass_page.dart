@@ -1,6 +1,7 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -51,9 +52,9 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
                       isDismissible: false,
                       expand: false,
                       builder: (context) {
-                        return const LoadingModal(
-                          text1: "Equipement en cours",
-                          text2: "Veuillez patienter ...",
+                        return LoadingModal(
+                          text1: AppLocalizations.of(context)!.equipping,
+                          text2: AppLocalizations.of(context)!.please_wait,
                         );
                       });
                   await BungieApiService()
@@ -67,7 +68,7 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: textBodyMedium(
-                        "L'item a bien été équipé",
+                        AppLocalizations.of(context)!.item_equipped,
                         utf8: false,
                         color: Colors.white,
                       ),

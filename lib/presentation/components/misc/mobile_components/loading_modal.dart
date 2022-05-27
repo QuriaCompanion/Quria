@@ -27,8 +27,8 @@ class LoadingModal extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            textH2(text1),
-            textH3(text2),
+            textH2(text1, utf8: false),
+            textH3(text2, utf8: false),
           ],
         ),
       ]),

@@ -19,7 +19,7 @@ import 'package:quria/presentation/screens/builder/subclass/subclass_page.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_page.dart';
 import 'package:quria/presentation/screens/collection/collection_item/collection_item_page.dart';
 import 'package:quria/presentation/screens/collection/collection_weapon_page.dart';
-import 'package:quria/presentation/screens/collection/inspect.dart';
+
 import 'package:quria/presentation/screens/inspect/inspect_mobile.dart';
 import 'package:quria/presentation/screens/inspect_subclass/inspect_subclass_page.dart';
 import 'package:quria/presentation/screens/login.dart';
@@ -78,10 +78,6 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const VaultPage());
       case routeCollection:
         return MaterialPageRoute(builder: (_) => const CollectionWeaponPage());
-      case routeInspect:
-        final DestinyInventoryItemDefinition item =
-            settings.arguments as DestinyInventoryItemDefinition;
-        return MaterialPageRoute(builder: (_) => InspectWidget(item: item));
       case routeSubclassMod:
         final SubclassModHelper data = settings.arguments as SubclassModHelper;
         return MaterialPageRoute(builder: (_) => SubclassModsPage(data: data));

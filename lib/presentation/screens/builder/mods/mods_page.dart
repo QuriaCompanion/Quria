@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
@@ -25,7 +26,7 @@ class _ModsPageState extends State<ModsPage> {
     armorMods = [
       // helmet
       ModSlots(
-          title: "Casque",
+          title: AppLocalizations.of(context)!.helmet,
           elementSocketEntries: ManifestService
               .manifestParsed
               .destinyInventoryItemDefinition[3473581026]!
@@ -42,7 +43,7 @@ class _ModsPageState extends State<ModsPage> {
           ]),
       // gauntlets
       ModSlots(
-          title: "Gantelets",
+          title: AppLocalizations.of(context)!.gauntlets,
           elementSocketEntries: ManifestService
               .manifestParsed
               .destinyInventoryItemDefinition[2771648715]!
@@ -59,7 +60,7 @@ class _ModsPageState extends State<ModsPage> {
           ]),
       // chest
       ModSlots(
-          title: "Armure de torse",
+          title: AppLocalizations.of(context)!.chest,
           elementSocketEntries: ManifestService
               .manifestParsed
               .destinyInventoryItemDefinition[549825413]!
@@ -76,7 +77,7 @@ class _ModsPageState extends State<ModsPage> {
           ]),
       // legs
       ModSlots(
-          title: "Armure de jambes",
+          title: AppLocalizations.of(context)!.legs,
           elementSocketEntries: ManifestService
               .manifestParsed
               .destinyInventoryItemDefinition[4287863773]!
@@ -93,7 +94,7 @@ class _ModsPageState extends State<ModsPage> {
           ]),
       // boots
       ModSlots(
-          title: "Objet de classe",
+          title: AppLocalizations.of(context)!.builder_mods_title,
           elementSocketEntries: ManifestService
               .manifestParsed
               .destinyInventoryItemDefinition[3500810712]!

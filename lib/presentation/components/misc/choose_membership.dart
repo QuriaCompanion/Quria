@@ -1,4 +1,5 @@
 import 'package:bungie_api/enums/bungie_membership_type.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -39,9 +40,9 @@ class ChooseMembership extends StatelessWidget {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(top: globalPadding(context) * 2),
-              child: const Text(
-                'Choisissez votre compte',
-                style: TextStyle(
+              child: Text(
+                AppLocalizations.of(context)!.choose_membership,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

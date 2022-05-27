@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 @immutable
 class SearchBar extends StatelessWidget {
@@ -9,10 +10,10 @@ class SearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
         style: const TextStyle(color: Colors.white),
-        decoration: const InputDecoration(
-            border: OutlineInputBorder(),
-            hintText: 'Recherche...',
-            hintStyle: TextStyle(color: Colors.white)),
+        decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            hintText: AppLocalizations.of(context)!.searching,
+            hintStyle: const TextStyle(color: Colors.white)),
         onChanged: onChange);
   }
 }

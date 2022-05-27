@@ -69,6 +69,7 @@ class FilterWidgetState extends State<FilterWidget> {
                     padding: const EdgeInsets.only(left: 8, top: 0, bottom: 0),
                     child: textBodyBold(
                       widget.items[index].name,
+                      utf8: false,
                     ),
                   ),
                   dense: true,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/presentation/var/routes.dart';
 import 'components/nav_item.dart';
 
@@ -17,21 +18,21 @@ class NavBarWidgetState extends State<NavBarWidget> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,
-        children: const [
+        children: [
           NavigationItem(
-            title: 'Collection',
+            title: AppLocalizations.of(context)!.collections,
             routeName: routeCollection,
           ),
           NavigationItem(
-            title: 'Profile',
+            title: AppLocalizations.of(context)!.profile,
             routeName: '/profile',
           ),
           NavigationItem(
-            title: 'Builder',
+            title: AppLocalizations.of(context)!.builder,
             routeName: routeExotic,
           ),
           NavigationItem(
-            title: 'BuilderList',
+            title: AppLocalizations.of(context)!.builder_list,
             routeName: routeBuilderList,
           ),
         ],

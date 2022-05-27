@@ -42,7 +42,7 @@ Widget mobileSection(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        textH2(title),
+        textH2(title, utf8: false),
         const Divider(
           color: blackLight,
           height: 22,
@@ -64,7 +64,7 @@ Widget mobileSectionInverted(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        textH2(title),
+        textH2(title, utf8: false),
         SizedBox(
           height: globalPadding(context) / 2,
         ),

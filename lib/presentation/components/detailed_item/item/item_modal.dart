@@ -11,6 +11,7 @@ import 'package:quria/presentation/components/detailed_item/item/item_component_
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/mobile_components/transfer_modal.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ItemModal extends StatelessWidget {
   final DestinyItemComponent item;
@@ -124,7 +125,11 @@ class ItemModal extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 RoundedButton(
-                  text: textBodyMedium('TransfÃ©rer', color: black),
+                  text: textBodyMedium(
+                    AppLocalizations.of(context)!.transfer,
+                    color: black,
+                    utf8: false,
+                  ),
                   onPressed: () {
                     showMaterialModalBottomSheet(
                         context: context,
@@ -145,7 +150,7 @@ class ItemModal extends StatelessWidget {
                   width: vw(context) * 0.4,
                 ),
                 RoundedButton(
-                  text: textBodyMedium('Détails',
+                  text: textBodyMedium(AppLocalizations.of(context)!.details,
                       color: Colors.white, utf8: false),
                   onPressed: () {
                     Navigator.pop(context);

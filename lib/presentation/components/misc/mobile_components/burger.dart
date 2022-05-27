@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -80,7 +81,9 @@ class _BurgerState extends State<Burger> {
                           children: [
                             SvgPicture.asset("assets/icons/Perso-1.svg"),
                             const SizedBox(width: 18),
-                            textBodyHighRegular("Personnage"),
+                            textBodyHighRegular(
+                                AppLocalizations.of(context)!.character,
+                                utf8: false),
                           ],
                         ),
                       ),
@@ -94,7 +97,9 @@ class _BurgerState extends State<Burger> {
                           children: [
                             SvgPicture.asset("assets/icons/Quria.svg"),
                             const SizedBox(width: 18),
-                            textBodyHighRegular("Builder Quria"),
+                            textBodyHighRegular(
+                                AppLocalizations.of(context)!.quria_builder,
+                                utf8: false),
                           ],
                         ),
                       ),
@@ -108,7 +113,9 @@ class _BurgerState extends State<Burger> {
                           children: [
                             SvgPicture.asset("assets/icons/Coffre.svg"),
                             const SizedBox(width: 18),
-                            textBodyHighRegular("Coffre"),
+                            textBodyHighRegular(
+                                AppLocalizations.of(context)!.vault,
+                                utf8: false),
                           ],
                         ),
                       ),
@@ -122,7 +129,9 @@ class _BurgerState extends State<Burger> {
                           children: [
                             SvgPicture.asset("assets/icons/Collection.svg"),
                             const SizedBox(width: 18),
-                            textBodyHighRegular("Collections"),
+                            textBodyHighRegular(
+                                AppLocalizations.of(context)!.collections,
+                                utf8: false),
                           ],
                         ),
                       ),
@@ -136,7 +145,10 @@ class _BurgerState extends State<Burger> {
                           children: [
                             SvgPicture.asset("assets/icons/Settings.svg"),
                             const SizedBox(width: 18),
-                            textBodyHighRegular("ParamÃ¨tres"),
+                            textBodyHighRegular(
+                              AppLocalizations.of(context)!.settings,
+                              utf8: false,
+                            ),
                           ],
                         ),
                       ),
@@ -158,7 +170,9 @@ class _BurgerState extends State<Burger> {
                       children: [
                         SvgPicture.asset("assets/icons/Off.svg"),
                         const SizedBox(width: 18),
-                        textBodyHighRegular("DÃ©connexion"),
+                        textBodyHighRegular(
+                            AppLocalizations.of(context)!.logout,
+                            utf8: false),
                       ],
                     ),
                   ),

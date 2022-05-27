@@ -52,7 +52,7 @@ class QuickAction extends StatelessWidget {
                   ),
                 ],
               ),
-              textBodyMedium(title),
+              textBodyMedium(title, utf8: false),
             ]),
       ),
     );

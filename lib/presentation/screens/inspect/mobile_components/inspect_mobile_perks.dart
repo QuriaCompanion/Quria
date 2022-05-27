@@ -1,4 +1,5 @@
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +47,7 @@ class _InspectMobilePerksState extends State<InspectMobilePerks> {
         width: double.infinity,
         child: Center(
           child: textCaption(
-            'Taper pour plus de détails, maintenir pour équiper',
+            AppLocalizations.of(context)!.builder_subclass_mods_caption,
             utf8: false,
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
@@ -21,7 +22,7 @@ class SettingsMobileView extends StatelessWidget {
               StorageService.resetManifest().then((value) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                   content: textBodyMedium(
-                    "Les données du manifeste ont bien été supprimé!",
+                    AppLocalizations.of(context)!.manifest_deleted,
                     utf8: false,
                     color: Colors.white,
                   ),
@@ -42,11 +43,11 @@ class SettingsMobileView extends StatelessWidget {
                 size: 35,
               ),
               title: textBodyHighRegular(
-                "Supprimer les données du manifestes",
+                AppLocalizations.of(context)!.manifest_delete,
                 utf8: false,
               ),
               subtitle: textBodyMedium(
-                "En cas de problème sur l'application",
+                AppLocalizations.of(context)!.manifest_delete_caption,
                 utf8: false,
               ),
             ),
@@ -67,7 +68,7 @@ class SettingsMobileView extends StatelessWidget {
               utf8: false,
             ),
             subtitle: textBodyMedium(
-              "Si vous souhaitez nous supporter!",
+              AppLocalizations.of(context)!.support,
               utf8: false,
             ),
           ),
@@ -83,11 +84,11 @@ class SettingsMobileView extends StatelessWidget {
               height: 35,
             ),
             title: textBodyHighRegular(
-              "QuriaCompanion sur twitter",
+              AppLocalizations.of(context)!.twitter,
               utf8: false,
             ),
             subtitle: textBodyMedium(
-              "Si vous avez besoin de nous contacter!",
+              AppLocalizations.of(context)!.twitter_caption,
               utf8: false,
             ),
           ),

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -75,7 +76,11 @@ class ScaffoldSteps<T> extends StatelessWidget {
               ),
             ),
             RoundedButton(
-                text: textBodyBold('Suivant', color: black),
+                text: textBodyBold(
+                  AppLocalizations.of(context)!.next,
+                  utf8: false,
+                  color: black,
+                ),
                 width: 200,
                 height: 50,
                 onPressed: () =>
