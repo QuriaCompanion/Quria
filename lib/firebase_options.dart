@@ -25,8 +25,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
+        return macos;
+      case TargetPlatform.windows:
         throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
@@ -60,8 +67,17 @@ class DefaultFirebaseOptions {
     messagingSenderId: '653536181122',
     projectId: 'quriacompanion-13944',
     storageBucket: 'quriacompanion-13944.appspot.com',
-    iosClientId:
-        '653536181122-jqc4vj7f6a5l38jjtg6a2clrvjgilqmp.apps.googleusercontent.com',
+    iosClientId: '653536181122-jqc4vj7f6a5l38jjtg6a2clrvjgilqmp.apps.googleusercontent.com',
     iosBundleId: 'com.example.quria',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDkDPScW8QD1NXA34WgFwJvnZ9pt5P8jfs',
+    appId: '1:653536181122:ios:9463967f24b5a19e8eed9b',
+    messagingSenderId: '653536181122',
+    projectId: 'quriacompanion-13944',
+    storageBucket: 'quriacompanion-13944.appspot.com',
+    iosClientId: '653536181122-gdh2j5i08lmu22cji0ur79k0dipr3h1n.apps.googleusercontent.com',
+    iosBundleId: 'com.quria.quriaCompanion',
   );
 }
