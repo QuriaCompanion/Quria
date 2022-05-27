@@ -57,6 +57,7 @@ dependencies:
   cloud_firestore: ^3.1.10
   firebase_core: ^1.13.1
   uuid: ^3.0.6
+  firebase_analytics: ^9.1.9
 
 dev_dependencies:
   build_runner: ^2.1.5
