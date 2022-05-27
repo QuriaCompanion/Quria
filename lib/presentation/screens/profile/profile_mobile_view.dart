@@ -1,6 +1,7 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
@@ -75,7 +76,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       },
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Weapon,
-                        value: "Armes",
+                        value: AppLocalizations.of(context)!.weapons,
                         width: vw(context) * 0.29,
                       )),
                   InkWell(
@@ -86,7 +87,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       },
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Armor,
-                        value: "Armure",
+                        value: AppLocalizations.of(context)!.armor,
                         width: vw(context) * 0.29,
                       )),
                   InkWell(
@@ -95,7 +96,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       },
                       child: MobileNavItem(
                         selected: false,
-                        value: "Coffre",
+                        value: AppLocalizations.of(context)!.vault,
                         width: vw(context) * 0.29,
                       )),
                 ],

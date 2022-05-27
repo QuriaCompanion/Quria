@@ -1,5 +1,6 @@
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -12,9 +13,13 @@ import 'package:quria/presentation/var/routes.dart';
 class ExoticMobileView extends StatefulWidget {
   final List<DestinyInventoryItemDefinition> exotics;
   final String characterId;
-  const ExoticMobileView(
-      {required this.exotics, required this.characterId, Key? key})
-      : super(key: key);
+  final Function(int) onCharacterChange;
+  const ExoticMobileView({
+    required this.exotics,
+    required this.characterId,
+    required this.onCharacterChange,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ExoticMobileView> createState() => _ExoticMobileViewState();
@@ -27,9 +32,7 @@ class _ExoticMobileViewState extends State<ExoticMobileView> {
       slivers: [
         CharacterAppbar(
           onCharacterChange: (newIndex) {
-            setState(() {
-              DisplayService.characterIndex = newIndex;
-            });
+            widget.onCharacterChange(newIndex);
           },
         ),
         SliverList(
@@ -41,9 +44,14 @@ class _ExoticMobileViewState extends State<ExoticMobileView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      textH1("Choisis un Ã©xotique"),
+                      textH1(
+                        AppLocalizations.of(context)!.builder_exotic_title,
+                        utf8: false,
+                      ),
                       textBodyRegular(
-                          "Il sert de base pour la construction de ton build."),
+                        AppLocalizations.of(context)!.builder_exotic_subtitle,
+                        utf8: false,
+                      ),
                     ],
                   ));
             },

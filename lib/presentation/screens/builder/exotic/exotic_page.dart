@@ -9,6 +9,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_mobile_view.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class ExoticWidget extends StatefulWidget {
   const ExoticWidget({Key? key}) : super(key: key);
@@ -59,6 +60,10 @@ class ExoticWidgetState extends State<ExoticWidget> {
                 characterId:
                     characters[DisplayService.characterIndex].characterId!,
                 exotics: snapshot.data!,
+                onCharacterChange: (newIndex) {
+                  DisplayService.characterIndex = newIndex;
+                  Navigator.popAndPushNamed(context, routeExotic);
+                },
               ),
             );
           } else {
@@ -69,98 +74,3 @@ class ExoticWidgetState extends State<ExoticWidget> {
     );
   }
 }
-
-
-// class ExoticWebView extends StatelessWidget {
-//   const ExoticWebView({ Key? key }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return SingleChildScrollView(
-//       child: Container(
-//         padding: EdgeInsets.only(
-//             top: globalPadding(context),
-//             left: globalPadding(context),
-//             right: globalPadding(context)),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               "Veuillez choisir un exotique",
-//               textAlign: TextAlign.left,
-//               style: TextStyle(color: Colors.white, fontSize: titleFontSize),
-//             ),
-//             SizedBox(height: padding),
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.start,
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 Expanded(
-//                   flex: 30,
-//                   child: Text(subtitle,
-//                       style: TextStyle(
-//                           color: Colors.white, fontSize: textFontSize)),
-//                 ),
-//                 SizedBox(
-//                   height: MediaQuery.of(context).size.height * 0.7,
-//                   child: VerticalDivider(
-//                     color: Colors.white,
-//                     thickness: 1.5,
-//                     width: padding * 2,
-//                   ),
-//                 ),
-//                 Expanded(
-//                   flex: 60,
-//                   child: Column(
-//                     children: [
-//                       CharacterChoice(
-//                           callback: (classType) {
-//                             setState(() {
-//                               isLoading = true;
-//                               _future = display.getExotics(classType);
-//                               isLoading = false;
-//                             });
-//                           },
-//                           width: vw(context) - padding * 2),
-//                       FutureBuilder(
-//                           future: _future,
-//                           builder: (context,
-//                               AsyncSnapshot<
-//                                       List<DestinyInventoryItemDefinition>>
-//                                   snapshot) {
-//                             if (snapshot.hasData) {
-//                               list = <Widget>[];
-//                               for (var i = 0; i < snapshot.data!.length; i++) {
-//                                 list.add(Padding(
-//                                   padding: EdgeInsets.all(itemPadding / 2),
-//                                   child: InkWell(
-//                                       onTap: () => {
-//                                             Navigator.pushNamed(
-//                                                 context, routeFilter,
-//                                                 arguments:
-//                                                     snapshot.data![i].hash)
-//                                           },
-//                                       child: NamedItem(
-//                                           width: itemSize,
-//                                           value: snapshot.data![i])),
-//                                 ));
-//                               }
-//                               return Wrap(
-//                                 alignment: WrapAlignment.center,
-//                                 children: list,
-//                               );
-//                             } else {
-//                               return const Loader();
-//                             }
-//                           }),
-//                     ],
-//                   ),
-//                 ),
-//               ],
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

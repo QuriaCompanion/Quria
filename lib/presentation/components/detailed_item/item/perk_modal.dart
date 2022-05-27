@@ -2,6 +2,7 @@ import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
@@ -152,7 +153,11 @@ class PerkModal extends StatelessWidget {
                           borderRadius: BorderRadius.circular(50),
                         ),
                       ),
-                      child: textBodyMedium("Equiper", color: black),
+                      child: textBodyMedium(
+                        AppLocalizations.of(context)!.equip,
+                        color: black,
+                        utf8: false,
+                      ),
                     ),
                   SizedBox(
                     height: globalPadding(context),

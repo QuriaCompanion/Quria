@@ -64,15 +64,17 @@ class BuilderRecapMobileItem extends StatelessWidget {
 
     return Column(
       children: [
-        ArmorAfinity(
-          pointsAvailable: armorModspace,
-          remaining: 10 - armorModspace,
-          afinityIcon: ManifestService
-              .manifestParsed
-              .destinyEnergyTypeDefinition[instanceInfo.energy!.energyTypeHash]!
-              .displayProperties!
-              .icon!,
-        ),
+        if (instanceInfo.energy?.energyTypeHash != null)
+          ArmorAfinity(
+            pointsAvailable: armorModspace,
+            remaining: 10 - armorModspace,
+            afinityIcon: ManifestService
+                .manifestParsed
+                .destinyEnergyTypeDefinition[
+                    instanceInfo.energy!.energyTypeHash]!
+                .displayProperties!
+                .icon!,
+          ),
         SizedBox(height: globalPadding(context)),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,

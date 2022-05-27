@@ -7,6 +7,7 @@ import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definitio
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
 import 'package:quria/presentation/components/detailed_item/item/stat_progress_bar.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ModModal extends StatefulWidget {
   final DestinyInventoryItemDefinition mod;
@@ -130,7 +131,11 @@ class _ModModalState extends State<ModModal> {
                           (vw(context) - globalPadding(context) * 2) * 0.147),
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50))),
-                  child: textBodyMedium("Equiper", color: black),
+                  child: textBodyMedium(
+                    AppLocalizations.of(context)!.equip,
+                    color: black,
+                    utf8: false,
+                  ),
                 ),
                 SizedBox(
                   height: globalPadding(context),

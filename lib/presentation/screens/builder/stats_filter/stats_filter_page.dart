@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/filterHelper.model.dart';
 import 'package:quria/data/models/helpers/statsFilterHelper.model.dart';
@@ -18,28 +19,37 @@ class StatsFilterPage extends StatefulWidget {
 }
 
 class _StatsFilterPageState extends State<StatsFilterPage> {
-  List<FilterHelper> filters = [
-    FilterHelper(
-        name: "MobiltÃ©", icon: "mobility.svg", value: StatsHash.mobility),
-    FilterHelper(
-        name: "RÃ©sistance",
-        icon: "resilience.svg",
-        value: StatsHash.resilience),
-    FilterHelper(
-        name: "RÃ©cuperation", icon: "recovery.svg", value: StatsHash.recovery),
-    FilterHelper(
-        name: "Discipline",
-        icon: "discipline.svg",
-        value: StatsHash.discipline),
-    FilterHelper(
-        name: "Intelligence",
-        icon: "intellect.svg",
-        value: StatsHash.intellect),
-    FilterHelper(
-        name: "Force", icon: "strength.svg", value: StatsHash.strength),
-  ];
+  List<FilterHelper> filters = [];
   @override
   Widget build(BuildContext context) {
+    if (filters.isEmpty) {
+      filters = [
+        FilterHelper(
+            name: AppLocalizations.of(context)!.mobility,
+            icon: "mobility.svg",
+            value: StatsHash.mobility),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.resilience,
+            icon: "resilience.svg",
+            value: StatsHash.resilience),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.recovery,
+            icon: "recovery.svg",
+            value: StatsHash.recovery),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.discipline,
+            icon: "discipline.svg",
+            value: StatsHash.discipline),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.intellect,
+            icon: "intellect.svg",
+            value: StatsHash.intellect),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.strength,
+            icon: "strength.svg",
+            value: StatsHash.strength),
+      ];
+    }
     if (vw(context) < 1000) {
       return ScaffoldSteps<SubclassHelper>(
         route: routeSubclass,
