@@ -1,3 +1,4 @@
+import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
@@ -5,6 +6,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/classItemChoiceHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassHelper.model.dart';
 import 'package:quria/data/models/helpers/subclassModHelper.model.dart';
+import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -13,9 +15,11 @@ import 'dart:math' as math;
 class SubclassMobileCard extends StatelessWidget {
   final DestinyItemComponent subclass;
   final SubclassHelper data;
-  const SubclassMobileCard(
-      {required this.subclass, required this.data, Key? key})
-      : super(key: key);
+  const SubclassMobileCard({
+    required this.subclass,
+    required this.data,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +27,8 @@ class SubclassMobileCard extends StatelessWidget {
         .manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!;
     return InkWell(
       onTap: () {
+        Provider.of<BuilderSubclassProvider>(context, listen: false)
+            .setSubclass(subclass.itemInstanceId, subclassDef);
         subclassDef.talentGrid?.talentGridHash == 0
             ? Navigator.pushNamed(context, routeSubclassMod,
                 arguments: SubclassModHelper(

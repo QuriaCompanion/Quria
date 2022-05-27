@@ -42,6 +42,7 @@ dependencies:
   bottom_loader: ^0.2.2
   flutter_dotenv: ^5.0.2
   flutter_svg: ^1.0.3
+  memoize: ^3.0.0
   http: ^0.13.4
   localstorage: ^4.0.0+1
   json_annotation: ^4.3.0

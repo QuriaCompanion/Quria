@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
 import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
+import 'package:quria/data/providers/builder/builder_mods_provider.dart';
+import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
+import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/app.dart';
 import 'package:quria/presentation/router.dart';
@@ -35,6 +40,21 @@ class QuriaApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<BuilderStatsFilterProvider>(
           create: (context) => BuilderStatsFilterProvider(),
+        ),
+        ChangeNotifierProvider<BuilderSubclassProvider>(
+          create: (context) => BuilderSubclassProvider(),
+        ),
+        ChangeNotifierProvider<BuilderSubclassModsProvider>(
+          create: (context) => BuilderSubclassModsProvider(),
+        ),
+        ChangeNotifierProvider<CharactersProvider>(
+          create: (context) => CharactersProvider(),
+        ),
+        ChangeNotifierProvider<BuilderClassItemProvider>(
+          create: (context) => BuilderClassItemProvider(),
+        ),
+        ChangeNotifierProvider<BuilderModsProvider>(
+          create: (context) => BuilderModsProvider(),
         ),
       ],
       child: MaterialApp(

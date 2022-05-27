@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 
 class BuilderExoticProvider with ChangeNotifier {
   int? _exoticHash;

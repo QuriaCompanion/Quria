@@ -23,8 +23,9 @@ class SubclassMobileView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textH1("Choisis ta doctrine"),
-                textBodyRegular("SÃ©lectionne ta doctrine pour ton build."),
+                textH1("Choisis ta doctrine", utf8: false),
+                textBodyRegular("SÃ©lectionne ta doctrine pour ton build.",
+                    utf8: false),
               ],
             )),
         Wrap(
