@@ -6,7 +6,7 @@ part of 'destiny_talent_grid_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyTalentGridDefinitionCollection on Isar {
   IsarCollection<DestinyTalentGridDefinition>
@@ -50,7 +50,7 @@ const DestinyTalentGridDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyTalentGridDefinitionSerializeWeb,
   deserializeWeb: _destinyTalentGridDefinitionDeserializeWeb,
   deserializePropWeb: _destinyTalentGridDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyTalentGridDefinitionGetId(DestinyTalentGridDefinition object) {
@@ -82,7 +82,7 @@ const _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter =
 
 void _destinyTalentGridDefinitionSerializeNative(
     IsarCollection<DestinyTalentGridDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyTalentGridDefinition object,
     int staticSize,
     List<int> offsets,
@@ -101,24 +101,24 @@ void _destinyTalentGridDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final exclusiveSets = bytesList0;
+  final _exclusiveSets = bytesList0;
   final value1 = object.gridLevelPerColumn;
-  final gridLevelPerColumn = value1;
+  final _gridLevelPerColumn = value1;
   final value2 =
       _destinyTalentGridDefinitionDestinyTalentExclusiveGroupMapConverter
           .toIsar(object.groups);
-  IsarUint8List? groups;
+  IsarUint8List? _groups;
   if (value2 != null) {
-    groups = IsarBinaryWriter.utf8Encoder.convert(value2);
+    _groups = IsarBinaryWriter.utf8Encoder.convert(value2);
   }
-  dynamicSize += (groups?.length ?? 0) as int;
+  dynamicSize += (_groups?.length ?? 0) as int;
   final value3 = object.independentNodeIndexes;
   dynamicSize += (value3?.length ?? 0) * 8;
-  final independentNodeIndexes = value3;
+  final _independentNodeIndexes = value3;
   final value4 = object.index;
-  final index = value4;
+  final _index = value4;
   final value5 = object.maxGridLevel;
-  final maxGridLevel = value5;
+  final _maxGridLevel = value5;
   final value6 =
       _destinyTalentGridDefinitionDestinyTalentNodeCategoryListConverter
           .toIsar(object.nodeCategories);
@@ -132,7 +132,7 @@ void _destinyTalentGridDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final nodeCategories = bytesList6;
+  final _nodeCategories = bytesList6;
   final value7 =
       _destinyTalentGridDefinitionDestinyTalentNodeDefinitionListConverter
           .toIsar(object.nodes);
@@ -146,27 +146,27 @@ void _destinyTalentGridDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final nodes = bytesList7;
+  final _nodes = bytesList7;
   final value8 = object.progressionHash;
-  final progressionHash = value8;
+  final _progressionHash = value8;
   final value9 = object.redacted;
-  final redacted = value9;
+  final _redacted = value9;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeStringList(offsets[0], exclusiveSets);
-  writer.writeLong(offsets[1], gridLevelPerColumn);
-  writer.writeBytes(offsets[2], groups);
-  writer.writeLongList(offsets[3], independentNodeIndexes);
-  writer.writeLong(offsets[4], index);
-  writer.writeLong(offsets[5], maxGridLevel);
-  writer.writeStringList(offsets[6], nodeCategories);
-  writer.writeStringList(offsets[7], nodes);
-  writer.writeLong(offsets[8], progressionHash);
-  writer.writeBool(offsets[9], redacted);
+  writer.writeStringList(offsets[0], _exclusiveSets);
+  writer.writeLong(offsets[1], _gridLevelPerColumn);
+  writer.writeBytes(offsets[2], _groups);
+  writer.writeLongList(offsets[3], _independentNodeIndexes);
+  writer.writeLong(offsets[4], _index);
+  writer.writeLong(offsets[5], _maxGridLevel);
+  writer.writeStringList(offsets[6], _nodeCategories);
+  writer.writeStringList(offsets[7], _nodes);
+  writer.writeLong(offsets[8], _progressionHash);
+  writer.writeBool(offsets[9], _redacted);
 }
 
 DestinyTalentGridDefinition _destinyTalentGridDefinitionDeserializeNative(

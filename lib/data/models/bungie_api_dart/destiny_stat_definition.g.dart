@@ -6,7 +6,7 @@ part of 'destiny_stat_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyStatDefinitionCollection on Isar {
   IsarCollection<DestinyStatDefinition> get destinyStatDefinitions =>
@@ -40,7 +40,7 @@ const DestinyStatDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyStatDefinitionSerializeWeb,
   deserializeWeb: _destinyStatDefinitionDeserializeWeb,
   deserializePropWeb: _destinyStatDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyStatDefinitionGetId(DestinyStatDefinition object) {
@@ -67,7 +67,7 @@ const _destinyStatDefinitionDestinyStatCategoryConverter =
 
 void _destinyStatDefinitionSerializeNative(
     IsarCollection<DestinyStatDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyStatDefinition object,
     int staticSize,
     List<int> offsets,
@@ -76,31 +76,31 @@ void _destinyStatDefinitionSerializeNative(
   final value0 =
       _destinyStatDefinitionDestinyDisplayPropertiesDefinitionConverter
           .toIsar(object.displayProperties);
-  IsarUint8List? displayProperties;
+  IsarUint8List? _displayProperties;
   if (value0 != null) {
-    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
   }
-  dynamicSize += (displayProperties?.length ?? 0) as int;
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
   final value1 = object.hasComputedBlock;
-  final hasComputedBlock = value1;
+  final _hasComputedBlock = value1;
   final value2 = object.index;
-  final index = value2;
+  final _index = value2;
   final value3 = object.redacted;
-  final redacted = value3;
+  final _redacted = value3;
   final value4 = _destinyStatDefinitionDestinyStatCategoryConverter
       .toIsar(object.statCategory);
-  final statCategory = value4;
+  final _statCategory = value4;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], displayProperties);
-  writer.writeBool(offsets[1], hasComputedBlock);
-  writer.writeLong(offsets[2], index);
-  writer.writeBool(offsets[3], redacted);
-  writer.writeLong(offsets[4], statCategory);
+  writer.writeBytes(offsets[0], _displayProperties);
+  writer.writeBool(offsets[1], _hasComputedBlock);
+  writer.writeLong(offsets[2], _index);
+  writer.writeBool(offsets[3], _redacted);
+  writer.writeLong(offsets[4], _statCategory);
 }
 
 DestinyStatDefinition _destinyStatDefinitionDeserializeNative(

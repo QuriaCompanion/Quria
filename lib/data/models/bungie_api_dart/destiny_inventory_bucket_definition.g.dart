@@ -6,7 +6,7 @@ part of 'destiny_inventory_bucket_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyInventoryBucketDefinitionCollection on Isar {
   IsarCollection<DestinyInventoryBucketDefinition>
@@ -46,7 +46,7 @@ const DestinyInventoryBucketDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyInventoryBucketDefinitionSerializeWeb,
   deserializeWeb: _destinyInventoryBucketDefinitionDeserializeWeb,
   deserializePropWeb: _destinyInventoryBucketDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyInventoryBucketDefinitionGetId(
@@ -79,60 +79,60 @@ const _destinyInventoryBucketDefinitionBucketScopeConverter =
 
 void _destinyInventoryBucketDefinitionSerializeNative(
     IsarCollection<DestinyInventoryBucketDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyInventoryBucketDefinition object,
     int staticSize,
     List<int> offsets,
     AdapterAlloc alloc) {
   var dynamicSize = 0;
   final value0 = object.bucketOrder;
-  final bucketOrder = value0;
+  final _bucketOrder = value0;
   final value1 = _destinyInventoryBucketDefinitionBucketCategoryConverter
       .toIsar(object.category);
-  final category = value1;
+  final _category = value1;
   final value2 =
       _destinyInventoryBucketDefinitionDestinyDisplayPropertiesDefinitionConverter
           .toIsar(object.displayProperties);
-  IsarUint8List? displayProperties;
+  IsarUint8List? _displayProperties;
   if (value2 != null) {
-    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
   }
-  dynamicSize += (displayProperties?.length ?? 0) as int;
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
   final value3 = object.enabled;
-  final enabled = value3;
+  final _enabled = value3;
   final value4 = object.fifo;
-  final fifo = value4;
+  final _fifo = value4;
   final value5 = object.hasTransferDestination;
-  final hasTransferDestination = value5;
+  final _hasTransferDestination = value5;
   final value6 = object.index;
-  final index = value6;
+  final _index = value6;
   final value7 = object.itemCount;
-  final itemCount = value7;
+  final _itemCount = value7;
   final value8 = _destinyInventoryBucketDefinitionItemLocationConverter
       .toIsar(object.location);
-  final location = value8;
+  final _location = value8;
   final value9 = object.redacted;
-  final redacted = value9;
+  final _redacted = value9;
   final value10 = _destinyInventoryBucketDefinitionBucketScopeConverter
       .toIsar(object.scope);
-  final scope = value10;
+  final _scope = value10;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLong(offsets[0], bucketOrder);
-  writer.writeLong(offsets[1], category);
-  writer.writeBytes(offsets[2], displayProperties);
-  writer.writeBool(offsets[3], enabled);
-  writer.writeBool(offsets[4], fifo);
-  writer.writeBool(offsets[5], hasTransferDestination);
-  writer.writeLong(offsets[6], index);
-  writer.writeLong(offsets[7], itemCount);
-  writer.writeLong(offsets[8], location);
-  writer.writeBool(offsets[9], redacted);
-  writer.writeLong(offsets[10], scope);
+  writer.writeLong(offsets[0], _bucketOrder);
+  writer.writeLong(offsets[1], _category);
+  writer.writeBytes(offsets[2], _displayProperties);
+  writer.writeBool(offsets[3], _enabled);
+  writer.writeBool(offsets[4], _fifo);
+  writer.writeBool(offsets[5], _hasTransferDestination);
+  writer.writeLong(offsets[6], _index);
+  writer.writeLong(offsets[7], _itemCount);
+  writer.writeLong(offsets[8], _location);
+  writer.writeBool(offsets[9], _redacted);
+  writer.writeLong(offsets[10], _scope);
 }
 
 DestinyInventoryBucketDefinition

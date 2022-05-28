@@ -6,7 +6,7 @@ part of 'destiny_damage_type_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyDamageTypeDefinitionCollection on Isar {
   IsarCollection<DestinyDamageTypeDefinition>
@@ -41,7 +41,7 @@ const DestinyDamageTypeDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyDamageTypeDefinitionSerializeWeb,
   deserializeWeb: _destinyDamageTypeDefinitionDeserializeWeb,
   deserializePropWeb: _destinyDamageTypeDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyDamageTypeDefinitionGetId(DestinyDamageTypeDefinition object) {
@@ -68,7 +68,7 @@ const _destinyDamageTypeDefinitionDamageTypeConverter = DamageTypeConverter();
 
 void _destinyDamageTypeDefinitionSerializeNative(
     IsarCollection<DestinyDamageTypeDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyDamageTypeDefinition object,
     int staticSize,
     List<int> offsets,
@@ -77,38 +77,38 @@ void _destinyDamageTypeDefinitionSerializeNative(
   final value0 =
       _destinyDamageTypeDefinitionDestinyDisplayPropertiesDefinitionConverter
           .toIsar(object.displayProperties);
-  IsarUint8List? displayProperties;
+  IsarUint8List? _displayProperties;
   if (value0 != null) {
-    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
   }
-  dynamicSize += (displayProperties?.length ?? 0) as int;
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
   final value1 =
       _destinyDamageTypeDefinitionDamageTypeConverter.toIsar(object.enumValue);
-  final enumValue = value1;
+  final _enumValue = value1;
   final value2 = object.index;
-  final index = value2;
+  final _index = value2;
   final value3 = object.redacted;
-  final redacted = value3;
+  final _redacted = value3;
   final value4 = object.showIcon;
-  final showIcon = value4;
+  final _showIcon = value4;
   final value5 = object.transparentIconPath;
-  IsarUint8List? transparentIconPath;
+  IsarUint8List? _transparentIconPath;
   if (value5 != null) {
-    transparentIconPath = IsarBinaryWriter.utf8Encoder.convert(value5);
+    _transparentIconPath = IsarBinaryWriter.utf8Encoder.convert(value5);
   }
-  dynamicSize += (transparentIconPath?.length ?? 0) as int;
+  dynamicSize += (_transparentIconPath?.length ?? 0) as int;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], displayProperties);
-  writer.writeLong(offsets[1], enumValue);
-  writer.writeLong(offsets[2], index);
-  writer.writeBool(offsets[3], redacted);
-  writer.writeBool(offsets[4], showIcon);
-  writer.writeBytes(offsets[5], transparentIconPath);
+  writer.writeBytes(offsets[0], _displayProperties);
+  writer.writeLong(offsets[1], _enumValue);
+  writer.writeLong(offsets[2], _index);
+  writer.writeBool(offsets[3], _redacted);
+  writer.writeBool(offsets[4], _showIcon);
+  writer.writeBytes(offsets[5], _transparentIconPath);
 }
 
 DestinyDamageTypeDefinition _destinyDamageTypeDefinitionDeserializeNative(

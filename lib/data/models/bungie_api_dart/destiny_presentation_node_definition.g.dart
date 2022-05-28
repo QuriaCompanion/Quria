@@ -6,7 +6,7 @@ part of 'destiny_presentation_node_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyPresentationNodeDefinitionCollection on Isar {
   IsarCollection<DestinyPresentationNodeDefinition>
@@ -55,7 +55,7 @@ const DestinyPresentationNodeDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyPresentationNodeDefinitionSerializeWeb,
   deserializeWeb: _destinyPresentationNodeDefinitionDeserializeWeb,
   deserializePropWeb: _destinyPresentationNodeDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyPresentationNodeDefinitionGetId(
@@ -94,7 +94,7 @@ const _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter 
 
 void _destinyPresentationNodeDefinitionSerializeNative(
     IsarCollection<DestinyPresentationNodeDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyPresentationNodeDefinition object,
     int staticSize,
     List<int> offsets,
@@ -103,76 +103,76 @@ void _destinyPresentationNodeDefinitionSerializeNative(
   final value0 =
       _destinyPresentationNodeDefinitionDestinyPresentationNodeChildrenBlockConverter
           .toIsar(object.children);
-  IsarUint8List? children;
+  IsarUint8List? _children;
   if (value0 != null) {
-    children = IsarBinaryWriter.utf8Encoder.convert(value0);
+    _children = IsarBinaryWriter.utf8Encoder.convert(value0);
   }
-  dynamicSize += (children?.length ?? 0) as int;
+  dynamicSize += (_children?.length ?? 0) as int;
   final value1 = object.completionRecordHash;
-  final completionRecordHash = value1;
+  final _completionRecordHash = value1;
   final value2 = object.disableChildSubscreenNavigation;
-  final disableChildSubscreenNavigation = value2;
+  final _disableChildSubscreenNavigation = value2;
   final value3 =
       _destinyPresentationNodeDefinitionDestinyDisplayPropertiesDefinitionConverter
           .toIsar(object.displayProperties);
-  IsarUint8List? displayProperties;
+  IsarUint8List? _displayProperties;
   if (value3 != null) {
-    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value3);
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value3);
   }
-  dynamicSize += (displayProperties?.length ?? 0) as int;
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
   final value4 =
       _destinyPresentationNodeDefinitionDestinyPresentationDisplayStyleConverter
           .toIsar(object.displayStyle);
-  final displayStyle = value4;
+  final _displayStyle = value4;
   final value5 = object.index;
-  final index = value5;
+  final _index = value5;
   final value6 = object.maxCategoryRecordScore;
-  final maxCategoryRecordScore = value6;
+  final _maxCategoryRecordScore = value6;
   final value7 =
       _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
           .toIsar(object.nodeType);
-  final nodeType = value7;
+  final _nodeType = value7;
   final value8 = object.objectiveHash;
-  final objectiveHash = value8;
+  final _objectiveHash = value8;
   final value9 = object.originalIcon;
-  IsarUint8List? originalIcon;
+  IsarUint8List? _originalIcon;
   if (value9 != null) {
-    originalIcon = IsarBinaryWriter.utf8Encoder.convert(value9);
+    _originalIcon = IsarBinaryWriter.utf8Encoder.convert(value9);
   }
-  dynamicSize += (originalIcon?.length ?? 0) as int;
+  dynamicSize += (_originalIcon?.length ?? 0) as int;
   final value10 = object.parentNodeHashes;
   dynamicSize += (value10?.length ?? 0) * 8;
-  final parentNodeHashes = value10;
+  final _parentNodeHashes = value10;
   final value11 =
       _destinyPresentationNodeDefinitionDestinyPresentationNodeTypeConverter
           .toIsar(object.presentationNodeType);
-  final presentationNodeType = value11;
+  final _presentationNodeType = value11;
   final value12 = object.redacted;
-  final redacted = value12;
+  final _redacted = value12;
   final value13 =
       _destinyPresentationNodeDefinitionDestinyPresentationNodeRequirementsBlockConverter
           .toIsar(object.requirements);
-  IsarUint8List? requirements;
+  IsarUint8List? _requirements;
   if (value13 != null) {
-    requirements = IsarBinaryWriter.utf8Encoder.convert(value13);
+    _requirements = IsarBinaryWriter.utf8Encoder.convert(value13);
   }
-  dynamicSize += (requirements?.length ?? 0) as int;
+  dynamicSize += (_requirements?.length ?? 0) as int;
   final value14 = object.rootViewIcon;
-  IsarUint8List? rootViewIcon;
+  IsarUint8List? _rootViewIcon;
   if (value14 != null) {
-    rootViewIcon = IsarBinaryWriter.utf8Encoder.convert(value14);
+    _rootViewIcon = IsarBinaryWriter.utf8Encoder.convert(value14);
   }
-  dynamicSize += (rootViewIcon?.length ?? 0) as int;
+  dynamicSize += (_rootViewIcon?.length ?? 0) as int;
   final value15 = _destinyPresentationNodeDefinitionDestinyScopeConverter
       .toIsar(object.scope);
-  final scope = value15;
+  final _scope = value15;
   final value16 =
       _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter
           .toIsar(object.screenStyle);
-  final screenStyle = value16;
+  final _screenStyle = value16;
   final value17 = object.traitHashes;
   dynamicSize += (value17?.length ?? 0) * 8;
-  final traitHashes = value17;
+  final _traitHashes = value17;
   final value18 = object.traitIds;
   dynamicSize += (value18?.length ?? 0) * 8;
   List<IsarUint8List?>? bytesList18;
@@ -184,32 +184,32 @@ void _destinyPresentationNodeDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final traitIds = bytesList18;
+  final _traitIds = bytesList18;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], children);
-  writer.writeLong(offsets[1], completionRecordHash);
-  writer.writeBool(offsets[2], disableChildSubscreenNavigation);
-  writer.writeBytes(offsets[3], displayProperties);
-  writer.writeLong(offsets[4], displayStyle);
-  writer.writeLong(offsets[5], index);
-  writer.writeLong(offsets[6], maxCategoryRecordScore);
-  writer.writeLong(offsets[7], nodeType);
-  writer.writeLong(offsets[8], objectiveHash);
-  writer.writeBytes(offsets[9], originalIcon);
-  writer.writeLongList(offsets[10], parentNodeHashes);
-  writer.writeLong(offsets[11], presentationNodeType);
-  writer.writeBool(offsets[12], redacted);
-  writer.writeBytes(offsets[13], requirements);
-  writer.writeBytes(offsets[14], rootViewIcon);
-  writer.writeLong(offsets[15], scope);
-  writer.writeLong(offsets[16], screenStyle);
-  writer.writeLongList(offsets[17], traitHashes);
-  writer.writeStringList(offsets[18], traitIds);
+  writer.writeBytes(offsets[0], _children);
+  writer.writeLong(offsets[1], _completionRecordHash);
+  writer.writeBool(offsets[2], _disableChildSubscreenNavigation);
+  writer.writeBytes(offsets[3], _displayProperties);
+  writer.writeLong(offsets[4], _displayStyle);
+  writer.writeLong(offsets[5], _index);
+  writer.writeLong(offsets[6], _maxCategoryRecordScore);
+  writer.writeLong(offsets[7], _nodeType);
+  writer.writeLong(offsets[8], _objectiveHash);
+  writer.writeBytes(offsets[9], _originalIcon);
+  writer.writeLongList(offsets[10], _parentNodeHashes);
+  writer.writeLong(offsets[11], _presentationNodeType);
+  writer.writeBool(offsets[12], _redacted);
+  writer.writeBytes(offsets[13], _requirements);
+  writer.writeBytes(offsets[14], _rootViewIcon);
+  writer.writeLong(offsets[15], _scope);
+  writer.writeLong(offsets[16], _screenStyle);
+  writer.writeLongList(offsets[17], _traitHashes);
+  writer.writeStringList(offsets[18], _traitIds);
 }
 
 DestinyPresentationNodeDefinition
