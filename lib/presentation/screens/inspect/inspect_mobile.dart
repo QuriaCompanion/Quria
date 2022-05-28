@@ -6,6 +6,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/itemInfoHelper.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
+import 'package:quria/presentation/components/misc/mobile_components/scaffold_burger_and_back_option.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_armor_info.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_info.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_header.dart';
@@ -32,20 +33,8 @@ class _MobileInspectState extends State<MobileInspect> {
   Widget build(BuildContext context) {
     final ItemInfoHelper data =
         DisplayService().getItemInfo(widget.data.instanceId, widget.data.hash);
-    return Scaffold(
+    return ScaffoldBurgerAndBackOption(
       key: scaffoldKey,
-      extendBodyBehindAppBar: true,
-      backgroundColor: black,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: SvgPicture.asset(
-            "assets/icons/Prev.svg",
-            color: Colors.white,
-          ),
-          onPressed: () => Navigator.pop(context),
-        ),
-        backgroundColor: Colors.transparent,
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

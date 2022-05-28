@@ -343,9 +343,10 @@ class ProfileService {
   }
 
   List<DestinyItemComponent> getSubclassesForCharacter(String characterId) {
-    var character = getCharacterInventory(characterId);
-    character.addAll(getCharacterEquipment(characterId));
-    return character
+    final List<DestinyItemComponent> inventory = [];
+    inventory.addAll(getCharacterInventory(characterId));
+    inventory.addAll(getCharacterEquipment(characterId));
+    return inventory
         .where((element) =>
             ManifestService
                 .manifestParsed

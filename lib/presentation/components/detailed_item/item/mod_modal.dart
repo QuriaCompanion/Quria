@@ -11,8 +11,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ModModal extends StatefulWidget {
   final DestinyInventoryItemDefinition mod;
-  final void Function() onSocketChange;
-  const ModModal({required this.mod, required this.onSocketChange, Key? key})
+  final void Function()? onSocketChange;
+  const ModModal({required this.mod, this.onSocketChange, Key? key})
       : super(key: key);
 
   @override
@@ -120,23 +120,25 @@ class _ModModalState extends State<ModModal> {
                     return Column(children: list);
                   }),
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                    widget.onSocketChange();
-                  },
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      fixedSize: Size(vw(context) - globalPadding(context) * 2,
-                          (vw(context) - globalPadding(context) * 2) * 0.147),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50))),
-                  child: textBodyMedium(
-                    AppLocalizations.of(context)!.equip,
-                    color: black,
-                    utf8: false,
+                if (widget.onSocketChange != null)
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      widget.onSocketChange!();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        fixedSize: Size(
+                            vw(context) - globalPadding(context) * 2,
+                            (vw(context) - globalPadding(context) * 2) * 0.147),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50))),
+                    child: textBodyMedium(
+                      AppLocalizations.of(context)!.equip,
+                      color: black,
+                      utf8: false,
+                    ),
                   ),
-                ),
                 SizedBox(
                   height: globalPadding(context),
                 )
