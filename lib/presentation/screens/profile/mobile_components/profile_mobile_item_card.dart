@@ -1,5 +1,6 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
@@ -62,7 +63,9 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
                   textH3('${widget.inventory.length + 1}/10', color: greyLight)
                 ],
               ),
-              textBodyMedium(isOpen ? 'Fermer' : 'Tout voir'),
+              textBodyMedium(isOpen
+                  ? AppLocalizations.of(context)!.close
+                  : AppLocalizations.of(context)!.see_all),
             ],
           ),
         ),

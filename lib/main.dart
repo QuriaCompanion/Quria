@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
@@ -8,6 +9,10 @@ import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/app.dart';
 import 'package:quria/presentation/router.dart';
@@ -18,12 +23,13 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   StorageService.init();
   await dotenv.load(fileName: ".env");
-  // await Firebase.initializeApp(
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(QuriaApp(
     router: AppRouter(),
   ));
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 }
 
 class QuriaApp extends StatelessWidget {
@@ -58,6 +64,17 @@ class QuriaApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en', ''), // English, no country code
+          Locale('es', ''), // Spanish, no country code
+          Locale('fr', ''),
+        ],
         theme: ThemeData(fontFamily: 'Inter'),
         debugShowCheckedModeBanner: false,
         home: LoginWidget(),

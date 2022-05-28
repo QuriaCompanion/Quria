@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/presentation/components/misc/mobile_components/equip_modal.dart';
@@ -29,7 +30,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
         children: [
           QuickAction(
               icon: "assets/icons/Equip.svg",
-              title: "Ãquiper",
+              title: AppLocalizations.of(context)!.equip,
               onTap: () {
                 showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,
@@ -43,7 +44,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
               }),
           QuickAction(
               icon: "assets/icons/Transfer.svg",
-              title: "TransfÃ©rer",
+              title: AppLocalizations.of(context)!.transfer,
               onTap: () {
                 showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,
@@ -58,7 +59,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
               }),
           QuickAction(
               icon: "assets/icons/Share.svg",
-              title: "Partager",
+              title: AppLocalizations.of(context)!.share,
               onTap: () {
                 showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,
@@ -69,7 +70,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
               }),
           QuickAction(
               icon: "assets/icons/Collection.svg",
-              title: "Collection",
+              title: AppLocalizations.of(context)!.collections,
               onTap: () {
                 Navigator.pushNamed(context, routeCollectionItem,
                     arguments: widget.itemHash);

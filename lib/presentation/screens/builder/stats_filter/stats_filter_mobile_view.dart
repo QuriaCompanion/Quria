@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -22,9 +23,12 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textH1("Priorise tes statistiques"),
+                textH1(
+                  AppLocalizations.of(context)!.builder_stats_order_title,
+                  utf8: false,
+                ),
                 textBodyRegular(
-                  "Classe les statistiques par ordre de préférence.",
+                  AppLocalizations.of(context)!.builder_stats_order_subtitle,
                   utf8: false,
                 ),
               ],
@@ -40,7 +44,7 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
             width: double.infinity,
             child: Center(
               child: textCaption(
-                "Maintenez puis faites glisser changer l'ordre",
+                AppLocalizations.of(context)!.builder_stats_order_caption,
                 utf8: false,
               ),
             ),

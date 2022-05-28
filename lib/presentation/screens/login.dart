@@ -1,5 +1,6 @@
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -65,7 +66,11 @@ class LoginWidgetState extends State<LoginWidget> {
       floatingActionButton: Padding(
         padding: EdgeInsets.only(bottom: globalPadding(context) * 2),
         child: RoundedButton(
-            text: textBodyBold('Se connecter', color: black),
+            text: textBodyBold(
+              AppLocalizations.of(context)!.login,
+              utf8: false,
+              color: black,
+            ),
             onPressed: () {
               loadingModal();
               authorizeClick(context);
@@ -99,7 +104,10 @@ class LoginWidgetState extends State<LoginWidget> {
                 color: Colors.white,
               ),
             ),
-            textConnect("CONNECTEZ-VOUS POUR CONTINUER"),
+            textConnect(
+              AppLocalizations.of(context)!.login_splash,
+              utf8: false,
+            ),
           ],
         ),
       ),
@@ -221,9 +229,9 @@ class LoginWidgetState extends State<LoginWidget> {
         isDismissible: false,
         expand: false,
         builder: (context) {
-          return const LoadingModal(
-            text1: "Connexion en cours",
-            text2: "Veuillez patienter ...",
+          return LoadingModal(
+            text1: AppLocalizations.of(context)!.logging_in,
+            text2: AppLocalizations.of(context)!.please_wait,
           );
         });
   }

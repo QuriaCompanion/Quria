@@ -1,6 +1,7 @@
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
@@ -64,8 +65,14 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textH1("Configure ta doctrine"),
-                textBodyRegular("Choisis tes Ã©lÃ©ments de doctrine."),
+                textH1(
+                  AppLocalizations.of(context)!.builder_subclass_mods_title,
+                  utf8: false,
+                ),
+                textBodyRegular(
+                  AppLocalizations.of(context)!.builder_subclass_mods_subtitle,
+                  utf8: false,
+                ),
               ],
             )),
         Padding(
@@ -83,7 +90,10 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                   width: double.infinity,
                   child: Center(
                     child: textCaption(
-                        'Taper pour plus de dÃ©tails, maintenir pour Ã©quiper'),
+                      AppLocalizations.of(context)!
+                          .builder_subclass_mods_caption,
+                      utf8: false,
+                    ),
                   )),
               for (int i = 0; i <= 4; i++)
                 mobileSectionInverted(context,
@@ -109,7 +119,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                         plugSetHash: widget.subclass.sockets!.socketEntries![i]
                             .reusablePlugSetHash)),
               mobileSectionInverted(context,
-                  title: "Aspects",
+                  title: displayedSockets[5].itemTypeDisplayName ?? "Aspects",
                   child: Column(
                     children: [
                       SubclassMobileItems(
@@ -158,7 +168,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                     ],
                   )),
               mobileSectionInverted(context,
-                  title: "Fragments",
+                  title: displayedSockets[7].itemTypeDisplayName ?? "Fragments",
                   child: Row(
                     children: [
                       for (int i = 0; i < aspectOne + aspectTwo; i++)

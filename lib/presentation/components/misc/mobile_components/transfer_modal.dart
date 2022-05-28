@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
@@ -49,7 +50,10 @@ class _TransferModalState extends State<TransferModal> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  textH2("Transferer"),
+                  textH2(
+                    AppLocalizations.of(context)!.transfer,
+                    utf8: false,
+                  ),
                   InkWell(
                     onTap: () => Navigator.pop(context),
                     child: const CircleAvatar(
@@ -89,7 +93,7 @@ class _TransferModalState extends State<TransferModal> {
                       ScaffoldMessenger.of(scaffoldKey.currentContext!)
                           .showSnackBar(SnackBar(
                         content: textBodyMedium(
-                          "L'item a bien été tranféré",
+                          AppLocalizations.of(context)!.item_transfered,
                           utf8: false,
                           color: Colors.white,
                         ),
@@ -141,10 +145,10 @@ class _TransferModalState extends State<TransferModal> {
                           });
                     }
                   },
-                  child: const CharacterTransferItem(
+                  child: CharacterTransferItem(
                     imageLink:
                         "https://www.bungie.net/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png",
-                    name: "Coffre",
+                    name: AppLocalizations.of(context)!.vault,
                     icon: "assets/icons/Transfer.svg",
                   ),
                 ),

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/filterHelper.model.dart';
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
 class FilterWidget extends StatelessWidget {
   const FilterWidget({Key? key}) : super(key: key);
@@ -13,6 +15,34 @@ class FilterWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<FilterHelper> filters =
         Provider.of<BuilderStatsFilterProvider>(context).filters;
+    if (filters.isEmpty) {
+      filters = [
+        FilterHelper(
+            name: AppLocalizations.of(context)!.mobility,
+            icon: "mobility.svg",
+            value: StatsHash.mobility),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.resilience,
+            icon: "resilience.svg",
+            value: StatsHash.resilience),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.recovery,
+            icon: "recovery.svg",
+            value: StatsHash.recovery),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.discipline,
+            icon: "discipline.svg",
+            value: StatsHash.discipline),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.intellect,
+            icon: "intellect.svg",
+            value: StatsHash.intellect),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.strength,
+            icon: "strength.svg",
+            value: StatsHash.strength),
+      ];
+    }
 
     return ReorderableListView(
       padding: EdgeInsets.zero,
@@ -50,6 +80,7 @@ class FilterWidget extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 8, top: 0, bottom: 0),
                     child: textBodyBold(
                       filters[index].name,
+                      utf8: false,
                     ),
                   ),
                   dense: true,

@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -20,7 +21,7 @@ class InProgressModal extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  textH2("En cours de construction"),
+                  textH2(AppLocalizations.of(context)!.wip, utf8: false),
                   InkWell(
                     onTap: () => Navigator.pop(context),
                     child: const CircleAvatar(
@@ -38,7 +39,10 @@ class InProgressModal extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(vertical: globalPadding(context)),
-              child: textBodyBold("Ca arrive bientot!"),
+              child: textBodyBold(
+                AppLocalizations.of(context)!.coming_soon,
+                utf8: false,
+              ),
             ),
           ],
         ),

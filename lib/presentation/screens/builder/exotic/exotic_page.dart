@@ -9,6 +9,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_mobile_view.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class ExoticWidget extends StatefulWidget {
   const ExoticWidget({Key? key}) : super(key: key);
@@ -59,6 +60,10 @@ class ExoticWidgetState extends State<ExoticWidget> {
                 characterId:
                     characters[DisplayService.characterIndex].characterId!,
                 exotics: snapshot.data!,
+                onCharacterChange: (newIndex) {
+                  DisplayService.characterIndex = newIndex;
+                  Navigator.popAndPushNamed(context, routeExotic);
+                },
               ),
             );
           } else {

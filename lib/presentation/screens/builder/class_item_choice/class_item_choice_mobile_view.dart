@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -26,8 +27,14 @@ class ClassItemChoiceMobileView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textH1("Choisis ton objet de classe"),
-                textBodyRegular("SÃ©lectionne l'objet de classe de ton build."),
+                textH1(
+                  AppLocalizations.of(context)!.builder_class_item_title,
+                  utf8: false,
+                ),
+                textBodyRegular(
+                  AppLocalizations.of(context)!.builder_class_item_subtitle,
+                  utf8: false,
+                ),
               ],
             )),
         Padding(

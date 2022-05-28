@@ -1,5 +1,6 @@
 import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -35,8 +36,14 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textH1("Configure ta doctrine"),
-                textBodyRegular("Choisis tes Ã©lements de doctrine."),
+                textH1(
+                  AppLocalizations.of(context)!.builder_subclass_mods_title,
+                  utf8: false,
+                ),
+                textBodyRegular(
+                  AppLocalizations.of(context)!.builder_subclass_mods_subtitle,
+                  utf8: false,
+                ),
               ],
             )),
         Padding(
@@ -54,13 +61,14 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
                   width: double.infinity,
                   child: Center(
                     child: textCaption(
-                      'Note: Les anciennes doctrines ne peuvent pas être configuré!',
+                      AppLocalizations.of(context)!
+                          .builder_subclass_mods_caption,
                       utf8: false,
                     ),
                   )),
               mobileSectionInverted(
                 context,
-                title: "Capacites de classe",
+                title: AppLocalizations.of(context)!.class_ability,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
@@ -71,7 +79,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
               ),
               mobileSectionInverted(
                 context,
-                title: "Sauts",
+                title: AppLocalizations.of(context)!.jumps,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
@@ -83,7 +91,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
               ),
               mobileSectionInverted(
                 context,
-                title: "Grenades",
+                title: AppLocalizations.of(context)!.grenades,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
@@ -95,7 +103,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
               ),
               mobileSectionInverted(
                 context,
-                title: "Sections",
+                title: AppLocalizations.of(context)!.sections,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
