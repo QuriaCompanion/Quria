@@ -42,6 +42,8 @@ class FilterWidget extends StatelessWidget {
             icon: "strength.svg",
             value: StatsHash.strength),
       ];
+      Provider.of<BuilderStatsFilterProvider>(context, listen: false)
+          .init(filters);
     }
 
     return ReorderableListView(

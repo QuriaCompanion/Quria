@@ -3,8 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
-import 'package:quria/data/models/helpers/builderHelper.model.dart';
-import 'package:quria/data/models/helpers/modHelper.model.dart';
 import 'package:quria/data/providers/builder/builder_mods_provider.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_steps.dart';
@@ -12,8 +10,7 @@ import 'package:quria/presentation/screens/builder/mods/mods_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 class ModsPage extends StatelessWidget {
-  final ModHelper data;
-  const ModsPage({required this.data, Key? key}) : super(key: key);
+  const ModsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -107,22 +104,16 @@ class ModsPage extends StatelessWidget {
                   .manifestParsed.destinyInventoryItemDefinition[2493100093],
             ]),
       ];
+      Provider.of<BuilderModsProvider>(context, listen: false).init(armorMods);
     }
     if (vw(context) < 1000) {
-      return ScaffoldSteps<BuilderPreparation>(
+      return ScaffoldSteps(
         route: routeBuilder,
-        arguments: BuilderPreparation(
-            characterId: data.characterId,
-            subclassInstanceId: data.subclassInstanceId,
-            statOrder: data.statOrder,
-            exoticHash: data.exoticHash,
-            armorMods: armorMods,
-            subclassMods: data.subclassMods,
-            classItemInstanceId: data.classItemInstanceId),
         body: ModsMobileView(
           armorMods: armorMods,
           onChange: (newMods) {
-            Provider.of<BuilderModsProvider>(context).setMods(newMods);
+            Provider.of<BuilderModsProvider>(context, listen: false)
+                .setMods(newMods);
           },
         ),
       );

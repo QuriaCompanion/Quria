@@ -20,4 +20,9 @@ class CharactersProvider with ChangeNotifier {
     _currentCharacter = character;
     notifyListeners();
   }
+
+  void init(current, characters) {
+    _currentCharacter = current;
+    _characters = characters;
+  }
 }

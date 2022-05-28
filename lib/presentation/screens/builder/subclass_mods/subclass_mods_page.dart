@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/classItemChoiceHelper.model.dart';
 import 'package:quria/data/models/helpers/socketsHelper.model.dart';
-import 'package:quria/data/models/helpers/subclassModHelper.model.dart';
 import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/services/display/display.service.dart';
@@ -14,8 +13,7 @@ import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_m
 import 'package:quria/presentation/var/routes.dart';
 
 class SubclassModsPage extends StatefulWidget {
-  final SubclassModHelper data;
-  const SubclassModsPage({required this.data, Key? key}) : super(key: key);
+  const SubclassModsPage({Key? key}) : super(key: key);
 
   @override
   State<SubclassModsPage> createState() => _SubclassModsPageState();
@@ -32,23 +30,20 @@ class _SubclassModsPageState extends State<SubclassModsPage> {
     data = getSubclassMods(
         Provider.of<BuilderSubclassProvider>(context).subclassId!);
     final sockets = data.sockets;
+    DestinyInventoryItemDefinition subclass =
+        Provider.of<BuilderSubclassProvider>(context).subclass!;
     chosenSockets =
-        Provider.of<BuilderSubclassModsProvider>(context).subclassMods ??
-            data.displayedSockets;
+        Provider.of<BuilderSubclassModsProvider>(context).subclassMods;
+    if (chosenSockets.isEmpty) {
+      chosenSockets = data.displayedSockets;
+    }
 
     if (vw(context) < 1000) {
       return ScaffoldSteps<ClassItemChoiceHelper>(
           route: routeClassItemChoice,
-          arguments: ClassItemChoiceHelper(
-            characterId: widget.data.characterId,
-            subclassInstanceId: widget.data.subclassInstanceId,
-            statOrder: widget.data.statOrder,
-            subclassMods: chosenSockets,
-            exoticHash: widget.data.exoticHash,
-          ),
           body: SubclassModsMobileView(
             sockets: sockets,
-            subclass: widget.data.subclass,
+            subclass: subclass,
             onChange: (mods, i) async {
               Provider.of<BuilderSubclassModsProvider>(context, listen: false)
                   .setSubclassMods(mods);

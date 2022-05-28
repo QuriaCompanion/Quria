@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/data/models/helpers/builderRecapHelper.model.dart';
-import 'package:quria/data/models/helpers/classItemChoiceHelper.model.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/inspectSubclassHelper.model.dart';
-import 'package:quria/data/models/helpers/modHelper.model.dart';
-import 'package:quria/data/models/helpers/statsFilterHelper.model.dart';
-import 'package:quria/data/models/helpers/subclassHelper.model.dart';
-import 'package:quria/data/models/helpers/subclassModHelper.model.dart';
 import 'package:quria/presentation/screens/builder/build_recap/builder_recap_page.dart';
 import 'package:quria/presentation/screens/builder/builder_results/builder_results_page.dart';
 import 'package:quria/presentation/screens/builder/class_item_choice/class_item_choice_page.dart';
@@ -34,49 +28,13 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => LoginWidget());
       case routeProfile:
         return MaterialPageRoute(builder: (_) => const ProfileWidget());
-      case routeFilter:
-        final StatsFilterHelper data = settings.arguments as StatsFilterHelper;
-        return MaterialPageRoute(builder: (_) => StatsFilterPage(data: data));
-      case routeBuilder:
-        final BuilderPreparation data =
-            settings.arguments as BuilderPreparation;
-        return MaterialPageRoute(
-            builder: (_) => BuilderResultsPage(data: data));
-      case routeBuilderRecap:
-        final BuilderRecapHelper data =
-            settings.arguments as BuilderRecapHelper;
-        return MaterialPageRoute(builder: (_) => BuilderRecapPage(data: data));
       case routeInspectMobile:
         final InspectData data = settings.arguments as InspectData;
         return MaterialPageRoute(builder: (_) => MobileInspect(data: data));
-      case routeExotic:
-        return MaterialPageRoute(builder: (_) => const ExoticWidget());
-      case routeSubclass:
-        final SubclassHelper data = settings.arguments as SubclassHelper;
-        return MaterialPageRoute(
-            builder: (_) => SubclassPage(
-                  data: data,
-                ));
-      case routeClassItemChoice:
-        final ClassItemChoiceHelper data =
-            settings.arguments as ClassItemChoiceHelper;
-        return MaterialPageRoute(
-            builder: (_) => ClassItemChoicePage(
-                  data: data,
-                ));
-      case routeMod:
-        final ModHelper data = settings.arguments as ModHelper;
-        return MaterialPageRoute(
-            builder: (_) => ModsPage(
-                  data: data,
-                ));
       case routeVault:
         return MaterialPageRoute(builder: (_) => const VaultPage());
       case routeCollection:
         return MaterialPageRoute(builder: (_) => const CollectionWeaponPage());
-      case routeSubclassMod:
-        final SubclassModHelper data = settings.arguments as SubclassModHelper;
-        return MaterialPageRoute(builder: (_) => SubclassModsPage(data: data));
       case routeInspectSubclass:
         final InspectSubclassHelper data =
             settings.arguments as InspectSubclassHelper;
@@ -88,6 +46,35 @@ class AppRouter {
         final int data = settings.arguments as int;
         return MaterialPageRoute(
             builder: (_) => CollectionItemPage(itemHash: data));
+
+      // BUILDER
+      // exotic
+      case routeExotic:
+        return MaterialPageRoute(builder: (_) => const ExoticWidget());
+      // stats filter
+      case routeFilter:
+        return MaterialPageRoute(builder: (_) => const StatsFilterPage());
+      // subclass choice
+      case routeSubclass:
+        return MaterialPageRoute(builder: (_) => const SubclassPage());
+      // subclass mods
+      case routeSubclassMod:
+        return MaterialPageRoute(builder: (_) => const SubclassModsPage());
+      // class item choice
+      case routeClassItemChoice:
+        return MaterialPageRoute(builder: (_) => const ClassItemChoicePage());
+      //armor mods
+      case routeMod:
+        return MaterialPageRoute(builder: (_) => const ModsPage());
+      // builder Results
+      case routeBuilder:
+        return MaterialPageRoute(builder: (_) => const BuilderResultsPage());
+      // builder Recap
+      case routeBuilderRecap:
+        final BuilderRecapHelper data =
+            settings.arguments as BuilderRecapHelper;
+        return MaterialPageRoute(builder: (_) => BuilderRecapPage(data: data));
+
       default:
         return MaterialPageRoute(builder: (_) => LoginWidget());
     }
