@@ -97,7 +97,7 @@ class BuilderResultsMobileItem extends StatelessWidget {
             children: [
               RoundedButton(
                 text: textBodyMedium(AppLocalizations.of(context)!.equip,
-                    color: black),
+                    utf8: false, color: black),
                 onPressed: () {
                   showMaterialModalBottomSheet(
                       context: context,
