@@ -6,7 +6,7 @@ part of 'destiny_plug_set_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyPlugSetDefinitionCollection on Isar {
   IsarCollection<DestinyPlugSetDefinition> get destinyPlugSetDefinitions =>
@@ -40,7 +40,7 @@ const DestinyPlugSetDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyPlugSetDefinitionSerializeWeb,
   deserializeWeb: _destinyPlugSetDefinitionDeserializeWeb,
   deserializePropWeb: _destinyPlugSetDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyPlugSetDefinitionGetId(DestinyPlugSetDefinition object) {
@@ -67,7 +67,7 @@ const _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitio
 
 void _destinyPlugSetDefinitionSerializeNative(
     IsarCollection<DestinyPlugSetDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyPlugSetDefinition object,
     int staticSize,
     List<int> offsets,
@@ -76,17 +76,17 @@ void _destinyPlugSetDefinitionSerializeNative(
   final value0 =
       _destinyPlugSetDefinitionDestinyDisplayPropertiesDefinitionConverter
           .toIsar(object.displayProperties);
-  IsarUint8List? displayProperties;
+  IsarUint8List? _displayProperties;
   if (value0 != null) {
-    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value0);
   }
-  dynamicSize += (displayProperties?.length ?? 0) as int;
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
   final value1 = object.index;
-  final index = value1;
+  final _index = value1;
   final value2 = object.isFakePlugSet;
-  final isFakePlugSet = value2;
+  final _isFakePlugSet = value2;
   final value3 = object.redacted;
-  final redacted = value3;
+  final _redacted = value3;
   final value4 =
       _destinyPlugSetDefinitionDestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
           .toIsar(object.reusablePlugItems);
@@ -100,18 +100,18 @@ void _destinyPlugSetDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final reusablePlugItems = bytesList4;
+  final _reusablePlugItems = bytesList4;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], displayProperties);
-  writer.writeLong(offsets[1], index);
-  writer.writeBool(offsets[2], isFakePlugSet);
-  writer.writeBool(offsets[3], redacted);
-  writer.writeStringList(offsets[4], reusablePlugItems);
+  writer.writeBytes(offsets[0], _displayProperties);
+  writer.writeLong(offsets[1], _index);
+  writer.writeBool(offsets[2], _isFakePlugSet);
+  writer.writeBool(offsets[3], _redacted);
+  writer.writeStringList(offsets[4], _reusablePlugItems);
 }
 
 DestinyPlugSetDefinition _destinyPlugSetDefinitionDeserializeNative(

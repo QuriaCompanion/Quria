@@ -11,12 +11,7 @@ import 'package:quria/presentation/components/misc/rounded_button.dart';
 class ScaffoldSteps<T> extends StatelessWidget {
   final Widget body;
   final String route;
-  final T arguments;
-  const ScaffoldSteps(
-      {required this.body,
-      required this.route,
-      required this.arguments,
-      Key? key})
+  const ScaffoldSteps({required this.body, required this.route, Key? key})
       : super(key: key);
 
   @override
@@ -83,8 +78,7 @@ class ScaffoldSteps<T> extends StatelessWidget {
                 ),
                 width: 200,
                 height: 50,
-                onPressed: () =>
-                    Navigator.pushNamed(context, route, arguments: arguments)),
+                onPressed: () => Navigator.pushNamed(context, route)),
           ],
         ),
       ),

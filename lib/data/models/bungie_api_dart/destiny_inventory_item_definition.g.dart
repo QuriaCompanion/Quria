@@ -6,7 +6,7 @@ part of 'destiny_inventory_item_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyInventoryItemDefinitionCollection on Isar {
   IsarCollection<DestinyInventoryItemDefinition>
@@ -109,7 +109,7 @@ const DestinyInventoryItemDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyInventoryItemDefinitionSerializeWeb,
   deserializeWeb: _destinyInventoryItemDefinitionDeserializeWeb,
   deserializePropWeb: _destinyInventoryItemDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyInventoryItemDefinitionGetId(
@@ -200,7 +200,7 @@ const _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter =
 
 void _destinyInventoryItemDefinitionSerializeNative(
     IsarCollection<DestinyInventoryItemDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyInventoryItemDefinition object,
     int staticSize,
     List<int> offsets,
@@ -209,13 +209,13 @@ void _destinyInventoryItemDefinitionSerializeNative(
   final value0 =
       _destinyInventoryItemDefinitionDestinyItemActionBlockDefinitionConverter
           .toIsar(object.action);
-  IsarUint8List? action;
+  IsarUint8List? _action;
   if (value0 != null) {
-    action = IsarBinaryWriter.utf8Encoder.convert(value0);
+    _action = IsarBinaryWriter.utf8Encoder.convert(value0);
   }
-  dynamicSize += (action?.length ?? 0) as int;
+  dynamicSize += (_action?.length ?? 0) as int;
   final value1 = object.allowActions;
-  final allowActions = value1;
+  final _allowActions = value1;
   final value2 =
       _destinyInventoryItemDefinitionDestinyAnimationReferenceListConverter
           .toIsar(object.animations);
@@ -229,108 +229,108 @@ void _destinyInventoryItemDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final animations = bytesList2;
+  final _animations = bytesList2;
   final value3 = _destinyInventoryItemDefinitionDestinyColorConverter
       .toIsar(object.backgroundColor);
-  IsarUint8List? backgroundColor;
+  IsarUint8List? _backgroundColor;
   if (value3 != null) {
-    backgroundColor = IsarBinaryWriter.utf8Encoder.convert(value3);
+    _backgroundColor = IsarBinaryWriter.utf8Encoder.convert(value3);
   }
-  dynamicSize += (backgroundColor?.length ?? 0) as int;
+  dynamicSize += (_backgroundColor?.length ?? 0) as int;
   final value4 = _destinyInventoryItemDefinitionDestinyBreakerTypeConverter
       .toIsar(object.breakerType);
-  final breakerType = value4;
+  final _breakerType = value4;
   final value5 = object.breakerTypeHash;
-  final breakerTypeHash = value5;
+  final _breakerTypeHash = value5;
   final value6 = _destinyInventoryItemDefinitionDestinyClassConverter
       .toIsar(object.classType);
-  final classType = value6;
+  final _classType = value6;
   final value7 = object.collectibleHash;
-  final collectibleHash = value7;
+  final _collectibleHash = value7;
   final value8 =
       _destinyInventoryItemDefinitionDestinyItemCraftingBlockDefinitionConverter
           .toIsar(object.crafting);
-  IsarUint8List? crafting;
+  IsarUint8List? _crafting;
   if (value8 != null) {
-    crafting = IsarBinaryWriter.utf8Encoder.convert(value8);
+    _crafting = IsarBinaryWriter.utf8Encoder.convert(value8);
   }
-  dynamicSize += (crafting?.length ?? 0) as int;
+  dynamicSize += (_crafting?.length ?? 0) as int;
   final value9 = object.damageTypeHashes;
   dynamicSize += (value9?.length ?? 0) * 8;
-  final damageTypeHashes = value9;
+  final _damageTypeHashes = value9;
   final value10 = _destinyInventoryItemDefinitionDamageTypeListConverter
       .toIsar(object.damageTypes);
   dynamicSize += (value10?.length ?? 0) * 8;
-  final damageTypes = value10;
+  final _damageTypes = value10;
   final value11 = _destinyInventoryItemDefinitionDamageTypeConverter
       .toIsar(object.defaultDamageType);
-  final defaultDamageType = value11;
+  final _defaultDamageType = value11;
   final value12 = object.defaultDamageTypeHash;
-  final defaultDamageTypeHash = value12;
+  final _defaultDamageTypeHash = value12;
   final value13 =
       _destinyInventoryItemDefinitionDestinyDisplayPropertiesDefinitionConverter
           .toIsar(object.displayProperties);
-  IsarUint8List? displayProperties;
+  IsarUint8List? _displayProperties;
   if (value13 != null) {
-    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value13);
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value13);
   }
-  dynamicSize += (displayProperties?.length ?? 0) as int;
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
   final value14 = object.displaySource;
-  IsarUint8List? displaySource;
+  IsarUint8List? _displaySource;
   if (value14 != null) {
-    displaySource = IsarBinaryWriter.utf8Encoder.convert(value14);
+    _displaySource = IsarBinaryWriter.utf8Encoder.convert(value14);
   }
-  dynamicSize += (displaySource?.length ?? 0) as int;
+  dynamicSize += (_displaySource?.length ?? 0) as int;
   final value15 = object.doesPostmasterPullHaveSideEffects;
-  final doesPostmasterPullHaveSideEffects = value15;
+  final _doesPostmasterPullHaveSideEffects = value15;
   final value16 = object.emblemObjectiveHash;
-  final emblemObjectiveHash = value16;
+  final _emblemObjectiveHash = value16;
   final value17 = object.equippable;
-  final equippable = value17;
+  final _equippable = value17;
   final value18 =
       _destinyInventoryItemDefinitionDestinyEquippingBlockDefinitionConverter
           .toIsar(object.equippingBlock);
-  IsarUint8List? equippingBlock;
+  IsarUint8List? _equippingBlock;
   if (value18 != null) {
-    equippingBlock = IsarBinaryWriter.utf8Encoder.convert(value18);
+    _equippingBlock = IsarBinaryWriter.utf8Encoder.convert(value18);
   }
-  dynamicSize += (equippingBlock?.length ?? 0) as int;
+  dynamicSize += (_equippingBlock?.length ?? 0) as int;
   final value19 = object.flavorText;
-  IsarUint8List? flavorText;
+  IsarUint8List? _flavorText;
   if (value19 != null) {
-    flavorText = IsarBinaryWriter.utf8Encoder.convert(value19);
+    _flavorText = IsarBinaryWriter.utf8Encoder.convert(value19);
   }
-  dynamicSize += (flavorText?.length ?? 0) as int;
+  dynamicSize += (_flavorText?.length ?? 0) as int;
   final value20 =
       _destinyInventoryItemDefinitionDestinyItemGearsetBlockDefinitionConverter
           .toIsar(object.gearset);
-  IsarUint8List? gearset;
+  IsarUint8List? _gearset;
   if (value20 != null) {
-    gearset = IsarBinaryWriter.utf8Encoder.convert(value20);
+    _gearset = IsarBinaryWriter.utf8Encoder.convert(value20);
   }
-  dynamicSize += (gearset?.length ?? 0) as int;
+  dynamicSize += (_gearset?.length ?? 0) as int;
   final value21 = object.iconWatermark;
-  IsarUint8List? iconWatermark;
+  IsarUint8List? _iconWatermark;
   if (value21 != null) {
-    iconWatermark = IsarBinaryWriter.utf8Encoder.convert(value21);
+    _iconWatermark = IsarBinaryWriter.utf8Encoder.convert(value21);
   }
-  dynamicSize += (iconWatermark?.length ?? 0) as int;
+  dynamicSize += (_iconWatermark?.length ?? 0) as int;
   final value22 = object.iconWatermarkShelved;
-  IsarUint8List? iconWatermarkShelved;
+  IsarUint8List? _iconWatermarkShelved;
   if (value22 != null) {
-    iconWatermarkShelved = IsarBinaryWriter.utf8Encoder.convert(value22);
+    _iconWatermarkShelved = IsarBinaryWriter.utf8Encoder.convert(value22);
   }
-  dynamicSize += (iconWatermarkShelved?.length ?? 0) as int;
+  dynamicSize += (_iconWatermarkShelved?.length ?? 0) as int;
   final value23 = object.index;
-  final index = value23;
+  final _index = value23;
   final value24 =
       _destinyInventoryItemDefinitionDestinyItemInventoryBlockDefinitionConverter
           .toIsar(object.inventory);
-  IsarUint8List? inventory;
+  IsarUint8List? _inventory;
   if (value24 != null) {
-    inventory = IsarBinaryWriter.utf8Encoder.convert(value24);
+    _inventory = IsarBinaryWriter.utf8Encoder.convert(value24);
   }
-  dynamicSize += (inventory?.length ?? 0) as int;
+  dynamicSize += (_inventory?.length ?? 0) as int;
   final value25 =
       _destinyInventoryItemDefinitionDestinyItemInvestmentStatDefinitionListConverter
           .toIsar(object.investmentStats);
@@ -344,30 +344,30 @@ void _destinyInventoryItemDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final investmentStats = bytesList25;
+  final _investmentStats = bytesList25;
   final value26 = object.isWrapper;
-  final isWrapper = value26;
+  final _isWrapper = value26;
   final value27 = object.itemCategoryHashes;
   dynamicSize += (value27?.length ?? 0) * 8;
-  final itemCategoryHashes = value27;
+  final _itemCategoryHashes = value27;
   final value28 = _destinyInventoryItemDefinitionDestinyItemSubTypeConverter
       .toIsar(object.itemSubType);
-  final itemSubType = value28;
+  final _itemSubType = value28;
   final value29 = _destinyInventoryItemDefinitionDestinyItemTypeConverter
       .toIsar(object.itemType);
-  final itemType = value29;
+  final _itemType = value29;
   final value30 = object.itemTypeAndTierDisplayName;
-  IsarUint8List? itemTypeAndTierDisplayName;
+  IsarUint8List? _itemTypeAndTierDisplayName;
   if (value30 != null) {
-    itemTypeAndTierDisplayName = IsarBinaryWriter.utf8Encoder.convert(value30);
+    _itemTypeAndTierDisplayName = IsarBinaryWriter.utf8Encoder.convert(value30);
   }
-  dynamicSize += (itemTypeAndTierDisplayName?.length ?? 0) as int;
+  dynamicSize += (_itemTypeAndTierDisplayName?.length ?? 0) as int;
   final value31 = object.itemTypeDisplayName;
-  IsarUint8List? itemTypeDisplayName;
+  IsarUint8List? _itemTypeDisplayName;
   if (value31 != null) {
-    itemTypeDisplayName = IsarBinaryWriter.utf8Encoder.convert(value31);
+    _itemTypeDisplayName = IsarBinaryWriter.utf8Encoder.convert(value31);
   }
-  dynamicSize += (itemTypeDisplayName?.length ?? 0) as int;
+  dynamicSize += (_itemTypeDisplayName?.length ?? 0) as int;
   final value32 = _destinyInventoryItemDefinitionHyperlinkReferenceListConverter
       .toIsar(object.links);
   dynamicSize += (value32?.length ?? 0) * 8;
@@ -380,27 +380,27 @@ void _destinyInventoryItemDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final links = bytesList32;
+  final _links = bytesList32;
   final value33 = object.loreHash;
-  final loreHash = value33;
+  final _loreHash = value33;
   final value34 =
       _destinyInventoryItemDefinitionDestinyItemMetricBlockDefinitionConverter
           .toIsar(object.metrics);
-  IsarUint8List? metrics;
+  IsarUint8List? _metrics;
   if (value34 != null) {
-    metrics = IsarBinaryWriter.utf8Encoder.convert(value34);
+    _metrics = IsarBinaryWriter.utf8Encoder.convert(value34);
   }
-  dynamicSize += (metrics?.length ?? 0) as int;
+  dynamicSize += (_metrics?.length ?? 0) as int;
   final value35 = object.nonTransferrable;
-  final nonTransferrable = value35;
+  final _nonTransferrable = value35;
   final value36 =
       _destinyInventoryItemDefinitionDestinyItemObjectiveBlockDefinitionConverter
           .toIsar(object.objectives);
-  IsarUint8List? objectives;
+  IsarUint8List? _objectives;
   if (value36 != null) {
-    objectives = IsarBinaryWriter.utf8Encoder.convert(value36);
+    _objectives = IsarBinaryWriter.utf8Encoder.convert(value36);
   }
-  dynamicSize += (objectives?.length ?? 0) as int;
+  dynamicSize += (_objectives?.length ?? 0) as int;
   final value37 =
       _destinyInventoryItemDefinitionDestinyItemPerkEntryDefinitionListConverter
           .toIsar(object.perks);
@@ -414,120 +414,120 @@ void _destinyInventoryItemDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final perks = bytesList37;
+  final _perks = bytesList37;
   final value38 =
       _destinyInventoryItemDefinitionDestinyItemPlugDefinitionConverter
           .toIsar(object.plug);
-  IsarUint8List? plug;
+  IsarUint8List? _plug;
   if (value38 != null) {
-    plug = IsarBinaryWriter.utf8Encoder.convert(value38);
+    _plug = IsarBinaryWriter.utf8Encoder.convert(value38);
   }
-  dynamicSize += (plug?.length ?? 0) as int;
+  dynamicSize += (_plug?.length ?? 0) as int;
   final value39 =
       _destinyInventoryItemDefinitionDestinyItemPreviewBlockDefinitionConverter
           .toIsar(object.preview);
-  IsarUint8List? preview;
+  IsarUint8List? _preview;
   if (value39 != null) {
-    preview = IsarBinaryWriter.utf8Encoder.convert(value39);
+    _preview = IsarBinaryWriter.utf8Encoder.convert(value39);
   }
-  dynamicSize += (preview?.length ?? 0) as int;
+  dynamicSize += (_preview?.length ?? 0) as int;
   final value40 =
       _destinyInventoryItemDefinitionDestinyItemQualityBlockDefinitionConverter
           .toIsar(object.quality);
-  IsarUint8List? quality;
+  IsarUint8List? _quality;
   if (value40 != null) {
-    quality = IsarBinaryWriter.utf8Encoder.convert(value40);
+    _quality = IsarBinaryWriter.utf8Encoder.convert(value40);
   }
-  dynamicSize += (quality?.length ?? 0) as int;
+  dynamicSize += (_quality?.length ?? 0) as int;
   final value41 = object.redacted;
-  final redacted = value41;
+  final _redacted = value41;
   final value42 =
       _destinyInventoryItemDefinitionDestinyItemSackBlockDefinitionConverter
           .toIsar(object.sack);
-  IsarUint8List? sack;
+  IsarUint8List? _sack;
   if (value42 != null) {
-    sack = IsarBinaryWriter.utf8Encoder.convert(value42);
+    _sack = IsarBinaryWriter.utf8Encoder.convert(value42);
   }
-  dynamicSize += (sack?.length ?? 0) as int;
+  dynamicSize += (_sack?.length ?? 0) as int;
   final value43 = object.screenshot;
-  IsarUint8List? screenshot;
+  IsarUint8List? _screenshot;
   if (value43 != null) {
-    screenshot = IsarBinaryWriter.utf8Encoder.convert(value43);
+    _screenshot = IsarBinaryWriter.utf8Encoder.convert(value43);
   }
-  dynamicSize += (screenshot?.length ?? 0) as int;
+  dynamicSize += (_screenshot?.length ?? 0) as int;
   final value44 = object.seasonHash;
-  final seasonHash = value44;
+  final _seasonHash = value44;
   final value45 = object.secondaryIcon;
-  IsarUint8List? secondaryIcon;
+  IsarUint8List? _secondaryIcon;
   if (value45 != null) {
-    secondaryIcon = IsarBinaryWriter.utf8Encoder.convert(value45);
+    _secondaryIcon = IsarBinaryWriter.utf8Encoder.convert(value45);
   }
-  dynamicSize += (secondaryIcon?.length ?? 0) as int;
+  dynamicSize += (_secondaryIcon?.length ?? 0) as int;
   final value46 = object.secondaryOverlay;
-  IsarUint8List? secondaryOverlay;
+  IsarUint8List? _secondaryOverlay;
   if (value46 != null) {
-    secondaryOverlay = IsarBinaryWriter.utf8Encoder.convert(value46);
+    _secondaryOverlay = IsarBinaryWriter.utf8Encoder.convert(value46);
   }
-  dynamicSize += (secondaryOverlay?.length ?? 0) as int;
+  dynamicSize += (_secondaryOverlay?.length ?? 0) as int;
   final value47 = object.secondarySpecial;
-  IsarUint8List? secondarySpecial;
+  IsarUint8List? _secondarySpecial;
   if (value47 != null) {
-    secondarySpecial = IsarBinaryWriter.utf8Encoder.convert(value47);
+    _secondarySpecial = IsarBinaryWriter.utf8Encoder.convert(value47);
   }
-  dynamicSize += (secondarySpecial?.length ?? 0) as int;
+  dynamicSize += (_secondarySpecial?.length ?? 0) as int;
   final value48 =
       _destinyInventoryItemDefinitionDestinyItemSetBlockDefinitionConverter
           .toIsar(object.setData);
-  IsarUint8List? setData;
+  IsarUint8List? _setData;
   if (value48 != null) {
-    setData = IsarBinaryWriter.utf8Encoder.convert(value48);
+    _setData = IsarBinaryWriter.utf8Encoder.convert(value48);
   }
-  dynamicSize += (setData?.length ?? 0) as int;
+  dynamicSize += (_setData?.length ?? 0) as int;
   final value49 =
       _destinyInventoryItemDefinitionDestinyItemSocketBlockDefinitionConverter
           .toIsar(object.sockets);
-  IsarUint8List? sockets;
+  IsarUint8List? _sockets;
   if (value49 != null) {
-    sockets = IsarBinaryWriter.utf8Encoder.convert(value49);
+    _sockets = IsarBinaryWriter.utf8Encoder.convert(value49);
   }
-  dynamicSize += (sockets?.length ?? 0) as int;
+  dynamicSize += (_sockets?.length ?? 0) as int;
   final value50 =
       _destinyInventoryItemDefinitionDestinyItemSourceBlockDefinitionConverter
           .toIsar(object.sourceData);
-  IsarUint8List? sourceData;
+  IsarUint8List? _sourceData;
   if (value50 != null) {
-    sourceData = IsarBinaryWriter.utf8Encoder.convert(value50);
+    _sourceData = IsarBinaryWriter.utf8Encoder.convert(value50);
   }
-  dynamicSize += (sourceData?.length ?? 0) as int;
+  dynamicSize += (_sourceData?.length ?? 0) as int;
   final value51 = _destinyInventoryItemDefinitionSpecialItemTypeConverter
       .toIsar(object.specialItemType);
-  final specialItemType = value51;
+  final _specialItemType = value51;
   final value52 =
       _destinyInventoryItemDefinitionDestinyItemStatBlockDefinitionConverter
           .toIsar(object.stats);
-  IsarUint8List? stats;
+  IsarUint8List? _stats;
   if (value52 != null) {
-    stats = IsarBinaryWriter.utf8Encoder.convert(value52);
+    _stats = IsarBinaryWriter.utf8Encoder.convert(value52);
   }
-  dynamicSize += (stats?.length ?? 0) as int;
+  dynamicSize += (_stats?.length ?? 0) as int;
   final value53 =
       _destinyInventoryItemDefinitionDestinyItemSummaryBlockDefinitionConverter
           .toIsar(object.summary);
-  IsarUint8List? summary;
+  IsarUint8List? _summary;
   if (value53 != null) {
-    summary = IsarBinaryWriter.utf8Encoder.convert(value53);
+    _summary = IsarBinaryWriter.utf8Encoder.convert(value53);
   }
-  dynamicSize += (summary?.length ?? 0) as int;
+  dynamicSize += (_summary?.length ?? 0) as int;
   final value54 = object.summaryItemHash;
-  final summaryItemHash = value54;
+  final _summaryItemHash = value54;
   final value55 =
       _destinyInventoryItemDefinitionDestinyItemTalentGridBlockDefinitionConverter
           .toIsar(object.talentGrid);
-  IsarUint8List? talentGrid;
+  IsarUint8List? _talentGrid;
   if (value55 != null) {
-    talentGrid = IsarBinaryWriter.utf8Encoder.convert(value55);
+    _talentGrid = IsarBinaryWriter.utf8Encoder.convert(value55);
   }
-  dynamicSize += (talentGrid?.length ?? 0) as int;
+  dynamicSize += (_talentGrid?.length ?? 0) as int;
   final value56 =
       _destinyInventoryItemDefinitionDestinyItemTooltipNotificationListConverter
           .toIsar(object.tooltipNotifications);
@@ -541,16 +541,16 @@ void _destinyInventoryItemDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final tooltipNotifications = bytesList56;
+  final _tooltipNotifications = bytesList56;
   final value57 = object.tooltipStyle;
-  IsarUint8List? tooltipStyle;
+  IsarUint8List? _tooltipStyle;
   if (value57 != null) {
-    tooltipStyle = IsarBinaryWriter.utf8Encoder.convert(value57);
+    _tooltipStyle = IsarBinaryWriter.utf8Encoder.convert(value57);
   }
-  dynamicSize += (tooltipStyle?.length ?? 0) as int;
+  dynamicSize += (_tooltipStyle?.length ?? 0) as int;
   final value58 = object.traitHashes;
   dynamicSize += (value58?.length ?? 0) * 8;
-  final traitHashes = value58;
+  final _traitHashes = value58;
   final value59 = object.traitIds;
   dynamicSize += (value59?.length ?? 0) * 8;
   List<IsarUint8List?>? bytesList59;
@@ -562,98 +562,98 @@ void _destinyInventoryItemDefinitionSerializeNative(
       dynamicSize += bytes.length as int;
     }
   }
-  final traitIds = bytesList59;
+  final _traitIds = bytesList59;
   final value60 =
       _destinyInventoryItemDefinitionDestinyItemTranslationBlockDefinitionConverter
           .toIsar(object.translationBlock);
-  IsarUint8List? translationBlock;
+  IsarUint8List? _translationBlock;
   if (value60 != null) {
-    translationBlock = IsarBinaryWriter.utf8Encoder.convert(value60);
+    _translationBlock = IsarBinaryWriter.utf8Encoder.convert(value60);
   }
-  dynamicSize += (translationBlock?.length ?? 0) as int;
+  dynamicSize += (_translationBlock?.length ?? 0) as int;
   final value61 = object.uiItemDisplayStyle;
-  IsarUint8List? uiItemDisplayStyle;
+  IsarUint8List? _uiItemDisplayStyle;
   if (value61 != null) {
-    uiItemDisplayStyle = IsarBinaryWriter.utf8Encoder.convert(value61);
+    _uiItemDisplayStyle = IsarBinaryWriter.utf8Encoder.convert(value61);
   }
-  dynamicSize += (uiItemDisplayStyle?.length ?? 0) as int;
+  dynamicSize += (_uiItemDisplayStyle?.length ?? 0) as int;
   final value62 =
       _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter
           .toIsar(object.value);
-  IsarUint8List? value;
+  IsarUint8List? _value;
   if (value62 != null) {
-    value = IsarBinaryWriter.utf8Encoder.convert(value62);
+    _value = IsarBinaryWriter.utf8Encoder.convert(value62);
   }
-  dynamicSize += (value?.length ?? 0) as int;
+  dynamicSize += (_value?.length ?? 0) as int;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeBytes(offsets[0], action);
-  writer.writeBool(offsets[1], allowActions);
-  writer.writeStringList(offsets[2], animations);
-  writer.writeBytes(offsets[3], backgroundColor);
-  writer.writeLong(offsets[4], breakerType);
-  writer.writeLong(offsets[5], breakerTypeHash);
-  writer.writeLong(offsets[6], classType);
-  writer.writeLong(offsets[7], collectibleHash);
-  writer.writeBytes(offsets[8], crafting);
-  writer.writeLongList(offsets[9], damageTypeHashes);
-  writer.writeLongList(offsets[10], damageTypes);
-  writer.writeLong(offsets[11], defaultDamageType);
-  writer.writeLong(offsets[12], defaultDamageTypeHash);
-  writer.writeBytes(offsets[13], displayProperties);
-  writer.writeBytes(offsets[14], displaySource);
-  writer.writeBool(offsets[15], doesPostmasterPullHaveSideEffects);
-  writer.writeLong(offsets[16], emblemObjectiveHash);
-  writer.writeBool(offsets[17], equippable);
-  writer.writeBytes(offsets[18], equippingBlock);
-  writer.writeBytes(offsets[19], flavorText);
-  writer.writeBytes(offsets[20], gearset);
-  writer.writeBytes(offsets[21], iconWatermark);
-  writer.writeBytes(offsets[22], iconWatermarkShelved);
-  writer.writeLong(offsets[23], index);
-  writer.writeBytes(offsets[24], inventory);
-  writer.writeStringList(offsets[25], investmentStats);
-  writer.writeBool(offsets[26], isWrapper);
-  writer.writeLongList(offsets[27], itemCategoryHashes);
-  writer.writeLong(offsets[28], itemSubType);
-  writer.writeLong(offsets[29], itemType);
-  writer.writeBytes(offsets[30], itemTypeAndTierDisplayName);
-  writer.writeBytes(offsets[31], itemTypeDisplayName);
-  writer.writeStringList(offsets[32], links);
-  writer.writeLong(offsets[33], loreHash);
-  writer.writeBytes(offsets[34], metrics);
-  writer.writeBool(offsets[35], nonTransferrable);
-  writer.writeBytes(offsets[36], objectives);
-  writer.writeStringList(offsets[37], perks);
-  writer.writeBytes(offsets[38], plug);
-  writer.writeBytes(offsets[39], preview);
-  writer.writeBytes(offsets[40], quality);
-  writer.writeBool(offsets[41], redacted);
-  writer.writeBytes(offsets[42], sack);
-  writer.writeBytes(offsets[43], screenshot);
-  writer.writeLong(offsets[44], seasonHash);
-  writer.writeBytes(offsets[45], secondaryIcon);
-  writer.writeBytes(offsets[46], secondaryOverlay);
-  writer.writeBytes(offsets[47], secondarySpecial);
-  writer.writeBytes(offsets[48], setData);
-  writer.writeBytes(offsets[49], sockets);
-  writer.writeBytes(offsets[50], sourceData);
-  writer.writeLong(offsets[51], specialItemType);
-  writer.writeBytes(offsets[52], stats);
-  writer.writeBytes(offsets[53], summary);
-  writer.writeLong(offsets[54], summaryItemHash);
-  writer.writeBytes(offsets[55], talentGrid);
-  writer.writeStringList(offsets[56], tooltipNotifications);
-  writer.writeBytes(offsets[57], tooltipStyle);
-  writer.writeLongList(offsets[58], traitHashes);
-  writer.writeStringList(offsets[59], traitIds);
-  writer.writeBytes(offsets[60], translationBlock);
-  writer.writeBytes(offsets[61], uiItemDisplayStyle);
-  writer.writeBytes(offsets[62], value);
+  writer.writeBytes(offsets[0], _action);
+  writer.writeBool(offsets[1], _allowActions);
+  writer.writeStringList(offsets[2], _animations);
+  writer.writeBytes(offsets[3], _backgroundColor);
+  writer.writeLong(offsets[4], _breakerType);
+  writer.writeLong(offsets[5], _breakerTypeHash);
+  writer.writeLong(offsets[6], _classType);
+  writer.writeLong(offsets[7], _collectibleHash);
+  writer.writeBytes(offsets[8], _crafting);
+  writer.writeLongList(offsets[9], _damageTypeHashes);
+  writer.writeLongList(offsets[10], _damageTypes);
+  writer.writeLong(offsets[11], _defaultDamageType);
+  writer.writeLong(offsets[12], _defaultDamageTypeHash);
+  writer.writeBytes(offsets[13], _displayProperties);
+  writer.writeBytes(offsets[14], _displaySource);
+  writer.writeBool(offsets[15], _doesPostmasterPullHaveSideEffects);
+  writer.writeLong(offsets[16], _emblemObjectiveHash);
+  writer.writeBool(offsets[17], _equippable);
+  writer.writeBytes(offsets[18], _equippingBlock);
+  writer.writeBytes(offsets[19], _flavorText);
+  writer.writeBytes(offsets[20], _gearset);
+  writer.writeBytes(offsets[21], _iconWatermark);
+  writer.writeBytes(offsets[22], _iconWatermarkShelved);
+  writer.writeLong(offsets[23], _index);
+  writer.writeBytes(offsets[24], _inventory);
+  writer.writeStringList(offsets[25], _investmentStats);
+  writer.writeBool(offsets[26], _isWrapper);
+  writer.writeLongList(offsets[27], _itemCategoryHashes);
+  writer.writeLong(offsets[28], _itemSubType);
+  writer.writeLong(offsets[29], _itemType);
+  writer.writeBytes(offsets[30], _itemTypeAndTierDisplayName);
+  writer.writeBytes(offsets[31], _itemTypeDisplayName);
+  writer.writeStringList(offsets[32], _links);
+  writer.writeLong(offsets[33], _loreHash);
+  writer.writeBytes(offsets[34], _metrics);
+  writer.writeBool(offsets[35], _nonTransferrable);
+  writer.writeBytes(offsets[36], _objectives);
+  writer.writeStringList(offsets[37], _perks);
+  writer.writeBytes(offsets[38], _plug);
+  writer.writeBytes(offsets[39], _preview);
+  writer.writeBytes(offsets[40], _quality);
+  writer.writeBool(offsets[41], _redacted);
+  writer.writeBytes(offsets[42], _sack);
+  writer.writeBytes(offsets[43], _screenshot);
+  writer.writeLong(offsets[44], _seasonHash);
+  writer.writeBytes(offsets[45], _secondaryIcon);
+  writer.writeBytes(offsets[46], _secondaryOverlay);
+  writer.writeBytes(offsets[47], _secondarySpecial);
+  writer.writeBytes(offsets[48], _setData);
+  writer.writeBytes(offsets[49], _sockets);
+  writer.writeBytes(offsets[50], _sourceData);
+  writer.writeLong(offsets[51], _specialItemType);
+  writer.writeBytes(offsets[52], _stats);
+  writer.writeBytes(offsets[53], _summary);
+  writer.writeLong(offsets[54], _summaryItemHash);
+  writer.writeBytes(offsets[55], _talentGrid);
+  writer.writeStringList(offsets[56], _tooltipNotifications);
+  writer.writeBytes(offsets[57], _tooltipStyle);
+  writer.writeLongList(offsets[58], _traitHashes);
+  writer.writeStringList(offsets[59], _traitIds);
+  writer.writeBytes(offsets[60], _translationBlock);
+  writer.writeBytes(offsets[61], _uiItemDisplayStyle);
+  writer.writeBytes(offsets[62], _value);
 }
 
 DestinyInventoryItemDefinition _destinyInventoryItemDefinitionDeserializeNative(

@@ -1,31 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
-import 'package:quria/data/models/helpers/builderHelper.model.dart';
-import 'package:quria/data/models/helpers/modHelper.model.dart';
+import 'package:quria/data/providers/builder/builder_mods_provider.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_steps.dart';
 import 'package:quria/presentation/screens/builder/mods/mods_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ModsPage extends StatefulWidget {
-  final ModHelper data;
-  const ModsPage({required this.data, Key? key}) : super(key: key);
-
-  @override
-  State<ModsPage> createState() => _ModsPageState();
-}
-
-class _ModsPageState extends State<ModsPage> {
-  List<ModSlots> armorMods = [];
-  @override
-  void initState() {
-    super.initState();
-  }
+class ModsPage extends StatelessWidget {
+  const ModsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<ModSlots> armorMods = Provider.of<BuilderModsProvider>(context).mods;
+
     if (armorMods.isEmpty) {
       armorMods = [
         // helmet
@@ -114,24 +104,16 @@ class _ModsPageState extends State<ModsPage> {
                   .manifestParsed.destinyInventoryItemDefinition[2493100093],
             ]),
       ];
+      Provider.of<BuilderModsProvider>(context, listen: false).init(armorMods);
     }
     if (vw(context) < 1000) {
-      return ScaffoldSteps<BuilderPreparation>(
+      return ScaffoldSteps(
         route: routeBuilder,
-        arguments: BuilderPreparation(
-            characterId: widget.data.characterId,
-            subclassInstanceId: widget.data.subclassInstanceId,
-            statOrder: widget.data.statOrder,
-            exoticHash: widget.data.exoticHash,
-            armorMods: armorMods,
-            subclassMods: widget.data.subclassMods,
-            classItemInstanceId: widget.data.classItemInstanceId),
         body: ModsMobileView(
           armorMods: armorMods,
           onChange: (newMods) {
-            setState(() {
-              armorMods = newMods;
-            });
+            Provider.of<BuilderModsProvider>(context, listen: false)
+                .setMods(newMods);
           },
         ),
       );

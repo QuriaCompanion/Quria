@@ -6,7 +6,7 @@ part of 'destiny_class_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyClassDefinitionCollection on Isar {
   IsarCollection<DestinyClassDefinition> get destinyClassDefinitions =>
@@ -42,7 +42,7 @@ const DestinyClassDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyClassDefinitionSerializeWeb,
   deserializeWeb: _destinyClassDefinitionDeserializeWeb,
   deserializePropWeb: _destinyClassDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyClassDefinitionGetId(DestinyClassDefinition object) {
@@ -69,7 +69,7 @@ const _destinyClassDefinitionMapConverter = MapConverter();
 
 void _destinyClassDefinitionSerializeNative(
     IsarCollection<DestinyClassDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyClassDefinition object,
     int staticSize,
     List<int> offsets,
@@ -77,49 +77,49 @@ void _destinyClassDefinitionSerializeNative(
   var dynamicSize = 0;
   final value0 =
       _destinyClassDefinitionDestinyClassConverter.toIsar(object.classType);
-  final classType = value0;
+  final _classType = value0;
   final value1 =
       _destinyClassDefinitionDestinyDisplayPropertiesDefinitionConverter
           .toIsar(object.displayProperties);
-  IsarUint8List? displayProperties;
+  IsarUint8List? _displayProperties;
   if (value1 != null) {
-    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value1);
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value1);
   }
-  dynamicSize += (displayProperties?.length ?? 0) as int;
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
   final value2 =
       _destinyClassDefinitionMapConverter.toIsar(object.genderedClassNames);
-  IsarUint8List? genderedClassNames;
+  IsarUint8List? _genderedClassNames;
   if (value2 != null) {
-    genderedClassNames = IsarBinaryWriter.utf8Encoder.convert(value2);
+    _genderedClassNames = IsarBinaryWriter.utf8Encoder.convert(value2);
   }
-  dynamicSize += (genderedClassNames?.length ?? 0) as int;
+  dynamicSize += (_genderedClassNames?.length ?? 0) as int;
   final value3 = _destinyClassDefinitionMapConverter
       .toIsar(object.genderedClassNamesByGenderHash);
-  IsarUint8List? genderedClassNamesByGenderHash;
+  IsarUint8List? _genderedClassNamesByGenderHash;
   if (value3 != null) {
-    genderedClassNamesByGenderHash =
+    _genderedClassNamesByGenderHash =
         IsarBinaryWriter.utf8Encoder.convert(value3);
   }
-  dynamicSize += (genderedClassNamesByGenderHash?.length ?? 0) as int;
+  dynamicSize += (_genderedClassNamesByGenderHash?.length ?? 0) as int;
   final value4 = object.index;
-  final index = value4;
+  final _index = value4;
   final value5 = object.mentorVendorHash;
-  final mentorVendorHash = value5;
+  final _mentorVendorHash = value5;
   final value6 = object.redacted;
-  final redacted = value6;
+  final _redacted = value6;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLong(offsets[0], classType);
-  writer.writeBytes(offsets[1], displayProperties);
-  writer.writeBytes(offsets[2], genderedClassNames);
-  writer.writeBytes(offsets[3], genderedClassNamesByGenderHash);
-  writer.writeLong(offsets[4], index);
-  writer.writeLong(offsets[5], mentorVendorHash);
-  writer.writeBool(offsets[6], redacted);
+  writer.writeLong(offsets[0], _classType);
+  writer.writeBytes(offsets[1], _displayProperties);
+  writer.writeBytes(offsets[2], _genderedClassNames);
+  writer.writeBytes(offsets[3], _genderedClassNamesByGenderHash);
+  writer.writeLong(offsets[4], _index);
+  writer.writeLong(offsets[5], _mentorVendorHash);
+  writer.writeBool(offsets[6], _redacted);
 }
 
 DestinyClassDefinition _destinyClassDefinitionDeserializeNative(

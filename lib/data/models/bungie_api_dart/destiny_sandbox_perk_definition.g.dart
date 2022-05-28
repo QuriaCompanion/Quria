@@ -6,7 +6,7 @@ part of 'destiny_sandbox_perk_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinySandboxPerkDefinitionCollection on Isar {
   IsarCollection<DestinySandboxPerkDefinition>
@@ -43,7 +43,7 @@ const DestinySandboxPerkDefinitionSchema = CollectionSchema(
   serializeWeb: _destinySandboxPerkDefinitionSerializeWeb,
   deserializeWeb: _destinySandboxPerkDefinitionDeserializeWeb,
   deserializePropWeb: _destinySandboxPerkDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinySandboxPerkDefinitionGetId(DestinySandboxPerkDefinition object) {
@@ -72,7 +72,7 @@ const _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter =
 
 void _destinySandboxPerkDefinitionSerializeNative(
     IsarCollection<DestinySandboxPerkDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinySandboxPerkDefinition object,
     int staticSize,
     List<int> offsets,
@@ -80,51 +80,51 @@ void _destinySandboxPerkDefinitionSerializeNative(
   var dynamicSize = 0;
   final value0 = _destinySandboxPerkDefinitionDamageTypeConverter
       .toIsar(object.damageType);
-  final damageType = value0;
+  final _damageType = value0;
   final value1 = object.damageTypeHash;
-  final damageTypeHash = value1;
+  final _damageTypeHash = value1;
   final value2 =
       _destinySandboxPerkDefinitionDestinyDisplayPropertiesDefinitionConverter
           .toIsar(object.displayProperties);
-  IsarUint8List? displayProperties;
+  IsarUint8List? _displayProperties;
   if (value2 != null) {
-    displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
+    _displayProperties = IsarBinaryWriter.utf8Encoder.convert(value2);
   }
-  dynamicSize += (displayProperties?.length ?? 0) as int;
+  dynamicSize += (_displayProperties?.length ?? 0) as int;
   final value3 = object.index;
-  final index = value3;
+  final _index = value3;
   final value4 = object.isDisplayable;
-  final isDisplayable = value4;
+  final _isDisplayable = value4;
   final value5 =
       _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter
           .toIsar(object.perkGroups);
-  IsarUint8List? perkGroups;
+  IsarUint8List? _perkGroups;
   if (value5 != null) {
-    perkGroups = IsarBinaryWriter.utf8Encoder.convert(value5);
+    _perkGroups = IsarBinaryWriter.utf8Encoder.convert(value5);
   }
-  dynamicSize += (perkGroups?.length ?? 0) as int;
+  dynamicSize += (_perkGroups?.length ?? 0) as int;
   final value6 = object.perkIdentifier;
-  IsarUint8List? perkIdentifier;
+  IsarUint8List? _perkIdentifier;
   if (value6 != null) {
-    perkIdentifier = IsarBinaryWriter.utf8Encoder.convert(value6);
+    _perkIdentifier = IsarBinaryWriter.utf8Encoder.convert(value6);
   }
-  dynamicSize += (perkIdentifier?.length ?? 0) as int;
+  dynamicSize += (_perkIdentifier?.length ?? 0) as int;
   final value7 = object.redacted;
-  final redacted = value7;
+  final _redacted = value7;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
-  writer.writeLong(offsets[0], damageType);
-  writer.writeLong(offsets[1], damageTypeHash);
-  writer.writeBytes(offsets[2], displayProperties);
-  writer.writeLong(offsets[3], index);
-  writer.writeBool(offsets[4], isDisplayable);
-  writer.writeBytes(offsets[5], perkGroups);
-  writer.writeBytes(offsets[6], perkIdentifier);
-  writer.writeBool(offsets[7], redacted);
+  writer.writeLong(offsets[0], _damageType);
+  writer.writeLong(offsets[1], _damageTypeHash);
+  writer.writeBytes(offsets[2], _displayProperties);
+  writer.writeLong(offsets[3], _index);
+  writer.writeBool(offsets[4], _isDisplayable);
+  writer.writeBytes(offsets[5], _perkGroups);
+  writer.writeBytes(offsets[6], _perkIdentifier);
+  writer.writeBool(offsets[7], _redacted);
 }
 
 DestinySandboxPerkDefinition _destinySandboxPerkDefinitionDeserializeNative(
