@@ -8,12 +8,12 @@ import 'package:quria/data/models/helpers/itemCardHelper.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display.dart';
 
-class ProfileMobileItemCard extends StatefulWidget {
+class ProfileDesktopItemCard extends StatefulWidget {
   final DestinyItemComponent item;
   final String characterId;
   final List<DestinyItemComponent> inventory;
   final void Function(InspectData) onClick;
-  const ProfileMobileItemCard({
+  const ProfileDesktopItemCard({
     required this.characterId,
     required this.inventory,
     required this.onClick,
@@ -22,10 +22,10 @@ class ProfileMobileItemCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ProfileMobileItemCard> createState() => _ProfileMobileItemCardState();
+  State<ProfileDesktopItemCard> createState() => _ProfileDesktopItemCardState();
 }
 
-class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
+class _ProfileDesktopItemCardState extends State<ProfileDesktopItemCard> {
   late ItemCardHelper data;
   bool isOpen = false;
   @override
@@ -36,7 +36,7 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
   }
 
   @override
-  void didUpdateWidget(covariant ProfileMobileItemCard oldWidget) {
+  void didUpdateWidget(covariant ProfileDesktopItemCard oldWidget) {
     super.didUpdateWidget(oldWidget);
     data = DisplayService()
         .getCardData(widget.item.itemInstanceId!, widget.item.itemHash);
@@ -79,7 +79,7 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
           elementIcon: data.elementIcon,
           powerLevel: data.powerLevel,
           perks: data.perks,
-          width: vw(context),
+          width: vw(context) * 0.5,
           cosmetics: data.intristics,
           armorSockets: data.armorSockets,
           characterId: widget.characterId),
@@ -96,7 +96,7 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
                 .getCardData(item.itemInstanceId!, item.itemHash);
             return Padding(
               padding:
-                  EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
+                  EdgeInsets.symmetric(vertical: globalPadding(context) / 4),
               child: ItemComponentDisplay(
                   onClick: (inspectData) {
                     widget.onClick(inspectData);
@@ -106,7 +106,7 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
                   elementIcon: dataItem.elementIcon,
                   powerLevel: dataItem.powerLevel,
                   perks: dataItem.perks,
-                  width: vw(context),
+                  width: vw(context) * 0.5,
                   cosmetics: dataItem.intristics,
                   armorSockets: dataItem.armorSockets,
                   characterId: widget.characterId),

@@ -20,19 +20,21 @@ class ItemComponentDisplay extends StatefulWidget {
   final List<DestinyItemSocketState> cosmetics;
   final List<DestinyItemSocketState> armorSockets;
   final void Function(InspectData) onClick;
+  final double width;
 
-  const ItemComponentDisplay(
-      {required this.item,
-      required this.itemDef,
-      required this.elementIcon,
-      required this.powerLevel,
-      required this.perks,
-      required this.cosmetics,
-      required this.characterId,
-      required this.armorSockets,
-      required this.onClick,
-      Key? key})
-      : super(key: key);
+  const ItemComponentDisplay({
+    required this.item,
+    required this.itemDef,
+    required this.elementIcon,
+    required this.powerLevel,
+    required this.perks,
+    required this.cosmetics,
+    required this.characterId,
+    required this.armorSockets,
+    required this.onClick,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ItemComponentDisplay> createState() => _ItemComponentDisplayState();
@@ -63,7 +65,7 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
 
   @override
   Widget build(BuildContext context) {
-    double iconSize = vw(context) / 6.69;
+    double iconSize = widget.width / 6.69;
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -83,8 +85,9 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
                 ),
                 SizedBox(width: globalPadding(context)),
                 SizedBox(
-                  width:
-                      vw(context) - (iconSize * 2) - globalPadding(context) * 3,
+                  width: widget.width -
+                      (iconSize * 2) -
+                      globalPadding(context) * 3,
                   height: iconSize,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -155,6 +158,7 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
                 cosmetics: widget.cosmetics,
                 itemDef: widget.itemDef,
                 armorSockets: widget.armorSockets,
+                width: widget.width,
               )
             ],
           )

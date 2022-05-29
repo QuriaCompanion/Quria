@@ -11,6 +11,7 @@ import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
+import 'package:quria/presentation/screens/profile/profile_desktop_view.dart';
 import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -112,8 +113,17 @@ class _ProfileWidgetState extends State<ProfileWidget> {
               );
             }
             if (vw(context) > 1000) {
-              return Column(
-                children: const [],
+              return Scaffold(
+                backgroundColor: black,
+                body: SingleChildScrollView(
+                  child: ProfileDesktopView(
+                      data: data,
+                      onClick: (inspectData) {
+                        Navigator.pushNamed(context, routeInspectMobile,
+                                arguments: inspectData)
+                            .then((_) => setState(() {}));
+                      }),
+                ),
               );
             } else {
               return ScaffoldCharacters(

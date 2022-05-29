@@ -109,6 +109,7 @@ class ItemModal extends StatelessWidget {
               cosmetics: data.intristics,
               itemDef: data.itemDef,
               armorSockets: data.armorSockets,
+              width: vw(context),
             ),
           ),
           Padding(

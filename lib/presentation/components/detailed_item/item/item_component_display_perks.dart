@@ -12,17 +12,19 @@ class ItemComponentDisplayPerks extends StatelessWidget {
   final List<DestinyItemSocketState> armorSockets;
   final DestinyInventoryItemDefinition itemDef;
   final List<DestinyItemSocketState> cosmetics;
+  final double width;
   const ItemComponentDisplayPerks({
     required this.itemDef,
     required this.perks,
     required this.cosmetics,
     required this.armorSockets,
+    required this.width,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double smallIconSize = vw(context) / 11.9;
+    double smallIconSize = width / 11.9;
     return Row(
       children: [
         for (DestinyItemSocketState perk in perks)

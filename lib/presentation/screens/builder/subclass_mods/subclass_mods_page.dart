@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/helpers/classItemChoiceHelper.model.dart';
 import 'package:quria/data/models/helpers/socketsHelper.model.dart';
 import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
@@ -39,7 +38,7 @@ class _SubclassModsPageState extends State<SubclassModsPage> {
     }
 
     if (vw(context) < 1000) {
-      return ScaffoldSteps<ClassItemChoiceHelper>(
+      return ScaffoldSteps(
           route: routeClassItemChoice,
           body: SubclassModsMobileView(
             sockets: sockets,

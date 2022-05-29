@@ -51,6 +51,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
               DestinyData.bungieLink + icon,
             ),
             child: ProfileMobileHeader(
+              width: vw(context),
               stats: widget.data.selectedCharacter!.stats,
               characterSuper: widget.data.characterSuper!,
               subclassId:
