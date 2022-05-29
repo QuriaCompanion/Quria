@@ -232,6 +232,20 @@ class ProfileService {
         }
       }
     }
+    inventoryItemIds.addAll([
+      204137529,
+      3961599962,
+      3682186345,
+      2850583378,
+      555005975,
+      2645858828,
+      1227870362,
+      3355995799,
+      2623485440,
+      4048838440,
+      3699676109,
+      3253038666
+    ]);
     await StorageService.getDefinitions<DestinyInventoryItemDefinition>(
         inventoryItemIds);
     await StorageService.getDefinitions<DestinyTalentGridDefinition>(talentIds);
