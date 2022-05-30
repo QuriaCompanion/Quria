@@ -44,7 +44,8 @@ class ArmorAfinity extends StatelessWidget {
                     ],
                   ),
                   textBodyRegular(
-                      '${AppLocalizations.of(context)!.unused}: $remaining'),
+                      '${AppLocalizations.of(context)!.unused}: $remaining',
+                      utf8: false),
                 ],
               ),
             )),

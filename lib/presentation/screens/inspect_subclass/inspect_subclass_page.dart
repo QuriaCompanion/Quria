@@ -14,7 +14,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
-import 'package:quria/presentation/components/misc/mobile_components/scaffold_base.dart';
+import 'package:quria/presentation/components/misc/mobile_components/scaffold_burger_and_back_option.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_mobile_view.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/talent_grid_mobile_view.dart';
 
@@ -40,7 +40,7 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
   @override
   Widget build(BuildContext context) {
     if (vw(context) < 1000) {
-      return ScaffoldBase(
+      return ScaffoldBurgerAndBackOption(
         body: Builder(builder: (context) {
           return Builder(builder: (context) {
             if (widget.data.isNewSubclass) {
