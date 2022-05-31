@@ -56,6 +56,9 @@ android {
         multiDexEnabled = true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+          ndk{
+                abiFilters 'armeabi-v7a','arm64-v8a','x86_64' 
+           }
     }
     signingConfigs {
        release {
@@ -63,9 +66,7 @@ android {
            keyPassword keystoreProperties['keyPassword']
            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
            storePassword keystoreProperties['storePassword']
-           ndk{
-                abiFilters 'armeabi-v7a','arm64-v8a','x86_64' 
-           }
+         
        }
    }
     buildTypes {
