@@ -116,7 +116,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                             }, onError: (_) => null);
                           }
                         },
-                        plugSetHash: widget.subclass.sockets!.socketEntries![i]
+                        plugSetHash: widget.subclass.sockets?.socketEntries?[i]
                             .reusablePlugSetHash)),
               mobileSectionInverted(context,
                   title: displayedSockets[5].itemTypeDisplayName ?? "Aspects",

@@ -63,6 +63,9 @@ android {
            keyPassword keystoreProperties['keyPassword']
            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
            storePassword keystoreProperties['storePassword']
+           ndk{
+                abiFilters 'armeabi-v7a','arm64-v8a','x86_64' 
+           }
        }
    }
     buildTypes {
