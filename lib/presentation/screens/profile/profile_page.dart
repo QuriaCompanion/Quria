@@ -87,8 +87,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           if (snapshot.hasData) {
             data = display.getProfileData();
             // set current character to provider
-            Provider.of<CharactersProvider>(context, listen: false)
-                .init(data.selectedCharacter!, data.characters);
             if (data.characters.isEmpty) {
               return Column(
                 children: [
@@ -111,6 +109,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 ],
               );
             }
+            Provider.of<CharactersProvider>(context, listen: false)
+                .init(data.selectedCharacter!, data.characters);
             if (vw(context) > 1000) {
               return Column(
                 children: const [],

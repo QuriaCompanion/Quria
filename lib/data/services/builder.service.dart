@@ -25,7 +25,7 @@ class BuilderService {
     Map<String, DestinyItemSocketsComponent> sockets = profile.getAllSockets();
 
     DestinyItemComponent classItem =
-        profile.getItemsByInstanceId([data.classItemInstanceId]).first;
+        profile.getItemByInstanceId(data.classItemInstanceId)!;
 
     BuilderHelper builder = BuilderHelper(
         statOrder: data.statOrder,
