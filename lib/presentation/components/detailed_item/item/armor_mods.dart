@@ -53,16 +53,19 @@ class _ArmorModsState extends State<ArmorMods> {
                     ?.plug
                     ?.plugCategoryHash !=
                 2973005342 &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition[element.plugHash]
+                    ?.plug
+                    ?.plugCategoryIdentifier !=
+                null &&
             !ManifestService
                 .manifestParsed
                 .destinyInventoryItemDefinition[element.plugHash]!
                 .plug!
                 .plugCategoryIdentifier!
                 .contains('masterworks.stat') &&
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.itemType !=
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemType !=
                 DestinyItemType.Armor &&
             ManifestService
                     .manifestParsed
