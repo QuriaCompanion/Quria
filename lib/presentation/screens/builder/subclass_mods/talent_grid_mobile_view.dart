@@ -69,6 +69,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
               mobileSectionInverted(
                 context,
                 title: AppLocalizations.of(context)!.class_ability,
+                utf8: false,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
@@ -80,6 +81,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
               mobileSectionInverted(
                 context,
                 title: AppLocalizations.of(context)!.jumps,
+                utf8: false,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
@@ -92,6 +94,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
               mobileSectionInverted(
                 context,
                 title: AppLocalizations.of(context)!.grenades,
+                utf8: false,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
@@ -104,6 +107,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
               mobileSectionInverted(
                 context,
                 title: AppLocalizations.of(context)!.sections,
+                utf8: false,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [

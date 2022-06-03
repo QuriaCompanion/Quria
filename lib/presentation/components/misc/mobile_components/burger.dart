@@ -55,8 +55,10 @@ class _BurgerState extends State<Burger> {
                 ),
                 const SizedBox(height: 16),
                 textH2(
-                    AccountService.membershipData?.bungieNetUser?.uniqueName ??
-                        "an error has occured")
+                  AccountService.membershipData?.bungieNetUser?.uniqueName ??
+                      "an error has occured",
+                  utf8: false,
+                )
               ],
             ),
           ),
