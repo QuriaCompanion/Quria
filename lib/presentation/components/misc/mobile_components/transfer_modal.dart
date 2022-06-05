@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
@@ -7,6 +8,7 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
+import 'package:quria/presentation/var/keys.dart';
 
 class TransferModal extends StatefulWidget {
   final String instanceId;
@@ -48,7 +50,10 @@ class _TransferModalState extends State<TransferModal> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  textH2("Transferer"),
+                  textH2(
+                    AppLocalizations.of(context)!.transfer,
+                    utf8: false,
+                  ),
                   InkWell(
                     onTap: () => Navigator.pop(context),
                     child: const CircleAvatar(
@@ -77,24 +82,31 @@ class _TransferModalState extends State<TransferModal> {
                 child: InkWell(
                   onTap: () async {
                     Navigator.pop(context);
-                    try {
-                      await BungieActionsService()
-                          .transferItem(
-                        widget.instanceId,
-                        character.characterId!,
-                        stackSize: 1,
-                        itemHash: widget.itemHash,
-                      )
-                          .then((_) {
-                        widget.onTransfer();
-                      });
-                    } catch (_) {
+                    await BungieActionsService()
+                        .transferItem(
+                      widget.instanceId,
+                      character.characterId!,
+                      stackSize: 1,
+                      itemHash: widget.itemHash,
+                    )
+                        .then((_) {
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                          .showSnackBar(SnackBar(
+                        content: textBodyMedium(
+                          AppLocalizations.of(context)!.item_transfered,
+                          utf8: false,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.green,
+                      ));
+                      widget.onTransfer();
+                    }, onError: (_) {
                       showDialog(
-                          context: context,
+                          context: scaffoldKey.currentContext!,
                           builder: (context) {
                             return const ErrorDialog();
                           });
-                    }
+                    });
                   },
                   child: CharacterTransferItem(
                     imageLink: DestinyData.bungieLink + character.emblemPath!,
@@ -133,10 +145,10 @@ class _TransferModalState extends State<TransferModal> {
                           });
                     }
                   },
-                  child: const CharacterTransferItem(
+                  child: CharacterTransferItem(
                     imageLink:
                         "https://www.bungie.net/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png",
-                    name: "Coffre",
+                    name: AppLocalizations.of(context)!.vault,
                     icon: "assets/icons/Transfer.svg",
                   ),
                 ),

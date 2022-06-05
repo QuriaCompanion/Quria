@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:bungie_api/models/user_membership_data.dart';
+import 'package:collection/collection.dart';
 
 import 'bungie_api.service.dart';
 
@@ -50,26 +51,23 @@ class AccountService {
 
   Future<GroupUserInfoCard?> getMembership() async {
     if (currentMembership == null) {
-      var _membershipData = await _getStoredMembershipData();
-      _membershipData ??= await updateMembershipData();
-      var _membershipId = await getCurrentMembershipId();
-      currentMembership = getMembershipById(_membershipData, _membershipId!);
+      var membershipData = await _getStoredMembershipData();
+      membershipData ??= await updateMembershipData();
+      var membershipId = await getCurrentMembershipId();
+      currentMembership = getMembershipById(membershipData, membershipId!);
     }
     return currentMembership;
   }
 
   GroupUserInfoCard? getMembershipById(
       UserMembershipData? membershipData, String membershipId) {
-    return membershipData?.destinyMemberships?.firstWhere(
-        (membership) => membership.membershipId == membershipId,
-        orElse: () => membershipData.destinyMemberships!.first);
+    return membershipData?.destinyMemberships?.firstWhereOrNull(
+        (membership) => membership.membershipId == membershipId);
   }
 
   Future<void> saveMembership(
       UserMembershipData membershipData, String membershipId) async {
     currentMembership = getMembershipById(membershipData, membershipId);
-    await StorageService.setLocalStorage(
-        'membershipData', membershipData.toJson());
-    await StorageService.setLocalStorage('membershipId', membershipId);
+    await setCurrentMembershipId(membershipId);
   }
 }

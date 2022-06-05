@@ -1,22 +1,21 @@
 import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
-import 'package:bungie_api/models/destiny_talent_grid_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/mobile_components/talent_grid_mobile_item.dart';
 
 class TalentGridMobileView extends StatefulWidget {
   final DestinyTalentGridDefinition talentGrid;
   final DestinyItemTalentGridComponent talentGridComponent;
-  final Function(DestinyItemTalentGridComponent) onChange;
   final DestinyInventoryItemDefinition subclass;
   const TalentGridMobileView(
       {required this.talentGrid,
       required this.talentGridComponent,
-      required this.onChange,
       required this.subclass,
       Key? key})
       : super(key: key);
@@ -37,8 +36,14 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textH1("Configure ta doctrine"),
-                textBodyRegular("Choisis tes Ã©lements de doctrine."),
+                textH1(
+                  AppLocalizations.of(context)!.builder_subclass_mods_title,
+                  utf8: false,
+                ),
+                textBodyRegular(
+                  AppLocalizations.of(context)!.builder_subclass_mods_subtitle,
+                  utf8: false,
+                ),
               ],
             )),
         Padding(
@@ -56,25 +61,27 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
                   width: double.infinity,
                   child: Center(
                     child: textCaption(
-                        'Taper pour plus de dÃ©tails, maintenir pour Ã©quiper'),
+                      AppLocalizations.of(context)!
+                          .builder_subclass_mods_caption,
+                      utf8: false,
+                    ),
                   )),
               mobileSectionInverted(
                 context,
-                title: "Capacites de classe",
+                title: AppLocalizations.of(context)!.class_ability,
+                utf8: false,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
                     widget.talentGridComponent.nodes![2],
                     widget.talentGridComponent.nodes![3]
                   ],
-                  onChange: (talentGridComponent) {
-                    widget.onChange(talentGridComponent);
-                  },
                 ),
               ),
               mobileSectionInverted(
                 context,
-                title: "Sauts",
+                title: AppLocalizations.of(context)!.jumps,
+                utf8: false,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
@@ -82,14 +89,12 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
                     widget.talentGridComponent.nodes![5],
                     widget.talentGridComponent.nodes![6],
                   ],
-                  onChange: (talentGridComponent) {
-                    widget.onChange(talentGridComponent);
-                  },
                 ),
               ),
               mobileSectionInverted(
                 context,
-                title: "Grenades",
+                title: AppLocalizations.of(context)!.grenades,
+                utf8: false,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
@@ -97,14 +102,12 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
                     widget.talentGridComponent.nodes![8],
                     widget.talentGridComponent.nodes![9],
                   ],
-                  onChange: (talentGridComponent) {
-                    widget.onChange(talentGridComponent);
-                  },
                 ),
               ),
               mobileSectionInverted(
                 context,
-                title: "Sections",
+                title: AppLocalizations.of(context)!.sections,
+                utf8: false,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
@@ -112,9 +115,6 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
                     widget.talentGridComponent.nodes![15],
                     widget.talentGridComponent.nodes![20],
                   ],
-                  onChange: (talentGridComponent) {
-                    widget.onChange(talentGridComponent);
-                  },
                 ),
               )
             ],

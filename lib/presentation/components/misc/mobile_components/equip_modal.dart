@@ -1,4 +1,5 @@
 import 'package:bungie_api/models/destiny_character_component.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -8,6 +9,7 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
+import 'package:quria/presentation/var/keys.dart';
 
 class EquipModal extends StatelessWidget {
   final String instanceId;
@@ -41,7 +43,10 @@ class EquipModal extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  textH2("Equiper"),
+                  textH2(
+                    AppLocalizations.of(context)!.equip,
+                    utf8: false,
+                  ),
                   InkWell(
                     onTap: () => Navigator.pop(context),
                     child: const CircleAvatar(
@@ -66,18 +71,28 @@ class EquipModal extends StatelessWidget {
                 child: InkWell(
                   onTap: () async {
                     Navigator.pop(context);
-                    try {
-                      await BungieActionsService().equipItem(
-                          itemId: instanceId,
-                          characterId: character.characterId!,
-                          itemHash: itemHash);
-                    } catch (_) {
+                    await BungieActionsService()
+                        .equipItem(
+                            itemId: instanceId,
+                            characterId: character.characterId!,
+                            itemHash: itemHash)
+                        .then((_) {
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                          .showSnackBar(SnackBar(
+                        content: textBodyMedium(
+                          AppLocalizations.of(context)!.item_equipped,
+                          utf8: false,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.green,
+                      ));
+                    }, onError: (_) {
                       showDialog(
-                          context: context,
+                          context: scaffoldKey.currentContext!,
                           builder: (context) {
                             return const ErrorDialog();
                           });
-                    }
+                    });
                   },
                   child: CharacterTransferItem(
                       imageLink: DestinyData.bungieLink + character.emblemPath!,

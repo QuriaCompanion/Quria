@@ -1,5 +1,6 @@
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -34,8 +35,14 @@ class BuilderResultsMobileView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textH1("Builds recommandÃ©s"),
-                textBodyRegular("Voici les meilleurs rÃ©sultats."),
+                textH1(
+                  AppLocalizations.of(context)!.builder_results_title,
+                  utf8: false,
+                ),
+                textBodyRegular(
+                  AppLocalizations.of(context)!.builder_results_subtitle,
+                  utf8: false,
+                ),
               ],
             )),
         Column(children: [
@@ -44,13 +51,17 @@ class BuilderResultsMobileView extends StatelessWidget {
               padding: EdgeInsets.all(globalPadding(context)),
               child: InkWell(
                 onTap: () {
-                  Navigator.pushNamed(context, routeBuilderRecap,
-                      arguments: BuilderRecapHelper(
-                          build: buildResult,
-                          mods: mods,
-                          subclassMods: subclassMods,
-                          subclassId: subclassId,
-                          characterId: characterId));
+                  Navigator.pushNamed(
+                    context,
+                    routeBuilderRecap,
+                    arguments: BuilderRecapHelper(
+                      build: buildResult,
+                      mods: mods,
+                      subclassMods: subclassMods,
+                      subclassId: subclassId,
+                      characterId: characterId,
+                    ),
+                  );
                 },
                 child: BuilderResultsMobileItem(
                   buildResult: buildResult,

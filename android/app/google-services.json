@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "653536181122",
+    "project_id": "quriacompanion-13944",
+    "storage_bucket": "quriacompanion-13944.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:653536181122:android:651521385f728d098eed9b",
+        "android_client_info": {
+          "package_name": "com.quria.quriaCompanion"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "653536181122-d11k1muphh79rdpn4ukfdq77g36jgd7u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDX67qhm1B6JeRhZ1zcLKfuU_wx6FBriFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "653536181122-d11k1muphh79rdpn4ukfdq77g36jgd7u.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "653536181122-jqc4vj7f6a5l38jjtg6a2clrvjgilqmp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.quria"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

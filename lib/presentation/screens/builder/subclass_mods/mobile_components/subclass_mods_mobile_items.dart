@@ -40,10 +40,20 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          pictureBordered(
-            size: vw(context) * 0.192,
-            image: NetworkImage(
-                DestinyData.bungieLink + widget.item.displayProperties!.icon!),
+          InkWell(
+            onTap: () {
+              showModalBottomSheet(
+                  backgroundColor: Colors.transparent,
+                  context: context,
+                  builder: (context) => ModModal(
+                        mod: widget.item,
+                      ));
+            },
+            child: pictureBordered(
+              size: vw(context) * 0.192,
+              image: NetworkImage(DestinyData.bungieLink +
+                  widget.item.displayProperties!.icon!),
+            ),
           ),
           Container(
             padding: EdgeInsets.only(

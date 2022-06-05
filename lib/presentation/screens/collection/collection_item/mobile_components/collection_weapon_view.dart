@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
@@ -16,12 +17,13 @@ class CollectionWeaponView extends StatelessWidget {
     return Column(
       children: [
         mobileSection(context,
-            title: "Statistiques", child: InspectMobileStats(item: item)),
+            title: AppLocalizations.of(context)!.statistics,
+            child: InspectMobileStats(item: item)),
         mobileSection(context,
-            title: "Attributs de l'arme",
+            title: AppLocalizations.of(context)!.perks,
             child: PerkList(item: item, selectedPerks: selectedPerks)),
         mobileSection(context,
-            title: "Obtention",
+            title: AppLocalizations.of(context)!.origin,
             child: InspectMobileOrigin(collectionHash: item.collectibleHash)),
         SizedBox(
           height: globalPadding(context) * 3,

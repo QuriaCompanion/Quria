@@ -5,8 +5,8 @@ import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definit
 class ItemCardHelper {
   final DestinyEquipmentSlotDefinition itemCategory;
   final DestinyInventoryItemDefinition itemDef;
-  final String elementIcon;
-  final int powerLevel;
+  final String? elementIcon;
+  final int? powerLevel;
   final List<DestinyItemSocketState> perks;
   final List<DestinyItemSocketState> intristics;
   final List<DestinyItemSocketState> armorSockets;

@@ -17,6 +17,7 @@ import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_defi
 import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_stat_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
+import 'package:quria/data/models/helpers/manifestHelper.model.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/definition_table_names.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -27,6 +28,7 @@ typedef DownloadProgress = void Function(int downloaded, int total);
 class ManifestService {
   final BungieApiService api = BungieApiService();
   static DestinyManifest? _manifestInfo;
+  static String language = "en";
   static final AllDestinyManifestComponents manifestParsed =
       AllDestinyManifestComponents();
   static final manifestList = DefinitionTableNames();
@@ -49,7 +51,12 @@ class ManifestService {
 
   static Future<void> loadAllManifest() async {
     if (await isManifestOutdated()) {
-      final manifests = await compute(_typeManifests, await loadManifestInfo());
+      final manifests = await compute(
+          _typeManifests,
+          ManifestHelper(
+            manifest: await loadManifestInfo(),
+            language: language,
+          ));
 
       await StorageService.isar.writeTxn((isar) async {
         await isar.destinyInventoryItemDefinitions
@@ -174,12 +181,14 @@ class ManifestService {
 
   static Future<bool> isManifestOutdated() async {
     final version = await ManifestService.getManifestVersion();
-    return await StorageService.getLocalStorage("manifestVersion") != version;
+    return await StorageService.getLocalStorage("manifestVersion") !=
+        "$language$version";
   }
 
   static Future<void> saveManifestVersion() async {
     final version = await ManifestService.getManifestVersion();
-    return await StorageService.setLocalStorage("manifestVersion", version);
+    return await StorageService.setLocalStorage(
+        "manifestVersion", "$language$version");
   }
 }
 
@@ -187,12 +196,11 @@ class ManifestService {
 /// types it correctly then stores them in isarDB
 ///
 /// promise of void
-Future<List> _typeManifests(DestinyManifest manifestInfo) async {
+Future<List> _typeManifests(ManifestHelper manifestInfo) async {
   Future<String> getManifestRemote<T>() async {
-    String language = "fr";
     http.Response res = await http.get(Uri.parse(DestinyData.bungieLink +
-        manifestInfo.jsonWorldComponentContentPaths![language]![
-            DefinitionTableNames.fromClass[T]!]!));
+        manifestInfo.manifest.jsonWorldComponentContentPaths![
+            manifestInfo.language]![DefinitionTableNames.fromClass[T]!]!));
     return res.body;
   }
 

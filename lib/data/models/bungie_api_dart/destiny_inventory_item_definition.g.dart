@@ -6,7 +6,7 @@ part of 'destiny_inventory_item_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyInventoryItemDefinitionCollection on Isar {
   IsarCollection<DestinyInventoryItemDefinition>
@@ -109,7 +109,7 @@ const DestinyInventoryItemDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyInventoryItemDefinitionSerializeWeb,
   deserializeWeb: _destinyInventoryItemDefinitionDeserializeWeb,
   deserializePropWeb: _destinyInventoryItemDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyInventoryItemDefinitionGetId(
@@ -200,7 +200,7 @@ const _destinyInventoryItemDefinitionDestinyItemValueBlockDefinitionConverter =
 
 void _destinyInventoryItemDefinitionSerializeNative(
     IsarCollection<DestinyInventoryItemDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyInventoryItemDefinition object,
     int staticSize,
     List<int> offsets,
@@ -587,9 +587,9 @@ void _destinyInventoryItemDefinitionSerializeNative(
   dynamicSize += (_value?.length ?? 0) as int;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBytes(offsets[0], _action);
   writer.writeBool(offsets[1], _allowActions);

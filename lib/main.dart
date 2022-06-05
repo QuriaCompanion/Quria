@@ -1,5 +1,19 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
+import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
+import 'package:quria/data/providers/builder/builder_mods_provider.dart';
+import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
+import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
+import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
+import 'package:quria/data/providers/characters_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/app.dart';
 import 'package:quria/presentation/router.dart';
@@ -9,18 +23,15 @@ import 'package:quria/presentation/var/routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   StorageService.init();
-  // todo : use .env data
-  // await Firebase.initializeApp(
-  //     options: const FirebaseOptions(
-  //         apiKey: 'AIzaSyAHPZS_6edfw4AVLW4VM1_hhkxrVUk9Mr0',
-  //         appId: '1:653536181122:web:c81569f39c669fc18eed9b',
-  //         messagingSenderId: '653536181122',
-  //         projectId: 'quriacompanion-13944'));
-
   await dotenv.load(fileName: ".env");
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(QuriaApp(
     router: AppRouter(),
   ));
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 }
 
 class QuriaApp extends StatelessWidget {
@@ -30,15 +41,51 @@ class QuriaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(fontFamily: 'Inter'),
-      debugShowCheckedModeBanner: false,
-      home: LoginWidget(),
-      onGenerateRoute: AppRouter.generateRoute,
-      builder: (_, child) => AppView(
-        child: child!,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<BuilderExoticProvider>(
+          create: (context) => BuilderExoticProvider(),
+        ),
+        ChangeNotifierProvider<BuilderStatsFilterProvider>(
+          create: (context) => BuilderStatsFilterProvider(),
+        ),
+        ChangeNotifierProvider<BuilderSubclassProvider>(
+          create: (context) => BuilderSubclassProvider(),
+        ),
+        ChangeNotifierProvider<BuilderSubclassModsProvider>(
+          create: (context) => BuilderSubclassModsProvider(),
+        ),
+        ChangeNotifierProvider<CharactersProvider>(
+          create: (context) => CharactersProvider(),
+        ),
+        ChangeNotifierProvider<BuilderClassItemProvider>(
+          create: (context) => BuilderClassItemProvider(),
+        ),
+        ChangeNotifierProvider<BuilderModsProvider>(
+          create: (context) => BuilderModsProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        localizationsDelegates: const [
+          AppLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [
+          Locale('en', ''), // English, no country code
+          Locale('es', ''), // Spanish, no country code
+          Locale('fr', ''),
+        ],
+        theme: ThemeData(fontFamily: 'Inter'),
+        debugShowCheckedModeBanner: false,
+        home: LoginWidget(),
+        onGenerateRoute: AppRouter.generateRoute,
+        builder: (_, child) => AppView(
+          child: child!,
+        ),
+        navigatorKey: navKey,
       ),
-      navigatorKey: navKey,
     );
   }
 }

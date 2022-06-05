@@ -134,6 +134,10 @@ class ProfileService {
     return _profile;
   }
 
+  reset() {
+    _profile = null;
+  }
+
   void startAutomaticUpdater() async {
     if (_lastLoadedFrom == LastLoadedFrom.cache) {
       await fetchProfileData(components: ProfileComponentGroups.everything);
@@ -228,6 +232,20 @@ class ProfileService {
         }
       }
     }
+    inventoryItemIds.addAll([
+      204137529,
+      3961599962,
+      3682186345,
+      2850583378,
+      555005975,
+      2645858828,
+      1227870362,
+      3355995799,
+      2623485440,
+      4048838440,
+      3699676109,
+      3253038666
+    ]);
     await StorageService.getDefinitions<DestinyInventoryItemDefinition>(
         inventoryItemIds);
     await StorageService.getDefinitions<DestinyTalentGridDefinition>(talentIds);
@@ -339,9 +357,10 @@ class ProfileService {
   }
 
   List<DestinyItemComponent> getSubclassesForCharacter(String characterId) {
-    var character = getCharacterInventory(characterId);
-    character.addAll(getCharacterEquipment(characterId));
-    return character
+    final List<DestinyItemComponent> inventory = [];
+    inventory.addAll(getCharacterInventory(characterId));
+    inventory.addAll(getCharacterEquipment(characterId));
+    return inventory
         .where((element) =>
             ManifestService
                 .manifestParsed
@@ -419,7 +438,7 @@ class ProfileService {
     return null;
   }
 
-  String getItemElement(DestinyItemComponent item) {
+  String? getItemElement(DestinyItemComponent item) {
     final itemDef = ManifestService
         .manifestParsed.destinyInventoryItemDefinition[item.itemHash];
     final instanceInfo = getInstanceInfo(item.itemInstanceId!);
@@ -430,9 +449,9 @@ class ProfileService {
             ?.icon ??
         ManifestService
             .manifestParsed
-            .destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]!
-            .displayProperties!
-            .icon!;
+            .destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]
+            ?.displayProperties
+            ?.icon;
   }
 
   int? getCurrentMeleeHashForCharacter(String characterId) {

@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/models/helpers/filterHelper.model.dart';
 import 'package:quria/presentation/screens/builder/components/filter.dart';
 
 class StatsFilterMobileView extends StatefulWidget {
-  final List<FilterHelper> filters;
-  final Function(List<FilterHelper>) onFilterChanged;
-  const StatsFilterMobileView(
-      {required this.filters, required this.onFilterChanged, Key? key})
-      : super(key: key);
+  const StatsFilterMobileView({Key? key}) : super(key: key);
 
   @override
   State<StatsFilterMobileView> createState() => _StatsFilterMobileViewState();
@@ -27,11 +23,33 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                textH1("Priorise tes statistiques"),
+                textH1(
+                  AppLocalizations.of(context)!.builder_stats_order_title,
+                  utf8: false,
+                ),
                 textBodyRegular(
-                    "Classe les statistiques par ordre de prÃ©fÃ©rence."),
+                  AppLocalizations.of(context)!.builder_stats_order_subtitle,
+                  utf8: false,
+                ),
               ],
             )),
+        Padding(
+          padding: EdgeInsets.all(globalPadding(context)),
+          child: Container(
+            padding:
+                EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
+            decoration: const BoxDecoration(
+                color: blackLight,
+                borderRadius: BorderRadius.all(Radius.circular(8))),
+            width: double.infinity,
+            child: Center(
+              child: textCaption(
+                AppLocalizations.of(context)!.builder_stats_order_caption,
+                utf8: false,
+              ),
+            ),
+          ),
+        ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
           child: Row(
@@ -46,21 +64,17 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
                         child: SizedBox(
-                            height: 35 + globalPadding(context),
+                            height: 48,
                             child: Center(child: textH3(i.toString()))),
                       ),
                   ],
                 ),
               ),
-              SizedBox(
-                width: vw(context) * 0.8,
-                height: (43 + globalPadding(context)) * 6,
-                child: FilterWidget(
-                  items: widget.filters,
-                  onFilterChanged: (list) {
-                    widget.onFilterChanged(list);
-                  },
+              RepaintBoundary(
+                child: SizedBox(
                   width: vw(context) * 0.8,
+                  height: 56 * 6,
+                  child: const FilterWidget(),
                 ),
               ),
             ],

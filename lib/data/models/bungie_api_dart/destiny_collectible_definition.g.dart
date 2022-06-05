@@ -6,7 +6,7 @@ part of 'destiny_collectible_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyCollectibleDefinitionCollection on Isar {
   IsarCollection<DestinyCollectibleDefinition>
@@ -49,7 +49,7 @@ const DestinyCollectibleDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyCollectibleDefinitionSerializeWeb,
   deserializeWeb: _destinyCollectibleDefinitionDeserializeWeb,
   deserializePropWeb: _destinyCollectibleDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyCollectibleDefinitionGetId(DestinyCollectibleDefinition object) {
@@ -85,7 +85,7 @@ const _destinyCollectibleDefinitionDestinyCollectibleStateBlockConverter =
 
 void _destinyCollectibleDefinitionSerializeNative(
     IsarCollection<DestinyCollectibleDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyCollectibleDefinition object,
     int staticSize,
     List<int> offsets,
@@ -164,9 +164,9 @@ void _destinyCollectibleDefinitionSerializeNative(
   final _traitIds = bytesList13;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBytes(offsets[0], _acquisitionInfo);
   writer.writeBytes(offsets[1], _displayProperties);

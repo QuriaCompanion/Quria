@@ -4,26 +4,28 @@ class MeleeCooldown {
     2543177538: tier1, //penumbral blast
     1341767667: tier1, //withering blade
     1492934406: tier1, //ball lightning
-    2805396803: tier2, //weighted knife
+    4016776975: tier2, //weighted knife
     4293830764: tier3, //frontal assault
     1073805481: tier4, //tempest strike
     313617030: tier4, //disorienting blow
-    2242504056: tier4, //Proximity Explosive Knife
-    1893159641: tier4, //Celestial fire
+    4016776973: tier4, //Proximity Explosive Knife
+    1470370538: tier4, // Incinerator Snap
+    1470370539: tier4, // Celestial Fire
     4220332374: tier4, //Shield throw
     1139822081: tier5, //snare bomb
     4220332375: tier5, //Shield bash
     71216177: tier5, //balistic slam
     4099943028: tier5, //seismic strike
-    3928207649: tier5, //hammer strike
-    829145869: tier5, //throwing hammer
+    852252788: tier5, //hammer strike
+    852252789: tier5, //throwing hammer
     3297679786: tier5, //rising storm
     487158888: tier5, //chain lightning
     682840449: tier5, //guiding flame
     966868917: tier5, //igniting touch
     2299867342: tier5, //Pocket Singularity
-    1265726813: tier6, // knife trick
+    4016776972: tier6, // knife trick
     1236431642: tier6, //mortar blast
+    4016776974: tier6, // lightweight knife
     1690891826: tier8, //combination blow
   };
 

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
-import 'package:bottom_loader/bottom_loader.dart';
 import 'package:quria/data/services/bungie_api/enums/quick_actions.enum.dart';
 import 'package:quria/data/models/helpers/builderRecapHelper.model.dart';
-import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
+import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/screens/builder/build_recap/mobile_components/builder_recap_mobile_actions.dart';
 import 'package:quria/presentation/screens/builder/build_recap/mobile_components/builder_recap_mobile_item.dart';
 
@@ -37,14 +37,23 @@ class BuilderRecapMobileView extends StatelessWidget {
           padding: EdgeInsets.all(globalPadding(context)),
           child: Column(
             children: [
-              mobileSection(context, title: "Actions rapides",
+              mobileSection(context,
+                  title: AppLocalizations.of(context)!.quick_actions,
                   child: BuilderRecapMobileActions(
                 onAction: (action) async {
                   switch (action) {
-                    case quick_actions.equip:
-                      var bl = BottomLoader(context,
-                          isDismissible: false, loader: const Loader());
-                      bl.display();
+                    case QuickActions.equip:
+                      showMaterialModalBottomSheet(
+                          context: context,
+                          backgroundColor: Colors.transparent,
+                          isDismissible: false,
+                          expand: false,
+                          builder: (context) {
+                            return LoadingModal(
+                              text1: AppLocalizations.of(context)!.equipping,
+                              text2: AppLocalizations.of(context)!.long_action,
+                            );
+                          });
                       BungieActionsService()
                           .equipBuild(
                             build: data.build,
@@ -53,9 +62,9 @@ class BuilderRecapMobileView extends StatelessWidget {
                             subclassMods: data.subclassMods,
                             subclassId: data.subclassId,
                           )
-                          .then((value) => bl.close());
+                          .then((_) => Navigator.pop(context));
                       break;
-                    case quick_actions.save:
+                    case QuickActions.save:
                       showMaterialModalBottomSheet(
                           context: context,
                           backgroundColor: Colors.transparent,
@@ -65,7 +74,7 @@ class BuilderRecapMobileView extends StatelessWidget {
                             return const InProgressModal();
                           });
                       break;
-                    case quick_actions.share:
+                    case QuickActions.share:
                       showMaterialModalBottomSheet(
                           context: context,
                           backgroundColor: Colors.transparent,
@@ -79,31 +88,31 @@ class BuilderRecapMobileView extends StatelessWidget {
                 },
               )),
               mobileSection(context,
-                  title: "Casque",
+                  title: AppLocalizations.of(context)!.helmet,
                   child: BuilderRecapMobileItem(
                     item: data.build.equipement[0],
                     mods: data.mods[0].items,
                   )),
               mobileSection(context,
-                  title: "Gantelets",
+                  title: AppLocalizations.of(context)!.gauntlets,
                   child: BuilderRecapMobileItem(
                     item: data.build.equipement[1],
                     mods: data.mods[1].items,
                   )),
               mobileSection(context,
-                  title: "Armure de torse",
+                  title: AppLocalizations.of(context)!.chest,
                   child: BuilderRecapMobileItem(
                     item: data.build.equipement[2],
                     mods: data.mods[2].items,
                   )),
               mobileSection(context,
-                  title: "Armure de bottes",
+                  title: AppLocalizations.of(context)!.legs,
                   child: BuilderRecapMobileItem(
                     item: data.build.equipement[3],
                     mods: data.mods[3].items,
                   )),
               mobileSection(context,
-                  title: "Objet de classe",
+                  title: AppLocalizations.of(context)!.class_item,
                   child: BuilderRecapMobileItem(
                     item: data.build.equipement[4],
                     mods: data.mods[4].items,

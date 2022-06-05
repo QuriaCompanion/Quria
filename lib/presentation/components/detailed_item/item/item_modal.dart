@@ -11,6 +11,7 @@ import 'package:quria/presentation/components/detailed_item/item/item_component_
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/mobile_components/transfer_modal.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ItemModal extends StatelessWidget {
   final DestinyItemComponent item;
@@ -62,15 +63,18 @@ class ItemModal extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Container(
-                                  width: 12,
-                                  height: 12,
-                                  margin: const EdgeInsets.only(right: 5),
-                                  child: Image(
-                                    image: NetworkImage(DestinyData.bungieLink +
-                                        data.elementIcon),
-                                  )),
-                              textBodyBold(data.powerLevel.toString()),
+                              if (data.elementIcon != null)
+                                Container(
+                                    width: 12,
+                                    height: 12,
+                                    margin: const EdgeInsets.only(right: 5),
+                                    child: Image(
+                                      image: NetworkImage(
+                                          DestinyData.bungieLink +
+                                              data.elementIcon!),
+                                    )),
+                              if (data.powerLevel != null)
+                                textBodyBold(data.powerLevel.toString()),
                               divider,
                               textBodyRegular(
                                   data.itemDef.itemTypeDisplayName!),
@@ -121,7 +125,11 @@ class ItemModal extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 RoundedButton(
-                  text: textBodyMedium('TransfÃ©rer', color: black),
+                  text: textBodyMedium(
+                    AppLocalizations.of(context)!.transfer,
+                    color: black,
+                    utf8: false,
+                  ),
                   onPressed: () {
                     showMaterialModalBottomSheet(
                         context: context,
@@ -142,7 +150,7 @@ class ItemModal extends StatelessWidget {
                   width: vw(context) * 0.4,
                 ),
                 RoundedButton(
-                  text: textBodyMedium('Détails',
+                  text: textBodyMedium(AppLocalizations.of(context)!.details,
                       color: Colors.white, utf8: false),
                   onPressed: () {
                     Navigator.pop(context);

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -10,12 +11,7 @@ import 'package:quria/presentation/components/misc/rounded_button.dart';
 class ScaffoldSteps<T> extends StatelessWidget {
   final Widget body;
   final String route;
-  final T arguments;
-  const ScaffoldSteps(
-      {required this.body,
-      required this.route,
-      required this.arguments,
-      Key? key})
+  const ScaffoldSteps({required this.body, required this.route, Key? key})
       : super(key: key);
 
   @override
@@ -75,16 +71,19 @@ class ScaffoldSteps<T> extends StatelessWidget {
               ),
             ),
             RoundedButton(
-                text: textBodyBold('Suivant', color: black),
+                text: textBodyBold(
+                  AppLocalizations.of(context)!.next,
+                  utf8: false,
+                  color: black,
+                ),
                 width: 200,
                 height: 50,
-                onPressed: () =>
-                    Navigator.pushNamed(context, route, arguments: arguments)),
+                onPressed: () => Navigator.pushNamed(context, route)),
           ],
         ),
       ),
       body: Container(
-        decoration: ghostBackground,
+        decoration: blackBackground,
         child: SingleChildScrollView(
           child: body,
         ),

@@ -13,9 +13,9 @@ import 'package:quria/presentation/components/misc/icon_item.dart';
 class ItemComponentDisplay extends StatefulWidget {
   final DestinyItemComponent item;
   final DestinyInventoryItemDefinition itemDef;
-  final String elementIcon;
   final String characterId;
-  final int powerLevel;
+  final String? elementIcon;
+  final int? powerLevel;
   final List<DestinyItemSocketState> perks;
   final List<DestinyItemSocketState> cosmetics;
   final List<DestinyItemSocketState> armorSockets;
@@ -94,14 +94,15 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Container(
-                              width: 12,
-                              height: 12,
-                              margin: const EdgeInsets.only(right: 5),
-                              child: Image(
-                                image: NetworkImage(DestinyData.bungieLink +
-                                    widget.elementIcon),
-                              )),
+                          if (widget.elementIcon != null)
+                            Container(
+                                width: 12,
+                                height: 12,
+                                margin: const EdgeInsets.only(right: 5),
+                                child: Image(
+                                  image: NetworkImage(DestinyData.bungieLink +
+                                      widget.elementIcon!),
+                                )),
                           textBodyBold(widget.powerLevel.toString()),
                           divider,
                           textBodyRegular(widget.itemDef.itemTypeDisplayName!),

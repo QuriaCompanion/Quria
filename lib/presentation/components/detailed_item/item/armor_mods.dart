@@ -4,6 +4,7 @@ import 'package:bungie_api/enums/tier_type.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -52,16 +53,19 @@ class _ArmorModsState extends State<ArmorMods> {
                     ?.plug
                     ?.plugCategoryHash !=
                 2973005342 &&
+            ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition[element.plugHash]
+                    ?.plug
+                    ?.plugCategoryIdentifier !=
+                null &&
             !ManifestService
                 .manifestParsed
                 .destinyInventoryItemDefinition[element.plugHash]!
                 .plug!
                 .plugCategoryIdentifier!
                 .contains('masterworks.stat') &&
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.itemType !=
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemType !=
                 DestinyItemType.Armor &&
             ManifestService
                     .manifestParsed
@@ -119,7 +123,10 @@ class _ArmorModsState extends State<ArmorMods> {
               borderRadius: BorderRadius.all(Radius.circular(8))),
           width: double.infinity,
           child: Center(
-            child: textCaption('Taper pour Ã©quiper un autre mod'),
+            child: textCaption(
+              AppLocalizations.of(context)!.mods_tips,
+              utf8: false,
+            ),
           )),
       SizedBox(height: globalPadding(context)),
       Row(

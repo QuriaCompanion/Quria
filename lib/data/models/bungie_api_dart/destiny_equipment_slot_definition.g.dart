@@ -6,7 +6,7 @@ part of 'destiny_equipment_slot_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyEquipmentSlotDefinitionCollection on Isar {
   IsarCollection<DestinyEquipmentSlotDefinition>
@@ -42,7 +42,7 @@ const DestinyEquipmentSlotDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyEquipmentSlotDefinitionSerializeWeb,
   deserializeWeb: _destinyEquipmentSlotDefinitionDeserializeWeb,
   deserializePropWeb: _destinyEquipmentSlotDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyEquipmentSlotDefinitionGetId(
@@ -71,7 +71,7 @@ const _destinyEquipmentSlotDefinitionDestinyDisplayPropertiesDefinitionConverter
 
 void _destinyEquipmentSlotDefinitionSerializeNative(
     IsarCollection<DestinyEquipmentSlotDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyEquipmentSlotDefinition object,
     int staticSize,
     List<int> offsets,
@@ -111,9 +111,9 @@ void _destinyEquipmentSlotDefinitionSerializeNative(
   final _redacted = value6;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBool(offsets[0], _applyCustomArtDyes);
   writer.writeStringList(offsets[1], _artDyeChannels);

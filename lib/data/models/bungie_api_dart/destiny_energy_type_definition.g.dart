@@ -6,7 +6,7 @@ part of 'destiny_energy_type_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyEnergyTypeDefinitionCollection on Isar {
   IsarCollection<DestinyEnergyTypeDefinition>
@@ -43,7 +43,7 @@ const DestinyEnergyTypeDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyEnergyTypeDefinitionSerializeWeb,
   deserializeWeb: _destinyEnergyTypeDefinitionDeserializeWeb,
   deserializePropWeb: _destinyEnergyTypeDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyEnergyTypeDefinitionGetId(DestinyEnergyTypeDefinition object) {
@@ -71,7 +71,7 @@ const _destinyEnergyTypeDefinitionDestinyEnergyTypeConverter =
 
 void _destinyEnergyTypeDefinitionSerializeNative(
     IsarCollection<DestinyEnergyTypeDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyEnergyTypeDefinition object,
     int staticSize,
     List<int> offsets,
@@ -106,9 +106,9 @@ void _destinyEnergyTypeDefinitionSerializeNative(
   dynamicSize += (_transparentIconPath?.length ?? 0) as int;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeLong(offsets[0], _capacityStatHash);
   writer.writeLong(offsets[1], _costStatHash);

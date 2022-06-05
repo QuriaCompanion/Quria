@@ -1,6 +1,7 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
@@ -29,32 +30,34 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
   DestinyItemType currentFilter = DestinyItemType.Weapon;
   @override
   Widget build(BuildContext context) {
+    String icon = widget.data.isNewSubclass
+        ? ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[
+                widget.data.selectedCharacterSubclass!.itemHash]!
+            .screenshot!
+        : ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[
+                widget.data.selectedCharacterSubclass!.itemHash]!
+            .secondaryIcon!;
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              mobileHeader(
-                context,
-                image: NetworkImage(
-                  DestinyData.bungieLink +
-                      ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition[
-                              widget.data.selectedCharacterSubclass.itemHash]!
-                          .screenshot!,
-                ),
-                child: ProfileMobileHeader(
-                  stats: widget.data.selectedCharacter.stats,
-                  characterSuper: widget.data.characterSuper,
-                  subclassId:
-                      widget.data.selectedCharacterSubclass.itemInstanceId!,
-                  characterId: widget.data.selectedCharacter.characterId!,
-                ),
-              ),
-            ],
+          mobileHeader(
+            context,
+            image: NetworkImage(
+              DestinyData.bungieLink + icon,
+            ),
+            child: ProfileMobileHeader(
+              stats: widget.data.selectedCharacter!.stats,
+              characterSuper: widget.data.characterSuper!,
+              subclassId:
+                  widget.data.selectedCharacterSubclass!.itemInstanceId!,
+              characterId: widget.data.selectedCharacter!.characterId!,
+              isNewSubclass: widget.data.isNewSubclass,
+            ),
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -73,7 +76,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       },
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Weapon,
-                        value: "Armes",
+                        value: AppLocalizations.of(context)!.weapons,
                         width: vw(context) * 0.29,
                       )),
                   InkWell(
@@ -84,7 +87,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       },
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Armor,
-                        value: "Armure",
+                        value: AppLocalizations.of(context)!.armor,
                         width: vw(context) * 0.29,
                       )),
                   InkWell(
@@ -93,7 +96,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       },
                       child: MobileNavItem(
                         selected: false,
-                        value: "Coffre",
+                        value: AppLocalizations.of(context)!.vault,
                         width: vw(context) * 0.29,
                       )),
                 ],
@@ -117,7 +120,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                         widget.onClick(inspectData);
                       },
                       item: item,
-                      characterId: widget.data.selectedCharacter.characterId!,
+                      characterId: widget.data.selectedCharacter!.characterId!,
                       inventory: widget.data.selectedCharacterInventory
                           .where((element) =>
                               ManifestService

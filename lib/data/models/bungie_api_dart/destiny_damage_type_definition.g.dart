@@ -6,7 +6,7 @@ part of 'destiny_damage_type_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyDamageTypeDefinitionCollection on Isar {
   IsarCollection<DestinyDamageTypeDefinition>
@@ -41,7 +41,7 @@ const DestinyDamageTypeDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyDamageTypeDefinitionSerializeWeb,
   deserializeWeb: _destinyDamageTypeDefinitionDeserializeWeb,
   deserializePropWeb: _destinyDamageTypeDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyDamageTypeDefinitionGetId(DestinyDamageTypeDefinition object) {
@@ -68,7 +68,7 @@ const _destinyDamageTypeDefinitionDamageTypeConverter = DamageTypeConverter();
 
 void _destinyDamageTypeDefinitionSerializeNative(
     IsarCollection<DestinyDamageTypeDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyDamageTypeDefinition object,
     int staticSize,
     List<int> offsets,
@@ -99,9 +99,9 @@ void _destinyDamageTypeDefinitionSerializeNative(
   dynamicSize += (_transparentIconPath?.length ?? 0) as int;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBytes(offsets[0], _displayProperties);
   writer.writeLong(offsets[1], _enumValue);

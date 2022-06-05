@@ -1,5 +1,6 @@
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -95,7 +96,8 @@ class BuilderResultsMobileItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               RoundedButton(
-                text: textBodyMedium('Equiper', color: black),
+                text: textBodyMedium(AppLocalizations.of(context)!.equip,
+                    utf8: false, color: black),
                 onPressed: () {
                   showMaterialModalBottomSheet(
                       context: context,
@@ -103,9 +105,9 @@ class BuilderResultsMobileItem extends StatelessWidget {
                       isDismissible: false,
                       expand: false,
                       builder: (context) {
-                        return const LoadingModal(
-                          text1: "Nous equipons votre equipement.",
-                          text2: "Cela peut prendre du temps ...",
+                        return LoadingModal(
+                          text1: AppLocalizations.of(context)!.equipping,
+                          text2: AppLocalizations.of(context)!.please_wait,
                         );
                       });
                   BungieActionsService()
@@ -121,7 +123,8 @@ class BuilderResultsMobileItem extends StatelessWidget {
                 width: vw(context) * 0.4,
               ),
               RoundedButton(
-                text: textBodyMedium('Enregistrer', color: Colors.white),
+                text: textBodyMedium(AppLocalizations.of(context)!.save,
+                    color: Colors.white),
                 onPressed: () {
                   showMaterialModalBottomSheet(
                       context: context,

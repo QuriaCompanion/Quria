@@ -6,7 +6,7 @@ part of 'destiny_presentation_node_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinyPresentationNodeDefinitionCollection on Isar {
   IsarCollection<DestinyPresentationNodeDefinition>
@@ -55,7 +55,7 @@ const DestinyPresentationNodeDefinitionSchema = CollectionSchema(
   serializeWeb: _destinyPresentationNodeDefinitionSerializeWeb,
   deserializeWeb: _destinyPresentationNodeDefinitionDeserializeWeb,
   deserializePropWeb: _destinyPresentationNodeDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinyPresentationNodeDefinitionGetId(
@@ -94,7 +94,7 @@ const _destinyPresentationNodeDefinitionDestinyPresentationScreenStyleConverter 
 
 void _destinyPresentationNodeDefinitionSerializeNative(
     IsarCollection<DestinyPresentationNodeDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinyPresentationNodeDefinition object,
     int staticSize,
     List<int> offsets,
@@ -187,9 +187,9 @@ void _destinyPresentationNodeDefinitionSerializeNative(
   final _traitIds = bytesList18;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeBytes(offsets[0], _children);
   writer.writeLong(offsets[1], _completionRecordHash);

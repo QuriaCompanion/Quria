@@ -6,7 +6,7 @@ part of 'destiny_sandbox_perk_definition.dart';
 // IsarCollectionGenerator
 // **************************************************************************
 
-// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable
+// ignore_for_file: duplicate_ignore, non_constant_identifier_names, constant_identifier_names, invalid_use_of_protected_member, unnecessary_cast, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 extension GetDestinySandboxPerkDefinitionCollection on Isar {
   IsarCollection<DestinySandboxPerkDefinition>
@@ -43,7 +43,7 @@ const DestinySandboxPerkDefinitionSchema = CollectionSchema(
   serializeWeb: _destinySandboxPerkDefinitionSerializeWeb,
   deserializeWeb: _destinySandboxPerkDefinitionDeserializeWeb,
   deserializePropWeb: _destinySandboxPerkDefinitionDeserializePropWeb,
-  version: 3,
+  version: 4,
 );
 
 int? _destinySandboxPerkDefinitionGetId(DestinySandboxPerkDefinition object) {
@@ -72,7 +72,7 @@ const _destinySandboxPerkDefinitionDestinyTalentNodeStepGroupsConverter =
 
 void _destinySandboxPerkDefinitionSerializeNative(
     IsarCollection<DestinySandboxPerkDefinition> collection,
-    IsarRawObject rawObj,
+    IsarCObject cObj,
     DestinySandboxPerkDefinition object,
     int staticSize,
     List<int> offsets,
@@ -113,9 +113,9 @@ void _destinySandboxPerkDefinitionSerializeNative(
   final _redacted = value7;
   final size = staticSize + dynamicSize;
 
-  rawObj.buffer = alloc(size);
-  rawObj.buffer_length = size;
-  final buffer = IsarNative.bufAsBytes(rawObj.buffer, size);
+  cObj.buffer = alloc(size);
+  cObj.buffer_length = size;
+  final buffer = IsarNative.bufAsBytes(cObj.buffer, size);
   final writer = IsarBinaryWriter(buffer, staticSize);
   writer.writeLong(offsets[0], _damageType);
   writer.writeLong(offsets[1], _damageTypeHash);

@@ -1,0 +1,4 @@
+QuriaCompanion est une application lancée par des joueurs passionnés pour faciliter la vie des gardiens. Vous pourrez entre autres:
+- déplacer et équiper vos équipements.
+- Modifier les attributs de vos armes et armures.
+- Créer de nouvelles combinaisons d'armure avec notre optimiseur d'armure et de mods.

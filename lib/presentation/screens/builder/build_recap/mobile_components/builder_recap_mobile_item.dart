@@ -3,11 +3,13 @@ import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_afinity.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class BuilderRecapMobileItem extends StatelessWidget {
   final Armor item;
@@ -62,28 +64,43 @@ class BuilderRecapMobileItem extends StatelessWidget {
 
     return Column(
       children: [
-        ArmorAfinity(
-          pointsAvailable: armorModspace,
-          remaining: 10 - armorModspace,
-          afinityIcon: ManifestService
-              .manifestParsed
-              .destinyEnergyTypeDefinition[instanceInfo.energy!.energyTypeHash]!
-              .displayProperties!
-              .icon!,
-        ),
+        if (instanceInfo.energy?.energyTypeHash != null)
+          ArmorAfinity(
+            pointsAvailable: armorModspace,
+            remaining: 10 - armorModspace,
+            afinityIcon: ManifestService
+                .manifestParsed
+                .destinyEnergyTypeDefinition[
+                    instanceInfo.energy!.energyTypeHash]!
+                .displayProperties!
+                .icon!,
+          ),
         SizedBox(height: globalPadding(context)),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ItemIcon(
-                displayHash: item.displayHash, imageSize: vw(context) * 0.192),
+            InkWell(
+              onTap: () => Navigator.pushNamed(
+                context,
+                routeInspectMobile,
+                arguments: InspectData(
+                  hash: item.displayHash,
+                  instanceId: item.itemInstanceId,
+                ),
+              ),
+              child: ItemIcon(
+                  displayHash: item.displayHash,
+                  imageSize: vw(context) * 0.192),
+            ),
             Padding(
               padding:
                   EdgeInsets.symmetric(horizontal: globalPadding(context) / 2),
               child: ArmorModIconDisplay(
                 iconSize: 44,
                 socket: ManifestService.manifestParsed
-                    .destinyInventoryItemDefinition[item.mods!.hash]!,
+                        .destinyInventoryItemDefinition[item.mods?.hash] ??
+                    ManifestService.manifestParsed
+                        .destinyInventoryItemDefinition[481675395]!,
               ),
             ),
             for (DestinyInventoryItemDefinition? mod in mods)
@@ -93,7 +110,9 @@ class BuilderRecapMobileItem extends StatelessWidget {
                   child: ArmorModIconDisplay(
                     iconSize: 44,
                     socket: ManifestService.manifestParsed
-                        .destinyInventoryItemDefinition[mod.hash]!,
+                            .destinyInventoryItemDefinition[mod.hash] ??
+                        ManifestService.manifestParsed
+                            .destinyInventoryItemDefinition[481675395]!,
                   ),
                 ),
           ],

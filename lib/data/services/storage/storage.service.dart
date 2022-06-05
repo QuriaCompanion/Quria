@@ -16,6 +16,7 @@ import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definitio
 import 'package:quria/data/models/bungie_api_dart/destiny_stat_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
 import 'package:quria/data/services/bungie_api/enums/definition_table_names.dart';
+import 'package:quria/data/services/display/display.service.dart';
 
 /// StorageService is to be called using static methods.
 ///
@@ -77,8 +78,13 @@ class StorageService {
 
     for (int i = 0; i < hashes.length; i++) {
       if (definitions[i] == null) continue;
-      T def = definitions[i]!;
+      T def = definitions[i] as T;
       AllDestinyManifestComponents.setField<T>(hashes[i], def);
     }
+  }
+
+  static Future<void> resetManifest() async {
+    await removeLocalStorage("manifestVersion");
+    DisplayService.isManifestUp = false;
   }
 }

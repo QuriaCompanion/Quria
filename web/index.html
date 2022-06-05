@@ -54,10 +54,10 @@
 
 
   <!-- add browser image as svg -->
-  <link rel="icon" type="image/svg+xml" href="Quria.svg">
+  <link rel="icon" type="image/png" href="QuriaLogo.png">
 
 
-  <title>Quria</title>
+  <title>Quria Companion</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body style="background-color: #0C0E13;">
@@ -127,29 +127,6 @@
       // Service workers not supported. Just drop the <script> tag.
       loadMainDartJs();
     }
-  </script>
-  <script type="module">
-    // Import the functions you need from the SDKs you need
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.6/firebase-analytics.js";
-    // TODO: Add SDKs for Firebase products that you want to use
-    // https://firebase.google.com/docs/web/setup#available-libraries
-  
-    // Your web app's Firebase configuration
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyAHPZS_6edfw4AVLW4VM1_hhkxrVUk9Mr0",
-      authDomain: "quriacompanion-13944.firebaseapp.com",
-      projectId: "quriacompanion-13944",
-      storageBucket: "quriacompanion-13944.appspot.com",
-      messagingSenderId: "653536181122",
-      appId: "1:653536181122:web:c81569f39c669fc18eed9b",
-      measurementId: "G-RW0ENQMR23"
-    };
-  
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
   </script>
 </body>
 </html>
