@@ -40,7 +40,7 @@ class _CollectionWeaponPageState extends State<CollectionWeaponPage> {
                   backgroundColor: black,
                   body: CollectionMobileView(items: snapshot.data!));
             } else {
-              return CollectionWebView(items: snapshot.data!);
+              return Scaffold(body: CollectionWebView(items: snapshot.data!));
             }
           } else {
             return const Loader();
