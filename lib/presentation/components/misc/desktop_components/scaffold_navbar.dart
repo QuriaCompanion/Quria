@@ -5,11 +5,19 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 
-class ScaffoldNavBar extends StatelessWidget {
+class ScaffoldNavBar extends StatefulWidget {
   final child;
 
   const ScaffoldNavBar({required this.child, Key? key}) : super(key: key);
+
+  @override
+  State<ScaffoldNavBar> createState() => _ScaffoldNavBarState();
+}
+
+class _ScaffoldNavBarState extends State<ScaffoldNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,36 +28,32 @@ class ScaffoldNavBar extends StatelessWidget {
             decoration: BoxDecoration(color: Colors.cyan),
             child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     child: Row(children: [
                       NavBarButton(
                         name: 'Personnage',
-                        widthPercent: vw(context) * 0.08,
                         icon: SvgPicture.asset("assets/icons/Perso-1.svg"),
                       ),
                       SizedBox(width: 40),
                       NavBarButton(
                         name: 'Builds',
-                        widthPercent: vw(context) * 0.08,
                         icon: SvgPicture.asset("assets/icons/Builds.svg"),
                       ),
                       SizedBox(width: 40),
                       NavBarButton(
                         name: 'QuriaBuilder',
-                        widthPercent: vw(context) * 0.08,
                         icon: SvgPicture.asset("assets/icons/Quria.svg"),
                       ),
                       SizedBox(width: 40),
                       NavBarButton(
                         name: 'Coffre',
-                        widthPercent: vw(context) * 0.08,
                         icon: SvgPicture.asset("assets/icons/Coffre.svg"),
                       ),
                       SizedBox(width: 40),
                       NavBarButton(
                         name: 'Collections',
-                        widthPercent: vw(context) * 0.08,
                         icon: SvgPicture.asset("assets/icons/Collection.svg"),
                       ),
                     ]),
@@ -59,50 +63,85 @@ class ScaffoldNavBar extends StatelessWidget {
                       Container(
                           child: Column(
                         children: [
-                          Row(
-                            children: [
-                              // Image(
-                              //     image:
-                              //         AssetImage('assets/images/avatar.png')),
-                              Text('Nom'),
-                              Text('1494'),
-                              const Icon(
-                                Icons.arrow_drop_down,
-                                color: Colors.white,
-                              ),
-                            ],
+                          navBarCharacter(
+                            score: '1232',
+                            name: 'Chasseur',
+                            icon: 'assets/img/error.png',
                           ),
-                          Row(
-                            children: [
-                              // Image(
-                              // image:
-                              // AssetImage('assets/images/avatar.png')),
-                            ],
+                          navBarCharacter(
+                            score: '1232',
+                            name: 'Chasseur',
+                            icon: 'assets/img/error.png',
+                          ),
+                          navBarCharacter(
+                            score: '1232',
+                            name: 'Chasseur',
+                            icon: 'assets/img/error.png',
                           ),
                         ],
                       )),
-                      Text('Paramètres'),
+                      // Text('Paramètres'),
                     ]),
                   ),
                 ]),
           ),
         ),
-        child
+        widget.child
       ]),
     );
   }
 }
 
-class NavBarButton extends StatefulWidget {
+class navBarCharacter extends StatelessWidget {
+  final String score;
   final String name;
-  final widthPercent;
+  final String icon;
+  const navBarCharacter({
+    Key? key,
+    required this.score,
+    required this.name,
+    required this.icon,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Image(width: 32, height: 32, image: AssetImage(icon)),
+        SizedBox(width: 8),
+        Text(name),
+        Image(
+          width: 32,
+          height: 32,
+          image: NetworkImage(DestinyData.bungieLink +
+              ManifestService
+                  .manifestParsed
+                  .destinyStatDefinition[StatsHash.power]!
+                  .displayProperties!
+                  .icon!),
+          color: yellow,
+          fit: BoxFit.cover,
+        ),
+        textBodyBold(score, color: yellow),
+        const Icon(
+          Icons.arrow_drop_down,
+          color: Colors.white,
+        ),
+      ],
+    );
+  }
+}
+
+class NavBarButton extends StatefulWidget {
+  final name;
   final icon;
+  // final width;
 
   const NavBarButton({
     Key? key,
     required this.name,
-    required this.widthPercent,
     required this.icon,
+    // required this.width,
   }) : super(key: key);
 
   @override
@@ -110,36 +149,54 @@ class NavBarButton extends StatefulWidget {
 }
 
 class _NavBarButtonState extends State<NavBarButton> {
-  bool test = false;
+  bool isHover = false;
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () => {inspect('sds')},
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              SizedBox(
-                width: 10,
-              ),
-              widget.icon,
-              SizedBox(width: 4),
-              textBodyBold(widget.name)
-            ],
-          ),
-          if (test)
-            LinearPercentIndicator(
-              animation: test,
-              restartAnimation: false,
-              animationDuration: 1000,
-              width: widget.widthPercent,
-              lineHeight: 5,
-              percent: 1,
-              backgroundColor: Colors.grey,
-              progressColor: Colors.white,
+    return Container(
+      child: InkWell(
+        onTap: () => {},
+        onHover: (val) {
+          setState(() {
+            isHover = val;
+          });
+        },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 10,
+                ),
+                widget.icon,
+                SizedBox(width: 4),
+                textBodyBold(widget.name)
+              ],
             ),
-        ],
+            // if (isHover)
+            AnimatedPositioned(
+              left: isHover ? 100 : 0,
+              top: isHover ? 100 : 0,
+              duration: Duration(milliseconds: 10),
+              child: Container(
+                  decoration: BoxDecoration(
+                      border: Border(
+                          bottom: BorderSide(color: Colors.white, width: 1))),
+                  child: SizedBox(width: 100)),
+            )
+            // LinearPercentIndicator(
+            //   animation: isHover,
+            //   restartAnimation: false,
+            //   animationDuration: 300,
+            //   width: ,
+            //   // width: widget.width,
+            //   lineHeight: 5,
+            //   percent: 1,
+            //   backgroundColor: Colors.grey,
+            //   progressColor: Colors.white,
+            // ),
+          ],
+        ),
       ),
     );
   }
