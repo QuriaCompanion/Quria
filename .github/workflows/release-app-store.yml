@@ -46,7 +46,7 @@ jobs:
  
    - name: Build xArchive
      run: |
-            xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release DEVELOPMENT_TEAM=8CKRD463F2 -sdk 'iphoneos' -destination 'generic/platform=iOS' -archivePath build-output/app.xcarchive PROVISIONING_PROFILE=3F6288ED-B05A-5187-BEC8-D16767CBCD1D clean archive CODE_SIGN_IDENTITY="iPhone Distribution: Yannis Battiston (8CKRD463F2)"
+            xcodebuild -workspace ios/Runner.xcworkspace -scheme Runner -configuration Release DEVELOPMENT_TEAM=8CKRD463F2 -sdk 'iphoneos' -destination 'generic/platform=iOS' -archivePath build-output/app.xcarchive PROVISIONING_PROFILE=8eb37219-b0c1-4be0-8741-245885da92c6 clean archive CODE_SIGN_IDENTITY="iPhone Distribution: Yannis Battiston (8CKRD463F2)"
 
    - name: Export ipa
      run: xcodebuild -exportArchive -archivePath build-output/app.xcarchive -exportPath build-output/ios -exportOptionsPlist ios/ExportOptions.plist
