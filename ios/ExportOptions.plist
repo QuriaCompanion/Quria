@@ -1,0 +1,16 @@
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>method</key>
+  <string>app-store</string> <!-- app-store, ad-hoc, enterprise, development -->
+  <key>teamID</key>
+  <string>8CKRD463F2</string>
+	<key>signingStyle</key>
+	<string>manual</string>
+  <key>provisioningProfiles</key>
+	<dict>
+		<key>com.quria.quriaCompanion</key>
+		<string>3F6288ED-B05A-5187-BEC8-D16767CBCD1D</string>
+	</dict>
+</dict>
+</plist>
