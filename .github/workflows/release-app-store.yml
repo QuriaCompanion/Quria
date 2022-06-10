@@ -1,8 +1,10 @@
 name: Deploy to iOS
 on:
   workflow_dispatch:
+    inputs:
       lane:
         description: "Deploy to production appstore"
+        required: true
 
 jobs:
  build_ios:
