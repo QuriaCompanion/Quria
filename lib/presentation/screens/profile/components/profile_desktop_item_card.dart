@@ -11,6 +11,7 @@ import 'package:quria/presentation/components/detailed_item/item/item_component_
 class ProfileDesktopItemCard extends StatefulWidget {
   final DestinyItemComponent item;
   final String characterId;
+  final double width;
   final List<DestinyItemComponent> inventory;
   final void Function(InspectData) onClick;
   const ProfileDesktopItemCard({
@@ -18,6 +19,7 @@ class ProfileDesktopItemCard extends StatefulWidget {
     required this.inventory,
     required this.onClick,
     required this.item,
+    required this.width,
     Key? key,
   }) : super(key: key);
 
@@ -79,7 +81,7 @@ class _ProfileDesktopItemCardState extends State<ProfileDesktopItemCard> {
           elementIcon: data.elementIcon,
           powerLevel: data.powerLevel,
           perks: data.perks,
-          width: vw(context) * 0.5,
+          width: widget.width,
           cosmetics: data.intristics,
           armorSockets: data.armorSockets,
           characterId: widget.characterId),

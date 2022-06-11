@@ -65,7 +65,6 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
 
   @override
   Widget build(BuildContext context) {
-    double iconSize = widget.width / 6.69;
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -81,14 +80,12 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
                 ItemIcon(
                   displayHash:
                       widget.item.overrideStyleItemHash ?? widget.itemDef.hash!,
-                  imageSize: iconSize,
+                  imageSize: iconSize(context, widget.width),
                 ),
                 SizedBox(width: globalPadding(context)),
                 SizedBox(
-                  width: widget.width -
-                      (iconSize * 2) -
-                      globalPadding(context) * 3,
-                  height: iconSize,
+                  width: itemComponentDisplayTextWidth(context, widget.width),
+                  height: iconSize(context, widget.width),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,8 +125,8 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
               })
             },
             child: SizedBox(
-              height: iconSize,
-              width: iconSize,
+              height: iconSize(context, widget.width),
+              width: iconSize(context, widget.width),
               child: AnimatedBuilder(
                   animation: animation,
                   builder: (context, child) {

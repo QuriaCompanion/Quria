@@ -11,8 +11,13 @@ import 'package:quria/presentation/components/detailed_item/item/stat_progress_b
 class InspectMobileStats extends StatelessWidget {
   final DestinyInventoryItemDefinition item;
   final Map<String, DestinyStat>? stats;
-  const InspectMobileStats({required this.item, this.stats, Key? key})
-      : super(key: key);
+  final double width;
+  const InspectMobileStats({
+    required this.item,
+    this.stats,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +26,7 @@ class InspectMobileStats extends StatelessWidget {
       children: [
         for (int statHash in DestinyData.linearStatBySubType[item.itemSubType]!)
           StatProgressBar(
-            width: vw(context),
+            width: width,
             name: ManifestService.manifestParsed
                     .destinyStatDefinition[statHash]!.displayProperties!.name ??
                 'error',
@@ -54,7 +59,7 @@ class InspectMobileStats extends StatelessWidget {
             children: [
               for (String statHash in unusedStats)
                 StatNoBar(
-                  width: vw(context),
+                  width: width,
                   fontSize: 20,
                   name: ManifestService
                           .manifestParsed
@@ -69,7 +74,7 @@ class InspectMobileStats extends StatelessWidget {
                 ),
               if (item.itemType == DestinyItemType.Armor)
                 StatNoBar(
-                  width: vw(context),
+                  width: width,
                   fontSize: 20,
                   name: 'Total',
                   value: armorTotal,

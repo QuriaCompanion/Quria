@@ -17,10 +17,12 @@ class ItemModal extends StatelessWidget {
   final DestinyItemComponent item;
   final void Function(InspectData) onClick;
   final void Function() onTransfer;
+  final double width;
   const ItemModal({
     required this.item,
     required this.onClick,
     required this.onTransfer,
+    required this.width,
     Key? key,
   }) : super(key: key);
 
@@ -47,12 +49,12 @@ class ItemModal extends StatelessWidget {
                   children: [
                     ItemIcon(
                       displayHash: item.overrideStyleItemHash ?? item.itemHash!,
-                      imageSize: mobileItemSize(context),
+                      imageSize: itemSize(context, width),
                     ),
                     SizedBox(width: globalPadding(context)),
                     SizedBox(
                       width: vw(context) -
-                          mobileItemSize(context) -
+                          itemSize(context, width) -
                           (globalPadding(context) * 3) -
                           40,
                       child: Column(

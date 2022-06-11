@@ -21,14 +21,16 @@ class ArmorMods extends StatefulWidget {
   final String afinityIcon;
   final String? instanceId;
   final String? characterId;
-  const ArmorMods(
-      {required this.afinityIcon,
-      required this.sockets,
-      required this.item,
-      this.characterId,
-      this.instanceId,
-      Key? key})
-      : super(key: key);
+  final double width;
+  const ArmorMods({
+    required this.afinityIcon,
+    required this.sockets,
+    required this.item,
+    required this.width,
+    this.characterId,
+    this.instanceId,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ArmorMods> createState() => _ArmorModsState();
@@ -98,6 +100,7 @@ class _ArmorModsState extends State<ArmorMods> {
         displayedSockets);
     return Column(children: [
       ArmorAfinity(
+          width: widget.width,
           afinityIcon: widget.afinityIcon,
           remaining: remaining,
           pointsAvailable: ManifestService
@@ -145,6 +148,7 @@ class _ArmorModsState extends State<ArmorMods> {
                         context: context,
                         builder: (context) {
                           return ArmorModsModal(
+                            width: vw(context),
                             socket: ManifestService.manifestParsed
                                     .destinyInventoryItemDefinition[
                                 socket.value.plugHash]!,
@@ -168,7 +172,7 @@ class _ArmorModsState extends State<ArmorMods> {
                         });
                   },
                   child: ArmorModIconDisplay(
-                    iconSize: mobileItemSize(context),
+                    iconSize: itemSize(context, widget.width),
                     socket: ManifestService.manifestParsed
                         .destinyInventoryItemDefinition[socket.value.plugHash]!,
                   ),

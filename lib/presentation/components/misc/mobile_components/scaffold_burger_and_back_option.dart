@@ -7,8 +7,12 @@ import 'package:quria/presentation/components/misc/mobile_components/burger.dart
 
 class ScaffoldBurgerAndBackOption extends StatelessWidget {
   final Widget body;
-  const ScaffoldBurgerAndBackOption({required this.body, Key? key})
-      : super(key: key);
+  final double width;
+  const ScaffoldBurgerAndBackOption({
+    required this.body,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,12 +44,12 @@ class ScaffoldBurgerAndBackOption extends StatelessWidget {
           },
         ),
         flexibleSpace: SizedBox(
-          width: vw(context),
+          width: width,
           height: appBarHeight(context),
           child: ClipRect(
               child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-            child: SizedBox(width: vw(context), height: appBarHeight(context)),
+            child: SizedBox(width: width, height: appBarHeight(context)),
           )),
         ),
         backgroundColor: Colors.transparent,

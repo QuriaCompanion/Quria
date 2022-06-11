@@ -46,6 +46,7 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                   backgroundColor: Colors.transparent,
                   context: context,
                   builder: (context) => ModModal(
+                        width: vw(context),
                         mod: widget.item,
                       ));
             },
@@ -77,6 +78,7 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                             context: context,
                             builder: (context) {
                               return ModModal(
+                                  width: vw(context),
                                   mod: ManifestService.manifestParsed
                                       .destinyInventoryItemDefinition[plug]!,
                                   onSocketChange: () {

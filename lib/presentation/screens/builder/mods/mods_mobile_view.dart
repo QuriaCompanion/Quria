@@ -41,6 +41,7 @@ class ModsMobileView extends StatelessWidget {
                 mobileSectionInverted(context,
                     title: mods.value.title,
                     child: ModsMobileSection(
+                        width: vw(context),
                         items: mods.value.items,
                         scoketEntries: mods.value.elementSocketEntries,
                         onChange: (modSlots, index) {

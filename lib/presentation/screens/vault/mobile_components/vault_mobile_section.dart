@@ -62,6 +62,7 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                         context: context,
                         builder: (context) {
                           return ItemModal(
+                            width: vw(context),
                             item: item,
                             onClick: (inspect) {
                               Navigator.pushNamed(context, routeInspectMobile,

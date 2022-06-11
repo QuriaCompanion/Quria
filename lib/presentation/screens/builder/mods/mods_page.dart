@@ -86,7 +86,7 @@ class ModsPage extends StatelessWidget {
               ManifestService
                   .manifestParsed.destinyInventoryItemDefinition[2493100093],
             ]),
-        // boots
+        // class items
         ModSlots(
             title: AppLocalizations.of(context)!.builder_mods_title,
             elementSocketEntries: ManifestService

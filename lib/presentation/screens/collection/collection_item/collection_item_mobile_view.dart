@@ -39,14 +39,13 @@ class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(
-              left: globalPadding(context),
-              right: globalPadding(context),
-              bottom: globalPadding(context)),
-          child: data.itemType == DestinyItemType.Weapon
-              ? CollectionWeaponView(item: data)
-              : CollectionArmorView(item: data),
-        )
+            padding: EdgeInsets.only(
+                left: globalPadding(context),
+                right: globalPadding(context),
+                bottom: globalPadding(context)),
+            child: data.itemType == DestinyItemType.Weapon
+                ? CollectionWeaponView(item: data, width: vw(context))
+                : CollectionArmorView(item: data, width: vw(context)))
       ],
     );
   }

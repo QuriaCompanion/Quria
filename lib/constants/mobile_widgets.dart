@@ -2,12 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 
-Widget mobileHeader(BuildContext context,
-    {required ImageProvider<Object> image, required Widget child}) {
+Widget mobileHeader(
+  BuildContext context, {
+  required ImageProvider<Object> image,
+  required Widget child,
+  double? width,
+}) {
+  width ??= vw(context);
   return Container(
     alignment: Alignment.bottomCenter,
-    width: vw(context),
-    height: vw(context) * 0.9,
+    width: width,
+    height: width * 0.9,
     decoration: BoxDecoration(
         image: DecorationImage(
             alignment: Alignment.topRight, fit: BoxFit.cover, image: image)),
@@ -23,12 +28,11 @@ Widget mobileHeader(BuildContext context,
           ),
         ),
         alignment: Alignment.bottomCenter,
-        height: vw(context) / 3.17,
+        height: width / 3.17,
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
             child: SizedBox(
-                width: vw(context) - globalPadding(context) * 2,
-                child: child))),
+                width: width - globalPadding(context) * 2, child: child))),
   );
 }
 

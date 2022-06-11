@@ -2,7 +2,9 @@ import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/models/helpers/itemInfoHelper.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
@@ -11,6 +13,8 @@ import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
+import 'package:quria/presentation/screens/inspect/inspect_item.dart';
+import 'package:quria/presentation/screens/inspect/inspect_mobile.dart';
 import 'package:quria/presentation/screens/profile/profile_desktop_view.dart';
 import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -120,9 +124,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   child: ProfileDesktopView(
                       data: data,
                       onClick: (inspectData) {
-                        Navigator.pushNamed(context, routeInspectMobile,
-                                arguments: inspectData)
-                            .then((_) => setState(() {}));
+                        final ItemInfoHelper data = DisplayService()
+                            .getItemInfo(
+                                inspectData.instanceId, inspectData.hash);
+                        showDialog(
+                            context: context,
+                            barrierColor: Color.fromARGB(110, 0, 0, 0),
+                            builder: (context) {
+                              return desktopModal(context,
+                                  child: InspectItem(
+                                    inspectData: inspectData,
+                                    data: data,
+                                    width: vw(context) * 0.4,
+                                  ));
+                            });
                       }),
                 ),
               );

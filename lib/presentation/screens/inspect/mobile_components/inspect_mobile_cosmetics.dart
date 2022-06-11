@@ -8,8 +8,12 @@ import 'package:quria/presentation/components/detailed_item/item/item_with_type_
 
 class MobileInspectCosmetics extends StatelessWidget {
   final List<DestinyItemSocketState> sockets;
-  const MobileInspectCosmetics({required this.sockets, Key? key})
-      : super(key: key);
+  final double width;
+  const MobileInspectCosmetics({
+    required this.sockets,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +39,7 @@ class MobileInspectCosmetics extends StatelessWidget {
           Padding(
             padding: EdgeInsets.only(bottom: globalPadding(context)),
             child: ItemWithTypeName(
-                iconSize: mobileItemSize(context),
+                iconSize: itemSize(context, width),
                 item: ManifestService.manifestParsed
                     .destinyInventoryItemDefinition[socket.plugHash]!),
           )

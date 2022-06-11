@@ -6,7 +6,6 @@ import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/screens/profile/components/profile_desktop_item_card.dart';
-import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_item_card.dart';
 
 class CharacterDesktopItemColumn extends StatelessWidget {
   final ProfileHelper data;
@@ -22,7 +21,7 @@ class CharacterDesktopItemColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: vw(context) * 0.475,
+      width: desktopCharactersColumnSize(context),
       decoration: BoxDecoration(
         color: blackLight,
         borderRadius: BorderRadius.circular(20),
@@ -50,6 +49,8 @@ class CharacterDesktopItemColumn extends StatelessWidget {
                         onClick(inspectData);
                       },
                       item: item,
+                      width: desktopCharactersColumnSize(context) -
+                          globalPadding(context),
                       characterId: data.selectedCharacter!.characterId!,
                       inventory: data.selectedCharacterInventory
                           .where((element) =>

@@ -8,7 +8,12 @@ import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mob
 
 class CollectionArmorView extends StatelessWidget {
   final DestinyInventoryItemDefinition item;
-  const CollectionArmorView({required this.item, Key? key}) : super(key: key);
+  final double width;
+  const CollectionArmorView({
+    required this.item,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +21,7 @@ class CollectionArmorView extends StatelessWidget {
       children: [
         mobileSection(context,
             title: AppLocalizations.of(context)!.statistics,
-            child: InspectMobileStats(item: item)),
+            child: InspectMobileStats(item: item, width: vw(context))),
         mobileSection(context,
             title: AppLocalizations.of(context)!.origin,
             child: InspectMobileOrigin(collectionHash: item.collectibleHash)),

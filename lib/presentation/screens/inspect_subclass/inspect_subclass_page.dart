@@ -41,6 +41,7 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
   Widget build(BuildContext context) {
     if (vw(context) < 1000) {
       return ScaffoldBurgerAndBackOption(
+        width: vw(context),
         body: Builder(builder: (context) {
           return Builder(builder: (context) {
             if (widget.data.isNewSubclass) {

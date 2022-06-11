@@ -20,8 +20,8 @@ class ProfileMobileHeader extends StatelessWidget {
     required this.characterSuper,
     required this.subclassId,
     required this.isNewSubclass,
-    Key? key,
     required this.width,
+    Key? key,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {

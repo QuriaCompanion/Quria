@@ -47,7 +47,8 @@ class ClassItemChoiceMobileView extends StatelessWidget {
                               .setClassItem(item.itemInstanceId!);
                           Navigator.pushNamed(context, routeMod);
                         },
-                        child: ItemComponentSmart(item: item)),
+                        child:
+                            ItemComponentSmart(width: vw(context), item: item)),
                     Divider(
                       height: globalPadding(context) * 2,
                       color: Colors.white,

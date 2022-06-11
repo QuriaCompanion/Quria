@@ -13,12 +13,13 @@ class ColumnPerkDisplay extends StatefulWidget {
     required this.item,
     required this.index,
     required this.selectedPerks,
+    required this.width,
     Key? key,
   }) : super(key: key);
   final DestinyInventoryItemDefinition item;
   final int index;
   final InspectHelper selectedPerks;
-
+  final double width;
   @override
   State<ColumnPerkDisplay> createState() => _ColumnPerkDisplayState();
 }
@@ -50,6 +51,7 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                       context: context,
                       builder: (context) {
                         return PerkModal(
+                          width: vw(context),
                           perk: ManifestService.manifestParsed
                                   .destinyInventoryItemDefinition[
                               sockets[i].plugItemHash]!,
@@ -91,7 +93,7 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                   selected: selectedIndex == i,
                   perk: ManifestService.manifestParsed
                       .destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
-                  iconSize: mobileItemSize(context),
+                  iconSize: itemSize(context, widget.width),
                 ),
               ),
             ),
@@ -108,6 +110,7 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                     context: context,
                     builder: (context) {
                       return PerkModal(
+                        width: vw(context),
                         perk: ManifestService
                                 .manifestParsed.destinyInventoryItemDefinition[
                             widget.item.sockets?.socketEntries?[widget.index]
@@ -120,7 +123,7 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                         .manifestParsed.destinyInventoryItemDefinition[
                     widget.item.sockets?.socketEntries?[widget.index]
                         .singleInitialItemHash]!,
-                iconSize: mobileItemSize(context),
+                iconSize: itemSize(context, widget.width),
                 selected: true,
               ),
             ),

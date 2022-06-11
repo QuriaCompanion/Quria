@@ -32,6 +32,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
         if (snapshot.hasData) {
           if (vw(context) < 1000) {
             return ScaffoldBurgerAndBackOption(
+                width: vw(context),
                 body: CollectionItemMobileView(data: snapshot.data!));
           } else {
             return Container();
