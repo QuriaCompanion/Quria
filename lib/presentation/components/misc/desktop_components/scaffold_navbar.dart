@@ -135,13 +135,11 @@ class navBarCharacter extends StatelessWidget {
 class NavBarButton extends StatefulWidget {
   final name;
   final icon;
-  // final width;
 
   const NavBarButton({
     Key? key,
     required this.name,
     required this.icon,
-    // required this.width,
   }) : super(key: key);
 
   @override
@@ -153,6 +151,8 @@ class _NavBarButtonState extends State<NavBarButton> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration:
+          isHover ? BoxDecoration(border: Border(bottom: BorderSide())) : null,
       child: InkWell(
         onTap: () => {},
         onHover: (val) {
@@ -173,28 +173,6 @@ class _NavBarButtonState extends State<NavBarButton> {
                 textBodyBold(widget.name)
               ],
             ),
-            // if (isHover)
-            AnimatedPositioned(
-              left: isHover ? 100 : 0,
-              top: isHover ? 100 : 0,
-              duration: Duration(milliseconds: 10),
-              child: Container(
-                  decoration: BoxDecoration(
-                      border: Border(
-                          bottom: BorderSide(color: Colors.white, width: 1))),
-                  child: SizedBox(width: 100)),
-            )
-            // LinearPercentIndicator(
-            //   animation: isHover,
-            //   restartAnimation: false,
-            //   animationDuration: 300,
-            //   width: ,
-            //   // width: widget.width,
-            //   lineHeight: 5,
-            //   percent: 1,
-            //   backgroundColor: Colors.grey,
-            //   progressColor: Colors.white,
-            // ),
           ],
         ),
       ),
