@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '653536181122',
     projectId: 'quriacompanion-13944',
     storageBucket: 'quriacompanion-13944.appspot.com',
-    iosClientId: '653536181122-jqc4vj7f6a5l38jjtg6a2clrvjgilqmp.apps.googleusercontent.com',
+    iosClientId:
+        '653536181122-jqc4vj7f6a5l38jjtg6a2clrvjgilqmp.apps.googleusercontent.com',
     iosBundleId: 'com.example.quria',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '653536181122',
     projectId: 'quriacompanion-13944',
     storageBucket: 'quriacompanion-13944.appspot.com',
-    iosClientId: '653536181122-gdh2j5i08lmu22cji0ur79k0dipr3h1n.apps.googleusercontent.com',
+    iosClientId:
+        '653536181122-gdh2j5i08lmu22cji0ur79k0dipr3h1n.apps.googleusercontent.com',
     iosBundleId: 'com.quria.quriaCompanion',
   );
 }
