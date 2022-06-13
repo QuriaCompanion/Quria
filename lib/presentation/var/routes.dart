@@ -20,5 +20,6 @@ const String routeVault = "/vault";
 const String routeInspectSubclass = "/inspect-subclass";
 const String routeCollectionItem = "/collection-item";
 const String routePageSettings = "/settings";
+const String routePageLegends = "/legends";
 
 final navKey = GlobalKey<NavigatorState>();
