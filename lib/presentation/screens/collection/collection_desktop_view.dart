@@ -7,27 +7,27 @@ import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definit
 import 'package:quria/data/services/bungie_api/enums/collection_filter.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
+import 'package:quria/presentation/screens/collection/components/collection_desktop_filter.dart';
 
-class CollectionWebView extends StatefulWidget {
+class CollectionDesktopView extends StatefulWidget {
   final Iterable<DestinyInventoryItemDefinition> items;
 
-  const CollectionWebView({required this.items, Key? key}) : super(key: key);
+  const CollectionDesktopView({required this.items, Key? key})
+      : super(key: key);
 
   @override
-  State<CollectionWebView> createState() => _CollectionWebViewState();
+  State<CollectionDesktopView> createState() => _CollectionDesktopViewState();
 }
 
-class _CollectionWebViewState extends State<CollectionWebView> {
+class _CollectionDesktopViewState extends State<CollectionDesktopView> {
   late Map<String, DestinyItemSubType> currentFilter;
-  late DestinyItemSubType currentType;
   late int selectedBucket;
   late List<DestinyInventoryItemDefinition> sortedItems;
   @override
   void initState() {
     super.initState();
-    currentFilter = CollectionFilter.primary;
+    currentFilter = CollectionFilter.kinetic;
     selectedBucket = InventoryBucket.kineticWeapons;
-    currentType = DestinyItemSubType.AutoRifle;
     sortedItems = widget.items.toList();
     sortedItems.sort((a, b) =>
         b.inventory!.tierType!.index.compareTo(a.inventory!.tierType!.index));
@@ -68,7 +68,7 @@ class _CollectionWebViewState extends State<CollectionWebView> {
                         InkWell(
                             onTap: () {
                               setState(() {
-                                currentFilter = CollectionFilter.primary;
+                                currentFilter = CollectionFilter.kinetic;
                                 selectedBucket = InventoryBucket.kineticWeapons;
                               });
                             },
@@ -81,7 +81,7 @@ class _CollectionWebViewState extends State<CollectionWebView> {
                         InkWell(
                             onTap: () {
                               setState(() {
-                                currentFilter = CollectionFilter.special;
+                                currentFilter = CollectionFilter.energy;
                                 selectedBucket = InventoryBucket.energyWeapons;
                               });
                             },
@@ -94,7 +94,7 @@ class _CollectionWebViewState extends State<CollectionWebView> {
                         InkWell(
                             onTap: () {
                               setState(() {
-                                currentFilter = CollectionFilter.heavy;
+                                currentFilter = CollectionFilter.power;
                                 selectedBucket = InventoryBucket.powerWeapons;
                               });
                             },
@@ -111,80 +111,15 @@ class _CollectionWebViewState extends State<CollectionWebView> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Column(
-                      children: [
-                        Row(children: [
-                          InkWell(
-                              child: Container(
-                                  width: 96,
-                                  height: 96,
-                                  decoration: BoxDecoration(
-                                      color: blackLight,
-                                      borderRadius:
-                                          BorderRadius.circular(borderRadius)),
-                                  child: const Image(
-                                    image: modsHeader,
-                                  ))),
-                          const SizedBox(width: 8),
-                          InkWell(
-                              child: Container(
-                                  width: 96,
-                                  height: 96,
-                                  decoration: BoxDecoration(
-                                      color: blackLight,
-                                      borderRadius:
-                                          BorderRadius.circular(borderRadius)),
-                                  child: const Image(
-                                    image: modsHeader,
-                                  ))),
-                          const SizedBox(width: 8),
-                          InkWell(
-                              child: Container(
-                                  width: 96,
-                                  height: 96,
-                                  decoration: BoxDecoration(
-                                      color: blackLight,
-                                      borderRadius:
-                                          BorderRadius.circular(borderRadius)),
-                                  child: const Image(
-                                    image: modsHeader,
-                                  )))
-                        ]),
-                        Container(
-                            margin: const EdgeInsets.only(top: 16),
-                            padding: const EdgeInsets.all(24),
-                            width: 306,
-                            height: 72,
-                            decoration: BoxDecoration(
-                                color: blackLight,
-                                borderRadius:
-                                    BorderRadius.circular(borderRadius)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textH3('Fusils auto'),
-                                textCaptionBold('0/10', color: greyLight)
-                              ],
-                            )),
-                        Container(
-                            margin: const EdgeInsets.only(top: 8),
-                            padding: const EdgeInsets.all(24),
-                            width: 306,
-                            height: 72,
-                            decoration: BoxDecoration(
-                                color: blackLight,
-                                borderRadius:
-                                    BorderRadius.circular(borderRadius)),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                textH3('Fusils auto'),
-                                textCaptionBold('0/10', color: greyLight)
-                              ],
-                            ))
-                      ],
-                    ),
-                    SizedBox(width: 24),
+                    CollectionDesktopFilter(
+                        selectedBucket: selectedBucket,
+                        currentFilter: currentFilter,
+                        onFilterChanged: (bucket, filter) {
+                          setState(() {
+                            currentFilter = filter;
+                            selectedBucket = bucket;
+                          });
+                        }),
                     Wrap(
                       children: [
                         Container(
