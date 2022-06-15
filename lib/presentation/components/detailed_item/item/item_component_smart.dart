@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:bungie_api/enums/item_state.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
@@ -28,12 +31,13 @@ class ItemComponentSmart extends StatelessWidget {
             ?.displayProperties
             ?.icon;
     final int? powerLevel = instanceInfo.primaryStat?.value;
-
     return Row(
       children: [
         ItemIcon(
           displayHash: item.overrideStyleItemHash ?? item.itemHash!,
           imageSize: mobileItemSize(context),
+          isMasterworked: item.state == ItemState.Masterwork ||
+              item.state == const ItemState(5),
         ),
         SizedBox(width: globalPadding(context)),
         SizedBox(

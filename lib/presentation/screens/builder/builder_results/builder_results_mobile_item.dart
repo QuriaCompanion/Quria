@@ -1,3 +1,4 @@
+import 'package:bungie_api/enums/item_state.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -8,6 +9,7 @@ import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
@@ -84,6 +86,11 @@ class BuilderResultsMobileItem extends StatelessWidget {
                   child: ItemIcon(
                     displayHash: buildResult.equipement[i].displayHash,
                     imageSize: (vw(context) - (globalPadding(context) * 8)) / 5,
+                    isMasterworked: ProfileService()
+                            .getItemByInstanceId(
+                                buildResult.equipement[i].itemInstanceId)
+                            ?.state ==
+                        const ItemState(5),
                   ),
                 ),
             ],

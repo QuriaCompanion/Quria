@@ -167,7 +167,6 @@ class ProfileService {
     if (response == null) {
       return _profile;
     }
-    inspect(response);
     for (List<DestinyItemPlug> sockets
         in response.profilePlugSets!.data!.plugs!.values) {
       for (DestinyItemPlug socket in sockets) {
