@@ -1,9 +1,11 @@
 import 'dart:async';
 
 import 'package:bungie_api/models/destiny_character_component.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
@@ -20,14 +22,15 @@ class ExoticWidget extends StatefulWidget {
 
 class ExoticWidgetState extends State<ExoticWidget> {
   final DisplayService display = DisplayService();
+  late DestinyCharacterComponent currentCharacter;
   late Future<List<DestinyInventoryItemDefinition>> _future;
   bool isLoading = true;
   String searchName = "";
   @override
   void initState() {
     super.initState();
-    final currentCharacter =
-        ProfileService().getCharacters()[DisplayService.characterIndex];
+    currentCharacter = Provider.of<CharactersProvider>(context, listen: false)
+        .currentCharacter as DestinyCharacterComponent;
     _future = display.getExotics(currentCharacter.classType!);
   }
 
@@ -38,7 +41,8 @@ class ExoticWidgetState extends State<ExoticWidget> {
       builder: ((context,
           AsyncSnapshot<List<DestinyInventoryItemDefinition>> snapshot) {
         List<DestinyCharacterComponent> characters =
-            ProfileService().getCharacters();
+            Provider.of<CharactersProvider>(context).characters;
+
         if (snapshot.hasData) isLoading = false;
         if (isLoading) {
           return Container(
@@ -57,11 +61,11 @@ class ExoticWidgetState extends State<ExoticWidget> {
               backgroundColor: black,
               drawer: const Burger(),
               body: ExoticMobileView(
-                characterId:
-                    characters[DisplayService.characterIndex].characterId!,
+                characterId: currentCharacter.characterId!,
                 exotics: snapshot.data!,
                 onCharacterChange: (newIndex) {
-                  DisplayService.characterIndex = newIndex;
+                  Provider.of<CharactersProvider>(context, listen: false)
+                      .setCurrentCharacter(newIndex);
                   Navigator.popAndPushNamed(context, routeExotic);
                 },
               ),

@@ -169,9 +169,11 @@ class BungieAuthBrowser implements OAuthBrowser {
   @override
   dynamic open(String url) async {
     if (Platform.isIOS) {
+      // ignore: deprecated_member_use
       await launch(url,
           forceSafariVC: true, statusBarBrightness: Brightness.dark);
     } else {
+      // ignore: deprecated_member_use
       await launch(url, forceSafariVC: true);
     }
   }

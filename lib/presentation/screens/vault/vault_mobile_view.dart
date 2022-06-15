@@ -1,9 +1,11 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/vaultHelper.model.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
@@ -38,9 +40,8 @@ class _VaultMobileView extends State<VaultMobileView> {
       slivers: [
         CharacterAppbar(
           onCharacterChange: (newIndex) {
-            setState(() {
-              DisplayService.characterIndex = newIndex;
-            });
+            Provider.of<CharactersProvider>(context, listen: false)
+                .setCurrentCharacter(newIndex);
           },
         ),
         SliverList(
@@ -140,8 +141,9 @@ class _VaultMobileView extends State<VaultMobileView> {
                           .manifestParsed
                           .destinyInventoryItemDefinition[element.itemHash]
                           ?.classType ==
-                      widget.data.characters[DisplayService.characterIndex]
-                          .classType))
+                      Provider.of<CharactersProvider>(context)
+                          .currentCharacter
+                          ?.classType))
           .toList();
       items.sort((a, b) {
         int first = ProfileService().getItemPowerLevel(b.itemInstanceId!) ?? 0;
