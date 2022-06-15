@@ -6,7 +6,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/presentation/components/Header/mobile_components/mobile_character_choice.dart';
 
 class CharacterAppbar extends StatefulWidget {

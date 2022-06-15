@@ -6,7 +6,6 @@ import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definit
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
@@ -40,9 +39,6 @@ class ExoticWidgetState extends State<ExoticWidget> {
       future: _future,
       builder: ((context,
           AsyncSnapshot<List<DestinyInventoryItemDefinition>> snapshot) {
-        List<DestinyCharacterComponent> characters =
-            Provider.of<CharactersProvider>(context).characters;
-
         if (snapshot.hasData) isLoading = false;
         if (isLoading) {
           return Container(

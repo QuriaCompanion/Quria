@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
-import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner_info.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/mobile_character_banner.dart';
 
