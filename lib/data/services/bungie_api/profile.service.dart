@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_collectible_state.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
@@ -167,7 +166,6 @@ class ProfileService {
     if (response == null) {
       return _profile;
     }
-    inspect(response);
     for (List<DestinyItemPlug> sockets
         in response.profilePlugSets!.data!.plugs!.values) {
       for (DestinyItemPlug socket in sockets) {
