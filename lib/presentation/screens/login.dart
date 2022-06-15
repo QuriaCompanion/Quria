@@ -4,6 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/presentation/components/misc/choose_membership.dart';
@@ -114,12 +115,12 @@ class LoginWidgetState extends State<LoginWidget> {
     );
   }
 
-  void redirect() async {
+  void redirect(String lang) async {
     if (kIsWeb) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         String clientId = BungieApiService.clientId!;
         final authorizationEndpoint =
-            "https://www.bungie.net/fr/OAuth/Authorize?client_id=$clientId&response_type=code";
+            "https://www.bungie.net/$lang/OAuth/Authorize?client_id=$clientId&response_type=code";
         html.window.location.assign(authorizationEndpoint);
       });
     } else {
@@ -136,9 +137,10 @@ class LoginWidgetState extends State<LoginWidget> {
             return checkMembership();
           }
         } catch (_) {
-          redirect();
+          redirect(AppLocalizations.of(context)!.localeName);
         }
-        redirect();
+        if (!mounted) return;
+        redirect(AppLocalizations.of(context)!.localeName);
       } on OAuthException catch (e) {
         Navigator.of(context).pop();
         bool isIOS = Platform.isIOS;
