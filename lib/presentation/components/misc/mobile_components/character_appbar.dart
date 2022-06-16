@@ -3,8 +3,9 @@ import 'dart:ui';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/presentation/components/Header/mobile_components/mobile_character_choice.dart';
 
 class CharacterAppbar extends StatefulWidget {
@@ -21,7 +22,8 @@ class _CharacterAppbarState extends State<CharacterAppbar> {
   @override
   initState() {
     super.initState();
-    characters = ProfileService().getCharacters();
+    characters =
+        Provider.of<CharactersProvider>(context, listen: false).characters;
   }
 
   bool choosingCharacter = false;

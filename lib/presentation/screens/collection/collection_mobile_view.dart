@@ -121,7 +121,11 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                 horizontal: globalPadding(context),
                 vertical: globalPadding(context) / 2),
             sliver: CollectionMobileItemSection(
-              sectionName: entry.key,
+              sectionName: sortedItems
+                      .firstWhere(
+                          (element) => entry.value == element.itemSubType)
+                      .itemTypeDisplayName ??
+                  'oopsie woopsie',
               items: sortedItems
                   .where((element) =>
                       entry.value == element.itemSubType &&
