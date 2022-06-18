@@ -13,13 +13,15 @@ class InspectMobilePerks extends StatefulWidget {
   final List<DestinyItemSocketState>? sockets;
   final String? instanceId;
   final String? characterId;
-  const InspectMobilePerks(
-      {required this.sockets,
-      required this.plugs,
-      this.characterId,
-      this.instanceId,
-      Key? key})
-      : super(key: key);
+  final double width;
+  const InspectMobilePerks({
+    required this.sockets,
+    required this.plugs,
+    required this.width,
+    this.characterId,
+    this.instanceId,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<InspectMobilePerks> createState() => _InspectMobilePerksState();
@@ -44,7 +46,7 @@ class _InspectMobilePerksState extends State<InspectMobilePerks> {
         decoration: const BoxDecoration(
             color: blackLight,
             borderRadius: BorderRadius.all(Radius.circular(8))),
-        width: double.infinity,
+        width: widget.width,
         child: Center(
           child: textCaption(
             AppLocalizations.of(context)!.builder_subclass_mods_caption,
@@ -61,6 +63,7 @@ class _InspectMobilePerksState extends State<InspectMobilePerks> {
                 ? EdgeInsets.only(right: globalPadding(context))
                 : EdgeInsets.zero,
             child: InspectMobilePerkColumn(
+                width: widget.width,
                 onSocketsChanged: (newSockets) {
                   setState(() {
                     currentSockets = newSockets;

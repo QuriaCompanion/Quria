@@ -13,15 +13,17 @@ import 'package:quria/presentation/components/misc/icon_item.dart';
 class ProfileMobileItemCard extends StatefulWidget {
   final DestinyItemComponent item;
   final String characterId;
+  final double width;
   final List<DestinyItemComponent> inventory;
   final void Function(InspectData) onClick;
-  const ProfileMobileItemCard(
-      {Key? key,
-      required this.characterId,
-      required this.inventory,
-      required this.onClick,
-      required this.item})
-      : super(key: key);
+  const ProfileMobileItemCard({
+    required this.characterId,
+    required this.inventory,
+    required this.onClick,
+    required this.item,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ProfileMobileItemCard> createState() => _ProfileMobileItemCardState();
@@ -86,6 +88,7 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
             perks: data.perks,
             cosmetics: data.intristics,
             armorSockets: data.armorSockets,
+            width: vw(context),
             characterId: widget.characterId),
         if (isOpen)
           const Divider(
@@ -110,7 +113,7 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
                           instanceId: item.itemInstanceId!));
                     },
                     child: ItemIcon(
-                      imageSize: mobileItemSize(context),
+                      imageSize: itemSize(context, widget.width),
                       displayHash: item.overrideStyleItemHash ?? item.itemHash!,
                       element: dataItem.elementIcon,
                       powerLevel: dataItem.powerLevel,

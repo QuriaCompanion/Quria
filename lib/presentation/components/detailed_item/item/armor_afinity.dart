@@ -8,10 +8,12 @@ class ArmorAfinity extends StatelessWidget {
   final String afinityIcon;
   final int pointsAvailable;
   final int remaining;
+  final double width;
   const ArmorAfinity({
     required this.afinityIcon,
     required this.pointsAvailable,
     required this.remaining,
+    required this.width,
     Key? key,
   }) : super(key: key);
   @override
@@ -20,7 +22,7 @@ class ArmorAfinity extends StatelessWidget {
       children: [
         Container(
             width: double.infinity,
-            height: mobileItemSize(context),
+            height: itemSize(context, width),
             decoration: const BoxDecoration(
                 color: solar,
                 borderRadius: BorderRadius.only(
@@ -54,7 +56,7 @@ class ArmorAfinity extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
-              height: mobileItemSize(context) / 3,
+              height: itemSize(context, width) / 3,
               width: (vw(context) - (globalPadding(context) * 2)) / 10.5,
               decoration: const BoxDecoration(
                 color: Colors.white,
@@ -63,14 +65,14 @@ class ArmorAfinity extends StatelessWidget {
             ),
             for (int i = 2; i < 10; i++)
               Container(
-                height: mobileItemSize(context) / 3,
+                height: itemSize(context, width) / 3,
                 width: (vw(context) - (globalPadding(context) * 2)) / 10.5,
                 decoration: BoxDecoration(
                   color: pointsAvailable >= i ? Colors.white : greyLight,
                 ),
               ),
             Container(
-              height: mobileItemSize(context) / 3,
+              height: itemSize(context, width) / 3,
               width: (vw(context) - (globalPadding(context) * 2)) / 10.5,
               decoration: BoxDecoration(
                 color: pointsAvailable == 10 ? Colors.white : greyLight,

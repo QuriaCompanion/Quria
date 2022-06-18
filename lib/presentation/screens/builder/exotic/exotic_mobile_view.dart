@@ -75,7 +75,10 @@ class _ExoticMobileViewState extends State<ExoticMobileView> {
                   },
                   child: Padding(
                     padding: EdgeInsets.only(bottom: globalPadding(context)),
-                    child: ExoticMobileItem(item: widget.exotics[index]),
+                    child: ExoticMobileItem(
+                      item: widget.exotics[index],
+                      width: vw(context),
+                    ),
                   ),
                 );
               },

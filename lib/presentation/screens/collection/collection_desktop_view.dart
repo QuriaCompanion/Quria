@@ -144,7 +144,10 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                             ),
                             itemCount: items.length,
                             itemBuilder: (context, index) {
-                              return CollectionItemLine(item: items[index]);
+                              return CollectionItemLine(
+                                item: items[index],
+                                width: (vw(context) - 600) / 2,
+                              );
                             }),
                       ),
                     )

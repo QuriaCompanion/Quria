@@ -15,11 +15,13 @@ class ArmorModsModal extends StatefulWidget {
   final DestinyInventoryItemDefinition socket;
   final void Function(int) onSocketChange;
   final int plugSetsHash;
+  final double width;
 
   const ArmorModsModal(
       {required this.socket,
       required this.plugSetsHash,
       required this.onSocketChange,
+      required this.width,
       Key? key})
       : super(key: key);
 
@@ -54,9 +56,9 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                     ModDisplay(
                         width: vw(context) -
                             globalPadding(context) * 3 -
-                            mobileItemSize(context),
+                            itemSize(context, widget.width),
                         padding: globalPadding(context),
-                        iconSize: mobileItemSize(context),
+                        iconSize: itemSize(context, widget.width),
                         item: widget.socket),
                     const Divider(
                       color: blackLight,
@@ -75,6 +77,7 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                                 context: context,
                                 builder: (context) {
                                   return ModModal(
+                                    width: vw(context),
                                     mod: ManifestService.manifestParsed
                                             .destinyInventoryItemDefinition[
                                         plug.plugItemHash]!,
@@ -86,7 +89,7 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                                 });
                           },
                           child: ModWithTypeName(
-                              iconSize: mobileItemSize(context),
+                              iconSize: itemSize(context, widget.width),
                               item: ManifestService.manifestParsed
                                       .destinyInventoryItemDefinition[
                                   plug.plugItemHash]!),

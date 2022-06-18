@@ -6,15 +6,20 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
 class CollectionItemLine extends StatelessWidget {
   final DestinyInventoryItemDefinition item;
-  const CollectionItemLine({required this.item, Key? key}) : super(key: key);
+  final double width;
+  const CollectionItemLine({
+    required this.item,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         Container(
-          width: mobileItemSize(context),
-          height: mobileItemSize(context),
+          width: itemSize(context, width),
+          height: itemSize(context, width),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
           ),
@@ -23,8 +28,8 @@ class CollectionItemLine extends StatelessWidget {
               Image(
                 image: NetworkImage(
                     DestinyData.bungieLink + item.displayProperties!.icon!),
-                height: mobileItemSize(context),
-                width: mobileItemSize(context),
+                height: itemSize(context, width),
+                width: itemSize(context, width),
                 fit: BoxFit.fill,
               ),
               if (item.iconWatermark != null)
@@ -32,8 +37,8 @@ class CollectionItemLine extends StatelessWidget {
                   image: NetworkImage(
                     DestinyData.bungieLink + item.iconWatermark!,
                   ),
-                  height: mobileItemSize(context),
-                  width: mobileItemSize(context),
+                  height: itemSize(context, width),
+                  width: itemSize(context, width),
                   fit: BoxFit.fill,
                 ),
             ],

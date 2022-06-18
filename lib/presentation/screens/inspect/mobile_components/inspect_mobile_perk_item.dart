@@ -13,16 +13,18 @@ class InspectMobilePerkItem extends StatefulWidget {
   final String? characterId;
   final String? instanceId;
   final int index;
+  final double width;
   final Function(List<DestinyItemSocketState>?) onSocketsChanged;
-  const InspectMobilePerkItem(
-      {required this.perk,
-      required this.sockets,
-      required this.onSocketsChanged,
-      required this.index,
-      this.characterId,
-      this.instanceId,
-      Key? key})
-      : super(key: key);
+  const InspectMobilePerkItem({
+    required this.perk,
+    required this.sockets,
+    required this.onSocketsChanged,
+    required this.index,
+    required this.width,
+    this.characterId,
+    this.instanceId,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<InspectMobilePerkItem> createState() => _InspectMobilePerkItemState();
@@ -43,6 +45,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
               context: context,
               builder: (context) {
                 return PerkModal(
+                  width: vw(context),
                   isSelected: selected,
                   perk: widget.perk,
                   instanceId: widget.instanceId,
@@ -80,7 +83,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
             perk: widget.perk,
             selected: selected,
             loading: loading,
-            iconSize: mobileItemSize(context)),
+            iconSize: itemSize(context, widget.width)),
       );
     });
   }

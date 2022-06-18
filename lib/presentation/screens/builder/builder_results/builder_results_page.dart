@@ -79,6 +79,7 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
           if (snapshot.hasData) {
             if (vw(context) < 1000) {
               return ScaffoldBurgerAndBackOption(
+                width: vw(context),
                 body: BuilderResultsMobileView(
                   buildResults: snapshot.data!,
                   mods: armorMods,

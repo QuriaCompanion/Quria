@@ -11,8 +11,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class ModModal extends StatefulWidget {
   final DestinyInventoryItemDefinition mod;
+  final double width;
   final void Function()? onSocketChange;
-  const ModModal({required this.mod, this.onSocketChange, Key? key})
+  const ModModal(
+      {required this.mod, this.onSocketChange, Key? key, required this.width})
       : super(key: key);
 
   @override
@@ -44,13 +46,13 @@ class _ModModalState extends State<ModModal> {
                 Row(
                   children: [
                     ArmorModIconDisplay(
-                      iconSize: mobileItemSize(context),
+                      iconSize: itemSize(context, widget.width),
                       socket: widget.mod,
                     ),
                     SizedBox(width: globalPadding(context)),
                     SizedBox(
                       width: vw(context) -
-                          mobileItemSize(context) -
+                          itemSize(context, widget.width) -
                           (globalPadding(context) * 3) -
                           40,
                       child: Column(

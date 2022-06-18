@@ -11,7 +11,12 @@ import 'package:quria/presentation/components/misc/icon_item.dart';
 
 class ItemComponentSmart extends StatelessWidget {
   final DestinyItemComponent item;
-  const ItemComponentSmart({required this.item, Key? key}) : super(key: key);
+  final double width;
+  const ItemComponentSmart({
+    required this.item,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -33,16 +38,16 @@ class ItemComponentSmart extends StatelessWidget {
       children: [
         ItemIcon(
           displayHash: item.overrideStyleItemHash ?? item.itemHash!,
-          imageSize: mobileItemSize(context),
+          imageSize: itemSize(context, width),
           isMasterworked: item.state == ItemState.Masterwork ||
               item.state == const ItemState(5),
         ),
         SizedBox(width: globalPadding(context)),
         SizedBox(
           width: vw(context) -
-              (mobileItemSize(context) * 2) -
+              (itemSize(context, width) * 2) -
               globalPadding(context) * 3,
-          height: mobileItemSize(context),
+          height: itemSize(context, width),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,

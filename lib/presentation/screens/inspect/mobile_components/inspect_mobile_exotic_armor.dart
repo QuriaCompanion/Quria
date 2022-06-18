@@ -8,8 +8,12 @@ import 'package:quria/presentation/components/detailed_item/item/mod_display.dar
 
 class InspectMobileExoticArmor extends StatelessWidget {
   final List<DestinyItemSocketState>? sockets;
-  const InspectMobileExoticArmor({required this.sockets, Key? key})
-      : super(key: key);
+  final double width;
+  const InspectMobileExoticArmor({
+    required this.sockets,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,8 +35,8 @@ class InspectMobileExoticArmor extends StatelessWidget {
             .plugHash]!;
     return ModDisplay(
         width:
-            vw(context) - globalPadding(context) * 2 - mobileItemSize(context),
-        iconSize: mobileItemSize(context),
+            vw(context) - globalPadding(context) * 2 - itemSize(context, width),
+        iconSize: itemSize(context, width),
         padding: globalPadding(context),
         item: item);
   }

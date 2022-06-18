@@ -11,12 +11,14 @@ class ModsMobileSection extends StatelessWidget {
   final List<DestinyInventoryItemDefinition?> items;
   final List<DestinyItemSocketEntryDefinition> scoketEntries;
   final void Function(DestinyInventoryItemDefinition, int) onChange;
-  const ModsMobileSection(
-      {required this.items,
-      required this.scoketEntries,
-      required this.onChange,
-      Key? key})
-      : super(key: key);
+  final double width;
+  const ModsMobileSection({
+    required this.items,
+    required this.scoketEntries,
+    required this.onChange,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class ModsMobileSection extends StatelessWidget {
                       context: context,
                       builder: (context) {
                         return ArmorModsModal(
+                          width: vw(context),
                           socket: item.value!,
                           plugSetsHash:
                               scoketEntries[item.key].reusablePlugSetHash!,
@@ -50,7 +53,7 @@ class ModsMobileSection extends StatelessWidget {
                       });
                 },
                 child: ArmorModIconDisplay(
-                    iconSize: mobileItemSize(context), socket: item.value!),
+                    iconSize: itemSize(context, width), socket: item.value!),
               ),
             ),
       ],

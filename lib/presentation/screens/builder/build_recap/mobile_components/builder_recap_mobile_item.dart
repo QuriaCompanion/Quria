@@ -15,9 +15,13 @@ import 'package:quria/presentation/var/routes.dart';
 class BuilderRecapMobileItem extends StatelessWidget {
   final Armor item;
   final List<DestinyInventoryItemDefinition?> mods;
-  const BuilderRecapMobileItem(
-      {required this.item, required this.mods, Key? key})
-      : super(key: key);
+  final double width;
+  const BuilderRecapMobileItem({
+    required this.item,
+    required this.mods,
+    Key? key,
+    required this.width,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +71,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
       children: [
         if (instanceInfo.energy?.energyTypeHash != null)
           ArmorAfinity(
+            width: width,
             pointsAvailable: armorModspace,
             remaining: 10 - armorModspace,
             afinityIcon: ManifestService

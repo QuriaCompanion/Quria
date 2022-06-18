@@ -72,7 +72,7 @@ class LoginWidgetState extends State<LoginWidget> {
               color: black,
             ),
             onPressed: () {
-              // loadingModal();
+              loadingModal();
               // authorizeClick(context);
               yannisooLogin();
             },

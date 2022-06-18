@@ -7,13 +7,15 @@ import 'package:quria/presentation/screens/inspect/components/column_perk_displa
 
 class PerkList extends StatelessWidget {
   const PerkList({
-    Key? key,
     required this.selectedPerks,
     required this.item,
+    required this.width,
+    Key? key,
   }) : super(key: key);
 
   final InspectHelper selectedPerks;
   final DestinyInventoryItemDefinition item;
+  final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,7 @@ class PerkList extends StatelessWidget {
                   item: item,
                   index: index,
                   selectedPerks: selectedPerks,
+                  width: width,
                 ),
               )
       ]),

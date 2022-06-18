@@ -36,6 +36,7 @@ class _ClassItemChoicePageState extends State<ClassItemChoicePage> {
   Widget build(BuildContext context) {
     if (vw(context) < 1000) {
       return ScaffoldBurgerAndBackOption(
+          width: vw(context),
           body: ClassItemChoiceMobileView(classItems: classItems));
     } else {
       return Container();

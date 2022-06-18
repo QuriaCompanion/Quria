@@ -17,7 +17,7 @@ class _BuilderRecapPageState extends State<BuilderRecapPage> {
   Widget build(BuildContext context) {
     if (vw(context) < 1000) {
       return ScaffoldBurgerAndBackOption(
-          body: BuilderRecapMobileView(data: widget.data));
+          width: vw(context), body: BuilderRecapMobileView(data: widget.data));
     } else {
       return Container();
     }
