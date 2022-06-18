@@ -1,4 +1,5 @@
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
+import 'package:bungie_api/enums/tier_type.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -8,6 +9,7 @@ import 'package:quria/data/services/bungie_api/enums/collection_filter.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
 import 'package:quria/presentation/screens/collection/components/collection_desktop_filter.dart';
+import 'package:quria/presentation/screens/collection/mobile_components/collection_mobile_item_line.dart';
 
 class CollectionDesktopView extends StatefulWidget {
   final Iterable<DestinyInventoryItemDefinition> items;
@@ -21,12 +23,14 @@ class CollectionDesktopView extends StatefulWidget {
 
 class _CollectionDesktopViewState extends State<CollectionDesktopView> {
   late Map<String, DestinyItemSubType> currentFilter;
+  late DestinyItemSubType selectedSubType;
   late int selectedBucket;
   late List<DestinyInventoryItemDefinition> sortedItems;
   @override
   void initState() {
     super.initState();
     currentFilter = CollectionFilter.kinetic;
+    selectedSubType = currentFilter.values.first;
     selectedBucket = InventoryBucket.kineticWeapons;
     sortedItems = widget.items.toList();
     sortedItems.sort((a, b) =>
@@ -36,7 +40,12 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
   @override
   Widget build(BuildContext context) {
     double borderRadius = 8;
-
+    List<DestinyInventoryItemDefinition> items = sortedItems
+        .where((element) =>
+            selectedSubType == element.itemSubType &&
+            element.inventory?.bucketTypeHash == selectedBucket &&
+            element.inventory?.tierType != TierType.Exotic)
+        .toList();
     return SingleChildScrollView(
       child: Container(
         decoration: const BoxDecoration(color: Colors.white),
@@ -113,36 +122,31 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                   children: [
                     CollectionDesktopFilter(
                         selectedBucket: selectedBucket,
+                        selectedSubType: selectedSubType,
                         currentFilter: currentFilter,
-                        onFilterChanged: (bucket, filter) {
+                        onFilterChanged: (bucket, filter, subtype) {
                           setState(() {
                             currentFilter = filter;
                             selectedBucket = bucket;
+                            selectedSubType = subtype;
                           });
                         }),
-                    Wrap(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(12),
-                          width: 512,
-                          height: 88,
-                          decoration: BoxDecoration(
-                              color: blackLight,
-                              borderRadius:
-                                  BorderRadius.circular(borderRadius)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Image(width: 56, height: 56, image: modsHeader),
-                              SizedBox(width: 12),
-                              Text(
-                                'arme name',
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
-                        )
-                      ],
+                    SingleChildScrollView(
+                      child: SizedBox(
+                        width: (vw(context) - 600),
+                        height: 2000,
+                        child: GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: (vw(context) - 600) / 2,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 20,
+                            ),
+                            itemCount: items.length,
+                            itemBuilder: (context, index) {
+                              return CollectionItemLine(item: items[index]);
+                            }),
+                      ),
                     )
                   ],
                 )

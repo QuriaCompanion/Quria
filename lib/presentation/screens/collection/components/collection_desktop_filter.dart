@@ -9,12 +9,15 @@ import 'package:quria/presentation/screens/collection/components/select_filter_t
 class CollectionDesktopFilter extends StatelessWidget {
   final int selectedBucket;
   final Map<String, DestinyItemSubType> currentFilter;
-  final Function(int, Map<String, DestinyItemSubType>) onFilterChanged;
+  final DestinyItemSubType selectedSubType;
+  final Function(int, Map<String, DestinyItemSubType>, DestinyItemSubType)
+      onFilterChanged;
   const CollectionDesktopFilter({
     Key? key,
     required this.selectedBucket,
     required this.currentFilter,
     required this.onFilterChanged,
+    required this.selectedSubType,
   }) : super(key: key);
 
   @override
@@ -33,6 +36,7 @@ class CollectionDesktopFilter extends StatelessWidget {
                   onFilterChanged(
                     InventoryBucket.kineticWeapons,
                     CollectionFilter.kinetic,
+                    selectedSubType,
                   );
                 },
                 child: SelectFilterType(
@@ -49,6 +53,7 @@ class CollectionDesktopFilter extends StatelessWidget {
                   onFilterChanged(
                     InventoryBucket.energyWeapons,
                     CollectionFilter.energy,
+                    selectedSubType,
                   );
                 },
                 child: SelectFilterType(
@@ -65,6 +70,7 @@ class CollectionDesktopFilter extends StatelessWidget {
                   onFilterChanged(
                     InventoryBucket.powerWeapons,
                     CollectionFilter.power,
+                    selectedSubType,
                   );
                 },
                 child: SelectFilterType(
@@ -79,19 +85,28 @@ class CollectionDesktopFilter extends StatelessWidget {
           ),
         ),
         for (final entry in currentFilter.entries)
-          Container(
-            margin: const EdgeInsets.only(top: 16),
-            padding: const EdgeInsets.all(24),
-            width: 300,
-            height: 72,
-            decoration: BoxDecoration(
-                color: blackLight, borderRadius: BorderRadius.circular(5)),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                textH3(entry.key, utf8: false),
-                textCaptionBold('0/10', color: greyLight)
-              ],
+          InkWell(
+            onTap: () {
+              onFilterChanged(
+                selectedBucket,
+                currentFilter,
+                entry.value,
+              );
+            },
+            child: Container(
+              margin: const EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.all(24),
+              width: 300,
+              height: 72,
+              decoration: BoxDecoration(
+                  color: blackLight, borderRadius: BorderRadius.circular(5)),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  textH3(entry.key, utf8: false),
+                  textCaptionBold('0/10', color: greyLight)
+                ],
+              ),
             ),
           ),
       ],
