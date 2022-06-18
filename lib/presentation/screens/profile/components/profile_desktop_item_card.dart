@@ -1,3 +1,4 @@
+import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,6 +8,7 @@ import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/itemCardHelper.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display.dart';
+import 'package:quria/presentation/components/misc/icon_item.dart';
 
 class ProfileDesktopItemCard extends StatefulWidget {
   final DestinyItemComponent item;
@@ -92,28 +94,37 @@ class _ProfileDesktopItemCardState extends State<ProfileDesktopItemCard> {
           thickness: 1,
         ),
       if (isOpen)
-        for (final item in widget.inventory)
-          Builder(builder: (context) {
-            final dataItem = DisplayService()
-                .getCardData(item.itemInstanceId!, item.itemHash);
-            return Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: globalPadding(context) / 4),
-              child: ItemComponentDisplay(
-                  onClick: (inspectData) {
-                    widget.onClick(inspectData);
-                  },
-                  item: item,
-                  itemDef: dataItem.itemDef,
-                  elementIcon: dataItem.elementIcon,
-                  powerLevel: dataItem.powerLevel,
-                  perks: dataItem.perks,
-                  width: vw(context) * 0.5,
-                  cosmetics: dataItem.intristics,
-                  armorSockets: dataItem.armorSockets,
-                  characterId: widget.characterId),
-            );
-          })
+        SizedBox(
+          width: widget.width,
+          child: Wrap(
+            alignment: WrapAlignment.start,
+            spacing: globalPadding(context) / 2,
+            runSpacing: globalPadding(context) / 2,
+            children: [
+              for (final item in widget.inventory)
+                Builder(builder: (context) {
+                  final dataItem = DisplayService()
+                      .getCardData(item.itemInstanceId!, item.itemHash);
+                  return InkWell(
+                    onTap: () {
+                      widget.onClick(InspectData(
+                          hash: item.itemHash!,
+                          characterId: widget.characterId,
+                          instanceId: item.itemInstanceId!));
+                    },
+                    child: ItemIcon(
+                      imageSize: iconSize(context, widget.width),
+                      displayHash: item.overrideStyleItemHash ?? item.itemHash!,
+                      element: dataItem.elementIcon,
+                      powerLevel: dataItem.powerLevel,
+                      isMasterworked: item.state == ItemState.Masterwork ||
+                          item.state == const ItemState(5),
+                    ),
+                  );
+                })
+            ],
+          ),
+        )
     ]);
   }
 }

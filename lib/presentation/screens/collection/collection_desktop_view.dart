@@ -10,6 +10,7 @@ import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart'
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
 import 'package:quria/presentation/screens/collection/components/collection_desktop_filter.dart';
 import 'package:quria/presentation/screens/collection/mobile_components/collection_mobile_item_line.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class CollectionDesktopView extends StatefulWidget {
   final Iterable<DestinyInventoryItemDefinition> items;
@@ -47,116 +48,131 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
             element.inventory?.tierType != TierType.Exotic)
         .toList();
     return SingleChildScrollView(
-      child: Container(
-        decoration: const BoxDecoration(color: Colors.white),
-        child: Column(
-          children: [
-            webHeader(
-              context,
-              image: collectionHeader,
-              child: textH1("Collection"),
-            ),
-            Container(
-              width: vw(context),
-              height: vh(context),
-              padding: const EdgeInsets.symmetric(horizontal: 40),
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      alignment: Alignment.topCenter,
-                      fit: BoxFit.cover,
-                      image: splashBackgroundWeb)),
-              child: Column(children: [
-                Padding(
-                  padding:
-                      EdgeInsets.only(top: globalPadding(context), bottom: 50),
-                  child: SizedBox(
-                    height: 45,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        InkWell(
-                            onTap: () {
-                              setState(() {
-                                currentFilter = CollectionFilter.kinetic;
-                                selectedBucket = InventoryBucket.kineticWeapons;
-                              });
-                            },
-                            child: MobileNavItem(
-                              selected: selectedBucket ==
-                                  InventoryBucket.kineticWeapons,
-                              value: "Cinétique",
-                              width: vw(context) * 0.10,
-                            )),
-                        InkWell(
-                            onTap: () {
-                              setState(() {
-                                currentFilter = CollectionFilter.energy;
-                                selectedBucket = InventoryBucket.energyWeapons;
-                              });
-                            },
-                            child: MobileNavItem(
-                              selected: selectedBucket ==
-                                  InventoryBucket.energyWeapons,
-                              value: "Énergétique",
-                              width: vw(context) * 0.10,
-                            )),
-                        InkWell(
-                            onTap: () {
-                              setState(() {
-                                currentFilter = CollectionFilter.power;
-                                selectedBucket = InventoryBucket.powerWeapons;
-                              });
-                            },
-                            child: MobileNavItem(
-                              selected: selectedBucket ==
-                                  InventoryBucket.powerWeapons,
-                              value: "Puissante",
-                              width: vw(context) * 0.10,
-                            )),
-                      ],
+      child: Column(
+        children: [
+          webHeader(
+            context,
+            image: collectionHeader,
+            child: textH1("Collection"),
+          ),
+          Container(
+            width: vw(context),
+            padding: const EdgeInsets.symmetric(horizontal: 40),
+            child: Column(children: [
+              // Padding(
+              //   padding:
+              //       EdgeInsets.only(top: globalPadding(context), bottom: 50),
+              //   child: SizedBox(
+              //     height: 45,
+              //     child: Row(
+              //       mainAxisAlignment: MainAxisAlignment.start,
+              //       children: [
+              //         InkWell(
+              //             onTap: () {
+              //               setState(() {
+              //                 currentFilter = CollectionFilter.kinetic;
+              //                 selectedBucket = InventoryBucket.kineticWeapons;
+              //               });
+              //             },
+              //             child: MobileNavItem(
+              //               selected: selectedBucket ==
+              //                   InventoryBucket.kineticWeapons,
+              //               value: "Cinétique",
+              //               width: vw(context) * 0.10,
+              //             )),
+              //         InkWell(
+              //             onTap: () {
+              //               setState(() {
+              //                 currentFilter = CollectionFilter.energy;
+              //                 selectedBucket = InventoryBucket.energyWeapons;
+              //               });
+              //             },
+              //             child: MobileNavItem(
+              //               selected: selectedBucket ==
+              //                   InventoryBucket.energyWeapons,
+              //               value: "Énergétique",
+              //               width: vw(context) * 0.10,
+              //             )),
+              //         InkWell(
+              //             onTap: () {
+              //               setState(() {
+              //                 currentFilter = CollectionFilter.power;
+              //                 selectedBucket = InventoryBucket.powerWeapons;
+              //               });
+              //             },
+              //             child: MobileNavItem(
+              //               selected: selectedBucket ==
+              //                   InventoryBucket.powerWeapons,
+              //               value: "Puissante",
+              //               width: vw(context) * 0.10,
+              //             )),
+              //       ],
+              //     ),
+              //   ),
+              // ),
+              SizedBox(
+                height: globalPadding(context),
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CollectionDesktopFilter(
+                      items: sortedItems,
+                      selectedBucket: selectedBucket,
+                      selectedSubType: selectedSubType,
+                      currentFilter: currentFilter,
+                      onFilterChanged: (bucket, filter, subtype) {
+                        setState(() {
+                          currentFilter = filter;
+                          selectedBucket = bucket;
+                          selectedSubType = subtype;
+                        });
+                      }),
+                  const Spacer(),
+                  SingleChildScrollView(
+                    child: SizedBox(
+                      width: (vw(context) - 300) - globalPadding(context) * 2,
+                      height: vh(context),
+                      child: GridView.builder(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            mainAxisSpacing: 20,
+                            crossAxisSpacing: 20,
+                            childAspectRatio: 4,
+                            crossAxisCount: 2,
+                          ),
+                          itemCount: items.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () => Navigator.pushNamed(
+                                  context, routeCollectionItem,
+                                  arguments: items[index].hash),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: blackLight,
+                                  borderRadius:
+                                      BorderRadius.circular(borderRadius),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                      left: globalPadding(context) / 2),
+                                  child: CollectionItemLine(
+                                    item: items[index],
+                                    width: ((vw(context) - 300) -
+                                            globalPadding(context)) /
+                                        2,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }),
                     ),
-                  ),
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CollectionDesktopFilter(
-                        selectedBucket: selectedBucket,
-                        selectedSubType: selectedSubType,
-                        currentFilter: currentFilter,
-                        onFilterChanged: (bucket, filter, subtype) {
-                          setState(() {
-                            currentFilter = filter;
-                            selectedBucket = bucket;
-                            selectedSubType = subtype;
-                          });
-                        }),
-                    SingleChildScrollView(
-                      child: SizedBox(
-                        width: (vw(context) - 600),
-                        height: 2000,
-                        child: GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: (vw(context) - 600) / 2,
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 20,
-                            ),
-                            itemCount: items.length,
-                            itemBuilder: (context, index) {
-                              return CollectionItemLine(
-                                item: items[index],
-                                width: (vw(context) - 600) / 2,
-                              );
-                            }),
-                      ),
-                    )
-                  ],
-                )
-              ]),
-            )
-          ],
-        ),
+                  )
+                ],
+              )
+            ]),
+          )
+        ],
       ),
     );
   }

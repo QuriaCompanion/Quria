@@ -33,6 +33,7 @@ import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:http/http.dart' as http;
 import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:universal_io/io.dart';
 
 class BungieApiService {
   static const String baseUrl = 'https://www.bungie.net';
@@ -54,17 +55,19 @@ class BungieApiService {
   }
 
   static String? get clientSecret {
-    if (kIsWeb) return "RVWOYmsG93EwUFekyNcVsMc-WoQIRM11AdMyQ-HoT0o";
+    if (kIsWeb || Platform.isWindows) {
+      return "RVWOYmsG93EwUFekyNcVsMc-WoQIRM11AdMyQ-HoT0o";
+    }
     return "lBsMpYu9FS4mr2k.OehferZifIpdEpMKBpXTzzeOuEg";
   }
 
   static String? get apiKey {
-    if (kIsWeb) return "8e66dfa160d24a67aa33dfe141c95468";
+    if (kIsWeb || Platform.isWindows) return "8e66dfa160d24a67aa33dfe141c95468";
     return "cb4b462f9f8b4b00a43242c6d56afcad";
   }
 
   static String? get clientId {
-    if (kIsWeb) return "36906";
+    if (kIsWeb || Platform.isWindows) return "36906";
     return "40171";
   }
 

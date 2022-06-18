@@ -18,8 +18,8 @@ class CollectionItemLine extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: itemSize(context, width),
-          height: itemSize(context, width),
+          width: iconSize(context, width),
+          height: iconSize(context, width),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
           ),
@@ -28,8 +28,8 @@ class CollectionItemLine extends StatelessWidget {
               Image(
                 image: NetworkImage(
                     DestinyData.bungieLink + item.displayProperties!.icon!),
-                height: itemSize(context, width),
-                width: itemSize(context, width),
+                height: iconSize(context, width),
+                width: iconSize(context, width),
                 fit: BoxFit.fill,
               ),
               if (item.iconWatermark != null)
@@ -37,8 +37,8 @@ class CollectionItemLine extends StatelessWidget {
                   image: NetworkImage(
                     DestinyData.bungieLink + item.iconWatermark!,
                   ),
-                  height: itemSize(context, width),
-                  width: itemSize(context, width),
+                  height: iconSize(context, width),
+                  width: iconSize(context, width),
                   fit: BoxFit.fill,
                 ),
             ],

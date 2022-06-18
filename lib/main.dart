@@ -15,7 +15,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:quria/presentation/components/app.dart';
+import 'package:quria/app.dart';
 import 'package:quria/presentation/router.dart';
 import 'package:quria/presentation/screens/login.dart';
 import 'package:quria/presentation/var/routes.dart';

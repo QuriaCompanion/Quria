@@ -41,6 +41,7 @@ class _CollectionWeaponPageState extends State<CollectionWeaponPage> {
                   body: CollectionMobileView(items: snapshot.data!));
             } else {
               return Scaffold(
+                backgroundColor: black,
                 body: SingleChildScrollView(
                   child: CollectionDesktopView(items: snapshot.data!),
                 ),
