@@ -166,6 +166,13 @@ class SettingsMobileView extends StatelessWidget {
             ),
           ),
           divider,
+          ListTile(
+            onTap: () {
+              Navigator.pushReplacementNamed(context, routePageLegends);
+            },
+            leading: const Icon(Icons.handshake, size: 35, color: Colors.white),
+            title: textBodyHighRegular('Hall of Fame', utf8: false),
+          ),
         ],
       ),
     );
