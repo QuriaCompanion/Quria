@@ -53,35 +53,36 @@ class InspectMobileStats extends StatelessWidget {
                 in DestinyData.linearStatBySubType[item.itemSubType]!) {
               armorTotal += stats![statHash.toString()]!.value!;
             }
-          }
 
-          return Column(
-            children: [
-              for (String statHash in unusedStats)
-                StatNoBar(
-                  width: width,
-                  fontSize: 20,
-                  name: ManifestService
-                          .manifestParsed
-                          .destinyStatDefinition[int.parse(statHash)]
-                          ?.displayProperties
-                          ?.name ??
-                      'error',
-                  value: stats?[statHash.toString()]?.value ??
-                      item.stats?.stats?[statHash.toString()]?.value ??
-                      0,
-                  type: item.itemType,
-                ),
-              if (item.itemType == DestinyItemType.Armor)
-                StatNoBar(
-                  width: width,
-                  fontSize: 20,
-                  name: 'Total',
-                  value: armorTotal,
-                  type: item.itemType,
-                )
-            ],
-          );
+            return Column(
+              children: [
+                for (String statHash in unusedStats)
+                  StatNoBar(
+                    width: width,
+                    fontSize: 20,
+                    name: ManifestService
+                            .manifestParsed
+                            .destinyStatDefinition[int.parse(statHash)]
+                            ?.displayProperties
+                            ?.name ??
+                        'error',
+                    value: stats?[statHash.toString()]?.value ??
+                        item.stats?.stats?[statHash.toString()]?.value ??
+                        0,
+                    type: item.itemType,
+                  ),
+                if (item.itemType == DestinyItemType.Armor)
+                  StatNoBar(
+                    width: width,
+                    fontSize: 20,
+                    name: 'Total',
+                    value: armorTotal,
+                    type: item.itemType,
+                  )
+              ],
+            );
+          }
+          return Container();
         })
       ],
     );

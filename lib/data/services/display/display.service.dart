@@ -33,7 +33,6 @@ class DisplayService {
   AccountService account = AccountService();
   static bool isManifestUp = false;
   static bool isProfileUp = false;
-  static int characterIndex = 0;
 
   Future<List<DestinyInventoryItemDefinition>> getExotics(
       DestinyClass classType) async {
@@ -113,7 +112,7 @@ class DisplayService {
     return remaining;
   }
 
-  ProfileHelper getProfileData() {
+  ProfileHelper getProfileData(currentIndex) {
     try {
       List<DestinyCharacterComponent> characters = profile.getCharacters();
       DestinyCharacterComponent? selectedCharacter;
@@ -125,10 +124,10 @@ class DisplayService {
             selectedCharacterInventory: [],
             selectedCharacterSubclass: null,
             characterSuper: null,
-            selectedCharacterIndex: characterIndex,
+            selectedCharacterIndex: currentIndex,
             isNewSubclass: true);
       }
-      selectedCharacter = characters[characterIndex];
+      selectedCharacter = characters[currentIndex];
       List<DestinyItemComponent> equipement =
           profile.getCharacterEquipment(selectedCharacter.characterId!);
       List<DestinyItemComponent> inventory = profile
@@ -161,7 +160,7 @@ class DisplayService {
           selectedCharacterInventory: inventory,
           selectedCharacterSubclass: selectedCharacterSubclass,
           characterSuper: characterSuper,
-          selectedCharacterIndex: characterIndex,
+          selectedCharacterIndex: currentIndex,
           isNewSubclass: isNewSubclass);
     } catch (e) {
       rethrow;

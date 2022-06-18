@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:io';
+import 'dart:ui';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:uni_links/uni_links.dart';
@@ -116,6 +118,18 @@ class AuthService {
 
   Future<String> authorize([bool forceReauth = true]) async {
     var browser = BungieAuthBrowser();
+    // print("test");
+    // final AuthorizationResponse? result =
+    //     await const FlutterAppAuth().authorize(
+    //   AuthorizationRequest(
+    //     BungieApiService.clientId!,
+    //     'quria://',
+    //     discoveryUrl: 'https://www.bungie.net/fr/OAuth/Authorize',
+    //   ),
+    // );
+    // inspect(result);
+    // return result?.authorizationCode ?? "";
+
     OAuth.openOAuth(browser, BungieApiService.clientId!, "fr", forceReauth);
     Stream<String?> stream = linkStream;
     Completer<String> completer = Completer();
@@ -154,6 +168,13 @@ class BungieAuthBrowser implements OAuthBrowser {
 
   @override
   dynamic open(String url) async {
-    await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+    if (Platform.isIOS) {
+      // ignore: deprecated_member_use
+      await launch(url,
+          forceSafariVC: true, statusBarBrightness: Brightness.dark);
+    } else {
+      // ignore: deprecated_member_use
+      await launch(url, forceSafariVC: true);
+    }
   }
 }

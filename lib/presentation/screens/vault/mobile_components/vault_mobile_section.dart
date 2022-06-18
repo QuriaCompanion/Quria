@@ -1,4 +1,5 @@
-import 'package:bungie_api/destiny2.dart';
+import 'package:bungie_api/enums/item_state.dart';
+import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
@@ -76,6 +77,8 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                   child: ItemIcon(
                     displayHash: item.overrideStyleItemHash ?? item.itemHash!,
                     imageSize: vw(context) * 0.148,
+                    isMasterworked: item.state == ItemState.Masterwork ||
+                        item.state == const ItemState(5),
                     element: ProfileService().getItemElement(item),
                     powerLevel: ProfileService()
                         .getItemPowerLevel(item.itemInstanceId!),

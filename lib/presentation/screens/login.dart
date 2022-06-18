@@ -114,12 +114,12 @@ class LoginWidgetState extends State<LoginWidget> {
     );
   }
 
-  void redirect() async {
+  void redirect(String lang) async {
     if (kIsWeb) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         String clientId = BungieApiService.clientId!;
         final authorizationEndpoint =
-            "https://www.bungie.net/fr/OAuth/Authorize?client_id=$clientId&response_type=code";
+            "https://www.bungie.net/$lang/OAuth/Authorize?client_id=$clientId&response_type=code";
         html.window.location.assign(authorizationEndpoint);
       });
     } else {
@@ -136,9 +136,10 @@ class LoginWidgetState extends State<LoginWidget> {
             return checkMembership();
           }
         } catch (_) {
-          redirect();
+          redirect(AppLocalizations.of(context)!.localeName);
         }
-        redirect();
+        if (!mounted) return;
+        redirect(AppLocalizations.of(context)!.localeName);
       } on OAuthException catch (e) {
         Navigator.of(context).pop();
         bool isIOS = Platform.isIOS;
@@ -260,10 +261,10 @@ class LoginWidgetState extends State<LoginWidget> {
     final AccountService account = AccountService();
     BungieNetToken token = BungieNetToken.fromJson({
       "access_token":
-          "CJCWBBKGAgAgK7WvC84B5cMs2kxfY7SckNpLPhI3Ed2K17uHw8Lh5HbgAAAAxhPepQMtS7gbNi6fq9qeaj+XZLbLmPa+6sl/k3Pu+NiYBawdY+c5ijIORyNx/Ql1imsqEDoBUt0fXGf3kurssoIvlaWOWeKdQRGlfekheb0OmXpnsf7oZLy/HxPFoTBoyMSXqmKLD8yOlUb3NI8sMsoRw32TjlCPtwAVMJ9e+jtWxt5FE6SztJrD5+TQPEaBFZhs4ddli/TeZD1CY6d76B8t0LQyQ2c3XkL/UdEe15513ImxszooNNnFlJ1nAgbvp69lZ6bA1/wzivnw8DU310cTX7SuT3qxw32rAjyhQXc=",
+          "CLuaBBKGAgAgkSHAaW3wyFmGq7NpPkZCAkSpsikPNDT3Mg2KVhQt/4ngAAAAIk52t87yikuxdY01Dwv/SVBH5IAyHlSnnN+th8FKu1cbUNNnAttLKQ7ogvjR2vlJZ2ckDzP7O1GwD3TCPgAgk2RC2h2pAm1QlSzDzGyNb3HrA1bSVAuzCa2JNUFiOgeDaivuXovJfE63IXLOppYJi18OEH+xwEqoi5GjGuTJAivQgCfJfUUiuwQCMfUQ7uKuOYEbiowebL+zJeniwhWvnGHb78paEo/8hSu0oT4N64bCSQuNAasmEHc7H4QbN6LYb0iA+XJyGzpRr/3DHrmQnI1ZbAICDnvs9Em1p/ZKRkk=",
       "expires_in": 3600,
       "refresh_token":
-          "CJCWBBKGAgAgU2Ntlg76gHg75O5u9eepLCt2VsatDUwD6ze/LO6BsHzgAAAA3Xv2GTmcVvgeDpJ1Cs+a5/VAteQomRbmZfjAXtkvyUuLGcDsJmvimfYPUVeBNL5oXZlWjX90xjdRfGZNKfEotzX5UUoUptW94tA4svYneTyp5iHK61Vx+5zOnDeL6pYWzsRVO7hCcr2syveLQBdghlMZASfb+yKJus30UFj+wdpG/P5dYC3OTYAJGX0Pzu6Y5xSD9CRxAZwdwh30IxgK5HaMqEhfYbL501DPE5T9Z4oDPxf5y09gDWpkPrgN+8pSMAcscXs0sayjUrLxN8UWr+ZyaoKaxlvfMZFctJpScr4=",
+          "CLuaBBKGAgAg4Lt9PwgTeCL+cabNFbU0+3fF9LEqZRHq0ly1DLoSFlLgAAAAe8btOzwrjGu3D27P7cw/Zk0iRXdT25aeMu1LJb/7P0M4b/QIa0w2X7xNZipAnuc8XU2LWRUGWoYNL0Tx68kqAouZmijphRvg8OwckCPbt13XkxauuWhcmEeh/NeEAZtBwp3Ot+4I2vDE9U91H1Hm7D8BHHm8F9HoBjAa2Z8I3A4edMClY4EYXKtyxzEPJy1hbkAc2+HtsbxXQnDLAAJAl/ddKJx8x6GYCi5kWFrwUrCN9Lx5RmaeC5GMh3L45Bp7CkogdoonUty75yqj02sSkUVLh3XngG4prDpm85oxg/o=",
       "refresh_expires_in": 7776000,
       "membership_id": "11319478"
     });

@@ -27,7 +27,7 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
   @override
   void initState() {
     super.initState();
-    currentFilter = CollectionFilter.primary;
+    currentFilter = CollectionFilter.kinetic;
     selectedBucket = InventoryBucket.kineticWeapons;
     sortedItems = widget.items.toList();
     sortedItems.sort((a, b) =>
@@ -67,7 +67,7 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                           InkWell(
                               onTap: () {
                                 setState(() {
-                                  currentFilter = CollectionFilter.primary;
+                                  currentFilter = CollectionFilter.kinetic;
                                   selectedBucket =
                                       InventoryBucket.kineticWeapons;
                                 });
@@ -81,7 +81,7 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                           InkWell(
                               onTap: () {
                                 setState(() {
-                                  currentFilter = CollectionFilter.special;
+                                  currentFilter = CollectionFilter.energy;
                                   selectedBucket =
                                       InventoryBucket.energyWeapons;
                                 });
@@ -95,7 +95,7 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                           InkWell(
                               onTap: () {
                                 setState(() {
-                                  currentFilter = CollectionFilter.heavy;
+                                  currentFilter = CollectionFilter.power;
                                   selectedBucket = InventoryBucket.powerWeapons;
                                 });
                               },
@@ -121,7 +121,11 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                 horizontal: globalPadding(context),
                 vertical: globalPadding(context) / 2),
             sliver: CollectionMobileItemSection(
-              sectionName: entry.key,
+              sectionName: sortedItems
+                      .firstWhere(
+                          (element) => entry.value == element.itemSubType)
+                      .itemTypeDisplayName ??
+                  'oopsie woopsie',
               items: sortedItems
                   .where((element) =>
                       entry.value == element.itemSubType &&

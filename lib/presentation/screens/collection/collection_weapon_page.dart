@@ -8,6 +8,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/screens/collection/collection_mobile_view.dart';
+import 'package:quria/presentation/screens/collection/collection_desktop_view.dart';
 
 class CollectionWeaponPage extends StatefulWidget {
   const CollectionWeaponPage({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class _CollectionWeaponPageState extends State<CollectionWeaponPage> {
   void initState() {
     super.initState();
     _future = DisplayService().getCollectionByType(DestinyItemType.Weapon);
-    currentFilter = CollectionFilter.primary;
+    currentFilter = CollectionFilter.kinetic;
   }
 
   @override
@@ -39,7 +40,11 @@ class _CollectionWeaponPageState extends State<CollectionWeaponPage> {
                   backgroundColor: black,
                   body: CollectionMobileView(items: snapshot.data!));
             } else {
-              return Container();
+              return Scaffold(
+                body: SingleChildScrollView(
+                  child: CollectionDesktopView(items: snapshot.data!),
+                ),
+              );
             }
           } else {
             return const Loader();

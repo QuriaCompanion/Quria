@@ -120,6 +120,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       onClick: (inspectData) {
                         widget.onClick(inspectData);
                       },
+                      width: vw(context),
                       item: item,
                       characterId: widget.data.selectedCharacter!.characterId!,
                       inventory: widget.data.selectedCharacterInventory

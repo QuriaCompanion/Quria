@@ -76,7 +76,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => BuilderRecapPage(data: data));
 
       default:
-        return MaterialPageRoute(builder: (_) => LoginWidget());
+        return MaterialPageRoute(builder: (_) => const CollectionWeaponPage());
+      // return MaterialPageRoute(builder: (_) => LoginWidget());
     }
   }
 }

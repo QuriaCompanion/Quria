@@ -1,3 +1,4 @@
+import 'package:bungie_api/enums/item_state.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:flutter/material.dart';
@@ -94,8 +95,13 @@ class BuilderRecapMobileItem extends StatelessWidget {
                 ),
               ),
               child: ItemIcon(
-                  displayHash: item.displayHash,
-                  imageSize: vw(context) * 0.192),
+                displayHash: item.displayHash,
+                imageSize: vw(context) * 0.192,
+                isMasterworked: ProfileService()
+                        .getItemByInstanceId(item.itemInstanceId)
+                        ?.state ==
+                    const ItemState(5),
+              ),
             ),
             Padding(
               padding:
