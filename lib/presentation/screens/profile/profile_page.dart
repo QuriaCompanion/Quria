@@ -14,7 +14,6 @@ import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/screens/inspect/inspect_item.dart';
-import 'package:quria/presentation/screens/inspect/inspect_mobile.dart';
 import 'package:quria/presentation/screens/profile/profile_desktop_view.dart';
 import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -40,52 +39,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
     _future = DisplayService.loadManifestAndProfile();
   }
 
-  late double statArmorSpace;
-  late double itemSectionSpace;
-  late double itemDetailsSidePadding;
-  late double itemDetailsChildPadding;
-  late double fontSize;
-  late double statsFontSize;
-  late double pagePadding;
-  late double itemDetailsWidth;
-  late double middleSpace;
-  late double imageSize;
-  late double iconSize;
-  late double verticalStatWidth;
-  bool choosingCharacter = false;
-
   @override
   Widget build(BuildContext context) {
-    statArmorSpace = 40;
-    itemSectionSpace = 20;
-    itemDetailsSidePadding = 25;
-    itemDetailsChildPadding = 10;
-    fontSize = 20;
-    statsFontSize = 30;
-    pagePadding = vw(context) * 0.05;
-    itemDetailsWidth = vw(context) * 0.45;
-    middleSpace = vw(context) * 0.2;
-    imageSize = vw(context) * 0.075;
-    verticalStatWidth = vw(context) * 0.06;
-    iconSize = imageSize * 0.66;
-    if (vw(context) < 1920) {
-      fontSize = 15;
-      statsFontSize = 25;
-    }
-    if (vw(context) < 1575) {
-      fontSize = 15;
-      statsFontSize = 20;
-    }
-    if (vw(context) < 1250) {
-      fontSize = 15;
-      statsFontSize = 15;
-    }
-    if (vw(context) < 1160) {
-      iconSize = imageSize * 0.5;
-    }
-    if (vw(context) < 1020) {
-      pagePadding = vw(context) * 0.025;
-    }
     return FutureBuilder(
         future: _future,
         builder: ((context, AsyncSnapshot snapshot) {
@@ -131,7 +86,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                                 inspectData.instanceId, inspectData.hash);
                         showDialog(
                             context: context,
-                            barrierColor: Color.fromARGB(110, 0, 0, 0),
+                            barrierColor: const Color.fromARGB(110, 0, 0, 0),
                             builder: (context) {
                               return desktopModal(context,
                                   child: InspectItem(

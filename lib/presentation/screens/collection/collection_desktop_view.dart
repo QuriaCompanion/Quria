@@ -7,7 +7,6 @@ import 'package:quria/constants/web_widgets.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/services/bungie_api/enums/collection_filter.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
-import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
 import 'package:quria/presentation/screens/collection/components/collection_desktop_filter.dart';
 import 'package:quria/presentation/screens/collection/mobile_components/collection_mobile_item_line.dart';
 import 'package:quria/presentation/var/routes.dart';
