@@ -8,12 +8,10 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (vw(context) < 1000) {
-      return const ScaffoldBurger(
-        body: SettingsMobileView(),
-      );
-    } else {
-      return Container();
-    }
+    return ScaffoldBurger(
+      body: SettingsMobileView(
+        height: vh(context),
+      ),
+    );
   }
 }

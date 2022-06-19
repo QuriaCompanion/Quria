@@ -10,6 +10,7 @@ import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/choose_membership.dart';
+import 'package:quria/presentation/components/misc/desktop_components/scaffold_navbar.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
@@ -48,7 +49,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             int currentIndex =
                 Provider.of<CharactersProvider>(context).characterIndex;
             data = display.getProfileData(currentIndex);
-            // set current character to provider
 
             if (data.characters.isEmpty) {
               return Column(
@@ -75,8 +75,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             Provider.of<CharactersProvider>(context, listen: false)
                 .init(data.selectedCharacter!, data.characters);
             if (vw(context) > 1000) {
-              return Scaffold(
-                backgroundColor: black,
+              return ScaffoldDesktop(
                 body: SingleChildScrollView(
                   child: ProfileDesktopView(
                       data: data,
@@ -97,6 +96,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             });
                       }),
                 ),
+                currentRoute: routeProfile,
               );
             } else {
               return ScaffoldCharacters(

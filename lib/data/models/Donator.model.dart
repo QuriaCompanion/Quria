@@ -1,22 +1,22 @@
 class Donator {
-  final int support_id;
-  final String supporter_name;
-  final String? support_note;
-  final int support_coffees;
+  final int supportId;
+  final String supporterName;
+  final String? supportNote;
+  final int supportCoffees;
 
   const Donator({
-    required this.support_id,
-    required this.supporter_name,
-    required this.support_note,
-    required this.support_coffees,
+    required this.supportId,
+    required this.supporterName,
+    required this.supportNote,
+    required this.supportCoffees,
   });
 
   factory Donator.fromJson(Map<String, dynamic> json) {
     return Donator(
-      support_id: json['support_id'],
-      supporter_name: json['supporter_name'],
-      support_note: json['support_note'],
-      support_coffees: json['support_coffees'],
+      supportId: json['support_id'],
+      supporterName: json['supporter_name'],
+      supportNote: json['support_note'],
+      supportCoffees: json['support_coffees'],
     );
   }
   static List<Donator> fromJsonList(Map<String, dynamic> jsonList) {

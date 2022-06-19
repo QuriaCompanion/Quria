@@ -12,13 +12,17 @@ import 'package:quria/presentation/var/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsMobileView extends StatelessWidget {
-  const SettingsMobileView({Key? key}) : super(key: key);
+  final double height;
+  const SettingsMobileView({
+    required this.height,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const divider = Divider(color: Colors.white);
     return SizedBox(
-      height: 400,
+      height: height,
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [

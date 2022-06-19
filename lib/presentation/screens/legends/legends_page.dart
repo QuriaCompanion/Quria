@@ -61,9 +61,9 @@ class _DonatorListState extends State<DonatorList> {
             children: snapshot.data!.map((donator) {
               return Row(
                 children: [
-                  textBodyMedium(donator.supporter_name,
+                  textBodyMedium(donator.supporterName,
                       color: Colors.white, utf8: false),
-                  textBodyMedium(donator.support_coffees.toString()),
+                  textBodyMedium(donator.supportCoffees.toString()),
                   const Icon(
                     Icons.coffee,
                     size: 15,

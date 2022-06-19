@@ -13,7 +13,7 @@ Widget desktopHeader(
     height: vw(context) * 0.2,
     decoration: BoxDecoration(
       image: DecorationImage(
-        alignment: Alignment.topRight,
+        alignment: Alignment.center,
         fit: BoxFit.cover,
         image: image,
       ),
