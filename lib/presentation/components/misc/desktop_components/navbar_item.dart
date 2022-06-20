@@ -33,7 +33,7 @@ class _NavBarButtonState extends State<NavBarButton> {
       width: 150,
       child: InkWell(
         onTap: () => Navigator.pushReplacementNamed(context, widget.route),
-        onHover: (val) {
+        onHover: (_) {
           setState(() {
             isHover = !isHover;
           });

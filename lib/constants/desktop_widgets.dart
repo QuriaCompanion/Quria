@@ -55,12 +55,16 @@ Widget desktopModal(BuildContext context, {required Widget child}) {
       Positioned(
         top: vh(context) * 0.2,
         right: vw(context) * 0.2,
-        child: Column(children: [
-          ModalButton(),
-          ModalButton(),
-          ModalButton(),
-          ModalButton(),
-        ]),
+        child: Material(
+          type: MaterialType.card,
+          color: Colors.transparent,
+          child: ModalButton(
+            callback: () {
+              Navigator.pop(context);
+            },
+            icon: 'assets/icons/Close.svg',
+          ),
+        ),
       ),
     ],
   );
