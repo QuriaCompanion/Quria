@@ -1,4 +1,5 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -12,6 +13,7 @@ import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:universal_io/io.dart';
 import 'firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
@@ -24,14 +26,16 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   StorageService.init();
   await dotenv.load(fileName: ".env");
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  if (kIsWeb || !Platform.isWindows) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  }
   runApp(QuriaApp(
     router: AppRouter(),
   ));
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 }
 
 class QuriaApp extends StatelessWidget {
@@ -58,8 +62,8 @@ class QuriaApp extends StatelessWidget {
         ChangeNotifierProvider<CharactersProvider>(
           create: (context) => CharactersProvider(),
         ),
-        ChangeNotifierProvider<BuilderClassItemProvider>(
-          create: (context) => BuilderClassItemProvider(),
+        ChangeNotifierProvider<BuilderCustomInfoProvider>(
+          create: (context) => BuilderCustomInfoProvider(),
         ),
         ChangeNotifierProvider<BuilderModsProvider>(
           create: (context) => BuilderModsProvider(),
