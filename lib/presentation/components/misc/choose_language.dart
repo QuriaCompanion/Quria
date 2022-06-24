@@ -4,7 +4,10 @@ import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/language_provider.dart';
+import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class ChooseLanguage extends StatelessWidget {
   const ChooseLanguage({Key? key}) : super(key: key);
@@ -12,7 +15,10 @@ class ChooseLanguage extends StatelessWidget {
   void changeLanguage(BuildContext context, {required String lang}) async {
     Provider.of<LanguageProvider>(context, listen: false)
         .setLanguage(Locale.fromSubtags(languageCode: lang));
-    await StorageService.setLocalStorage('lang', lang);
+    DisplayService.isProfileUp = false;
+    ProfileService().reset();
+    StorageService.setLocalStorage('lang', lang)
+        .then((value) => {Navigator.pushNamed(context, routeProfile)});
   }
 
   @override
