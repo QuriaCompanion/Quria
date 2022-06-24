@@ -84,7 +84,7 @@ class _CollectionMobileItemSectionState
                             children: [
                               Row(
                                 children: [
-                                  textH3(widget.sectionName, utf8: false),
+                                  textH3(widget.sectionName),
                                   SizedBox(width: globalPadding(context)),
                                   textCaptionBold("${widget.items.length}",
                                       color: greyLight),

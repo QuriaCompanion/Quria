@@ -1,4 +1,5 @@
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -31,12 +32,15 @@ void main() async {
     lang = Locale.fromSubtags(languageCode: storedLang);
   }
   await dotenv.load(fileName: ".env");
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  if (kIsWeb || !Platform.isWindows) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  }
+
   runApp(QuriaApp(router: AppRouter(), lang: lang));
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 }
 
 class QuriaApp extends StatelessWidget {
@@ -65,8 +69,8 @@ class QuriaApp extends StatelessWidget {
           ChangeNotifierProvider<CharactersProvider>(
             create: (context) => CharactersProvider(),
           ),
-          ChangeNotifierProvider<BuilderClassItemProvider>(
-            create: (context) => BuilderClassItemProvider(),
+          ChangeNotifierProvider<BuilderCustomInfoProvider>(
+            create: (context) => BuilderCustomInfoProvider(),
           ),
           ChangeNotifierProvider<BuilderModsProvider>(
             create: (context) => BuilderModsProvider(),

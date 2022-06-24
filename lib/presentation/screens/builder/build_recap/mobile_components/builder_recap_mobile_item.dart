@@ -85,7 +85,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
                 context,
                 routeInspectMobile,
                 arguments: InspectData(
-                  hash: item.displayHash,
+                  hash: item.hash,
                   instanceId: item.itemInstanceId,
                 ),
               ),
@@ -93,9 +93,13 @@ class BuilderRecapMobileItem extends StatelessWidget {
                 displayHash: item.displayHash,
                 imageSize: vw(context) * 0.192,
                 isMasterworked: ProfileService()
-                        .getItemByInstanceId(item.itemInstanceId)
-                        ?.state ==
-                    const ItemState(5),
+                            .getItemByInstanceId(item.itemInstanceId)
+                            ?.state ==
+                        const ItemState(5) ||
+                    ProfileService()
+                            .getItemByInstanceId(item.itemInstanceId)
+                            ?.state ==
+                        ItemState.Masterwork,
               ),
             ),
             Padding(

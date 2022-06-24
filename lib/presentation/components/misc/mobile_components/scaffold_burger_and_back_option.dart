@@ -52,23 +52,22 @@ class ScaffoldBurgerAndBackOption extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
       floatingActionButton: Padding(
-        padding: EdgeInsets.all(globalPadding(context)),
+        padding: EdgeInsets.only(bottom: globalPadding(context)),
         child: FloatingActionButton(
-          backgroundColor: blackLight,
+          backgroundColor: Colors.white,
           onPressed: () {
             Navigator.pop(context);
           },
           child: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
+            Icons.chevron_left_rounded,
+            color: black,
+            size: 35,
           ),
         ),
       ),
       body: Container(
         decoration: blackBackground,
-        child: SingleChildScrollView(
-          child: body,
-        ),
+        child: SingleChildScrollView(child: body),
       ),
     );
   }

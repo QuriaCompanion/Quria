@@ -8,12 +8,14 @@ class ItemIcon extends StatelessWidget {
   final int displayHash;
   final double imageSize;
   final bool isMasterworked;
+  final bool isSunset;
   final int? powerLevel;
   final String? element;
   const ItemIcon({
     required this.displayHash,
     required this.imageSize,
     this.isMasterworked = false,
+    this.isSunset = false,
     this.powerLevel,
     this.element,
     Key? key,
@@ -40,8 +42,11 @@ class ItemIcon extends StatelessWidget {
             width: imageSize,
             fit: BoxFit.fill,
           ),
-          if (ManifestService.manifestParsed
-                  .destinyInventoryItemDefinition[displayHash]!.iconWatermark !=
+          if (ManifestService
+                  .manifestParsed
+                  .destinyInventoryItemDefinition[displayHash]!
+                  .quality
+                  ?.displayVersionWatermarkIcons?[0] !=
               null)
             Image(
               image: NetworkImage(
@@ -49,7 +54,8 @@ class ItemIcon extends StatelessWidget {
                     ManifestService
                         .manifestParsed
                         .destinyInventoryItemDefinition[displayHash]!
-                        .iconWatermark!,
+                        .quality!
+                        .displayVersionWatermarkIcons![0],
               ),
               height: imageSize,
               width: imageSize,

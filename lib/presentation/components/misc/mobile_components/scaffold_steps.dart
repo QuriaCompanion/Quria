@@ -61,13 +61,14 @@ class ScaffoldSteps<T> extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             FloatingActionButton(
-              backgroundColor: blackLight,
+              backgroundColor: Colors.white,
               onPressed: () {
                 Navigator.pop(context);
               },
               child: const Icon(
-                Icons.arrow_back,
-                color: Colors.white,
+                Icons.chevron_left_rounded,
+                color: black,
+                size: 35,
               ),
             ),
             RoundedButton(
@@ -77,7 +78,7 @@ class ScaffoldSteps<T> extends StatelessWidget {
                   color: black,
                 ),
                 width: 200,
-                height: 50,
+                height: 56,
                 onPressed: () => Navigator.pushNamed(context, route)),
           ],
         ),

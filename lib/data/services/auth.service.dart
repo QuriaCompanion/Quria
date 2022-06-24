@@ -116,7 +116,7 @@ class AuthService {
     }
   }
 
-  Future<String> authorize([bool forceReauth = true]) async {
+  Future<String> authorize(String lang, [bool forceReauth = true]) async {
     var browser = BungieAuthBrowser();
     // print("test");
     // final AuthorizationResponse? result =
@@ -130,7 +130,7 @@ class AuthService {
     // inspect(result);
     // return result?.authorizationCode ?? "";
 
-    OAuth.openOAuth(browser, BungieApiService.clientId!, "fr", forceReauth);
+    OAuth.openOAuth(browser, BungieApiService.clientId!, lang, forceReauth);
     Stream<String?> stream = linkStream;
     Completer<String> completer = Completer();
 
