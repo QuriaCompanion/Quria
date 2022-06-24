@@ -93,5 +93,9 @@
     "twitter": "Suivez nous sur Twitter",
     "twitter_caption": "Pour nous contacter ou avoir les dernières infos",
     "change_platform": "Changer de platforme",
-    "change_platform_caption": "Si vous avez une autre plateforme"
+    "change_platform_caption": "Si vous avez une autre plateforme",
+    "change_language": "Changer de langue",
+    "fr": "Français",
+    "en": "Anglais",
+    "es": "Espagnol"
 }

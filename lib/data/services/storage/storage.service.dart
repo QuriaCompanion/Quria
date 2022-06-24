@@ -26,7 +26,7 @@ import 'package:quria/data/services/display/display.service.dart';
 class StorageService {
   static late final LocalStorage _storage;
   static late Isar isar;
-  static init() async {
+  static Future init() async {
     _storage = LocalStorage('Quria');
 
     isar = await Isar.open(
@@ -56,8 +56,8 @@ class StorageService {
   }
 
   /// Given a storage [key] , return the value from localStorage.
-  static Future<dynamic> getLocalStorage(String key) async {
-    return await _storage.getItem(key);
+  static Future<T> getLocalStorage<T>(String key) async {
+    return _storage.ready.then((_) async => await _storage.getItem(key) as T);
   }
 
   /// Given a storage [key] , removes localStorage entry
