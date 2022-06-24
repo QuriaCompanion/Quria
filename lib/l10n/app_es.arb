@@ -6,7 +6,7 @@
     "mods_tips": "Pulsa para equipar otro modificador",
     "collections": "Colecciones",
     "profile": "Perfil",
-    "builder": "Constructor",
+    "builder": "Builder",
     "builder_list": "Mis equipamientos",
     "choose_membership": "Elige tu cuenta",
     "error_base": "Ha ocurrieo un error, por favor inténtalo de nuevo más tarde",
@@ -19,7 +19,7 @@
     "login": "Acceso",
     "logout": "Cerrar sesión",
     "login_splash": "Inicia sesión para continuar",
-    "quria_builder": "Constructora Quria",
+    "quria_builder": "Builder Quria",
     "equipping": "Estamos equipando a tu personaje",
     "long_action": "Ésta acción puede llevar un tiempo ...",
     "item_equipped": "El artículo ha sido equipado",
@@ -85,5 +85,11 @@
     "manifest_delete_caption": "En caso de que haya un error en la app",
     "support": "Si quieres ayudarnos",
     "twitter": "Síguenos en Twitter",
-    "twitter_caption": "Síguenos en Twitter para estar en contacto!"
+    "twitter_caption": "Síguenos en Twitter para estar en contacto!",
+    "change_platform": "Cambiar de plataforma",
+    "change_platform_caption": "Si tienes otra plataforma",
+    "change_language": "Cambiar de idioma",
+    "fr": "Francés",
+    "en": "Inglés",
+    "es": "Español"
 }
