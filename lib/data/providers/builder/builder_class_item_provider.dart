@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 class BuilderCustomInfoProvider with ChangeNotifier {
   String? _classItemInstanceId;
   bool _considerMasterwork = true;
-  bool _removeSunset = true;
+  bool _includeSunset = true;
   get classItemInstanceId => _classItemInstanceId;
   get considerMasterwork => _considerMasterwork;
-  get removeSunset => _removeSunset;
+  get includeSunset => _includeSunset;
 
   void setClassItem(
     String classItemInstanceId,
@@ -21,7 +21,7 @@ class BuilderCustomInfoProvider with ChangeNotifier {
   }
 
   void setRemoveSunset(bool removeSunset) {
-    _removeSunset = removeSunset;
+    _includeSunset = removeSunset;
     notifyListeners();
   }
 }

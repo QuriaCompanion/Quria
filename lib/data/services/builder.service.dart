@@ -24,7 +24,7 @@ class BuilderService {
         profile.getCharacter(data.characterId);
     List<DestinyItemComponent> armors = profile.getAllArmorForClass(
         character!.classType!,
-        removeSunset: data.removeSunset);
+        includeSunset: data.includeSunset);
     Map<String, DestinyItemSocketsComponent> sockets = profile.getAllSockets();
 
     DestinyItemComponent classItem =

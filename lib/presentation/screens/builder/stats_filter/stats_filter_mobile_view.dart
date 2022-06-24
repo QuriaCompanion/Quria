@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
@@ -55,44 +56,38 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
             )),
         Column(
           children: [
-            Padding(
-              padding: EdgeInsets.all(globalPadding(context)),
-              child: Container(
-                padding:
-                    EdgeInsets.symmetric(vertical: globalPadding(context)) *
-                        0.875,
-                decoration: const BoxDecoration(
-                    color: blackLight,
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                width: double.infinity,
-                child: Center(
-                  child: textCaption(
-                    AppLocalizations.of(context)!.builder_stats_order_caption,
-                    utf8: false,
-                  ),
-                ),
+            Container(
+              width: vw(context) - (globalPadding(context) * 2),
+              padding: EdgeInsets.symmetric(
+                  horizontal: globalPadding(context),
+                  vertical: globalPadding(context) / 4),
+              decoration: BoxDecoration(
+                color: blackLight,
+                borderRadius: BorderRadius.circular(4),
               ),
-            ),
-            DropdownButton<StatWeighing>(
-                hint: textBodyRegular("ceci est un test"),
-                dropdownColor: blackLight,
-                value: Provider.of<BuilderStatsFilterProvider>(context)
-                    .statWeighing,
-                items: StatWeighing.values.map((StatWeighing classType) {
-                  return DropdownMenuItem<StatWeighing>(
-                      value: classType, child: _getStatText(classType));
-                }).toList(),
-                onChanged: (StatWeighing? value) {
-                  if (value != null) {
-                    Provider.of<BuilderStatsFilterProvider>(context,
-                            listen: false)
-                        .setStatWeighing(value);
-                  }
-                }),
+              child: DropdownButton<StatWeighing>(
+                  underline: Container(),
+                  isExpanded: true,
+                  icon: SvgPicture.asset("assets/icons/DropIcon.svg"),
+                  dropdownColor: blackLight,
+                  value: Provider.of<BuilderStatsFilterProvider>(context)
+                      .statWeighing,
+                  items: StatWeighing.values.map((StatWeighing classType) {
+                    return DropdownMenuItem<StatWeighing>(
+                        value: classType, child: _getStatText(classType));
+                  }).toList(),
+                  onChanged: (StatWeighing? value) {
+                    if (value != null) {
+                      Provider.of<BuilderStatsFilterProvider>(context,
+                              listen: false)
+                          .setStatWeighing(value);
+                    }
+                  }),
+            )
           ],
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
+          padding: EdgeInsets.all(globalPadding(context)),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -914,7 +914,7 @@ class ProfileService {
   }
 
   List<DestinyItemComponent> getAllArmorForClass(DestinyClass classType,
-      {DestinyItemSubType? itemSubType, bool removeSunset = false}) {
+      {DestinyItemSubType? itemSubType, bool includeSunset = true}) {
     List<DestinyItemComponent> allItems = getAllItems();
     final List<DestinyItemComponent> neededItem = allItems.where((item) {
       return ManifestService.manifestParsed
@@ -929,7 +929,7 @@ class ProfileService {
                       .destinyInventoryItemDefinition[item.itemHash]
                       ?.itemSubType ==
                   itemSubType) &&
-          (removeSunset ||
+          (includeSunset ||
               !sunsetItems.any((element) =>
                   element ==
                   ManifestService

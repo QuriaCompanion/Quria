@@ -59,9 +59,9 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
     bool considerMasterwork =
         Provider.of<BuilderCustomInfoProvider>(context, listen: false)
             .considerMasterwork;
-    bool removeSunset =
+    bool includeSunset =
         Provider.of<BuilderCustomInfoProvider>(context, listen: false)
-            .removeSunset;
+            .includeSunset;
 
     int? exoticHash =
         Provider.of<BuilderExoticProvider>(context, listen: false).exoticHash;
@@ -78,7 +78,7 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
         armorMods: armorMods,
         statWeighing: statWeighing,
         considerMasterwork: considerMasterwork,
-        removeSunset: removeSunset,
+        includeSunset: includeSunset,
         classItemInstanceId: classItemInstanceId,
       ),
     );

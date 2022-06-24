@@ -40,7 +40,7 @@ class BuilderPreparation {
   String classItemInstanceId;
   StatWeighing statWeighing;
   bool considerMasterwork;
-  bool removeSunset;
+  bool includeSunset;
   BuilderPreparation({
     required this.characterId,
     required this.subclassMods,
@@ -49,7 +49,7 @@ class BuilderPreparation {
     required this.classItemInstanceId,
     required this.statWeighing,
     required this.considerMasterwork,
-    required this.removeSunset,
+    required this.includeSunset,
     this.exoticHash,
     this.subclassInstanceId,
   });
