@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
@@ -19,7 +20,7 @@ class SettingsMobileView extends StatelessWidget {
   Widget build(BuildContext context) {
     const divider = Divider(color: Colors.white);
     return SizedBox(
-      height: 400,
+      height: vh(context),
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
