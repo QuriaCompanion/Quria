@@ -85,6 +85,8 @@ enum ArmorStatInt {
   strength,
 }
 
+const List<int> sunsetItems = [2471437758, 1862490583, 1862490584, 1862490585];
+
 enum ClassLogo { titan, hunter, warlock }
 
 extension ClassLogoLink on ClassLogo {
@@ -96,8 +98,6 @@ extension ClassLogoLink on ClassLogo {
         return "https://www.bungie.net/common/destiny2_content/icons/e7324e8c29c5314b8bce166ff167859d.png";
       case ClassLogo.warlock:
         return "https://www.bungie.net/common/destiny2_content/icons/bf7b2848d2f5fbebbf350d418b8ec148.png";
-      default:
-        return "0";
     }
   }
 }

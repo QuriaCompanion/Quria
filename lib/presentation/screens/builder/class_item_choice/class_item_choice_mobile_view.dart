@@ -33,6 +33,43 @@ class ClassItemChoiceMobileView extends StatelessWidget {
                 ),
               ],
             )),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            textBodyBold(
+                AppLocalizations.of(context)!.builder_class_item_keep_sunset,
+                utf8: false),
+            Checkbox(
+                value: Provider.of<BuilderCustomInfoProvider>(context)
+                    .removeSunset,
+                onChanged: (bool? value) {
+                  if (value != null) {
+                    Provider.of<BuilderCustomInfoProvider>(context,
+                            listen: false)
+                        .setRemoveSunset(value);
+                  }
+                })
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            textBodyBold(
+                AppLocalizations.of(context)!
+                    .builder_class_item_assume_masterwork,
+                utf8: false),
+            Checkbox(
+                value: Provider.of<BuilderCustomInfoProvider>(context)
+                    .considerMasterwork,
+                onChanged: (bool? value) {
+                  if (value != null) {
+                    Provider.of<BuilderCustomInfoProvider>(context,
+                            listen: false)
+                        .setConsiderMasterwork(value);
+                  }
+                })
+          ],
+        ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
           child: Column(
@@ -42,10 +79,10 @@ class ClassItemChoiceMobileView extends StatelessWidget {
                   children: [
                     InkWell(
                         onTap: () {
-                          Provider.of<BuilderClassItemProvider>(context,
+                          Provider.of<BuilderCustomInfoProvider>(context,
                                   listen: false)
                               .setClassItem(item.itemInstanceId!);
-                          Navigator.pushNamed(context, routeMod);
+                          Navigator.pushNamed(context, routeBuilder);
                         },
                         child: ItemComponentSmart(item: item)),
                     Divider(

@@ -40,7 +40,7 @@ class _SubclassModsPageState extends State<SubclassModsPage> {
 
     if (vw(context) < 1000) {
       return ScaffoldSteps<ClassItemChoiceHelper>(
-          route: routeClassItemChoice,
+          route: routeMod,
           body: SubclassModsMobileView(
             sockets: sockets,
             subclass: subclass,
