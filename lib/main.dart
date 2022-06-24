@@ -9,8 +9,10 @@ import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/language_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:universal_io/io.dart';
 import 'firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
@@ -40,50 +42,56 @@ class QuriaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider<BuilderExoticProvider>(
-          create: (context) => BuilderExoticProvider(),
-        ),
-        ChangeNotifierProvider<BuilderStatsFilterProvider>(
-          create: (context) => BuilderStatsFilterProvider(),
-        ),
-        ChangeNotifierProvider<BuilderSubclassProvider>(
-          create: (context) => BuilderSubclassProvider(),
-        ),
-        ChangeNotifierProvider<BuilderSubclassModsProvider>(
-          create: (context) => BuilderSubclassModsProvider(),
-        ),
-        ChangeNotifierProvider<CharactersProvider>(
-          create: (context) => CharactersProvider(),
-        ),
-        ChangeNotifierProvider<BuilderClassItemProvider>(
-          create: (context) => BuilderClassItemProvider(),
-        ),
-        ChangeNotifierProvider<BuilderModsProvider>(
-          create: (context) => BuilderModsProvider(),
-        ),
-      ],
-      child: MaterialApp(
-        localizationsDelegates: const [
-          AppLocalizations.delegate,
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
+        providers: [
+          ChangeNotifierProvider<BuilderExoticProvider>(
+            create: (context) => BuilderExoticProvider(),
+          ),
+          ChangeNotifierProvider<BuilderStatsFilterProvider>(
+            create: (context) => BuilderStatsFilterProvider(),
+          ),
+          ChangeNotifierProvider<BuilderSubclassProvider>(
+            create: (context) => BuilderSubclassProvider(),
+          ),
+          ChangeNotifierProvider<BuilderSubclassModsProvider>(
+            create: (context) => BuilderSubclassModsProvider(),
+          ),
+          ChangeNotifierProvider<CharactersProvider>(
+            create: (context) => CharactersProvider(),
+          ),
+          ChangeNotifierProvider<BuilderClassItemProvider>(
+            create: (context) => BuilderClassItemProvider(),
+          ),
+          ChangeNotifierProvider<BuilderModsProvider>(
+            create: (context) => BuilderModsProvider(),
+          ),
+          ChangeNotifierProvider<LanguageProvider>(
+            create: (context) => LanguageProvider(),
+          )
         ],
-        supportedLocales: const [
-          Locale('en', ''), // English, no country code
-          Locale('es', ''), // Spanish, no country code
-          Locale('fr', ''),
-        ],
-        theme: ThemeData(fontFamily: 'Inter'),
-        debugShowCheckedModeBanner: false,
-        home: LoginWidget(),
-        onGenerateRoute: AppRouter.generateRoute,
-        builder: (_, child) => AppView(
-          child: child!,
-        ),
-        navigatorKey: navKey,
-      ),
-    );
+        builder: (context, child) {
+          return MaterialApp(
+            locale: Provider.of<LanguageProvider>(context).language ??
+                Locale(Platform.localeName.substring(0, 2), ''),
+            localizationsDelegates: const [
+              AppLocalizations.delegate,
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [
+              Locale('en', ''), // English, no country code
+              Locale('es', ''), // Spanish, no country code
+              Locale('fr', ''),
+            ],
+            theme: ThemeData(fontFamily: 'Inter'),
+            debugShowCheckedModeBanner: false,
+            home: LoginWidget(),
+            onGenerateRoute: AppRouter.generateRoute,
+            builder: (_, child) => AppView(
+              child: child!,
+            ),
+            navigatorKey: navKey,
+          );
+        });
   }
 }

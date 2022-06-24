@@ -87,5 +87,9 @@
     "twitter": "Follow us on Twitter",
     "twitter_caption": "Follow us on Twitter to keep in touch!",
     "change_platform": "Change platform",
-    "change_platform_caption": "If you have a different platform"
+    "change_platform_caption": "If you have a different platform",
+    "change_language": "Cambiar idioma",
+    "fr": "Francés",
+    "en": "Inglés",
+    "es": "Español"
 }

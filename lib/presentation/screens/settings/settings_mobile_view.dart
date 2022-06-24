@@ -155,7 +155,7 @@ class SettingsMobileView extends StatelessWidget {
                     );
                   });
             },
-            leading: const Icon(Icons.language, size: 35),
+            leading: const Icon(Icons.language, size: 35, color: Colors.white),
             title: textBodyHighRegular(
               AppLocalizations.of(context)!.change_platform,
               utf8: false,
