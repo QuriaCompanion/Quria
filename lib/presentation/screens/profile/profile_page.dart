@@ -85,10 +85,10 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         future: _future,
         builder: ((context, AsyncSnapshot snapshot) {
           if (snapshot.hasData) {
-            data = display.getProfileData();
+            int currentIndex =
+                Provider.of<CharactersProvider>(context).characterIndex;
+            data = display.getProfileData(currentIndex);
             // set current character to provider
-            Provider.of<CharactersProvider>(context, listen: false)
-                .init(data.selectedCharacter!, data.characters);
             if (data.characters.isEmpty) {
               return Column(
                 children: [
@@ -111,6 +111,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 ],
               );
             }
+            Provider.of<CharactersProvider>(context, listen: false)
+                .init(data.selectedCharacter!, data.characters);
             if (vw(context) > 1000) {
               return Column(
                 children: const [],
@@ -121,7 +123,8 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 // give a function parameter to the child which is executed in the parent
                 onCharacterChange: (newIndex) {
                   setState(() {
-                    DisplayService.characterIndex = newIndex;
+                    Provider.of<CharactersProvider>(context, listen: false)
+                        .setCurrentCharacter(newIndex);
                   });
                 },
                 body: RepaintBoundary(

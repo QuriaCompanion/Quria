@@ -1,3 +1,4 @@
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -34,6 +35,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(QuriaApp(router: AppRouter(), lang: lang));
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 }
 

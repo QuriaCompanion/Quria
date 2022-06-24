@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_collectible_state.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
@@ -167,7 +166,6 @@ class ProfileService {
     if (response == null) {
       return _profile;
     }
-    inspect(response);
     for (List<DestinyItemPlug> sockets
         in response.profilePlugSets!.data!.plugs!.values) {
       for (DestinyItemPlug socket in sockets) {
@@ -232,6 +230,20 @@ class ProfileService {
         }
       }
     }
+    inventoryItemIds.addAll([
+      204137529,
+      3961599962,
+      3682186345,
+      2850583378,
+      555005975,
+      2645858828,
+      1227870362,
+      3355995799,
+      2623485440,
+      4048838440,
+      3699676109,
+      3253038666
+    ]);
     await StorageService.getDefinitions<DestinyInventoryItemDefinition>(
         inventoryItemIds);
     await StorageService.getDefinitions<DestinyTalentGridDefinition>(talentIds);

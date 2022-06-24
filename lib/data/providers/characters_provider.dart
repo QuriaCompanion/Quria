@@ -4,20 +4,18 @@ import 'package:flutter/foundation.dart';
 class CharactersProvider with ChangeNotifier {
   List<DestinyCharacterComponent> _characters = [];
   DestinyCharacterComponent? _currentCharacter;
-  List<DestinyCharacterComponent>? get characters => _characters;
+  int _characterIndex = 0;
+  List<DestinyCharacterComponent> get characters => _characters;
   DestinyCharacterComponent? get currentCharacter => _currentCharacter;
-
-  void setCharacters(
-    List<DestinyCharacterComponent> characters,
-  ) {
+  int get characterIndex => _characterIndex;
+  void setCharacters(List<DestinyCharacterComponent> characters) {
     _characters = characters;
     notifyListeners();
   }
 
-  void setCurrentCharacter(
-    DestinyCharacterComponent character,
-  ) {
-    _currentCharacter = character;
+  void setCurrentCharacter(int index) {
+    _characterIndex = index;
+    _currentCharacter = _characters[index];
     notifyListeners();
   }
 
