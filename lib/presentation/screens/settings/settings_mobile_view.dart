@@ -6,6 +6,7 @@ import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/components/misc/choose_language.dart';
 import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -139,29 +140,12 @@ class SettingsMobileView extends StatelessWidget {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return ChooseMembership(
-                      memberships:
-                          AccountService.membershipData!.destinyMemberships!,
-                      onSelected: (membership) {
-                        AccountService()
-                            .saveMembership(
-                                AccountService.membershipData!, membership)
-                            .then((_) {
-                          DisplayService.isProfileUp = false;
-                          ProfileService().reset();
-                          Navigator.pushReplacementNamed(context, routeProfile);
-                        });
-                      },
-                    );
+                    return const ChooseLanguage();
                   });
             },
             leading: const Icon(Icons.language, size: 35, color: Colors.white),
             title: textBodyHighRegular(
-              AppLocalizations.of(context)!.change_platform,
-              utf8: false,
-            ),
-            subtitle: textBodyMedium(
-              AppLocalizations.of(context)!.change_platform_caption,
+              AppLocalizations.of(context)!.change_language,
               utf8: false,
             ),
           ),

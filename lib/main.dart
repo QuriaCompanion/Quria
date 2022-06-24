@@ -23,21 +23,26 @@ import 'package:quria/presentation/var/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  StorageService.init();
+  await StorageService.init();
+  String? storedLang = await StorageService.getLocalStorage<String?>('lang');
+  Locale? lang;
+  if (storedLang != null) {
+    lang = Locale.fromSubtags(languageCode: storedLang);
+  }
   await dotenv.load(fileName: ".env");
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(QuriaApp(
-    router: AppRouter(),
-  ));
+  runApp(QuriaApp(router: AppRouter(), lang: lang));
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
 }
 
 class QuriaApp extends StatelessWidget {
   final AppRouter router;
+  final Locale? lang;
 
-  const QuriaApp({Key? key, required this.router}) : super(key: key);
+  const QuriaApp({Key? key, required this.router, required this.lang})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +74,11 @@ class QuriaApp extends StatelessWidget {
           )
         ],
         builder: (context, child) {
+          final currentLang = Provider.of<LanguageProvider>(context).language ??
+              lang ??
+              Locale(Platform.localeName.substring(0, 2), '');
           return MaterialApp(
-            locale: Provider.of<LanguageProvider>(context).language ??
-                Locale(Platform.localeName.substring(0, 2), ''),
+            locale: currentLang,
             localizationsDelegates: const [
               AppLocalizations.delegate,
               GlobalMaterialLocalizations.delegate,
