@@ -24,7 +24,7 @@ import 'package:quria/presentation/var/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await StorageService.init();
+  StorageService.init();
   String? storedLang = await StorageService.getLocalStorage<String?>('lang');
   Locale? lang;
   if (storedLang != null) {

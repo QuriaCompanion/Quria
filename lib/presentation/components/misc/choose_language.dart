@@ -27,14 +27,8 @@ class ChooseLanguage extends StatelessWidget {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(top: globalPadding(context) * 2),
-              child: Text(
-                AppLocalizations.of(context)!.change_language,
-                style: const TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+              child: textH2(AppLocalizations.of(context)!.change_language,
+                  utf8: false),
             ),
             Column(
               children: [
