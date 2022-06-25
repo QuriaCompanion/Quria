@@ -58,7 +58,7 @@ class FilterWidget extends StatelessWidget {
             key: ValueKey(filters[index].name),
             padding: EdgeInsets.zero,
             decoration: BoxDecoration(
-                color: blackLight, borderRadius: BorderRadius.circular(8)),
+                color: blackLight, borderRadius: BorderRadius.circular(4)),
             margin: const EdgeInsets.only(bottom: 8),
             clipBehavior: Clip.hardEdge,
             height: 48,

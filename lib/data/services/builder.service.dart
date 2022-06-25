@@ -1,7 +1,9 @@
+import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_investment_stat_definition.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
+import 'package:quria/data/models/StatWeighing.enum.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
@@ -20,23 +22,27 @@ class BuilderService {
     ProfileService profile = ProfileService();
     DestinyCharacterComponent? character =
         profile.getCharacter(data.characterId);
-    List<DestinyItemComponent> armors =
-        profile.getAllArmorForClass(character!.classType!);
+    List<DestinyItemComponent> armors = profile.getAllArmorForClass(
+        character!.classType!,
+        includeSunset: data.includeSunset);
     Map<String, DestinyItemSocketsComponent> sockets = profile.getAllSockets();
 
     DestinyItemComponent classItem =
         profile.getItemByInstanceId(data.classItemInstanceId)!;
 
     BuilderHelper builder = BuilderHelper(
-        statOrder: data.statOrder,
-        exotic: ManifestService
-            .manifestParsed.destinyInventoryItemDefinition[data.exoticHash],
-        armors: armors,
-        manifest: ManifestService.manifestParsed.destinyInventoryItemDefinition,
-        sockets: sockets,
-        armorMods: data.armorMods,
-        subclassMods: data.subclassMods,
-        classItem: classItem);
+      statOrder: data.statOrder,
+      exotic: ManifestService
+          .manifestParsed.destinyInventoryItemDefinition[data.exoticHash],
+      armors: armors,
+      manifest: ManifestService.manifestParsed.destinyInventoryItemDefinition,
+      sockets: sockets,
+      armorMods: data.armorMods,
+      subclassMods: data.subclassMods,
+      statWeighing: data.statWeighing,
+      considerMasterwork: data.considerMasterwork,
+      classItem: classItem,
+    );
 
     return await compute(_armorLoop, builder);
   }
@@ -53,6 +59,18 @@ class BuilderService {
         StatsHash.intellect: 0,
         StatsHash.strength: 0,
       };
+      if (builderHelper.considerMasterwork ||
+          item.state == ItemState.Masterwork ||
+          item.state == const ItemState(5)) {
+        investmentStats = {
+          StatsHash.mobility: 2,
+          StatsHash.resilience: 2,
+          StatsHash.recovery: 2,
+          StatsHash.discipline: 2,
+          StatsHash.intellect: 2,
+          StatsHash.strength: 2,
+        };
+      }
       // get sockets for the item
       List<DestinyItemSocketState>? sockets =
           builderHelper.sockets[item.itemInstanceId]?.sockets;
@@ -269,42 +287,55 @@ class BuilderService {
               StatsHash.intellect: 0,
               StatsHash.strength: 0,
             };
+            if (builderHelper.considerMasterwork ||
+                builderHelper.classItem.state == ItemState.Masterwork ||
+                builderHelper.classItem.state == const ItemState(5)) {
+              statistics = {
+                StatsHash.mobility: 2,
+                StatsHash.resilience: 2,
+                StatsHash.recovery: 2,
+                StatsHash.discipline: 2,
+                StatsHash.intellect: 2,
+                StatsHash.strength: 2,
+              };
+            }
 
-            statistics[StatsHash.mobility] = helmetStats[StatsHash.mobility]! +
+            statistics[StatsHash.mobility] = statistics[StatsHash.mobility]! +
+                helmetStats[StatsHash.mobility]! +
                 gauntletStats[StatsHash.mobility]! +
                 chestStats[StatsHash.mobility]! +
-                legStats[StatsHash.mobility]! +
-                10;
+                legStats[StatsHash.mobility]!;
+
             statistics[StatsHash.resilience] =
-                helmetStats[StatsHash.resilience]! +
+                statistics[StatsHash.resilience]! +
+                    helmetStats[StatsHash.resilience]! +
                     gauntletStats[StatsHash.resilience]! +
                     chestStats[StatsHash.resilience]! +
-                    legStats[StatsHash.resilience]! +
-                    10;
+                    legStats[StatsHash.resilience]!;
 
-            statistics[StatsHash.recovery] = helmetStats[StatsHash.recovery]! +
+            statistics[StatsHash.recovery] = statistics[StatsHash.recovery]! +
+                helmetStats[StatsHash.recovery]! +
                 gauntletStats[StatsHash.recovery]! +
                 chestStats[StatsHash.recovery]! +
-                legStats[StatsHash.recovery]! +
-                10;
+                legStats[StatsHash.recovery]!;
 
             statistics[StatsHash.discipline] =
-                helmetStats[StatsHash.discipline]! +
+                statistics[StatsHash.discipline]! +
+                    helmetStats[StatsHash.discipline]! +
                     gauntletStats[StatsHash.discipline]! +
                     chestStats[StatsHash.discipline]! +
-                    legStats[StatsHash.discipline]! +
-                    10;
-            statistics[StatsHash.intellect] =
+                    legStats[StatsHash.discipline]!;
+            statistics[StatsHash.intellect] = statistics[StatsHash.intellect]! +
                 helmetStats[StatsHash.intellect]! +
-                    gauntletStats[StatsHash.intellect]! +
-                    chestStats[StatsHash.intellect]! +
-                    legStats[StatsHash.intellect]! +
-                    10;
-            statistics[StatsHash.strength] = helmetStats[StatsHash.strength]! +
+                gauntletStats[StatsHash.intellect]! +
+                chestStats[StatsHash.intellect]! +
+                legStats[StatsHash.intellect]!;
+            statistics[StatsHash.strength] = statistics[StatsHash.strength]! +
+                helmetStats[StatsHash.strength]! +
                 gauntletStats[StatsHash.strength]! +
                 chestStats[StatsHash.strength]! +
-                legStats[StatsHash.strength]! +
-                10;
+                legStats[StatsHash.strength]!;
+
             statTiers[StatsHash.mobility] =
                 (statistics[StatsHash.mobility]! / 10).floor();
             statTiers[StatsHash.resilience] =
@@ -339,44 +370,87 @@ class BuilderService {
             statistics[StatsHash.strength] =
                 statistics[StatsHash.strength]! + modBonus[StatsHash.strength]!;
 
+            BuilderOptionalMods optionalModsResult = optionalMods(statistics,
+                armorModspace, builderHelper.statOrder, builderHelper.manifest);
+            statistics = optionalModsResult.statValues;
+            statTiers[StatsHash.mobility] =
+                (statistics[StatsHash.mobility]! / 10).floor();
+            statTiers[StatsHash.resilience] =
+                (statistics[StatsHash.resilience]! / 10).floor();
+            statTiers[StatsHash.recovery] =
+                (statistics[StatsHash.recovery]! / 10).floor();
+            statTiers[StatsHash.discipline] =
+                (statistics[StatsHash.discipline]! / 10).floor();
+            statTiers[StatsHash.intellect] =
+                (statistics[StatsHash.intellect]! / 10).floor();
+            statTiers[StatsHash.strength] =
+                (statistics[StatsHash.strength]! / 10).floor();
+            int finalTier = statTiers[StatsHash.mobility]! +
+                statTiers[StatsHash.resilience]! +
+                statTiers[StatsHash.recovery]! +
+                statTiers[StatsHash.discipline]! +
+                statTiers[StatsHash.intellect]! +
+                statTiers[StatsHash.strength]!;
+
+            int statToFilterBy = 0;
+            switch (builderHelper.statWeighing) {
+              case StatWeighing.allTiers:
+                statToFilterBy = baseTier;
+
+                break;
+              case StatWeighing.maxOne:
+                statToFilterBy = statTiers[builderHelper.statOrder[0]]!;
+                break;
+              case StatWeighing.maxTwo:
+                statToFilterBy = statTiers[builderHelper.statOrder[0]]! +
+                    statTiers[builderHelper.statOrder[1]]!;
+                break;
+              case StatWeighing.maxThree:
+                statToFilterBy = statTiers[builderHelper.statOrder[0]]! +
+                    statTiers[builderHelper.statOrder[1]]! +
+                    statTiers[builderHelper.statOrder[1]]!;
+                break;
+            }
+
             Stats stats = Stats(
                 base: baseTier,
-                max: baseTier,
+                max: finalTier,
                 ordering: statTiers,
-                statistics: statistics);
+                statistics: statistics,
+                statToFilterBy: statToFilterBy);
 
             List<Armor> armors = [
               Armor(
                   hash: helmet.itemHash!,
                   displayHash: helmet.overrideStyleItemHash ?? helmet.itemHash!,
                   itemInstanceId: helmet.itemInstanceId!,
-                  mods: null,
+                  mods: optionalModsResult.modSelected[0],
                   type: 0),
               Armor(
                   hash: gauntlet.itemHash!,
                   displayHash:
                       gauntlet.overrideStyleItemHash ?? gauntlet.itemHash!,
                   itemInstanceId: gauntlet.itemInstanceId!,
-                  mods: null,
+                  mods: optionalModsResult.modSelected[1],
                   type: 1),
               Armor(
                   hash: chest.itemHash!,
                   displayHash: chest.overrideStyleItemHash ?? chest.itemHash!,
                   itemInstanceId: chest.itemInstanceId!,
-                  mods: null,
+                  mods: optionalModsResult.modSelected[2],
                   type: 2),
               Armor(
                   hash: leg.itemHash!,
                   displayHash: leg.overrideStyleItemHash ?? leg.itemHash!,
                   itemInstanceId: leg.itemInstanceId!,
-                  mods: null,
+                  mods: optionalModsResult.modSelected[3],
                   type: 3),
               Armor(
                   hash: builderHelper.classItem.itemHash!,
                   displayHash: builderHelper.classItem.overrideStyleItemHash ??
                       builderHelper.classItem.itemHash!,
                   itemInstanceId: builderHelper.classItem.itemInstanceId!,
-                  mods: null,
+                  mods: optionalModsResult.modSelected[4],
                   type: 4)
             ];
             builds.add(Build(
@@ -384,46 +458,15 @@ class BuilderService {
               equipement: armors,
             ));
             if (builds.length == 100) {
-              builds.sort((a, b) => (a.stats.max < b.stats.max) ? 1 : -1);
+              builds.sort((a, b) =>
+                  (a.stats.statToFilterBy < b.stats.statToFilterBy) ? 1 : -1);
               builds = builds.getRange(0, 50).toList();
             }
           }
         }
       }
     }
-    for (Build build in builds) {
-      BuilderOptionalMods optionalModsResult = optionalMods(
-          build.stats.statistics,
-          armorModspace,
-          builderHelper.statOrder,
-          builderHelper.manifest);
-      build.stats.statistics = optionalModsResult.statValues;
-      Map<int, int> statTiers = {};
-      statTiers[StatsHash.mobility] =
-          (build.stats.statistics[StatsHash.mobility]! / 10).floor();
-      statTiers[StatsHash.resilience] =
-          (build.stats.statistics[StatsHash.resilience]! / 10).floor();
-      statTiers[StatsHash.recovery] =
-          (build.stats.statistics[StatsHash.recovery]! / 10).floor();
-      statTiers[StatsHash.discipline] =
-          (build.stats.statistics[StatsHash.discipline]! / 10).floor();
-      statTiers[StatsHash.intellect] =
-          (build.stats.statistics[StatsHash.intellect]! / 10).floor();
-      statTiers[StatsHash.strength] =
-          (build.stats.statistics[StatsHash.strength]! / 10).floor();
-      int finalTier = statTiers[StatsHash.mobility]! +
-          statTiers[StatsHash.resilience]! +
-          statTiers[StatsHash.recovery]! +
-          statTiers[StatsHash.discipline]! +
-          statTiers[StatsHash.intellect]! +
-          statTiers[StatsHash.strength]!;
-      build.stats.max = finalTier;
-      build.equipement[0].mods = optionalModsResult.modSelected[0];
-      build.equipement[1].mods = optionalModsResult.modSelected[1];
-      build.equipement[2].mods = optionalModsResult.modSelected[2];
-      build.equipement[3].mods = optionalModsResult.modSelected[3];
-      build.equipement[4].mods = optionalModsResult.modSelected[4];
-    }
+
     if (builds.length > 50) {
       builds = builds.getRange(0, 50).toList();
     }

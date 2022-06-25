@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/constants/texts.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -9,6 +11,7 @@ import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
+import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -65,6 +68,15 @@ class ExoticWidgetState extends State<ExoticWidget> {
                   Navigator.popAndPushNamed(context, routeExotic);
                 },
               ),
+              floatingActionButton: RoundedButton(
+                  text: textBodyBold(
+                    AppLocalizations.of(context)!.next,
+                    utf8: false,
+                    color: black,
+                  ),
+                  width: 200,
+                  height: 56,
+                  onPressed: () => Navigator.pushNamed(context, routeFilter)),
             );
           } else {
             return Container();

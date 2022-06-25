@@ -16,69 +16,76 @@ class InspectMobileStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        for (int statHash in DestinyData.linearStatBySubType[item.itemSubType]!)
-          StatProgressBar(
-            width: vw(context),
-            name: ManifestService.manifestParsed
-                    .destinyStatDefinition[statHash]!.displayProperties!.name ??
-                'error',
-            value: stats?[statHash.toString()]?.value ??
-                item.stats?.stats?[statHash.toString()]?.value ??
-                0,
-            type: item.itemType,
-          ),
-        Builder(builder: (context) {
-          List<String> unusedStats = [];
-          if (stats != null) {
-            unusedStats.addAll(stats!.keys.where((statHash) => !DestinyData
-                .linearStatBySubType[item.itemSubType]!
-                .contains(int.parse(statHash))));
-          }
-          // else {
-          //   unusedStats.addAll(item.stats!.stats!.keys.where((statHash) =>
-          //       !DestinyData.linearStatBySubType[item.itemSubType]!
-          //           .contains(int.parse(statHash))));
-          // }
-          int armorTotal = 0;
-          if (item.itemType == DestinyItemType.Armor && stats != null) {
-            for (int statHash
-                in DestinyData.linearStatBySubType[item.itemSubType]!) {
-              armorTotal += stats![statHash.toString()]!.value!;
+    if (DestinyData.linearStatBySubType[item.itemSubType] != null) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (int statHash
+              in DestinyData.linearStatBySubType[item.itemSubType]!)
+            StatProgressBar(
+              width: vw(context),
+              name: ManifestService
+                      .manifestParsed
+                      .destinyStatDefinition[statHash]!
+                      .displayProperties!
+                      .name ??
+                  'error',
+              value: stats?[statHash.toString()]?.value ??
+                  item.stats?.stats?[statHash.toString()]?.value ??
+                  0,
+              type: item.itemType,
+            ),
+          Builder(builder: (context) {
+            List<String> unusedStats = [];
+            if (stats != null) {
+              unusedStats.addAll(stats!.keys.where((statHash) => !DestinyData
+                  .linearStatBySubType[item.itemSubType]!
+                  .contains(int.parse(statHash))));
             }
-          }
+            // else {
+            //   unusedStats.addAll(item.stats!.stats!.keys.where((statHash) =>
+            //       !DestinyData.linearStatBySubType[item.itemSubType]!
+            //           .contains(int.parse(statHash))));
+            // }
+            int armorTotal = 0;
+            if (item.itemType == DestinyItemType.Armor && stats != null) {
+              for (int statHash
+                  in DestinyData.linearStatBySubType[item.itemSubType]!) {
+                armorTotal += stats![statHash.toString()]!.value!;
+              }
+            }
 
-          return Column(
-            children: [
-              for (String statHash in unusedStats)
-                StatNoBar(
-                  width: vw(context),
-                  fontSize: 20,
-                  name: ManifestService
-                          .manifestParsed
-                          .destinyStatDefinition[int.parse(statHash)]
-                          ?.displayProperties
-                          ?.name ??
-                      'error',
-                  value: stats?[statHash.toString()]?.value ??
-                      item.stats?.stats?[statHash.toString()]?.value ??
-                      0,
-                  type: item.itemType,
-                ),
-              if (item.itemType == DestinyItemType.Armor)
-                StatNoBar(
-                  width: vw(context),
-                  fontSize: 20,
-                  name: 'Total',
-                  value: armorTotal,
-                  type: item.itemType,
-                )
-            ],
-          );
-        })
-      ],
-    );
+            return Column(
+              children: [
+                for (String statHash in unusedStats)
+                  StatNoBar(
+                    width: vw(context),
+                    fontSize: 20,
+                    name: ManifestService
+                            .manifestParsed
+                            .destinyStatDefinition[int.parse(statHash)]
+                            ?.displayProperties
+                            ?.name ??
+                        'error',
+                    value: stats?[statHash.toString()]?.value ??
+                        item.stats?.stats?[statHash.toString()]?.value ??
+                        0,
+                    type: item.itemType,
+                  ),
+                if (item.itemType == DestinyItemType.Armor)
+                  StatNoBar(
+                    width: vw(context),
+                    fontSize: 20,
+                    name: 'Total',
+                    value: armorTotal,
+                    type: item.itemType,
+                  )
+              ],
+            );
+          })
+        ],
+      );
+    }
+    return Container();
   }
 }

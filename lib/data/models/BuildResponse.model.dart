@@ -17,14 +17,17 @@ class Build {
 class Stats {
   int base;
   int max;
+  int statToFilterBy;
   Map<int, int> ordering;
   Map<int, int> statistics;
 
-  Stats(
-      {required this.base,
-      required this.max,
-      required this.ordering,
-      required this.statistics});
+  Stats({
+    required this.base,
+    required this.max,
+    required this.ordering,
+    required this.statistics,
+    required this.statToFilterBy,
+  });
 }
 
 class Armor {

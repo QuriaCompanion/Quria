@@ -31,7 +31,7 @@ class _SubclassPageState extends State<SubclassPage> {
   Widget build(BuildContext context) {
     if (vw(context) < 1000) {
       return ScaffoldSteps(
-        route: routeClassItemChoice,
+        route: routeMod,
         body: SubclassMobileView(
           subclasses: data,
         ),
