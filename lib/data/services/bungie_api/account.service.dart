@@ -45,6 +45,10 @@ class AccountService {
   }
 
   void reset() {
+    StorageService.removeLocalStorage("bungie_token");
+    StorageService.removeLocalStorage("last_refresh");
+    StorageService.removeLocalStorage("membershipData");
+    StorageService.removeLocalStorage("currentMembership");
     currentMembership = null;
     membershipData = null;
   }

@@ -45,9 +45,13 @@ class BuilderResultsMobileView extends StatelessWidget {
                 ),
               ],
             )),
-        Column(children: [
-          for (var buildResult in buildResults)
-            Padding(
+        ListView.builder(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          primary: false,
+          itemCount: buildResults.length,
+          itemBuilder: (context, index) {
+            return Padding(
               padding: EdgeInsets.all(globalPadding(context)),
               child: InkWell(
                 onTap: () {
@@ -55,7 +59,7 @@ class BuilderResultsMobileView extends StatelessWidget {
                     context,
                     routeBuilderRecap,
                     arguments: BuilderRecapHelper(
-                      build: buildResult,
+                      build: buildResults[index],
                       mods: mods,
                       subclassMods: subclassMods,
                       subclassId: subclassId,
@@ -64,15 +68,16 @@ class BuilderResultsMobileView extends StatelessWidget {
                   );
                 },
                 child: BuilderResultsMobileItem(
-                  buildResult: buildResult,
+                  buildResult: buildResults[index],
                   characterId: characterId,
                   mods: mods,
                   subclassMods: subclassMods,
                   subclassId: subclassId,
                 ),
               ),
-            ),
-        ])
+            );
+          },
+        )
       ],
     );
   }

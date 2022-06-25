@@ -1,3 +1,4 @@
+import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
 import 'package:flutter/material.dart';
@@ -49,54 +50,81 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
         decoration: const BoxDecoration(color: black),
         child: SingleChildScrollView(
           child: Column(children: [
-            mobileSection(context,
-                title: AppLocalizations.of(context)!.mod_equip,
-                child: Column(
-                  children: [
-                    ModDisplay(
-                        width: vw(context) -
-                            globalPadding(context) * 3 -
-                            itemSize(context, widget.width),
-                        padding: globalPadding(context),
-                        iconSize: itemSize(context, widget.width),
-                        item: widget.socket),
-                    const Divider(
-                      color: blackLight,
-                      height: 22,
-                      thickness: 1,
-                    ),
-                    for (var plug in plugs!)
-                      Padding(
-                        padding:
-                            EdgeInsets.only(bottom: globalPadding(context)),
-                        child: InkWell(
-                          onTap: () {
-                            showMaterialModalBottomSheet(
-                                backgroundColor: Colors.transparent,
-                                expand: false,
-                                context: context,
-                                builder: (context) {
-                                  return ModModal(
-                                    width: vw(context),
-                                    mod: ManifestService.manifestParsed
-                                            .destinyInventoryItemDefinition[
-                                        plug.plugItemHash]!,
-                                    onSocketChange: () {
-                                      Navigator.pop(context);
-                                      widget.onSocketChange(plug.plugItemHash!);
-                                    },
-                                  );
-                                });
-                          },
-                          child: ModWithTypeName(
-                              iconSize: itemSize(context, widget.width),
-                              item: ManifestService.manifestParsed
-                                      .destinyInventoryItemDefinition[
-                                  plug.plugItemHash]!),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: globalPadding(context)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      textH2(AppLocalizations.of(context)!.mod_equip,
+                          utf8: false),
+                      InkWell(
+                        onTap: () => Navigator.pop(context),
+                        child: const CircleAvatar(
+                          backgroundColor: blackLight,
+                          child:
+                              Icon(Icons.clear, size: 20, color: Colors.white),
                         ),
                       ),
-                  ],
-                ))
+                    ],
+                  ),
+                  const Divider(
+                    color: blackLight,
+                    height: 22,
+                    thickness: 1,
+                  ),
+                  Column(
+                    children: [
+                      ModDisplay(
+                          width: vw(context) -
+                              globalPadding(context) * 3 -
+                              iconSize(context, widget.width),
+                          padding: globalPadding(context),
+                          iconSize: iconSize(context, widget.width),
+                          item: widget.socket),
+                      const Divider(
+                        color: blackLight,
+                        height: 22,
+                        thickness: 1,
+                      ),
+                      for (var plug in plugs!)
+                        Padding(
+                          padding:
+                              EdgeInsets.only(bottom: globalPadding(context)),
+                          child: InkWell(
+                            onTap: () {
+                              showMaterialModalBottomSheet(
+                                  backgroundColor: Colors.transparent,
+                                  expand: false,
+                                  context: context,
+                                  builder: (context) {
+                                    return ModModal(
+                                      mod: ManifestService.manifestParsed
+                                              .destinyInventoryItemDefinition[
+                                          plug.plugItemHash]!,
+                                      onSocketChange: () {
+                                        Navigator.pop(context);
+                                        widget
+                                            .onSocketChange(plug.plugItemHash!);
+                                      },
+                                      width: widget.width,
+                                    );
+                                  });
+                            },
+                            child: ModWithTypeName(
+                                iconSize: iconSize(context, widget.width),
+                                item: ManifestService.manifestParsed
+                                        .destinyInventoryItemDefinition[
+                                    plug.plugItemHash]!),
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ]),
         ),
       ),

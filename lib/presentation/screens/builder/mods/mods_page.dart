@@ -108,7 +108,7 @@ class ModsPage extends StatelessWidget {
     }
     if (vw(context) < 1000) {
       return ScaffoldSteps(
-        route: routeBuilder,
+        route: routeClassItemChoice,
         body: ModsMobileView(
           armorMods: armorMods,
           onChange: (newMods) {

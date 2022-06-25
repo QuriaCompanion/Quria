@@ -123,7 +123,7 @@ class LoginWidgetState extends State<LoginWidget> {
         html.window.location.assign(authorizationEndpoint);
       });
     } else {
-      String code = await widget.auth.authorize(widget.forceReauth);
+      String code = await widget.auth.authorize(lang, widget.forceReauth);
       authCode(code);
     }
   }

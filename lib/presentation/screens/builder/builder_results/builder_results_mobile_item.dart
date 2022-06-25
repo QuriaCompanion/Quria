@@ -87,10 +87,15 @@ class BuilderResultsMobileItem extends StatelessWidget {
                     displayHash: buildResult.equipement[i].displayHash,
                     imageSize: (vw(context) - (globalPadding(context) * 8)) / 5,
                     isMasterworked: ProfileService()
-                            .getItemByInstanceId(
-                                buildResult.equipement[i].itemInstanceId)
-                            ?.state ==
-                        const ItemState(5),
+                                .getItemByInstanceId(
+                                    buildResult.equipement[i].itemInstanceId)
+                                ?.state ==
+                            const ItemState(5) ||
+                        ProfileService()
+                                .getItemByInstanceId(
+                                    buildResult.equipement[i].itemInstanceId)
+                                ?.state ==
+                            ItemState.Masterwork,
                   ),
                 ),
             ],

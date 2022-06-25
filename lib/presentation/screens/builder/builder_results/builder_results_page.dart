@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/models/StatWeighing.enum.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
@@ -52,11 +53,20 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
             .filters
             .map((e) => e.value)
             .toList();
+    StatWeighing statWeighing =
+        Provider.of<BuilderStatsFilterProvider>(context, listen: false)
+            .statWeighing;
+    bool considerMasterwork =
+        Provider.of<BuilderCustomInfoProvider>(context, listen: false)
+            .considerMasterwork;
+    bool includeSunset =
+        Provider.of<BuilderCustomInfoProvider>(context, listen: false)
+            .includeSunset;
 
-    int exoticHash =
-        Provider.of<BuilderExoticProvider>(context, listen: false).exoticHash!;
+    int? exoticHash =
+        Provider.of<BuilderExoticProvider>(context, listen: false).exoticHash;
     String classItemInstanceId =
-        Provider.of<BuilderClassItemProvider>(context, listen: false)
+        Provider.of<BuilderCustomInfoProvider>(context, listen: false)
             .classItemInstanceId;
 
     _future = BuilderService().calculateBuilds(
@@ -66,6 +76,9 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
         statOrder: statOrder,
         exoticHash: exoticHash,
         armorMods: armorMods,
+        statWeighing: statWeighing,
+        considerMasterwork: considerMasterwork,
+        includeSunset: includeSunset,
         classItemInstanceId: classItemInstanceId,
       ),
     );

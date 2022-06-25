@@ -40,7 +40,9 @@
     "builder_results_title": "Builds recommandés",
     "builder_results_subtitle": "Voici les meilleurs résultats.",
     "builder_class_item_title": "Choisis ton objet de classe",
-    "builder_class_item_subtitle": "Sélectionne l'objet de classe de ton build.",
+    "builder_class_item_subtitle": "Sélectionne l'objet de classe de ton build.",    
+    "builder_class_item_keep_sunset": "Inclure les éléments sunset",
+    "builder_class_item_assume_masterwork": "Assumer tout comme pièce maîtresse",
     "builder_exotic_title": "Choisis un éxotique",
     "builder_exotic_subtitle": "Il sert de base pour la construction de ton build.",
     "builder_mods_title": "Choisis tes mod",
@@ -48,6 +50,10 @@
     "builder_stats_order_title": "Priorise tes statistiques",
     "builder_stats_order_subtitle": "Classe les statistiques par ordre de préférence.",
     "builder_stats_order_caption": "Maintenez puis faites glisser pour changer l'ordre",
+    "builder_stats_order_all_tiers": "Tier disponible le plus haut",
+    "builder_stats_order_tier_1": "Première statistique maximisé",
+    "builder_stats_order_tier_2": "2 premières statistiques maximisé",
+    "builder_stats_order_tier_3": "3 premières statistiques maximisé",
     "mobility": "Mobilité",
     "resilience": "Résistance",
     "recovery": "Récupération",
@@ -87,5 +93,9 @@
     "twitter": "Suivez nous sur Twitter",
     "twitter_caption": "Pour nous contacter ou avoir les dernières infos",
     "change_platform": "Changer de platforme",
-    "change_platform_caption": "Si vous avez une autre plateforme"
+    "change_platform_caption": "Si vous avez une autre plateforme",
+    "change_language": "Changer de langue",
+    "fr": "Français",
+    "en": "Anglais",
+    "es": "Espagnol"
 }
