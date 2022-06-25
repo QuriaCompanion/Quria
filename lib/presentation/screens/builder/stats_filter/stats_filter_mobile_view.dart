@@ -21,16 +21,20 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
     switch (statWeighing) {
       case StatWeighing.allTiers:
         return textBodyMedium(
-            AppLocalizations.of(context)!.builder_stats_order_all_tiers);
+            AppLocalizations.of(context)!.builder_stats_order_all_tiers,
+            utf8: false);
       case StatWeighing.maxOne:
         return textBodyMedium(
-            AppLocalizations.of(context)!.builder_stats_order_tier_1);
+            AppLocalizations.of(context)!.builder_stats_order_tier_1,
+            utf8: false);
       case StatWeighing.maxTwo:
         return textBodyMedium(
-            AppLocalizations.of(context)!.builder_stats_order_tier_2);
+            AppLocalizations.of(context)!.builder_stats_order_tier_2,
+            utf8: false);
       case StatWeighing.maxThree:
         return textBodyMedium(
-            AppLocalizations.of(context)!.builder_stats_order_tier_3);
+            AppLocalizations.of(context)!.builder_stats_order_tier_3,
+            utf8: false);
     }
   }
 
