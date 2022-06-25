@@ -1,22 +1,15 @@
 import 'dart:ui';
-
-import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/presentation/components/Header/mobile_components/mobile_character_choice.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 
 class ScaffoldCharacters extends StatefulWidget {
-  final Function(int) onCharacterChange;
-  final List<DestinyCharacterComponent> characters;
   final Widget body;
-  const ScaffoldCharacters(
-      {required this.onCharacterChange,
-      required this.characters,
-      required this.body,
-      Key? key})
-      : super(key: key);
+  const ScaffoldCharacters({required this.body, Key? key}) : super(key: key);
 
   @override
   State<ScaffoldCharacters> createState() => _ScaffoldCharactersState();
@@ -74,8 +67,9 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
                         globalPadding(context)),
                 child: MobileCharacterChoice(
                   callback: (newIndex) {
+                    Provider.of<CharactersProvider>(context, listen: false)
+                        .setCurrentCharacter(newIndex);
                     setState(() {
-                      widget.onCharacterChange(newIndex);
                       choosingCharacter = !choosingCharacter;
                     });
                   },
@@ -84,7 +78,8 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
                       choosingCharacter = !choosingCharacter;
                     });
                   },
-                  characters: widget.characters,
+                  characters:
+                      Provider.of<CharactersProvider>(context).characters,
                 ),
               ),
             ),

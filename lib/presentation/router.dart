@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quria/data/models/helpers/builderRecapHelper.model.dart';
+import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/inspectSubclassHelper.model.dart';
 import 'package:quria/presentation/screens/builder/build_recap/builder_recap_page.dart';
@@ -74,8 +74,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const BuilderResultsPage());
       // builder Recap
       case routeBuilderRecap:
-        final BuilderRecapHelper data =
-            settings.arguments as BuilderRecapHelper;
+        final Build data = settings.arguments as Build;
         return MaterialPageRoute(builder: (_) => BuilderRecapPage(data: data));
 
       default:

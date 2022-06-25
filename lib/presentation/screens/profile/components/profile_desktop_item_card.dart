@@ -35,15 +35,17 @@ class _ProfileDesktopItemCardState extends State<ProfileDesktopItemCard> {
   @override
   void initState() {
     super.initState();
-    data = DisplayService()
-        .getCardData(widget.item.itemInstanceId!, widget.item.itemHash);
+    data = DisplayService.getCardData(context,
+        itemInstanceId: widget.item.itemInstanceId!,
+        itemHash: widget.item.itemHash);
   }
 
   @override
   void didUpdateWidget(covariant ProfileDesktopItemCard oldWidget) {
     super.didUpdateWidget(oldWidget);
-    data = DisplayService()
-        .getCardData(widget.item.itemInstanceId!, widget.item.itemHash);
+    data = DisplayService.getCardData(context,
+        itemInstanceId: widget.item.itemInstanceId!,
+        itemHash: widget.item.itemHash);
   }
 
   @override
@@ -103,8 +105,11 @@ class _ProfileDesktopItemCardState extends State<ProfileDesktopItemCard> {
             children: [
               for (final item in widget.inventory)
                 Builder(builder: (context) {
-                  final dataItem = DisplayService()
-                      .getCardData(item.itemInstanceId!, item.itemHash);
+                  final dataItem = DisplayService.getCardData(
+                    context,
+                    itemInstanceId: item.itemInstanceId!,
+                    itemHash: item.itemHash,
+                  );
                   return InkWell(
                     onTap: () {
                       widget.onClick(InspectData(

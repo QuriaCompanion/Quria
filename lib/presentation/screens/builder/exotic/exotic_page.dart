@@ -23,7 +23,6 @@ class ExoticWidget extends StatefulWidget {
 }
 
 class ExoticWidgetState extends State<ExoticWidget> {
-  final DisplayService display = DisplayService();
   late DestinyCharacterComponent currentCharacter;
   late Future<List<DestinyInventoryItemDefinition>> _future;
   bool isLoading = true;
@@ -33,7 +32,7 @@ class ExoticWidgetState extends State<ExoticWidget> {
     super.initState();
     currentCharacter = Provider.of<CharactersProvider>(context, listen: false)
         .currentCharacter as DestinyCharacterComponent;
-    _future = display.getExotics(currentCharacter.classType!);
+    _future = DisplayService.getExotics(context, currentCharacter.classType!);
   }
 
   @override

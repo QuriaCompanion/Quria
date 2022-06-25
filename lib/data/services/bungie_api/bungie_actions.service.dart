@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -16,28 +20,36 @@ class BungieActionsService {
   }
   BungieActionsService._internal();
 
-  Future<void> transferItem(String itemId, String? characterId,
+  Future<void> transferItem(
+      BuildContext context, String itemId, String? characterId,
       {int? itemHash, int? stackSize}) async {
     try {
-      final owner = profile.getItemOwner(itemId);
+      final owner = Provider.of<InventoryProvider>(context, listen: false)
+          .getItemOwner(itemId);
       if (owner == characterId || owner == null) {
         await api
             .transferItem(itemId, characterId ?? owner,
                 itemHash: itemHash,
                 stackSize: stackSize,
                 transferToVault: characterId == null)
-            .then((value) => profile.moveItem(itemId, characterId, false));
+            .then((value) =>
+                Provider.of<InventoryProvider>(context, listen: false)
+                    .moveItem(itemId, characterId, false));
       } else {
         await api
             .transferItem(itemId, owner,
                 itemHash: itemHash, stackSize: stackSize, transferToVault: true)
-            .then((value) => profile.moveItem(itemId, null, false));
+            .then((value) =>
+                Provider.of<InventoryProvider>(context, listen: false)
+                    .moveItem(itemId, null, false));
         await api
             .transferItem(itemId, characterId,
                 itemHash: itemHash,
                 stackSize: stackSize,
                 transferToVault: false)
-            .then((value) => profile.moveItem(itemId, characterId, false));
+            .then((value) =>
+                Provider.of<InventoryProvider>(context, listen: false)
+                    .moveItem(itemId, characterId, false));
       }
     } catch (e) {
       try {
@@ -48,7 +60,8 @@ class BungieActionsService {
             .equippingBlock!
             .equipmentSlotTypeHash!;
         List<DestinyItemComponent> slotItems =
-            (profile.getItemsForCharacter(characterId, slotTypeHash))
+            (Provider.of<InventoryProvider>(context, listen: false)
+                    .getItemsForCharacter(characterId, slotTypeHash))
                 .toSet()
                 .toList();
         if (slotItems.length <= 9) {
@@ -57,13 +70,17 @@ class BungieActionsService {
                   itemHash: slotItems.first.itemHash,
                   stackSize: 1,
                   transferToVault: true)
-              .then((value) => profile.moveItem(itemId, null, false));
+              .then((value) =>
+                  Provider.of<InventoryProvider>(context, listen: false)
+                      .moveItem(itemId, null, false));
           await api
               .transferItem(itemId, characterId,
                   itemHash: itemHash,
                   stackSize: stackSize,
                   transferToVault: false)
-              .then((value) => profile.moveItem(itemId, characterId, false));
+              .then((value) =>
+                  Provider.of<InventoryProvider>(context, listen: false)
+                      .moveItem(itemId, characterId, false));
         }
       } catch (e) {
         rethrow;
@@ -71,42 +88,47 @@ class BungieActionsService {
     }
   }
 
-  Future<void> equipItem({
+  Future<void> equipItem(
+    BuildContext context, {
     required String itemId,
     required String characterId,
     required int itemHash,
   }) async {
     try {
-      final owner = profile.getItemOwner(itemId);
+      final owner =
+          Provider.of<InventoryProvider>(context).getItemOwner(itemId);
       if (owner == characterId) {
-        await api
-            .equipItem(itemId, characterId)
-            .then((value) => profile.moveItem(itemId, characterId, true));
+        await api.equipItem(itemId, characterId).then((value) =>
+            Provider.of<InventoryProvider>(context, listen: false)
+                .moveItem(itemId, characterId, true));
       } else {
-        await transferItem(itemId, characterId,
+        await transferItem(context, itemId, characterId,
             itemHash: itemHash, stackSize: 1);
-        await api
-            .equipItem(itemId, characterId)
-            .then((value) => profile.moveItem(itemId, characterId, true));
+        await api.equipItem(itemId, characterId).then((value) =>
+            Provider.of<InventoryProvider>(context, listen: false)
+                .moveItem(itemId, characterId, true));
       }
     } catch (e) {
       try {
         await transferItem(
+          context,
           itemId,
           characterId,
           itemHash: itemHash,
           stackSize: 1,
-        ).then((value) => profile.moveItem(itemId, characterId, false));
-        await api
-            .equipItem(itemId, characterId)
-            .then((value) => profile.moveItem(itemId, characterId, true));
+        ).then((value) => Provider.of<InventoryProvider>(context, listen: false)
+            .moveItem(itemId, characterId, false));
+        await api.equipItem(itemId, characterId).then((value) =>
+            Provider.of<InventoryProvider>(context, listen: false)
+                .moveItem(itemId, characterId, true));
       } catch (e) {
         rethrow;
       }
     }
   }
 
-  Future<void> equipBuild({
+  Future<void> equipBuild(
+    BuildContext context, {
     required Build build,
     required String characterId,
     required List<ModSlots> mods,
@@ -117,19 +139,32 @@ class BungieActionsService {
     List<List<int?>> socketsHashes = [];
     List<int?> subclassSocketsHashes = [];
     List<DestinyItemComponent> characterInventory = [];
-    characterInventory.addAll(profile.getCharacterEquipment(characterId));
-    characterInventory.addAll(profile.getCharacterInventory(characterId));
+    characterInventory.addAll(Provider.of<InventoryProvider>(context)
+        .getCharacterEquipment(characterId));
+    characterInventory.addAll(Provider.of<InventoryProvider>(context)
+        .getCharacterInventory(characterId));
+
+    if (subclassId != null) {
+      itemsIds.add(subclassId);
+      if (subclassMods.isNotEmpty) {
+        subclassSocketsHashes.addAll(
+            (Provider.of<ItemProvider>(context).getItemSockets(subclassId))
+                .map((e) => e.plugHash)
+                .toList());
+      }
+    }
     // transfer all items to character
     for (int i = 0; i < build.equipement.length; i++) {
       itemsIds.add(build.equipement[i].itemInstanceId);
-      socketsHashes.add(
-          (profile.getItemSockets(build.equipement[i].itemInstanceId))
-              .map((e) => e.plugHash)
-              .toList());
+      socketsHashes.add((Provider.of<ItemProvider>(context)
+              .getItemSockets(build.equipement[i].itemInstanceId))
+          .map((e) => e.plugHash)
+          .toList());
       if (!characterInventory
           .map((e) => e.itemInstanceId)
           .contains(build.equipement[i].itemInstanceId)) {
         await transferItem(
+          context,
           build.equipement[i].itemInstanceId,
           characterId,
           itemHash: build.equipement[i].hash,
@@ -137,18 +172,11 @@ class BungieActionsService {
         );
       }
     }
-    if (subclassId != null) {
-      itemsIds.add(subclassId);
-      if (subclassMods.isNotEmpty) {
-        subclassSocketsHashes.addAll((profile.getItemSockets(subclassId))
-            .map((e) => e.plugHash)
-            .toList());
-      }
-    }
     // equip all items
     await api.equipItems(itemsIds, characterId).then((value) {
       for (final id in itemsIds) {
-        profile.moveItem(id, characterId, false);
+        Provider.of<InventoryProvider>(context, listen: false)
+            .moveItem(id, characterId, false);
       }
     }, onError: (_) => null);
 

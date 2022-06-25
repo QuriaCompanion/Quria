@@ -1,50 +1,94 @@
+import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_investment_stat_definition.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
+import 'package:bungie_api/models/destiny_item_sockets_component.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/StatWeighing.enum.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
-import 'package:bungie_api/models/destiny_item_sockets_component.dart';
 import 'package:flutter/foundation.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
+import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
+import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
+import 'package:quria/data/providers/builder/builder_mods_provider.dart';
+import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
+import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
+import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class BuilderService {
-  Future<List<Build>> calculateBuilds({
-    required BuilderPreparation data,
-  }) async {
-    ProfileService profile = ProfileService();
-    DestinyCharacterComponent? character =
-        profile.getCharacter(data.characterId);
-    List<DestinyItemComponent> armors = profile.getAllArmorForClass(
-        character!.classType!,
-        includeSunset: data.includeSunset);
-    Map<String, DestinyItemSocketsComponent> sockets = profile.getAllSockets();
+  BuilderHelper buildPreparation(BuildContext context) {
+    DestinyCharacterComponent character =
+        Provider.of<CharactersProvider>(context, listen: false).currentCharacter
+            as DestinyCharacterComponent;
+    bool includeSunset =
+        Provider.of<BuilderCustomInfoProvider>(context, listen: false)
+            .includeSunset;
+
+    List<DestinyItemComponent> armors =
+        Provider.of<InventoryProvider>(context, listen: false).getArmorForClass(
+            character.classType as DestinyClass,
+            includeSunset: includeSunset);
+
+    List<DestinyInventoryItemDefinition> subclassMods =
+        Provider.of<BuilderSubclassModsProvider>(context, listen: false)
+            .subclassMods;
+
+    List<ModSlots> armorMods =
+        Provider.of<BuilderModsProvider>(context, listen: false).mods;
+
+    List<int> statOrder =
+        Provider.of<BuilderStatsFilterProvider>(context, listen: false)
+            .filters
+            .map((e) => e.value)
+            .toList();
+
+    StatWeighing statWeighing =
+        Provider.of<BuilderStatsFilterProvider>(context, listen: false)
+            .statWeighing;
+
+    bool considerMasterwork =
+        Provider.of<BuilderCustomInfoProvider>(context, listen: false)
+            .considerMasterwork;
+
+    DestinyInventoryItemDefinition? exotic =
+        Provider.of<BuilderExoticProvider>(context, listen: false).exoticHash;
 
     DestinyItemComponent classItem =
-        profile.getItemByInstanceId(data.classItemInstanceId)!;
+        Provider.of<BuilderCustomInfoProvider>(context, listen: false).classItem
+            as DestinyItemComponent;
 
-    BuilderHelper builder = BuilderHelper(
-      statOrder: data.statOrder,
-      exotic: ManifestService
-          .manifestParsed.destinyInventoryItemDefinition[data.exoticHash],
+    Map<String, DestinyItemSocketsComponent> sockets =
+        Provider.of<ItemProvider>(context, listen: false).sockets;
+
+    return BuilderHelper(
+      statOrder: statOrder,
       armors: armors,
-      manifest: ManifestService.manifestParsed.destinyInventoryItemDefinition,
       sockets: sockets,
-      armorMods: data.armorMods,
-      subclassMods: data.subclassMods,
-      statWeighing: data.statWeighing,
-      considerMasterwork: data.considerMasterwork,
+      manifest: ManifestService.manifestParsed.destinyInventoryItemDefinition,
+      subclassMods: subclassMods,
+      armorMods: armorMods,
       classItem: classItem,
+      statWeighing: statWeighing,
+      considerMasterwork: considerMasterwork,
+      exotic: exotic,
     );
+  }
 
-    return await compute(_armorLoop, builder);
+  Future<List<Build>> calculateBuilds({
+    required BuilderHelper data,
+  }) async {
+    return await compute(_armorLoop, data);
   }
 
   Future<List<Build>> _armorLoop(BuilderHelper builderHelper) async {

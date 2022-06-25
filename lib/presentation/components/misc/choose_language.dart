@@ -16,7 +16,7 @@ class ChooseLanguage extends StatelessWidget {
     Provider.of<LanguageProvider>(context, listen: false)
         .setLanguage(Locale.fromSubtags(languageCode: lang));
     DisplayService.isProfileUp = false;
-    ProfileService().reset();
+    ProfileService.reset();
     StorageService.setLocalStorage('lang', lang)
         .then((value) => {Navigator.pushNamed(context, routeProfile)});
   }

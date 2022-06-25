@@ -19,8 +19,17 @@ class CharactersProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void init(current, characters) {
-    _currentCharacter = current;
-    _characters = characters;
+  void init(Map<String, DestinyCharacterComponent>? characters) {
+    if (characters == null) {
+      return;
+    }
+    List<DestinyCharacterComponent> list = characters.values.toList();
+    list.sort((charA, charB) {
+      DateTime dateA = DateTime.parse(charA.dateLastPlayed!);
+      DateTime dateB = DateTime.parse(charB.dateLastPlayed!);
+      return dateB.compareTo(dateA);
+    });
+    _currentCharacter = list[_characterIndex];
+    _characters = list;
   }
 }

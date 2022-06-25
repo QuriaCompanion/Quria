@@ -24,14 +24,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 
 class LoginWidget extends StatefulWidget {
   final String title = "Login";
   final BungieApiService api = BungieApiService();
-  final AuthService auth = AuthService();
-  final AccountService account = AccountService();
-  final ProfileService profile = ProfileService();
   final bool forceReauth;
 
   LoginWidget({Key? key, this.forceReauth = true}) : super(key: key);
@@ -44,7 +40,7 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   void initState() {
     super.initState();
-    widget.auth.getToken().then((value) => {
+    AuthService.getToken().then((value) => {
           if (value != null) {checkMembership()}
         });
 
@@ -123,7 +119,7 @@ class LoginWidgetState extends State<LoginWidget> {
         html.window.location.assign(authorizationEndpoint);
       });
     } else {
-      String code = await widget.auth.authorize(lang, widget.forceReauth);
+      String code = await AuthService.authorize(lang, widget.forceReauth);
       authCode(code);
     }
   }
@@ -132,7 +128,7 @@ class LoginWidgetState extends State<LoginWidget> {
     try {
       try {
         try {
-          if (await widget.auth.getToken() != null) {
+          if (await AuthService.getToken() != null) {
             return checkMembership();
           }
         } catch (_) {
@@ -192,7 +188,7 @@ class LoginWidgetState extends State<LoginWidget> {
 
   authCode(String code) async {
     try {
-      await widget.auth.requestToken(code);
+      await AuthService.requestToken(code);
       checkMembership();
     } catch (e) {
       inspect(e);
@@ -200,7 +196,7 @@ class LoginWidgetState extends State<LoginWidget> {
   }
 
   void checkMembership() async {
-    GroupUserInfoCard? membership = await widget.account.getMembership();
+    GroupUserInfoCard? membership = await AccountService.getMembership();
     if (membership == null) {
       UserMembershipData? membershipData = await widget.api.getMemberships();
       if (membershipData?.destinyMemberships?.firstWhereOrNull(
@@ -217,7 +213,7 @@ class LoginWidgetState extends State<LoginWidget> {
               .firstWhere((element) => element.membershipId != null)
               .membershipId!;
 
-      await widget.account.saveMembership(membershipData!, membershipId);
+      await AccountService.saveMembership(membershipData!, membershipId);
     }
     if (!mounted) return;
     Navigator.pushReplacementNamed(context, routeProfile);
@@ -246,7 +242,7 @@ class LoginWidgetState extends State<LoginWidget> {
                 memberships: membershipData!.destinyMemberships!,
                 onSelected: (membership) {
                   Navigator.of(context).pop();
-                  widget.account.saveMembership(membershipData, membership);
+                  AccountService.saveMembership(membershipData, membership);
                   Navigator.pushReplacementNamed(context, routeProfile);
                   return;
                 });
@@ -257,8 +253,6 @@ class LoginWidgetState extends State<LoginWidget> {
   }
 
   void yannisooLogin() async {
-    final AuthService auth = AuthService();
-    final AccountService account = AccountService();
     BungieNetToken token = BungieNetToken.fromJson({
       "access_token":
           "CN6bBBKGAgAgrMvDXdyzZdbiJQpJq3PPaAgnomvuvk/sZTE81r5NwQDgAAAAfJ2CwAxczR6rHddngJLwbD8nvwq1213DL0oLf6CeK1ewuW0G+Oj3loygH8qq41cWWJrF/S+1ltf7FEY9d+CTiCUs/8/awMAE9AWzGBflsIkU+Aa639TOuK2bGSkm+HSav3as/9R3KbDffyoSj0uZn+s6Qd9lh+ZipWQ3TbywgfZNREC/qlVKV/JteYxzd/tuMmYE0E1EGF+bhJLWLKMxuQ9juylnOCzN+vXPkuViMsTTa3Y9eq7qoUUBLT9Byu33PgSF192J/8kVRD8Amo2cvgJGBSNtoJ9VQZZvft7UTpw=",
@@ -269,8 +263,10 @@ class LoginWidgetState extends State<LoginWidget> {
       "membership_id": "11319478"
     });
 
-    if (await auth.getToken() == null) await auth.saveToken(token);
-    await account.getMembership();
+    if (await AuthService.getToken() == null) {
+      await AuthService.saveToken(token);
+    }
+    await AccountService.getMembership();
     if (!mounted) return;
     Navigator.pushReplacementNamed(context, routeProfile);
   }

@@ -82,7 +82,7 @@ class _ArmorModsState extends State<ArmorMods> {
                 TierType.Exotic)
         .toList()
         .asMap();
-    final remaining = DisplayService().remainingModPoints(
+    final remaining = DisplayService.remainingModPoints(
         ManifestService
             .manifestParsed
             .destinyInventoryItemDefinition[widget.sockets

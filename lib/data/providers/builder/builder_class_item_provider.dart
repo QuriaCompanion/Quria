@@ -1,17 +1,18 @@
+import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/foundation.dart';
 
 class BuilderCustomInfoProvider with ChangeNotifier {
-  String? _classItemInstanceId;
+  DestinyItemComponent? _classItem;
   bool _considerMasterwork = true;
   bool _includeSunset = true;
-  get classItemInstanceId => _classItemInstanceId;
-  get considerMasterwork => _considerMasterwork;
-  get includeSunset => _includeSunset;
+  DestinyItemComponent? get classItem => _classItem;
+  bool get considerMasterwork => _considerMasterwork;
+  bool get includeSunset => _includeSunset;
 
   void setClassItem(
-    String classItemInstanceId,
+    DestinyItemComponent classItemInstanceId,
   ) {
-    _classItemInstanceId = classItemInstanceId;
+    _classItem = classItemInstanceId;
     notifyListeners();
   }
 

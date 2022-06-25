@@ -28,8 +28,8 @@ class ItemModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ItemCardHelper data =
-        DisplayService().getCardData(item.itemInstanceId!, item.itemHash);
+    ItemCardHelper data = DisplayService.getCardData(context,
+        itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
     return SingleChildScrollView(
         child: Container(
       decoration: const BoxDecoration(

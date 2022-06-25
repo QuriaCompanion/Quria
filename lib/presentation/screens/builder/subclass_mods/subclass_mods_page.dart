@@ -20,9 +20,14 @@ class SubclassModsPage extends StatefulWidget {
 
 class _SubclassModsPageState extends State<SubclassModsPage> {
   late SocketsHelper data;
+  late SocketsHelper Function(String) getSubclassMods;
   List<DestinyInventoryItemDefinition> chosenSockets = [];
-  SocketsHelper Function(String) getSubclassMods = memo1<String, SocketsHelper>(
-      (String id) => DisplayService().getSubclassMods(id));
+  @override
+  void initState() {
+    super.initState();
+    getSubclassMods = memo1<String, SocketsHelper>(
+        (String id) => DisplayService.getSubclassMods(context, id));
+  }
 
   @override
   Widget build(BuildContext context) {

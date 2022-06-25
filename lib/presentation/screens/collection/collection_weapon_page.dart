@@ -25,7 +25,7 @@ class _CollectionWeaponPageState extends State<CollectionWeaponPage> {
   @override
   void initState() {
     super.initState();
-    _future = DisplayService().getCollectionByType(DestinyItemType.Weapon);
+    _future = DisplayService.getCollectionByType(DestinyItemType.Weapon);
     currentFilter = CollectionFilter.kinetic;
   }
 

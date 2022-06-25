@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
@@ -113,12 +112,11 @@ class SettingsMobileView extends StatelessWidget {
                       memberships:
                           AccountService.membershipData!.destinyMemberships!,
                       onSelected: (membership) {
-                        AccountService()
-                            .saveMembership(
+                        AccountService.saveMembership(
                                 AccountService.membershipData!, membership)
                             .then((_) {
                           DisplayService.isProfileUp = false;
-                          ProfileService().reset();
+                          ProfileService.reset();
                           Navigator.pushReplacementNamed(context, routeProfile);
                         });
                       },

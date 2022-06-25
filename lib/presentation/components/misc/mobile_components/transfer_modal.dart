@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
@@ -28,9 +30,10 @@ class TransferModal extends StatefulWidget {
 class _TransferModalState extends State<TransferModal> {
   @override
   Widget build(BuildContext context) {
-    final owner = ProfileService().getItemOwner(widget.instanceId);
-    final characters = ProfileService()
-        .getCharacters()
+    final owner =
+        Provider.of<InventoryProvider>(context).getItemOwner(widget.instanceId);
+    final characters = Provider.of<CharactersProvider>(context)
+        .characters
         .where((element) => element.characterId != owner);
 
     return SingleChildScrollView(
@@ -84,6 +87,7 @@ class _TransferModalState extends State<TransferModal> {
                     Navigator.pop(context);
                     await BungieActionsService()
                         .transferItem(
+                      context,
                       widget.instanceId,
                       character.characterId!,
                       stackSize: 1,
@@ -120,7 +124,8 @@ class _TransferModalState extends State<TransferModal> {
                   ),
                 ),
               ),
-            if (characters.length < ProfileService().getCharacters().length)
+            if (characters.length <
+                Provider.of<CharactersProvider>(context).characters.length)
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: globalPadding(context) / 2,
@@ -132,6 +137,7 @@ class _TransferModalState extends State<TransferModal> {
 
                     try {
                       await BungieActionsService().transferItem(
+                        context,
                         widget.instanceId,
                         null,
                         stackSize: 1,

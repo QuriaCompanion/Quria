@@ -2,9 +2,10 @@ import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_modal.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
@@ -79,8 +80,9 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                     imageSize: vw(context) * 0.148,
                     isMasterworked: item.state == ItemState.Masterwork ||
                         item.state == const ItemState(5),
-                    element: ProfileService().getItemElement(item),
-                    powerLevel: ProfileService()
+                    element:
+                        Provider.of<ItemProvider>(context).getItemElement(item),
+                    powerLevel: Provider.of<ItemProvider>(context)
                         .getItemPowerLevel(item.itemInstanceId!),
                   ),
                 );

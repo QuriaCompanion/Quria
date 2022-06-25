@@ -14,19 +14,18 @@ import 'bungie_api/bungie_api.service.dart';
 bool initialLinkHandled = false;
 
 class AuthService {
-  BungieNetToken? _currentToken;
-  GroupUserInfoCard? _currentMembership;
-  static final AccountService accountService = AccountService();
+  static BungieNetToken? _currentToken;
+  static GroupUserInfoCard? _currentMembership;
 
-  bool waitingAuthCode = false;
+  static bool waitingAuthCode = false;
   final Map<String, String> headers = {
     "Accept": "application/json",
     "Access-Control-Allow-Origin": "*"
   };
 
-  final bungieUrl = "https://www.bungie.net/Platform/";
+  static const bungieUrl = "https://www.bungie.net/Platform/";
 
-  late StreamSubscription<String?> linkStreamSub;
+  static late StreamSubscription<String?> linkStreamSub;
 
   static final AuthService _singleton = AuthService._internal();
 
@@ -35,32 +34,32 @@ class AuthService {
   }
   AuthService._internal();
 
-  Future<BungieNetToken?> _getStoredToken() async {
+  static Future<BungieNetToken?> _getStoredToken() async {
     var json = await StorageService.getLocalStorage('bungie_token');
     if (json == null) return null;
     return BungieNetToken.fromJson(json);
   }
 
-  Future<void> _setStoredToken(BungieNetToken token) async {
+  static Future<void> _setStoredToken(BungieNetToken token) async {
     await StorageService.setLocalStorage('bungie_token', token);
     await StorageService.setLocalStorage('last_refresh', "${DateTime.now()}");
   }
 
-  Future<BungieNetToken> refreshToken(BungieNetToken token) async {
+  static Future<BungieNetToken> refreshToken(BungieNetToken token) async {
     BungieNetToken bNetToken =
         await BungieApiService().refreshToken(token.refreshToken);
     saveToken(bNetToken);
     return bNetToken;
   }
 
-  Future<void> saveToken(BungieNetToken token) async {
-    await accountService.setCurrentMembershipId(token.membershipId);
+  static Future<void> saveToken(BungieNetToken token) async {
+    await AccountService.setCurrentMembershipId(token.membershipId);
     await _setStoredToken(token);
     await Future.delayed(const Duration(milliseconds: 1));
     _currentToken = token;
   }
 
-  Future<BungieNetToken?> getToken() async {
+  static Future<BungieNetToken?> getToken() async {
     BungieNetToken? token = _currentToken;
     token ??= await _getStoredToken();
     if (token?.accessToken == null || token?.expiresIn == null) {
@@ -82,18 +81,18 @@ class AuthService {
     return token;
   }
 
-  Future<void> removeToken() async {
+  static Future<void> removeToken() async {
     _currentToken = null;
     await StorageService.removeLocalStorage('bungie_token');
   }
 
-  Future<BungieNetToken> requestToken(String code) async {
+  static Future<BungieNetToken> requestToken(String code) async {
     BungieNetToken token = await BungieApiService().requestToken(code);
     await saveToken(token);
     return token;
   }
 
-  Future<String?> checkAuthorizationCode() async {
+  static Future<String?> checkAuthorizationCode() async {
     Uri? uri;
     if (!initialLinkHandled) {
       uri = await getInitialUri();
@@ -116,7 +115,8 @@ class AuthService {
     }
   }
 
-  Future<String> authorize(String lang, [bool forceReauth = true]) async {
+  static Future<String> authorize(String lang,
+      [bool forceReauth = true]) async {
     var browser = BungieAuthBrowser();
     // print("test");
     // final AuthorizationResponse? result =
@@ -158,7 +158,7 @@ class AuthService {
     return completer.future;
   }
 
-  bool get isLogged {
+  static bool get isLogged {
     return _currentMembership != null;
   }
 }

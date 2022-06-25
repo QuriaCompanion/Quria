@@ -3,13 +3,15 @@ import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/inspectSubclassHelper.model.dart';
 import 'package:quria/data/models/helpers/socketsHelper.model.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
@@ -34,7 +36,7 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
   @override
   void initState() {
     super.initState();
-    sockets = DisplayService().getSubclassMods(widget.data.subclassId);
+    sockets = DisplayService.getSubclassMods(context, widget.data.subclassId);
   }
 
   @override
@@ -88,9 +90,11 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
               );
             }
             DestinyItemTalentGridComponent talentGridComponent =
-                ProfileService().getTalentGrid(widget.data.subclassId)!;
+                Provider.of<ItemProvider>(context)
+                    .getTalentGrid(widget.data.subclassId)!;
             DestinyItemComponent itemComponent =
-                ProfileService().getItemByInstanceId(widget.data.subclassId)!;
+                Provider.of<InventoryProvider>(context)
+                    .getItemByInstanceId(widget.data.subclassId)!;
             DestinyInventoryItemDefinition definition = ManifestService
                 .manifestParsed
                 .destinyInventoryItemDefinition[itemComponent.itemHash]!;

@@ -20,7 +20,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
   @override
   void initState() {
     super.initState();
-    _future = DisplayService().getCollectionItem(widget.itemHash);
+    _future = DisplayService.getCollectionItem(widget.itemHash);
   }
 
   @override
