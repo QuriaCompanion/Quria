@@ -1,12 +1,12 @@
-import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/screens/profile/components/character_desktop_item_column.dart';
+import 'package:quria/presentation/screens/profile/components/profile_desktop_item_section.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_header.dart';
 
 class ProfileDesktopView extends StatelessWidget {
@@ -20,6 +20,12 @@ class ProfileDesktopView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const List<int> buckets = [
+      InventoryBucket.kineticWeapons,
+      InventoryBucket.energyWeapons,
+      InventoryBucket.powerWeapons,
+      ...InventoryBucket.armorBucketHashes
+    ];
     String icon = data.isNewSubclass
         ? ManifestService
             .manifestParsed
@@ -49,25 +55,16 @@ class ProfileDesktopView extends StatelessWidget {
             isNewSubclass: data.isNewSubclass,
           ),
         ),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            CharacterDesktopItemColumn(
-              data: data,
-              filter: DestinyItemType.Weapon,
-              onClick: (inspectData) {
-                onClick(inspectData);
-              },
-            ),
-            CharacterDesktopItemColumn(
-              data: data,
-              filter: DestinyItemType.Armor,
-              onClick: (inspectData) {
-                onClick(inspectData);
-              },
-            ),
-          ],
+        SizedBox(
+          height: vh(context) * 0.8,
+          child: ListView.builder(
+            itemCount: buckets.length,
+            itemBuilder: ((context, index) => ProfileDesktopItemSection(
+                  data: data,
+                  onClick: onClick,
+                  bucket: buckets[index],
+                )),
+          ),
         )
       ],
     );

@@ -32,6 +32,63 @@ class InventoryProvider with ChangeNotifier {
     return _characterEquipment[characterId]?.items ?? [];
   }
 
+  List<DestinyItemComponent> getCharacterInventoryByBucket(
+      String characterId, int slotTypeHash) {
+    return _characterInventory[characterId]
+            ?.items
+            ?.where((item) =>
+                ManifestService
+                    .manifestParsed
+                    .destinyInventoryItemDefinition[item.itemHash]
+                    ?.equippingBlock
+                    ?.equipmentSlotTypeHash ==
+                slotTypeHash)
+            .toList() ??
+        [];
+  }
+
+  List<DestinyItemComponent> getVaultInventoryForCharacterByBucket(
+      String characterId, int slotTypeHash) {
+    final List<DestinyItemComponent> inventory = [];
+    inventory.addAll(_profileInventory.where((item) =>
+        ManifestService
+            .manifestParsed
+            .destinyInventoryItemDefinition[item.itemHash]
+            ?.equippingBlock
+            ?.equipmentSlotTypeHash ==
+        slotTypeHash));
+    _characterEquipment.forEach((id, equipment) {
+      if (id != characterId && equipment.items != null) {
+        inventory.addAll(equipment.items!.where((item) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[item.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash ==
+            slotTypeHash));
+      }
+    });
+    _characterInventory.forEach((id, equipment) {
+      if (id != characterId && equipment.items != null) {
+        inventory.addAll(equipment.items!.where((item) =>
+            ManifestService
+                .manifestParsed
+                .destinyInventoryItemDefinition[item.itemHash]
+                ?.equippingBlock
+                ?.equipmentSlotTypeHash ==
+            slotTypeHash));
+      }
+    });
+    return inventory;
+  }
+
+  DestinyItemComponent getCharacterEquipmentByBucket(
+      String characterId, int bucket) {
+    return _characterEquipment[characterId]!
+        .items!
+        .firstWhere((item) => item.bucketHash == bucket);
+  }
+
   List<DestinyItemComponent> getItemsByInstanceId(List<String?> ids) {
     ids = ids.where((id) => id != null).toList();
     List<DestinyItemComponent> items = [];

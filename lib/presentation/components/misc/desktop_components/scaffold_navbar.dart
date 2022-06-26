@@ -49,23 +49,11 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                           selected: routeProfile == widget.currentRoute,
                           icon: "assets/icons/Perso-1.svg",
                         ),
-                        // SizedBox(width: 40),
-                        // NavBarButton(
-                        //   name: 'Builds',
-                        //   rou
-                        //   icon: "assets/icons/Builds.svg",
-                        // ),
                         NavBarButton(
                           name: 'QuriaBuilder',
                           route: routeExotic,
                           selected: routeExotic == widget.currentRoute,
                           icon: "assets/icons/Quria.svg",
-                        ),
-                        NavBarButton(
-                          route: routeVault,
-                          selected: routeVault == widget.currentRoute,
-                          name: 'Coffre',
-                          icon: "assets/icons/Coffre.svg",
                         ),
                         NavBarButton(
                           name: 'Collections',
@@ -118,6 +106,6 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
             },
           ),
         ),
-        body: widget.body);
+        body: SingleChildScrollView(child: widget.body));
   }
 }
