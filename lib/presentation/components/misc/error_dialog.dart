@@ -18,6 +18,7 @@ class ErrorDialog extends StatelessWidget {
     String error = errorMessage ?? AppLocalizations.of(context)!.error_base;
     return Center(
       child: Container(
+        height: 400,
         width: vw(context) * 0.75,
         decoration: const BoxDecoration(
           color: blackLight,

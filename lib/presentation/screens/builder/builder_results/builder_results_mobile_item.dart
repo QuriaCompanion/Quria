@@ -121,16 +121,21 @@ class BuilderResultsMobileItem extends StatelessWidget {
                       .equipBuild(
                         context,
                         build: buildResult,
-                        characterId: Provider.of<CharactersProvider>(context)
+                        characterId: Provider.of<CharactersProvider>(context,
+                                listen: false)
                             .currentCharacter!
                             .characterId!,
-                        mods: Provider.of<BuilderModsProvider>(context).mods,
-                        subclassMods:
-                            Provider.of<BuilderSubclassModsProvider>(context)
-                                .subclassMods,
-                        subclassId:
-                            Provider.of<BuilderSubclassProvider>(context)
-                                .subclassId,
+                        mods: Provider.of<BuilderModsProvider>(context,
+                                listen: false)
+                            .mods,
+                        subclassMods: Provider.of<BuilderSubclassModsProvider>(
+                                context,
+                                listen: false)
+                            .subclassMods,
+                        subclassId: Provider.of<BuilderSubclassProvider>(
+                                context,
+                                listen: false)
+                            .subclassId,
                       )
                       .then((value) => Navigator.pop(context));
                 },

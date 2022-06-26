@@ -15,12 +15,8 @@ import 'package:sliver_tools/sliver_tools.dart';
 class VaultMobileSection extends StatefulWidget {
   final List<DestinyItemComponent> vaultItems;
   final int bucketHash;
-  final void Function() onTransfer;
   const VaultMobileSection(
-      {required this.vaultItems,
-      required this.bucketHash,
-      required this.onTransfer,
-      Key? key})
+      {required this.vaultItems, required this.bucketHash, Key? key})
       : super(key: key);
 
   @override
@@ -68,10 +64,8 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                             item: item,
                             onClick: (inspect) {
                               Navigator.pushNamed(context, routeInspectMobile,
-                                      arguments: inspect)
-                                  .then((_) => setState(() {}));
+                                  arguments: inspect);
                             },
-                            onTransfer: () => widget.onTransfer(),
                           );
                         });
                   }),

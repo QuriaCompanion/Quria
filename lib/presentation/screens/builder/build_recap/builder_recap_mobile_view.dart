@@ -66,10 +66,11 @@ class BuilderRecapMobileView extends StatelessWidget {
                               .equipBuild(
                                 context,
                                 build: data,
-                                characterId:
-                                    Provider.of<CharactersProvider>(context)
-                                        .currentCharacter!
-                                        .characterId!,
+                                characterId: Provider.of<CharactersProvider>(
+                                        context,
+                                        listen: false)
+                                    .currentCharacter!
+                                    .characterId!,
                                 mods: Provider.of<BuilderModsProvider>(context)
                                     .mods,
                                 subclassMods:

@@ -16,12 +16,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemModal extends StatelessWidget {
   final DestinyItemComponent item;
   final void Function(InspectData) onClick;
-  final void Function() onTransfer;
   final double width;
   const ItemModal({
     required this.item,
     required this.onClick,
-    required this.onTransfer,
     required this.width,
     Key? key,
   }) : super(key: key);
@@ -145,7 +143,6 @@ class ItemModal extends StatelessWidget {
                             instanceId: item.itemInstanceId!,
                             onTransfer: () {
                               Navigator.pop(context);
-                              onTransfer();
                             },
                           );
                         });

@@ -73,13 +73,13 @@ class EquipModal extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: () async {
-                    Navigator.pop(context);
                     await BungieActionsService()
                         .equipItem(context,
                             itemId: instanceId,
                             characterId: character.characterId!,
                             itemHash: itemHash)
                         .then((_) {
+                      Navigator.pop(context);
                       ScaffoldMessenger.of(scaffoldKey.currentContext!)
                           .showSnackBar(SnackBar(
                         content: textBodyMedium(
@@ -90,6 +90,7 @@ class EquipModal extends StatelessWidget {
                         backgroundColor: Colors.green,
                       ));
                     }, onError: (_) {
+                      Navigator.pop(context);
                       showDialog(
                           context: scaffoldKey.currentContext!,
                           builder: (context) {

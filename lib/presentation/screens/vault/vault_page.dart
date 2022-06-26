@@ -35,9 +35,6 @@ class _VaultPageState extends State<VaultPage> {
                 drawer: const Burger(),
                 body: VaultMobileView(
                   data: data,
-                  onTransfer: () {
-                    setState(() {});
-                  },
                 ),
               );
             } else {

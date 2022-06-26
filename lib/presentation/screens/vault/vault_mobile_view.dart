@@ -19,10 +19,8 @@ import 'package:sliver_tools/sliver_tools.dart';
 @immutable
 class VaultMobileView extends StatefulWidget {
   final VaultHelper data;
-  final void Function() onTransfer;
   const VaultMobileView({
     required this.data,
-    required this.onTransfer,
     Key? key,
   }) : super(key: key);
 
@@ -156,7 +154,6 @@ class _VaultMobileView extends State<VaultMobileView> {
         VaultMobileSection(
           vaultItems: items,
           bucketHash: bucketHash,
-          onTransfer: () => widget.onTransfer(),
         ),
       );
     }

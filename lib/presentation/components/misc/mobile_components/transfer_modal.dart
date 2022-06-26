@@ -84,7 +84,6 @@ class _TransferModalState extends State<TransferModal> {
                 ),
                 child: InkWell(
                   onTap: () async {
-                    Navigator.pop(context);
                     await BungieActionsService()
                         .transferItem(
                       context,
@@ -94,6 +93,7 @@ class _TransferModalState extends State<TransferModal> {
                       itemHash: widget.itemHash,
                     )
                         .then((_) {
+                      Navigator.pop(context);
                       ScaffoldMessenger.of(scaffoldKey.currentContext!)
                           .showSnackBar(SnackBar(
                         content: textBodyMedium(
@@ -133,23 +133,32 @@ class _TransferModalState extends State<TransferModal> {
                 ),
                 child: InkWell(
                   onTap: () async {
-                    Navigator.pop(context);
-
-                    try {
-                      await BungieActionsService().transferItem(
-                        context,
-                        widget.instanceId,
-                        null,
-                        stackSize: 1,
-                        itemHash: widget.itemHash,
-                      );
-                    } catch (_) {
+                    await BungieActionsService()
+                        .transferItem(
+                      context,
+                      widget.instanceId,
+                      null,
+                      stackSize: 1,
+                      itemHash: widget.itemHash,
+                    )
+                        .then((_) {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
+                          .showSnackBar(SnackBar(
+                        content: textBodyMedium(
+                          AppLocalizations.of(context)!.item_transfered,
+                          utf8: false,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.green,
+                      ));
+                    }, onError: (_) {
                       showDialog(
-                          context: context,
+                          context: scaffoldKey.currentContext!,
                           builder: (context) {
                             return const ErrorDialog();
                           });
-                    }
+                    });
                   },
                   child: CharacterTransferItem(
                     imageLink:

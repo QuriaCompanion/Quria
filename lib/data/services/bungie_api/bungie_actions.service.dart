@@ -26,7 +26,7 @@ class BungieActionsService {
     try {
       final owner = Provider.of<InventoryProvider>(context, listen: false)
           .getItemOwner(itemId);
-      if (owner == characterId || owner == null) {
+      if (owner == characterId || owner == null || characterId == null) {
         await api
             .transferItem(itemId, characterId ?? owner,
                 itemHash: itemHash,
@@ -95,8 +95,8 @@ class BungieActionsService {
     required int itemHash,
   }) async {
     try {
-      final owner =
-          Provider.of<InventoryProvider>(context).getItemOwner(itemId);
+      final owner = Provider.of<InventoryProvider>(context, listen: false)
+          .getItemOwner(itemId);
       if (owner == characterId) {
         await api.equipItem(itemId, characterId).then((value) =>
             Provider.of<InventoryProvider>(context, listen: false)
@@ -139,16 +139,19 @@ class BungieActionsService {
     List<List<int?>> socketsHashes = [];
     List<int?> subclassSocketsHashes = [];
     List<DestinyItemComponent> characterInventory = [];
-    characterInventory.addAll(Provider.of<InventoryProvider>(context)
-        .getCharacterEquipment(characterId));
-    characterInventory.addAll(Provider.of<InventoryProvider>(context)
-        .getCharacterInventory(characterId));
+    characterInventory.addAll(
+        Provider.of<InventoryProvider>(context, listen: false)
+            .getCharacterEquipment(characterId));
+    characterInventory.addAll(
+        Provider.of<InventoryProvider>(context, listen: false)
+            .getCharacterInventory(characterId));
 
     if (subclassId != null) {
       itemsIds.add(subclassId);
       if (subclassMods.isNotEmpty) {
         subclassSocketsHashes.addAll(
-            (Provider.of<ItemProvider>(context).getItemSockets(subclassId))
+            (Provider.of<ItemProvider>(context, listen: false)
+                    .getItemSockets(subclassId))
                 .map((e) => e.plugHash)
                 .toList());
       }
@@ -156,7 +159,7 @@ class BungieActionsService {
     // transfer all items to character
     for (int i = 0; i < build.equipement.length; i++) {
       itemsIds.add(build.equipement[i].itemInstanceId);
-      socketsHashes.add((Provider.of<ItemProvider>(context)
+      socketsHashes.add((Provider.of<ItemProvider>(context, listen: false)
               .getItemSockets(build.equipement[i].itemInstanceId))
           .map((e) => e.plugHash)
           .toList());
@@ -192,7 +195,7 @@ class BungieActionsService {
               .socketEntries![index]
               .singleInitialItemHash!;
           if (socketsHashes[i][index] != hash &&
-              socketsHashes[i][index] != mods[i].items[index]!.hash) {
+              socketsHashes[i][index] != mods[i].items[index]?.hash) {
             await api.insertSocketPlugFree(
                 build.equipement[i].itemInstanceId, hash, index, characterId);
           }
@@ -227,7 +230,7 @@ class BungieActionsService {
       }
       for (int index = 1; index < 5; index++) {
         try {
-          if (socketsHashes[i][index] != mods[i].items[index]!.hash!) {
+          if (socketsHashes[i][index] != mods[i].items[index]?.hash) {
             api.insertSocketPlugFree(build.equipement[i].itemInstanceId[i],
                 mods[i].items[index]!.hash!, index, characterId);
           }

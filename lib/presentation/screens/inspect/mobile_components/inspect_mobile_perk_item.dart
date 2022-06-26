@@ -1,8 +1,10 @@
+import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/perk_item_display.dart';
 import 'package:quria/presentation/components/detailed_item/item/perk_modal.dart';
@@ -63,8 +65,13 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
             });
             try {
               BungieApiService()
-                  .insertSocketPlugFree(widget.instanceId!, widget.perk.hash!,
-                      widget.index, widget.characterId!)
+                  .insertSocketPlugFree(
+                      widget.instanceId!,
+                      widget.perk.hash!,
+                      widget.index,
+                      Provider.of<CharactersProvider>(context, listen: false)
+                          .currentCharacter!
+                          .characterId)
                   .then((value) async {
                 setState(() {
                   loading = false;

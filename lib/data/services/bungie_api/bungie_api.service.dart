@@ -169,7 +169,7 @@ class BungieApiService {
       String itemInstanceId,
       int plugItemHash,
       int index,
-      String characterId) async {
+      String? characterId) async {
     var plug = DestinyInsertPlugsRequestEntry()
       ..plugItemHash = plugItemHash
       ..socketArrayType = DestinySocketArrayType.Default

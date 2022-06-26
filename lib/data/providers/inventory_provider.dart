@@ -92,7 +92,7 @@ class InventoryProvider with ChangeNotifier {
 
   DestinyItemComponent getCurrentSubClassForCharacter(String characterId) {
     List<DestinyItemComponent> character =
-        _characterInventory[characterId]?.items ?? [];
+        _characterEquipment[characterId]?.items ?? [];
     return character.firstWhere((element) =>
         ManifestService
             .manifestParsed

@@ -77,13 +77,14 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
                       ),
                       backgroundColor: Colors.green,
                     ));
-                  },
-                          onError: (_) => showDialog(
-                              context: context,
-                              builder: (context) {
-                                Navigator.pop(context);
-                                return const ErrorDialog();
-                              }));
+                  }, onError: (_) {
+                    Navigator.pop(context);
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return const ErrorDialog();
+                        });
+                  });
                 },
                 sockets: sockets.sockets,
                 subclass: sockets.def!,
