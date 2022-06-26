@@ -25,4 +25,11 @@ class BuilderCustomInfoProvider with ChangeNotifier {
     _includeSunset = removeSunset;
     notifyListeners();
   }
+
+  void reset() {
+    _classItem = null;
+    _considerMasterwork = true;
+    _includeSunset = true;
+    notifyListeners();
+  }
 }

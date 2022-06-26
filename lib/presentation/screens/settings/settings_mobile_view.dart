@@ -116,7 +116,7 @@ class SettingsMobileView extends StatelessWidget {
                                 AccountService.membershipData!, membership)
                             .then((_) {
                           DisplayService.isProfileUp = false;
-                          ProfileService.reset();
+                          ProfileService.reset(context);
                           Navigator.pushReplacementNamed(context, routeProfile);
                         });
                       },

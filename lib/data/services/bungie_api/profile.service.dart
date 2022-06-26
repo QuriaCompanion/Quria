@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'dart:async';
 import 'package:bungie_api/models/destiny_plug_sets_component.dart';
 import 'package:flutter/material.dart';
@@ -8,8 +6,11 @@ import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definit
 import 'package:bungie_api/models/destiny_item_plug.dart';
 import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
-import 'package:bungie_api/models/destiny_profile_response.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
+import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
+import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
+import 'package:quria/data/providers/builder/builder_mods_provider.dart';
+import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/collectible_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
@@ -120,138 +121,161 @@ class ProfileService {
     }
   }
 
-  static reset() {
-    // TODO: implement reset
+  static reset(BuildContext context) {
+    Provider.of<CharactersProvider>(context, listen: false).reset();
+    Provider.of<CollectibleProvider>(context, listen: false).reset();
+    Provider.of<InventoryProvider>(context, listen: false).reset();
+    Provider.of<ItemProvider>(context, listen: false).reset();
+    Provider.of<PlugsProvider>(context, listen: false).reset();
+    Provider.of<BuilderSubclassModsProvider>(context, listen: false).reset();
+    Provider.of<BuilderModsProvider>(context, listen: false).reset();
+    Provider.of<BuilderExoticProvider>(context, listen: false).reset();
+    Provider.of<BuilderCustomInfoProvider>(context, listen: false).reset();
   }
 
   Future<void> _updateProfileData(
       BuildContext context, List<DestinyComponentType> components) async {
-    DestinyProfileResponse? response;
-    response = await _api.getCurrentProfile(components);
-    _lastUpdated = DateTime.now();
-    final List<int> inventoryItemIds = [];
-    final List<int> talentIds = [];
-    inventoryItemIds
-        .addAll([3473581026, 2771648715, 549825413, 4287863773, 3500810712]);
-    if (response == null) {
-      return;
-    }
-    for (List<DestinyItemPlug> sockets
-        in response.profilePlugSets!.data!.plugs!.values) {
-      for (DestinyItemPlug socket in sockets) {
-        if (socket.plugItemHash != null) {
-          inventoryItemIds.add(socket.plugItemHash!);
-        }
+    await _api.getCurrentProfile(components).then((response) async {
+      _lastUpdated = DateTime.now();
+      final List<int> inventoryItemIds = [];
+      final List<int> talentIds = [];
+      inventoryItemIds
+          .addAll([3473581026, 2771648715, 549825413, 4287863773, 3500810712]);
+      if (response == null) {
+        return;
       }
-    }
-    for (DestinyPlugSetsComponent characterPlugSet
-        in response.characterPlugSets!.data!.values) {
-      for (List<DestinyItemPlug> sockets in characterPlugSet.plugs!.values) {
+      for (List<DestinyItemPlug> sockets
+          in response.profilePlugSets!.data!.plugs!.values) {
         for (DestinyItemPlug socket in sockets) {
           if (socket.plugItemHash != null) {
             inventoryItemIds.add(socket.plugItemHash!);
           }
         }
       }
-    }
-    if (response.profileInventory?.data?.items != null) {
-      for (final item in response.profileInventory!.data!.items!) {
-        if (item.itemHash != null) {
-          inventoryItemIds.add(item.itemHash!);
-        }
-      }
-    }
-    if (response.characterInventories?.data != null) {
-      for (final character in response.characterInventories!.data!.values) {
-        if (character.items != null) {
-          for (final item in character.items!) {
-            if (item.itemHash != null) {
-              inventoryItemIds.add(item.itemHash!);
+      for (DestinyPlugSetsComponent characterPlugSet
+          in response.characterPlugSets!.data!.values) {
+        for (List<DestinyItemPlug> sockets in characterPlugSet.plugs!.values) {
+          for (DestinyItemPlug socket in sockets) {
+            if (socket.plugItemHash != null) {
+              inventoryItemIds.add(socket.plugItemHash!);
             }
           }
         }
       }
-    }
-    if (response.characterEquipment?.data != null) {
-      for (final character in response.characterEquipment!.data!.values) {
-        if (character.items != null) {
-          for (final item in character.items!) {
-            if (item.itemHash != null) {
-              inventoryItemIds.add(item.itemHash!);
+      if (response.profileInventory?.data?.items != null) {
+        for (final item in response.profileInventory!.data!.items!) {
+          if (item.itemHash != null) {
+            inventoryItemIds.add(item.itemHash!);
+          }
+        }
+      }
+      if (response.characterInventories?.data != null) {
+        for (final character in response.characterInventories!.data!.values) {
+          if (character.items != null) {
+            for (final item in character.items!) {
+              if (item.itemHash != null) {
+                inventoryItemIds.add(item.itemHash!);
+              }
             }
           }
         }
       }
-    }
-    if (response.itemComponents?.sockets?.data != null) {
-      for (final socketGroup
-          in response.itemComponents!.sockets!.data!.values) {
-        for (final socket in socketGroup.sockets!) {
-          if (socket.plugHash != null) {
-            inventoryItemIds.add(socket.plugHash!);
+      if (response.characterEquipment?.data != null) {
+        for (final character in response.characterEquipment!.data!.values) {
+          if (character.items != null) {
+            for (final item in character.items!) {
+              if (item.itemHash != null) {
+                inventoryItemIds.add(item.itemHash!);
+              }
+            }
           }
         }
       }
-    }
-    if (response.itemComponents?.talentGrids != null) {
-      for (final talent in response.itemComponents!.talentGrids!.data!.values) {
-        if (talent.talentGridHash != null) {
-          talentIds.add(talent.talentGridHash!);
+      if (response.itemComponents?.sockets?.data != null) {
+        for (final socketGroup
+            in response.itemComponents!.sockets!.data!.values) {
+          for (final socket in socketGroup.sockets!) {
+            if (socket.plugHash != null) {
+              inventoryItemIds.add(socket.plugHash!);
+            }
+          }
         }
       }
-    }
-    inventoryItemIds.addAll([
-      204137529,
-      3961599962,
-      3682186345,
-      2850583378,
-      555005975,
-      2645858828,
-      1227870362,
-      3355995799,
-      2623485440,
-      4048838440,
-      3699676109,
-      3253038666
-    ]);
-    await StorageService.getDefinitions<DestinyInventoryItemDefinition>(
-        inventoryItemIds);
-    await StorageService.getDefinitions<DestinyTalentGridDefinition>(talentIds);
-    if (components.contains(DestinyComponentType.ProfileInventories)) {
-      Provider.of<InventoryProvider>(context, listen: false)
-          .setProfileInventory(response.profileInventory?.data?.items ?? []);
-    }
-    if (components.contains(DestinyComponentType.ItemPlugStates)) {
-      Provider.of<PlugsProvider>(context, listen: false)
-          .setProfilePlugSets(response.profilePlugSets?.data?.plugs ?? {});
-      Provider.of<PlugsProvider>(context, listen: false)
-          .setCharacterPlugSets(response.characterPlugSets?.data ?? {});
-    }
+      if (response.itemComponents?.talentGrids != null) {
+        for (final talent
+            in response.itemComponents!.talentGrids!.data!.values) {
+          if (talent.talentGridHash != null) {
+            talentIds.add(talent.talentGridHash!);
+          }
+        }
+      }
+      inventoryItemIds.addAll([
+        204137529,
+        3961599962,
+        3682186345,
+        2850583378,
+        555005975,
+        2645858828,
+        1227870362,
+        3355995799,
+        2623485440,
+        4048838440,
+        3699676109,
+        3253038666
+      ]);
+      await StorageService.getDefinitions<DestinyInventoryItemDefinition>(
+              inventoryItemIds)
+          .then((_) async =>
+              StorageService.getDefinitions<DestinyTalentGridDefinition>(
+                      talentIds)
+                  .then((_) {
+                if (components
+                    .contains(DestinyComponentType.ProfileInventories)) {
+                  Provider.of<InventoryProvider>(context, listen: false)
+                      .setProfileInventory(
+                          response.profileInventory?.data?.items ?? []);
+                }
+                if (components.contains(DestinyComponentType.ItemPlugStates)) {
+                  Provider.of<PlugsProvider>(context, listen: false)
+                      .setProfilePlugSets(
+                          response.profilePlugSets?.data?.plugs ?? {});
+                  Provider.of<PlugsProvider>(context, listen: false)
+                      .setCharacterPlugSets(
+                          response.characterPlugSets?.data ?? {});
+                }
 
-    if (components.contains(DestinyComponentType.Collectibles)) {
-      Provider.of<CollectibleProvider>(context, listen: false)
-          .setProfileCollectible(response.profileCollectibles?.data);
-      Provider.of<CollectibleProvider>(context, listen: false)
-          .setCharacterCollectible(response.characterCollectibles?.data ?? {});
-    }
-    if (components.contains(DestinyComponentType.Characters)) {
-      Provider.of<CharactersProvider>(context, listen: false)
-          .init(response.characters?.data ?? {});
-    }
+                if (components.contains(DestinyComponentType.Collectibles)) {
+                  Provider.of<CollectibleProvider>(context, listen: false)
+                      .setProfileCollectible(
+                          response.profileCollectibles?.data);
+                  Provider.of<CollectibleProvider>(context, listen: false)
+                      .setCharacterCollectible(
+                          response.characterCollectibles?.data ?? {});
+                }
+                if (components.contains(DestinyComponentType.Characters)) {
+                  Provider.of<CharactersProvider>(context, listen: false)
+                      .init(response.characters?.data ?? {});
+                }
 
-    if (components.contains(DestinyComponentType.CharacterInventories)) {
-      Provider.of<InventoryProvider>(context, listen: false)
-          .setCharacterInventories(response.characterInventories?.data ?? {});
-    }
-    if (components.contains(DestinyComponentType.CharacterEquipment)) {
-      Provider.of<InventoryProvider>(context, listen: false)
-          .setCharacterEquipment(response.characterEquipment?.data ?? {});
-    }
+                if (components
+                    .contains(DestinyComponentType.CharacterInventories)) {
+                  Provider.of<InventoryProvider>(context, listen: false)
+                      .setCharacterInventories(
+                          response.characterInventories?.data ?? {});
+                }
+                if (components
+                    .contains(DestinyComponentType.CharacterEquipment)) {
+                  Provider.of<InventoryProvider>(context, listen: false)
+                      .setCharacterEquipment(
+                          response.characterEquipment?.data ?? {});
+                }
 
-    if (components.contains(DestinyComponentType.ItemInstances)) {
-      Provider.of<ItemProvider>(context, listen: false)
-          .init(response.itemComponents);
-    }
+                if (components.contains(DestinyComponentType.ItemInstances)) {
+                  Provider.of<ItemProvider>(context, listen: false)
+                      .init(response.itemComponents);
+                }
+              }));
+    });
   }
 
   String getDropLocation(int hash) {

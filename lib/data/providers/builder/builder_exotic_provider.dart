@@ -9,4 +9,9 @@ class BuilderExoticProvider with ChangeNotifier {
     _exotic = exotic;
     notifyListeners();
   }
+
+  void reset() {
+    _exotic = null;
+    notifyListeners();
+  }
 }

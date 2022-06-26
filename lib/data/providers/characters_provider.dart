@@ -32,4 +32,11 @@ class CharactersProvider with ChangeNotifier {
     _currentCharacter = list[_characterIndex];
     _characters = list;
   }
+
+  void reset() {
+    _characters = [];
+    _currentCharacter = null;
+    _characterIndex = 0;
+    notifyListeners();
+  }
 }

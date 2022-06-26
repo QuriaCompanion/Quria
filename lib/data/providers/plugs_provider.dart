@@ -16,6 +16,12 @@ class PlugsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void reset() {
+    _profilePlugSets = {};
+    _characterPlugSets = {};
+    notifyListeners();
+  }
+
   void setCharacterPlugSets(
       Map<String, DestinyPlugSetsComponent> characterPlugSets) {
     _characterPlugSets = characterPlugSets;

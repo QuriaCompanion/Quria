@@ -21,4 +21,10 @@ class CollectibleProvider with ChangeNotifier {
     _characterCollectibles = characterCollectible;
     notifyListeners();
   }
+
+  void reset() {
+    _profileCollectibles = null;
+    _characterCollectibles = {};
+    notifyListeners();
+  }
 }

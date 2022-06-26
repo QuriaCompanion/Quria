@@ -167,7 +167,7 @@ class _BurgerState extends State<Burger> {
                   child: InkWell(
                     onTap: () {
                       DisplayService.isProfileUp = false;
-                      ProfileService.reset();
+                      ProfileService.reset(context);
                       AccountService.reset();
                       Navigator.pushNamed(context, routeLogin);
                     },

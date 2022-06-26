@@ -42,6 +42,17 @@ class ItemProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void reset() {
+    _instances = {};
+    _stats = {};
+    _sockets = {};
+    _reusablePlugs = {};
+    _talentGrids = {};
+    _plugStates = {};
+    _perks = {};
+    notifyListeners();
+  }
+
   DestinyItemInstanceComponent? getInstanceInfo(String instanceId) {
     return _instances[instanceId];
   }

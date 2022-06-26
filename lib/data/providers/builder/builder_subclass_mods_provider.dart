@@ -11,4 +11,9 @@ class BuilderSubclassModsProvider with ChangeNotifier {
     _subclassMods = subclassMods;
     notifyListeners();
   }
+
+  void reset() {
+    _subclassMods = [];
+    notifyListeners();
+  }
 }

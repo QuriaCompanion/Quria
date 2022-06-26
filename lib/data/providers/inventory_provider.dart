@@ -292,6 +292,12 @@ class InventoryProvider with ChangeNotifier {
     return neededItem;
   }
 
+  void reset() {
+    _characterEquipment.clear();
+    _characterInventory.clear();
+    _profileInventory.clear();
+  }
+
   void setProfileInventory(List<DestinyItemComponent> profileInventory) {
     _profileInventory = profileInventory;
     notifyListeners();

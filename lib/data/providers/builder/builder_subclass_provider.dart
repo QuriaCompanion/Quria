@@ -15,4 +15,10 @@ class BuilderSubclassProvider with ChangeNotifier {
     _subclass = subclass;
     notifyListeners();
   }
+
+  void reset() {
+    _subclassId = null;
+    _subclass = null;
+    notifyListeners();
+  }
 }

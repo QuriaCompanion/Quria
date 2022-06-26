@@ -1,83 +1,138 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/Donator.model.dart';
-import 'package:http/http.dart' as http;
+import 'package:quria/data/services/display/display.service.dart';
+import 'package:quria/presentation/components/misc/loader.dart';
 
-class LegendsPage extends StatelessWidget {
+class LegendsPage extends StatefulWidget {
   const LegendsPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Column(children: [
-      textBodyMedium('Designer:'),
-      textBodyMedium('Name of the designer'),
-      textBodyMedium('traductor:'),
-      textBodyMedium('Name of the traductor'),
-      textBodyMedium('Developpers:'),
-      textBodyMedium('Names of the Developpers'),
-      textBodyMedium('Donators:'),
-      const DonatorList()
-    ]);
-  }
+  State<LegendsPage> createState() => _LegendsPageState();
 }
 
-class DonatorList extends StatefulWidget {
-  const DonatorList({Key? key}) : super(key: key);
-
-  @override
-  State<DonatorList> createState() => _DonatorListState();
-}
-
-class _DonatorListState extends State<DonatorList> {
-  late Future<List<Donator>> futureDonators;
+class _LegendsPageState extends State<LegendsPage> {
+  late Future<List<Donator>> _future;
 
   @override
   void initState() {
     super.initState();
-    futureDonators = fetchDonators();
+    _future = DisplayService.fetchDonators();
   }
-
-  Future<List<Donator>> fetchDonators() async {
-    const token = 'addTokenHere';
-    final response = await http.get(
-        Uri.parse('https://developers.buymeacoffee.com/api/v1/supporters'),
-        headers: {'Authorization': 'Bearer $token'});
-    if (response.statusCode == 200) {
-      return Donator.fromJsonList(jsonDecode(response.body));
-    } else {
-      throw Exception('Failed to load album');
-    }
-  }
+  // TODO: move the text to localisation file
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Donator>>(
-      future: futureDonators,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ListView(
-            children: snapshot.data!.map((donator) {
-              return Row(
-                children: [
-                  textBodyMedium(donator.supporterName,
-                      color: Colors.white, utf8: false),
-                  textBodyMedium(donator.supportCoffees.toString()),
-                  const Icon(
-                    Icons.coffee,
-                    size: 15,
+    const divider = Divider(color: Colors.white);
+    return FutureBuilder(
+        future: _future,
+        builder: (context, AsyncSnapshot<List<Donator>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            return ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const SizedBox(),
+                      Center(child: textH1("Hall of Fame")),
+                      InkWell(
+                        onTap: () => Navigator.pop(context),
+                        child: const CircleAvatar(
+                          backgroundColor: blackLight,
+                          child:
+                              Icon(Icons.clear, size: 20, color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                ListTile(
+                  leading: const Icon(
+                    Icons.design_services,
                     color: Colors.white,
-                  )
-                ],
-              );
-            }).toList(),
+                    size: 35,
+                  ),
+                  title: textBodyBold('Franck Lennon', utf8: false),
+                  subtitle: textBodyMedium('Designer'),
+                ),
+                divider,
+                ListTile(
+                  leading: const Icon(
+                    Icons.computer_outlined,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  title: textBodyBold('Quentin Fle', utf8: false),
+                  subtitle: textBodyMedium('Developer', utf8: false),
+                ),
+                divider,
+                ListTile(
+                  leading: const Icon(
+                    Icons.computer_outlined,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  title: textBodyBold('Rémy Pachoncinski', utf8: false),
+                  subtitle: textBodyMedium('Developer:', utf8: false),
+                ),
+                divider,
+                ListTile(
+                  leading: const Icon(
+                    Icons.computer_outlined,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  title: textBodyBold('Yannis Battiston', utf8: false),
+                  subtitle: textBodyMedium('Developer:', utf8: false),
+                ),
+                divider,
+                ListTile(
+                  leading: const Icon(
+                    Icons.language,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  title: textBodyBold('@albertcarsan'),
+                  subtitle:
+                      textBodyMedium('Translator (spanish): ', utf8: false),
+                ),
+                divider,
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: textH3("Donators")),
+                ),
+                for (Donator donator in snapshot.data!)
+                  ListTile(
+                    title: textBodyMedium(donator.supporterName, utf8: false),
+                    subtitle: Row(
+                      children: [
+                        const Icon(
+                          Icons.coffee,
+                          size: 15,
+                          color: Colors.white,
+                        ),
+                        textBodyMedium(donator.supportCoffees.toString(),
+                            utf8: false),
+                      ],
+                    ),
+                  ),
+              ],
+            );
+          }
+          return Container(
+            height: vh(context),
+            width: vw(context),
+            decoration: const BoxDecoration(
+                image: DecorationImage(
+                    fit: BoxFit.cover, image: splashBackground)),
+            child: Loader(
+              splashColor: Colors.transparent,
+              animationSize: vw(context) * 0.5,
+            ),
           );
-        } else if (snapshot.hasError) {
-          return Text('${snapshot.error}');
-        }
-        return const CircularProgressIndicator();
-      },
-    );
+        });
   }
 }

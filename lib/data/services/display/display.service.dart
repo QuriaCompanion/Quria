@@ -1,4 +1,4 @@
-// ignore_for_file: use_build_context_synchronously
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -15,6 +15,7 @@ import 'package:bungie_api/models/destiny_item_socket_entry_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/data/models/Donator.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/exoticHelper.model.dart';
@@ -33,6 +34,7 @@ import 'package:quria/data/services/bungie_api/enums/super_coodowns.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:http/http.dart' as http;
 
 class DisplayService {
   static bool isManifestUp = false;
@@ -87,8 +89,7 @@ class DisplayService {
   }
 
   static Future<void> loadManifestAndProfile(BuildContext context) async {
-    await manifestLoader();
-    await profileLoader(context);
+    await manifestLoader().then((value) async => await profileLoader(context));
     return;
   }
 
@@ -417,5 +418,30 @@ class DisplayService {
       displayedSockets: displayedSockets,
       def: def,
     );
+  }
+
+  static Future<List<Donator>> fetchDonators() async {
+    const token =
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5MTI5ZDIwMC1kYTdkLTRjY2MtOWQzZC01ODA0MTU0ZTgyMjYiLCJqdGkiOiJkNmEwNTMzMTUyYzMzNjFlZjQ2YmRlOGE3Yjk5NzQzNWVhNmJkZGEyY2JjOTNmY2Y3ZmU3MmI0MTMxMTVlYzA2OWVjOGU2NTJlMjc4MDBiMyIsImlhdCI6MTY1NTA1ODc5MiwibmJmIjoxNjU1MDU4NzkyLCJleHAiOjE2NzA4Njk5OTIsInN1YiI6IjIxMDY1MzkiLCJzY29wZXMiOlsicmVhZC1vbmx5Il19.A10kQcJoOMqUiEzTPvcHW_rzJWA0QzjH8DqrVS4EI_gZ4VE-9Mf1XJYIIiexv0iHhu--tgQqeSi4U8cBXJ-hviCd_61SvPTRkOtdU3gEW2gLlQi6uS2YrEW8MVZecOpMV94kBjhMj2cMCSVN66I1oo0gwSht_zOkYYkqp7Eiq7iBdk60sg6Mhmbar-7Gbajy7slJRhFTC-tb2yihxmjBYqQlPuaZOtYfjPMiocs7sS18qZX8feCEMdQiCsGkiK-GML60gKXPzwJAIU3QOM_xVDM0qXzw3pRDNBGSSARyrfn_FF1xlLrBQFSa-04AAU_zVo4rt3VBwvfHqF7BvgOK_NT6lnRxcxHNOy5TDBBCWYaz7HF8dpHmMZrBKMlEggWTzf79evf6fRNneeu4rSA8gpgmmyzZHAht8MGk-toV5I8nAegWUjtNOWhUV3htmUYlurvzm0-cOh0twz2p0TRG50Cid_HwwX4G5PDFc_ncRm2OdCLkJ1J6DuZQeVbtiiAIM--wIR26GZoK5v1e8mlY2CEuIKgTrgZK0gBCHVw386iGlUTroSPjn3YwUh9igyZvQrPIEd12VRH0xo3NvmCi3Fp4VBF067nUhIe4BMuSh-spMQZ3-i_VMmGjf_9CH85jZRUKgMjmrKMmp3YtG_9Da9h9m-v65xCMf5kS7EXoYfc';
+    final response = await http.get(
+        Uri.parse('https://developers.buymeacoffee.com/api/v1/supporters'),
+        headers: {'Authorization': 'Bearer $token'});
+    final json = jsonDecode(response.body);
+    List<Donator> donators = Donator.fromJsonList(json);
+    if (json['last_page'] > 1) {
+      for (var page = 2; page <= json['last_page']; page++) {
+        final response = await http.get(
+            Uri.parse(
+                'https://developers.buymeacoffee.com/api/v1/supporters?page=$page'),
+            headers: {'Authorization': 'Bearer $token'});
+        donators.addAll(Donator.fromJsonList(jsonDecode(response.body)));
+      }
+    }
+
+    if (response.statusCode == 200) {
+      return donators;
+    } else {
+      throw Exception('Failed to load album');
+    }
   }
 }
