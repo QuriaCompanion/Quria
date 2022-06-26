@@ -70,7 +70,7 @@ class ChooseMembership extends StatelessWidget {
                           if (membership?.membershipType ==
                               membership?.crossSaveOverride)
                             Image.network(
-                              "https://www.bungie.net/7/ca//destiny/logos/crossSave.png",
+                              "https://www.bungie.net/7/ca/destiny/logos/crossSave.png",
                               height: vw(context) * .1,
                             ),
                           Text(

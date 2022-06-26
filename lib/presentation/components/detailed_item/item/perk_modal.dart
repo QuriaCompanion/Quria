@@ -12,21 +12,23 @@ import 'package:quria/presentation/components/detailed_item/item/stat_progress_b
 
 class PerkModal extends StatelessWidget {
   final DestinyInventoryItemDefinition perk;
+  final double width;
   final int? index;
   final bool? isSelected;
   final String? instanceId;
   final String? characterId;
   final Function(List<DestinyItemSocketState>?)? onSocketsChanged;
 
-  const PerkModal(
-      {Key? key,
-      required this.perk,
-      this.onSocketsChanged,
-      this.index,
-      this.isSelected,
-      this.instanceId,
-      this.characterId})
-      : super(key: key);
+  const PerkModal({
+    required this.perk,
+    required this.width,
+    this.onSocketsChanged,
+    this.index,
+    this.isSelected,
+    this.instanceId,
+    this.characterId,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,14 +54,14 @@ class PerkModal extends StatelessWidget {
                       PerkItemDisplay(
                         selected: isSelected ?? false,
                         perk: perk,
-                        iconSize: mobileItemSize(context),
+                        iconSize: itemSize(context, width),
                       ),
                       SizedBox(
                         width: globalPadding(context),
                       ),
                       SizedBox(
                         width: vw(context) -
-                            mobileItemSize(context) -
+                            itemSize(context, width) -
                             (globalPadding(context) * 3) -
                             40,
                         child: Column(

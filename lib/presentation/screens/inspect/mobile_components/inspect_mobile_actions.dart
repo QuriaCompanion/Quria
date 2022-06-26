@@ -12,9 +12,13 @@ import 'package:quria/presentation/var/routes.dart';
 class InspectMobileActions extends StatefulWidget {
   final String instanceId;
   final int itemHash;
-  const InspectMobileActions(
-      {required this.itemHash, required this.instanceId, Key? key})
-      : super(key: key);
+  final double width;
+  const InspectMobileActions({
+    required this.itemHash,
+    required this.instanceId,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<InspectMobileActions> createState() => _InspectMobileActionsState();
@@ -31,6 +35,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
           QuickAction(
               icon: "assets/icons/Equip.svg",
               title: AppLocalizations.of(context)!.equip,
+              width: widget.width,
               onTap: () {
                 showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,
@@ -45,6 +50,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
           QuickAction(
               icon: "assets/icons/Transfer.svg",
               title: AppLocalizations.of(context)!.transfer,
+              width: widget.width,
               onTap: () {
                 showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,
@@ -60,6 +66,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
           QuickAction(
               icon: "assets/icons/Share.svg",
               title: AppLocalizations.of(context)!.share,
+              width: widget.width,
               onTap: () {
                 showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,
@@ -71,6 +78,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
           QuickAction(
               icon: "assets/icons/Collection.svg",
               title: AppLocalizations.of(context)!.collections,
+              width: widget.width,
               onTap: () {
                 Navigator.pushNamed(context, routeCollectionItem,
                     arguments: widget.itemHash);

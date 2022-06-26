@@ -127,7 +127,10 @@ class _CollectionMobileItemSectionState
                       child: Padding(
                           padding: EdgeInsets.symmetric(
                               vertical: globalPadding(context) / 2),
-                          child: CollectionItemLine(item: widget.items[index])),
+                          child: CollectionItemLine(
+                            item: widget.items[index],
+                            width: vw(context),
+                          )),
                     );
                   }), childCount: widget.items.length),
                 ),

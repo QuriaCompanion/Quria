@@ -20,7 +20,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
   @override
   void initState() {
     super.initState();
-    _future = DisplayService().getCollectionItem(widget.itemHash);
+    _future = DisplayService.getCollectionItem(widget.itemHash);
   }
 
   @override
@@ -32,6 +32,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
         if (snapshot.hasData) {
           if (vw(context) < 1000) {
             return ScaffoldBurgerAndBackOption(
+                width: vw(context),
                 body: CollectionItemMobileView(data: snapshot.data!));
           } else {
             return Container();

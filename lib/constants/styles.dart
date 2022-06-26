@@ -21,17 +21,36 @@ const modsHeader = AssetImage("assets/img/mods.png");
 const buildHeader = AssetImage("assets/img/build.png");
 const collectionHeader = AssetImage("assets/img/collection.png");
 const splashBackground = AssetImage("assets/img/base_background.png");
+const splashBackgroundWeb = AssetImage("assets/img/splash_large.png");
 
 double globalPadding(BuildContext context) {
   return vw(context) * 0.04266;
 }
 
-double mobileItemSize(BuildContext context) {
-  return (vw(context) - (globalPadding(context) * 6)) / 5;
+double itemSize(BuildContext context, double width) {
+  return (width - (globalPadding(context) * 6)) / 5;
 }
 
 double vw(BuildContext context) {
   return MediaQuery.of(context).size.width;
+}
+
+double iconSize(BuildContext context, double width) {
+  return width / 6.69;
+}
+
+double desktopCharactersColumnSize(BuildContext context) {
+  if (vw(context) > 1600) {
+    return vw(context) * 0.4;
+  }
+  return vw(context) * 0.475;
+}
+
+double itemComponentDisplayTextWidth(BuildContext context, double width) {
+  if (vw(context) > 1000) {
+    return width - (iconSize(context, width) * 2) - globalPadding(context);
+  }
+  return width - (iconSize(context, width) * 2) - globalPadding(context) * 3;
 }
 
 double vh(BuildContext context) {

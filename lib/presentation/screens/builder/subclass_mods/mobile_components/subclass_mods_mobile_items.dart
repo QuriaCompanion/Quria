@@ -1,11 +1,12 @@
+import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/providers/plugs_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/mod_modal.dart';
 
@@ -29,8 +30,8 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
   Widget build(BuildContext context) {
     List<int> plugs = [];
     if (widget.plugSetHash != null) {
-      for (DestinyItemPlug plug
-          in ProfileService().getPlugSets(widget.plugSetHash!)) {
+      for (DestinyItemPlug plug in Provider.of<PlugsProvider>(context)
+          .getPlugSets(context, widget.plugSetHash!)) {
         plugs.add(plug.plugItemHash!);
       }
     }
@@ -46,6 +47,7 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                   backgroundColor: Colors.transparent,
                   context: context,
                   builder: (context) => ModModal(
+                        width: vw(context),
                         mod: widget.item,
                       ));
             },
@@ -77,6 +79,7 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                             context: context,
                             builder: (context) {
                               return ModModal(
+                                  width: vw(context),
                                   mod: ManifestService.manifestParsed
                                       .destinyInventoryItemDefinition[plug]!,
                                   onSocketChange: () {

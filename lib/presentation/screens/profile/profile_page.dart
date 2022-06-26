@@ -26,70 +26,23 @@ class ProfileWidget extends StatefulWidget {
 
 class _ProfileWidgetState extends State<ProfileWidget> {
   final display = DisplayService();
-  late ProfileHelper data;
   late Future _future;
   DestinyItemType currentFilter = DestinyItemType.Weapon;
   @override
   void initState() {
     super.initState();
-    _future = DisplayService.loadManifestAndProfile();
+    _future = DisplayService.loadManifestAndProfile(context);
   }
-
-  late double statArmorSpace;
-  late double itemSectionSpace;
-  late double itemDetailsSidePadding;
-  late double itemDetailsChildPadding;
-  late double fontSize;
-  late double statsFontSize;
-  late double pagePadding;
-  late double itemDetailsWidth;
-  late double middleSpace;
-  late double imageSize;
-  late double iconSize;
-  late double verticalStatWidth;
-  bool choosingCharacter = false;
 
   @override
   Widget build(BuildContext context) {
-    statArmorSpace = 40;
-    itemSectionSpace = 20;
-    itemDetailsSidePadding = 25;
-    itemDetailsChildPadding = 10;
-    fontSize = 20;
-    statsFontSize = 30;
-    pagePadding = vw(context) * 0.05;
-    itemDetailsWidth = vw(context) * 0.45;
-    middleSpace = vw(context) * 0.2;
-    imageSize = vw(context) * 0.075;
-    verticalStatWidth = vw(context) * 0.06;
-    iconSize = imageSize * 0.66;
-    if (vw(context) < 1920) {
-      fontSize = 15;
-      statsFontSize = 25;
-    }
-    if (vw(context) < 1575) {
-      fontSize = 15;
-      statsFontSize = 20;
-    }
-    if (vw(context) < 1250) {
-      fontSize = 15;
-      statsFontSize = 15;
-    }
-    if (vw(context) < 1160) {
-      iconSize = imageSize * 0.5;
-    }
-    if (vw(context) < 1020) {
-      pagePadding = vw(context) * 0.025;
-    }
     return FutureBuilder(
         future: _future,
         builder: ((context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {
-            int currentIndex =
-                Provider.of<CharactersProvider>(context).characterIndex;
-            data = display.getProfileData(currentIndex);
-            // set current character to provider
-            if (data.characters.isEmpty) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            final characters =
+                Provider.of<CharactersProvider>(context).characters;
+            if (characters.isEmpty) {
               return Column(
                 children: [
                   ErrorDialog(
@@ -98,8 +51,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                         memberships:
                             AccountService.membershipData!.destinyMemberships!,
                         onSelected: (membership) async {
-                          AccountService()
-                              .saveMembership(
+                          AccountService.saveMembership(
                                   AccountService.membershipData!, membership)
                               .then((_) {
                             DisplayService.isProfileUp = false;
@@ -111,29 +63,17 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 ],
               );
             }
-            Provider.of<CharactersProvider>(context, listen: false)
-                .init(data.selectedCharacter!, data.characters);
+            ProfileHelper data = DisplayService.getProfileData(context);
             if (vw(context) > 1000) {
-              return Column(
-                children: const [],
-              );
+              return Container();
             } else {
               return ScaffoldCharacters(
-                characters: data.characters,
-                // give a function parameter to the child which is executed in the parent
-                onCharacterChange: (newIndex) {
-                  setState(() {
-                    Provider.of<CharactersProvider>(context, listen: false)
-                        .setCurrentCharacter(newIndex);
-                  });
-                },
                 body: RepaintBoundary(
                   child: ProfileMobileView(
                       data: data,
                       onClick: (inspectData) {
                         Navigator.pushNamed(context, routeInspectMobile,
-                                arguments: inspectData)
-                            .then((_) => setState(() {}));
+                            arguments: inspectData);
                       }),
                 ),
               );

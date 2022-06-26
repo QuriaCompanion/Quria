@@ -34,11 +34,13 @@ class CharacterBannerInfo extends StatelessWidget {
               SizedBox(
                 width: vw(context) * 0.016,
               ),
-              textH3(ManifestService
-                      .manifestParsed
-                      .destinyClassDefinition[character.classHash]!
-                      .genderedClassNamesByGenderHash![
-                  character.genderHash.toString()]!),
+              textH3(
+                ManifestService
+                        .manifestParsed
+                        .destinyClassDefinition[character.classHash]!
+                        .genderedClassNamesByGenderHash![
+                    character.genderHash.toString()]!,
+              ),
             ],
           ),
           SizedBox(
@@ -60,7 +62,10 @@ class CharacterBannerInfo extends StatelessWidget {
                       fit: BoxFit.cover,
                     ),
                   ),
-                  textH3(character.light.toString(), color: yellow)
+                  textH3(
+                    character.light.toString(),
+                    color: yellow,
+                  )
                 ]),
           )
         ],

@@ -10,7 +10,12 @@ import 'package:quria/presentation/components/detailed_item/item/mod_display.dar
 
 class ExoticMobileItem extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
-  const ExoticMobileItem({required this.item, Key? key}) : super(key: key);
+  final double width;
+  const ExoticMobileItem({
+    required this.item,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ExoticMobileItem> createState() => _ExoticMobileItemState();
@@ -82,8 +87,8 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
                 child: Row(
                   children: [
                     Image(
-                        width: mobileItemSize(context),
-                        height: mobileItemSize(context),
+                        width: itemSize(context, widget.width),
+                        height: itemSize(context, widget.width),
                         image: NetworkImage(DestinyData.bungieLink +
                             widget.item.displayProperties!.icon!)),
                     SizedBox(width: globalPadding(context) / 2),
@@ -128,8 +133,8 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
                   ModDisplay(
                     width: vw(context) -
                         (globalPadding(context) * 4) -
-                        mobileItemSize(context),
-                    iconSize: mobileItemSize(context),
+                        itemSize(context, widget.width),
+                    iconSize: itemSize(context, widget.width),
                     padding: globalPadding(context) / 2,
                     item: perk,
                   ),

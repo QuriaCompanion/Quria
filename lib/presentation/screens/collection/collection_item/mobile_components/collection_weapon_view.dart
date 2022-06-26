@@ -10,18 +10,34 @@ import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mob
 
 class CollectionWeaponView extends StatelessWidget {
   final DestinyInventoryItemDefinition item;
-  const CollectionWeaponView({required this.item, Key? key}) : super(key: key);
+  final double width;
+  const CollectionWeaponView({
+    required this.item,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final InspectHelper selectedPerks = InspectHelper();
     return Column(
       children: [
-        mobileSection(context,
-            title: AppLocalizations.of(context)!.statistics,
-            child: InspectMobileStats(item: item)),
-        mobileSection(context,
-            title: AppLocalizations.of(context)!.perks,
-            child: PerkList(item: item, selectedPerks: selectedPerks)),
+        mobileSection(
+          context,
+          title: AppLocalizations.of(context)!.statistics,
+          child: InspectMobileStats(
+            item: item,
+            width: width,
+          ),
+        ),
+        mobileSection(
+          context,
+          title: AppLocalizations.of(context)!.perks,
+          child: PerkList(
+            item: item,
+            selectedPerks: selectedPerks,
+            width: width,
+          ),
+        ),
         mobileSection(context,
             title: AppLocalizations.of(context)!.origin,
             child: InspectMobileOrigin(collectionHash: item.collectibleHash)),

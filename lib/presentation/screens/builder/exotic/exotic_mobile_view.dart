@@ -67,7 +67,7 @@ class _ExoticMobileViewState extends State<ExoticMobileView> {
                 return InkWell(
                   onTap: () {
                     Provider.of<BuilderExoticProvider>(context, listen: false)
-                        .setExoticHash(widget.exotics[index].hash);
+                        .setExoticHash(widget.exotics[index]);
                     Navigator.pushNamed(context, routeFilter,
                         arguments: StatsFilterHelper(
                             characterId: widget.characterId,
@@ -75,7 +75,10 @@ class _ExoticMobileViewState extends State<ExoticMobileView> {
                   },
                   child: Padding(
                     padding: EdgeInsets.only(bottom: globalPadding(context)),
-                    child: ExoticMobileItem(item: widget.exotics[index]),
+                    child: ExoticMobileItem(
+                      item: widget.exotics[index],
+                      width: vw(context),
+                    ),
                   ),
                 );
               },

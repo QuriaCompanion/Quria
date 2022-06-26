@@ -21,19 +21,21 @@ class ItemComponentDisplay extends StatefulWidget {
   final List<DestinyItemSocketState> cosmetics;
   final List<DestinyItemSocketState> armorSockets;
   final void Function(InspectData) onClick;
+  final double width;
 
-  const ItemComponentDisplay(
-      {required this.item,
-      required this.itemDef,
-      required this.elementIcon,
-      required this.powerLevel,
-      required this.perks,
-      required this.cosmetics,
-      required this.characterId,
-      required this.armorSockets,
-      required this.onClick,
-      Key? key})
-      : super(key: key);
+  const ItemComponentDisplay({
+    required this.item,
+    required this.itemDef,
+    required this.elementIcon,
+    required this.powerLevel,
+    required this.perks,
+    required this.cosmetics,
+    required this.characterId,
+    required this.armorSockets,
+    required this.onClick,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ItemComponentDisplay> createState() => _ItemComponentDisplayState();
@@ -64,7 +66,6 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
 
   @override
   Widget build(BuildContext context) {
-    double iconSize = vw(context) / 6.69;
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -80,15 +81,14 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
                 ItemIcon(
                   displayHash:
                       widget.item.overrideStyleItemHash ?? widget.itemDef.hash!,
-                  imageSize: iconSize,
+                  imageSize: iconSize(context, widget.width),
                   isMasterworked: widget.item.state == ItemState.Masterwork ||
                       widget.item.state == const ItemState(5),
                 ),
                 SizedBox(width: globalPadding(context)),
                 SizedBox(
-                  width:
-                      vw(context) - (iconSize * 2) - globalPadding(context) * 3,
-                  height: iconSize,
+                  width: itemComponentDisplayTextWidth(context, widget.width),
+                  height: iconSize(context, widget.width),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -128,8 +128,8 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
               })
             },
             child: SizedBox(
-              height: iconSize,
-              width: iconSize,
+              height: iconSize(context, widget.width),
+              width: iconSize(context, widget.width),
               child: AnimatedBuilder(
                   animation: animation,
                   builder: (context, child) {
@@ -158,6 +158,7 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay>
                 cosmetics: widget.cosmetics,
                 itemDef: widget.itemDef,
                 armorSockets: widget.armorSockets,
+                width: widget.width,
               )
             ],
           )

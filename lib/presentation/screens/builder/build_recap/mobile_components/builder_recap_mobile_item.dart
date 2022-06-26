@@ -1,11 +1,13 @@
 import 'package:bungie_api/enums/item_state.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_afinity.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
@@ -15,14 +17,19 @@ import 'package:quria/presentation/var/routes.dart';
 class BuilderRecapMobileItem extends StatelessWidget {
   final Armor item;
   final List<DestinyInventoryItemDefinition?> mods;
-  const BuilderRecapMobileItem(
-      {required this.item, required this.mods, Key? key})
-      : super(key: key);
+  final double width;
+  const BuilderRecapMobileItem({
+    required this.item,
+    required this.mods,
+    Key? key,
+    required this.width,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     DestinyItemInstanceComponent instanceInfo =
-        ProfileService().getInstanceInfo(item.itemInstanceId);
+        Provider.of<ItemProvider>(context)
+            .getInstanceInfo(item.itemInstanceId)!;
     //instanciate armor mod space (starts at 10 points for each armor assuming everything is masterworked)
     int armorModspace = 0;
     // loops through the mods in this armor
@@ -67,6 +74,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
       children: [
         if (instanceInfo.energy?.energyTypeHash != null)
           ArmorAfinity(
+            width: width,
             pointsAvailable: armorModspace,
             remaining: 10 - armorModspace,
             afinityIcon: ManifestService
@@ -92,11 +100,11 @@ class BuilderRecapMobileItem extends StatelessWidget {
               child: ItemIcon(
                 displayHash: item.displayHash,
                 imageSize: vw(context) * 0.192,
-                isMasterworked: ProfileService()
+                isMasterworked: Provider.of<InventoryProvider>(context)
                             .getItemByInstanceId(item.itemInstanceId)
                             ?.state ==
                         const ItemState(5) ||
-                    ProfileService()
+                    Provider.of<InventoryProvider>(context)
                             .getItemByInstanceId(item.itemInstanceId)
                             ?.state ==
                         ItemState.Masterwork,

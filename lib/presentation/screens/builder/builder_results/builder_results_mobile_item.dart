@@ -1,15 +1,18 @@
 import 'package:bungie_api/enums/item_state.dart';
-import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/providers/builder/builder_mods_provider.dart';
+import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
+import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
+import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
@@ -18,17 +21,7 @@ import 'package:quria/presentation/screens/profile/components/character_stats_li
 
 class BuilderResultsMobileItem extends StatelessWidget {
   final Build buildResult;
-  final String characterId;
-  final List<ModSlots> mods;
-  final String? subclassId;
-  final List<DestinyInventoryItemDefinition> subclassMods;
-  const BuilderResultsMobileItem(
-      {required this.buildResult,
-      required this.mods,
-      required this.characterId,
-      required this.subclassMods,
-      this.subclassId,
-      Key? key})
+  const BuilderResultsMobileItem({required this.buildResult, Key? key})
       : super(key: key);
 
   @override
@@ -66,7 +59,9 @@ class BuilderResultsMobileItem extends StatelessWidget {
                 ),
                 CharacterStatsListing(
                     stats: finalStats,
-                    characterId: characterId,
+                    characterId: Provider.of<CharactersProvider>(context)
+                        .currentCharacter!
+                        .characterId!,
                     width: vw(context) * 0.5,
                     direction: Axis.horizontal),
               ],
@@ -86,12 +81,12 @@ class BuilderResultsMobileItem extends StatelessWidget {
                   child: ItemIcon(
                     displayHash: buildResult.equipement[i].displayHash,
                     imageSize: (vw(context) - (globalPadding(context) * 8)) / 5,
-                    isMasterworked: ProfileService()
+                    isMasterworked: Provider.of<InventoryProvider>(context)
                                 .getItemByInstanceId(
                                     buildResult.equipement[i].itemInstanceId)
                                 ?.state ==
                             const ItemState(5) ||
-                        ProfileService()
+                        Provider.of<InventoryProvider>(context)
                                 .getItemByInstanceId(
                                     buildResult.equipement[i].itemInstanceId)
                                 ?.state ==
@@ -124,11 +119,23 @@ class BuilderResultsMobileItem extends StatelessWidget {
                       });
                   BungieActionsService()
                       .equipBuild(
+                        context,
                         build: buildResult,
-                        characterId: characterId,
-                        mods: mods,
-                        subclassMods: subclassMods,
-                        subclassId: subclassId,
+                        characterId: Provider.of<CharactersProvider>(context,
+                                listen: false)
+                            .currentCharacter!
+                            .characterId!,
+                        mods: Provider.of<BuilderModsProvider>(context,
+                                listen: false)
+                            .mods,
+                        subclassMods: Provider.of<BuilderSubclassModsProvider>(
+                                context,
+                                listen: false)
+                            .subclassMods,
+                        subclassId: Provider.of<BuilderSubclassProvider>(
+                                context,
+                                listen: false)
+                            .subclassId,
                       )
                       .then((value) => Navigator.pop(context));
                 },

@@ -19,16 +19,18 @@ class InspectMobileArmorInfo extends StatefulWidget {
   final List<DestinyItemSocketState> sockets;
   final Map<String, DestinyStat>? stats;
   final String? afinityIcon;
+  final double width;
 
-  const InspectMobileArmorInfo(
-      {required this.item,
-      required this.instanceId,
-      required this.stats,
-      required this.characterId,
-      required this.sockets,
-      required this.afinityIcon,
-      Key? key})
-      : super(key: key);
+  const InspectMobileArmorInfo({
+    required this.item,
+    required this.instanceId,
+    required this.stats,
+    required this.characterId,
+    required this.sockets,
+    required this.afinityIcon,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<InspectMobileArmorInfo> createState() => _InspectMobileArmorInfoState();
@@ -41,28 +43,44 @@ class _InspectMobileArmorInfoState extends State<InspectMobileArmorInfo> {
       mobileSection(context,
           title: AppLocalizations.of(context)!.quick_actions,
           child: InspectMobileActions(
+            width: widget.width,
             itemHash: widget.item.hash!,
             instanceId: widget.instanceId,
           )),
-      mobileSection(context,
-          title: AppLocalizations.of(context)!.statistics,
-          child: InspectMobileStats(item: widget.item, stats: widget.stats)),
+      mobileSection(
+        context,
+        title: AppLocalizations.of(context)!.statistics,
+        child: InspectMobileStats(
+          item: widget.item,
+          stats: widget.stats,
+          width: widget.width,
+        ),
+      ),
       if (widget.item.inventory?.tierType == TierType.Exotic)
         mobileSection(context,
             title: AppLocalizations.of(context)!.exotic_perk,
-            child: InspectMobileExoticArmor(sockets: widget.sockets)),
+            child: InspectMobileExoticArmor(
+              sockets: widget.sockets,
+              width: widget.width,
+            )),
       if (widget.afinityIcon != null)
         mobileSection(context,
             title: AppLocalizations.of(context)!.armor_mods,
             child: ArmorMods(
+                width: widget.width,
                 instanceId: widget.instanceId,
                 afinityIcon: widget.afinityIcon!,
                 sockets: widget.sockets,
                 characterId: widget.characterId,
                 item: widget.item)),
-      mobileSection(context,
-          title: AppLocalizations.of(context)!.cosmetics,
-          child: MobileInspectCosmetics(sockets: widget.sockets)),
+      mobileSection(
+        context,
+        title: AppLocalizations.of(context)!.cosmetics,
+        child: MobileInspectCosmetics(
+          sockets: widget.sockets,
+          width: widget.width,
+        ),
+      ),
       mobileSection(context,
           title: AppLocalizations.of(context)!.origin,
           child:

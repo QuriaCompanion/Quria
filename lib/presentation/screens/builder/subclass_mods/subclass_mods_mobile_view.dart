@@ -184,6 +184,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                   context: context,
                                   builder: (context) {
                                     return ArmorModsModal(
+                                      width: vw(context),
                                       socket: displayedSockets[7 + i],
                                       plugSetsHash: widget
                                           .subclass
@@ -221,7 +222,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                   displayedSockets[7 + i]
                                       .displayProperties!
                                       .icon!),
-                              size: mobileItemSize(context),
+                              size: itemSize(context, vw(context)),
                             ),
                           ),
                         ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quria/data/models/helpers/builderRecapHelper.model.dart';
+import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/inspectSubclassHelper.model.dart';
 import 'package:quria/presentation/screens/builder/build_recap/builder_recap_page.dart';
@@ -15,6 +15,7 @@ import 'package:quria/presentation/screens/collection/collection_weapon_page.dar
 
 import 'package:quria/presentation/screens/inspect/inspect_mobile.dart';
 import 'package:quria/presentation/screens/inspect_subclass/inspect_subclass_page.dart';
+import 'package:quria/presentation/screens/legends/legends_page.dart';
 import 'package:quria/presentation/screens/login.dart';
 import 'package:quria/presentation/screens/profile/profile_page.dart';
 import 'package:quria/presentation/screens/settings/settings_page.dart';
@@ -42,6 +43,8 @@ class AppRouter {
             builder: (_) => InspectSubclassPage(data: data));
       case routePageSettings:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
+      case routePageLegends:
+        return MaterialPageRoute(builder: (_) => const LegendsPage());
       case routeCollectionItem:
         final int data = settings.arguments as int;
         return MaterialPageRoute(
@@ -71,12 +74,12 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const BuilderResultsPage());
       // builder Recap
       case routeBuilderRecap:
-        final BuilderRecapHelper data =
-            settings.arguments as BuilderRecapHelper;
+        final Build data = settings.arguments as Build;
         return MaterialPageRoute(builder: (_) => BuilderRecapPage(data: data));
 
       default:
-        return MaterialPageRoute(builder: (_) => LoginWidget());
+        return MaterialPageRoute(builder: (_) => const CollectionWeaponPage());
+      // return MaterialPageRoute(builder: (_) => LoginWidget());
     }
   }
 }

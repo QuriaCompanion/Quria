@@ -2,9 +2,10 @@ import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_modal.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
@@ -14,12 +15,8 @@ import 'package:sliver_tools/sliver_tools.dart';
 class VaultMobileSection extends StatefulWidget {
   final List<DestinyItemComponent> vaultItems;
   final int bucketHash;
-  final void Function() onTransfer;
   const VaultMobileSection(
-      {required this.vaultItems,
-      required this.bucketHash,
-      required this.onTransfer,
-      Key? key})
+      {required this.vaultItems, required this.bucketHash, Key? key})
       : super(key: key);
 
   @override
@@ -63,13 +60,12 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                         context: context,
                         builder: (context) {
                           return ItemModal(
+                            width: vw(context),
                             item: item,
                             onClick: (inspect) {
                               Navigator.pushNamed(context, routeInspectMobile,
-                                      arguments: inspect)
-                                  .then((_) => setState(() {}));
+                                  arguments: inspect);
                             },
-                            onTransfer: () => widget.onTransfer(),
                           );
                         });
                   }),
@@ -78,8 +74,9 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                     imageSize: vw(context) * 0.148,
                     isMasterworked: item.state == ItemState.Masterwork ||
                         item.state == const ItemState(5),
-                    element: ProfileService().getItemElement(item),
-                    powerLevel: ProfileService()
+                    element:
+                        Provider.of<ItemProvider>(context).getItemElement(item),
+                    powerLevel: Provider.of<ItemProvider>(context)
                         .getItemPowerLevel(item.itemInstanceId!),
                   ),
                 );

@@ -27,13 +27,15 @@ class CharacterStatsListingState extends State<CharacterStatsListing> {
   @override
   initState() {
     super.initState();
-    data = DisplayService().getStatsListing(widget.characterId, widget.stats);
+    data = DisplayService.getStatsListing(
+        context, widget.characterId, widget.stats);
   }
 
   @override
   void didUpdateWidget(covariant CharacterStatsListing oldWidget) {
     super.didUpdateWidget(oldWidget);
-    data = DisplayService().getStatsListing(widget.characterId, widget.stats);
+    data = DisplayService.getStatsListing(
+        context, widget.characterId, widget.stats);
   }
 
   @override

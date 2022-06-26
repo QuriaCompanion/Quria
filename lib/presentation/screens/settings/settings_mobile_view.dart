@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
@@ -14,13 +13,17 @@ import 'package:quria/presentation/var/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsMobileView extends StatelessWidget {
-  const SettingsMobileView({Key? key}) : super(key: key);
+  final double height;
+  const SettingsMobileView({
+    required this.height,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const divider = Divider(color: Colors.white);
     return SizedBox(
-      height: vh(context),
+      height: height,
       child: ListView(
         scrollDirection: Axis.vertical,
         children: [
@@ -109,12 +112,11 @@ class SettingsMobileView extends StatelessWidget {
                       memberships:
                           AccountService.membershipData!.destinyMemberships!,
                       onSelected: (membership) {
-                        AccountService()
-                            .saveMembership(
+                        AccountService.saveMembership(
                                 AccountService.membershipData!, membership)
                             .then((_) {
                           DisplayService.isProfileUp = false;
-                          ProfileService().reset();
+                          ProfileService.reset(context);
                           Navigator.pushReplacementNamed(context, routeProfile);
                         });
                       },
@@ -151,6 +153,13 @@ class SettingsMobileView extends StatelessWidget {
             ),
           ),
           divider,
+          ListTile(
+            onTap: () {
+              Navigator.pushReplacementNamed(context, routePageLegends);
+            },
+            leading: const Icon(Icons.handshake, size: 35, color: Colors.white),
+            title: textBodyHighRegular('Hall of Fame', utf8: false),
+          ),
         ],
       ),
     );

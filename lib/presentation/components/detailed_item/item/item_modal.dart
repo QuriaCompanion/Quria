@@ -16,18 +16,18 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class ItemModal extends StatelessWidget {
   final DestinyItemComponent item;
   final void Function(InspectData) onClick;
-  final void Function() onTransfer;
+  final double width;
   const ItemModal({
     required this.item,
     required this.onClick,
-    required this.onTransfer,
+    required this.width,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ItemCardHelper data =
-        DisplayService().getCardData(item.itemInstanceId!, item.itemHash);
+    ItemCardHelper data = DisplayService.getCardData(context,
+        itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
     return SingleChildScrollView(
         child: Container(
       decoration: const BoxDecoration(
@@ -47,12 +47,12 @@ class ItemModal extends StatelessWidget {
                   children: [
                     ItemIcon(
                       displayHash: item.overrideStyleItemHash ?? item.itemHash!,
-                      imageSize: mobileItemSize(context),
+                      imageSize: itemSize(context, width),
                     ),
                     SizedBox(width: globalPadding(context)),
                     SizedBox(
                       width: vw(context) -
-                          mobileItemSize(context) -
+                          itemSize(context, width) -
                           (globalPadding(context) * 3) -
                           40,
                       child: Column(
@@ -109,6 +109,7 @@ class ItemModal extends StatelessWidget {
               cosmetics: data.intristics,
               itemDef: data.itemDef,
               armorSockets: data.armorSockets,
+              width: vw(context),
             ),
           ),
           Padding(
@@ -142,7 +143,6 @@ class ItemModal extends StatelessWidget {
                             instanceId: item.itemInstanceId!,
                             onTransfer: () {
                               Navigator.pop(context);
-                              onTransfer();
                             },
                           );
                         });

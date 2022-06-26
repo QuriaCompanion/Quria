@@ -17,4 +17,8 @@ class BuilderModsProvider with ChangeNotifier {
   ) {
     _mods = mods;
   }
+
+  void reset() {
+    _mods = [];
+  }
 }

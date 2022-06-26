@@ -7,27 +7,22 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ProfileMobileHeader extends StatefulWidget {
+class ProfileMobileHeader extends StatelessWidget {
   final String characterId;
   final String characterSuper;
   final String subclassId;
   final Map<String, int>? stats;
   final bool isNewSubclass;
-
+  final double width;
   const ProfileMobileHeader({
     required this.stats,
     required this.characterId,
     required this.characterSuper,
     required this.subclassId,
     required this.isNewSubclass,
+    required this.width,
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<ProfileMobileHeader> createState() => _ProfileMobileHeaderState();
-}
-
-class _ProfileMobileHeaderState extends State<ProfileMobileHeader> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -41,9 +36,9 @@ class _ProfileMobileHeaderState extends State<ProfileMobileHeader> {
               Navigator.of(context).pushNamed(
                 routeInspectSubclass,
                 arguments: InspectSubclassHelper(
-                    isNewSubclass: widget.isNewSubclass,
-                    subclassId: widget.subclassId,
-                    characterId: widget.characterId),
+                    isNewSubclass: isNewSubclass,
+                    subclassId: subclassId,
+                    characterId: characterId),
               );
             },
             child: Stack(
@@ -52,29 +47,28 @@ class _ProfileMobileHeaderState extends State<ProfileMobileHeader> {
                 Transform.rotate(
                   angle: -math.pi / 4,
                   child: Container(
-                    height: vw(context) * 0.15,
-                    width: vw(context) * 0.15,
+                    height: width * 0.15,
+                    width: width * 0.15,
                     decoration:
                         BoxDecoration(border: Border.all(color: Colors.white)),
                   ),
                 ),
                 Image(
-                  image: NetworkImage(
-                      DestinyData.bungieLink + widget.characterSuper),
-                  height: vw(context) * 0.17,
-                  width: vw(context) * 0.17,
+                  image: NetworkImage(DestinyData.bungieLink + characterSuper),
+                  height: width * 0.17,
+                  width: width * 0.17,
                   fit: BoxFit.fill,
                 ),
               ],
             ),
           ),
           SizedBox(
-            height: vw(context) * 0.17,
+            height: width * 0.17,
             child: CharacterStatsListing(
-              stats: widget.stats!,
-              characterId: widget.characterId,
+              stats: stats!,
+              characterId: characterId,
               direction: Axis.horizontal,
-              width: vw(context) * 0.6,
+              width: width * 0.6,
             ),
           ),
         ],
