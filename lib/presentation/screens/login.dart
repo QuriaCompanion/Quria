@@ -69,8 +69,8 @@ class LoginWidgetState extends State<LoginWidget> {
             ),
             onPressed: () {
               loadingModal();
-              authorizeClick(context);
-              // yannisooLogin();
+              // authorizeClick(context);
+              yannisooLogin();
             },
             width: 250.0,
             height: 60),

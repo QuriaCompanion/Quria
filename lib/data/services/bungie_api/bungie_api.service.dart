@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:bungie_api/enums/destiny_socket_array_type.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_free_action_request.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_request_entry.dart';
@@ -32,7 +33,6 @@ import 'package:flutter/foundation.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:http/http.dart' as http;
-import 'package:universal_io/io.dart';
 
 class BungieApiService {
   static const String baseUrl = 'https://www.bungie.net';
