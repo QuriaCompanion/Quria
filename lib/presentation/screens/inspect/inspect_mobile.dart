@@ -28,8 +28,8 @@ class _MobileInspectState extends State<MobileInspect> {
   @override
   Widget build(BuildContext context) {
     final double width = widget.width ?? vw(context);
-    final ItemInfoHelper data = DisplayService.getItemInfo(context,
-        itemInstanceId: widget.data.instanceId, itemHash: widget.data.hash);
+    final ItemInfoHelper data =
+        DisplayService.getItemInfo(context, itemInstanceId: widget.data.instanceId, itemHash: widget.data.hash);
     return ScaffoldBurgerAndBackOption(
       width: width,
       body: SingleChildScrollView(

@@ -42,23 +42,18 @@ class _ProfileWidgetState extends State<ProfileWidget> {
         future: _future,
         builder: ((context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            final characters =
-                Provider.of<CharactersProvider>(context).characters;
+            final characters = Provider.of<CharactersProvider>(context).characters;
             if (characters.isEmpty) {
               return Column(
                 children: [
                   ErrorDialog(
                     errorMessage: AppLocalizations.of(context)!.no_characters,
                     child: ChooseMembership(
-                        memberships:
-                            AccountService.membershipData!.destinyMemberships!,
+                        memberships: AccountService.membershipData!.destinyMemberships!,
                         onSelected: (membership) async {
-                          AccountService.saveMembership(
-                                  AccountService.membershipData!, membership)
-                              .then((_) {
+                          AccountService.saveMembership(AccountService.membershipData!, membership).then((_) {
                             DisplayService.isProfileUp = false;
-                            Navigator.pushReplacementNamed(
-                                context, routeProfile);
+                            Navigator.pushReplacementNamed(context, routeProfile);
                           });
                         }),
                   ),
@@ -72,8 +67,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 body: ProfileDesktopView(
                     data: data,
                     onClick: (inspectData) {
-                      Navigator.pushNamed(context, routeInspectMobile,
-                          arguments: inspectData);
+                      Navigator.pushNamed(context, routeInspectMobile, arguments: inspectData);
                     }),
               );
             } else {
@@ -82,8 +76,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                   child: ProfileMobileView(
                       data: data,
                       onClick: (inspectData) {
-                        Navigator.pushNamed(context, routeInspectMobile,
-                            arguments: inspectData);
+                        Navigator.pushNamed(context, routeInspectMobile, arguments: inspectData);
                       }),
                 ),
               );
@@ -92,9 +85,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           return Container(
             height: vh(context),
             width: vw(context),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover, image: splashBackground)),
+            decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
             child: Loader(
               splashColor: Colors.transparent,
               animationSize: vw(context) * 0.5,

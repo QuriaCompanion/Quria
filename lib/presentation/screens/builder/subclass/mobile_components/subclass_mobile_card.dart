@@ -18,12 +18,11 @@ class SubclassMobileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DestinyInventoryItemDefinition subclassDef = ManifestService
-        .manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!;
+    final DestinyInventoryItemDefinition subclassDef =
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!;
     return InkWell(
       onTap: () {
-        Provider.of<BuilderSubclassProvider>(context, listen: false)
-            .setSubclass(subclass.itemInstanceId, subclassDef);
+        Provider.of<BuilderSubclassProvider>(context, listen: false).setSubclass(subclass.itemInstanceId, subclassDef);
         subclassDef.talentGrid?.talentGridHash == 0
             ? Navigator.pushNamed(
                 context,
@@ -53,13 +52,11 @@ class SubclassMobileCard extends StatelessWidget {
                       child: Container(
                         height: vw(context) * 0.15,
                         width: vw(context) * 0.15,
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white)),
+                        decoration: BoxDecoration(border: Border.all(color: Colors.white)),
                       ),
                     ),
                     Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          subclassDef.displayProperties!.icon!),
+                      image: NetworkImage(DestinyData.bungieLink + subclassDef.displayProperties!.icon!),
                       height: vw(context) * 0.17,
                       width: vw(context) * 0.17,
                       fit: BoxFit.fill,

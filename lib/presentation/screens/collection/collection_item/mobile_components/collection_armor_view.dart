@@ -20,8 +20,7 @@ class CollectionArmorView extends StatelessWidget {
     return Column(
       children: [
         mobileSection(context,
-            title: AppLocalizations.of(context)!.statistics,
-            child: InspectMobileStats(item: item, width: vw(context))),
+            title: AppLocalizations.of(context)!.statistics, child: InspectMobileStats(item: item, width: vw(context))),
         mobileSection(context,
             title: AppLocalizations.of(context)!.origin,
             child: InspectMobileOrigin(collectionHash: item.collectibleHash)),

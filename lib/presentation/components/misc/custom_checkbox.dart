@@ -16,11 +16,8 @@ class CustomCheckbox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
-          horizontal: globalPadding(context),
-          vertical: globalPadding(context) / 1.5),
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5), color: blackLight),
+      padding: EdgeInsets.symmetric(horizontal: globalPadding(context), vertical: globalPadding(context) / 1.5),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: blackLight),
       child: GestureDetector(
         onTap: () {
           onChanged(!value);

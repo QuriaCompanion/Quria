@@ -32,15 +32,9 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
   Widget build(BuildContext context) {
     String icon = widget.data.isNewSubclass
         ? ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition[
-                widget.data.selectedCharacterSubclass!.itemHash]!
-            .screenshot!
-        : ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition[
-                widget.data.selectedCharacterSubclass!.itemHash]!
-            .secondaryIcon!;
+            .manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.screenshot!
+        : ManifestService.manifestParsed
+            .destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!;
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -54,16 +48,13 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
               width: vw(context),
               stats: widget.data.selectedCharacter!.stats,
               characterSuper: widget.data.characterSuper!,
-              subclassId:
-                  widget.data.selectedCharacterSubclass!.itemInstanceId!,
+              subclassId: widget.data.selectedCharacterSubclass!.itemInstanceId!,
               characterId: widget.data.selectedCharacter!.characterId!,
               isNewSubclass: widget.data.isNewSubclass,
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(
-                top: globalPadding(context),
-                bottom: globalPadding(context) * 2),
+            padding: EdgeInsets.only(top: globalPadding(context), bottom: globalPadding(context) * 2),
             child: SizedBox(
               height: 45,
               child: Row(
@@ -104,13 +95,9 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
               ),
             ),
           ),
-          for (DestinyItemComponent item
-              in widget.data.selectedCharacterEquipment.where((element) =>
-                  ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition[element.itemHash]
-                      ?.itemType ==
-                  currentFilter))
+          for (DestinyItemComponent item in widget.data.selectedCharacterEquipment.where((element) =>
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemType ==
+              currentFilter))
             Padding(
               padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
               child: Column(
@@ -125,17 +112,10 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       characterId: widget.data.selectedCharacter!.characterId!,
                       inventory: widget.data.selectedCharacterInventory
                           .where((element) =>
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition[
-                                      element.itemHash]
-                                  ?.equippingBlock
-                                  ?.equipmentSlotTypeHash ==
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition[item.itemHash]
-                                  ?.equippingBlock
-                                  ?.equipmentSlotTypeHash)
+                              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]
+                                  ?.equippingBlock?.equipmentSlotTypeHash ==
+                              ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]
+                                  ?.equippingBlock?.equipmentSlotTypeHash)
                           .toList(),
                     ),
                   ),

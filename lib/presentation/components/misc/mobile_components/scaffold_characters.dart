@@ -32,8 +32,7 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
               child: Container(
                 alignment: Alignment.topCenter,
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top +
-                      globalPadding(context),
+                  top: MediaQuery.of(context).padding.top + globalPadding(context),
                 ),
                 child: SizedBox(
                   width: appBarItem(context),
@@ -54,21 +53,16 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
         flexibleSpace: SizedBox(
           width: vw(context),
           height: choosingCharacter
-              ? MediaQuery.of(context).padding.top +
-                  (globalPadding(context) * 4) +
-                  (appBarItem(context)) * 3
+              ? MediaQuery.of(context).padding.top + (globalPadding(context) * 4) + (appBarItem(context)) * 3
               : appBarHeight(context),
           child: ClipRect(
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
               child: Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).padding.top +
-                        globalPadding(context)),
+                padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + globalPadding(context)),
                 child: MobileCharacterChoice(
                   callback: (newIndex) {
-                    Provider.of<CharactersProvider>(context, listen: false)
-                        .setCurrentCharacter(newIndex);
+                    Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(newIndex);
                     setState(() {
                       choosingCharacter = !choosingCharacter;
                     });
@@ -78,8 +72,7 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
                       choosingCharacter = !choosingCharacter;
                     });
                   },
-                  characters:
-                      Provider.of<CharactersProvider>(context).characters,
+                  characters: Provider.of<CharactersProvider>(context).characters,
                 ),
               ),
             ),

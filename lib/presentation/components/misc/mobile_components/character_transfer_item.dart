@@ -9,11 +9,7 @@ class CharacterTransferItem extends StatelessWidget {
   final String icon;
   final int? powerLevel;
   const CharacterTransferItem(
-      {required this.imageLink,
-      required this.icon,
-      required this.name,
-      this.powerLevel,
-      Key? key})
+      {required this.imageLink, required this.icon, required this.name, this.powerLevel, Key? key})
       : super(key: key);
 
   @override
@@ -43,8 +39,7 @@ class CharacterTransferItem extends StatelessWidget {
               SizedBox(
                 width: globalPadding(context) / 2,
               ),
-              if (powerLevel != null)
-                textBodyBold("$powerLevel", color: yellow),
+              if (powerLevel != null) textBodyBold("$powerLevel", color: yellow),
             ],
           ),
           SvgPicture.asset(

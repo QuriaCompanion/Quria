@@ -28,9 +28,7 @@ class ModsMobileSection extends StatelessWidget {
           if (item.value != null)
             Padding(
               padding: EdgeInsets.only(
-                  top: globalPadding(context) / 2,
-                  bottom: globalPadding(context) / 2,
-                  right: globalPadding(context)),
+                  top: globalPadding(context) / 2, bottom: globalPadding(context) / 2, right: globalPadding(context)),
               child: InkWell(
                 onTap: () {
                   showMaterialModalBottomSheet(
@@ -41,19 +39,15 @@ class ModsMobileSection extends StatelessWidget {
                         return ArmorModsModal(
                           width: vw(context),
                           socket: item.value!,
-                          plugSetsHash:
-                              scoketEntries[item.key].reusablePlugSetHash!,
+                          plugSetsHash: scoketEntries[item.key].reusablePlugSetHash!,
                           onSocketChange: (itemHash) {
                             onChange(
-                                ManifestService.manifestParsed
-                                    .destinyInventoryItemDefinition[itemHash]!,
-                                item.key);
+                                ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!, item.key);
                           },
                         );
                       });
                 },
-                child: ArmorModIconDisplay(
-                    iconSize: itemSize(context, width), socket: item.value!),
+                child: ArmorModIconDisplay(iconSize: itemSize(context, width), socket: item.value!),
               ),
             ),
       ],

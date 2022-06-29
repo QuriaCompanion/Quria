@@ -40,7 +40,7 @@ class MeleeCooldown {
     7: 63,
     8: 56,
     9: 51,
-    10: 43
+    10: 43,
   };
   static const Map<int, int> tier2 = {
     0: 0,
@@ -53,7 +53,7 @@ class MeleeCooldown {
     7: 60,
     8: 54,
     9: 49,
-    10: 42
+    10: 42,
   };
   static const Map<int, int> tier3 = {
     0: 0,
@@ -79,7 +79,7 @@ class MeleeCooldown {
     7: 56,
     8: 50,
     9: 46,
-    10: 39
+    10: 39,
   };
   static const Map<int, int> tier5 = {
     0: 0,
@@ -92,7 +92,7 @@ class MeleeCooldown {
     7: 50,
     8: 45,
     9: 41,
-    10: 35
+    10: 35,
   };
   static const Map<int, int> tier6 = {
     0: 0,
@@ -105,7 +105,7 @@ class MeleeCooldown {
     7: 46,
     8: 41,
     9: 37,
-    10: 32
+    10: 32,
   };
   static const Map<int, int> tier7 = {
     0: 0,
@@ -118,7 +118,7 @@ class MeleeCooldown {
     7: 42,
     8: 38,
     9: 34,
-    10: 29
+    10: 29,
   };
   static const Map<int, int> tier8 = {
     0: 0,
@@ -131,6 +131,6 @@ class MeleeCooldown {
     7: 8,
     8: 8,
     9: 7,
-    10: 6
+    10: 6,
   };
 }

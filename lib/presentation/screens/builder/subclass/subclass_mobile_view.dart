@@ -8,8 +8,7 @@ import 'package:quria/presentation/screens/builder/subclass/mobile_components/su
 
 class SubclassMobileView extends StatelessWidget {
   final List<DestinyItemComponent> subclasses;
-  const SubclassMobileView({required this.subclasses, Key? key})
-      : super(key: key);
+  const SubclassMobileView({required this.subclasses, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -52,8 +52,7 @@ class DestinyScopeConverter extends TypeConverter<DestinyScope?, int?> {
   }
 }
 
-class DestinyStatCategoryConverter
-    extends TypeConverter<DestinyStatCategory?, int?> {
+class DestinyStatCategoryConverter extends TypeConverter<DestinyStatCategory?, int?> {
   const DestinyStatCategoryConverter();
 
   @override
@@ -69,8 +68,7 @@ class DestinyStatCategoryConverter
   }
 }
 
-class DestinyPresentationNodeTypeConverter
-    extends TypeConverter<DestinyPresentationNodeType?, int?> {
+class DestinyPresentationNodeTypeConverter extends TypeConverter<DestinyPresentationNodeType?, int?> {
   const DestinyPresentationNodeTypeConverter();
 
   @override
@@ -182,8 +180,7 @@ class DestinyItemTypeConverter extends TypeConverter<DestinyItemType?, int?> {
   }
 }
 
-class DestinyItemSubTypeConverter
-    extends TypeConverter<DestinyItemSubType?, int?> {
+class DestinyItemSubTypeConverter extends TypeConverter<DestinyItemSubType?, int?> {
   const DestinyItemSubTypeConverter();
 
   @override
@@ -199,8 +196,7 @@ class DestinyItemSubTypeConverter
   }
 }
 
-class DestinyPresentationScreenStyleConverter
-    extends TypeConverter<DestinyPresentationScreenStyle?, int?> {
+class DestinyPresentationScreenStyleConverter extends TypeConverter<DestinyPresentationScreenStyle?, int?> {
   const DestinyPresentationScreenStyleConverter();
 
   @override
@@ -216,8 +212,7 @@ class DestinyPresentationScreenStyleConverter
   }
 }
 
-class DestinyPresentationDisplayStyleConverter
-    extends TypeConverter<DestinyPresentationDisplayStyle?, int?> {
+class DestinyPresentationDisplayStyleConverter extends TypeConverter<DestinyPresentationDisplayStyle?, int?> {
   const DestinyPresentationDisplayStyleConverter();
 
   @override
@@ -233,8 +228,7 @@ class DestinyPresentationDisplayStyleConverter
   }
 }
 
-class DestinyBreakerTypeConverter
-    extends TypeConverter<DestinyBreakerType?, int?> {
+class DestinyBreakerTypeConverter extends TypeConverter<DestinyBreakerType?, int?> {
   const DestinyBreakerTypeConverter();
 
   @override
@@ -250,8 +244,7 @@ class DestinyBreakerTypeConverter
   }
 }
 
-class DestinyEnergyTypeConverter
-    extends TypeConverter<DestinyEnergyType?, int?> {
+class DestinyEnergyTypeConverter extends TypeConverter<DestinyEnergyType?, int?> {
   const DestinyEnergyTypeConverter();
 
   @override
@@ -267,8 +260,7 @@ class DestinyEnergyTypeConverter
   }
 }
 
-class DestinyDisplayPropertiesDefinitionConverter
-    extends TypeConverter<DestinyDisplayPropertiesDefinition?, String?> {
+class DestinyDisplayPropertiesDefinitionConverter extends TypeConverter<DestinyDisplayPropertiesDefinition?, String?> {
   const DestinyDisplayPropertiesDefinitionConverter();
 
   @override
@@ -284,8 +276,7 @@ class DestinyDisplayPropertiesDefinitionConverter
   }
 }
 
-class DestinyCollectibleAcquisitionBlockConverter
-    extends TypeConverter<DestinyCollectibleAcquisitionBlock?, String?> {
+class DestinyCollectibleAcquisitionBlockConverter extends TypeConverter<DestinyCollectibleAcquisitionBlock?, String?> {
   const DestinyCollectibleAcquisitionBlockConverter();
 
   @override
@@ -301,8 +292,7 @@ class DestinyCollectibleAcquisitionBlockConverter
   }
 }
 
-class DestinyCollectibleStateBlockConverter
-    extends TypeConverter<DestinyCollectibleStateBlock?, String?> {
+class DestinyCollectibleStateBlockConverter extends TypeConverter<DestinyCollectibleStateBlock?, String?> {
   const DestinyCollectibleStateBlockConverter();
 
   @override
@@ -318,8 +308,7 @@ class DestinyCollectibleStateBlockConverter
   }
 }
 
-class DestinyPresentationChildBlockConverter
-    extends TypeConverter<DestinyPresentationChildBlock?, String?> {
+class DestinyPresentationChildBlockConverter extends TypeConverter<DestinyPresentationChildBlock?, String?> {
   const DestinyPresentationChildBlockConverter();
 
   @override
@@ -351,8 +340,7 @@ class DestinyColorConverter extends TypeConverter<DestinyColor?, String?> {
   }
 }
 
-class DestinyItemActionBlockDefinitionConverter
-    extends TypeConverter<DestinyItemActionBlockDefinition?, String?> {
+class DestinyItemActionBlockDefinitionConverter extends TypeConverter<DestinyItemActionBlockDefinition?, String?> {
   const DestinyItemActionBlockDefinitionConverter();
 
   @override
@@ -368,8 +356,7 @@ class DestinyItemActionBlockDefinitionConverter
   }
 }
 
-class DestinyItemCraftingBlockDefinitionConverter
-    extends TypeConverter<DestinyItemCraftingBlockDefinition?, String?> {
+class DestinyItemCraftingBlockDefinitionConverter extends TypeConverter<DestinyItemCraftingBlockDefinition?, String?> {
   const DestinyItemCraftingBlockDefinitionConverter();
 
   @override
@@ -402,8 +389,7 @@ class DestinyItemInventoryBlockDefinitionConverter
   }
 }
 
-class DestinyItemSetBlockDefinitionConverter
-    extends TypeConverter<DestinyItemSetBlockDefinition?, String?> {
+class DestinyItemSetBlockDefinitionConverter extends TypeConverter<DestinyItemSetBlockDefinition?, String?> {
   const DestinyItemSetBlockDefinitionConverter();
 
   @override
@@ -419,8 +405,7 @@ class DestinyItemSetBlockDefinitionConverter
   }
 }
 
-class DestinyItemStatBlockDefinitionConverter
-    extends TypeConverter<DestinyItemStatBlockDefinition?, String?> {
+class DestinyItemStatBlockDefinitionConverter extends TypeConverter<DestinyItemStatBlockDefinition?, String?> {
   const DestinyItemStatBlockDefinitionConverter();
 
   @override
@@ -453,8 +438,7 @@ class DestinyItemTranslationBlockDefinitionConverter
   }
 }
 
-class DestinyEquippingBlockDefinitionConverter
-    extends TypeConverter<DestinyEquippingBlockDefinition?, String?> {
+class DestinyEquippingBlockDefinitionConverter extends TypeConverter<DestinyEquippingBlockDefinition?, String?> {
   const DestinyEquippingBlockDefinitionConverter();
 
   @override
@@ -470,8 +454,7 @@ class DestinyEquippingBlockDefinitionConverter
   }
 }
 
-class DestinyItemPreviewBlockDefinitionConverter
-    extends TypeConverter<DestinyItemPreviewBlockDefinition?, String?> {
+class DestinyItemPreviewBlockDefinitionConverter extends TypeConverter<DestinyItemPreviewBlockDefinition?, String?> {
   const DestinyItemPreviewBlockDefinitionConverter();
 
   @override
@@ -487,8 +470,7 @@ class DestinyItemPreviewBlockDefinitionConverter
   }
 }
 
-class DestinyItemQualityBlockDefinitionConverter
-    extends TypeConverter<DestinyItemQualityBlockDefinition?, String?> {
+class DestinyItemQualityBlockDefinitionConverter extends TypeConverter<DestinyItemQualityBlockDefinition?, String?> {
   const DestinyItemQualityBlockDefinitionConverter();
 
   @override
@@ -504,8 +486,7 @@ class DestinyItemQualityBlockDefinitionConverter
   }
 }
 
-class DestinyItemValueBlockDefinitionConverter
-    extends TypeConverter<DestinyItemValueBlockDefinition?, String?> {
+class DestinyItemValueBlockDefinitionConverter extends TypeConverter<DestinyItemValueBlockDefinition?, String?> {
   const DestinyItemValueBlockDefinitionConverter();
 
   @override
@@ -521,8 +502,7 @@ class DestinyItemValueBlockDefinitionConverter
   }
 }
 
-class DestinyItemSourceBlockDefinitionConverter
-    extends TypeConverter<DestinyItemSourceBlockDefinition?, String?> {
+class DestinyItemSourceBlockDefinitionConverter extends TypeConverter<DestinyItemSourceBlockDefinition?, String?> {
   const DestinyItemSourceBlockDefinitionConverter();
 
   @override
@@ -555,8 +535,7 @@ class DestinyItemObjectiveBlockDefinitionConverter
   }
 }
 
-class DestinyItemMetricBlockDefinitionConverter
-    extends TypeConverter<DestinyItemMetricBlockDefinition?, String?> {
+class DestinyItemMetricBlockDefinitionConverter extends TypeConverter<DestinyItemMetricBlockDefinition?, String?> {
   const DestinyItemMetricBlockDefinitionConverter();
 
   @override
@@ -572,8 +551,7 @@ class DestinyItemMetricBlockDefinitionConverter
   }
 }
 
-class DestinyItemPlugDefinitionConverter
-    extends TypeConverter<DestinyItemPlugDefinition?, String?> {
+class DestinyItemPlugDefinitionConverter extends TypeConverter<DestinyItemPlugDefinition?, String?> {
   const DestinyItemPlugDefinitionConverter();
 
   @override
@@ -589,8 +567,7 @@ class DestinyItemPlugDefinitionConverter
   }
 }
 
-class DestinyItemGearsetBlockDefinitionConverter
-    extends TypeConverter<DestinyItemGearsetBlockDefinition?, String?> {
+class DestinyItemGearsetBlockDefinitionConverter extends TypeConverter<DestinyItemGearsetBlockDefinition?, String?> {
   const DestinyItemGearsetBlockDefinitionConverter();
 
   @override
@@ -606,8 +583,7 @@ class DestinyItemGearsetBlockDefinitionConverter
   }
 }
 
-class DestinyItemSackBlockDefinitionConverter
-    extends TypeConverter<DestinyItemSackBlockDefinition?, String?> {
+class DestinyItemSackBlockDefinitionConverter extends TypeConverter<DestinyItemSackBlockDefinition?, String?> {
   const DestinyItemSackBlockDefinitionConverter();
 
   @override
@@ -623,8 +599,7 @@ class DestinyItemSackBlockDefinitionConverter
   }
 }
 
-class DestinyItemSocketBlockDefinitionConverter
-    extends TypeConverter<DestinyItemSocketBlockDefinition?, String?> {
+class DestinyItemSocketBlockDefinitionConverter extends TypeConverter<DestinyItemSocketBlockDefinition?, String?> {
   const DestinyItemSocketBlockDefinitionConverter();
 
   @override
@@ -640,8 +615,7 @@ class DestinyItemSocketBlockDefinitionConverter
   }
 }
 
-class DestinyItemSummaryBlockDefinitionConverter
-    extends TypeConverter<DestinyItemSummaryBlockDefinition?, String?> {
+class DestinyItemSummaryBlockDefinitionConverter extends TypeConverter<DestinyItemSummaryBlockDefinition?, String?> {
   const DestinyItemSummaryBlockDefinitionConverter();
 
   @override
@@ -698,8 +672,7 @@ class DestinyPresentationNodeRequirementsBlockConverter
   @override
   DestinyPresentationNodeRequirementsBlock? fromIsar(String? object) {
     if (object == null) return null;
-    return DestinyPresentationNodeRequirementsBlock.fromJson(
-        json.decode(object));
+    return DestinyPresentationNodeRequirementsBlock.fromJson(json.decode(object));
   }
 
   @override
@@ -709,8 +682,7 @@ class DestinyPresentationNodeRequirementsBlockConverter
   }
 }
 
-class DestinyTalentNodeStepGroupsConverter
-    extends TypeConverter<DestinyTalentNodeStepGroups?, String?> {
+class DestinyTalentNodeStepGroupsConverter extends TypeConverter<DestinyTalentNodeStepGroups?, String?> {
   const DestinyTalentNodeStepGroupsConverter();
 
   @override
@@ -750,8 +722,8 @@ class DestinyTalentExclusiveGroupMapConverter
 }
 
 // lists
-class DestinyItemInvestmentStatDefinitionListConverter extends TypeConverter<
-    List<DestinyItemInvestmentStatDefinition>?, List<String>?> {
+class DestinyItemInvestmentStatDefinitionListConverter
+    extends TypeConverter<List<DestinyItemInvestmentStatDefinition>?, List<String>?> {
   const DestinyItemInvestmentStatDefinitionListConverter();
 
   @override
@@ -775,8 +747,8 @@ class DestinyItemInvestmentStatDefinitionListConverter extends TypeConverter<
   }
 }
 
-class DestinyItemPerkEntryDefinitionListConverter extends TypeConverter<
-    List<DestinyItemPerkEntryDefinition>?, List<String>?> {
+class DestinyItemPerkEntryDefinitionListConverter
+    extends TypeConverter<List<DestinyItemPerkEntryDefinition>?, List<String>?> {
   const DestinyItemPerkEntryDefinitionListConverter();
 
   @override
@@ -800,8 +772,7 @@ class DestinyItemPerkEntryDefinitionListConverter extends TypeConverter<
   }
 }
 
-class DestinyAnimationReferenceListConverter
-    extends TypeConverter<List<DestinyAnimationReference>?, List<String>?> {
+class DestinyAnimationReferenceListConverter extends TypeConverter<List<DestinyAnimationReference>?, List<String>?> {
   const DestinyAnimationReferenceListConverter();
 
   @override
@@ -825,8 +796,7 @@ class DestinyAnimationReferenceListConverter
   }
 }
 
-class HyperlinkReferenceListConverter
-    extends TypeConverter<List<HyperlinkReference>?, List<String>?> {
+class HyperlinkReferenceListConverter extends TypeConverter<List<HyperlinkReference>?, List<String>?> {
   const HyperlinkReferenceListConverter();
 
   @override
@@ -850,8 +820,7 @@ class HyperlinkReferenceListConverter
   }
 }
 
-class DamageTypeListConverter
-    extends TypeConverter<List<DamageType>?, List<int>?> {
+class DamageTypeListConverter extends TypeConverter<List<DamageType>?, List<int>?> {
   const DamageTypeListConverter();
 
   @override
@@ -875,8 +844,8 @@ class DamageTypeListConverter
   }
 }
 
-class DestinyItemTooltipNotificationListConverter extends TypeConverter<
-    List<DestinyItemTooltipNotification>?, List<String>?> {
+class DestinyItemTooltipNotificationListConverter
+    extends TypeConverter<List<DestinyItemTooltipNotification>?, List<String>?> {
   const DestinyItemTooltipNotificationListConverter();
 
   @override
@@ -900,8 +869,7 @@ class DestinyItemTooltipNotificationListConverter extends TypeConverter<
   }
 }
 
-class DestinyArtDyeReferenceListConverter
-    extends TypeConverter<List<DestinyArtDyeReference>?, List<String>?> {
+class DestinyArtDyeReferenceListConverter extends TypeConverter<List<DestinyArtDyeReference>?, List<String>?> {
   const DestinyArtDyeReferenceListConverter();
 
   @override
@@ -926,26 +894,21 @@ class DestinyArtDyeReferenceListConverter
 }
 
 class DestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
-    extends TypeConverter<
-        List<DestinyItemSocketEntryPlugItemRandomizedDefinition>?,
-        List<String>?> {
+    extends TypeConverter<List<DestinyItemSocketEntryPlugItemRandomizedDefinition>?, List<String>?> {
   const DestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter();
 
   @override
-  List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? fromIsar(
-      List<String>? object) {
+  List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? fromIsar(List<String>? object) {
     if (object == null) return null;
     List<DestinyItemSocketEntryPlugItemRandomizedDefinition> list = [];
     for (String item in object) {
-      list.add(DestinyItemSocketEntryPlugItemRandomizedDefinition.fromJson(
-          json.decode(item)));
+      list.add(DestinyItemSocketEntryPlugItemRandomizedDefinition.fromJson(json.decode(item)));
     }
     return list;
   }
 
   @override
-  List<String>? toIsar(
-      List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? object) {
+  List<String>? toIsar(List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? object) {
     if (object == null) return null;
     List<String> list = [];
     for (DestinyItemSocketEntryPlugItemRandomizedDefinition item in object) {
@@ -955,8 +918,7 @@ class DestinyItemSocketEntryPlugItemRandomizedDefinitionListConverter
   }
 }
 
-class DestinyTalentNodeCategoryListConverter
-    extends TypeConverter<List<DestinyTalentNodeCategory>?, List<String>?> {
+class DestinyTalentNodeCategoryListConverter extends TypeConverter<List<DestinyTalentNodeCategory>?, List<String>?> {
   const DestinyTalentNodeCategoryListConverter();
 
   @override
@@ -981,18 +943,15 @@ class DestinyTalentNodeCategoryListConverter
 }
 
 class DestinyTalentNodeExclusiveSetDefinitionListConverter
-    extends TypeConverter<List<DestinyTalentNodeExclusiveSetDefinition>?,
-        List<String>?> {
+    extends TypeConverter<List<DestinyTalentNodeExclusiveSetDefinition>?, List<String>?> {
   const DestinyTalentNodeExclusiveSetDefinitionListConverter();
 
   @override
-  List<DestinyTalentNodeExclusiveSetDefinition>? fromIsar(
-      List<String>? object) {
+  List<DestinyTalentNodeExclusiveSetDefinition>? fromIsar(List<String>? object) {
     if (object == null) return null;
     List<DestinyTalentNodeExclusiveSetDefinition> list = [];
     for (String item in object) {
-      list.add(
-          DestinyTalentNodeExclusiveSetDefinition.fromJson(json.decode(item)));
+      list.add(DestinyTalentNodeExclusiveSetDefinition.fromJson(json.decode(item)));
     }
     return list;
   }

@@ -8,8 +8,7 @@ class PlugsProvider with ChangeNotifier {
   Map<String, List<DestinyItemPlug>> _profilePlugSets = {};
   Map<String, DestinyPlugSetsComponent> _characterPlugSets = {};
   Map<String, List<DestinyItemPlug>> get profilePlugSets => _profilePlugSets;
-  Map<String, DestinyPlugSetsComponent>? get profileCharacterPlugSets =>
-      _characterPlugSets;
+  Map<String, DestinyPlugSetsComponent>? get profileCharacterPlugSets => _characterPlugSets;
 
   void setProfilePlugSets(Map<String, List<DestinyItemPlug>> profilePlugSets) {
     _profilePlugSets = profilePlugSets;
@@ -22,14 +21,12 @@ class PlugsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void setCharacterPlugSets(
-      Map<String, DestinyPlugSetsComponent> characterPlugSets) {
+  void setCharacterPlugSets(Map<String, DestinyPlugSetsComponent> characterPlugSets) {
     _characterPlugSets = characterPlugSets;
     notifyListeners();
   }
 
-  List<DestinyItemPlug>? getCharacterPlugSets(
-      String characterId, int plugSetHash) {
+  List<DestinyItemPlug>? getCharacterPlugSets(String characterId, int plugSetHash) {
     var plugs = _characterPlugSets[characterId]?.plugs;
     if (plugs?.containsKey("$plugSetHash") ?? false) {
       return plugs?["$plugSetHash"];
@@ -47,8 +44,7 @@ class PlugsProvider with ChangeNotifier {
   List<DestinyItemPlug> getPlugSets(BuildContext context, int plugSetHash) {
     List<DestinyItemPlug> plugs = [];
     plugs.addAll(getProfilePlugSets(plugSetHash) ?? []);
-    var characters =
-        Provider.of<CharactersProvider>(context, listen: false).characters;
+    var characters = Provider.of<CharactersProvider>(context, listen: false).characters;
     for (var c in characters) {
       plugs.addAll(getCharacterPlugSets(c.characterId!, plugSetHash) ?? []);
     }

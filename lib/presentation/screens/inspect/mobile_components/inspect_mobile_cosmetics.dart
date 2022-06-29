@@ -20,28 +20,20 @@ class MobileInspectCosmetics extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        for (DestinyItemSocketState socket in sockets.where((element) =>
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.itemType ==
-                DestinyItemType.Armor ||
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.itemSubType ==
-                DestinyItemSubType.Ornament ||
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.itemSubType ==
-                DestinyItemSubType.Shader))
+        for (DestinyItemSocketState socket in sockets.where(
+          (element) =>
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemType ==
+                  DestinyItemType.Armor ||
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemSubType ==
+                  DestinyItemSubType.Ornament ||
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemSubType ==
+                  DestinyItemSubType.Shader,
+        ))
           Padding(
             padding: EdgeInsets.only(bottom: globalPadding(context)),
             child: ItemWithTypeName(
                 iconSize: itemSize(context, width),
-                item: ManifestService.manifestParsed
-                    .destinyInventoryItemDefinition[socket.plugHash]!),
+                item: ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!),
           )
       ],
     );

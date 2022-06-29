@@ -37,18 +37,15 @@ class AppRouter {
       case routeCollection:
         return MaterialPageRoute(builder: (_) => const CollectionWeaponPage());
       case routeInspectSubclass:
-        final InspectSubclassHelper data =
-            settings.arguments as InspectSubclassHelper;
-        return MaterialPageRoute(
-            builder: (_) => InspectSubclassPage(data: data));
+        final InspectSubclassHelper data = settings.arguments as InspectSubclassHelper;
+        return MaterialPageRoute(builder: (_) => InspectSubclassPage(data: data));
       case routePageSettings:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
       case routePageLegends:
         return MaterialPageRoute(builder: (_) => const LegendsPage());
       case routeCollectionItem:
         final int data = settings.arguments as int;
-        return MaterialPageRoute(
-            builder: (_) => CollectionItemPage(itemHash: data));
+        return MaterialPageRoute(builder: (_) => CollectionItemPage(itemHash: data));
 
       // BUILDER
       // exotic

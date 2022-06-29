@@ -36,9 +36,7 @@ class ProfileMobileHeader extends StatelessWidget {
               Navigator.of(context).pushNamed(
                 routeInspectSubclass,
                 arguments: InspectSubclassHelper(
-                    isNewSubclass: isNewSubclass,
-                    subclassId: subclassId,
-                    characterId: characterId),
+                    isNewSubclass: isNewSubclass, subclassId: subclassId, characterId: characterId),
               );
             },
             child: Stack(
@@ -49,8 +47,7 @@ class ProfileMobileHeader extends StatelessWidget {
                   child: Container(
                     height: width * 0.15,
                     width: width * 0.15,
-                    decoration:
-                        BoxDecoration(border: Border.all(color: Colors.white)),
+                    decoration: BoxDecoration(border: Border.all(color: Colors.white)),
                   ),
                 ),
                 Image(

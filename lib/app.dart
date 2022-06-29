@@ -18,8 +18,7 @@ class _AppViewState extends State<AppView> {
   @override
   void initState() {
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        systemNavigationBarColor: blackLight,
-        systemNavigationBarIconBrightness: Brightness.light));
+        systemNavigationBarColor: blackLight, systemNavigationBarIconBrightness: Brightness.light));
 
     super.initState();
   }

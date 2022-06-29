@@ -36,8 +36,7 @@ class ItemComponentDisplayPerks extends StatelessWidget {
               ),
               child: PerkItemDisplay(
                 selected: true,
-                perk: ManifestService.manifestParsed
-                    .destinyInventoryItemDefinition[perk.plugHash]!,
+                perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[perk.plugHash]!,
                 iconSize: smallIconSize,
               )),
         if (itemDef.itemType == DestinyItemType.Armor)
@@ -56,10 +55,7 @@ class ItemComponentDisplayPerks extends StatelessWidget {
               child: Image(
                 image: NetworkImage(DestinyData.bungieLink +
                     ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[socket.plugHash]!
-                        .displayProperties!
-                        .icon!),
+                        .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!),
               ),
             ),
         const Spacer(),
@@ -80,10 +76,7 @@ class ItemComponentDisplayPerks extends StatelessWidget {
                 child: Image(
                   image: NetworkImage(DestinyData.bungieLink +
                       ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition[socket.plugHash]!
-                          .displayProperties!
-                          .icon!),
+                          .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!),
                 ),
               ),
           ],

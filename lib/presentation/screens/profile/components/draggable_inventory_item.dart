@@ -22,21 +22,17 @@ class DraggableInventoryItem extends StatelessWidget {
       feedback: ItemIcon(
         displayHash: item.overrideStyleItemHash ?? item.itemHash!,
         imageSize: size,
-        isMasterworked: item.state == ItemState.Masterwork ||
-            item.state == const ItemState(5),
+        isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
         element: Provider.of<ItemProvider>(context).getItemElement(item),
-        powerLevel: Provider.of<ItemProvider>(context)
-            .getItemPowerLevel(item.itemInstanceId!),
+        powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
       ),
       childWhenDragging: const SizedBox(),
       child: ItemIcon(
         displayHash: item.overrideStyleItemHash ?? item.itemHash!,
         imageSize: size,
-        isMasterworked: item.state == ItemState.Masterwork ||
-            item.state == const ItemState(5),
+        isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
         element: Provider.of<ItemProvider>(context).getItemElement(item),
-        powerLevel: Provider.of<ItemProvider>(context)
-            .getItemPowerLevel(item.itemInstanceId!),
+        powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
       ),
     );
   }

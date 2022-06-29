@@ -17,5 +17,5 @@ enum InspectColumn {
   fourthColumn,
   fifthColumn,
   masterwork,
-  mod
+  mod,
 }

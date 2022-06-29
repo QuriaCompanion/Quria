@@ -22,8 +22,7 @@ class InspectMobilePerkColumn extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<InspectMobilePerkColumn> createState() =>
-      _InspectMobilePerkColumnState();
+  State<InspectMobilePerkColumn> createState() => _InspectMobilePerkColumnState();
 }
 
 class _InspectMobilePerkColumnState extends State<InspectMobilePerkColumn> {

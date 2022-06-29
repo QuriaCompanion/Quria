@@ -37,8 +37,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      bool selected =
-          widget.sockets.any((socket) => socket.plugHash == widget.perk.hash);
+      bool selected = widget.sockets.any((socket) => socket.plugHash == widget.perk.hash);
       return InkWell(
         onTap: () {
           showMaterialModalBottomSheet(
@@ -51,8 +50,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
                   isSelected: selected,
                   perk: widget.perk,
                   instanceId: widget.instanceId,
-                  onSocketsChanged: (newSockets) =>
-                      widget.onSocketsChanged(newSockets),
+                  onSocketsChanged: (newSockets) => widget.onSocketsChanged(newSockets),
                   characterId: widget.characterId,
                   index: widget.index,
                 );
@@ -65,18 +63,12 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
             });
             try {
               BungieApiService()
-                  .insertSocketPlugFree(
-                      widget.instanceId!,
-                      widget.perk.hash!,
-                      widget.index,
-                      Provider.of<CharactersProvider>(context, listen: false)
-                          .currentCharacter!
-                          .characterId)
+                  .insertSocketPlugFree(widget.instanceId!, widget.perk.hash!, widget.index,
+                      Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId)
                   .then((value) async {
                 setState(() {
                   loading = false;
-                  widget.onSocketsChanged(
-                      value?.response?.item?.sockets?.data?.sockets);
+                  widget.onSocketsChanged(value?.response?.item?.sockets?.data?.sockets);
                 });
               });
             } catch (e) {
@@ -87,10 +79,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
           }
         },
         child: PerkItemDisplay(
-            perk: widget.perk,
-            selected: selected,
-            loading: loading,
-            iconSize: itemSize(context, widget.width)),
+            perk: widget.perk, selected: selected, loading: loading, iconSize: itemSize(context, widget.width)),
       );
     });
   }

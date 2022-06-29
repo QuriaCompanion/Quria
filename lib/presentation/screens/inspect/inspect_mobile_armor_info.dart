@@ -83,8 +83,7 @@ class _InspectMobileArmorInfoState extends State<InspectMobileArmorInfo> {
       ),
       mobileSection(context,
           title: AppLocalizations.of(context)!.origin,
-          child:
-              InspectMobileOrigin(collectionHash: widget.item.collectibleHash))
+          child: InspectMobileOrigin(collectionHash: widget.item.collectibleHash))
     ]);
   }
 }

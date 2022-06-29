@@ -28,21 +28,16 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? sockets =
-        ManifestService
-            .manifestParsed
-            .destinyPlugSetDefinition[widget.item.sockets!
-                .socketEntries?[widget.index].randomizedPlugSetHash]
-            ?.reusablePlugItems;
+    final List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? sockets = ManifestService
+        .manifestParsed
+        .destinyPlugSetDefinition[widget.item.sockets!.socketEntries?[widget.index].randomizedPlugSetHash]
+        ?.reusablePlugItems;
     return Column(
       children: [
-        if (widget.item.sockets?.socketEntries?[widget.index]
-                .randomizedPlugSetHash !=
-            null)
+        if (widget.item.sockets?.socketEntries?[widget.index].randomizedPlugSetHash != null)
           for (int i = 0; i < sockets!.length; i++)
             Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
+              padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
               child: InkWell(
                 onTap: () {
                   showMaterialModalBottomSheet(
@@ -52,36 +47,26 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                       builder: (context) {
                         return PerkModal(
                           width: vw(context),
-                          perk: ManifestService.manifestParsed
-                                  .destinyInventoryItemDefinition[
-                              sockets[i].plugItemHash]!,
+                          perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
                           onSocketsChanged: (_) {
                             setState(() {
                               selectedIndex = i;
                               switch (widget.index) {
                                 case 1:
-                                  widget.selectedPerks.firstColumn =
-                                      ManifestService.manifestParsed
-                                              .destinyInventoryItemDefinition[
-                                          sockets[i].plugItemHash]!;
+                                  widget.selectedPerks.firstColumn = ManifestService
+                                      .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
                                   break;
                                 case 2:
-                                  widget.selectedPerks.secondColumn =
-                                      ManifestService.manifestParsed
-                                              .destinyInventoryItemDefinition[
-                                          sockets[i].plugItemHash]!;
+                                  widget.selectedPerks.secondColumn = ManifestService
+                                      .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
                                   break;
                                 case 3:
-                                  widget.selectedPerks.thirdColumn =
-                                      ManifestService.manifestParsed
-                                              .destinyInventoryItemDefinition[
-                                          sockets[i].plugItemHash]!;
+                                  widget.selectedPerks.thirdColumn = ManifestService
+                                      .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
                                   break;
                                 case 4:
-                                  widget.selectedPerks.fourthColumn =
-                                      ManifestService.manifestParsed
-                                              .destinyInventoryItemDefinition[
-                                          sockets[i].plugItemHash]!;
+                                  widget.selectedPerks.fourthColumn = ManifestService
+                                      .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
                                   break;
                               }
                             });
@@ -91,15 +76,12 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                 },
                 child: PerkItemDisplay(
                   selected: selectedIndex == i,
-                  perk: ManifestService.manifestParsed
-                      .destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
+                  perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
                   iconSize: itemSize(context, widget.width),
                 ),
               ),
             ),
-        if (widget.item.sockets?.socketEntries?[widget.index]
-                .randomizedPlugSetHash ==
-            null)
+        if (widget.item.sockets?.socketEntries?[widget.index].randomizedPlugSetHash == null)
           Padding(
             padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
             child: InkWell(
@@ -111,18 +93,14 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                     builder: (context) {
                       return PerkModal(
                         width: vw(context),
-                        perk: ManifestService
-                                .manifestParsed.destinyInventoryItemDefinition[
-                            widget.item.sockets?.socketEntries?[widget.index]
-                                .singleInitialItemHash]!,
+                        perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
+                            widget.item.sockets?.socketEntries?[widget.index].singleInitialItemHash]!,
                       );
                     });
               },
               child: PerkItemDisplay(
-                perk: ManifestService
-                        .manifestParsed.destinyInventoryItemDefinition[
-                    widget.item.sockets?.socketEntries?[widget.index]
-                        .singleInitialItemHash]!,
+                perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
+                    widget.item.sockets?.socketEntries?[widget.index].singleInitialItemHash]!,
                 iconSize: itemSize(context, widget.width),
                 selected: true,
               ),

@@ -12,26 +12,18 @@ class SingleItemCard extends StatelessWidget {
   final DestinyInventoryItemDefinition data;
   final double fontSize;
   final double sizes;
-  const SingleItemCard(
-      {required this.data, this.fontSize = 20, this.sizes = 150, Key? key})
-      : super(key: key);
+  const SingleItemCard({required this.data, this.fontSize = 20, this.sizes = 150, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => {
-        StorageService.setLocalStorage("exotic", data.hash),
-        Navigator.pushNamed(context, routeBuilder)
-      },
+      onTap: () => {StorageService.setLocalStorage("exotic", data.hash), Navigator.pushNamed(context, routeBuilder)},
       child: Container(
         decoration: regularShadow,
         child: Column(
           mainAxisSize: MainAxisSize.max,
           children: [
-            Image.network(
-                DestinyData.bungieLink + data.displayProperties!.icon!,
-                width: sizes,
-                fit: BoxFit.fill),
+            Image.network(DestinyData.bungieLink + data.displayProperties!.icon!, width: sizes, fit: BoxFit.fill),
             Text(utf8.decode(data.displayProperties!.name!.runes.toList()),
                 textAlign: TextAlign.center,
                 style: TextStyle(fontSize: fontSize, color: Colors.white),

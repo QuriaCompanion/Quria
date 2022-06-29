@@ -33,14 +33,11 @@ class _CollectionWeaponPageState extends State<CollectionWeaponPage> {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: _future,
-        builder: (context,
-            AsyncSnapshot<Iterable<DestinyInventoryItemDefinition>> snapshot) {
+        builder: (context, AsyncSnapshot<Iterable<DestinyInventoryItemDefinition>> snapshot) {
           if (snapshot.hasData) {
             if (vw(context) < 1000) {
               return Scaffold(
-                  drawer: const Burger(),
-                  backgroundColor: black,
-                  body: CollectionMobileView(items: snapshot.data!));
+                  drawer: const Burger(), backgroundColor: black, body: CollectionMobileView(items: snapshot.data!));
             } else {
               return ScaffoldDesktop(
                 body: SingleChildScrollView(

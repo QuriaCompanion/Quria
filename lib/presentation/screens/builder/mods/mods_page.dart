@@ -21,87 +21,57 @@ class ModsPage extends StatelessWidget {
         // helmet
         ModSlots(
             title: AppLocalizations.of(context)!.helmet,
-            elementSocketEntries: ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition[3473581026]!
-                .sockets!
-                .socketEntries!,
+            elementSocketEntries:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[3473581026]!.sockets!.socketEntries!,
             items: [
               null,
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[807186981],
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[807186981],
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[2493100093],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[807186981],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[807186981],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[2493100093],
             ]),
         // gauntlets
         ModSlots(
             title: AppLocalizations.of(context)!.gauntlets,
-            elementSocketEntries: ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition[2771648715]!
-                .sockets!
-                .socketEntries!,
+            elementSocketEntries:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[2771648715]!.sockets!.socketEntries!,
             items: [
               null,
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[1844045567],
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[1844045567],
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[2493100093],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[1844045567],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[1844045567],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[2493100093],
             ]),
         // chest
         ModSlots(
             title: AppLocalizations.of(context)!.chest,
-            elementSocketEntries: ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition[549825413]!
-                .sockets!
-                .socketEntries!,
+            elementSocketEntries:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[549825413]!.sockets!.socketEntries!,
             items: [
               null,
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[1659393211],
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[1659393211],
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[2493100093],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[1659393211],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[1659393211],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[2493100093],
             ]),
         // legs
         ModSlots(
             title: AppLocalizations.of(context)!.legs,
-            elementSocketEntries: ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition[4287863773]!
-                .sockets!
-                .socketEntries!,
+            elementSocketEntries:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[4287863773]!.sockets!.socketEntries!,
             items: [
               null,
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[573150099],
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[573150099],
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[2493100093],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[573150099],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[573150099],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[2493100093],
             ]),
         // class items
         ModSlots(
             title: AppLocalizations.of(context)!.builder_mods_title,
-            elementSocketEntries: ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition[3500810712]!
-                .sockets!
-                .socketEntries!,
+            elementSocketEntries:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[3500810712]!.sockets!.socketEntries!,
             items: [
               null,
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[1137289077],
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[1137289077],
-              ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[2493100093],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[1137289077],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[1137289077],
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[2493100093],
             ]),
       ];
       Provider.of<BuilderModsProvider>(context, listen: false).init(armorMods);
@@ -112,8 +82,7 @@ class ModsPage extends StatelessWidget {
         body: ModsMobileView(
           armorMods: armorMods,
           onChange: (newMods) {
-            Provider.of<BuilderModsProvider>(context, listen: false)
-                .setMods(newMods);
+            Provider.of<BuilderModsProvider>(context, listen: false).setMods(newMods);
           },
         ),
       );

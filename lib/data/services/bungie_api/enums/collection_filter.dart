@@ -38,8 +38,7 @@ class CollectionFilter {
     "Epée": DestinyItemSubType.Sword,
     "Fusion linéaire": DestinyItemSubType.FusionRifleLine,
   };
-  static const Map<DestinyAmmunitionType, Map<String, DestinyItemSubType>>
-      typeFilters = {
+  static const Map<DestinyAmmunitionType, Map<String, DestinyItemSubType>> typeFilters = {
     DestinyAmmunitionType.Primary: kinetic,
     DestinyAmmunitionType.Special: energy,
     DestinyAmmunitionType.Heavy: power,

@@ -10,8 +10,7 @@ import 'package:quria/presentation/components/Header/mobile_components/mobile_ch
 
 class CharacterAppbar extends StatefulWidget {
   final Function(int) onCharacterChange;
-  const CharacterAppbar({required this.onCharacterChange, Key? key})
-      : super(key: key);
+  const CharacterAppbar({required this.onCharacterChange, Key? key}) : super(key: key);
 
   @override
   State<CharacterAppbar> createState() => _CharacterAppbarState();
@@ -22,8 +21,7 @@ class _CharacterAppbarState extends State<CharacterAppbar> {
   @override
   initState() {
     super.initState();
-    characters =
-        Provider.of<CharactersProvider>(context, listen: false).characters;
+    characters = Provider.of<CharactersProvider>(context, listen: false).characters;
   }
 
   bool choosingCharacter = false;
@@ -38,16 +36,12 @@ class _CharacterAppbarState extends State<CharacterAppbar> {
             child: Container(
               alignment: Alignment.topCenter,
               padding: EdgeInsets.only(
-                top:
-                    MediaQuery.of(context).padding.top + globalPadding(context),
+                top: MediaQuery.of(context).padding.top + globalPadding(context),
               ),
               child: SizedBox(
                 width: appBarItem(context),
                 height: appBarItem(context),
-                child: SvgPicture.asset(
-                  "assets/icons/Menu.svg",
-                  color: Colors.white,
-                ),
+                child: SvgPicture.asset("assets/icons/Menu.svg", color: Colors.white),
               ),
             ),
           );
@@ -60,17 +54,13 @@ class _CharacterAppbarState extends State<CharacterAppbar> {
       flexibleSpace: SizedBox(
         width: vw(context),
         height: choosingCharacter
-            ? MediaQuery.of(context).padding.top +
-                (globalPadding(context) * 4) +
-                (appBarItem(context)) * 3
+            ? MediaQuery.of(context).padding.top + (globalPadding(context) * 4) + (appBarItem(context)) * 3
             : appBarHeight(context),
         child: ClipRect(
           child: BackdropFilter(
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Padding(
-              padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top +
-                      globalPadding(context)),
+              padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + globalPadding(context)),
               child: MobileCharacterChoice(
                 callback: (newIndex) {
                   setState(() {

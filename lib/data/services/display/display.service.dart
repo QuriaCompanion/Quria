@@ -40,23 +40,19 @@ class DisplayService {
   static bool isManifestUp = false;
   static bool isProfileUp = false;
 
-  static Future<List<DestinyInventoryItemDefinition>> getExotics(
-      BuildContext context, DestinyClass classType) async {
+  static Future<List<DestinyInventoryItemDefinition>> getExotics(BuildContext context, DestinyClass classType) async {
     List<DestinyItemComponent> items =
-        Provider.of<InventoryProvider>(context, listen: false)
-            .getArmorForClass(classType);
+        Provider.of<InventoryProvider>(context, listen: false).getArmorForClass(classType);
 
     List<DestinyInventoryItemDefinition> exoticItems = await compute(
         exoticLoop,
         ExoticHelper(
-            manifest:
-                ManifestService.manifestParsed.destinyInventoryItemDefinition,
+            manifest: ManifestService.manifestParsed.destinyInventoryItemDefinition,
             items: items,
             classType: classType));
     final List<int> ids = [];
     for (final item in exoticItems) {
-      for (DestinyItemSocketEntryDefinition sockets
-          in item.sockets!.socketEntries!) {
+      for (DestinyItemSocketEntryDefinition sockets in item.sockets!.socketEntries!) {
         if (sockets.singleInitialItemHash != null) {
           ids.add(sockets.singleInitialItemHash!);
         }
@@ -81,9 +77,7 @@ class DisplayService {
   }
 
   static Future<void> profileLoader(BuildContext context) async {
-    isProfileUp
-        ? ProfileService().fetchProfileData(context)
-        : await ProfileService().fetchProfileData(context);
+    isProfileUp ? ProfileService().fetchProfileData(context) : await ProfileService().fetchProfileData(context);
     isProfileUp = true;
     return;
   }
@@ -93,16 +87,13 @@ class DisplayService {
     return;
   }
 
-  static int remainingModPoints(
-      int base, Map<int, DestinyItemSocketState> mods) {
+  static int remainingModPoints(int base, Map<int, DestinyItemSocketState> mods) {
     int remaining = base;
     for (final modState in mods.values) {
-      DestinyInventoryItemDefinition? mod = ManifestService
-          .manifestParsed.destinyInventoryItemDefinition[modState.plugHash];
+      DestinyInventoryItemDefinition? mod =
+          ManifestService.manifestParsed.destinyInventoryItemDefinition[modState.plugHash];
       // check if the mod has bonus stats
-      if (mod != null &&
-          mod.investmentStats != null &&
-          mod.investmentStats!.isNotEmpty) {
+      if (mod != null && mod.investmentStats != null && mod.investmentStats!.isNotEmpty) {
         // loops through the bonus stats
         for (var stat in mod.investmentStats!) {
           // if it has a cost to the armor it reduces the armor mod space
@@ -124,37 +115,23 @@ class DisplayService {
 
   static ProfileHelper getProfileData(BuildContext context) {
     try {
-      DestinyCharacterComponent selectedCharacter =
-          Provider.of<CharactersProvider>(context).currentCharacter!;
+      DestinyCharacterComponent selectedCharacter = Provider.of<CharactersProvider>(context).currentCharacter!;
       List<DestinyItemComponent> equipement =
-          Provider.of<InventoryProvider>(context)
-              .getCharacterEquipment(selectedCharacter.characterId!);
-      List<DestinyItemComponent> inventory =
-          Provider.of<InventoryProvider>(context)
-              .getCharacterInventory(selectedCharacter.characterId!)
-              .where((element) => element.bucketHash != 215593132)
-              .toList();
+          Provider.of<InventoryProvider>(context).getCharacterEquipment(selectedCharacter.characterId!);
+      List<DestinyItemComponent> inventory = Provider.of<InventoryProvider>(context)
+          .getCharacterInventory(selectedCharacter.characterId!)
+          .where((element) => element.bucketHash != 215593132)
+          .toList();
       DestinyItemComponent selectedCharacterSubclass =
-          Provider.of<InventoryProvider>(context)
-              .getCurrentSubClassForCharacter(selectedCharacter.characterId!);
+          Provider.of<InventoryProvider>(context).getCurrentSubClassForCharacter(selectedCharacter.characterId!);
       int? superHash = Provider.of<InventoryProvider>(context)
-          .getCurrentSuperHashForCharacter(
-              context, selectedCharacter.characterId!);
-      String characterSuper = ManifestService
-              .manifestParsed
-              .destinyInventoryItemDefinition[superHash]
-              ?.displayProperties
-              ?.icon ??
-          ManifestService
-              .manifestParsed
-              .destinySandboxPerkDefinition[
-                  DestinyData.superNodeToSandbox[superHash]]
-              ?.displayProperties
-              ?.icon ??
-          "";
-      bool isNewSubclass = ManifestService
-              .manifestParsed.destinyInventoryItemDefinition[superHash] !=
-          null;
+          .getCurrentSuperHashForCharacter(context, selectedCharacter.characterId!);
+      String characterSuper =
+          ManifestService.manifestParsed.destinyInventoryItemDefinition[superHash]?.displayProperties?.icon ??
+              ManifestService.manifestParsed.destinySandboxPerkDefinition[DestinyData.superNodeToSandbox[superHash]]
+                  ?.displayProperties?.icon ??
+              "";
+      bool isNewSubclass = ManifestService.manifestParsed.destinyInventoryItemDefinition[superHash] != null;
       return ProfileHelper(
           selectedCharacter: selectedCharacter,
           selectedCharacterEquipment: equipement,
@@ -167,37 +144,22 @@ class DisplayService {
     }
   }
 
-  static ItemInfoHelper getItemInfo(BuildContext context,
-      {required String itemInstanceId, required int itemHash}) {
+  static ItemInfoHelper getItemInfo(BuildContext context, {required String itemInstanceId, required int itemHash}) {
     try {
-      DestinyInventoryItemDefinition itemDef = ManifestService
-          .manifestParsed.destinyInventoryItemDefinition[itemHash]!;
-      Map<String, DestinyStat>? stats = Provider.of<ItemProvider>(context)
-          .getPrecalculatedStats(itemInstanceId);
-      DestinyItemInstanceComponent instanceInfo =
-          Provider.of<ItemProvider>(context).getInstanceInfo(itemInstanceId)!;
+      DestinyInventoryItemDefinition itemDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!;
+      Map<String, DestinyStat>? stats = Provider.of<ItemProvider>(context).getPrecalculatedStats(itemInstanceId);
+      DestinyItemInstanceComponent instanceInfo = Provider.of<ItemProvider>(context).getInstanceInfo(itemInstanceId)!;
       int? powerLevel = instanceInfo.primaryStat?.value;
       String imageLink = DestinyData.bungieLink + itemDef.screenshot!;
       String? elementIcon = ManifestService
-              .manifestParsed
-              .destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]
-              ?.displayProperties
-              ?.icon ??
+              .manifestParsed.destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]?.displayProperties?.icon ??
           ManifestService
-              .manifestParsed
-              .destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]
-              ?.displayProperties
-              ?.icon;
+              .manifestParsed.destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]?.displayProperties?.icon;
       Map<String, List<DestinyItemPlugBase>>? plugs =
-          Provider.of<ItemProvider>(context)
-              .getItemReusablePlugs(itemInstanceId);
-      List<DestinyItemSocketState> sockets =
-          Provider.of<ItemProvider>(context).getItemSockets(itemInstanceId);
+          Provider.of<ItemProvider>(context).getItemReusablePlugs(itemInstanceId);
+      List<DestinyItemSocketState> sockets = Provider.of<ItemProvider>(context).getItemSockets(itemInstanceId);
       String? afinityIcon = ManifestService
-          .manifestParsed
-          .destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]
-          ?.displayProperties
-          ?.icon;
+          .manifestParsed.destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]?.displayProperties?.icon;
       return ItemInfoHelper(
           itemDef: itemDef,
           stats: stats,
@@ -212,34 +174,23 @@ class DisplayService {
     }
   }
 
-  static ItemCardHelper getCardData(BuildContext context,
-      {required String itemInstanceId, required int? itemHash}) {
-    final instanceInfo = Provider.of<ItemProvider>(context, listen: false)
-        .getInstanceInfo(itemInstanceId);
-    final DestinyInventoryItemDefinition itemDef = ManifestService
-        .manifestParsed.destinyInventoryItemDefinition[itemHash]!;
+  static ItemCardHelper getCardData(BuildContext context, {required String itemInstanceId, required int? itemHash}) {
+    final instanceInfo = Provider.of<ItemProvider>(context, listen: false).getInstanceInfo(itemInstanceId);
+    final DestinyInventoryItemDefinition itemDef =
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!;
     final DestinyEquipmentSlotDefinition itemCategory =
-        ManifestService.manifestParsed.destinyEquipmentSlotDefinition[
-            itemDef.equippingBlock!.equipmentSlotTypeHash]!;
+        ManifestService.manifestParsed.destinyEquipmentSlotDefinition[itemDef.equippingBlock!.equipmentSlotTypeHash]!;
     final String? elementIcon = ManifestService
-            .manifestParsed
-            .destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]
-            ?.displayProperties
-            ?.icon ??
+            .manifestParsed.destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]?.displayProperties?.icon ??
         ManifestService
-            .manifestParsed
-            .destinyEnergyTypeDefinition[instanceInfo?.energy?.energyTypeHash]
-            ?.displayProperties
-            ?.icon;
+            .manifestParsed.destinyEnergyTypeDefinition[instanceInfo?.energy?.energyTypeHash]?.displayProperties?.icon;
 
     final int? powerLevel = instanceInfo?.primaryStat?.value;
 
     List<DestinyItemSocketState> sockets =
-        Provider.of<ItemProvider>(context, listen: false)
-            .getItemSockets(itemInstanceId);
-    final List<DestinyItemSocketState> perks = sockets
-        .where((element) => Conditions.perkSockets(element.plugHash))
-        .toList();
+        Provider.of<ItemProvider>(context, listen: false).getItemSockets(itemInstanceId);
+    final List<DestinyItemSocketState> perks =
+        sockets.where((element) => Conditions.perkSockets(element.plugHash)).toList();
 
     final List<DestinyItemSocketState> armorSockets =
         sockets.where((element) => Conditions.amorSockets(element)).toList();
@@ -247,29 +198,16 @@ class DisplayService {
         .where((element) =>
             element.plugHash != null &&
                 ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[element.plugHash]
-                        ?.displayProperties
-                        ?.icon !=
+                        .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.displayProperties?.icon !=
                     null &&
                 DestinyData.modCategoryHash.contains(
                   ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition[element.plugHash]!
-                      .plug!
-                      .plugCategoryHash,
+                      .manifestParsed.destinyInventoryItemDefinition[element.plugHash]!.plug!.plugCategoryHash,
                 ) ||
             (itemDef.itemType == DestinyItemType.Weapon &&
-                (ManifestService
-                            .manifestParsed
-                            .destinyInventoryItemDefinition[element.plugHash]
-                            ?.plug
-                            ?.plugStyle ==
+                (ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugStyle ==
                         PlugUiStyles.Masterwork ||
-                    ManifestService
-                            .manifestParsed
-                            .destinyInventoryItemDefinition[element.plugHash]
-                            ?.plug
+                    ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug
                             ?.plugCategoryIdentifier
                             ?.contains('masterworks.stat') ==
                         true)))
@@ -285,52 +223,31 @@ class DisplayService {
         armorSockets: armorSockets);
   }
 
-  static DestinyInventoryItemDefinition getPerk(
-      DestinyInventoryItemDefinition item) {
-    return ManifestService.manifestParsed.destinyInventoryItemDefinition[item
-        .sockets!.socketEntries
+  static DestinyInventoryItemDefinition getPerk(DestinyInventoryItemDefinition item) {
+    return ManifestService.manifestParsed.destinyInventoryItemDefinition[item.sockets!.socketEntries
         ?.firstWhere((element) =>
-            ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[
-                            element.singleInitialItemHash]
-                        ?.plug
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.singleInitialItemHash]?.plug
                         ?.plugCategoryHash ==
                     1744546145 &&
-                ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[
-                            element.singleInitialItemHash]
-                        ?.inventory
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[element.singleInitialItemHash]?.inventory
                         ?.tierType ==
                     TierType.Exotic ||
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[
-                        element.singleInitialItemHash]
-                    ?.hash ==
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.singleInitialItemHash]?.hash ==
                 3268255645)
         .singleInitialItemHash]!;
   }
 
-  static Future<DestinyInventoryItemDefinition?> getCollectionItem(
-      int itemHash) async {
+  static Future<DestinyInventoryItemDefinition?> getCollectionItem(int itemHash) async {
     List<int> ids = [itemHash];
-    final item =
-        await StorageService.isar.destinyInventoryItemDefinitions.get(itemHash);
+    final item = await StorageService.isar.destinyInventoryItemDefinitions.get(itemHash);
     for (final sockets in item!.sockets!.socketEntries!) {
-      if (ManifestService
-              .manifestParsed
-              .destinyPlugSetDefinition[sockets.randomizedPlugSetHash]
-              ?.reusablePlugItems ==
+      if (ManifestService.manifestParsed.destinyPlugSetDefinition[sockets.randomizedPlugSetHash]?.reusablePlugItems ==
           null) continue;
       if (sockets.singleInitialItemHash != null) {
         ids.add(sockets.singleInitialItemHash!);
       }
       for (final plug in ManifestService
-          .manifestParsed
-          .destinyPlugSetDefinition[sockets.randomizedPlugSetHash]!
-          .reusablePlugItems!) {
+          .manifestParsed.destinyPlugSetDefinition[sockets.randomizedPlugSetHash]!.reusablePlugItems!) {
         if (plug.plugItemHash != null) ids.add(plug.plugItemHash!);
       }
     }
@@ -338,8 +255,7 @@ class DisplayService {
     return item;
   }
 
-  static Map<String, String> getStatsListing(
-      BuildContext context, String characterId, Map<String, int> stats) {
+  static Map<String, String> getStatsListing(BuildContext context, String characterId, Map<String, int> stats) {
     String formatTime(int time) {
       var minutes = (time ~/ 60);
       var seconds = time % 60;
@@ -354,18 +270,17 @@ class DisplayService {
     if (superTier > 10) superTier = 10;
     if (strengthTier > 10) strengthTier = 10;
 
-    int? grenadeHash = Provider.of<InventoryProvider>(context, listen: false)
-        .getCurrentGrenadeHashForCharacter(context, characterId);
+    int? grenadeHash =
+        Provider.of<InventoryProvider>(context, listen: false).getCurrentGrenadeHashForCharacter(context, characterId);
 
-    int grenadeTimer =
-        GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier] ?? 0;
+    int grenadeTimer = GrenadeCooldown.grenadeMap[grenadeHash]?[disciplineTier] ?? 0;
 
-    int? superHash = Provider.of<InventoryProvider>(context, listen: false)
-        .getCurrentSuperHashForCharacter(context, characterId);
+    int? superHash =
+        Provider.of<InventoryProvider>(context, listen: false).getCurrentSuperHashForCharacter(context, characterId);
     int superTimer = SuperCooldown.superMap[superHash]?[superTier] ?? 0;
 
-    int? meleeHash = Provider.of<InventoryProvider>(context, listen: false)
-        .getCurrentMeleeHashForCharacter(context, characterId);
+    int? meleeHash =
+        Provider.of<InventoryProvider>(context, listen: false).getCurrentMeleeHashForCharacter(context, characterId);
     int meleeTimer = MeleeCooldown.meleeMap[meleeHash]?[strengthTier] ?? 0;
 
     return {
@@ -375,25 +290,20 @@ class DisplayService {
     };
   }
 
-  static List<DestinyInventoryItemDefinition> exoticLoop(
-      ExoticHelper exoticHelper) {
+  static List<DestinyInventoryItemDefinition> exoticLoop(ExoticHelper exoticHelper) {
     List<DestinyInventoryItemDefinition> exoticItems = [];
     for (DestinyItemComponent element in exoticHelper.items) {
-      if (exoticHelper.manifest[element.itemHash]?.inventory?.tierType ==
-              TierType.Exotic &&
+      if (exoticHelper.manifest[element.itemHash]?.inventory?.tierType == TierType.Exotic &&
           !exoticItems.contains(exoticHelper.manifest[element.itemHash]) &&
-          exoticHelper.manifest[element.itemHash]?.classType ==
-              exoticHelper.classType) {
+          exoticHelper.manifest[element.itemHash]?.classType == exoticHelper.classType) {
         exoticItems.add(exoticHelper.manifest[element.itemHash]!);
       }
     }
-    exoticItems
-        .sort((a, b) => a.itemSubType!.index.compareTo(b.itemSubType!.index));
+    exoticItems.sort((a, b) => a.itemSubType!.index.compareTo(b.itemSubType!.index));
     return exoticItems;
   }
 
-  static Future<Iterable<DestinyInventoryItemDefinition>> getCollectionByType(
-      DestinyItemType type) async {
+  static Future<Iterable<DestinyInventoryItemDefinition>> getCollectionByType(DestinyItemType type) async {
     return await StorageService.isar.destinyInventoryItemDefinitions
         .filter()
         .itemTypeEqualTo(type)
@@ -401,18 +311,12 @@ class DisplayService {
         .findAll();
   }
 
-  static SocketsHelper getSubclassMods(
-      BuildContext context, String subclassInstanceId) {
-    final sockets = Provider.of<ItemProvider>(context, listen: false)
-        .getItemSockets(subclassInstanceId);
-    final displayedSockets = sockets
-        .map((e) => ManifestService
-            .manifestParsed.destinyInventoryItemDefinition[e.plugHash]!)
-        .toList();
+  static SocketsHelper getSubclassMods(BuildContext context, String subclassInstanceId) {
+    final sockets = Provider.of<ItemProvider>(context, listen: false).getItemSockets(subclassInstanceId);
+    final displayedSockets =
+        sockets.map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e.plugHash]!).toList();
     final def = ManifestService.manifestParsed.destinyInventoryItemDefinition[
-        Provider.of<InventoryProvider>(context, listen: false)
-            .getItemByInstanceId(subclassInstanceId)
-            ?.itemHash];
+        Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(subclassInstanceId)?.itemHash];
     return SocketsHelper(
       sockets: sockets,
       displayedSockets: displayedSockets,
@@ -423,16 +327,13 @@ class DisplayService {
   static Future<List<Donator>> fetchDonators() async {
     const token =
         'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI5MTI5ZDIwMC1kYTdkLTRjY2MtOWQzZC01ODA0MTU0ZTgyMjYiLCJqdGkiOiJkNmEwNTMzMTUyYzMzNjFlZjQ2YmRlOGE3Yjk5NzQzNWVhNmJkZGEyY2JjOTNmY2Y3ZmU3MmI0MTMxMTVlYzA2OWVjOGU2NTJlMjc4MDBiMyIsImlhdCI6MTY1NTA1ODc5MiwibmJmIjoxNjU1MDU4NzkyLCJleHAiOjE2NzA4Njk5OTIsInN1YiI6IjIxMDY1MzkiLCJzY29wZXMiOlsicmVhZC1vbmx5Il19.A10kQcJoOMqUiEzTPvcHW_rzJWA0QzjH8DqrVS4EI_gZ4VE-9Mf1XJYIIiexv0iHhu--tgQqeSi4U8cBXJ-hviCd_61SvPTRkOtdU3gEW2gLlQi6uS2YrEW8MVZecOpMV94kBjhMj2cMCSVN66I1oo0gwSht_zOkYYkqp7Eiq7iBdk60sg6Mhmbar-7Gbajy7slJRhFTC-tb2yihxmjBYqQlPuaZOtYfjPMiocs7sS18qZX8feCEMdQiCsGkiK-GML60gKXPzwJAIU3QOM_xVDM0qXzw3pRDNBGSSARyrfn_FF1xlLrBQFSa-04AAU_zVo4rt3VBwvfHqF7BvgOK_NT6lnRxcxHNOy5TDBBCWYaz7HF8dpHmMZrBKMlEggWTzf79evf6fRNneeu4rSA8gpgmmyzZHAht8MGk-toV5I8nAegWUjtNOWhUV3htmUYlurvzm0-cOh0twz2p0TRG50Cid_HwwX4G5PDFc_ncRm2OdCLkJ1J6DuZQeVbtiiAIM--wIR26GZoK5v1e8mlY2CEuIKgTrgZK0gBCHVw386iGlUTroSPjn3YwUh9igyZvQrPIEd12VRH0xo3NvmCi3Fp4VBF067nUhIe4BMuSh-spMQZ3-i_VMmGjf_9CH85jZRUKgMjmrKMmp3YtG_9Da9h9m-v65xCMf5kS7EXoYfc';
-    final response = await http.get(
-        Uri.parse('https://developers.buymeacoffee.com/api/v1/supporters'),
+    final response = await http.get(Uri.parse('https://developers.buymeacoffee.com/api/v1/supporters'),
         headers: {'Authorization': 'Bearer $token'});
     final json = jsonDecode(response.body);
     List<Donator> donators = Donator.fromJsonList(json);
     if (json['last_page'] > 1) {
       for (var page = 2; page <= json['last_page']; page++) {
-        final response = await http.get(
-            Uri.parse(
-                'https://developers.buymeacoffee.com/api/v1/supporters?page=$page'),
+        final response = await http.get(Uri.parse('https://developers.buymeacoffee.com/api/v1/supporters?page=$page'),
             headers: {'Authorization': 'Bearer $token'});
         donators.addAll(Donator.fromJsonList(jsonDecode(response.body)));
       }

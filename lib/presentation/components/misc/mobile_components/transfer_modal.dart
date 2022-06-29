@@ -30,11 +30,9 @@ class TransferModal extends StatefulWidget {
 class _TransferModalState extends State<TransferModal> {
   @override
   Widget build(BuildContext context) {
-    final owner =
-        Provider.of<InventoryProvider>(context).getItemOwner(widget.instanceId);
-    final characters = Provider.of<CharactersProvider>(context)
-        .characters
-        .where((element) => element.characterId != owner);
+    final owner = Provider.of<InventoryProvider>(context).getItemOwner(widget.instanceId);
+    final characters =
+        Provider.of<CharactersProvider>(context).characters.where((element) => element.characterId != owner);
 
     return SingleChildScrollView(
       child: Container(
@@ -94,8 +92,7 @@ class _TransferModalState extends State<TransferModal> {
                     )
                         .then((_) {
                       Navigator.pop(context);
-                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
-                          .showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                         content: textBodyMedium(
                           AppLocalizations.of(context)!.item_transfered,
                           utf8: false,
@@ -114,18 +111,14 @@ class _TransferModalState extends State<TransferModal> {
                   },
                   child: CharacterTransferItem(
                     imageLink: DestinyData.bungieLink + character.emblemPath!,
-                    name: ManifestService
-                            .manifestParsed
-                            .destinyClassDefinition[character.classHash]!
-                            .genderedClassNamesByGenderHash![
-                        character.genderHash.toString()]!,
+                    name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
+                        .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                     icon: "assets/icons/Transfer.svg",
                     powerLevel: character.light,
                   ),
                 ),
               ),
-            if (characters.length <
-                Provider.of<CharactersProvider>(context).characters.length)
+            if (characters.length < Provider.of<CharactersProvider>(context).characters.length)
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: globalPadding(context) / 2,
@@ -143,8 +136,7 @@ class _TransferModalState extends State<TransferModal> {
                     )
                         .then((_) {
                       Navigator.pop(context);
-                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
-                          .showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                         content: textBodyMedium(
                           AppLocalizations.of(context)!.item_transfered,
                           utf8: false,

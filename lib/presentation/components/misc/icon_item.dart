@@ -33,28 +33,18 @@ class ItemIcon extends StatelessWidget {
         children: [
           Image(
             image: NetworkImage(DestinyData.bungieLink +
-                ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[displayHash]!
-                    .displayProperties!
-                    .icon!),
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!),
             height: imageSize,
             width: imageSize,
             fit: BoxFit.fill,
           ),
-          if (ManifestService
-                  .manifestParsed
-                  .destinyInventoryItemDefinition[displayHash]!
-                  .quality
+          if (ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
                   ?.displayVersionWatermarkIcons?[0] !=
               null)
             Image(
               image: NetworkImage(
                 DestinyData.bungieLink +
-                    ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[displayHash]!
-                        .quality!
+                    ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!
                         .displayVersionWatermarkIcons![0],
               ),
               height: imageSize,
@@ -77,9 +67,7 @@ class ItemIcon extends StatelessWidget {
                     if (element != null)
                       Padding(
                         padding: const EdgeInsets.only(left: 4),
-                        child: Image(
-                            image: NetworkImage(
-                                DestinyData.bungieLink + element!)),
+                        child: Image(image: NetworkImage(DestinyData.bungieLink + element!)),
                       ),
                     textIcon(powerLevel.toString())
                   ],

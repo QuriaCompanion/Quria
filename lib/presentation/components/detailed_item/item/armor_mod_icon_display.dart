@@ -7,9 +7,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 class ArmorModIconDisplay extends StatelessWidget {
   final DestinyInventoryItemDefinition socket;
   final double iconSize;
-  const ArmorModIconDisplay(
-      {required this.iconSize, required this.socket, Key? key})
-      : super(key: key);
+  const ArmorModIconDisplay({required this.iconSize, required this.socket, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,32 +21,22 @@ class ArmorModIconDisplay extends StatelessWidget {
           Image(
             width: iconSize,
             height: iconSize,
-            image: NetworkImage(
-                DestinyData.bungieLink + socket.displayProperties!.icon!),
+            image: NetworkImage(DestinyData.bungieLink + socket.displayProperties!.icon!),
           ),
           if (socket.investmentStats!.isNotEmpty &&
-              ManifestService
-                      .manifestParsed
-                      .destinyStatDefinition[
-                          socket.investmentStats?[0].statTypeHash]
-                      ?.displayProperties
-                      ?.hasIcon ==
+              ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats?[0].statTypeHash]
+                      ?.displayProperties?.hasIcon ==
                   true)
             Image(
               width: iconSize,
               height: iconSize,
               image: NetworkImage(DestinyData.bungieLink +
-                  ManifestService
-                      .manifestParsed
-                      .destinyStatDefinition[
-                          socket.investmentStats![0].statTypeHash]!
-                      .displayProperties!
-                      .icon!),
+                  ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!
+                      .displayProperties!.icon!),
             ),
           Padding(
             padding: const EdgeInsets.only(right: 5.0),
-            child: textBodyBold(
-                socket.plug?.energyCost?.energyCost.toString() ?? ""),
+            child: textBodyBold(socket.plug?.energyCost?.energyCost.toString() ?? ""),
           ),
         ],
       ),

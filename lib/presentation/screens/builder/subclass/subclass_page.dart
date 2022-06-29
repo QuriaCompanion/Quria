@@ -21,11 +21,8 @@ class _SubclassPageState extends State<SubclassPage> {
   @override
   void initState() {
     super.initState();
-    data = Provider.of<InventoryProvider>(context, listen: false)
-        .getSubclassesForCharacter(
-            Provider.of<CharactersProvider>(context, listen: false)
-                .currentCharacter!
-                .characterId!);
+    data = Provider.of<InventoryProvider>(context, listen: false).getSubclassesForCharacter(
+        Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!);
   }
 
   @override

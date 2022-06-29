@@ -91,18 +91,14 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
               );
             }
             DestinyItemTalentGridComponent talentGridComponent =
-                Provider.of<ItemProvider>(context)
-                    .getTalentGrid(widget.data.subclassId)!;
+                Provider.of<ItemProvider>(context).getTalentGrid(widget.data.subclassId)!;
             DestinyItemComponent itemComponent =
-                Provider.of<InventoryProvider>(context)
-                    .getItemByInstanceId(widget.data.subclassId)!;
-            DestinyInventoryItemDefinition definition = ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition[itemComponent.itemHash]!;
+                Provider.of<InventoryProvider>(context).getItemByInstanceId(widget.data.subclassId)!;
+            DestinyInventoryItemDefinition definition =
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[itemComponent.itemHash]!;
             return TalentGridMobileView(
               talentGrid:
-                  ManifestService.manifestParsed.destinyTalentGridDefinition[
-                      talentGridComponent.talentGridHash]!,
+                  ManifestService.manifestParsed.destinyTalentGridDefinition[talentGridComponent.talentGridHash]!,
               talentGridComponent: talentGridComponent,
               subclass: definition,
             );

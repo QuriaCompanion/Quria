@@ -50,9 +50,7 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
             return Container(
                 height: vh(context),
                 width: vw(context),
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover, image: splashBackground)),
+                decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
                 child: Loader(
                   splashColor: Colors.transparent,
                   animationSize: vw(context) * 0.5,

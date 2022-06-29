@@ -53,7 +53,7 @@ class InventoryBucket {
     gauntlets,
     chestArmor,
     legArmor,
-    classArmor
+    classArmor,
   ];
 
   static const weaponBucketHashes = [
@@ -75,9 +75,7 @@ class InventoryBucket {
     shaders,
   ];
 
-  static const pursuitBucketHashes = [
-    pursuits
-  ];
+  static const pursuitBucketHashes = [pursuits];
 
   static const List<int> exoticWeaponBlockBuckets = weaponBucketHashes;
 

@@ -20,21 +20,13 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
   Widget _getStatText(StatWeighing statWeighing) {
     switch (statWeighing) {
       case StatWeighing.allTiers:
-        return textBodyMedium(
-            AppLocalizations.of(context)!.builder_stats_order_all_tiers,
-            utf8: false);
+        return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_all_tiers, utf8: false);
       case StatWeighing.maxOne:
-        return textBodyMedium(
-            AppLocalizations.of(context)!.builder_stats_order_tier_1,
-            utf8: false);
+        return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_tier_1, utf8: false);
       case StatWeighing.maxTwo:
-        return textBodyMedium(
-            AppLocalizations.of(context)!.builder_stats_order_tier_2,
-            utf8: false);
+        return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_tier_2, utf8: false);
       case StatWeighing.maxThree:
-        return textBodyMedium(
-            AppLocalizations.of(context)!.builder_stats_order_tier_3,
-            utf8: false);
+        return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_tier_3, utf8: false);
     }
   }
 
@@ -62,9 +54,7 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
           children: [
             Container(
               width: vw(context) - (globalPadding(context) * 2),
-              padding: EdgeInsets.symmetric(
-                  horizontal: globalPadding(context),
-                  vertical: globalPadding(context) / 4),
+              padding: EdgeInsets.symmetric(horizontal: globalPadding(context), vertical: globalPadding(context) / 4),
               decoration: BoxDecoration(
                 color: blackLight,
                 borderRadius: BorderRadius.circular(4),
@@ -74,17 +64,13 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
                   isExpanded: true,
                   icon: SvgPicture.asset("assets/icons/DropIcon.svg"),
                   dropdownColor: blackLight,
-                  value: Provider.of<BuilderStatsFilterProvider>(context)
-                      .statWeighing,
+                  value: Provider.of<BuilderStatsFilterProvider>(context).statWeighing,
                   items: StatWeighing.values.map((StatWeighing classType) {
-                    return DropdownMenuItem<StatWeighing>(
-                        value: classType, child: _getStatText(classType));
+                    return DropdownMenuItem<StatWeighing>(value: classType, child: _getStatText(classType));
                   }).toList(),
                   onChanged: (StatWeighing? value) {
                     if (value != null) {
-                      Provider.of<BuilderStatsFilterProvider>(context,
-                              listen: false)
-                          .setStatWeighing(value);
+                      Provider.of<BuilderStatsFilterProvider>(context, listen: false).setStatWeighing(value);
                     }
                   }),
             )
@@ -103,9 +89,7 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
                     for (int i = 1; i <= 6; i++)
                       Padding(
                         padding: const EdgeInsets.only(bottom: 8.0),
-                        child: SizedBox(
-                            height: 48,
-                            child: Center(child: textH3(i.toString()))),
+                        child: SizedBox(height: 48, child: Center(child: textH3(i.toString()))),
                       ),
                   ],
                 ),

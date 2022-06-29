@@ -5,8 +5,7 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 class CharacterChoice extends StatefulWidget {
   final double width;
   final Function(DestinyClass) callback;
-  const CharacterChoice({required this.callback, required this.width, Key? key})
-      : super(key: key);
+  const CharacterChoice({required this.callback, required this.width, Key? key}) : super(key: key);
 
   @override
   CharacterChoiceState createState() => CharacterChoiceState();

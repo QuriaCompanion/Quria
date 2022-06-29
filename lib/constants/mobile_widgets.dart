@@ -13,9 +13,7 @@ Widget mobileHeader(
     alignment: Alignment.bottomCenter,
     width: width,
     height: width * 0.9,
-    decoration: BoxDecoration(
-        image: DecorationImage(
-            alignment: Alignment.topRight, fit: BoxFit.cover, image: image)),
+    decoration: BoxDecoration(image: DecorationImage(alignment: Alignment.topRight, fit: BoxFit.cover, image: image)),
     child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -31,8 +29,7 @@ Widget mobileHeader(
         height: width / 3.17,
         child: Padding(
             padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
-            child: SizedBox(
-                width: width - globalPadding(context) * 2, child: child))),
+            child: SizedBox(width: width - globalPadding(context) * 2, child: child))),
   );
 }
 
@@ -90,9 +87,7 @@ Widget mobileCard(
 }) {
   return Container(
       padding: EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
-      decoration: const BoxDecoration(
-          color: blackLight,
-          borderRadius: BorderRadius.all(Radius.circular(8))),
+      decoration: const BoxDecoration(color: blackLight, borderRadius: BorderRadius.all(Radius.circular(8))),
       width: double.infinity,
       child: child);
 }

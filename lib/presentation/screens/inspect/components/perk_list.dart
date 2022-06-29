@@ -22,14 +22,10 @@ class PerkList extends StatelessWidget {
     return SizedBox(
       child: Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
         if (item.sockets?.socketEntries != null)
-          for (int index = 0;
-              index < item.sockets!.socketEntries!.length;
-              index++)
-            if (Conditions.perkSockets(
-                item.sockets!.socketEntries![index].singleInitialItemHash))
+          for (int index = 0; index < item.sockets!.socketEntries!.length; index++)
+            if (Conditions.perkSockets(item.sockets!.socketEntries![index].singleInitialItemHash))
               Padding(
-                padding: EdgeInsets.only(
-                    right: index != 5 ? globalPadding(context) : 0),
+                padding: EdgeInsets.only(right: index != 5 ? globalPadding(context) : 0),
                 child: ColumnPerkDisplay(
                   item: item,
                   index: index,

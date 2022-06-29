@@ -65,8 +65,7 @@ class SettingsMobileView extends StatelessWidget {
           divider,
           ListTile(
             onTap: () {
-              launchUrl(Uri.parse("https://www.buymeacoffee.com/quria?s=03"),
-                  mode: LaunchMode.externalApplication);
+              launchUrl(Uri.parse("https://www.buymeacoffee.com/quria?s=03"), mode: LaunchMode.externalApplication);
             },
             leading: SvgPicture.asset(
               "assets/icons/buymeacoffee.svg",
@@ -85,8 +84,7 @@ class SettingsMobileView extends StatelessWidget {
           divider,
           ListTile(
             onTap: () {
-              launchUrl(Uri.parse("https://twitter.com/quriacompanion"),
-                  mode: LaunchMode.externalApplication);
+              launchUrl(Uri.parse("https://twitter.com/quriacompanion"), mode: LaunchMode.externalApplication);
             },
             leading: SvgPicture.asset(
               "assets/icons/twitter.svg",
@@ -109,12 +107,9 @@ class SettingsMobileView extends StatelessWidget {
                   context: context,
                   builder: (context) {
                     return ChooseMembership(
-                      memberships:
-                          AccountService.membershipData!.destinyMemberships!,
+                      memberships: AccountService.membershipData!.destinyMemberships!,
                       onSelected: (membership) {
-                        AccountService.saveMembership(
-                                AccountService.membershipData!, membership)
-                            .then((_) {
+                        AccountService.saveMembership(AccountService.membershipData!, membership).then((_) {
                           DisplayService.isProfileUp = false;
                           ProfileService.reset(context);
                           Navigator.pushReplacementNamed(context, routeProfile);

@@ -31,8 +31,7 @@ class ModDisplay extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 textBodyRegular(item.displayProperties!.name!),
-                textCaption(item.displayProperties!.description!,
-                    color: greyLight),
+                textCaption(item.displayProperties!.description!, color: greyLight),
               ],
             ),
           ),

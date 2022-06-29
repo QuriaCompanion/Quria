@@ -62,9 +62,7 @@ double appBarItem(BuildContext context) {
 }
 
 double appBarHeight(BuildContext context) {
-  return MediaQuery.of(context).padding.top +
-      (globalPadding(context) * 2) +
-      appBarItem(context);
+  return MediaQuery.of(context).padding.top + (globalPadding(context) * 2) + appBarItem(context);
 }
 
 const Color backgroundColor = black;
@@ -95,8 +93,7 @@ const hr = Divider(
   height: 22,
   thickness: 1,
 );
-const divider =
-    Text(' | ', style: TextStyle(color: Color.fromRGBO(40, 45, 56, 1)));
+const divider = Text(' | ', style: TextStyle(color: Color.fromRGBO(40, 45, 56, 1)));
 
 BoxDecoration regularShadow = BoxDecoration(
   color: Colors.grey.shade700,
@@ -109,6 +106,5 @@ BoxDecoration regularShadow = BoxDecoration(
     ),
   ],
 );
-const String ghostLink =
-    "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg";
+const String ghostLink = "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg";
 const BoxDecoration blackBackground = BoxDecoration(color: black);

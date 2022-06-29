@@ -36,9 +36,7 @@ class AccountService {
   }
 
   static Future<UserMembershipData?> _getStoredMembershipData() async {
-    Map<String, dynamic>? json =
-        await StorageService.getLocalStorage('membershipData')
-            as Map<String, dynamic>?;
+    Map<String, dynamic>? json = await StorageService.getLocalStorage('membershipData') as Map<String, dynamic>?;
     if (json == null) return null;
     membershipData = UserMembershipData.fromJson(json);
     return membershipData;
@@ -63,14 +61,12 @@ class AccountService {
     return currentMembership;
   }
 
-  static GroupUserInfoCard? getMembershipById(
-      UserMembershipData? membershipData, String membershipId) {
-    return membershipData?.destinyMemberships?.firstWhereOrNull(
-        (membership) => membership.membershipId == membershipId);
+  static GroupUserInfoCard? getMembershipById(UserMembershipData? membershipData, String membershipId) {
+    return membershipData?.destinyMemberships
+        ?.firstWhereOrNull((membership) => membership.membershipId == membershipId);
   }
 
-  static Future<void> saveMembership(
-      UserMembershipData membershipData, String membershipId) async {
+  static Future<void> saveMembership(UserMembershipData membershipData, String membershipId) async {
     currentMembership = getMembershipById(membershipData, membershipId);
     await setCurrentMembershipId(membershipId);
   }

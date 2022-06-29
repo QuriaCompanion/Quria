@@ -19,8 +19,7 @@ class ModalButton extends StatefulWidget {
   State<ModalButton> createState() => _ModalButtonState();
 }
 
-class _ModalButtonState extends State<ModalButton>
-    with TickerProviderStateMixin {
+class _ModalButtonState extends State<ModalButton> with TickerProviderStateMixin {
   bool _isHover = false;
   late AnimationController controller = AnimationController(
     vsync: this,
@@ -69,8 +68,7 @@ class _ModalButtonState extends State<ModalButton>
               child: Container(
                 height: vw(context) * 0.06,
                 width: vw(context) * 0.06,
-                decoration:
-                    BoxDecoration(border: Border.all(color: Colors.white)),
+                decoration: BoxDecoration(border: Border.all(color: Colors.white)),
               )),
           SvgPicture.asset(
             widget.icon,

@@ -13,74 +13,49 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 class BungieActionsService {
   final api = BungieApiService();
   final profile = ProfileService();
-  static final BungieActionsService _singleton =
-      BungieActionsService._internal();
+  static final BungieActionsService _singleton = BungieActionsService._internal();
   factory BungieActionsService() {
     return _singleton;
   }
   BungieActionsService._internal();
 
-  Future<void> transferItem(
-      BuildContext context, String itemId, String? characterId,
+  Future<void> transferItem(BuildContext context, String itemId, String? characterId,
       {int? itemHash, int? stackSize}) async {
     try {
-      final owner = Provider.of<InventoryProvider>(context, listen: false)
-          .getItemOwner(itemId);
+      final owner = Provider.of<InventoryProvider>(context, listen: false).getItemOwner(itemId);
       if (owner == characterId || owner == null || characterId == null) {
         await api
             .transferItem(itemId, characterId ?? owner,
-                itemHash: itemHash,
-                stackSize: stackSize,
-                transferToVault: characterId == null)
-            .then((value) =>
-                Provider.of<InventoryProvider>(context, listen: false)
-                    .moveItem(itemId, characterId, false));
+                itemHash: itemHash, stackSize: stackSize, transferToVault: characterId == null)
+            .then(
+                (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, false));
       } else {
         await api
-            .transferItem(itemId, owner,
-                itemHash: itemHash, stackSize: stackSize, transferToVault: true)
-            .then((value) =>
-                Provider.of<InventoryProvider>(context, listen: false)
-                    .moveItem(itemId, null, false));
+            .transferItem(itemId, owner, itemHash: itemHash, stackSize: stackSize, transferToVault: true)
+            .then((value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, null, false));
         await api
-            .transferItem(itemId, characterId,
-                itemHash: itemHash,
-                stackSize: stackSize,
-                transferToVault: false)
-            .then((value) =>
-                Provider.of<InventoryProvider>(context, listen: false)
-                    .moveItem(itemId, characterId, false));
+            .transferItem(itemId, characterId, itemHash: itemHash, stackSize: stackSize, transferToVault: false)
+            .then(
+                (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, false));
       }
     } catch (e) {
       try {
         if (characterId == null) rethrow;
         int slotTypeHash = ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition[itemHash]!
-            .equippingBlock!
-            .equipmentSlotTypeHash!;
+            .manifestParsed.destinyInventoryItemDefinition[itemHash]!.equippingBlock!.equipmentSlotTypeHash!;
         List<DestinyItemComponent> slotItems =
-            (Provider.of<InventoryProvider>(context, listen: false)
-                    .getItemsForCharacter(characterId, slotTypeHash))
+            (Provider.of<InventoryProvider>(context, listen: false).getItemsForCharacter(characterId, slotTypeHash))
                 .toSet()
                 .toList();
         if (slotItems.length <= 9) {
           await api
               .transferItem(slotItems.first.itemInstanceId!, characterId,
-                  itemHash: slotItems.first.itemHash,
-                  stackSize: 1,
-                  transferToVault: true)
-              .then((value) =>
-                  Provider.of<InventoryProvider>(context, listen: false)
-                      .moveItem(itemId, null, false));
+                  itemHash: slotItems.first.itemHash, stackSize: 1, transferToVault: true)
+              .then((value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, null, false));
           await api
-              .transferItem(itemId, characterId,
-                  itemHash: itemHash,
-                  stackSize: stackSize,
-                  transferToVault: false)
+              .transferItem(itemId, characterId, itemHash: itemHash, stackSize: stackSize, transferToVault: false)
               .then((value) =>
-                  Provider.of<InventoryProvider>(context, listen: false)
-                      .moveItem(itemId, characterId, false));
+                  Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, false));
         }
       } catch (e) {
         rethrow;
@@ -95,18 +70,14 @@ class BungieActionsService {
     required int itemHash,
   }) async {
     try {
-      final owner = Provider.of<InventoryProvider>(context, listen: false)
-          .getItemOwner(itemId);
+      final owner = Provider.of<InventoryProvider>(context, listen: false).getItemOwner(itemId);
       if (owner == characterId) {
-        await api.equipItem(itemId, characterId).then((value) =>
-            Provider.of<InventoryProvider>(context, listen: false)
-                .moveItem(itemId, characterId, true));
+        await api.equipItem(itemId, characterId).then(
+            (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, true));
       } else {
-        await transferItem(context, itemId, characterId,
-            itemHash: itemHash, stackSize: 1);
-        await api.equipItem(itemId, characterId).then((value) =>
-            Provider.of<InventoryProvider>(context, listen: false)
-                .moveItem(itemId, characterId, true));
+        await transferItem(context, itemId, characterId, itemHash: itemHash, stackSize: 1);
+        await api.equipItem(itemId, characterId).then(
+            (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, true));
       }
     } catch (e) {
       try {
@@ -116,11 +87,9 @@ class BungieActionsService {
           characterId,
           itemHash: itemHash,
           stackSize: 1,
-        ).then((value) => Provider.of<InventoryProvider>(context, listen: false)
-            .moveItem(itemId, characterId, false));
-        await api.equipItem(itemId, characterId).then((value) =>
-            Provider.of<InventoryProvider>(context, listen: false)
-                .moveItem(itemId, characterId, true));
+        ).then((value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, false));
+        await api.equipItem(itemId, characterId).then(
+            (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, true));
       } catch (e) {
         rethrow;
       }
@@ -139,33 +108,27 @@ class BungieActionsService {
     List<List<int?>> socketsHashes = [];
     List<int?> subclassSocketsHashes = [];
     List<DestinyItemComponent> characterInventory = [];
-    characterInventory.addAll(
-        Provider.of<InventoryProvider>(context, listen: false)
-            .getCharacterEquipment(characterId));
-    characterInventory.addAll(
-        Provider.of<InventoryProvider>(context, listen: false)
-            .getCharacterInventory(characterId));
+    characterInventory
+        .addAll(Provider.of<InventoryProvider>(context, listen: false).getCharacterEquipment(characterId));
+    characterInventory
+        .addAll(Provider.of<InventoryProvider>(context, listen: false).getCharacterInventory(characterId));
 
     if (subclassId != null) {
       itemsIds.add(subclassId);
       if (subclassMods.isNotEmpty) {
-        subclassSocketsHashes.addAll(
-            (Provider.of<ItemProvider>(context, listen: false)
-                    .getItemSockets(subclassId))
-                .map((e) => e.plugHash)
-                .toList());
+        subclassSocketsHashes.addAll((Provider.of<ItemProvider>(context, listen: false).getItemSockets(subclassId))
+            .map((e) => e.plugHash)
+            .toList());
       }
     }
     // transfer all items to character
     for (int i = 0; i < build.equipement.length; i++) {
       itemsIds.add(build.equipement[i].itemInstanceId);
-      socketsHashes.add((Provider.of<ItemProvider>(context, listen: false)
-              .getItemSockets(build.equipement[i].itemInstanceId))
-          .map((e) => e.plugHash)
-          .toList());
-      if (!characterInventory
-          .map((e) => e.itemInstanceId)
-          .contains(build.equipement[i].itemInstanceId)) {
+      socketsHashes.add(
+          (Provider.of<ItemProvider>(context, listen: false).getItemSockets(build.equipement[i].itemInstanceId))
+              .map((e) => e.plugHash)
+              .toList());
+      if (!characterInventory.map((e) => e.itemInstanceId).contains(build.equipement[i].itemInstanceId)) {
         await transferItem(
           context,
           build.equipement[i].itemInstanceId,
@@ -178,8 +141,7 @@ class BungieActionsService {
     // equip all items
     await api.equipItems(itemsIds, characterId).then((value) {
       for (final id in itemsIds) {
-        Provider.of<InventoryProvider>(context, listen: false)
-            .moveItem(id, characterId, false);
+        Provider.of<InventoryProvider>(context, listen: false).moveItem(id, characterId, false);
       }
     }, onError: (_) => null);
 
@@ -188,30 +150,20 @@ class BungieActionsService {
     for (int i = 0; i < 5; i++) {
       for (int index = 0; index < 4; index++) {
         try {
-          int hash = ManifestService
-              .manifestParsed
-              .destinyInventoryItemDefinition[build.equipement[i].hash]!
-              .sockets!
-              .socketEntries![index]
-              .singleInitialItemHash!;
-          if (socketsHashes[i][index] != hash &&
-              socketsHashes[i][index] != mods[i].items[index]?.hash) {
-            await api.insertSocketPlugFree(
-                build.equipement[i].itemInstanceId, hash, index, characterId);
+          int hash = ManifestService.manifestParsed.destinyInventoryItemDefinition[build.equipement[i].hash]!.sockets!
+              .socketEntries![index].singleInitialItemHash!;
+          if (socketsHashes[i][index] != hash && socketsHashes[i][index] != mods[i].items[index]?.hash) {
+            await api.insertSocketPlugFree(build.equipement[i].itemInstanceId, hash, index, characterId);
           }
         } catch (e) {
           continue;
         }
       }
     }
-    for (int subclassIndex = 0;
-        subclassIndex < subclassMods.length;
-        subclassIndex++) {
+    for (int subclassIndex = 0; subclassIndex < subclassMods.length; subclassIndex++) {
       try {
-        if (subclassMods[subclassIndex].hash !=
-            subclassSocketsHashes[subclassIndex]) {
-          await api.insertSocketPlugFree(subclassId!,
-              subclassMods[subclassIndex].hash!, subclassIndex, characterId);
+        if (subclassMods[subclassIndex].hash != subclassSocketsHashes[subclassIndex]) {
+          await api.insertSocketPlugFree(subclassId!, subclassMods[subclassIndex].hash!, subclassIndex, characterId);
         }
       } catch (e) {
         continue;
@@ -222,8 +174,8 @@ class BungieActionsService {
     for (int i = 0; i < 5; i++) {
       try {
         if (socketsHashes[i][0] != build.equipement[i].mods!.hash!) {
-          api.insertSocketPlugFree(build.equipement[i].itemInstanceId[i],
-              build.equipement[i].mods!.hash!, 0, characterId);
+          api.insertSocketPlugFree(
+              build.equipement[i].itemInstanceId[i], build.equipement[i].mods!.hash!, 0, characterId);
         }
       } catch (e) {
         continue;
@@ -231,8 +183,8 @@ class BungieActionsService {
       for (int index = 1; index < 5; index++) {
         try {
           if (socketsHashes[i][index] != mods[i].items[index]?.hash) {
-            api.insertSocketPlugFree(build.equipement[i].itemInstanceId[i],
-                mods[i].items[index]!.hash!, index, characterId);
+            api.insertSocketPlugFree(
+                build.equipement[i].itemInstanceId[i], mods[i].items[index]!.hash!, index, characterId);
           }
         } catch (e) {
           continue;

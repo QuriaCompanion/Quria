@@ -19,8 +19,7 @@ import 'package:quria/presentation/screens/builder/build_recap/mobile_components
 
 class BuilderRecapMobileView extends StatelessWidget {
   final Build data;
-  const BuilderRecapMobileView({required this.data, Key? key})
-      : super(key: key);
+  const BuilderRecapMobileView({required this.data, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,10 +31,7 @@ class BuilderRecapMobileView extends StatelessWidget {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  textH1("Base :T${data.stats.base}"),
-                  textH1("Final :T${data.stats.max}")
-                ],
+                children: [textH1("Base :T${data.stats.base}"), textH1("Final :T${data.stats.max}")],
               ),
             )),
         Padding(
@@ -56,31 +52,20 @@ class BuilderRecapMobileView extends StatelessWidget {
                               expand: false,
                               builder: (context) {
                                 return LoadingModal(
-                                  text1:
-                                      AppLocalizations.of(context)!.equipping,
-                                  text2:
-                                      AppLocalizations.of(context)!.long_action,
+                                  text1: AppLocalizations.of(context)!.equipping,
+                                  text2: AppLocalizations.of(context)!.long_action,
                                 );
                               });
                           BungieActionsService()
                               .equipBuild(
                                 context,
                                 build: data,
-                                characterId: Provider.of<CharactersProvider>(
-                                        context,
-                                        listen: false)
+                                characterId: Provider.of<CharactersProvider>(context, listen: false)
                                     .currentCharacter!
                                     .characterId!,
-                                mods: Provider.of<BuilderModsProvider>(context)
-                                    .mods,
-                                subclassMods:
-                                    Provider.of<BuilderSubclassModsProvider>(
-                                            context)
-                                        .subclassMods,
-                                subclassId:
-                                    Provider.of<BuilderSubclassProvider>(
-                                            context)
-                                        .subclassId,
+                                mods: Provider.of<BuilderModsProvider>(context).mods,
+                                subclassMods: Provider.of<BuilderSubclassModsProvider>(context).subclassMods,
+                                subclassId: Provider.of<BuilderSubclassProvider>(context).subclassId,
                               )
                               .then((_) => Navigator.pop(context));
                           break;
@@ -112,40 +97,35 @@ class BuilderRecapMobileView extends StatelessWidget {
                   child: BuilderRecapMobileItem(
                     width: vw(context),
                     item: data.equipement[0],
-                    mods:
-                        Provider.of<BuilderModsProvider>(context).mods[0].items,
+                    mods: Provider.of<BuilderModsProvider>(context).mods[0].items,
                   )),
               mobileSection(context,
                   title: AppLocalizations.of(context)!.gauntlets,
                   child: BuilderRecapMobileItem(
                     width: vw(context),
                     item: data.equipement[1],
-                    mods:
-                        Provider.of<BuilderModsProvider>(context).mods[1].items,
+                    mods: Provider.of<BuilderModsProvider>(context).mods[1].items,
                   )),
               mobileSection(context,
                   title: AppLocalizations.of(context)!.chest,
                   child: BuilderRecapMobileItem(
                     width: vw(context),
                     item: data.equipement[2],
-                    mods:
-                        Provider.of<BuilderModsProvider>(context).mods[2].items,
+                    mods: Provider.of<BuilderModsProvider>(context).mods[2].items,
                   )),
               mobileSection(context,
                   title: AppLocalizations.of(context)!.legs,
                   child: BuilderRecapMobileItem(
                     width: vw(context),
                     item: data.equipement[3],
-                    mods:
-                        Provider.of<BuilderModsProvider>(context).mods[3].items,
+                    mods: Provider.of<BuilderModsProvider>(context).mods[3].items,
                   )),
               mobileSection(context,
                   title: AppLocalizations.of(context)!.class_item,
                   child: BuilderRecapMobileItem(
                     width: vw(context),
                     item: data.equipement[4],
-                    mods:
-                        Provider.of<BuilderModsProvider>(context).mods[4].items,
+                    mods: Provider.of<BuilderModsProvider>(context).mods[4].items,
                   ))
             ],
           ),

@@ -47,39 +47,24 @@ class _ArmorModsState extends State<ArmorMods> {
   @override
   Widget build(BuildContext context) {
     final Map<int, DestinyItemSocketState> displayedSockets = currentSockets
-        .where((element) =>
-            (element.isVisible!) &&
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.plug
-                    ?.plugCategoryHash !=
-                2973005342 &&
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.plug
-                    ?.plugCategoryIdentifier !=
-                null &&
-            !ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition[element.plugHash]!
-                .plug!
-                .plugCategoryIdentifier!
-                .contains('masterworks.stat') &&
-            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemType !=
-                DestinyItemType.Armor &&
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.itemSubType !=
-                DestinyItemSubType.Ornament &&
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.inventory
-                    ?.tierType !=
-                TierType.Exotic)
+        .where(
+          (element) =>
+              (element.isVisible!) &&
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryHash !=
+                  2973005342 &&
+              ManifestService
+                      .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryIdentifier !=
+                  null &&
+              !ManifestService
+                  .manifestParsed.destinyInventoryItemDefinition[element.plugHash]!.plug!.plugCategoryIdentifier!
+                  .contains('masterworks.stat') &&
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemType !=
+                  DestinyItemType.Armor &&
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemSubType !=
+                  DestinyItemSubType.Ornament &&
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.inventory?.tierType !=
+                  TierType.Exotic,
+        )
         .toList()
         .asMap();
     final remaining = DisplayService.remainingModPoints(
@@ -88,10 +73,7 @@ class _ArmorModsState extends State<ArmorMods> {
             .destinyInventoryItemDefinition[widget.sockets
                 .firstWhere((element) =>
                     ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[element.plugHash]
-                        ?.plug
-                        ?.plugCategoryIdentifier
+                        .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryIdentifier
                         ?.contains('masterworks.stat') ==
                     true)
                 .plugHash]!
@@ -108,10 +90,7 @@ class _ArmorModsState extends State<ArmorMods> {
               .destinyInventoryItemDefinition[widget.sockets
                   .firstWhere((element) =>
                       ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition[element.plugHash]
-                          ?.plug
-                          ?.plugCategoryIdentifier
+                          .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryIdentifier
                           ?.contains('masterworks.stat') ==
                       true)
                   .plugHash]!
@@ -119,11 +98,8 @@ class _ArmorModsState extends State<ArmorMods> {
               .value!),
       SizedBox(height: globalPadding(context)),
       Container(
-          padding:
-              EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
-          decoration: const BoxDecoration(
-              color: blackLight,
-              borderRadius: BorderRadius.all(Radius.circular(8))),
+          padding: EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
+          decoration: const BoxDecoration(color: blackLight, borderRadius: BorderRadius.all(Radius.circular(8))),
           width: double.infinity,
           child: Center(
             child: textCaption(
@@ -134,8 +110,7 @@ class _ArmorModsState extends State<ArmorMods> {
       SizedBox(height: globalPadding(context)),
       Row(
         children: [
-          for (MapEntry<int, DestinyItemSocketState> socket
-              in displayedSockets.entries)
+          for (MapEntry<int, DestinyItemSocketState> socket in displayedSockets.entries)
             Padding(
                 padding: socket.key + 1 != displayedSockets.length
                     ? EdgeInsets.only(right: globalPadding(context))
@@ -149,22 +124,15 @@ class _ArmorModsState extends State<ArmorMods> {
                         builder: (context) {
                           return ArmorModsModal(
                             width: vw(context),
-                            socket: ManifestService.manifestParsed
-                                    .destinyInventoryItemDefinition[
-                                socket.value.plugHash]!,
-                            plugSetsHash: widget
-                                .item
-                                .sockets!
-                                .socketEntries![socket.key]
-                                .reusablePlugSetHash!,
+                            socket:
+                                ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!,
+                            plugSetsHash: widget.item.sockets!.socketEntries![socket.key].reusablePlugSetHash!,
                             onSocketChange: (itemHash) {
                               BungieApiService()
-                                  .insertSocketPlugFree(widget.instanceId!,
-                                      itemHash, socket.key, widget.characterId!)
+                                  .insertSocketPlugFree(widget.instanceId!, itemHash, socket.key, widget.characterId!)
                                   .then((value) {
                                 setState(() {
-                                  currentSockets = value!
-                                      .response!.item!.sockets!.data!.sockets!;
+                                  currentSockets = value!.response!.item!.sockets!.data!.sockets!;
                                 });
                               });
                             },
@@ -173,8 +141,7 @@ class _ArmorModsState extends State<ArmorMods> {
                   },
                   child: ArmorModIconDisplay(
                     iconSize: itemSize(context, widget.width),
-                    socket: ManifestService.manifestParsed
-                        .destinyInventoryItemDefinition[socket.value.plugHash]!,
+                    socket: ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!,
                   ),
                 ))
         ],

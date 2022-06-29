@@ -19,10 +19,8 @@ class ClassItemChoiceMobileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DestinyCharacterComponent character =
-        Provider.of<CharactersProvider>(context, listen: false).currentCharacter
-            as DestinyCharacterComponent;
-    List<DestinyItemComponent> classItems =
-        Provider.of<InventoryProvider>(context, listen: false).getArmorForClass(
+        Provider.of<CharactersProvider>(context, listen: false).currentCharacter as DestinyCharacterComponent;
+    List<DestinyItemComponent> classItems = Provider.of<InventoryProvider>(context, listen: false).getArmorForClass(
       character.classType!,
       itemSubType: DestinyItemSubType.ClassArmor,
     );
@@ -55,32 +53,21 @@ class ClassItemChoiceMobileView extends StatelessWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: globalPadding(context) / 2),
+                        padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
                         child: CustomCheckbox(
-                          text: AppLocalizations.of(context)!
-                              .builder_class_item_keep_sunset,
-                          value: Provider.of<BuilderCustomInfoProvider>(context)
-                              .includeSunset,
+                          text: AppLocalizations.of(context)!.builder_class_item_keep_sunset,
+                          value: Provider.of<BuilderCustomInfoProvider>(context).includeSunset,
                           onChanged: (newValue) =>
-                              Provider.of<BuilderCustomInfoProvider>(context,
-                                      listen: false)
-                                  .setRemoveSunset(newValue),
+                              Provider.of<BuilderCustomInfoProvider>(context, listen: false).setRemoveSunset(newValue),
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(
-                            vertical: globalPadding(context) / 2),
+                        padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
                         child: CustomCheckbox(
-                            text: AppLocalizations.of(context)!
-                                .builder_class_item_assume_masterwork,
-                            value:
-                                Provider.of<BuilderCustomInfoProvider>(context)
-                                    .considerMasterwork,
-                            onChanged: (newValue) =>
-                                Provider.of<BuilderCustomInfoProvider>(context,
-                                        listen: false)
-                                    .setConsiderMasterwork(newValue)),
+                            text: AppLocalizations.of(context)!.builder_class_item_assume_masterwork,
+                            value: Provider.of<BuilderCustomInfoProvider>(context).considerMasterwork,
+                            onChanged: (newValue) => Provider.of<BuilderCustomInfoProvider>(context, listen: false)
+                                .setConsiderMasterwork(newValue)),
                       ),
                     ],
                   )),
@@ -94,13 +81,10 @@ class ClassItemChoiceMobileView extends StatelessWidget {
                         children: [
                           InkWell(
                               onTap: () {
-                                Provider.of<BuilderCustomInfoProvider>(context,
-                                        listen: false)
-                                    .setClassItem(item);
+                                Provider.of<BuilderCustomInfoProvider>(context, listen: false).setClassItem(item);
                                 Navigator.pushNamed(context, routeBuilder);
                               },
-                              child: ItemComponentSmart(
-                                  width: vw(context), item: item)),
+                              child: ItemComponentSmart(width: vw(context), item: item)),
                           Divider(
                             height: globalPadding(context) * 2,
                             color: Colors.white,

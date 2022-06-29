@@ -60,10 +60,7 @@ class PerkModal extends StatelessWidget {
                         width: globalPadding(context),
                       ),
                       SizedBox(
-                        width: vw(context) -
-                            itemSize(context, width) -
-                            (globalPadding(context) * 3) -
-                            40,
+                        width: vw(context) - itemSize(context, width) - (globalPadding(context) * 3) - 40,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -111,11 +108,8 @@ class PerkModal extends StatelessWidget {
                         for (var stat in perk.investmentStats!) {
                           list.add(StatProgressBar(
                               width: vw(context),
-                              name: ManifestService
-                                      .manifestParsed
-                                      .destinyStatDefinition[stat.statTypeHash]!
-                                      .displayProperties!
-                                      .name ??
+                              name: ManifestService.manifestParsed.destinyStatDefinition[stat.statTypeHash]!
+                                      .displayProperties!.name ??
                                   'error',
                               value: stat.value?.abs() ?? 0,
                               type: DestinyItemType.Armor));
@@ -134,13 +128,9 @@ class PerkModal extends StatelessWidget {
                   if (instanceId != null && isSelected == false)
                     ElevatedButton(
                       onPressed: () {
-                        BungieApiService()
-                            .insertSocketPlugFree(
-                                instanceId!, perk.hash!, index!, characterId!)
-                            .then(
+                        BungieApiService().insertSocketPlugFree(instanceId!, perk.hash!, index!, characterId!).then(
                           (value) async {
-                            onSocketsChanged!(
-                                value?.response?.item?.sockets?.data?.sockets);
+                            onSocketsChanged!(value?.response?.item?.sockets?.data?.sockets);
                             Navigator.pop(context);
                           },
                         );

@@ -51,8 +51,7 @@ class QuriaApp extends StatelessWidget {
   final AppRouter router;
   final Locale? lang;
 
-  const QuriaApp({Key? key, required this.router, required this.lang})
-      : super(key: key);
+  const QuriaApp({Key? key, required this.router, required this.lang}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

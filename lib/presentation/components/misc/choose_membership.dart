@@ -7,9 +7,7 @@ import 'package:quria/constants/styles.dart';
 class ChooseMembership extends StatelessWidget {
   final List<GroupUserInfoCard?> memberships;
   final void Function(String) onSelected;
-  const ChooseMembership(
-      {required this.memberships, required this.onSelected, Key? key})
-      : super(key: key);
+  const ChooseMembership({required this.memberships, required this.onSelected, Key? key}) : super(key: key);
 
   String membershipName(GroupUserInfoCard membership) {
     switch (membership.membershipType) {
@@ -67,8 +65,7 @@ class ChooseMembership extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          if (membership?.membershipType ==
-                              membership?.crossSaveOverride)
+                          if (membership?.membershipType == membership?.crossSaveOverride)
                             Image.network(
                               "https://www.bungie.net/7/ca/destiny/logos/crossSave.png",
                               height: vw(context) * .1,

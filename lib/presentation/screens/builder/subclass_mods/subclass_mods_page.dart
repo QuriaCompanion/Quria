@@ -25,19 +25,15 @@ class _SubclassModsPageState extends State<SubclassModsPage> {
   @override
   void initState() {
     super.initState();
-    getSubclassMods = memo1<String, SocketsHelper>(
-        (String id) => DisplayService.getSubclassMods(context, id));
+    getSubclassMods = memo1<String, SocketsHelper>((String id) => DisplayService.getSubclassMods(context, id));
   }
 
   @override
   Widget build(BuildContext context) {
-    data = getSubclassMods(
-        Provider.of<BuilderSubclassProvider>(context).subclassId!);
+    data = getSubclassMods(Provider.of<BuilderSubclassProvider>(context).subclassId!);
     final sockets = data.sockets;
-    DestinyInventoryItemDefinition subclass =
-        Provider.of<BuilderSubclassProvider>(context).subclass!;
-    chosenSockets =
-        Provider.of<BuilderSubclassModsProvider>(context).subclassMods;
+    DestinyInventoryItemDefinition subclass = Provider.of<BuilderSubclassProvider>(context).subclass!;
+    chosenSockets = Provider.of<BuilderSubclassModsProvider>(context).subclassMods;
     if (chosenSockets.isEmpty) {
       chosenSockets = data.displayedSockets;
     }
@@ -49,8 +45,7 @@ class _SubclassModsPageState extends State<SubclassModsPage> {
             sockets: sockets,
             subclass: subclass,
             onChange: (mods, i) async {
-              Provider.of<BuilderSubclassModsProvider>(context, listen: false)
-                  .setSubclassMods(mods);
+              Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(mods);
             },
           ));
     } else {

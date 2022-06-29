@@ -80,8 +80,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
               title: AppLocalizations.of(context)!.collections,
               width: widget.width,
               onTap: () {
-                Navigator.pushNamed(context, routeCollectionItem,
-                    arguments: widget.itemHash);
+                Navigator.pushNamed(context, routeCollectionItem, arguments: widget.itemHash);
               }),
         ],
       ),

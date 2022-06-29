@@ -7,8 +7,7 @@ import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_
 class ModWithTypeName extends StatelessWidget {
   final DestinyInventoryItemDefinition item;
   final double iconSize;
-  const ModWithTypeName({required this.item, this.iconSize = 16, Key? key})
-      : super(key: key);
+  const ModWithTypeName({required this.item, this.iconSize = 16, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

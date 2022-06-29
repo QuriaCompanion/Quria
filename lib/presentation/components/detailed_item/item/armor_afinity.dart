@@ -25,8 +25,7 @@ class ArmorAfinity extends StatelessWidget {
             height: itemSize(context, width),
             decoration: const BoxDecoration(
                 color: solar,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(8), topRight: Radius.circular(8))),
+                borderRadius: BorderRadius.only(topLeft: Radius.circular(8), topRight: Radius.circular(8))),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
               child: Row(
@@ -34,20 +33,12 @@ class ArmorAfinity extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Image(
-                          width: 18,
-                          height: 18,
-                          image: NetworkImage(
-                              DestinyData.bungieLink + afinityIcon)),
-                      SizedBox(
-                          width: (vw(context) - (globalPadding(context) * 2)) *
-                              0.005),
+                      Image(width: 18, height: 18, image: NetworkImage(DestinyData.bungieLink + afinityIcon)),
+                      SizedBox(width: (vw(context) - (globalPadding(context) * 2)) * 0.005),
                       textH2(pointsAvailable.toString()),
                     ],
                   ),
-                  textBodyRegular(
-                      '${AppLocalizations.of(context)!.unused}: $remaining',
-                      utf8: false),
+                  textBodyRegular('${AppLocalizations.of(context)!.unused}: $remaining', utf8: false),
                 ],
               ),
             )),
@@ -76,8 +67,7 @@ class ArmorAfinity extends StatelessWidget {
               width: (vw(context) - (globalPadding(context) * 2)) / 10.5,
               decoration: BoxDecoration(
                 color: pointsAvailable == 10 ? Colors.white : greyLight,
-                borderRadius:
-                    const BorderRadius.only(bottomRight: Radius.circular(8)),
+                borderRadius: const BorderRadius.only(bottomRight: Radius.circular(8)),
               ),
             ),
           ],

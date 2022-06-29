@@ -13,13 +13,11 @@ class ChooseLanguage extends StatelessWidget {
   const ChooseLanguage({Key? key}) : super(key: key);
 
   void changeLanguage(BuildContext context, {required String lang}) async {
-    Provider.of<LanguageProvider>(context, listen: false)
-        .setLanguage(Locale.fromSubtags(languageCode: lang));
+    Provider.of<LanguageProvider>(context, listen: false).setLanguage(Locale.fromSubtags(languageCode: lang));
     DisplayService.isProfileUp = false;
     DisplayService.isManifestUp = false;
     ProfileService.reset(context);
-    StorageService.setLocalStorage('lang', lang)
-        .then((value) => {Navigator.pushNamed(context, routeProfile)});
+    StorageService.setLocalStorage('lang', lang).then((value) => {Navigator.pushNamed(context, routeProfile)});
   }
 
   @override
@@ -34,8 +32,7 @@ class ChooseLanguage extends StatelessWidget {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(top: globalPadding(context) * 2),
-              child: textH2(AppLocalizations.of(context)!.change_language,
-                  utf8: false),
+              child: textH2(AppLocalizations.of(context)!.change_language, utf8: false),
             ),
             Column(
               children: [

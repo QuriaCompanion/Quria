@@ -26,20 +26,15 @@ class InspectMobileStats extends StatelessWidget {
         for (int statHash in DestinyData.linearStatBySubType[item.itemSubType]!)
           StatProgressBar(
             width: width,
-            name: ManifestService.manifestParsed
-                    .destinyStatDefinition[statHash]!.displayProperties!.name ??
-                'error',
-            value: stats?[statHash.toString()]?.value ??
-                item.stats?.stats?[statHash.toString()]?.value ??
-                0,
+            name: ManifestService.manifestParsed.destinyStatDefinition[statHash]!.displayProperties!.name ?? 'error',
+            value: stats?[statHash.toString()]?.value ?? item.stats?.stats?[statHash.toString()]?.value ?? 0,
             type: item.itemType,
           ),
         Builder(builder: (context) {
           List<String> unusedStats = [];
           if (stats != null) {
-            unusedStats.addAll(stats!.keys.where((statHash) => !DestinyData
-                .linearStatBySubType[item.itemSubType]!
-                .contains(int.parse(statHash))));
+            unusedStats.addAll(stats!.keys.where(
+                (statHash) => !DestinyData.linearStatBySubType[item.itemSubType]!.contains(int.parse(statHash))));
           }
           // else {
           //   unusedStats.addAll(item.stats!.stats!.keys.where((statHash) =>
@@ -48,8 +43,7 @@ class InspectMobileStats extends StatelessWidget {
           // }
           int armorTotal = 0;
           if (item.itemType == DestinyItemType.Armor && stats != null) {
-            for (int statHash
-                in DestinyData.linearStatBySubType[item.itemSubType]!) {
+            for (int statHash in DestinyData.linearStatBySubType[item.itemSubType]!) {
               armorTotal += stats![statHash.toString()]!.value!;
             }
 
@@ -60,14 +54,9 @@ class InspectMobileStats extends StatelessWidget {
                     width: width,
                     fontSize: 20,
                     name: ManifestService
-                            .manifestParsed
-                            .destinyStatDefinition[int.parse(statHash)]
-                            ?.displayProperties
-                            ?.name ??
+                            .manifestParsed.destinyStatDefinition[int.parse(statHash)]?.displayProperties?.name ??
                         'error',
-                    value: stats?[statHash.toString()]?.value ??
-                        item.stats?.stats?[statHash.toString()]?.value ??
-                        0,
+                    value: stats?[statHash.toString()]?.value ?? item.stats?.stats?[statHash.toString()]?.value ?? 0,
                     type: item.itemType,
                   ),
                 if (item.itemType == DestinyItemType.Armor)

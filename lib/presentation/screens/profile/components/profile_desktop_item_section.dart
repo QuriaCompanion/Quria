@@ -24,24 +24,20 @@ class ProfileDesktopItemSection extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ProfileDesktopItemSection> createState() =>
-      _ProfileDesktopItemSectionState();
+  State<ProfileDesktopItemSection> createState() => _ProfileDesktopItemSectionState();
 }
 
 class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
   @override
   Widget build(BuildContext context) {
-    List<DestinyItemComponent> characterInventory =
-        Provider.of<InventoryProvider>(context).getCharacterInventoryByBucket(
-            widget.data.selectedCharacter!.characterId!, widget.bucket);
-    List<DestinyItemComponent> inventory =
-        Provider.of<InventoryProvider>(context)
-            .getVaultInventoryForCharacterByBucket(
-                widget.data.selectedCharacter!.characterId!, widget.bucket);
+    List<DestinyItemComponent> characterInventory = Provider.of<InventoryProvider>(context)
+        .getCharacterInventoryByBucket(widget.data.selectedCharacter!.characterId!, widget.bucket);
+
+    List<DestinyItemComponent> inventory = Provider.of<InventoryProvider>(context)
+        .getVaultInventoryForCharacterByBucket(widget.data.selectedCharacter!.characterId!, widget.bucket);
 
     DestinyItemComponent equippedItem = Provider.of<InventoryProvider>(context)
-        .getCharacterEquipmentByBucket(
-            widget.data.selectedCharacter!.characterId!, widget.bucket);
+        .getCharacterEquipmentByBucket(widget.data.selectedCharacter!.characterId!, widget.bucket);
     double itemSize = 56;
 
     return Column(
@@ -54,11 +50,8 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
             textH2(
               ManifestService
                       .manifestParsed
-                      .destinyEquipmentSlotDefinition[ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition[equippedItem.itemHash]
-                          ?.equippingBlock
-                          ?.equipmentSlotTypeHash]
+                      .destinyEquipmentSlotDefinition[ManifestService.manifestParsed
+                          .destinyInventoryItemDefinition[equippedItem.itemHash]?.equippingBlock?.equipmentSlotTypeHash]
                       ?.displayProperties
                       ?.name ??
                   "error",
@@ -85,16 +78,12 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ItemIcon(
-                    displayHash: equippedItem.overrideStyleItemHash ??
-                        equippedItem.itemHash!,
+                    displayHash: equippedItem.overrideStyleItemHash ?? equippedItem.itemHash!,
                     imageSize: itemSize,
                     isMasterworked:
-                        equippedItem.state == ItemState.Masterwork ||
-                            equippedItem.state == const ItemState(5),
-                    element: Provider.of<ItemProvider>(context)
-                        .getItemElement(equippedItem),
-                    powerLevel: Provider.of<ItemProvider>(context)
-                        .getItemPowerLevel(equippedItem.itemInstanceId!),
+                        equippedItem.state == ItemState.Masterwork || equippedItem.state == const ItemState(5),
+                    element: Provider.of<ItemProvider>(context).getItemElement(equippedItem),
+                    powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(equippedItem.itemInstanceId!),
                   ),
                   const SizedBox(width: 8),
                   DragTarget<DestinyItemComponent>(
@@ -108,30 +97,23 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                         child: GridView.builder(
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
+                            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                               mainAxisSpacing: 8,
                               crossAxisSpacing: 8,
                               crossAxisCount: 3,
                             ),
                             itemCount: characterInventory.length,
                             itemBuilder: (context, index) {
-                              return DraggableInventoryItem(
-                                  size: itemSize,
-                                  item: characterInventory[index]);
+                              return DraggableInventoryItem(size: itemSize, item: characterInventory[index]);
                             }),
                       );
                     },
                     onAccept: (DestinyItemComponent data) {
-                      if (Provider.of<InventoryProvider>(context, listen: false)
-                              .getItemOwner(data.itemInstanceId!) !=
+                      if (Provider.of<InventoryProvider>(context, listen: false).getItemOwner(data.itemInstanceId!) !=
                           widget.data.selectedCharacter?.characterId) {
                         BungieActionsService().transferItem(
-                            context,
-                            data.itemInstanceId!,
-                            widget.data.selectedCharacter?.characterId,
-                            itemHash: data.itemHash!,
-                            stackSize: 1);
+                            context, data.itemInstanceId!, widget.data.selectedCharacter?.characterId,
+                            itemHash: data.itemHash!, stackSize: 1);
                       }
                     },
                   ),
@@ -157,8 +139,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                       child: GridView.builder(
                           shrinkWrap: true,
                           padding: EdgeInsets.zero,
-                          gridDelegate:
-                              SliverGridDelegateWithMaxCrossAxisExtent(
+                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: itemSize,
                             mainAxisExtent: itemSize,
                             crossAxisSpacing: 8,
@@ -175,15 +156,12 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                   );
                 },
                 onAccept: (DestinyItemComponent data) {
-                  if (Provider.of<InventoryProvider>(context, listen: false)
-                              .getItemOwner(data.itemInstanceId!) !=
+                  if (Provider.of<InventoryProvider>(context, listen: false).getItemOwner(data.itemInstanceId!) !=
                           null &&
-                      Provider.of<InventoryProvider>(context, listen: false)
-                              .getItemOwner(data.itemInstanceId!) ==
+                      Provider.of<InventoryProvider>(context, listen: false).getItemOwner(data.itemInstanceId!) ==
                           widget.data.selectedCharacter?.characterId) {
-                    BungieActionsService().transferItem(
-                        context, data.itemInstanceId!, null,
-                        itemHash: data.itemHash!, stackSize: 1);
+                    BungieActionsService()
+                        .transferItem(context, data.itemInstanceId!, null, itemHash: data.itemHash!, stackSize: 1);
                   }
                 },
               ),

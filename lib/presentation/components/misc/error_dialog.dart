@@ -26,25 +26,22 @@ class ErrorDialog extends StatelessWidget {
             Radius.circular(10),
           ),
         ),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const ClipRRect(
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-                  child: Image(image: AssetImage('assets/img/error.png'))),
-              textH3(AppLocalizations.of(context)!.error_title, utf8: false),
-              Center(
-                child: textBodyRegular(error, utf8: false, center: true),
-              ),
-              if (child != null) child!,
-              if (child == null)
-                RoundedButton(
-                  text: textBodyMedium(AppLocalizations.of(context)!.understood,
-                      color: black),
-                  onPressed: () => Navigator.pop(context),
-                ),
-              SizedBox(height: globalPadding(context)),
-            ]),
+        child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          const ClipRRect(
+              borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+              child: Image(image: AssetImage('assets/img/error.png'))),
+          textH3(AppLocalizations.of(context)!.error_title, utf8: false),
+          Center(
+            child: textBodyRegular(error, utf8: false, center: true),
+          ),
+          if (child != null) child!,
+          if (child == null)
+            RoundedButton(
+              text: textBodyMedium(AppLocalizations.of(context)!.understood, color: black),
+              onPressed: () => Navigator.pop(context),
+            ),
+          SizedBox(height: globalPadding(context)),
+        ]),
       ),
     );
   }

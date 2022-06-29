@@ -14,9 +14,7 @@ class ScaffoldDesktop extends StatefulWidget {
   final Widget body;
   final String currentRoute;
 
-  const ScaffoldDesktop(
-      {required this.body, Key? key, required this.currentRoute})
-      : super(key: key);
+  const ScaffoldDesktop({required this.body, Key? key, required this.currentRoute}) : super(key: key);
 
   @override
   State<ScaffoldDesktop> createState() => _ScaffoldDesktopState();
@@ -34,8 +32,7 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
           flexibleSpace: Builder(
             builder: (context) {
               return Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: globalPadding(context) / 2),
+                padding: EdgeInsets.symmetric(horizontal: globalPadding(context) / 2),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -66,35 +63,34 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                     Row(
                       children: [
                         CharacterDesktopBannerInfo(
-                          character: Provider.of<CharactersProvider>(context)
-                              .currentCharacter!,
+                          character: Provider.of<CharactersProvider>(context).currentCharacter!,
                         ),
                         InkWell(
                           onTap: () {
                             showDialog(
-                                context: context,
-                                barrierColor:
-                                    const Color.fromARGB(110, 0, 0, 0),
-                                builder: (context) {
-                                  return desktopModal(
-                                    context,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                          borderRadius: BorderRadius.all(
-                                            Radius.circular(20),
-                                          ),
-                                          color: blackLight),
-                                      child: Column(
-                                        children: [
-                                          textH2('Paramètres', utf8: false),
-                                          const SettingsMobileView(
-                                            height: 600,
-                                          ),
-                                        ],
-                                      ),
+                              context: context,
+                              barrierColor: const Color.fromARGB(110, 0, 0, 0),
+                              builder: (context) {
+                                return desktopModal(
+                                  context,
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(20),
+                                        ),
+                                        color: blackLight),
+                                    child: Column(
+                                      children: [
+                                        textH2('Paramètres', utf8: false),
+                                        const SettingsMobileView(
+                                          height: 600,
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                });
+                                  ),
+                                );
+                              },
+                            );
                           },
                           child: SvgPicture.asset("assets/icons/Settings.svg"),
                         )

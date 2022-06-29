@@ -26,8 +26,7 @@ class CollectionItemLine extends StatelessWidget {
           child: Stack(
             children: [
               Image(
-                image: NetworkImage(
-                    DestinyData.bungieLink + item.displayProperties!.icon!),
+                image: NetworkImage(DestinyData.bungieLink + item.displayProperties!.icon!),
                 height: iconSize(context, width),
                 width: iconSize(context, width),
                 fit: BoxFit.fill,

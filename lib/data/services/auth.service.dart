@@ -18,10 +18,7 @@ class AuthService {
   static GroupUserInfoCard? _currentMembership;
 
   static bool waitingAuthCode = false;
-  final Map<String, String> headers = {
-    "Accept": "application/json",
-    "Access-Control-Allow-Origin": "*"
-  };
+  final Map<String, String> headers = {"Accept": "application/json", "Access-Control-Allow-Origin": "*"};
 
   static const bungieUrl = "https://www.bungie.net/Platform/";
 
@@ -46,8 +43,7 @@ class AuthService {
   }
 
   static Future<BungieNetToken> refreshToken(BungieNetToken token) async {
-    BungieNetToken bNetToken =
-        await BungieApiService().refreshToken(token.refreshToken);
+    BungieNetToken bNetToken = await BungieApiService().refreshToken(token.refreshToken);
     saveToken(bNetToken);
     return bNetToken;
   }
@@ -70,8 +66,7 @@ class AuthService {
     String? savedString = await StorageService.getLocalStorage('last_refresh');
     DateTime savedDate = DateTime.parse(savedString!);
     DateTime expire = savedDate.add(Duration(seconds: token!.expiresIn));
-    DateTime refreshExpire =
-        savedDate.add(Duration(seconds: token.refreshExpiresIn));
+    DateTime refreshExpire = savedDate.add(Duration(seconds: token.refreshExpiresIn));
     if (refreshExpire.isBefore(now)) {
       return null;
     }
@@ -100,8 +95,7 @@ class AuthService {
     }
 
     if (uri?.queryParameters == null) return null;
-    if (uri!.queryParameters.containsKey("code") ||
-        uri.queryParameters.containsKey("error")) {
+    if (uri!.queryParameters.containsKey("code") || uri.queryParameters.containsKey("error")) {
       closeInAppWebView();
     }
 
@@ -109,14 +103,12 @@ class AuthService {
       return uri.queryParameters["code"];
     } else {
       String? errorType = uri.queryParameters["error"];
-      String errorDescription =
-          uri.queryParameters["error_description"] ?? uri.toString();
+      String errorDescription = uri.queryParameters["error_description"] ?? uri.toString();
       throw OAuthException(errorType!, errorDescription);
     }
   }
 
-  static Future<String> authorize(String lang,
-      [bool forceReauth = true]) async {
+  static Future<String> authorize(String lang, [bool forceReauth = true]) async {
     var browser = BungieAuthBrowser();
     // print("test");
     // final AuthorizationResponse? result =
@@ -136,8 +128,7 @@ class AuthService {
 
     linkStreamSub = stream.listen((link) {
       Uri uri = Uri.parse(link!);
-      if (uri.queryParameters.containsKey("code") ||
-          uri.queryParameters.containsKey("error")) {
+      if (uri.queryParameters.containsKey("code") || uri.queryParameters.containsKey("error")) {
         closeInAppWebView();
         linkStreamSub.cancel();
       }
@@ -170,8 +161,7 @@ class BungieAuthBrowser implements OAuthBrowser {
   dynamic open(String url) async {
     if (Platform.isIOS) {
       // ignore: deprecated_member_use
-      await launch(url,
-          forceSafariVC: true, statusBarBrightness: Brightness.dark);
+      await launch(url, forceSafariVC: true, statusBarBrightness: Brightness.dark);
     } else {
       // ignore: deprecated_member_use
       await launch(url, forceSafariVC: true);

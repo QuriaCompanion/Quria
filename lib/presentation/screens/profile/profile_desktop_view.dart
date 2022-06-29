@@ -28,15 +28,9 @@ class ProfileDesktopView extends StatelessWidget {
     ];
     String icon = data.isNewSubclass
         ? ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition[
-                data.selectedCharacterSubclass!.itemHash]!
-            .screenshot!
+            .manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.screenshot!
         : ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition[
-                data.selectedCharacterSubclass!.itemHash]!
-            .secondaryIcon!;
+            .manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,

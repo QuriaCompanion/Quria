@@ -28,16 +28,13 @@ class BuilderRecapMobileItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DestinyItemInstanceComponent instanceInfo =
-        Provider.of<ItemProvider>(context)
-            .getInstanceInfo(item.itemInstanceId)!;
+        Provider.of<ItemProvider>(context).getInstanceInfo(item.itemInstanceId)!;
     //instanciate armor mod space (starts at 10 points for each armor assuming everything is masterworked)
     int armorModspace = 0;
     // loops through the mods in this armor
     for (DestinyInventoryItemDefinition? mod in mods) {
       // check if the mod has bonus stats
-      if (mod != null &&
-          mod.investmentStats != null &&
-          mod.investmentStats!.isNotEmpty) {
+      if (mod != null && mod.investmentStats != null && mod.investmentStats!.isNotEmpty) {
         // loops through the bonus stats
         for (var stat in mod.investmentStats!) {
           // if it has a cost to the armor it reduces the armor mod space
@@ -77,12 +74,8 @@ class BuilderRecapMobileItem extends StatelessWidget {
             width: width,
             pointsAvailable: armorModspace,
             remaining: 10 - armorModspace,
-            afinityIcon: ManifestService
-                .manifestParsed
-                .destinyEnergyTypeDefinition[
-                    instanceInfo.energy!.energyTypeHash]!
-                .displayProperties!
-                .icon!,
+            afinityIcon: ManifestService.manifestParsed
+                .destinyEnergyTypeDefinition[instanceInfo.energy!.energyTypeHash]!.displayProperties!.icon!,
           ),
         SizedBox(height: globalPadding(context)),
         Row(
@@ -100,25 +93,19 @@ class BuilderRecapMobileItem extends StatelessWidget {
               child: ItemIcon(
                 displayHash: item.displayHash,
                 imageSize: vw(context) * 0.192,
-                isMasterworked: Provider.of<InventoryProvider>(context)
-                            .getItemByInstanceId(item.itemInstanceId)
-                            ?.state ==
-                        const ItemState(5) ||
-                    Provider.of<InventoryProvider>(context)
-                            .getItemByInstanceId(item.itemInstanceId)
-                            ?.state ==
-                        ItemState.Masterwork,
+                isMasterworked:
+                    Provider.of<InventoryProvider>(context).getItemByInstanceId(item.itemInstanceId)?.state ==
+                            const ItemState(5) ||
+                        Provider.of<InventoryProvider>(context).getItemByInstanceId(item.itemInstanceId)?.state ==
+                            ItemState.Masterwork,
               ),
             ),
             Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: globalPadding(context) / 2),
+              padding: EdgeInsets.symmetric(horizontal: globalPadding(context) / 2),
               child: ArmorModIconDisplay(
                 iconSize: 44,
-                socket: ManifestService.manifestParsed
-                        .destinyInventoryItemDefinition[item.mods?.hash] ??
-                    ManifestService.manifestParsed
-                        .destinyInventoryItemDefinition[481675395]!,
+                socket: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.mods?.hash] ??
+                    ManifestService.manifestParsed.destinyInventoryItemDefinition[481675395]!,
               ),
             ),
             for (DestinyInventoryItemDefinition? mod in mods)
@@ -127,10 +114,8 @@ class BuilderRecapMobileItem extends StatelessWidget {
                   padding: EdgeInsets.only(right: globalPadding(context) / 2),
                   child: ArmorModIconDisplay(
                     iconSize: 44,
-                    socket: ManifestService.manifestParsed
-                            .destinyInventoryItemDefinition[mod.hash] ??
-                        ManifestService.manifestParsed
-                            .destinyInventoryItemDefinition[481675395]!,
+                    socket: ManifestService.manifestParsed.destinyInventoryItemDefinition[mod.hash] ??
+                        ManifestService.manifestParsed.destinyInventoryItemDefinition[481675395]!,
                   ),
                 ),
           ],

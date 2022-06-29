@@ -34,8 +34,7 @@ class InspectMobileWeaponInfo extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<InspectMobileWeaponInfo> createState() =>
-      _InspectMobileWeaponInfoState();
+  State<InspectMobileWeaponInfo> createState() => _InspectMobileWeaponInfoState();
 }
 
 class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {

@@ -14,8 +14,7 @@ import 'package:quria/presentation/var/routes.dart';
 class CollectionDesktopView extends StatefulWidget {
   final Iterable<DestinyInventoryItemDefinition> items;
 
-  const CollectionDesktopView({required this.items, Key? key})
-      : super(key: key);
+  const CollectionDesktopView({required this.items, Key? key}) : super(key: key);
 
   @override
   State<CollectionDesktopView> createState() => _CollectionDesktopViewState();
@@ -33,8 +32,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
     selectedSubType = currentFilter.values.first;
     selectedBucket = InventoryBucket.kineticWeapons;
     sortedItems = widget.items.toList();
-    sortedItems.sort((a, b) =>
-        b.inventory!.tierType!.index.compareTo(a.inventory!.tierType!.index));
+    sortedItems.sort((a, b) => b.inventory!.tierType!.index.compareTo(a.inventory!.tierType!.index));
   }
 
   @override
@@ -133,8 +131,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                       width: (vw(context) - 300) - globalPadding(context) * 2,
                       height: vh(context),
                       child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                             mainAxisSpacing: 20,
                             crossAxisSpacing: 20,
                             childAspectRatio: 4,
@@ -143,23 +140,18 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                           itemCount: items.length,
                           itemBuilder: (context, index) {
                             return InkWell(
-                              onTap: () => Navigator.pushNamed(
-                                  context, routeCollectionItem,
-                                  arguments: items[index].hash),
+                              onTap: () =>
+                                  Navigator.pushNamed(context, routeCollectionItem, arguments: items[index].hash),
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: blackLight,
-                                  borderRadius:
-                                      BorderRadius.circular(borderRadius),
+                                  borderRadius: BorderRadius.circular(borderRadius),
                                 ),
                                 child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: globalPadding(context) / 2),
+                                  padding: EdgeInsets.only(left: globalPadding(context) / 2),
                                   child: CollectionItemLine(
                                     item: items[index],
-                                    width: ((vw(context) - 300) -
-                                            globalPadding(context)) /
-                                        2,
+                                    width: ((vw(context) - 300) - globalPadding(context)) / 2,
                                   ),
                                 ),
                               ),

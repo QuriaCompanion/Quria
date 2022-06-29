@@ -14,11 +14,7 @@ class SubclassMobileItems extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
   final int? plugSetHash;
   final void Function(DestinyInventoryItemDefinition) onSocketChange;
-  const SubclassMobileItems(
-      {required this.item,
-      required this.plugSetHash,
-      required this.onSocketChange,
-      Key? key})
+  const SubclassMobileItems({required this.item, required this.plugSetHash, required this.onSocketChange, Key? key})
       : super(key: key);
 
   @override
@@ -30,8 +26,7 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
   Widget build(BuildContext context) {
     List<int> plugs = [];
     if (widget.plugSetHash != null) {
-      for (DestinyItemPlug plug in Provider.of<PlugsProvider>(context)
-          .getPlugSets(context, widget.plugSetHash!)) {
+      for (DestinyItemPlug plug in Provider.of<PlugsProvider>(context).getPlugSets(context, widget.plugSetHash!)) {
         plugs.add(plug.plugItemHash!);
       }
     }
@@ -53,17 +48,14 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
             },
             child: pictureBordered(
               size: vw(context) * 0.192,
-              image: NetworkImage(DestinyData.bungieLink +
-                  widget.item.displayProperties!.icon!),
+              image: NetworkImage(DestinyData.bungieLink + widget.item.displayProperties!.icon!),
             ),
           ),
           Container(
             padding: EdgeInsets.only(
               left: globalPadding(context) / 2,
             ),
-            width: vw(context) -
-                vw(context) * 0.192 -
-                globalPadding(context) * 2.5,
+            width: vw(context) - vw(context) * 0.192 - globalPadding(context) * 2.5,
             child: Wrap(
               alignment: WrapAlignment.start,
               spacing: globalPadding(context) / 2,
@@ -80,29 +72,22 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                             builder: (context) {
                               return ModModal(
                                   width: vw(context),
-                                  mod: ManifestService.manifestParsed
-                                      .destinyInventoryItemDefinition[plug]!,
+                                  mod: ManifestService.manifestParsed.destinyInventoryItemDefinition[plug]!,
                                   onSocketChange: () {
                                     setState(() {
-                                      widget.onSocketChange(ManifestService
-                                              .manifestParsed
-                                              .destinyInventoryItemDefinition[
-                                          plug]!);
+                                      widget.onSocketChange(
+                                          ManifestService.manifestParsed.destinyInventoryItemDefinition[plug]!);
                                     });
                                   });
                             });
                       },
                       onLongPress: () {
-                        widget.onSocketChange(ManifestService.manifestParsed
-                            .destinyInventoryItemDefinition[plug]!);
+                        widget.onSocketChange(ManifestService.manifestParsed.destinyInventoryItemDefinition[plug]!);
                       },
                       child: pictureBordered(
                           image: NetworkImage(DestinyData.bungieLink +
                               ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition[plug]!
-                                  .displayProperties!
-                                  .icon!),
+                                  .manifestParsed.destinyInventoryItemDefinition[plug]!.displayProperties!.icon!),
                           size: 44),
                     )
               ],

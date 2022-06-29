@@ -42,9 +42,10 @@ class InspectItem extends StatelessWidget {
           width: width,
           child: Padding(
             padding: EdgeInsets.only(
-                left: globalPadding(context),
-                right: globalPadding(context),
-                bottom: globalPadding(context)),
+              left: globalPadding(context),
+              right: globalPadding(context),
+              bottom: globalPadding(context),
+            ),
             child: data.itemDef.itemType == DestinyItemType.Weapon
                 ? InspectMobileWeaponInfo(
                     item: data.itemDef,

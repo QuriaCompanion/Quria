@@ -17,25 +17,15 @@ class InspectMobileExoticArmor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DestinyInventoryItemDefinition item =
-        ManifestService.manifestParsed.destinyInventoryItemDefinition[sockets
-            ?.firstWhere((element) =>
-                ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[element.plugHash]
-                        ?.plug
-                        ?.plugCategoryHash ==
-                    1744546145 &&
-                ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[element.plugHash]
-                        ?.inventory
-                        ?.tierType ==
-                    TierType.Exotic)
-            .plugHash]!;
+    DestinyInventoryItemDefinition item = ManifestService.manifestParsed.destinyInventoryItemDefinition[sockets
+        ?.firstWhere((element) =>
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryHash ==
+                1744546145 &&
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.inventory?.tierType ==
+                TierType.Exotic)
+        .plugHash]!;
     return ModDisplay(
-        width:
-            vw(context) - globalPadding(context) * 2 - itemSize(context, width),
+        width: vw(context) - globalPadding(context) * 2 - itemSize(context, width),
         iconSize: itemSize(context, width),
         padding: globalPadding(context),
         item: item);

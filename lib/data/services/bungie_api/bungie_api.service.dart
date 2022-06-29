@@ -76,49 +76,37 @@ class BungieApiService {
   }
 
   Future<BungieNetToken> refreshToken(String refreshToken) {
-    return OAuth.refreshToken(Client(autoRefreshToken: false), clientId!,
-        clientSecret!, refreshToken);
+    return OAuth.refreshToken(Client(autoRefreshToken: false), clientId!, clientSecret!, refreshToken);
   }
 
-  Future<DestinyProfileResponse?> getCurrentProfile(
-      List<DestinyComponentType> components) async {
+  Future<DestinyProfileResponse?> getCurrentProfile(List<DestinyComponentType> components) async {
     BungieNetToken? token = await AuthService.getToken();
     GroupUserInfoCard? membership = await AccountService.getMembership();
     if (membership == null) return null;
-    var profile = await getProfile(
-        components, membership.membershipId, membership.membershipType, token);
+    var profile = await getProfile(components, membership.membershipId, membership.membershipType, token);
     return profile;
   }
 
   Future<DestinyProfileResponse?> getProfile(
-      List<DestinyComponentType> components,
-      String? membershipId,
-      BungieMembershipType? membershipType,
+      List<DestinyComponentType> components, String? membershipId, BungieMembershipType? membershipType,
       [BungieNetToken? token]) async {
-    DestinyProfileResponseResponse response = await Destiny2.getProfile(
-        Client(token: token), components, membershipId!, membershipType!);
+    DestinyProfileResponseResponse response =
+        await Destiny2.getProfile(Client(token: token), components, membershipId!, membershipType!);
     return response.response;
   }
 
-  Future<DestinyVendorsResponse?> getVendors(
-      List<DestinyComponentType> components, String characterId) async {
+  Future<DestinyVendorsResponse?> getVendors(List<DestinyComponentType> components, String characterId) async {
     BungieNetToken? token = await AuthService.getToken();
     GroupUserInfoCard? membership = await AccountService.getMembership();
     if (membership == null) return null;
-    DestinyVendorsResponseResponse response = await Destiny2.getVendors(
-        Client(token: token),
-        characterId,
-        components,
-        membership.membershipId!,
-        DestinyVendorFilter.None,
-        membership.membershipType!);
+    DestinyVendorsResponseResponse response = await Destiny2.getVendors(Client(token: token), characterId, components,
+        membership.membershipId!, DestinyVendorFilter.None, membership.membershipType!);
     return response.response;
   }
 
   Future<UserMembershipData?> getMemberships() async {
     BungieNetToken? token = await AuthService.getToken();
-    UserMembershipDataResponse response =
-        await User.getMembershipDataForCurrentUser(Client(token: token));
+    UserMembershipDataResponse response = await User.getMembershipDataForCurrentUser(Client(token: token));
     return response.response;
   }
 
@@ -138,8 +126,7 @@ class BungieApiService {
     return response.response;
   }
 
-  Future<int?> pullFromPostMaster(
-      int itemHash, int stackSize, String itemId, String characterId) async {
+  Future<int?> pullFromPostMaster(int itemHash, int stackSize, String itemId, String characterId) async {
     BungieNetToken? token = await AuthService.getToken();
     GroupUserInfoCard? membership = await AccountService.getMembership();
     Int32Response response = await Destiny2.pullFromPostmaster(
@@ -166,10 +153,7 @@ class BungieApiService {
   }
 
   Future<DestinyItemChangeResponseResponse?> insertSocketPlugFree(
-      String itemInstanceId,
-      int plugItemHash,
-      int index,
-      String? characterId) async {
+      String itemInstanceId, int plugItemHash, int index, String? characterId) async {
     var plug = DestinyInsertPlugsRequestEntry()
       ..plugItemHash = plugItemHash
       ..socketArrayType = DestinySocketArrayType.Default
@@ -186,8 +170,7 @@ class BungieApiService {
     return response;
   }
 
-  Future<int?> changeLockState(
-      String itemId, String characterId, bool locked) async {
+  Future<int?> changeLockState(String itemId, String characterId, bool locked) async {
     BungieNetToken? token = await AuthService.getToken();
     GroupUserInfoCard? membership = await AccountService.getMembership();
     var response = await Destiny2.setItemLockState(
@@ -200,8 +183,7 @@ class BungieApiService {
     return response.response;
   }
 
-  Future<int?> changeTrackState(
-      String itemId, String characterId, bool tracked) async {
+  Future<int?> changeTrackState(String itemId, String characterId, bool tracked) async {
     BungieNetToken? token = await AuthService.getToken();
     GroupUserInfoCard? membership = await AccountService.getMembership();
     var response = await Destiny2.setQuestTrackedState(
@@ -214,8 +196,7 @@ class BungieApiService {
     return response.response;
   }
 
-  Future<List<DestinyEquipItemResult>?> equipItems(
-      List<String> itemIds, String characterId) async {
+  Future<List<DestinyEquipItemResult>?> equipItems(List<String> itemIds, String characterId) async {
     BungieNetToken? token = await AuthService.getToken();
     GroupUserInfoCard? membership = await AccountService.getMembership();
     var response = await Destiny2.equipItems(
@@ -246,10 +227,7 @@ class Client implements HttpClient {
   }
 
   Future<HttpResponse> _request(HttpClientConfig config) async {
-    Map<String, String> headers = {
-      'X-API-Key': BungieApiService.apiKey!,
-      'Accept': 'application/json'
-    };
+    Map<String, String> headers = {'X-API-Key': BungieApiService.apiKey!, 'Accept': 'application/json'};
     if (config.bodyContentType != null) {
       headers['Content-Type'] = config.bodyContentType!;
     }
@@ -281,17 +259,11 @@ class Client implements HttpClient {
     final http.Response response;
 
     if (config.method == 'GET') {
-      response = await http.get(
-          Uri.parse("${BungieApiService.apiUrl}${config.url}$paramsString"),
-          headers: headers);
+      response = await http.get(Uri.parse("${BungieApiService.apiUrl}${config.url}$paramsString"), headers: headers);
     } else {
-      String body = config.bodyContentType == 'application/json'
-          ? jsonEncode(config.body)
-          : config.body;
-      response = await http.post(
-          Uri.parse("${BungieApiService.apiUrl}${config.url}$paramsString"),
-          headers: headers,
-          body: body);
+      String body = config.bodyContentType == 'application/json' ? jsonEncode(config.body) : config.body;
+      response = await http.post(Uri.parse("${BungieApiService.apiUrl}${config.url}$paramsString"),
+          headers: headers, body: body);
     }
 
     if (response.statusCode == 401 && autoRefreshToken!) {

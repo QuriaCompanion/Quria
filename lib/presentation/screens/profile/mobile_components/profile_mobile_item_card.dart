@@ -72,13 +72,10 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
                   children: [
                     textH2(data.itemCategory.displayProperties!.name!),
                     const SizedBox(width: 20),
-                    textH3('${widget.inventory.length + 1}/10',
-                        color: greyLight)
+                    textH3('${widget.inventory.length + 1}/10', color: greyLight)
                   ],
                 ),
-                textBodyMedium(isOpen
-                    ? AppLocalizations.of(context)!.close
-                    : AppLocalizations.of(context)!.see_all),
+                textBodyMedium(isOpen ? AppLocalizations.of(context)!.close : AppLocalizations.of(context)!.see_all),
               ],
             ),
           ),
@@ -110,22 +107,18 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
               for (final item in widget.inventory)
                 Builder(builder: (context) {
                   final dataItem = DisplayService.getCardData(context,
-                      itemInstanceId: item.itemInstanceId!,
-                      itemHash: item.itemHash);
+                      itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
                   return InkWell(
                     onTap: () {
                       widget.onClick(InspectData(
-                          hash: item.itemHash!,
-                          characterId: widget.characterId,
-                          instanceId: item.itemInstanceId!));
+                          hash: item.itemHash!, characterId: widget.characterId, instanceId: item.itemInstanceId!));
                     },
                     child: ItemIcon(
                       imageSize: itemSize(context, widget.width),
                       displayHash: item.overrideStyleItemHash ?? item.itemHash!,
                       element: dataItem.elementIcon,
                       powerLevel: dataItem.powerLevel,
-                      isMasterworked: item.state == ItemState.Masterwork ||
-                          item.state == const ItemState(5),
+                      isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
                     ),
                   );
                 })

@@ -21,8 +21,7 @@ import 'package:quria/presentation/screens/profile/components/character_stats_li
 
 class BuilderResultsMobileItem extends StatelessWidget {
   final Build buildResult;
-  const BuilderResultsMobileItem({required this.buildResult, Key? key})
-      : super(key: key);
+  const BuilderResultsMobileItem({required this.buildResult, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +58,7 @@ class BuilderResultsMobileItem extends StatelessWidget {
                 ),
                 CharacterStatsListing(
                     stats: finalStats,
-                    characterId: Provider.of<CharactersProvider>(context)
-                        .currentCharacter!
-                        .characterId!,
+                    characterId: Provider.of<CharactersProvider>(context).currentCharacter!.characterId!,
                     width: vw(context) * 0.5,
                     direction: Axis.horizontal),
               ],
@@ -82,13 +79,11 @@ class BuilderResultsMobileItem extends StatelessWidget {
                     displayHash: buildResult.equipement[i].displayHash,
                     imageSize: (vw(context) - (globalPadding(context) * 8)) / 5,
                     isMasterworked: Provider.of<InventoryProvider>(context)
-                                .getItemByInstanceId(
-                                    buildResult.equipement[i].itemInstanceId)
+                                .getItemByInstanceId(buildResult.equipement[i].itemInstanceId)
                                 ?.state ==
                             const ItemState(5) ||
                         Provider.of<InventoryProvider>(context)
-                                .getItemByInstanceId(
-                                    buildResult.equipement[i].itemInstanceId)
+                                .getItemByInstanceId(buildResult.equipement[i].itemInstanceId)
                                 ?.state ==
                             ItemState.Masterwork,
                   ),
@@ -103,8 +98,7 @@ class BuilderResultsMobileItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               RoundedButton(
-                text: textBodyMedium(AppLocalizations.of(context)!.equip,
-                    utf8: false, color: black),
+                text: textBodyMedium(AppLocalizations.of(context)!.equip, utf8: false, color: black),
                 onPressed: () {
                   showMaterialModalBottomSheet(
                       context: context,
@@ -121,29 +115,18 @@ class BuilderResultsMobileItem extends StatelessWidget {
                       .equipBuild(
                         context,
                         build: buildResult,
-                        characterId: Provider.of<CharactersProvider>(context,
-                                listen: false)
-                            .currentCharacter!
-                            .characterId!,
-                        mods: Provider.of<BuilderModsProvider>(context,
-                                listen: false)
-                            .mods,
-                        subclassMods: Provider.of<BuilderSubclassModsProvider>(
-                                context,
-                                listen: false)
-                            .subclassMods,
-                        subclassId: Provider.of<BuilderSubclassProvider>(
-                                context,
-                                listen: false)
-                            .subclassId,
+                        characterId:
+                            Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
+                        mods: Provider.of<BuilderModsProvider>(context, listen: false).mods,
+                        subclassMods: Provider.of<BuilderSubclassModsProvider>(context, listen: false).subclassMods,
+                        subclassId: Provider.of<BuilderSubclassProvider>(context, listen: false).subclassId,
                       )
                       .then((value) => Navigator.pop(context));
                 },
                 width: vw(context) * 0.4,
               ),
               RoundedButton(
-                text: textBodyMedium(AppLocalizations.of(context)!.save,
-                    color: Colors.white),
+                text: textBodyMedium(AppLocalizations.of(context)!.save, color: Colors.white),
                 onPressed: () {
                   showMaterialModalBottomSheet(
                       context: context,

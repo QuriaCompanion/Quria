@@ -8,12 +8,10 @@ import 'package:quria/presentation/components/detailed_item/item/item_named_desc
 
 class InspectMobileIntrinsics extends StatefulWidget {
   final List<DestinyItemSocketState>? sockets;
-  const InspectMobileIntrinsics({required this.sockets, Key? key})
-      : super(key: key);
+  const InspectMobileIntrinsics({required this.sockets, Key? key}) : super(key: key);
 
   @override
-  State<InspectMobileIntrinsics> createState() =>
-      _InspectMobileIntrinsicsState();
+  State<InspectMobileIntrinsics> createState() => _InspectMobileIntrinsicsState();
 }
 
 class _InspectMobileIntrinsicsState extends State<InspectMobileIntrinsics> {
@@ -25,27 +23,14 @@ class _InspectMobileIntrinsicsState extends State<InspectMobileIntrinsics> {
         .where((element) =>
             element.plugHash != null &&
                 ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[element.plugHash]
-                        ?.displayProperties
-                        ?.icon !=
+                        .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.displayProperties?.icon !=
                     null &&
                 DestinyData.modCategoryHash.contains(ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]!
-                    .plug!
-                    .plugCategoryHash) ||
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.plug
-                    ?.plugStyle ==
+                    .manifestParsed.destinyInventoryItemDefinition[element.plugHash]!.plug!.plugCategoryHash) ||
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugStyle ==
                 PlugUiStyles.Masterwork ||
             ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[element.plugHash]
-                    ?.plug
-                    ?.plugCategoryIdentifier
+                    .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryIdentifier
                     ?.contains('masterworks.stat') ==
                 true)
         .toList();
@@ -60,9 +45,7 @@ class _InspectMobileIntrinsicsState extends State<InspectMobileIntrinsics> {
       list.add(Padding(
         padding: const EdgeInsets.only(bottom: 22),
         child: ItemNamedDescription(
-            iconSize: iconSize,
-            item: ManifestService.manifestParsed
-                .destinyInventoryItemDefinition[socket.plugHash]!),
+            iconSize: iconSize, item: ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!),
       ));
     }
     return Column(

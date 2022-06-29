@@ -48,7 +48,7 @@ class _NavBarButtonState extends State<NavBarButton> {
               children: [
                 SvgPicture.asset(widget.icon),
                 const SizedBox(width: 5),
-                textBodyBold(widget.name)
+                textBodyBold(widget.name),
               ],
             ),
             if (widget.selected)

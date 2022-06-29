@@ -43,9 +43,7 @@ class _InspectMobilePerksState extends State<InspectMobilePerks> {
     return Column(children: [
       Container(
         padding: EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
-        decoration: const BoxDecoration(
-            color: blackLight,
-            borderRadius: BorderRadius.all(Radius.circular(8))),
+        decoration: const BoxDecoration(color: blackLight, borderRadius: BorderRadius.all(Radius.circular(8))),
         width: widget.width,
         child: Center(
           child: textCaption(
@@ -59,9 +57,7 @@ class _InspectMobilePerksState extends State<InspectMobilePerks> {
         List<Widget> list = <Widget>[];
         for (int i = 0; i < perks.length; i++) {
           list.add(Padding(
-            padding: i != perks.length - 1
-                ? EdgeInsets.only(right: globalPadding(context))
-                : EdgeInsets.zero,
+            padding: i != perks.length - 1 ? EdgeInsets.only(right: globalPadding(context)) : EdgeInsets.zero,
             child: InspectMobilePerkColumn(
                 width: widget.width,
                 onSocketsChanged: (newSockets) {
