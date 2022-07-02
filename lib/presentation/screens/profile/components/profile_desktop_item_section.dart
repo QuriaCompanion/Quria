@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
@@ -15,11 +14,9 @@ import 'package:quria/presentation/screens/profile/components/draggable_inventor
 class ProfileDesktopItemSection extends StatefulWidget {
   final ProfileHelper data;
   final int bucket;
-  final void Function(InspectData) onClick;
   const ProfileDesktopItemSection({
     required this.data,
     required this.bucket,
-    required this.onClick,
     Key? key,
   }) : super(key: key);
 
@@ -61,7 +58,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
             )
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 8,
         ),
         Row(
@@ -133,26 +130,24 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                   List<dynamic> accepted,
                   List<dynamic> rejected,
                 ) {
-                  return InkWell(
-                    child: SizedBox(
-                      width: vw(context) * 0.7,
-                      child: GridView.builder(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.zero,
-                          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: itemSize,
-                            mainAxisExtent: itemSize,
-                            crossAxisSpacing: 8,
-                            mainAxisSpacing: 8,
-                          ),
-                          itemCount: inventory.length,
-                          itemBuilder: (context, index) {
-                            return DraggableInventoryItem(
-                              item: inventory[index],
-                              size: itemSize,
-                            );
-                          }),
-                    ),
+                  return SizedBox(
+                    width: vw(context) * 0.7,
+                    child: GridView.builder(
+                        shrinkWrap: true,
+                        padding: EdgeInsets.zero,
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: itemSize,
+                          mainAxisExtent: itemSize,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 8,
+                        ),
+                        itemCount: inventory.length,
+                        itemBuilder: (context, index) {
+                          return DraggableInventoryItem(
+                            item: inventory[index],
+                            size: itemSize,
+                          );
+                        }),
                   );
                 },
                 onAccept: (DestinyItemComponent data) {

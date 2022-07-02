@@ -12,6 +12,7 @@ import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart'
 import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/collectible_provider.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/providers/language_provider.dart';
@@ -59,6 +60,9 @@ class QuriaApp extends StatelessWidget {
         providers: [
           ChangeNotifierProvider<BuilderExoticProvider>(
             create: (context) => BuilderExoticProvider(),
+          ),
+          ChangeNotifierProvider<InspectProvider>(
+            create: (context) => InspectProvider(),
           ),
           ChangeNotifierProvider<BuilderStatsFilterProvider>(
             create: (context) => BuilderStatsFilterProvider(),

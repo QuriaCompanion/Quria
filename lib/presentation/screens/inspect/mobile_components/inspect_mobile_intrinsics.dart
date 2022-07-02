@@ -1,44 +1,19 @@
-import 'package:bungie_api/enums/plug_ui_styles.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_named_description.dart';
 
-class InspectMobileIntrinsics extends StatefulWidget {
-  final List<DestinyItemSocketState>? sockets;
-  const InspectMobileIntrinsics({required this.sockets, Key? key}) : super(key: key);
-
-  @override
-  State<InspectMobileIntrinsics> createState() => _InspectMobileIntrinsicsState();
-}
-
-class _InspectMobileIntrinsicsState extends State<InspectMobileIntrinsics> {
-  late List<DestinyItemSocketState> displayedMods;
-  @override
-  void initState() {
-    super.initState();
-    displayedMods = widget.sockets!
-        .where((element) =>
-            element.plugHash != null &&
-                ManifestService
-                        .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.displayProperties?.icon !=
-                    null &&
-                DestinyData.modCategoryHash.contains(ManifestService
-                    .manifestParsed.destinyInventoryItemDefinition[element.plugHash]!.plug!.plugCategoryHash) ||
-            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugStyle ==
-                PlugUiStyles.Masterwork ||
-            ManifestService
-                    .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryIdentifier
-                    ?.contains('masterworks.stat') ==
-                true)
-        .toList();
-  }
+class InspectMobileIntrinsics extends StatelessWidget {
+  final double width;
+  const InspectMobileIntrinsics({required this.width, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final double iconSize = (vw(context) - ((globalPadding(context)) * 6)) / 5;
+    List<DestinyItemSocketState> displayedMods = Provider.of<InspectProvider>(context).getIntristicsSockets(context);
+    final double iconSize = (width - ((globalPadding(context)) * 6)) / 5;
 
     List<Widget> list = <Widget>[];
     for (DestinyItemSocketState socket in displayedMods) {

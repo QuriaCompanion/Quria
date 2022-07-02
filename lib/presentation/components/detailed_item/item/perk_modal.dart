@@ -17,7 +17,7 @@ class PerkModal extends StatelessWidget {
   final bool? isSelected;
   final String? instanceId;
   final String? characterId;
-  final Function(List<DestinyItemSocketState>?)? onSocketsChanged;
+  final Function(List<DestinyItemSocketState>)? onSocketsChanged;
 
   const PerkModal({
     required this.perk,
@@ -130,7 +130,7 @@ class PerkModal extends StatelessWidget {
                       onPressed: () {
                         BungieApiService().insertSocketPlugFree(instanceId!, perk.hash!, index!, characterId!).then(
                           (value) async {
-                            onSocketsChanged!(value?.response?.item?.sockets?.data?.sockets);
+                            onSocketsChanged!(value?.response?.item?.sockets?.data?.sockets ?? []);
                             Navigator.pop(context);
                           },
                         );

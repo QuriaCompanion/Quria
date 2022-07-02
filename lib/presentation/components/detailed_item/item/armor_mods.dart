@@ -1,6 +1,8 @@
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
+import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -16,19 +21,9 @@ import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
 class ArmorMods extends StatefulWidget {
-  final List<DestinyItemSocketState> sockets;
-  final DestinyInventoryItemDefinition item;
-  final String afinityIcon;
-  final String? instanceId;
-  final String? characterId;
   final double width;
   const ArmorMods({
-    required this.afinityIcon,
-    required this.sockets,
-    required this.item,
     required this.width,
-    this.characterId,
-    this.instanceId,
     Key? key,
   }) : super(key: key);
 
@@ -39,55 +34,27 @@ class ArmorMods extends StatefulWidget {
 class _ArmorModsState extends State<ArmorMods> {
   late List<DestinyItemSocketState> currentSockets;
   @override
-  void initState() {
-    super.initState();
-    currentSockets = widget.sockets;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final Map<int, DestinyItemSocketState> displayedSockets = currentSockets
-        .where(
-          (element) =>
-              (element.isVisible!) &&
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryHash !=
-                  2973005342 &&
-              ManifestService
-                      .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryIdentifier !=
-                  null &&
-              !ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[element.plugHash]!.plug!.plugCategoryIdentifier!
-                  .contains('masterworks.stat') &&
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemType !=
-                  DestinyItemType.Armor &&
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemSubType !=
-                  DestinyItemSubType.Ornament &&
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.inventory?.tierType !=
-                  TierType.Exotic,
-        )
-        .toList()
-        .asMap();
-    final remaining = DisplayService.remainingModPoints(
-        ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition[widget.sockets
-                .firstWhere((element) =>
-                    ManifestService
-                        .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryIdentifier
-                        ?.contains('masterworks.stat') ==
-                    true)
-                .plugHash]!
-            .investmentStats![0]
-            .value!,
-        displayedSockets);
+    final DestinyInventoryItemDefinition itemDef = Provider.of<InspectProvider>(context).itemDef!;
+    final DestinyItemComponent item = Provider.of<InspectProvider>(context).item!;
+    final String characterId = Provider.of<InventoryProvider>(context).getItemOwner(item.itemInstanceId!) ??
+        Provider.of<CharactersProvider>(context).currentCharacter!.characterId!;
+
+    final Map<int, DestinyItemSocketState> displayedSockets =
+        Provider.of<InspectProvider>(context).getArmorSockets(context);
+
+    final List<DestinyItemSocketState> sockets = Provider.of<InspectProvider>(context).getSockets(context);
+    final String afinityIcon = Provider.of<InspectProvider>(context).getAfinityIcon(context)!;
+    final int remaining = Provider.of<InspectProvider>(context).getRemainingPoints(context);
     return Column(children: [
       ArmorAfinity(
           width: widget.width,
-          afinityIcon: widget.afinityIcon,
+          afinityIcon: afinityIcon,
           remaining: remaining,
           pointsAvailable: ManifestService
               .manifestParsed
-              .destinyInventoryItemDefinition[widget.sockets
+              .destinyInventoryItemDefinition[sockets
                   .firstWhere((element) =>
                       ManifestService
                           .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryIdentifier
@@ -126,10 +93,10 @@ class _ArmorModsState extends State<ArmorMods> {
                             width: vw(context),
                             socket:
                                 ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!,
-                            plugSetsHash: widget.item.sockets!.socketEntries![socket.key].reusablePlugSetHash!,
+                            plugSetsHash: itemDef.sockets!.socketEntries![socket.key].reusablePlugSetHash!,
                             onSocketChange: (itemHash) {
                               BungieApiService()
-                                  .insertSocketPlugFree(widget.instanceId!, itemHash, socket.key, widget.characterId!)
+                                  .insertSocketPlugFree(item.itemInstanceId!, itemHash, socket.key, characterId)
                                   .then((value) {
                                 setState(() {
                                   currentSockets = value!.response!.item!.sockets!.data!.sockets!;

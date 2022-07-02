@@ -16,7 +16,7 @@ class InspectMobilePerkItem extends StatefulWidget {
   final String? instanceId;
   final int index;
   final double width;
-  final Function(List<DestinyItemSocketState>?) onSocketsChanged;
+  final Function(List<DestinyItemSocketState>) onSocketsChanged;
   const InspectMobilePerkItem({
     required this.perk,
     required this.sockets,
@@ -68,7 +68,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
                   .then((value) async {
                 setState(() {
                   loading = false;
-                  widget.onSocketsChanged(value?.response?.item?.sockets?.data?.sockets);
+                  widget.onSocketsChanged(value?.response?.item?.sockets?.data?.sockets ?? []);
                 });
               });
             } catch (e) {

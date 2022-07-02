@@ -52,6 +52,11 @@ class ItemProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void setNewSockets(String itemInstanceId, List<DestinyItemSocketState> sockets) {
+    _sockets[itemInstanceId]?.sockets = sockets;
+    notifyListeners();
+  }
+
   DestinyItemInstanceComponent? getInstanceInfo(String instanceId) {
     return _instances[instanceId];
   }

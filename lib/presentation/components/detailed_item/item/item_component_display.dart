@@ -1,4 +1,5 @@
 import 'package:bungie_api/enums/item_state.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
@@ -7,9 +8,12 @@ import 'dart:math';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display_perks.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class ItemComponentDisplay extends StatefulWidget {
   final DestinyItemComponent item;
@@ -20,7 +24,6 @@ class ItemComponentDisplay extends StatefulWidget {
   final List<DestinyItemSocketState> perks;
   final List<DestinyItemSocketState> cosmetics;
   final List<DestinyItemSocketState> armorSockets;
-  final void Function(InspectData) onClick;
   final double width;
 
   const ItemComponentDisplay({
@@ -32,7 +35,6 @@ class ItemComponentDisplay extends StatefulWidget {
     required this.cosmetics,
     required this.characterId,
     required this.armorSockets,
-    required this.onClick,
     required this.width,
     Key? key,
   }) : super(key: key);
@@ -69,10 +71,9 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay> with Ticker
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           InkWell(
             onTap: () {
-              widget.onClick(InspectData(
-                  hash: widget.item.itemHash!,
-                  characterId: widget.characterId,
-                  instanceId: widget.item.itemInstanceId!));
+              Provider.of<InspectProvider>(context, listen: false)
+                  .setInspectItem(itemDef: widget.itemDef, item: widget.item);
+              Navigator.pushNamed(context, routeInspectMobile);
             },
             child: Row(
               children: [

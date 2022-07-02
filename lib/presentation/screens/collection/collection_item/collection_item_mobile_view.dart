@@ -40,8 +40,8 @@ class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
             padding: EdgeInsets.only(
                 left: globalPadding(context), right: globalPadding(context), bottom: globalPadding(context)),
             child: data.itemType == DestinyItemType.Weapon
-                ? CollectionWeaponView(item: data, width: vw(context))
-                : CollectionArmorView(item: data, width: vw(context)))
+                ? CollectionWeaponView(width: vw(context))
+                : CollectionArmorView(width: vw(context)))
       ],
     );
   }

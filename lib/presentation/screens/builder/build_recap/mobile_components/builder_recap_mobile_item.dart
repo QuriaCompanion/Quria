@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -82,14 +83,13 @@ class BuilderRecapMobileItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             InkWell(
-              onTap: () => Navigator.pushNamed(
-                context,
-                routeInspectMobile,
-                arguments: InspectData(
-                  hash: item.hash,
-                  instanceId: item.itemInstanceId,
-                ),
-              ),
+              onTap: () {
+                Provider.of<InspectProvider>(context, listen: false).setInspectItem(
+                    itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.hash]!,
+                    item: Provider.of<InventoryProvider>(context, listen: false)
+                        .getItemByInstanceId(item.itemInstanceId));
+                Navigator.pushNamed(context, routeInspectMobile);
+              },
               child: ItemIcon(
                 displayHash: item.displayHash,
                 imageSize: vw(context) * 0.192,

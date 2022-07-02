@@ -30,8 +30,7 @@ class AppRouter {
       case routeProfile:
         return MaterialPageRoute(builder: (_) => const ProfileWidget());
       case routeInspectMobile:
-        final InspectData data = settings.arguments as InspectData;
-        return MaterialPageRoute(builder: (_) => MobileInspect(data: data));
+        return MaterialPageRoute(builder: (_) => MobileInspect());
       case routeVault:
         return MaterialPageRoute(builder: (_) => const VaultPage());
       case routeCollection:

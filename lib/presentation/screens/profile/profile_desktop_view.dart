@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
@@ -11,10 +10,8 @@ import 'package:quria/presentation/screens/profile/mobile_components/profile_mob
 
 class ProfileDesktopView extends StatelessWidget {
   final ProfileHelper data;
-  final void Function(InspectData) onClick;
   const ProfileDesktopView({
     required this.data,
-    required this.onClick,
     Key? key,
   }) : super(key: key);
 
@@ -55,7 +52,6 @@ class ProfileDesktopView extends StatelessWidget {
             itemCount: buckets.length,
             itemBuilder: ((context, index) => ProfileDesktopItemSection(
                   data: data,
-                  onClick: onClick,
                   bucket: buckets[index],
                 )),
           ),

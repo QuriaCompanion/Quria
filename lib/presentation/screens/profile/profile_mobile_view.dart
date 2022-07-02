@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -15,10 +14,8 @@ import 'package:quria/presentation/var/routes.dart';
 
 class ProfileMobileView extends StatefulWidget {
   final ProfileHelper data;
-  final void Function(InspectData) onClick;
   const ProfileMobileView({
     required this.data,
-    required this.onClick,
     Key? key,
   }) : super(key: key);
 
@@ -104,9 +101,6 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                 children: [
                   RepaintBoundary(
                     child: ProfileMobileItemCard(
-                      onClick: (inspectData) {
-                        widget.onClick(inspectData);
-                      },
                       width: vw(context),
                       item: item,
                       characterId: widget.data.selectedCharacter!.characterId!,

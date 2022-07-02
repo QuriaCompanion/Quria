@@ -24,6 +24,9 @@ const splashBackground = AssetImage("assets/img/base_background.png");
 const splashBackgroundWeb = AssetImage("assets/img/splash_large.png");
 
 double globalPadding(BuildContext context) {
+  if (vw(context) > 1000) {
+    return vw(context) * 0.02;
+  }
   return vw(context) * 0.04266;
 }
 

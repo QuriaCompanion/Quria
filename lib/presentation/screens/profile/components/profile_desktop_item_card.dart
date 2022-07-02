@@ -73,9 +73,6 @@ class _ProfileDesktopItemCardState extends State<ProfileDesktopItemCard> {
         ),
       ),
       ItemComponentDisplay(
-          onClick: (inspectData) {
-            widget.onClick(inspectData);
-          },
           item: widget.item,
           itemDef: data.itemDef,
           elementIcon: data.elementIcon,

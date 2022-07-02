@@ -147,28 +147,38 @@ class DisplayService {
   static ItemInfoHelper getItemInfo(BuildContext context, {required String itemInstanceId, required int itemHash}) {
     try {
       DestinyInventoryItemDefinition itemDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!;
+
       Map<String, DestinyStat>? stats = Provider.of<ItemProvider>(context).getPrecalculatedStats(itemInstanceId);
+
       DestinyItemInstanceComponent instanceInfo = Provider.of<ItemProvider>(context).getInstanceInfo(itemInstanceId)!;
+
       int? powerLevel = instanceInfo.primaryStat?.value;
+
       String imageLink = DestinyData.bungieLink + itemDef.screenshot!;
+
       String? elementIcon = ManifestService
               .manifestParsed.destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]?.displayProperties?.icon ??
           ManifestService
               .manifestParsed.destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]?.displayProperties?.icon;
+
       Map<String, List<DestinyItemPlugBase>>? plugs =
           Provider.of<ItemProvider>(context).getItemReusablePlugs(itemInstanceId);
+
       List<DestinyItemSocketState> sockets = Provider.of<ItemProvider>(context).getItemSockets(itemInstanceId);
+
       String? afinityIcon = ManifestService
           .manifestParsed.destinyEnergyTypeDefinition[instanceInfo.energy?.energyTypeHash]?.displayProperties?.icon;
+
       return ItemInfoHelper(
-          itemDef: itemDef,
-          stats: stats,
-          powerLevel: powerLevel,
-          imageLink: imageLink,
-          elementIcon: elementIcon,
-          plugs: plugs,
-          sockets: sockets,
-          afinityIcon: afinityIcon);
+        itemDef: itemDef,
+        stats: stats,
+        powerLevel: powerLevel,
+        imageLink: imageLink,
+        elementIcon: elementIcon,
+        plugs: plugs,
+        sockets: sockets,
+        afinityIcon: afinityIcon,
+      );
     } catch (e) {
       rethrow;
     }
