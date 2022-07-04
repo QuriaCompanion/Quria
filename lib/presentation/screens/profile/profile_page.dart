@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
-import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/choose_membership.dart';

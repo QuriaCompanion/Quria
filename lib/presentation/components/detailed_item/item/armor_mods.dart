@@ -1,6 +1,3 @@
-import 'package:bungie_api/enums/destiny_item_sub_type.dart';
-import 'package:bungie_api/enums/destiny_item_type.dart';
-import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
@@ -14,7 +11,6 @@ import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
-import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_afinity.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
