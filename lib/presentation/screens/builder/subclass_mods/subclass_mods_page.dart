@@ -47,6 +47,7 @@ class _SubclassModsPageState extends State<SubclassModsPage> {
             onChange: (mods, i) async {
               Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(mods);
             },
+            width: vw(context),
           ));
     } else {
       return Container();

@@ -221,6 +221,9 @@ class DestinyData {
     ]
   ];
   static const String bungieLink = "https://www.bungie.net";
+  static const String exoticArmorLogo = "/common/destiny2_content/icons/d89699e6307ac5d2a306cf054978e251.png";
+  static const String modsLogo = "/common/destiny2_content/icons/53fa0b010b6b5e4b6bf9b8367d2980e0.png";
+  static const String classItemLogo = "/common/destiny2_content/icons/3cfff0f2aa68784762f553eb7997e909.png";
 
   static const Map<TierType, int> tierTypeHashes = {
     TierType.Basic: 3340296461,

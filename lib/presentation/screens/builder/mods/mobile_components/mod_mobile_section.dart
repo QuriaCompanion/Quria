@@ -1,10 +1,13 @@
 import 'package:bungie_api/models/destiny_item_socket_entry_definition.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/providers/inspect/armor_mod_modal_provider.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
+import 'package:quria/presentation/screens/inspect/components/armor_mod_desktop_modal.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
 class ModsMobileSection extends StatelessWidget {
@@ -28,22 +31,43 @@ class ModsMobileSection extends StatelessWidget {
           if (item.value != null)
             Padding(
               padding: EdgeInsets.only(
-                  top: globalPadding(context) / 2, bottom: globalPadding(context) / 2, right: globalPadding(context)),
+                  top: globalPadding(context) / 2,
+                  bottom: globalPadding(context) / 2,
+                  right: width == vw(context) ? globalPadding(context) : 8),
               child: InkWell(
                 onTap: () {
-                  showMaterialModalBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      expand: false,
+                  if (width == vw(context)) {
+                    showMaterialModalBottomSheet(
+                        backgroundColor: Colors.transparent,
+                        expand: false,
+                        context: context,
+                        builder: (context) {
+                          return ArmorModsModal(
+                            width: vw(context),
+                            socket: item.value!,
+                            plugSetsHash: scoketEntries[item.key].reusablePlugSetHash!,
+                            onSocketChange: (itemHash) {
+                              onChange(
+                                  ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!, item.key);
+                            },
+                          );
+                        });
+                    return;
+                  }
+                  showDialog(
                       context: context,
                       builder: (context) {
-                        return ArmorModsModal(
-                          width: vw(context),
-                          socket: item.value!,
-                          plugSetsHash: scoketEntries[item.key].reusablePlugSetHash!,
-                          onSocketChange: (itemHash) {
-                            onChange(
-                                ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!, item.key);
-                          },
+                        Provider.of<ArmorModModalProvider>(context, listen: false).setSelectedMod(item.value!);
+                        return Center(
+                          child: SizedBox(
+                              width: vw(context) * 0.5,
+                              child: ArmorModDesktopModal(
+                                plugSetsHash: scoketEntries[item.key].reusablePlugSetHash!,
+                                onSocketChange: (itemHash) {
+                                  onChange(ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!,
+                                      item.key);
+                                },
+                              )),
                         );
                       });
                 },

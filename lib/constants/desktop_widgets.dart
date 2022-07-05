@@ -2,7 +2,6 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/presentation/components/misc/desktop_components/modal_button.dart';
 import 'package:quria/presentation/components/misc/mobile_components/equip_modal.dart';
@@ -14,6 +13,7 @@ Widget desktopHeader(
   BuildContext context, {
   required ImageProvider<Object> image,
   required Widget child,
+  Alignment alignment = Alignment.center,
 }) {
   return Container(
     alignment: Alignment.bottomCenter,
@@ -21,7 +21,7 @@ Widget desktopHeader(
     height: vw(context) * 0.2,
     decoration: BoxDecoration(
       image: DecorationImage(
-        alignment: Alignment.center,
+        alignment: alignment,
         fit: BoxFit.cover,
         image: image,
       ),
@@ -44,6 +44,55 @@ Widget desktopHeader(
         child: child,
       ),
     ),
+  );
+}
+
+Widget builderContainer(BuildContext context, {required Widget child}) {
+  return Center(
+    child: Container(
+      width: vw(context) * 0.55,
+      padding: EdgeInsets.all(globalPadding(context)),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: blackLight,
+      ),
+      child: child,
+    ),
+  );
+}
+
+Widget desktopRegularModal(BuildContext context, {required Widget child}) {
+  return Stack(
+    children: [
+      Center(
+        child: SizedBox(
+          width: vw(context) * 0.4,
+          child: Material(
+            type: MaterialType.card,
+            color: Colors.transparent,
+            child: SingleChildScrollView(child: child),
+          ),
+        ),
+      ),
+      Positioned(
+        top: vh(context) * 0.2,
+        right: vw(context) * 0.2,
+        child: Material(
+          type: MaterialType.card,
+          color: Colors.transparent,
+          child: Column(
+            children: [
+              ModalButton(
+                callback: () {
+                  Navigator.pop(context);
+                },
+                icon: 'assets/icons/Close.svg',
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
   );
 }
 

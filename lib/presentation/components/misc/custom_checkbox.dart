@@ -5,11 +5,13 @@ import 'package:quria/constants/texts.dart';
 class CustomCheckbox extends StatelessWidget {
   final String text;
   final bool value;
+  final Color color;
   final Function onChanged;
   const CustomCheckbox({
     required this.text,
     required this.value,
     required this.onChanged,
+    this.color = blackLight,
     Key? key,
   }) : super(key: key);
   final Duration duration = const Duration(milliseconds: 500);
@@ -17,7 +19,7 @@ class CustomCheckbox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: globalPadding(context), vertical: globalPadding(context) / 1.5),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: blackLight),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: color),
       child: GestureDetector(
         onTap: () {
           onChanged(!value);

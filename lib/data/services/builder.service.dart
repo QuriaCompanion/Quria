@@ -15,7 +15,7 @@ import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
-import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
+import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
 import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
 import 'package:quria/data/providers/builder/builder_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
@@ -47,7 +47,7 @@ class BuilderService {
 
     bool considerMasterwork = Provider.of<BuilderCustomInfoProvider>(context, listen: false).considerMasterwork;
 
-    DestinyInventoryItemDefinition? exotic = Provider.of<BuilderExoticProvider>(context, listen: false).exoticHash;
+    DestinyInventoryItemDefinition? exotic = Provider.of<BuilderExoticProvider>(context, listen: false).exotic;
 
     DestinyItemComponent classItem =
         Provider.of<BuilderCustomInfoProvider>(context, listen: false).classItem as DestinyItemComponent;

@@ -48,6 +48,7 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
           return Builder(builder: (context) {
             if (widget.data.isNewSubclass) {
               return SubclassModsMobileView(
+                width: vw(context),
                 onChange: (mods, index) async {
                   showMaterialModalBottomSheet(
                       context: context,

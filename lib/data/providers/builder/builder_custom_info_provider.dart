@@ -10,9 +10,9 @@ class BuilderCustomInfoProvider with ChangeNotifier {
   bool get includeSunset => _includeSunset;
 
   void setClassItem(
-    DestinyItemComponent classItemInstanceId,
+    DestinyItemComponent classItem,
   ) {
-    _classItem = classItemInstanceId;
+    _classItem = classItem;
     notifyListeners();
   }
 

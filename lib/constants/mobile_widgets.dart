@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/StatWeighing.enum.dart';
 
 Widget mobileHeader(
   BuildContext context, {
@@ -33,10 +35,24 @@ Widget mobileHeader(
   );
 }
 
+Widget getStatText(BuildContext context, StatWeighing statWeighing) {
+  switch (statWeighing) {
+    case StatWeighing.allTiers:
+      return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_all_tiers, utf8: false);
+    case StatWeighing.maxOne:
+      return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_tier_1, utf8: false);
+    case StatWeighing.maxTwo:
+      return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_tier_2, utf8: false);
+    case StatWeighing.maxThree:
+      return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_tier_3, utf8: false);
+  }
+}
+
 Widget mobileSection(
   BuildContext context, {
   required String title,
   required Widget child,
+  Color dividerColor = blackLight,
 }) {
   return Padding(
     padding: EdgeInsets.symmetric(vertical: globalPadding(context)),
@@ -44,8 +60,8 @@ Widget mobileSection(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         textH2(title, utf8: false),
-        const Divider(
-          color: blackLight,
+        Divider(
+          color: dividerColor,
           height: 22,
           thickness: 1,
         ),

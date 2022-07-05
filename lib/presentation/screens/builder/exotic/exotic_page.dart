@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/display/display.service.dart';
+import 'package:quria/presentation/components/misc/desktop_components/scaffold_navbar.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
+import 'package:quria/presentation/screens/builder/desktop/builder_desktop_view.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -74,7 +76,7 @@ class ExoticWidgetState extends State<ExoticWidget> {
                   onPressed: () => Navigator.pushNamed(context, routeFilter)),
             );
           } else {
-            return Container();
+            return const ScaffoldDesktop(currentRoute: routeExotic, body: BuilderDesktopView());
           }
         }
       }),

@@ -18,9 +18,13 @@ class ArmorModsModal extends StatefulWidget {
   final int plugSetsHash;
   final double width;
 
-  const ArmorModsModal(
-      {required this.socket, required this.plugSetsHash, required this.onSocketChange, required this.width, Key? key})
-      : super(key: key);
+  const ArmorModsModal({
+    required this.socket,
+    required this.plugSetsHash,
+    required this.onSocketChange,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ArmorModsModal> createState() => _ArmorModsModalState();
@@ -80,7 +84,7 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                         height: 22,
                         thickness: 1,
                       ),
-                      for (var plug in plugs!)
+                      for (DestinyItemPlug plug in plugs!)
                         Padding(
                           padding: EdgeInsets.only(bottom: globalPadding(context)),
                           child: InkWell(

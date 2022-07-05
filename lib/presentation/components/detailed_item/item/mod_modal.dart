@@ -8,6 +8,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
 import 'package:quria/presentation/components/detailed_item/item/stat_progress_bar.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quria/presentation/components/misc/rounded_button.dart';
 
 class ModModal extends StatefulWidget {
   final DestinyInventoryItemDefinition mod;
@@ -32,23 +33,19 @@ class _ModModalState extends State<ModModal> {
         child: Column(
           children: [
             Padding(
-              padding: EdgeInsets.only(
-                top: globalPadding(context),
-                left: globalPadding(context),
-                right: globalPadding(context),
-              ),
+              padding: EdgeInsets.all(globalPadding(context)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
                       ArmorModIconDisplay(
-                        iconSize: itemSize(context, widget.width),
+                        iconSize: widget.width == vw(context) ? itemSize(context, widget.width) : 80,
                         socket: widget.mod,
                       ),
                       SizedBox(width: globalPadding(context)),
                       SizedBox(
-                        width: vw(context) - itemSize(context, widget.width) - (globalPadding(context) * 3) - 40,
+                        width: widget.width - itemSize(context, widget.width) - (globalPadding(context) * 3) - 40,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -93,7 +90,7 @@ class _ModModalState extends State<ModModal> {
                         for (var stat in widget.mod.investmentStats!) {
                           list.add(
                             StatProgressBar(
-                              width: vw(context),
+                              width: widget.width,
                               name: ManifestService.manifestParsed.destinyStatDefinition[stat.statTypeHash]!
                                       .displayProperties!.name ??
                                   'error',
@@ -114,21 +111,18 @@ class _ModModalState extends State<ModModal> {
                     }),
                   ),
                   if (widget.onSocketChange != null)
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                        widget.onSocketChange!();
-                      },
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          fixedSize: Size(vw(context) - globalPadding(context) * 2,
-                              (vw(context) - globalPadding(context) * 2) * 0.147),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50))),
-                      child: textBodyMedium(AppLocalizations.of(context)!.equip, color: black, utf8: false),
-                    ),
-                  SizedBox(
-                    height: globalPadding(context),
-                  )
+                    RoundedButton(
+                        width: widget.width,
+                        text: textBodyMedium(
+                          AppLocalizations.of(context)!.equip,
+                          utf8: false,
+                          color: black,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          widget.onSocketChange!();
+                        }),
+                  SizedBox(height: globalPadding(context))
                 ],
               ),
             ),

@@ -17,19 +17,6 @@ class StatsFilterMobileView extends StatefulWidget {
 }
 
 class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
-  Widget _getStatText(StatWeighing statWeighing) {
-    switch (statWeighing) {
-      case StatWeighing.allTiers:
-        return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_all_tiers, utf8: false);
-      case StatWeighing.maxOne:
-        return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_tier_1, utf8: false);
-      case StatWeighing.maxTwo:
-        return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_tier_2, utf8: false);
-      case StatWeighing.maxThree:
-        return textBodyMedium(AppLocalizations.of(context)!.builder_stats_order_tier_3, utf8: false);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -50,31 +37,27 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
                 ),
               ],
             )),
-        Column(
-          children: [
-            Container(
-              width: vw(context) - (globalPadding(context) * 2),
-              padding: EdgeInsets.symmetric(horizontal: globalPadding(context), vertical: globalPadding(context) / 4),
-              decoration: BoxDecoration(
-                color: blackLight,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              child: DropdownButton<StatWeighing>(
-                  underline: Container(),
-                  isExpanded: true,
-                  icon: SvgPicture.asset("assets/icons/DropIcon.svg"),
-                  dropdownColor: blackLight,
-                  value: Provider.of<BuilderStatsFilterProvider>(context).statWeighing,
-                  items: StatWeighing.values.map((StatWeighing classType) {
-                    return DropdownMenuItem<StatWeighing>(value: classType, child: _getStatText(classType));
-                  }).toList(),
-                  onChanged: (StatWeighing? value) {
-                    if (value != null) {
-                      Provider.of<BuilderStatsFilterProvider>(context, listen: false).setStatWeighing(value);
-                    }
-                  }),
-            )
-          ],
+        Container(
+          width: vw(context) - (globalPadding(context) * 2),
+          padding: EdgeInsets.symmetric(horizontal: globalPadding(context), vertical: globalPadding(context) / 4),
+          decoration: BoxDecoration(
+            color: blackLight,
+            borderRadius: BorderRadius.circular(4),
+          ),
+          child: DropdownButton<StatWeighing>(
+              underline: Container(),
+              isExpanded: true,
+              icon: SvgPicture.asset("assets/icons/DropIcon.svg"),
+              dropdownColor: blackLight,
+              value: Provider.of<BuilderStatsFilterProvider>(context).statWeighing,
+              items: StatWeighing.values.map((StatWeighing classType) {
+                return DropdownMenuItem<StatWeighing>(value: classType, child: getStatText(context, classType));
+              }).toList(),
+              onChanged: (StatWeighing? value) {
+                if (value != null) {
+                  Provider.of<BuilderStatsFilterProvider>(context, listen: false).setStatWeighing(value);
+                }
+              }),
         ),
         Padding(
           padding: EdgeInsets.all(globalPadding(context)),
