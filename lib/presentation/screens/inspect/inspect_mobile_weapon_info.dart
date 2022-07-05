@@ -30,13 +30,14 @@ class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        mobileSection(
-          context,
-          title: AppLocalizations.of(context)!.quick_actions,
-          child: InspectMobileActions(
-            width: widget.width,
+        if (vw(context) < 1000)
+          mobileSection(
+            context,
+            title: AppLocalizations.of(context)!.quick_actions,
+            child: InspectMobileActions(
+              width: widget.width,
+            ),
           ),
-        ),
         mobileSection(
           context,
           title: AppLocalizations.of(context)!.statistics,

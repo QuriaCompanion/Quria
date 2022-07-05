@@ -36,6 +36,7 @@ dependencies:
   auto_size_text: ^3.0.0
   sliver_tools: ^0.2.5
   extended_image: ^6.2.1
+  simple_animations: ^4.2.0
   flutter:
     sdk: flutter
   isar: 3.0.0-dev.0

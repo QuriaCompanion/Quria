@@ -10,7 +10,12 @@ import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mob
 
 class CollectionItemMobileView extends StatefulWidget {
   final DestinyInventoryItemDefinition data;
-  const CollectionItemMobileView({required this.data, Key? key}) : super(key: key);
+  final double? width;
+  const CollectionItemMobileView({
+    required this.data,
+    Key? key,
+    this.width,
+  }) : super(key: key);
 
   @override
   State<CollectionItemMobileView> createState() => _CollectionItemMobileViewState();
@@ -40,8 +45,8 @@ class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
             padding: EdgeInsets.only(
                 left: globalPadding(context), right: globalPadding(context), bottom: globalPadding(context)),
             child: data.itemType == DestinyItemType.Weapon
-                ? CollectionWeaponView(width: vw(context))
-                : CollectionArmorView(width: vw(context)))
+                ? CollectionWeaponView(width: widget.width ?? vw(context))
+                : CollectionArmorView(width: widget.width ?? vw(context)))
       ],
     );
   }

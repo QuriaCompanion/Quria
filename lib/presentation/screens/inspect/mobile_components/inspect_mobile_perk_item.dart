@@ -40,6 +40,26 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
       bool selected = widget.sockets.any((socket) => socket.plugHash == widget.perk.hash);
       return InkWell(
         onTap: () {
+          if (widget.width < 1000) {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return Center(
+                    child: SizedBox(
+                        width: vw(context) * 0.25,
+                        child: PerkModal(
+                          width: vw(context) * 0.25,
+                          isSelected: selected,
+                          perk: widget.perk,
+                          instanceId: widget.instanceId,
+                          onSocketsChanged: (newSockets) => widget.onSocketsChanged(newSockets),
+                          characterId: widget.characterId,
+                          index: widget.index,
+                        )),
+                  );
+                });
+            return;
+          }
           showMaterialModalBottomSheet(
               backgroundColor: Colors.transparent,
               expand: false,

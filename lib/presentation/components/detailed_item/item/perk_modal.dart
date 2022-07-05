@@ -60,7 +60,7 @@ class PerkModal extends StatelessWidget {
                         width: globalPadding(context),
                       ),
                       SizedBox(
-                        width: vw(context) - itemSize(context, width) - (globalPadding(context) * 3) - 40,
+                        width: width - itemSize(context, width) - (globalPadding(context) * 3) - 40,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -107,7 +107,7 @@ class PerkModal extends StatelessWidget {
                       if (perk.investmentStats?.isNotEmpty ?? false) {
                         for (var stat in perk.investmentStats!) {
                           list.add(StatProgressBar(
-                              width: vw(context),
+                              width: width - globalPadding(context),
                               name: ManifestService.manifestParsed.destinyStatDefinition[stat.statTypeHash]!
                                       .displayProperties!.name ??
                                   'error',
@@ -138,8 +138,8 @@ class PerkModal extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,
                         fixedSize: Size(
-                          vw(context) - globalPadding(context) * 2,
-                          (vw(context) - globalPadding(context) * 2) * 0.147,
+                          width - globalPadding(context) * 2,
+                          (width - globalPadding(context) * 2) * 0.147,
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),

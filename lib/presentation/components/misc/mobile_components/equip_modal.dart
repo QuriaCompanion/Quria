@@ -16,8 +16,14 @@ import 'package:quria/presentation/var/keys.dart';
 class EquipModal extends StatelessWidget {
   final String instanceId;
   final int itemHash;
+  final double? width;
 
-  const EquipModal({required this.itemHash, required this.instanceId, Key? key}) : super(key: key);
+  const EquipModal({
+    required this.itemHash,
+    required this.instanceId,
+    this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +97,7 @@ class EquipModal extends StatelessWidget {
                     });
                   },
                   child: CharacterTransferItem(
+                      width: width ?? vw(context),
                       imageLink: DestinyData.bungieLink + character.emblemPath!,
                       name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
                           .genderedClassNamesByGenderHash![character.genderHash.toString()]!,

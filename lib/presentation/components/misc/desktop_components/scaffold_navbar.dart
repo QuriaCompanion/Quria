@@ -71,7 +71,7 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                               context: context,
                               barrierColor: const Color.fromARGB(110, 0, 0, 0),
                               builder: (context) {
-                                return desktopModal(
+                                return desktopItemModal(
                                   context,
                                   child: Container(
                                     decoration: const BoxDecoration(

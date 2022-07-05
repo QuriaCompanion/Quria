@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mods.dart';
@@ -31,24 +32,20 @@ class _InspectMobileArmorInfoState extends State<InspectMobileArmorInfo> {
     String? afinityIcon = Provider.of<InspectProvider>(context).getAfinityIcon(context);
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      mobileSection(context,
+      if (vw(context) < 1000)
+        mobileSection(
+          context,
           title: AppLocalizations.of(context)!.quick_actions,
-          child: InspectMobileActions(
-            width: widget.width,
-          )),
+          child: InspectMobileActions(width: widget.width),
+        ),
       mobileSection(
         context,
         title: AppLocalizations.of(context)!.statistics,
-        child: InspectMobileStats(
-          width: widget.width,
-        ),
+        child: InspectMobileStats(width: widget.width),
       ),
       if (itemDef.inventory?.tierType == TierType.Exotic)
         mobileSection(context,
-            title: AppLocalizations.of(context)!.exotic_perk,
-            child: InspectMobileExoticArmor(
-              width: widget.width,
-            )),
+            title: AppLocalizations.of(context)!.exotic_perk, child: InspectMobileExoticArmor(width: widget.width)),
       if (afinityIcon != null)
         mobileSection(
           context,

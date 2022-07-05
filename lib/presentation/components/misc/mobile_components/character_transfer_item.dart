@@ -7,10 +7,16 @@ class CharacterTransferItem extends StatelessWidget {
   final String imageLink;
   final String name;
   final String icon;
+  final double width;
   final int? powerLevel;
-  const CharacterTransferItem(
-      {required this.imageLink, required this.icon, required this.name, this.powerLevel, Key? key})
-      : super(key: key);
+  const CharacterTransferItem({
+    required this.imageLink,
+    required this.icon,
+    required this.name,
+    required this.width,
+    this.powerLevel,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,8 +50,8 @@ class CharacterTransferItem extends StatelessWidget {
           ),
           SvgPicture.asset(
             icon,
-            height: vw(context) * 0.06,
-            width: vw(context) * 0.06,
+            height: width * 0.06,
+            width: width * 0.06,
             color: Colors.white,
           ),
         ],

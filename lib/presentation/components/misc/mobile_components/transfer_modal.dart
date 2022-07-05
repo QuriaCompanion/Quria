@@ -15,11 +15,13 @@ import 'package:quria/presentation/var/keys.dart';
 class TransferModal extends StatefulWidget {
   final String instanceId;
   final int itemHash;
-  final void Function() onTransfer;
+  final double? width;
+  final void Function()? onTransfer;
   const TransferModal({
     required this.instanceId,
     required this.itemHash,
-    required this.onTransfer,
+    this.onTransfer,
+    this.width,
     Key? key,
   }) : super(key: key);
 
@@ -100,7 +102,9 @@ class _TransferModalState extends State<TransferModal> {
                         ),
                         backgroundColor: Colors.green,
                       ));
-                      widget.onTransfer();
+                      if (widget.onTransfer != null) {
+                        widget.onTransfer!();
+                      }
                     }, onError: (_) {
                       showDialog(
                           context: scaffoldKey.currentContext!,
@@ -110,6 +114,7 @@ class _TransferModalState extends State<TransferModal> {
                     });
                   },
                   child: CharacterTransferItem(
+                    width: widget.width ?? vw(context),
                     imageLink: DestinyData.bungieLink + character.emblemPath!,
                     name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
                         .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
@@ -153,6 +158,7 @@ class _TransferModalState extends State<TransferModal> {
                     });
                   },
                   child: CharacterTransferItem(
+                    width: widget.width ?? vw(context),
                     imageLink:
                         "https://www.bungie.net/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png",
                     name: AppLocalizations.of(context)!.vault,

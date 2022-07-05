@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'dart:math' as math;
 
 import 'package:quria/constants/styles.dart';
+import 'package:simple_animations/simple_animations.dart';
 
 class ModalButton extends StatefulWidget {
   final void Function() callback;
@@ -19,23 +20,24 @@ class ModalButton extends StatefulWidget {
   State<ModalButton> createState() => _ModalButtonState();
 }
 
-class _ModalButtonState extends State<ModalButton> with TickerProviderStateMixin {
+class _ModalButtonState extends State<ModalButton> with AnimationMixin {
   bool _isHover = false;
-  late AnimationController controller = AnimationController(
-    vsync: this,
-    duration: const Duration(milliseconds: 500),
-  );
-
-  late Animation<double> animation;
-  setHover(int degres) {
-    final angle = degres * math.pi / 180;
-    animation = Tween<double>(begin: 0, end: angle).animate(controller);
-  }
+  late AnimationController angleController;
+  late AnimationController colorController;
+  late Animation<double> angle;
+  late Animation<Color?> color;
+  static const duration = Duration(milliseconds: 250);
 
   @override
   void initState() {
     super.initState();
-    setHover(45);
+    angleController = createController()..mirror(duration: duration);
+    colorController = createController()..mirror(duration: duration);
+
+    angle = Tween(begin: -math.pi / 4, end: math.pi / 4).animate(angleController);
+    color = ColorTween(begin: Colors.white, end: yellow).animate(colorController);
+    angleController.stop();
+    colorController.stop();
   }
 
   @override
@@ -45,8 +47,13 @@ class _ModalButtonState extends State<ModalButton> with TickerProviderStateMixin
         widget.callback();
       },
       onHover: (_) {
-        _isHover ? controller.forward(from: 0) : controller.reverse(from: 1);
-        setHover(180);
+        if (_isHover) {
+          angleController.reverse();
+          colorController.reverse();
+        } else {
+          angleController.forward();
+          colorController.forward();
+        }
         setState(() {
           _isHover = !_isHover;
         });
@@ -57,25 +64,22 @@ class _ModalButtonState extends State<ModalButton> with TickerProviderStateMixin
           Transform.rotate(
               angle: -math.pi / 4,
               child: Container(
-                height: (vw(context) * 0.06) - 10,
-                width: (vw(context) * 0.06) - 10,
-                decoration: const BoxDecoration(
-                  color: blackLight,
+                height: (vw(context) * 0.04) - 10,
+                width: (vw(context) * 0.04) - 10,
+                decoration: BoxDecoration(
+                  color: color.value ?? Colors.white,
                 ),
               )),
           Transform.rotate(
-              angle: animation.value,
+              angle: angle.value,
               child: Container(
-                height: vw(context) * 0.06,
-                width: vw(context) * 0.06,
-                decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+                height: vw(context) * 0.04,
+                width: vw(context) * 0.04,
+                decoration: BoxDecoration(
+                  border: Border.all(color: color.value ?? Colors.white),
+                ),
               )),
-          SvgPicture.asset(
-            widget.icon,
-            height: vw(context) * 0.02,
-            width: vw(context) * 0.03,
-            color: Colors.white,
-          ),
+          SvgPicture.asset(widget.icon, height: vw(context) * 0.015, width: vw(context) * 0.015, color: black),
         ],
       ),
     );

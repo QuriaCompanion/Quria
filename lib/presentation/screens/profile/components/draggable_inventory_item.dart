@@ -40,7 +40,7 @@ class DraggableInventoryItem extends StatelessWidget {
               context: context,
               barrierColor: const Color.fromARGB(110, 0, 0, 0),
               builder: (context) {
-                return desktopModal(context,
+                return desktopItemModal(context,
                     child: InspectItem(
                       width: vw(context) * 0.4,
                     ));
