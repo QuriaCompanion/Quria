@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:percent_indicator/percent_indicator.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:simple_animations/anicoto/animation_mixin.dart';
+import 'package:simple_animations/simple_animations.dart';
 
 class NavBarButton extends StatefulWidget {
   final String name;
@@ -20,13 +22,18 @@ class NavBarButton extends StatefulWidget {
   State<NavBarButton> createState() => _NavBarButtonState();
 }
 
-class _NavBarButtonState extends State<NavBarButton> {
+class _NavBarButtonState extends State<NavBarButton> with AnimationMixin {
+  late AnimationController colorController;
+  late Animation<Color?> color;
   @override
   void initState() {
     super.initState();
+    colorController = createController()..mirror(duration: const Duration(milliseconds: 250));
+    color = ColorTween(begin: Colors.white, end: yellow).animate(colorController);
+    colorController.stop();
   }
 
-  bool isHover = false;
+  bool _isHover = false;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -34,8 +41,10 @@ class _NavBarButtonState extends State<NavBarButton> {
       child: InkWell(
         onTap: () => Navigator.pushReplacementNamed(context, widget.route),
         onHover: (_) {
+          _isHover ? colorController.reverse() : colorController.forward();
+
           setState(() {
-            isHover = !isHover;
+            _isHover = !_isHover;
           });
         },
         child: Column(
@@ -46,32 +55,11 @@ class _NavBarButtonState extends State<NavBarButton> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SvgPicture.asset(widget.icon),
+                SvgPicture.asset(widget.icon, color: widget.selected ? yellow : color.value),
                 const SizedBox(width: 5),
-                textBodyBold(widget.name),
+                textBodyBold(widget.name, color: widget.selected ? yellow : color.value),
               ],
             ),
-            if (widget.selected)
-              LinearPercentIndicator(
-                percent: 1,
-                progressColor: Colors.white,
-                backgroundColor: Colors.white,
-                lineHeight: 3,
-                padding: EdgeInsets.zero,
-                width: 150,
-              ),
-            if (!widget.selected)
-              LinearPercentIndicator(
-                animationDuration: 250,
-                percent: isHover ? 1 : 0,
-                animation: true,
-                animateFromLastPercent: true,
-                progressColor: Colors.white,
-                lineHeight: 3,
-                padding: EdgeInsets.zero,
-                backgroundColor: Colors.transparent,
-                width: 150,
-              ),
           ],
         ),
       ),

@@ -75,6 +75,9 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                 },
                 icon: 'assets/icons/Close.svg',
               ),
+              SizedBox(
+                height: vw(context) * 0.02,
+              ),
               ModalButton(
                 callback: () {
                   showDialog(
@@ -92,6 +95,9 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                       });
                 },
                 icon: 'assets/icons/Equip.svg',
+              ),
+              SizedBox(
+                height: vw(context) * 0.02,
               ),
               ModalButton(
                 callback: () {
@@ -111,6 +117,9 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                 },
                 icon: 'assets/icons/Transfer.svg',
               ),
+              SizedBox(
+                height: vw(context) * 0.02,
+              ),
               ModalButton(
                 callback: () {
                   showDialog(
@@ -122,6 +131,9 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                       });
                 },
                 icon: 'assets/icons/Share.svg',
+              ),
+              SizedBox(
+                height: vw(context) * 0.02,
               ),
               ModalButton(
                 callback: () {
