@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/display/display.service.dart';
-import 'package:quria/presentation/components/misc/desktop_components/scaffold_navbar.dart';
+import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';

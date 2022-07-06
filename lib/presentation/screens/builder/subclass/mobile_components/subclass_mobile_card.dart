@@ -30,7 +30,7 @@ class SubclassMobileCard extends StatelessWidget {
           height: width,
           decoration: BoxDecoration(
             color: color,
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Center(
             child: Stack(

@@ -40,7 +40,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
       bool selected = widget.sockets.any((socket) => socket.plugHash == widget.perk.hash);
       return InkWell(
         onTap: () {
-          if (widget.width < 1000) {
+          if (vw(context) > 1000) {
             showDialog(
                 context: context,
                 builder: (context) {

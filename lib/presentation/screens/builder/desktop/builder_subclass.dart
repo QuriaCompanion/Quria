@@ -13,6 +13,7 @@ import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/display/display.service.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/builder/subclass/mobile_components/subclass_mobile_card.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_mobile_view.dart';
@@ -45,15 +46,32 @@ class BuilderSubclass extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             for (final subclass in subclasses)
-              InkWell(
-                child: SubclassMobileCard(
-                  onTap: (subclassDef) {
-                    Provider.of<BuilderSubclassProvider>(context, listen: false)
-                        .setSubclass(subclass.itemInstanceId, subclassDef);
-                  },
-                  color: grey,
-                  subclass: subclass,
-                  width: vw(context) * 0.1,
+              Container(
+                decoration: Provider.of<BuilderSubclassProvider>(context).subclass ==
+                        ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]
+                    ? BoxDecoration(
+                        border: Border.all(
+                          color: vanguard,
+                          width: 3,
+                        ),
+                        borderRadius: BorderRadius.circular(8),
+                      )
+                    : null,
+                child: InkWell(
+                  child: SubclassMobileCard(
+                    onTap: (subclassDef) {
+                      if (Provider.of<BuilderSubclassProvider>(context, listen: false).subclass ==
+                          ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]) {
+                        Provider.of<BuilderSubclassProvider>(context, listen: false).setSubclass(null, null);
+                        return;
+                      }
+                      Provider.of<BuilderSubclassProvider>(context, listen: false)
+                          .setSubclass(subclass.itemInstanceId, subclassDef);
+                    },
+                    color: grey,
+                    subclass: subclass,
+                    width: vw(context) * 0.1,
+                  ),
                 ),
               ),
           ],
@@ -79,15 +97,17 @@ class BuilderSubclass extends StatelessWidget {
                         if (chosenSockets.isEmpty) {
                           chosenSockets = data.displayedSockets;
                         }
-                        return desktopRegularModal(context,
-                            child: SubclassModsMobileView(
-                              width: vw(context) * 0.4,
-                              sockets: sockets,
-                              subclass: subclass,
-                              onChange: (mods, i) async {
-                                Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(mods);
-                              },
-                            ));
+                        return desktopRegularModal(
+                          context,
+                          child: SubclassModsMobileView(
+                            width: vw(context) * 0.4,
+                            sockets: sockets,
+                            subclass: subclass,
+                            onChange: (mods, i) async {
+                              Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(mods);
+                            },
+                          ),
+                        );
                       })
                 },
                 text: textBodyBold(AppLocalizations.of(context)!.builder_subclass_mods_title,

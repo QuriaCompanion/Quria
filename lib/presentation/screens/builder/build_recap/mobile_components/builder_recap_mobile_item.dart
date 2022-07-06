@@ -1,5 +1,6 @@
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_instance_component.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_afinity.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
+import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 class BuilderRecapMobileItem extends StatelessWidget {
@@ -87,16 +89,31 @@ class BuilderRecapMobileItem extends StatelessWidget {
                     itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.hash]!,
                     item: Provider.of<InventoryProvider>(context, listen: false)
                         .getItemByInstanceId(item.itemInstanceId));
-                Navigator.pushNamed(context, routeInspectMobile);
+                if (vw(context) == width) {
+                  Navigator.pushNamed(context, routeInspectMobile);
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return desktopItemModal(context,
+                          child: InspectItem(
+                            width: vw(context) * 0.4,
+                          ));
+                    },
+                  );
+                }
               },
               child: ItemIcon(
                 displayHash: item.displayHash,
-                imageSize: vw(context) * 0.192,
+                imageSize: width == vw(context) ? width * 0.192 : 100,
                 isMasterworked:
                     Provider.of<InventoryProvider>(context).getItemByInstanceId(item.itemInstanceId)?.state ==
                             const ItemState(5) ||
                         Provider.of<InventoryProvider>(context).getItemByInstanceId(item.itemInstanceId)?.state ==
                             ItemState.Masterwork,
+                powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId),
+                element: Provider.of<ItemProvider>(context)
+                    .getItemElement(Provider.of<InventoryProvider>(context).getItemByInstanceId(item.itemInstanceId)!),
               ),
             ),
             Padding(
@@ -119,7 +136,6 @@ class BuilderRecapMobileItem extends StatelessWidget {
                 ),
           ],
         ),
-        SizedBox(height: globalPadding(context)),
       ],
     );
   }

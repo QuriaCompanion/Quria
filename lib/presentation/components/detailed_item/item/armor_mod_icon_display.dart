@@ -1,3 +1,5 @@
+import 'package:extended_image/extended_image.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/texts.dart';
@@ -18,21 +20,39 @@ class ArmorModIconDisplay extends StatelessWidget {
       child: Stack(
         alignment: Alignment.topRight,
         children: [
-          Image(
+          ExtendedImage.network(
+            DestinyData.bungieLink + socket.displayProperties!.icon!,
             width: iconSize,
             height: iconSize,
-            image: NetworkImage(DestinyData.bungieLink + socket.displayProperties!.icon!),
+            timeLimit: const Duration(seconds: 10),
+            loadStateChanged: (ExtendedImageState state) {
+              switch (state.extendedImageLoadState) {
+                case LoadState.loading:
+                  return Container(
+                    decoration: BoxDecoration(border: Border.all(color: Colors.white), color: grey),
+                  );
+                case LoadState.completed:
+                  return null;
+                case LoadState.failed:
+                  return null;
+              }
+            },
+            cache: true,
+            fit: BoxFit.fill,
           ),
           if (socket.investmentStats!.isNotEmpty &&
               ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats?[0].statTypeHash]
                       ?.displayProperties?.hasIcon ==
                   true)
-            Image(
+            ExtendedImage.network(
+              DestinyData.bungieLink +
+                  ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!
+                      .displayProperties!.icon!,
               width: iconSize,
               height: iconSize,
-              image: NetworkImage(DestinyData.bungieLink +
-                  ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!
-                      .displayProperties!.icon!),
+              timeLimit: const Duration(seconds: 10),
+              cache: true,
+              fit: BoxFit.fill,
             ),
           Padding(
             padding: const EdgeInsets.only(right: 5.0),

@@ -4,6 +4,7 @@ import 'package:quria/constants/desktop_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/builder/desktop/builder_armor_mods.dart';
@@ -12,6 +13,7 @@ import 'package:quria/presentation/screens/builder/desktop/builder_exotic_choice
 import 'package:quria/presentation/screens/builder/desktop/builder_info_row.dart';
 import 'package:quria/presentation/screens/builder/desktop/builder_stat_order.dart';
 import 'package:quria/presentation/screens/builder/desktop/builder_subclass.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class BuilderDesktopView extends StatelessWidget {
   const BuilderDesktopView({Key? key}) : super(key: key);
@@ -62,12 +64,14 @@ class BuilderDesktopView extends StatelessWidget {
         ),
         RoundedButton(
             buttonColor: yellow,
+            isDisabled: Provider.of<BuilderCustomInfoProvider>(context).classItem == null,
+            disabledColor: grey,
             text: textBodyBold(
               AppLocalizations.of(context)!.builder,
               color: black,
               utf8: false,
             ),
-            onPressed: () => {}),
+            onPressed: () => {Navigator.pushNamed(context, routeBuilder)}),
         SizedBox(
           height: globalPadding(context) * 1,
         ),

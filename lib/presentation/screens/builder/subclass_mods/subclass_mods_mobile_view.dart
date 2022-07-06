@@ -56,7 +56,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
           0;
     }
     return Container(
-      color: blackLight,
+      color: black,
       child: Column(
         children: [
           mobileHeader(context,
@@ -210,7 +210,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                             child: ArmorModDesktopModal(
                                               plugSetsHash:
                                                   widget.subclass.sockets!.socketEntries![7 + i].reusablePlugSetHash!,
-                                              onSocketChange: (itemHash) {
+                                              onSocketChange: (itemHash) async {
                                                 if (!displayedSockets.contains(ManifestService
                                                     .manifestParsed.destinyInventoryItemDefinition[itemHash]!)) {
                                                   widget

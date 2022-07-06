@@ -12,7 +12,7 @@ import 'package:quria/presentation/components/detailed_item/item/mod_display.dar
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 
 class ArmorModDesktopModal extends StatelessWidget {
-  final void Function(int) onSocketChange;
+  final Future<void> Function(int) onSocketChange;
   final int plugSetsHash;
   const ArmorModDesktopModal({
     required this.onSocketChange,
@@ -63,14 +63,27 @@ class ArmorModDesktopModal extends StatelessWidget {
             runSpacing: 8,
             children: [
               for (DestinyItemPlug plug in plugs)
-                InkWell(
-                  onTap: () {
-                    Provider.of<ArmorModModalProvider>(context, listen: false).setSelectedMod(
-                        ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!);
-                  },
-                  child: ArmorModIconDisplay(
-                    iconSize: 55,
-                    socket: ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!,
+                Container(
+                  width: 55,
+                  height: 55,
+                  decoration: Provider.of<ArmorModModalProvider>(context).armorMod ==
+                          ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!
+                      ? BoxDecoration(
+                          border: Border.all(
+                            color: vanguard,
+                            width: 3,
+                          ),
+                        )
+                      : null,
+                  child: InkWell(
+                    onTap: () {
+                      Provider.of<ArmorModModalProvider>(context, listen: false).setSelectedMod(
+                          ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!);
+                    },
+                    child: ArmorModIconDisplay(
+                      iconSize: 55,
+                      socket: ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!,
+                    ),
                   ),
                 ),
             ],
@@ -84,8 +97,9 @@ class ArmorModDesktopModal extends StatelessWidget {
                 color: black,
               ),
               onPressed: () {
-                onSocketChange(Provider.of<ArmorModModalProvider>(context, listen: false).armorMod!.hash!);
-                Navigator.pop(context);
+                onSocketChange(Provider.of<ArmorModModalProvider>(context, listen: false).armorMod!.hash!).then(
+                  (_) => Navigator.pop(context),
+                );
               })
         ],
       ),

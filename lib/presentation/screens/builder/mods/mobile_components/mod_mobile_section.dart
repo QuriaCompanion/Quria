@@ -63,7 +63,7 @@ class ModsMobileSection extends StatelessWidget {
                               width: vw(context) * 0.5,
                               child: ArmorModDesktopModal(
                                 plugSetsHash: scoketEntries[item.key].reusablePlugSetHash!,
-                                onSocketChange: (itemHash) {
+                                onSocketChange: (itemHash) async {
                                   onChange(ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!,
                                       item.key);
                                 },

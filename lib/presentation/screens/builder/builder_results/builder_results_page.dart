@@ -4,9 +4,13 @@ import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_burger_and_back_option.dart';
+import 'package:quria/presentation/screens/builder/builder_results/builder_results_desktop_view.dart';
 import 'package:quria/presentation/screens/builder/builder_results/builder_results_mobile_view.dart';
+import 'package:quria/presentation/screens/builder/desktop/builder_desktop_view.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class BuilderResultsPage extends StatefulWidget {
   const BuilderResultsPage({
@@ -44,7 +48,12 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
                 ),
               );
             } else {
-              return Container();
+              return ScaffoldDesktop(
+                body: BuilderResultsDesktopView(
+                  buildResults: snapshot.data!,
+                ),
+                currentRoute: routeExotic,
+              );
             }
           } else {
             return Container(

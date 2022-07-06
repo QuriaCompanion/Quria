@@ -36,6 +36,21 @@ class ItemIcon extends StatelessWidget {
             DestinyData.bungieLink +
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!,
             height: imageSize,
+            loadStateChanged: (ExtendedImageState state) {
+              switch (state.extendedImageLoadState) {
+                case LoadState.loading:
+                  return Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        color: DestinyData.getTierColor(ManifestService
+                            .manifestParsed.destinyInventoryItemDefinition[displayHash]!.inventory!.tierType!)),
+                  );
+                case LoadState.completed:
+                  return null;
+                case LoadState.failed:
+                  return null;
+              }
+            },
             width: imageSize,
             timeLimit: const Duration(seconds: 10),
             cache: true,

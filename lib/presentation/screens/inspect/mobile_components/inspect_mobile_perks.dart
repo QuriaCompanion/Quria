@@ -36,41 +36,43 @@ class _InspectMobilePerksState extends State<InspectMobilePerks> {
     String characterId = Provider.of<InventoryProvider>(context).getItemOwner(item.itemInstanceId!) ??
         Provider.of<CharactersProvider>(context).currentCharacter!.characterId!;
 
-    return Column(children: [
-      Container(
-        padding: EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
-        decoration: const BoxDecoration(color: blackLight, borderRadius: BorderRadius.all(Radius.circular(8))),
-        width: widget.width,
-        child: Center(
-          child: textCaption(
-            AppLocalizations.of(context)!.builder_subclass_mods_caption,
-            utf8: false,
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
+          decoration: const BoxDecoration(color: blackLight, borderRadius: BorderRadius.all(Radius.circular(8))),
+          width: widget.width,
+          child: Center(
+            child: textCaption(
+              AppLocalizations.of(context)!.builder_subclass_mods_caption,
+              utf8: false,
+            ),
           ),
         ),
-      ),
-      SizedBox(height: globalPadding(context)),
-      Builder(builder: (context) {
-        List<Widget> list = <Widget>[];
-        for (int i = 0; i < perks.length; i++) {
-          list.add(Padding(
-            padding: i != perks.length - 1 ? EdgeInsets.only(right: globalPadding(context)) : EdgeInsets.zero,
-            child: InspectMobilePerkColumn(
-                width: widget.width,
-                onSocketsChanged: (newSockets) {
-                  Provider.of<ItemProvider>(context).setNewSockets(item.itemInstanceId!, newSockets);
-                },
-                instanceId: item.itemInstanceId,
-                characterId: characterId,
-                perkColumn: perks[i],
-                sockets: sockets),
-          ));
-        }
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: list,
-        );
-      })
-    ]);
+        SizedBox(height: globalPadding(context)),
+        Builder(builder: (context) {
+          List<Widget> list = <Widget>[];
+          for (int i = 0; i < perks.length; i++) {
+            list.add(Padding(
+              padding: i != perks.length - 1 ? EdgeInsets.only(right: globalPadding(context)) : EdgeInsets.zero,
+              child: InspectMobilePerkColumn(
+                  width: widget.width,
+                  onSocketsChanged: (newSockets) {
+                    Provider.of<ItemProvider>(context, listen: false).setNewSockets(item.itemInstanceId!, newSockets);
+                  },
+                  instanceId: item.itemInstanceId,
+                  characterId: characterId,
+                  perkColumn: perks[i],
+                  sockets: sockets),
+            ));
+          }
+          return Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: list,
+          );
+        })
+      ],
+    );
   }
 }

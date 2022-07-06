@@ -14,6 +14,7 @@ import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class BuilderInfoRow extends StatelessWidget {
   const BuilderInfoRow({
@@ -126,12 +127,13 @@ class BuilderInfoRow extends StatelessWidget {
         ),
         RoundedButton(
             buttonColor: yellow,
+            isDisabled: Provider.of<BuilderCustomInfoProvider>(context).classItem == null,
             text: textBodyBold(
               AppLocalizations.of(context)!.builder,
               color: black,
               utf8: false,
             ),
-            onPressed: () => {}),
+            onPressed: () => {Navigator.pushNamed(context, routeBuilder)}),
       ],
     );
   }

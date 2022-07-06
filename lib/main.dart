@@ -13,6 +13,7 @@ import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/collectible_provider.dart';
 import 'package:quria/data/providers/inspect/armor_mod_modal_provider.dart';
+import 'package:quria/data/providers/inspect/inspect_build_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
@@ -20,7 +21,6 @@ import 'package:quria/data/providers/language_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quria/data/providers/plugs_provider.dart';
-import 'package:quria/presentation/screens/inspect/components/armor_mod_desktop_modal.dart';
 import 'package:universal_io/io.dart';
 import 'firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -60,6 +60,9 @@ class QuriaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider<InspectBuildProvider>(
+            create: (context) => InspectBuildProvider(),
+          ),
           ChangeNotifierProvider<ArmorModModalProvider>(
             create: (context) => ArmorModModalProvider(),
           ),

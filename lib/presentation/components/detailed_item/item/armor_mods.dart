@@ -8,28 +8,25 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inspect/armor_mod_modal_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/providers/item_provider.dart';
+import 'package:quria/data/providers/plugs_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_afinity.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
+import 'package:quria/presentation/screens/inspect/components/armor_mod_desktop_modal.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
-class ArmorMods extends StatefulWidget {
+class ArmorMods extends StatelessWidget {
   final double width;
   const ArmorMods({
     required this.width,
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<ArmorMods> createState() => _ArmorModsState();
-}
-
-class _ArmorModsState extends State<ArmorMods> {
-  late List<DestinyItemSocketState> currentSockets;
-  @override
   @override
   Widget build(BuildContext context) {
     final DestinyInventoryItemDefinition itemDef = Provider.of<InspectProvider>(context).itemDef!;
@@ -45,7 +42,7 @@ class _ArmorModsState extends State<ArmorMods> {
     final int remaining = Provider.of<InspectProvider>(context).getRemainingPoints(context);
     return Column(children: [
       ArmorAfinity(
-          width: widget.width,
+          width: width,
           afinityIcon: afinityIcon,
           remaining: remaining,
           pointsAvailable: ManifestService
@@ -80,30 +77,54 @@ class _ArmorModsState extends State<ArmorMods> {
                     : EdgeInsets.zero,
                 child: InkWell(
                   onTap: () {
-                    showMaterialModalBottomSheet(
-                        backgroundColor: Colors.transparent,
-                        expand: true,
-                        context: context,
-                        builder: (context) {
-                          return ArmorModsModal(
-                            width: vw(context),
-                            socket:
-                                ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!,
+                    if (vw(context) < 1000) {
+                      showMaterialModalBottomSheet(
+                          backgroundColor: Colors.transparent,
+                          expand: true,
+                          context: context,
+                          builder: (context) {
+                            return ArmorModsModal(
+                              width: vw(context),
+                              socket:
+                                  ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!,
+                              plugSetsHash: itemDef.sockets!.socketEntries![socket.key].reusablePlugSetHash!,
+                              onSocketChange: (itemHash) {
+                                BungieApiService()
+                                    .insertSocketPlugFree(item.itemInstanceId!, itemHash, socket.key, characterId)
+                                    .then((value) {
+                                  Provider.of<ItemProvider>(context, listen: false).setNewSockets(
+                                      item.itemInstanceId!, value!.response!.item!.sockets!.data!.sockets!);
+                                });
+                              },
+                            );
+                          });
+                      return;
+                    }
+                    Provider.of<ArmorModModalProvider>(context, listen: false).setSelectedMod(
+                        ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!);
+                    showDialog(
+                      context: context,
+                      builder: (context) => Center(
+                        child: SizedBox(
+                          width: vw(context) * 0.4,
+                          child: ArmorModDesktopModal(
                             plugSetsHash: itemDef.sockets!.socketEntries![socket.key].reusablePlugSetHash!,
-                            onSocketChange: (itemHash) {
-                              BungieApiService()
+                            onSocketChange: (itemHash) async {
+                              await BungieApiService()
                                   .insertSocketPlugFree(item.itemInstanceId!, itemHash, socket.key, characterId)
                                   .then((value) {
-                                setState(() {
-                                  currentSockets = value!.response!.item!.sockets!.data!.sockets!;
-                                });
+                                Provider.of<ItemProvider>(context, listen: false).setNewSockets(
+                                    item.itemInstanceId!, value!.response!.item!.sockets!.data!.sockets!);
                               });
+                              return;
                             },
-                          );
-                        });
+                          ),
+                        ),
+                      ),
+                    );
                   },
                   child: ArmorModIconDisplay(
-                    iconSize: itemSize(context, widget.width),
+                    iconSize: itemSize(context, width),
                     socket: ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!,
                   ),
                 ))

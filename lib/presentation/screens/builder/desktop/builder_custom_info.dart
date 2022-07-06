@@ -69,14 +69,32 @@ class BuilderCustomInfo extends StatelessWidget {
               runSpacing: 8,
               children: [
                 for (DestinyItemComponent item in classItems)
-                  InkWell(
-                    onTap: () => Provider.of<BuilderCustomInfoProvider>(context, listen: false).setClassItem(item),
-                    child: ItemIcon(
-                      displayHash: item.overrideStyleItemHash ?? item.itemHash!,
-                      imageSize: 80,
-                      isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
-                      element: Provider.of<ItemProvider>(context).getItemElement(item),
-                      powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
+                  Container(
+                    width: 80,
+                    height: 80,
+                    decoration: Provider.of<BuilderCustomInfoProvider>(context).classItem == item
+                        ? BoxDecoration(
+                            border: Border.all(
+                              color: vanguard,
+                              width: 3,
+                            ),
+                          )
+                        : null,
+                    child: InkWell(
+                      onTap: () {
+                        if (Provider.of<BuilderCustomInfoProvider>(context, listen: false).classItem == item) {
+                          Provider.of<BuilderCustomInfoProvider>(context, listen: false).setClassItem(null);
+                          return;
+                        }
+                        Provider.of<BuilderCustomInfoProvider>(context, listen: false).setClassItem(item);
+                      },
+                      child: ItemIcon(
+                        displayHash: item.overrideStyleItemHash ?? item.itemHash!,
+                        imageSize: 80,
+                        isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
+                        element: Provider.of<ItemProvider>(context).getItemElement(item),
+                        powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
+                      ),
                     ),
                   ),
               ],

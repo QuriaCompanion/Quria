@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
@@ -54,23 +55,37 @@ class _BuilderExoticChoiceState extends State<BuilderExoticChoice> {
                       mainAxisSpacing: 8,
                     ),
                     itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () {
-                          Provider.of<BuilderExoticProvider>(context, listen: false).setExoticHash(exotics[index]);
-                        },
-                        child: Container(
-                          width: 80,
-                          height: 80,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.white,
-                              width: 1,
-                            ),
-                          ),
-                          child: Image(
+                      return Container(
+                        decoration: Provider.of<BuilderExoticProvider>(context).exotic == exotics[index]
+                            ? BoxDecoration(
+                                border: Border.all(
+                                  color: vanguard,
+                                  width: 3,
+                                ),
+                              )
+                            : null,
+                        child: InkWell(
+                          onTap: () {
+                            if (Provider.of<BuilderExoticProvider>(context, listen: false).exotic == exotics[index]) {
+                              Provider.of<BuilderExoticProvider>(context, listen: false).setExoticHash(null);
+                              return;
+                            }
+                            Provider.of<BuilderExoticProvider>(context, listen: false).setExoticHash(exotics[index]);
+                          },
+                          child: Container(
                             width: 80,
                             height: 80,
-                            image: NetworkImage(DestinyData.bungieLink + exotics[index].displayProperties!.icon!),
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.white,
+                                width: 1,
+                              ),
+                            ),
+                            child: Image(
+                              width: 80,
+                              height: 80,
+                              image: NetworkImage(DestinyData.bungieLink + exotics[index].displayProperties!.icon!),
+                            ),
                           ),
                         ),
                       );
