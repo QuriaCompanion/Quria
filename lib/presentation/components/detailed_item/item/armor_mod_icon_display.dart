@@ -25,18 +25,6 @@ class ArmorModIconDisplay extends StatelessWidget {
             width: iconSize,
             height: iconSize,
             timeLimit: const Duration(seconds: 10),
-            loadStateChanged: (ExtendedImageState state) {
-              switch (state.extendedImageLoadState) {
-                case LoadState.loading:
-                  return Container(
-                    decoration: BoxDecoration(border: Border.all(color: Colors.white), color: grey),
-                  );
-                case LoadState.completed:
-                  return null;
-                case LoadState.failed:
-                  return null;
-              }
-            },
             cache: true,
             fit: BoxFit.fill,
           ),

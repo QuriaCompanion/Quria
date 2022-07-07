@@ -75,9 +75,8 @@ class BuilderModsProvider with ChangeNotifier {
               ManifestService.manifestParsed.destinyInventoryItemDefinition[2493100093],
             ]),
       ];
-      setMods(armorMods);
+      _mods = armorMods;
     }
-    _mods = mods;
   }
 
   void reset() {

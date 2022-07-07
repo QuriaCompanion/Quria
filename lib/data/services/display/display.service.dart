@@ -18,6 +18,7 @@ import 'package:provider/provider.dart';
 import 'package:quria/data/models/Donator.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_plug_set_definition.dart';
 import 'package:quria/data/models/helpers/exoticHelper.model.dart';
 import 'package:quria/data/models/helpers/itemCardHelper.model.dart';
 import 'package:quria/data/models/helpers/itemInfoHelper.model.dart';
@@ -245,6 +246,23 @@ class DisplayService {
             ManifestService.manifestParsed.destinyInventoryItemDefinition[element.singleInitialItemHash]?.hash ==
                 3268255645)
         .singleInitialItemHash]!;
+  }
+
+  static Future<void> getCollectionDefinitions(DestinyInventoryItemDefinition item) async {
+    List<int> socketList = [];
+    for (var sockets in item.sockets!.socketEntries!) {
+      if (Conditions.perkSockets(sockets.singleInitialItemHash)) {
+        if (sockets.randomizedPlugSetHash != null) {
+          await StorageService.getDefinitions<DestinyPlugSetDefinition>([sockets.randomizedPlugSetHash!]);
+          for (var socket in ManifestService
+              .manifestParsed.destinyPlugSetDefinition[sockets.randomizedPlugSetHash]!.reusablePlugItems!) {
+            if (socket.plugItemHash != null) socketList.add(socket.plugItemHash!);
+          }
+        }
+      }
+    }
+
+    return await StorageService.getDefinitions<DestinyInventoryItemDefinition>(socketList);
   }
 
   static Future<DestinyInventoryItemDefinition?> getCollectionItem(int itemHash) async {

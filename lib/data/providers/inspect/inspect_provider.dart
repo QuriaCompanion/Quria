@@ -31,11 +31,11 @@ class InspectProvider with ChangeNotifier {
   }
 
   Map<String, DestinyStat> getItemStats(BuildContext context) {
-    return Provider.of<ItemProvider>(context).getPrecalculatedStats(_item!.itemInstanceId!) ?? {};
+    return Provider.of<ItemProvider>(context).getPrecalculatedStats(_item?.itemInstanceId) ?? {};
   }
 
   int? getPowerLevel(BuildContext context) {
-    return Provider.of<ItemProvider>(context).getItemPowerLevel(_item!.itemInstanceId!);
+    return Provider.of<ItemProvider>(context).getItemPowerLevel(_item?.itemInstanceId);
   }
 
   String getImageLink(BuildContext context) {
@@ -44,7 +44,7 @@ class InspectProvider with ChangeNotifier {
 
   String? getElementIcon(BuildContext context) {
     DestinyItemInstanceComponent? instanceInfo =
-        Provider.of<ItemProvider>(context).getInstanceInfo(_item!.itemInstanceId!);
+        Provider.of<ItemProvider>(context).getInstanceInfo(_item?.itemInstanceId);
     return ManifestService
             .manifestParsed.destinyDamageTypeDefinition[itemDef?.defaultDamageTypeHash]?.displayProperties?.icon ??
         ManifestService
@@ -52,12 +52,12 @@ class InspectProvider with ChangeNotifier {
   }
 
   Map<String, List<DestinyItemPlugBase>> getPlugs(BuildContext context) {
-    return Provider.of<ItemProvider>(context).getItemReusablePlugs(_item!.itemInstanceId!);
+    return Provider.of<ItemProvider>(context).getItemReusablePlugs(_item?.itemInstanceId);
   }
 
   List<DestinyItemSocketState> getIntristicsSockets(BuildContext context) {
     return Provider.of<ItemProvider>(context)
-        .getItemSockets(_item!.itemInstanceId!)
+        .getItemSockets(_item?.itemInstanceId)
         .where((element) =>
             element.plugHash != null &&
                 ManifestService
@@ -129,7 +129,7 @@ class InspectProvider with ChangeNotifier {
 
   List<DestinyItemSocketState> getCosmeticSockets(BuildContext context) {
     return Provider.of<ItemProvider>(context)
-        .getItemSockets(_item!.itemInstanceId!)
+        .getItemSockets(_item?.itemInstanceId)
         .where(
           (element) =>
               ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.itemType ==
@@ -143,7 +143,7 @@ class InspectProvider with ChangeNotifier {
   }
 
   List<DestinyItemSocketState> getSockets(BuildContext context) {
-    return Provider.of<ItemProvider>(context).getItemSockets(_item!.itemInstanceId!);
+    return Provider.of<ItemProvider>(context).getItemSockets(_item?.itemInstanceId);
   }
 
   String? getAfinityIcon(BuildContext context) {

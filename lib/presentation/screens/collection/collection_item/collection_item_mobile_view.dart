@@ -31,23 +31,27 @@ class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        mobileHeader(
-          context,
-          image: NetworkImage(DestinyData.bungieLink + data.screenshot!),
-          child: InspectMobileHeader(
-            name: data.displayProperties!.name!,
-            type: data.itemTypeAndTierDisplayName!,
+    return Container(
+      color: black,
+      child: Column(
+        children: [
+          mobileHeader(
+            context,
+            image: NetworkImage(DestinyData.bungieLink + data.screenshot!),
+            child: InspectMobileHeader(
+              name: data.displayProperties!.name!,
+              type: data.itemTypeAndTierDisplayName!,
+            ),
+            width: widget.width,
           ),
-        ),
-        Padding(
-            padding: EdgeInsets.only(
-                left: globalPadding(context), right: globalPadding(context), bottom: globalPadding(context)),
-            child: data.itemType == DestinyItemType.Weapon
-                ? CollectionWeaponView(width: widget.width ?? vw(context))
-                : CollectionArmorView(width: widget.width ?? vw(context)))
-      ],
+          Padding(
+              padding: EdgeInsets.only(
+                  left: globalPadding(context), right: globalPadding(context), bottom: globalPadding(context)),
+              child: data.itemType == DestinyItemType.Weapon
+                  ? CollectionWeaponView(width: widget.width ?? vw(context))
+                  : CollectionArmorView(width: widget.width ?? vw(context)))
+        ],
+      ),
     );
   }
 }

@@ -57,11 +57,11 @@ class ItemProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  DestinyItemInstanceComponent? getInstanceInfo(String instanceId) {
+  DestinyItemInstanceComponent? getInstanceInfo(String? instanceId) {
     return _instances[instanceId];
   }
 
-  Map<String, List<DestinyItemPlugBase>> getItemReusablePlugs(String itemInstanceId) {
+  Map<String, List<DestinyItemPlugBase>> getItemReusablePlugs(String? itemInstanceId) {
     return _reusablePlugs[itemInstanceId]?.plugs ?? {};
   }
 
@@ -72,12 +72,12 @@ class ItemProvider with ChangeNotifier {
     return null;
   }
 
-  int? getItemPowerLevel(String instanceId) {
+  int? getItemPowerLevel(String? instanceId) {
     final instanceInfo = getInstanceInfo(instanceId);
     return instanceInfo?.primaryStat?.value;
   }
 
-  List<DestinyItemSocketState> getItemSockets(String itemInstanceId) {
+  List<DestinyItemSocketState> getItemSockets(String? itemInstanceId) {
     return _sockets[itemInstanceId]?.sockets ?? [];
   }
 
@@ -90,7 +90,7 @@ class ItemProvider with ChangeNotifier {
             .manifestParsed.destinyEnergyTypeDefinition[instanceInfo?.energy?.energyTypeHash]?.displayProperties?.icon;
   }
 
-  Map<String, DestinyStat>? getPrecalculatedStats(String itemInstanceId) {
+  Map<String, DestinyStat>? getPrecalculatedStats(String? itemInstanceId) {
     if (_stats.containsKey(itemInstanceId)) {
       return _stats[itemInstanceId]?.stats;
     }

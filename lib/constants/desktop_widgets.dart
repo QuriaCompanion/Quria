@@ -279,7 +279,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                           context,
                           child: CollectionItemMobileView(
                             data: Provider.of<InspectProvider>(context).itemDef!,
-                            width: vw(context) * 0.25,
+                            width: vw(context) * 0.4,
                           ),
                         );
                       });
@@ -320,6 +320,9 @@ Widget desktopCollectionModal(BuildContext context, {required Widget child}) {
                   Navigator.pop(context);
                 },
                 icon: 'assets/icons/Close.svg',
+              ),
+              SizedBox(
+                height: vw(context) * 0.02,
               ),
               ModalButton(
                 callback: () {

@@ -499,8 +499,22 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.0-dev.0"
-  js:
+  isolate_contactor:
     dependency: transitive
+    description:
+      name: isolate_contactor
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.0"
+  isolate_manager:
+    dependency: "direct main"
+    description:
+      name: isolate_manager
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
+  js:
+    dependency: "direct dev"
     description:
       name: js
       url: "https://pub.dartlang.org"

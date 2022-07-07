@@ -100,8 +100,8 @@ class ArmorMods extends StatelessWidget {
                           });
                       return;
                     }
-                    Provider.of<ArmorModModalProvider>(context, listen: false).setSelectedMod(
-                        ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!);
+                    Provider.of<ArmorModModalProvider>(context, listen: false)
+                        .init(ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!);
                     showDialog(
                       context: context,
                       builder: (context) => Center(

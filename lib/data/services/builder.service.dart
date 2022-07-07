@@ -71,6 +71,7 @@ class BuilderService {
   Future<List<Build>> calculateBuilds({
     required BuilderHelper data,
   }) async {
+    await Future.delayed(Duration(milliseconds: 200));
     return await compute(_armorLoop, data);
   }
 

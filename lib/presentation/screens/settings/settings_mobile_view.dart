@@ -22,141 +22,139 @@ class SettingsMobileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const divider = Divider(color: Colors.white);
-    return SizedBox(
-      height: height,
-      child: ListView(
-        scrollDirection: Axis.vertical,
-        children: [
-          InkWell(
-            onTap: () {
-              StorageService.resetManifest().then((value) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                  content: textBodyMedium(
-                    AppLocalizations.of(context)!.manifest_deleted,
-                    utf8: false,
-                    color: Colors.white,
-                  ),
-                  backgroundColor: Colors.green,
-                ));
-              }, onError: (_) {
-                showDialog(
-                    context: context,
-                    builder: (context) {
-                      return const ErrorDialog();
-                    });
-              });
-            },
-            child: ListTile(
-              leading: const Icon(
-                Icons.delete,
-                color: Colors.white,
-                size: 35,
-              ),
-              title: textBodyHighRegular(
-                AppLocalizations.of(context)!.manifest_delete,
-                utf8: false,
-              ),
-              subtitle: textBodyMedium(
-                AppLocalizations.of(context)!.manifest_delete_caption,
-                utf8: false,
-              ),
-            ),
-          ),
-          divider,
-          ListTile(
-            onTap: () {
-              launchUrl(Uri.parse("https://www.buymeacoffee.com/quria?s=03"), mode: LaunchMode.externalApplication);
-            },
-            leading: SvgPicture.asset(
-              "assets/icons/buymeacoffee.svg",
-              width: 35,
-              height: 35,
-            ),
-            title: textBodyHighRegular(
-              "BuyMeACofee",
-              utf8: false,
-            ),
-            subtitle: textBodyMedium(
-              AppLocalizations.of(context)!.support,
-              utf8: false,
-            ),
-          ),
-          divider,
-          ListTile(
-            onTap: () {
-              launchUrl(Uri.parse("https://twitter.com/quriacompanion"), mode: LaunchMode.externalApplication);
-            },
-            leading: SvgPicture.asset(
-              "assets/icons/twitter.svg",
-              width: 35,
-              height: 35,
-            ),
-            title: textBodyHighRegular(
-              AppLocalizations.of(context)!.twitter,
-              utf8: false,
-            ),
-            subtitle: textBodyMedium(
-              AppLocalizations.of(context)!.twitter_caption,
-              utf8: false,
-            ),
-          ),
-          divider,
-          ListTile(
-            onTap: () {
+    return ListView(
+      shrinkWrap: true,
+      scrollDirection: Axis.vertical,
+      children: [
+        InkWell(
+          onTap: () {
+            StorageService.resetManifest().then((value) {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: textBodyMedium(
+                  AppLocalizations.of(context)!.manifest_deleted,
+                  utf8: false,
+                  color: Colors.white,
+                ),
+                backgroundColor: Colors.green,
+              ));
+            }, onError: (_) {
               showDialog(
                   context: context,
                   builder: (context) {
-                    return ChooseMembership(
-                      memberships: AccountService.membershipData!.destinyMemberships!,
-                      onSelected: (membership) {
-                        AccountService.saveMembership(AccountService.membershipData!, membership).then((_) {
-                          DisplayService.isProfileUp = false;
-                          ProfileService.reset(context);
-                          Navigator.pushReplacementNamed(context, routeProfile);
-                        });
-                      },
-                    );
+                    return const ErrorDialog();
                   });
-            },
-            leading: Image.network(
-              "https://www.bungie.net/7/ca//destiny/logos/crossSave.png",
-              width: 35,
-              height: 35,
+            });
+          },
+          child: ListTile(
+            leading: const Icon(
+              Icons.delete,
+              color: Colors.white,
+              size: 35,
             ),
             title: textBodyHighRegular(
-              AppLocalizations.of(context)!.change_platform,
+              AppLocalizations.of(context)!.manifest_delete,
               utf8: false,
             ),
             subtitle: textBodyMedium(
-              AppLocalizations.of(context)!.change_platform_caption,
+              AppLocalizations.of(context)!.manifest_delete_caption,
               utf8: false,
             ),
           ),
-          divider,
-          ListTile(
-            onTap: () {
-              showDialog(
-                  context: context,
-                  builder: (context) {
-                    return const ChooseLanguage();
-                  });
-            },
-            leading: const Icon(Icons.language, size: 35, color: Colors.white),
-            title: textBodyHighRegular(
-              AppLocalizations.of(context)!.change_language,
-              utf8: false,
-            ),
+        ),
+        divider,
+        ListTile(
+          onTap: () {
+            launchUrl(Uri.parse("https://www.buymeacoffee.com/quria?s=03"), mode: LaunchMode.externalApplication);
+          },
+          leading: SvgPicture.asset(
+            "assets/icons/buymeacoffee.svg",
+            width: 35,
+            height: 35,
           ),
-          divider,
-          ListTile(
-            onTap: () {
-              Navigator.pushReplacementNamed(context, routePageLegends);
-            },
-            leading: const Icon(Icons.handshake, size: 35, color: Colors.white),
-            title: textBodyHighRegular('Hall of Fame', utf8: false),
+          title: textBodyHighRegular(
+            "BuyMeACofee",
+            utf8: false,
           ),
-        ],
-      ),
+          subtitle: textBodyMedium(
+            AppLocalizations.of(context)!.support,
+            utf8: false,
+          ),
+        ),
+        divider,
+        ListTile(
+          onTap: () {
+            launchUrl(Uri.parse("https://twitter.com/quriacompanion"), mode: LaunchMode.externalApplication);
+          },
+          leading: SvgPicture.asset(
+            "assets/icons/twitter.svg",
+            width: 35,
+            height: 35,
+          ),
+          title: textBodyHighRegular(
+            AppLocalizations.of(context)!.twitter,
+            utf8: false,
+          ),
+          subtitle: textBodyMedium(
+            AppLocalizations.of(context)!.twitter_caption,
+            utf8: false,
+          ),
+        ),
+        divider,
+        ListTile(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return ChooseMembership(
+                    memberships: AccountService.membershipData!.destinyMemberships!,
+                    onSelected: (membership) {
+                      AccountService.saveMembership(AccountService.membershipData!, membership).then((_) {
+                        DisplayService.isProfileUp = false;
+                        ProfileService.reset(context);
+                        Navigator.pushReplacementNamed(context, routeProfile);
+                      });
+                    },
+                  );
+                });
+          },
+          leading: Image.network(
+            "https://www.bungie.net/7/ca//destiny/logos/crossSave.png",
+            width: 35,
+            height: 35,
+          ),
+          title: textBodyHighRegular(
+            AppLocalizations.of(context)!.change_platform,
+            utf8: false,
+          ),
+          subtitle: textBodyMedium(
+            AppLocalizations.of(context)!.change_platform_caption,
+            utf8: false,
+          ),
+        ),
+        divider,
+        ListTile(
+          onTap: () {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return const ChooseLanguage();
+                });
+          },
+          leading: const Icon(Icons.language, size: 35, color: Colors.white),
+          title: textBodyHighRegular(
+            AppLocalizations.of(context)!.change_language,
+            utf8: false,
+          ),
+        ),
+        divider,
+        ListTile(
+          onTap: () {
+            Navigator.pushReplacementNamed(context, routePageLegends);
+          },
+          leading: const Icon(Icons.handshake, size: 35, color: Colors.white),
+          title: textBodyHighRegular('Hall of Fame', utf8: false),
+        ),
+      ],
     );
   }
 }

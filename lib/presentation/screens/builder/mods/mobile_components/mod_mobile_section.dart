@@ -57,7 +57,7 @@ class ModsMobileSection extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        Provider.of<ArmorModModalProvider>(context, listen: false).setSelectedMod(item.value!);
+                        Provider.of<ArmorModModalProvider>(context, listen: false).init(item.value!);
                         return Center(
                           child: SizedBox(
                               width: vw(context) * 0.5,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -168,21 +170,38 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                               context: context,
                               barrierColor: const Color.fromARGB(110, 0, 0, 0),
                               builder: (context) {
-                                return desktopRegularModal(
-                                  context,
+                                return Center(
                                   child: Container(
+                                    width: vw(context) * 0.4,
                                     decoration: const BoxDecoration(
-                                        borderRadius: BorderRadius.all(
-                                          Radius.circular(20),
-                                        ),
-                                        color: blackLight),
-                                    child: Column(
-                                      children: [
-                                        textH2('Paramètres', utf8: false),
-                                        const SettingsMobileView(
-                                          height: 600,
-                                        ),
-                                      ],
+                                      borderRadius: BorderRadius.all(
+                                        Radius.circular(20),
+                                      ),
+                                      color: black,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              textH1(AppLocalizations.of(context)!.settings, utf8: false),
+                                              InkWell(
+                                                onTap: () => Navigator.pop(context),
+                                                child: const CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  child: Icon(Icons.clear, size: 20, color: black),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          const SettingsMobileView(
+                                            height: 600,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );

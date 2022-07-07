@@ -35,7 +35,6 @@ class ItemIcon extends StatelessWidget {
           ExtendedImage.network(
             DestinyData.bungieLink +
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!,
-            height: imageSize,
             loadStateChanged: (ExtendedImageState state) {
               switch (state.extendedImageLoadState) {
                 case LoadState.loading:
@@ -51,6 +50,7 @@ class ItemIcon extends StatelessWidget {
                   return null;
               }
             },
+            height: imageSize,
             width: imageSize,
             timeLimit: const Duration(seconds: 10),
             cache: true,

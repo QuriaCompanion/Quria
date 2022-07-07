@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -109,10 +110,13 @@ class ProfileMobileHeader extends StatelessWidget {
                     decoration: BoxDecoration(border: Border.all(color: Colors.white)),
                   ),
                 ),
-                Image(
-                  image: NetworkImage(DestinyData.bungieLink + characterSuper),
+                ExtendedImage.network(
+                  DestinyData.bungieLink + characterSuper,
                   height: width * 0.17,
                   width: width * 0.17,
+                  timeLimit: const Duration(seconds: 10),
+                  cache: true,
+                  filterQuality: FilterQuality.high,
                   fit: BoxFit.fill,
                 ),
               ],

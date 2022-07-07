@@ -203,7 +203,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                     context: context,
                                     builder: (context) {
                                       Provider.of<ArmorModModalProvider>(context, listen: false)
-                                          .setSelectedMod(displayedSockets[7 + i]);
+                                          .init(displayedSockets[7 + i]);
                                       return Center(
                                         child: SizedBox(
                                             width: vw(context) * 0.4,

@@ -5,8 +5,12 @@ class ArmorModModalProvider with ChangeNotifier {
   DestinyInventoryItemDefinition? _armorMod;
   DestinyInventoryItemDefinition? get armorMod => _armorMod;
 
-  setSelectedMod(DestinyInventoryItemDefinition armorMod) {
+  void setSelectedMod(DestinyInventoryItemDefinition armorMod) {
     _armorMod = armorMod;
     notifyListeners();
+  }
+
+  void init(DestinyInventoryItemDefinition armorMod) {
+    _armorMod = armorMod;
   }
 }
