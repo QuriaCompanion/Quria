@@ -75,7 +75,9 @@ class InventoryProvider with ChangeNotifier {
   }
 
   DestinyItemComponent getCharacterEquipmentByBucket(String characterId, int bucket) {
-    return _characterEquipment[characterId]!.items!.firstWhere((item) => item.bucketHash == bucket);
+    return _characterEquipment[characterId]!.items!.firstWhere((item) =>
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.inventory?.bucketTypeHash ==
+        bucket);
   }
 
   List<DestinyItemComponent> getItemsByInstanceId(List<String?> ids) {

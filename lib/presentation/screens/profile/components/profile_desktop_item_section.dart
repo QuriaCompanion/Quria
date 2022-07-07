@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
@@ -74,13 +75,32 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ItemIcon(
-                    displayHash: equippedItem.overrideStyleItemHash ?? equippedItem.itemHash!,
-                    imageSize: itemSize,
-                    isMasterworked:
-                        equippedItem.state == ItemState.Masterwork || equippedItem.state == const ItemState(5),
-                    element: Provider.of<ItemProvider>(context).getItemElement(equippedItem),
-                    powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(equippedItem.itemInstanceId!),
+                  DragTarget<DestinyItemComponent>(
+                    builder: (
+                      BuildContext context,
+                      List<dynamic> accepted,
+                      List<dynamic> rejected,
+                    ) {
+                      return ItemIcon(
+                        displayHash: equippedItem.overrideStyleItemHash ?? equippedItem.itemHash!,
+                        imageSize: itemSize,
+                        isMasterworked:
+                            equippedItem.state == ItemState.Masterwork || equippedItem.state == const ItemState(5),
+                        element: Provider.of<ItemProvider>(context).getItemElement(equippedItem),
+                        powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(equippedItem.itemInstanceId!),
+                      );
+                    },
+                    onAccept: (DestinyItemComponent data) {
+                      if (data != equippedItem) {
+                        BungieActionsService().equipItem(
+                          context,
+                          itemId: data.itemInstanceId!,
+                          characterId:
+                              Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
+                          itemHash: data.itemHash!,
+                        );
+                      }
+                    },
                   ),
                   const SizedBox(width: 8),
                   DragTarget<DestinyItemComponent>(

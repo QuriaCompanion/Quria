@@ -22,8 +22,8 @@ class BuilderCustomInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DestinyCharacterComponent character = Provider.of<CharactersProvider>(context, listen: false).currentCharacter!;
-    List<DestinyItemComponent> classItems = Provider.of<InventoryProvider>(context, listen: false).getArmorForClass(
+    DestinyCharacterComponent character = Provider.of<CharactersProvider>(context).currentCharacter!;
+    List<DestinyItemComponent> classItems = Provider.of<InventoryProvider>(context).getArmorForClass(
       character.classType!,
       itemSubType: DestinyItemSubType.ClassArmor,
     );

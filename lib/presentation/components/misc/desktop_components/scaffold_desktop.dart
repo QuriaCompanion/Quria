@@ -1,11 +1,17 @@
+import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
+import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
+import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
-import 'package:quria/presentation/components/misc/desktop_components/modal_button.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/navbar_item.dart';
 import 'package:quria/presentation/screens/profile/components/character_desktop_banner_info.dart';
 import 'package:quria/presentation/screens/settings/settings_mobile_view.dart';
@@ -64,6 +70,94 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                     Row(
                       children: [
                         InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                List<DestinyCharacterComponent> characters =
+                                    Provider.of<CharactersProvider>(context, listen: false).characters;
+                                return Center(
+                                  child: Container(
+                                    width: vw(context) * 0.4,
+                                    decoration: BoxDecoration(color: black, borderRadius: BorderRadius.circular(10)),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(globalPadding(context)),
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              textH2(AppLocalizations.of(context)!.character, utf8: false),
+                                              InkWell(
+                                                onTap: () => Navigator.pop(context),
+                                                child: const CircleAvatar(
+                                                  backgroundColor: Colors.white,
+                                                  child: Icon(Icons.clear, size: 20, color: black),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          for (var character in characters.asMap().entries)
+                                            Padding(
+                                              padding: const EdgeInsets.only(top: 16),
+                                              child: InkWell(
+                                                onTap: () {
+                                                  if (character.value !=
+                                                      Provider.of<CharactersProvider>(context, listen: false)
+                                                          .currentCharacter) {
+                                                    Provider.of<CharactersProvider>(context, listen: false)
+                                                        .setCurrentCharacter(character.key);
+                                                    Provider.of<BuilderCustomInfoProvider>(context, listen: false)
+                                                        .reset();
+                                                    Provider.of<BuilderExoticProvider>(context, listen: false).reset();
+                                                    Provider.of<BuilderSubclassProvider>(context, listen: false)
+                                                        .reset();
+                                                  }
+                                                  Navigator.pop(context);
+                                                },
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  children: [
+                                                    Image(
+                                                        width: 50,
+                                                        height: 50,
+                                                        image: NetworkImage(
+                                                            DestinyData.bungieLink + character.value.emblemPath!)),
+                                                    textBodyBold(ManifestService
+                                                            .manifestParsed
+                                                            .destinyClassDefinition[character.value.classHash]!
+                                                            .genderedClassNamesByGenderHash![
+                                                        character.value.genderHash.toString()]!),
+                                                    Row(
+                                                      children: [
+                                                        Image(
+                                                          width: 30,
+                                                          height: 30,
+                                                          image: NetworkImage(DestinyData.bungieLink +
+                                                              ManifestService
+                                                                  .manifestParsed
+                                                                  .destinyStatDefinition[StatsHash.power]!
+                                                                  .displayProperties!
+                                                                  .icon!),
+                                                          color: yellow,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                        textBodyBold(character.value.light.toString(), color: yellow),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
                           child: CharacterDesktopBannerInfo(
                             character: Provider.of<CharactersProvider>(context).currentCharacter!,
                           ),

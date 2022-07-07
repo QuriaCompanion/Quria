@@ -18,17 +18,10 @@ class BuilderExoticChoice extends StatefulWidget {
 }
 
 class _BuilderExoticChoiceState extends State<BuilderExoticChoice> {
-  late Future<List<DestinyInventoryItemDefinition>> _exotics;
-
-  @override
-  void initState() {
-    super.initState();
-    _exotics = DisplayService.getExotics(
-        context, Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.classType!);
-  }
-
   @override
   Widget build(BuildContext context) {
+    Future<List<DestinyInventoryItemDefinition>> exotics =
+        DisplayService.getExotics(context, Provider.of<CharactersProvider>(context).currentCharacter!.classType!);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -41,7 +34,7 @@ class _BuilderExoticChoiceState extends State<BuilderExoticChoice> {
           utf8: false,
         ),
         FutureBuilder<List<DestinyInventoryItemDefinition>>(
-            future: _exotics,
+            future: exotics,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 final List<DestinyInventoryItemDefinition> exotics = snapshot.data!;

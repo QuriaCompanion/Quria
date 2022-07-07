@@ -51,7 +51,8 @@ class BungieActionsService {
           await api
               .transferItem(slotItems.first.itemInstanceId!, characterId,
                   itemHash: slotItems.first.itemHash, stackSize: 1, transferToVault: true)
-              .then((value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, null, false));
+              .then((value) => Provider.of<InventoryProvider>(context, listen: false)
+                  .moveItem(slotItems.first.itemInstanceId!, null, false));
           await api
               .transferItem(itemId, characterId, itemHash: itemHash, stackSize: stackSize, transferToVault: false)
               .then((value) =>
