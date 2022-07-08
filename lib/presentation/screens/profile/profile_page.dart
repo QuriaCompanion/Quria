@@ -46,19 +46,16 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           if (characters.isEmpty) {
             return Column(
               children: [
-                ErrorDialog(
-                  errorMessage: AppLocalizations.of(context)!.no_characters,
-                  child: ChooseMembership(
-                    memberships: AccountService.membershipData!.destinyMemberships!,
-                    onSelected: (membership) async {
-                      AccountService.saveMembership(AccountService.membershipData!, membership).then(
-                        (_) {
-                          DisplayService.isProfileUp = false;
-                          Navigator.pushReplacementNamed(context, routeProfile);
-                        },
-                      );
-                    },
-                  ),
+                ChooseMembership(
+                  memberships: AccountService.membershipData!.destinyMemberships!,
+                  onSelected: (membership) async {
+                    AccountService.saveMembership(AccountService.membershipData!, membership).then(
+                      (_) {
+                        DisplayService.isProfileUp = false;
+                        Navigator.pushReplacementNamed(context, routeProfile);
+                      },
+                    );
+                  },
                 ),
               ],
             );

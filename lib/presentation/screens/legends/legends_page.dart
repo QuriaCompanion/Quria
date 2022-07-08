@@ -36,13 +36,12 @@ class _LegendsPageState extends State<LegendsPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const SizedBox(),
                       Center(child: textH1("Hall of Fame")),
                       InkWell(
                         onTap: () => Navigator.pop(context),
                         child: const CircleAvatar(
-                          backgroundColor: blackLight,
-                          child: Icon(Icons.clear, size: 20, color: Colors.white),
+                          backgroundColor: Colors.white,
+                          child: Icon(Icons.clear, size: 20, color: black),
                         ),
                       ),
                     ],
@@ -119,14 +118,8 @@ class _LegendsPageState extends State<LegendsPage> {
               ],
             );
           }
-          return Container(
-            height: vh(context),
-            width: vw(context),
-            decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
-            child: Loader(
-              splashColor: Colors.transparent,
-              animationSize: vw(context) * 0.5,
-            ),
+          return const Loader(
+            splashColor: Colors.transparent,
           );
         });
   }

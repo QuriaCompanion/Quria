@@ -44,6 +44,7 @@ class ProfileDesktopView extends StatelessWidget {
             subclassId: data.selectedCharacterSubclass!.itemInstanceId!,
             characterId: data.selectedCharacter!.characterId!,
             isNewSubclass: data.isNewSubclass,
+            subclass: data.selectedCharacterSubclass!,
           ),
         ),
         SizedBox(

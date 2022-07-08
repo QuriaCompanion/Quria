@@ -60,7 +60,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
           ],
         ),
         const SizedBox(
-          height: 8,
+          height: 16,
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -71,7 +71,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                 color: blackLight,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.all(globalPadding(context) / 4),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -102,7 +102,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                       }
                     },
                   ),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 16),
                   DragTarget<DestinyItemComponent>(
                     builder: (
                       BuildContext context,
@@ -143,7 +143,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                 color: blackLight,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.all(globalPadding(context) / 4),
+              padding: const EdgeInsets.all(16),
               child: DragTarget<DestinyItemComponent>(
                 builder: (
                   BuildContext context,

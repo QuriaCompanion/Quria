@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
@@ -9,6 +10,7 @@ import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/misc/choose_language.dart';
 import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
+import 'package:quria/presentation/screens/legends/legends_page.dart';
 import 'package:quria/presentation/var/routes.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -102,19 +104,46 @@ class SettingsMobileView extends StatelessWidget {
         divider,
         ListTile(
           onTap: () {
+            if (vw(context) < 1000) {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ChooseMembership(
+                      memberships: AccountService.membershipData!.destinyMemberships!,
+                      onSelected: (membership) {
+                        AccountService.saveMembership(AccountService.membershipData!, membership).then((_) {
+                          DisplayService.isProfileUp = false;
+                          ProfileService.reset(context);
+                          Navigator.pushReplacementNamed(context, routeProfile);
+                        });
+                      },
+                    );
+                  });
+              return;
+            }
             showDialog(
                 context: context,
                 builder: (context) {
-                  return ChooseMembership(
-                    memberships: AccountService.membershipData!.destinyMemberships!,
-                    onSelected: (membership) {
-                      AccountService.saveMembership(AccountService.membershipData!, membership).then((_) {
-                        DisplayService.isProfileUp = false;
-                        ProfileService.reset(context);
-                        Navigator.pushReplacementNamed(context, routeProfile);
-                      });
-                    },
-                  );
+                  return Center(
+                      child: Container(
+                          width: vw(context) * 0.4,
+                          height: vw(context) * 0.3,
+                          color: black,
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            children: [
+                              ChooseMembership(
+                                memberships: AccountService.membershipData!.destinyMemberships!,
+                                onSelected: (membership) {
+                                  AccountService.saveMembership(AccountService.membershipData!, membership).then((_) {
+                                    DisplayService.isProfileUp = false;
+                                    ProfileService.reset(context);
+                                    Navigator.pushReplacementNamed(context, routeProfile);
+                                  });
+                                },
+                              ),
+                            ],
+                          )));
                 });
           },
           leading: Image.network(
@@ -149,7 +178,21 @@ class SettingsMobileView extends StatelessWidget {
         divider,
         ListTile(
           onTap: () {
-            Navigator.pushReplacementNamed(context, routePageLegends);
+            if (vw(context) < 1000) {
+              Navigator.pushReplacementNamed(context, routePageLegends);
+              return;
+            }
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return Center(
+                      child: Container(
+                          width: vw(context) * 0.4,
+                          height: vw(context) * 0.3,
+                          color: black,
+                          padding: const EdgeInsets.all(16),
+                          child: const LegendsPage()));
+                });
           },
           leading: const Icon(Icons.handshake, size: 35, color: Colors.white),
           title: textBodyHighRegular('Hall of Fame', utf8: false),

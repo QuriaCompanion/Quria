@@ -1,3 +1,4 @@
+import 'package:bungie_api/destiny2.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,6 +27,7 @@ class ProfileMobileHeader extends StatelessWidget {
   final Map<String, int>? stats;
   final bool isNewSubclass;
   final double width;
+  final DestinyItemComponent subclass;
   const ProfileMobileHeader({
     required this.stats,
     required this.characterId,
@@ -33,6 +35,7 @@ class ProfileMobileHeader extends StatelessWidget {
     required this.subclassId,
     required this.isNewSubclass,
     required this.width,
+    required this.subclass,
     Key? key,
   }) : super(key: key);
   @override
@@ -62,7 +65,7 @@ class ProfileMobileHeader extends StatelessWidget {
                       child: SubclassModsMobileView(
                         width: vw(context) * 0.4,
                         sockets: sockets.sockets,
-                        subclass: ManifestService.manifestParsed.destinyInventoryItemDefinition[subclassId]!,
+                        subclass: ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
                         onChange: (mods, i) async {
                           await BungieApiService()
                               .insertSocketPlugFree(

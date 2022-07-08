@@ -48,6 +48,7 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
               subclassId: widget.data.selectedCharacterSubclass!.itemInstanceId!,
               characterId: widget.data.selectedCharacter!.characterId!,
               isNewSubclass: widget.data.isNewSubclass,
+              subclass: widget.data.selectedCharacterSubclass!,
             ),
           ),
           Padding(
