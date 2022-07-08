@@ -1,5 +1,9 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
@@ -68,9 +72,8 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
                         splashColor: Colors.transparent,
                         animationSize: 300,
                       ),
-                      textH1("Hey I am a lazy ghost so I don't turn around while you wait for your builds",
-                          utf8: false),
-                      textH1("but don't worry one day I'll turn like a big boy", utf8: false)
+                      if (kIsWeb) textH1(AppLocalizations.of(context)!.desktop_ghost_1, utf8: false),
+                      if (kIsWeb) textH1(AppLocalizations.of(context)!.desktop_ghost_2, utf8: false)
                     ],
                   ),
                 ));

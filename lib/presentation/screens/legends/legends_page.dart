@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/Donator.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
@@ -20,7 +21,6 @@ class _LegendsPageState extends State<LegendsPage> {
     super.initState();
     _future = DisplayService.fetchDonators();
   }
-  // TODO: move the text to localisation file
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _LegendsPageState extends State<LegendsPage> {
                     size: 35,
                   ),
                   title: textBodyBold('Franck Lennon', utf8: false),
-                  subtitle: textBodyMedium('Designer'),
+                  subtitle: textBodyMedium(AppLocalizations.of(context)!.designer, utf8: false),
                 ),
                 divider,
                 ListTile(
@@ -64,7 +64,7 @@ class _LegendsPageState extends State<LegendsPage> {
                     size: 35,
                   ),
                   title: textBodyBold('Quentin Fle', utf8: false),
-                  subtitle: textBodyMedium('Developer', utf8: false),
+                  subtitle: textBodyMedium(AppLocalizations.of(context)!.developer, utf8: false),
                 ),
                 divider,
                 ListTile(
@@ -74,7 +74,7 @@ class _LegendsPageState extends State<LegendsPage> {
                     size: 35,
                   ),
                   title: textBodyBold('Rémy Pachoncinski', utf8: false),
-                  subtitle: textBodyMedium('Developer:', utf8: false),
+                  subtitle: textBodyMedium(AppLocalizations.of(context)!.developer, utf8: false),
                 ),
                 divider,
                 ListTile(
@@ -84,7 +84,7 @@ class _LegendsPageState extends State<LegendsPage> {
                     size: 35,
                   ),
                   title: textBodyBold('Yannis Battiston', utf8: false),
-                  subtitle: textBodyMedium('Developer:', utf8: false),
+                  subtitle: textBodyMedium(AppLocalizations.of(context)!.developer, utf8: false),
                 ),
                 divider,
                 ListTile(
@@ -94,12 +94,12 @@ class _LegendsPageState extends State<LegendsPage> {
                     size: 35,
                   ),
                   title: textBodyBold('@albertcarsan'),
-                  subtitle: textBodyMedium('Translator (spanish): ', utf8: false),
+                  subtitle: textBodyMedium(AppLocalizations.of(context)!.translator, utf8: false),
                 ),
                 divider,
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Center(child: textH3("Donators")),
+                  child: Center(child: textH3(AppLocalizations.of(context)!.donors, utf8: false)),
                 ),
                 for (Donator donator in snapshot.data!)
                   ListTile(

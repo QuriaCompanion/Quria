@@ -31,8 +31,8 @@ class BuilderDesktopView extends StatelessWidget {
           image: buildHeaderWeb,
           alignment: const Alignment(0, -0.75),
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: textH1(
+            padding: EdgeInsets.all(globalPadding(context)),
+            child: textDesktopTitle(
               AppLocalizations.of(context)!.quria_builder,
               utf8: false,
             ),

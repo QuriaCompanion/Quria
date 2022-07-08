@@ -19,19 +19,12 @@ class BuilderResultsDesktopView extends StatelessWidget {
       children: [
         desktopHeader(context,
             image: buildHeader,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                textH1(
-                  AppLocalizations.of(context)!.builder_results_title,
-                  utf8: false,
-                ),
-                textBodyRegular(
-                  AppLocalizations.of(context)!.builder_results_subtitle,
-                  utf8: false,
-                ),
-              ],
+            child: Padding(
+              padding: EdgeInsets.all(globalPadding(context)),
+              child: textDesktopTitle(
+                AppLocalizations.of(context)!.builder_results_title,
+                utf8: false,
+              ),
             )),
         Padding(
           padding: EdgeInsets.all(globalPadding(context)),

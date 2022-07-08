@@ -64,6 +64,18 @@ Widget textConnect(String child, {color = Colors.white, utf8 = true}) {
   );
 }
 
+Widget textDesktopTitle(String child, {color = Colors.white, utf8 = true}) {
+  return AutoSizeText(
+    utf8 ? utf8Decode(child) : child,
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
+      fontSize: 48,
+      fontWeight: FontWeight.w700,
+      color: color,
+    ),
+  );
+}
+
 Widget textH3(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
     utf8 ? utf8Decode(child) : child,

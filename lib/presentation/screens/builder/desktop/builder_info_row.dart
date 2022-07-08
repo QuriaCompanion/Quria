@@ -48,7 +48,7 @@ class BuilderInfoRow extends StatelessWidget {
                   fit: BoxFit.fill,
                   printError: false,
                 ),
-                textCaption(AppLocalizations.of(context)!.exotic_perk)
+                textCaption(AppLocalizations.of(context)!.exotic)
               ],
             ),
             Container(
@@ -87,7 +87,7 @@ class BuilderInfoRow extends StatelessWidget {
                   fit: BoxFit.fill,
                   printError: false,
                 ),
-                textCaption(AppLocalizations.of(context)!.builder_subclass_mods_title)
+                textCaption(AppLocalizations.of(context)!.subclass)
               ],
             ),
             Container(
@@ -150,7 +150,7 @@ class BuilderInfoRow extends StatelessWidget {
             buttonColor: yellow,
             isDisabled: Provider.of<BuilderCustomInfoProvider>(context).classItem == null,
             text: textBodyBold(
-              AppLocalizations.of(context)!.builder,
+              AppLocalizations.of(context)!.see_builds,
               color: black,
               utf8: false,
             ),

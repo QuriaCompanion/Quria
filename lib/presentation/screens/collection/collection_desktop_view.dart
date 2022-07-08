@@ -54,7 +54,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
           webHeader(
             context,
             image: collectionHeader,
-            child: textH1("Collection"),
+            child: textDesktopTitle("Collection"),
           ),
           Container(
             width: vw(context),
