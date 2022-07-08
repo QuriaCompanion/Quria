@@ -2,24 +2,25 @@ import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/itemCardHelper.model.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/display/display.service.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class ProfileMobileItemCard extends StatefulWidget {
   final DestinyItemComponent item;
   final String characterId;
   final double width;
   final List<DestinyItemComponent> inventory;
-  final void Function(InspectData) onClick;
   const ProfileMobileItemCard({
     required this.characterId,
     required this.inventory,
-    required this.onClick,
     required this.item,
     required this.width,
     Key? key,
@@ -72,21 +73,15 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
                   children: [
                     textH2(data.itemCategory.displayProperties!.name!),
                     const SizedBox(width: 20),
-                    textH3('${widget.inventory.length + 1}/10',
-                        color: greyLight)
+                    textH3('${widget.inventory.length + 1}/10', color: greyLight)
                   ],
                 ),
-                textBodyMedium(isOpen
-                    ? AppLocalizations.of(context)!.close
-                    : AppLocalizations.of(context)!.see_all),
+                textBodyMedium(isOpen ? AppLocalizations.of(context)!.close : AppLocalizations.of(context)!.see_all),
               ],
             ),
           ),
         ),
         ItemComponentDisplay(
-            onClick: (inspectData) {
-              widget.onClick(inspectData);
-            },
             item: widget.item,
             itemDef: data.itemDef,
             elementIcon: data.elementIcon,
@@ -110,22 +105,20 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
               for (final item in widget.inventory)
                 Builder(builder: (context) {
                   final dataItem = DisplayService.getCardData(context,
-                      itemInstanceId: item.itemInstanceId!,
-                      itemHash: item.itemHash);
+                      itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
                   return InkWell(
                     onTap: () {
-                      widget.onClick(InspectData(
-                          hash: item.itemHash!,
-                          characterId: widget.characterId,
-                          instanceId: item.itemInstanceId!));
+                      Provider.of<InspectProvider>(context, listen: false).setInspectItem(
+                          itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
+                          item: item);
+                      Navigator.pushNamed(context, routeInspectMobile);
                     },
                     child: ItemIcon(
                       imageSize: itemSize(context, widget.width),
                       displayHash: item.overrideStyleItemHash ?? item.itemHash!,
                       element: dataItem.elementIcon,
                       powerLevel: dataItem.powerLevel,
-                      isMasterworked: item.state == ItemState.Masterwork ||
-                          item.state == const ItemState(5),
+                      isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
                     ),
                   );
                 })

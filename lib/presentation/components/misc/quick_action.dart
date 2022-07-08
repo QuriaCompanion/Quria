@@ -24,41 +24,38 @@ class QuickAction extends StatelessWidget {
       height: width * 0.2,
       child: InkWell(
         onTap: () => onTap(),
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Stack(
+            alignment: Alignment.center,
             children: [
-              Stack(
-                alignment: Alignment.center,
-                children: [
-                  Transform.rotate(
-                    angle: -math.pi / 4,
-                    child: Container(
-                      height: (width * 0.12) - 5,
-                      width: (width * 0.12) - 5,
-                      decoration: const BoxDecoration(
-                        color: blackLight,
-                      ),
-                    ),
+              Transform.rotate(
+                angle: -math.pi / 4,
+                child: Container(
+                  height: (width * 0.12) - 5,
+                  width: (width * 0.12) - 5,
+                  decoration: const BoxDecoration(
+                    color: blackLight,
                   ),
-                  Transform.rotate(
-                    angle: -math.pi / 4,
-                    child: Container(
-                      height: width * 0.12,
-                      width: width * 0.12,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white)),
-                    ),
-                  ),
-                  SvgPicture.asset(
-                    icon,
-                    height: width * 0.06,
-                    width: width * 0.06,
-                    color: Colors.white,
-                  ),
-                ],
+                ),
               ),
-              textBodyMedium(title, utf8: false),
-            ]),
+              Transform.rotate(
+                angle: -math.pi / 4,
+                child: Container(
+                  height: width * 0.12,
+                  width: width * 0.12,
+                  decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+                ),
+              ),
+              SvgPicture.asset(
+                icon,
+                height: width * 0.06,
+                width: width * 0.06,
+                color: Colors.white,
+              ),
+            ],
+          ),
+          textBodyMedium(title, utf8: false),
+        ]),
       ),
     );
   }

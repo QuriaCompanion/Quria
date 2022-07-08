@@ -16,19 +16,21 @@ import 'package:quria/presentation/var/keys.dart';
 class EquipModal extends StatelessWidget {
   final String instanceId;
   final int itemHash;
+  final double? width;
 
-  const EquipModal({required this.itemHash, required this.instanceId, Key? key})
-      : super(key: key);
+  const EquipModal({
+    required this.itemHash,
+    required this.instanceId,
+    this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<DestinyCharacterComponent> characters =
-        Provider.of<CharactersProvider>(context).characters;
+    List<DestinyCharacterComponent> characters = Provider.of<CharactersProvider>(context).characters;
     if (Provider.of<InventoryProvider>(context).isItemEquipped(instanceId)) {
-      final owner =
-          Provider.of<InventoryProvider>(context).getItemOwner(instanceId);
-      characters =
-          characters.where((element) => element.characterId != owner).toList();
+      final owner = Provider.of<InventoryProvider>(context).getItemOwner(instanceId);
+      characters = characters.where((element) => element.characterId != owner).toList();
     }
 
     return SingleChildScrollView(
@@ -74,14 +76,10 @@ class EquipModal extends StatelessWidget {
                 child: InkWell(
                   onTap: () async {
                     await BungieActionsService()
-                        .equipItem(context,
-                            itemId: instanceId,
-                            characterId: character.characterId!,
-                            itemHash: itemHash)
+                        .equipItem(context, itemId: instanceId, characterId: character.characterId!, itemHash: itemHash)
                         .then((_) {
                       Navigator.pop(context);
-                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
-                          .showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                         content: textBodyMedium(
                           AppLocalizations.of(context)!.item_equipped,
                           utf8: false,
@@ -99,12 +97,10 @@ class EquipModal extends StatelessWidget {
                     });
                   },
                   child: CharacterTransferItem(
+                      width: width ?? vw(context),
                       imageLink: DestinyData.bungieLink + character.emblemPath!,
-                      name: ManifestService
-                              .manifestParsed
-                              .destinyClassDefinition[character.classHash]!
-                              .genderedClassNamesByGenderHash![
-                          character.genderHash.toString()]!,
+                      name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
+                          .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                       powerLevel: character.light,
                       icon: "assets/icons/Equip.svg"),
                 ),

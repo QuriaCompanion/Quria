@@ -15,9 +15,7 @@ import 'package:sliver_tools/sliver_tools.dart';
 class VaultMobileSection extends StatefulWidget {
   final List<DestinyItemComponent> vaultItems;
   final int bucketHash;
-  const VaultMobileSection(
-      {required this.vaultItems, required this.bucketHash, Key? key})
-      : super(key: key);
+  const VaultMobileSection({required this.vaultItems, required this.bucketHash, Key? key}) : super(key: key);
 
   @override
   State<VaultMobileSection> createState() => _VaultMobileSectionState();
@@ -37,10 +35,7 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
               decoration: const BoxDecoration(color: black),
               padding: EdgeInsets.symmetric(vertical: globalPadding(context)),
               child: textH2(ManifestService
-                      .manifestParsed
-                      .destinyInventoryBucketDefinition[widget.bucketHash]
-                      ?.displayProperties
-                      ?.name ??
+                      .manifestParsed.destinyInventoryBucketDefinition[widget.bucketHash]?.displayProperties?.name ??
                   'error'),
             ),
           ),
@@ -63,8 +58,7 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                             width: vw(context),
                             item: item,
                             onClick: (inspect) {
-                              Navigator.pushNamed(context, routeInspectMobile,
-                                  arguments: inspect);
+                              Navigator.pushNamed(context, routeInspectMobile, arguments: inspect);
                             },
                           );
                         });
@@ -72,12 +66,9 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                   child: ItemIcon(
                     displayHash: item.overrideStyleItemHash ?? item.itemHash!,
                     imageSize: vw(context) * 0.148,
-                    isMasterworked: item.state == ItemState.Masterwork ||
-                        item.state == const ItemState(5),
-                    element:
-                        Provider.of<ItemProvider>(context).getItemElement(item),
-                    powerLevel: Provider.of<ItemProvider>(context)
-                        .getItemPowerLevel(item.itemInstanceId!),
+                    isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
+                    element: Provider.of<ItemProvider>(context).getItemElement(item),
+                    powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
                   ),
                 );
               },

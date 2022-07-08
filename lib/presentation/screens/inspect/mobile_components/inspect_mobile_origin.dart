@@ -5,13 +5,11 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class InspectMobileOrigin extends StatelessWidget {
   final int? collectionHash;
-  const InspectMobileOrigin({required this.collectionHash, Key? key})
-      : super(key: key);
+  const InspectMobileOrigin({required this.collectionHash, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String source = ManifestService.manifestParsed
-            .destinyCollectibleDefinition[collectionHash]?.sourceString ??
+    String source = ManifestService.manifestParsed.destinyCollectibleDefinition[collectionHash]?.sourceString ??
         AppLocalizations.of(context)!.unknown;
     return textBodyRegular(source);
   }

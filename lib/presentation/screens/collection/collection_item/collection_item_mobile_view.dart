@@ -10,12 +10,15 @@ import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mob
 
 class CollectionItemMobileView extends StatefulWidget {
   final DestinyInventoryItemDefinition data;
-  const CollectionItemMobileView({required this.data, Key? key})
-      : super(key: key);
+  final double? width;
+  const CollectionItemMobileView({
+    required this.data,
+    Key? key,
+    this.width,
+  }) : super(key: key);
 
   @override
-  State<CollectionItemMobileView> createState() =>
-      _CollectionItemMobileViewState();
+  State<CollectionItemMobileView> createState() => _CollectionItemMobileViewState();
 }
 
 class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
@@ -28,25 +31,27 @@ class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        mobileHeader(
-          context,
-          image: NetworkImage(DestinyData.bungieLink + data.screenshot!),
-          child: InspectMobileHeader(
-            name: data.displayProperties!.name!,
-            type: data.itemTypeAndTierDisplayName!,
+    return Container(
+      color: black,
+      child: Column(
+        children: [
+          mobileHeader(
+            context,
+            image: NetworkImage(DestinyData.bungieLink + data.screenshot!),
+            child: InspectMobileHeader(
+              name: data.displayProperties!.name!,
+              type: data.itemTypeAndTierDisplayName!,
+            ),
+            width: widget.width,
           ),
-        ),
-        Padding(
-            padding: EdgeInsets.only(
-                left: globalPadding(context),
-                right: globalPadding(context),
-                bottom: globalPadding(context)),
-            child: data.itemType == DestinyItemType.Weapon
-                ? CollectionWeaponView(item: data, width: vw(context))
-                : CollectionArmorView(item: data, width: vw(context)))
-      ],
+          Padding(
+              padding: EdgeInsets.only(
+                  left: globalPadding(context), right: globalPadding(context), bottom: globalPadding(context)),
+              child: data.itemType == DestinyItemType.Weapon
+                  ? CollectionWeaponView(width: widget.width ?? vw(context))
+                  : CollectionArmorView(width: widget.width ?? vw(context)))
+        ],
+      ),
     );
   }
 }

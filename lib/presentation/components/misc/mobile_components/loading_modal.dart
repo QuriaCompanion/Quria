@@ -6,8 +6,7 @@ import 'package:quria/constants/texts.dart';
 class LoadingModal extends StatelessWidget {
   final String text1;
   final String text2;
-  const LoadingModal({required this.text1, required this.text2, Key? key})
-      : super(key: key);
+  const LoadingModal({required this.text1, required this.text2, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

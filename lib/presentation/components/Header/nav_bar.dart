@@ -25,7 +25,7 @@ class NavBarWidgetState extends State<NavBarWidget> {
           ),
           NavigationItem(
             title: AppLocalizations.of(context)!.profile,
-            routeName: '/profile',
+            routeName: routeProfile,
           ),
           NavigationItem(
             title: AppLocalizations.of(context)!.builder,

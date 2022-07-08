@@ -29,8 +29,7 @@ class ManifestService {
   final BungieApiService api = BungieApiService();
   static DestinyManifest? _manifestInfo;
   static String language = "en";
-  static final AllDestinyManifestComponents manifestParsed =
-      AllDestinyManifestComponents();
+  static final AllDestinyManifestComponents manifestParsed = AllDestinyManifestComponents();
   static final manifestList = DefinitionTableNames();
   final StorageService storage = StorageService();
   static final ManifestService _singleton = ManifestService._internal();
@@ -59,30 +58,18 @@ class ManifestService {
           ));
 
       await StorageService.isar.writeTxn((isar) async {
-        await isar.destinyInventoryItemDefinitions
-            .putAll(manifests[0] as List<DestinyInventoryItemDefinition>);
-        await isar.destinyClassDefinitions
-            .putAll(manifests[1] as List<DestinyClassDefinition>);
-        await isar.destinyDamageTypeDefinitions
-            .putAll(manifests[2] as List<DestinyDamageTypeDefinition>);
-        await isar.destinyStatDefinitions
-            .putAll(manifests[3] as List<DestinyStatDefinition>);
-        await isar.destinyTalentGridDefinitions
-            .putAll(manifests[4] as List<DestinyTalentGridDefinition>);
-        await isar.destinySandboxPerkDefinitions
-            .putAll(manifests[5] as List<DestinySandboxPerkDefinition>);
-        await isar.destinyEquipmentSlotDefinitions
-            .putAll(manifests[6] as List<DestinyEquipmentSlotDefinition>);
-        await isar.destinyPresentationNodeDefinitions
-            .putAll(manifests[7] as List<DestinyPresentationNodeDefinition>);
-        await isar.destinyEnergyTypeDefinitions
-            .putAll(manifests[8] as List<DestinyEnergyTypeDefinition>);
-        await isar.destinyPlugSetDefinitions
-            .putAll(manifests[9] as List<DestinyPlugSetDefinition>);
-        await isar.destinyCollectibleDefinitions
-            .putAll(manifests[10] as List<DestinyCollectibleDefinition>);
-        await isar.destinyInventoryBucketDefinitions
-            .putAll(manifests[11] as List<DestinyInventoryBucketDefinition>);
+        await isar.destinyInventoryItemDefinitions.putAll(manifests[0] as List<DestinyInventoryItemDefinition>);
+        await isar.destinyClassDefinitions.putAll(manifests[1] as List<DestinyClassDefinition>);
+        await isar.destinyDamageTypeDefinitions.putAll(manifests[2] as List<DestinyDamageTypeDefinition>);
+        await isar.destinyStatDefinitions.putAll(manifests[3] as List<DestinyStatDefinition>);
+        await isar.destinyTalentGridDefinitions.putAll(manifests[4] as List<DestinyTalentGridDefinition>);
+        await isar.destinySandboxPerkDefinitions.putAll(manifests[5] as List<DestinySandboxPerkDefinition>);
+        await isar.destinyEquipmentSlotDefinitions.putAll(manifests[6] as List<DestinyEquipmentSlotDefinition>);
+        await isar.destinyPresentationNodeDefinitions.putAll(manifests[7] as List<DestinyPresentationNodeDefinition>);
+        await isar.destinyEnergyTypeDefinitions.putAll(manifests[8] as List<DestinyEnergyTypeDefinition>);
+        await isar.destinyPlugSetDefinitions.putAll(manifests[9] as List<DestinyPlugSetDefinition>);
+        await isar.destinyCollectibleDefinitions.putAll(manifests[10] as List<DestinyCollectibleDefinition>);
+        await isar.destinyInventoryBucketDefinitions.putAll(manifests[11] as List<DestinyInventoryBucketDefinition>);
       });
 
       await mainManifestInfo();
@@ -97,72 +84,44 @@ class ManifestService {
   static Future<void> mainManifestInfo() async {
     await Future.wait([
       StorageService.isar.destinyClassDefinitions.where().findAll().then(
-            (value) =>
-                AllDestinyManifestComponents.setValue<DestinyClassDefinition>({
-              for (DestinyClassDefinition item in value) item.hash!: item
-            }),
+            (value) => AllDestinyManifestComponents.setValue<DestinyClassDefinition>(
+                {for (DestinyClassDefinition item in value) item.hash!: item}),
           ),
       StorageService.isar.destinyDamageTypeDefinitions.where().findAll().then(
-            (value) => AllDestinyManifestComponents.setValue<
-                DestinyDamageTypeDefinition>({
-              for (DestinyDamageTypeDefinition item in value) item.hash!: item
-            }),
+            (value) => AllDestinyManifestComponents.setValue<DestinyDamageTypeDefinition>(
+                {for (DestinyDamageTypeDefinition item in value) item.hash!: item}),
           ),
       StorageService.isar.destinyStatDefinitions.where().findAll().then(
-            (value) =>
-                AllDestinyManifestComponents.setValue<DestinyStatDefinition>({
-              for (DestinyStatDefinition item in value) item.hash!: item
-            }),
+            (value) => AllDestinyManifestComponents.setValue<DestinyStatDefinition>(
+                {for (DestinyStatDefinition item in value) item.hash!: item}),
           ),
       StorageService.isar.destinyTalentGridDefinitions.where().findAll().then(
-            (value) => AllDestinyManifestComponents.setValue<
-                DestinyTalentGridDefinition>({
-              for (DestinyTalentGridDefinition item in value) item.hash!: item
-            }),
+            (value) => AllDestinyManifestComponents.setValue<DestinyTalentGridDefinition>(
+                {for (DestinyTalentGridDefinition item in value) item.hash!: item}),
           ),
       StorageService.isar.destinySandboxPerkDefinitions.where().findAll().then(
-            (value) => AllDestinyManifestComponents.setValue<
-                DestinySandboxPerkDefinition>({
-              for (DestinySandboxPerkDefinition item in value) item.hash!: item
-            }),
+            (value) => AllDestinyManifestComponents.setValue<DestinySandboxPerkDefinition>(
+                {for (DestinySandboxPerkDefinition item in value) item.hash!: item}),
           ),
-      StorageService.isar.destinyEquipmentSlotDefinitions
-          .where()
-          .findAll()
-          .then(
-            (value) => AllDestinyManifestComponents.setValue<
-                DestinyEquipmentSlotDefinition>({
-              for (DestinyEquipmentSlotDefinition item in value)
-                item.hash!: item
-            }),
+      StorageService.isar.destinyEquipmentSlotDefinitions.where().findAll().then(
+            (value) => AllDestinyManifestComponents.setValue<DestinyEquipmentSlotDefinition>(
+                {for (DestinyEquipmentSlotDefinition item in value) item.hash!: item}),
           ),
       StorageService.isar.destinyEnergyTypeDefinitions.where().findAll().then(
-            (value) => AllDestinyManifestComponents.setValue<
-                DestinyEnergyTypeDefinition>({
-              for (DestinyEnergyTypeDefinition item in value) item.hash!: item
-            }),
+            (value) => AllDestinyManifestComponents.setValue<DestinyEnergyTypeDefinition>(
+                {for (DestinyEnergyTypeDefinition item in value) item.hash!: item}),
           ),
       StorageService.isar.destinyPlugSetDefinitions.where().findAll().then(
-            (value) => AllDestinyManifestComponents.setValue<
-                DestinyPlugSetDefinition>({
-              for (DestinyPlugSetDefinition item in value) item.hash!: item
-            }),
+            (value) => AllDestinyManifestComponents.setValue<DestinyPlugSetDefinition>(
+                {for (DestinyPlugSetDefinition item in value) item.hash!: item}),
           ),
       StorageService.isar.destinyCollectibleDefinitions.where().findAll().then(
-            (value) => AllDestinyManifestComponents.setValue<
-                DestinyCollectibleDefinition>({
-              for (DestinyCollectibleDefinition item in value) item.hash!: item
-            }),
+            (value) => AllDestinyManifestComponents.setValue<DestinyCollectibleDefinition>(
+                {for (DestinyCollectibleDefinition item in value) item.hash!: item}),
           ),
-      StorageService.isar.destinyInventoryBucketDefinitions
-          .where()
-          .findAll()
-          .then(
-            (value) => AllDestinyManifestComponents.setValue<
-                DestinyInventoryBucketDefinition>({
-              for (DestinyInventoryBucketDefinition item in value)
-                item.hash!: item
-            }),
+      StorageService.isar.destinyInventoryBucketDefinitions.where().findAll().then(
+            (value) => AllDestinyManifestComponents.setValue<DestinyInventoryBucketDefinition>(
+                {for (DestinyInventoryBucketDefinition item in value) item.hash!: item}),
           ),
     ]);
   }
@@ -181,14 +140,12 @@ class ManifestService {
 
   static Future<bool> isManifestOutdated() async {
     final version = await ManifestService.getManifestVersion();
-    return await StorageService.getLocalStorage("manifestVersion") !=
-        "$language$version";
+    return await StorageService.getLocalStorage("manifestVersion") != "$language$version";
   }
 
   static Future<void> saveManifestVersion() async {
     final version = await ManifestService.getManifestVersion();
-    return await StorageService.setLocalStorage(
-        "manifestVersion", "$language$version");
+    return await StorageService.setLocalStorage("manifestVersion", "$language$version");
   }
 }
 
@@ -199,8 +156,8 @@ class ManifestService {
 Future<List> _typeManifests(ManifestHelper manifestInfo) async {
   Future<String> getManifestRemote<T>() async {
     http.Response res = await http.get(Uri.parse(DestinyData.bungieLink +
-        manifestInfo.manifest.jsonWorldComponentContentPaths![
-            manifestInfo.language]![DefinitionTableNames.fromClass[T]!]!));
+        manifestInfo
+            .manifest.jsonWorldComponentContentPaths![manifestInfo.language]![DefinitionTableNames.fromClass[T]!]!));
     return res.body;
   }
 

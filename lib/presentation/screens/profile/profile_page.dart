@@ -8,9 +8,11 @@ import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/choose_membership.dart';
+import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
+import 'package:quria/presentation/screens/profile/profile_desktop_view.dart';
 import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -37,59 +39,53 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: _future,
-        builder: ((context, AsyncSnapshot snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            final characters =
-                Provider.of<CharactersProvider>(context).characters;
-            if (characters.isEmpty) {
-              return Column(
-                children: [
-                  ErrorDialog(
-                    errorMessage: AppLocalizations.of(context)!.no_characters,
-                    child: ChooseMembership(
-                        memberships:
-                            AccountService.membershipData!.destinyMemberships!,
-                        onSelected: (membership) async {
-                          AccountService.saveMembership(
-                                  AccountService.membershipData!, membership)
-                              .then((_) {
-                            DisplayService.isProfileUp = false;
-                            Navigator.pushReplacementNamed(
-                                context, routeProfile);
-                          });
-                        }),
-                  ),
-                ],
-              );
-            }
-            ProfileHelper data = DisplayService.getProfileData(context);
-            if (vw(context) > 1000) {
-              return Container();
-            } else {
-              return ScaffoldCharacters(
-                body: RepaintBoundary(
-                  child: ProfileMobileView(
-                      data: data,
-                      onClick: (inspectData) {
-                        Navigator.pushNamed(context, routeInspectMobile,
-                            arguments: inspectData);
-                      }),
+      future: _future,
+      builder: ((context, AsyncSnapshot snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final characters = Provider.of<CharactersProvider>(context).characters;
+          if (characters.isEmpty) {
+            return Column(
+              children: [
+                ChooseMembership(
+                  memberships: AccountService.membershipData!.destinyMemberships!,
+                  onSelected: (membership) async {
+                    AccountService.saveMembership(AccountService.membershipData!, membership).then(
+                      (_) {
+                        DisplayService.isProfileUp = false;
+                        Navigator.pushReplacementNamed(context, routeProfile);
+                      },
+                    );
+                  },
                 ),
-              );
-            }
+              ],
+            );
           }
-          return Container(
-            height: vh(context),
-            width: vw(context),
-            decoration: const BoxDecoration(
-                image: DecorationImage(
-                    fit: BoxFit.cover, image: splashBackground)),
-            child: Loader(
-              splashColor: Colors.transparent,
-              animationSize: vw(context) * 0.5,
-            ),
-          );
-        }));
+          ProfileHelper data = DisplayService.getProfileData(context);
+          if (vw(context) > 1000) {
+            return ScaffoldDesktop(
+                currentRoute: routeProfile,
+                body: ProfileDesktopView(
+                  data: data,
+                ));
+          } else {
+            return ScaffoldCharacters(
+                body: RepaintBoundary(
+              child: ProfileMobileView(
+                data: data,
+              ),
+            ));
+          }
+        }
+        return Container(
+          height: vh(context),
+          width: vw(context),
+          decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
+          child: Loader(
+            splashColor: Colors.transparent,
+            animationSize: vw(context) * 0.5,
+          ),
+        );
+      }),
+    );
   }
 }

@@ -10,11 +10,7 @@ class PerkItemDisplay extends StatelessWidget {
   final double iconSize;
   final bool selected;
   const PerkItemDisplay(
-      {required this.perk,
-      required this.iconSize,
-      this.loading = false,
-      this.selected = false,
-      Key? key})
+      {required this.perk, required this.iconSize, this.loading = false, this.selected = false, Key? key})
       : super(key: key);
 
   @override
@@ -25,8 +21,7 @@ class PerkItemDisplay extends StatelessWidget {
         SleekCircularSlider(
           appearance: CircularSliderAppearance(
               size: iconSize,
-              customColors: CustomSliderColors(
-                  dotColor: blueEquipped, progressBarColor: blueEquipped),
+              customColors: CustomSliderColors(dotColor: blueEquipped, progressBarColor: blueEquipped),
               spinnerMode: true),
         ),
       CircleAvatar(
@@ -40,8 +35,7 @@ class PerkItemDisplay extends StatelessWidget {
             backgroundColor: Colors.white,
             child: CircleAvatar(
               radius: radius * 0.75,
-              backgroundColor:
-                  selected ? blueEquipped : const Color(0xFF505155),
+              backgroundColor: selected ? blueEquipped : const Color(0xFF505155),
               child: Image(
                   width: iconSize * 0.5,
                   image: NetworkImage(

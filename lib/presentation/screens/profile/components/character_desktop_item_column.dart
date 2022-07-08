@@ -32,13 +32,8 @@ class CharacterDesktopItemColumn extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            for (DestinyItemComponent item in data.selectedCharacterEquipment
-                .where((element) =>
-                    ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[element.itemHash]
-                        ?.itemType ==
-                    filter))
+            for (DestinyItemComponent item in data.selectedCharacterEquipment.where((element) =>
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemType == filter))
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,22 +44,14 @@ class CharacterDesktopItemColumn extends StatelessWidget {
                         onClick(inspectData);
                       },
                       item: item,
-                      width: desktopCharactersColumnSize(context) -
-                          globalPadding(context),
+                      width: desktopCharactersColumnSize(context) - globalPadding(context),
                       characterId: data.selectedCharacter!.characterId!,
                       inventory: data.selectedCharacterInventory
                           .where((element) =>
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition[
-                                      element.itemHash]
-                                  ?.equippingBlock
-                                  ?.equipmentSlotTypeHash ==
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition[item.itemHash]
-                                  ?.equippingBlock
-                                  ?.equipmentSlotTypeHash)
+                              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]
+                                  ?.equippingBlock?.equipmentSlotTypeHash ==
+                              ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]
+                                  ?.equippingBlock?.equipmentSlotTypeHash)
                           .toList(),
                     ),
                   ),

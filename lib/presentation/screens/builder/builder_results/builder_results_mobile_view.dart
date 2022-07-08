@@ -9,8 +9,7 @@ import 'package:quria/presentation/var/routes.dart';
 
 class BuilderResultsMobileView extends StatelessWidget {
   final List<Build> buildResults;
-  const BuilderResultsMobileView({required this.buildResults, Key? key})
-      : super(key: key);
+  const BuilderResultsMobileView({required this.buildResults, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,8 +47,7 @@ class BuilderResultsMobileView extends StatelessWidget {
                     arguments: buildResults[index],
                   );
                 },
-                child:
-                    BuilderResultsMobileItem(buildResult: buildResults[index]),
+                child: BuilderResultsMobileItem(buildResult: buildResults[index]),
               ),
             );
           },

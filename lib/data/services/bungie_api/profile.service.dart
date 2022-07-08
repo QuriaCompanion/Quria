@@ -7,7 +7,7 @@ import 'package:bungie_api/models/destiny_item_plug.dart';
 import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
-import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
+import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
 import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
 import 'package:quria/data/providers/builder/builder_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
@@ -101,16 +101,14 @@ class ProfileService {
   ];
   final _api = BungieApiService();
 
-  List<DestinyComponentType> updateComponents =
-      ProfileComponentGroups.everything;
+  List<DestinyComponentType> updateComponents = ProfileComponentGroups.everything;
   DateTime? _lastUpdated;
   Future<void> fetchProfileData(
     BuildContext context, {
     List<DestinyComponentType>? components,
   }) async {
     try {
-      if (_lastUpdated != null &&
-          DateTime.now().difference(_lastUpdated!).inSeconds < 30) {
+      if (_lastUpdated != null && DateTime.now().difference(_lastUpdated!).inSeconds < 30) {
         return;
       }
       await _updateProfileData(context, updateComponents);
@@ -133,27 +131,23 @@ class ProfileService {
     Provider.of<BuilderCustomInfoProvider>(context, listen: false).reset();
   }
 
-  Future<void> _updateProfileData(
-      BuildContext context, List<DestinyComponentType> components) async {
+  Future<void> _updateProfileData(BuildContext context, List<DestinyComponentType> components) async {
     await _api.getCurrentProfile(components).then((response) async {
       _lastUpdated = DateTime.now();
       final List<int> inventoryItemIds = [];
       final List<int> talentIds = [];
-      inventoryItemIds
-          .addAll([3473581026, 2771648715, 549825413, 4287863773, 3500810712]);
+      inventoryItemIds.addAll([3473581026, 2771648715, 549825413, 4287863773, 3500810712]);
       if (response == null) {
         return;
       }
-      for (List<DestinyItemPlug> sockets
-          in response.profilePlugSets!.data!.plugs!.values) {
+      for (List<DestinyItemPlug> sockets in response.profilePlugSets!.data!.plugs!.values) {
         for (DestinyItemPlug socket in sockets) {
           if (socket.plugItemHash != null) {
             inventoryItemIds.add(socket.plugItemHash!);
           }
         }
       }
-      for (DestinyPlugSetsComponent characterPlugSet
-          in response.characterPlugSets!.data!.values) {
+      for (DestinyPlugSetsComponent characterPlugSet in response.characterPlugSets!.data!.values) {
         for (List<DestinyItemPlug> sockets in characterPlugSet.plugs!.values) {
           for (DestinyItemPlug socket in sockets) {
             if (socket.plugItemHash != null) {
@@ -192,8 +186,7 @@ class ProfileService {
         }
       }
       if (response.itemComponents?.sockets?.data != null) {
-        for (final socketGroup
-            in response.itemComponents!.sockets!.data!.values) {
+        for (final socketGroup in response.itemComponents!.sockets!.data!.values) {
           for (final socket in socketGroup.sockets!) {
             if (socket.plugHash != null) {
               inventoryItemIds.add(socket.plugHash!);
@@ -202,8 +195,7 @@ class ProfileService {
         }
       }
       if (response.itemComponents?.talentGrids != null) {
-        for (final talent
-            in response.itemComponents!.talentGrids!.data!.values) {
+        for (final talent in response.itemComponents!.talentGrids!.data!.values) {
           if (talent.talentGridHash != null) {
             talentIds.add(talent.talentGridHash!);
           }
@@ -223,84 +215,61 @@ class ProfileService {
         3699676109,
         3253038666
       ]);
-      await StorageService.getDefinitions<DestinyInventoryItemDefinition>(
-              inventoryItemIds)
-          .then((_) async =>
-              StorageService.getDefinitions<DestinyTalentGridDefinition>(
-                      talentIds)
-                  .then((_) {
-                if (components
-                    .contains(DestinyComponentType.ProfileInventories)) {
+      await StorageService.getDefinitions<DestinyInventoryItemDefinition>(inventoryItemIds)
+          .then((_) async => StorageService.getDefinitions<DestinyTalentGridDefinition>(talentIds).then((_) {
+                if (components.contains(DestinyComponentType.ProfileInventories)) {
                   Provider.of<InventoryProvider>(context, listen: false)
-                      .setProfileInventory(
-                          response.profileInventory?.data?.items ?? []);
+                      .setProfileInventory(response.profileInventory?.data?.items ?? []);
                 }
                 if (components.contains(DestinyComponentType.ItemPlugStates)) {
                   Provider.of<PlugsProvider>(context, listen: false)
-                      .setProfilePlugSets(
-                          response.profilePlugSets?.data?.plugs ?? {});
+                      .setProfilePlugSets(response.profilePlugSets?.data?.plugs ?? {});
                   Provider.of<PlugsProvider>(context, listen: false)
-                      .setCharacterPlugSets(
-                          response.characterPlugSets?.data ?? {});
+                      .setCharacterPlugSets(response.characterPlugSets?.data ?? {});
                 }
 
                 if (components.contains(DestinyComponentType.Collectibles)) {
                   Provider.of<CollectibleProvider>(context, listen: false)
-                      .setProfileCollectible(
-                          response.profileCollectibles?.data);
+                      .setProfileCollectible(response.profileCollectibles?.data);
                   Provider.of<CollectibleProvider>(context, listen: false)
-                      .setCharacterCollectible(
-                          response.characterCollectibles?.data ?? {});
+                      .setCharacterCollectible(response.characterCollectibles?.data ?? {});
                 }
                 if (components.contains(DestinyComponentType.Characters)) {
-                  Provider.of<CharactersProvider>(context, listen: false)
-                      .init(response.characters?.data ?? {});
+                  Provider.of<CharactersProvider>(context, listen: false).init(response.characters?.data ?? {});
                 }
 
-                if (components
-                    .contains(DestinyComponentType.CharacterInventories)) {
+                if (components.contains(DestinyComponentType.CharacterInventories)) {
                   Provider.of<InventoryProvider>(context, listen: false)
-                      .setCharacterInventories(
-                          response.characterInventories?.data ?? {});
+                      .setCharacterInventories(response.characterInventories?.data ?? {});
                 }
-                if (components
-                    .contains(DestinyComponentType.CharacterEquipment)) {
+                if (components.contains(DestinyComponentType.CharacterEquipment)) {
                   Provider.of<InventoryProvider>(context, listen: false)
-                      .setCharacterEquipment(
-                          response.characterEquipment?.data ?? {});
+                      .setCharacterEquipment(response.characterEquipment?.data ?? {});
                 }
 
                 if (components.contains(DestinyComponentType.ItemInstances)) {
-                  Provider.of<ItemProvider>(context, listen: false)
-                      .init(response.itemComponents);
+                  Provider.of<ItemProvider>(context, listen: false).init(response.itemComponents);
                 }
               }));
     });
   }
 
   String getDropLocation(int hash) {
-    return ManifestService
-            .manifestParsed.destinyCollectibleDefinition[hash]?.sourceString ??
-        "Source inconnu";
+    return ManifestService.manifestParsed.destinyCollectibleDefinition[hash]?.sourceString ?? "Source inconnu";
   }
 
   List<List<DestinyInventoryItemDefinition>> getItemPerksAsItemDef(
-      Map<String, List<DestinyItemPlugBase>>? plugs,
-      List<DestinyItemSocketState>? sockets) {
+      Map<String, List<DestinyItemPlugBase>>? plugs, List<DestinyItemSocketState>? sockets) {
     List<List<DestinyInventoryItemDefinition>> perks = [];
     for (DestinyItemSocketState socket in sockets!) {
       if (plugs != null) {
         for (List<DestinyItemPlugBase> plug in plugs.values) {
           if (plug.any((element) => element.plugItemHash == socket.plugHash) &&
               DestinyData.perkCategoryHash.contains(ManifestService
-                  .manifestParsed
-                  .destinyInventoryItemDefinition[socket.plugHash]!
-                  .plug!
-                  .plugCategoryHash!)) {
+                  .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.plug!.plugCategoryHash!)) {
             List<DestinyInventoryItemDefinition> plugDefitions = [];
             for (DestinyItemPlugBase plug in plug) {
-              final plugDef = ManifestService.manifestParsed
-                  .destinyInventoryItemDefinition[plug.plugItemHash];
+              final plugDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash];
               if (plugDef == null) continue;
               plugDefitions.add(plugDef);
             }
@@ -308,27 +277,15 @@ class ProfileService {
           }
         }
       }
-      if (ManifestService
-                  .manifestParsed
-                  .destinyInventoryItemDefinition[socket.plugHash]
-                  ?.displayProperties
-                  ?.icon !=
+      if (ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]?.displayProperties?.icon !=
               null &&
           DestinyData.perkCategoryHash.contains(
-            ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition[socket.plugHash]!
-                .plug!
-                .plugCategoryHash!,
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.plug!.plugCategoryHash!,
           ) &&
           !perks.any((element) => element.contains(
-                ManifestService.manifestParsed
-                    .destinyInventoryItemDefinition[socket.plugHash]!,
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!,
               ))) {
-        perks.add([
-          ManifestService
-              .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!
-        ]);
+        perks.add([ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!]);
       }
     }
     return perks;

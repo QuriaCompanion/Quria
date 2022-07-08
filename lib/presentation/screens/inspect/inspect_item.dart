@@ -1,9 +1,10 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/helpers/inspectData.model.dart';
-import 'package:quria/data/models/helpers/itemInfoHelper.model.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_armor_info.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_info.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_header.dart';
@@ -12,27 +13,30 @@ class InspectItem extends StatelessWidget {
   const InspectItem({
     Key? key,
     required this.width,
-    required this.data,
-    required this.inspectData,
   }) : super(key: key);
 
   final double width;
-  final ItemInfoHelper data;
-  final InspectData inspectData;
 
   @override
   Widget build(BuildContext context) {
+    String imageLink = Provider.of<InspectProvider>(context).getImageLink(context);
+
+    DestinyInventoryItemDefinition? itemDef = Provider.of<InspectProvider>(context).itemDef;
+
+    String? elementIcon = Provider.of<InspectProvider>(context).getElementIcon(context);
+
+    int? powerLevel = Provider.of<InspectProvider>(context).getPowerLevel(context);
     return Column(
       children: [
         mobileHeader(
           context,
           width: width,
-          image: NetworkImage(data.imageLink),
+          image: NetworkImage(imageLink),
           child: InspectMobileHeader(
-            name: data.itemDef.displayProperties!.name!,
-            iconElement: data.elementIcon,
-            type: data.itemDef.itemTypeDisplayName!,
-            power: data.powerLevel,
+            name: itemDef!.displayProperties!.name!,
+            iconElement: elementIcon,
+            type: itemDef.itemTypeDisplayName!,
+            power: powerLevel,
           ),
         ),
         Container(
@@ -42,26 +46,13 @@ class InspectItem extends StatelessWidget {
           width: width,
           child: Padding(
             padding: EdgeInsets.only(
-                left: globalPadding(context),
-                right: globalPadding(context),
-                bottom: globalPadding(context)),
-            child: data.itemDef.itemType == DestinyItemType.Weapon
-                ? InspectMobileWeaponInfo(
-                    item: data.itemDef,
-                    stats: data.stats,
-                    characterId: inspectData.characterId,
-                    instanceId: inspectData.instanceId,
-                    sockets: data.sockets,
-                    width: width,
-                    plugs: data.plugs)
-                : InspectMobileArmorInfo(
-                    item: data.itemDef,
-                    stats: data.stats,
-                    instanceId: inspectData.instanceId,
-                    characterId: inspectData.characterId,
-                    sockets: data.sockets,
-                    width: width,
-                    afinityIcon: data.afinityIcon),
+              left: globalPadding(context),
+              right: globalPadding(context),
+              bottom: globalPadding(context),
+            ),
+            child: itemDef.itemType == DestinyItemType.Weapon
+                ? InspectMobileWeaponInfo(width: width)
+                : InspectMobileArmorInfo(width: width),
           ),
         )
       ],

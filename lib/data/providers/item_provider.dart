@@ -25,8 +25,7 @@ class ItemProvider with ChangeNotifier {
   Map<String, DestinyItemInstanceComponent> get instances => _instances;
   Map<String, DestinyItemStatsComponent> get stats => _stats;
   Map<String, DestinyItemSocketsComponent> get sockets => _sockets;
-  Map<String, DestinyItemReusablePlugsComponent> get reusablePlugs =>
-      _reusablePlugs;
+  Map<String, DestinyItemReusablePlugsComponent> get reusablePlugs => _reusablePlugs;
   Map<String, DestinyItemTalentGridComponent> get talentGrids => _talentGrids;
   Map<String, DestinyItemPlugComponent> get plugStates => _plugStates;
   Map<String, DestinyItemPerksComponent> get perks => _perks;
@@ -53,12 +52,16 @@ class ItemProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  DestinyItemInstanceComponent? getInstanceInfo(String instanceId) {
+  void setNewSockets(String itemInstanceId, List<DestinyItemSocketState> sockets) {
+    _sockets[itemInstanceId]?.sockets = sockets;
+    notifyListeners();
+  }
+
+  DestinyItemInstanceComponent? getInstanceInfo(String? instanceId) {
     return _instances[instanceId];
   }
 
-  Map<String, List<DestinyItemPlugBase>> getItemReusablePlugs(
-      String itemInstanceId) {
+  Map<String, List<DestinyItemPlugBase>> getItemReusablePlugs(String? itemInstanceId) {
     return _reusablePlugs[itemInstanceId]?.plugs ?? {};
   }
 
@@ -69,32 +72,25 @@ class ItemProvider with ChangeNotifier {
     return null;
   }
 
-  int? getItemPowerLevel(String instanceId) {
+  int? getItemPowerLevel(String? instanceId) {
     final instanceInfo = getInstanceInfo(instanceId);
     return instanceInfo?.primaryStat?.value;
   }
 
-  List<DestinyItemSocketState> getItemSockets(String itemInstanceId) {
+  List<DestinyItemSocketState> getItemSockets(String? itemInstanceId) {
     return _sockets[itemInstanceId]?.sockets ?? [];
   }
 
   String? getItemElement(DestinyItemComponent item) {
-    final itemDef = ManifestService
-        .manifestParsed.destinyInventoryItemDefinition[item.itemHash];
+    final itemDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash];
     final instanceInfo = getInstanceInfo(item.itemInstanceId!);
     return ManifestService
-            .manifestParsed
-            .destinyDamageTypeDefinition[itemDef?.defaultDamageTypeHash]
-            ?.displayProperties
-            ?.icon ??
+            .manifestParsed.destinyDamageTypeDefinition[itemDef?.defaultDamageTypeHash]?.displayProperties?.icon ??
         ManifestService
-            .manifestParsed
-            .destinyEnergyTypeDefinition[instanceInfo?.energy?.energyTypeHash]
-            ?.displayProperties
-            ?.icon;
+            .manifestParsed.destinyEnergyTypeDefinition[instanceInfo?.energy?.energyTypeHash]?.displayProperties?.icon;
   }
 
-  Map<String, DestinyStat>? getPrecalculatedStats(String itemInstanceId) {
+  Map<String, DestinyStat>? getPrecalculatedStats(String? itemInstanceId) {
     if (_stats.containsKey(itemInstanceId)) {
       return _stats[itemInstanceId]?.stats;
     }

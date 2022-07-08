@@ -11,10 +11,7 @@ class MobileCharacterChoice extends StatefulWidget {
   final Function choosingCharacter;
   final List<DestinyCharacterComponent> characters;
   const MobileCharacterChoice(
-      {required this.callback,
-      required this.characters,
-      required this.choosingCharacter,
-      Key? key})
+      {required this.callback, required this.characters, required this.choosingCharacter, Key? key})
       : super(key: key);
 
   @override
@@ -26,8 +23,7 @@ class _MobileCharacterChoiceState extends State<MobileCharacterChoice> {
 
   @override
   Widget build(BuildContext context) {
-    int currentIndex =
-        Provider.of<CharactersProvider>(context, listen: false).characterIndex;
+    int currentIndex = Provider.of<CharactersProvider>(context, listen: false).characterIndex;
     List order = [];
     if (currentIndex == 0) {
       order = [currentIndex, 1, 2];

@@ -15,11 +15,13 @@ import 'package:quria/presentation/var/keys.dart';
 class TransferModal extends StatefulWidget {
   final String instanceId;
   final int itemHash;
-  final void Function() onTransfer;
+  final double? width;
+  final void Function()? onTransfer;
   const TransferModal({
     required this.instanceId,
     required this.itemHash,
-    required this.onTransfer,
+    this.onTransfer,
+    this.width,
     Key? key,
   }) : super(key: key);
 
@@ -30,11 +32,9 @@ class TransferModal extends StatefulWidget {
 class _TransferModalState extends State<TransferModal> {
   @override
   Widget build(BuildContext context) {
-    final owner =
-        Provider.of<InventoryProvider>(context).getItemOwner(widget.instanceId);
-    final characters = Provider.of<CharactersProvider>(context)
-        .characters
-        .where((element) => element.characterId != owner);
+    final owner = Provider.of<InventoryProvider>(context).getItemOwner(widget.instanceId);
+    final characters =
+        Provider.of<CharactersProvider>(context).characters.where((element) => element.characterId != owner);
 
     return SingleChildScrollView(
       child: Container(
@@ -94,8 +94,7 @@ class _TransferModalState extends State<TransferModal> {
                     )
                         .then((_) {
                       Navigator.pop(context);
-                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
-                          .showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                         content: textBodyMedium(
                           AppLocalizations.of(context)!.item_transfered,
                           utf8: false,
@@ -103,7 +102,9 @@ class _TransferModalState extends State<TransferModal> {
                         ),
                         backgroundColor: Colors.green,
                       ));
-                      widget.onTransfer();
+                      if (widget.onTransfer != null) {
+                        widget.onTransfer!();
+                      }
                     }, onError: (_) {
                       showDialog(
                           context: scaffoldKey.currentContext!,
@@ -113,19 +114,16 @@ class _TransferModalState extends State<TransferModal> {
                     });
                   },
                   child: CharacterTransferItem(
+                    width: widget.width ?? vw(context),
                     imageLink: DestinyData.bungieLink + character.emblemPath!,
-                    name: ManifestService
-                            .manifestParsed
-                            .destinyClassDefinition[character.classHash]!
-                            .genderedClassNamesByGenderHash![
-                        character.genderHash.toString()]!,
+                    name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
+                        .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                     icon: "assets/icons/Transfer.svg",
                     powerLevel: character.light,
                   ),
                 ),
               ),
-            if (characters.length <
-                Provider.of<CharactersProvider>(context).characters.length)
+            if (characters.length < Provider.of<CharactersProvider>(context).characters.length)
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: globalPadding(context) / 2,
@@ -143,8 +141,7 @@ class _TransferModalState extends State<TransferModal> {
                     )
                         .then((_) {
                       Navigator.pop(context);
-                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
-                          .showSnackBar(SnackBar(
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                         content: textBodyMedium(
                           AppLocalizations.of(context)!.item_transfered,
                           utf8: false,
@@ -161,6 +158,7 @@ class _TransferModalState extends State<TransferModal> {
                     });
                   },
                   child: CharacterTransferItem(
+                    width: widget.width ?? vw(context),
                     imageLink:
                         "https://www.bungie.net/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png",
                     name: AppLocalizations.of(context)!.vault,

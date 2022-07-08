@@ -12,9 +12,7 @@ class VaultMobileHeader extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-            width: vw(context) - (globalPadding(context) * 2),
-            child: textH1(name, maxLines: 2, utf8: false)),
+        SizedBox(width: vw(context) - (globalPadding(context) * 2), child: textH1(name, maxLines: 2, utf8: false)),
       ],
     );
   }

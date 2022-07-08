@@ -10,7 +10,7 @@ class InspectMobilePerkColumn extends StatefulWidget {
   final String? instanceId;
   final String? characterId;
   final double width;
-  final Function(List<DestinyItemSocketState>?)? onSocketsChanged;
+  final Function(List<DestinyItemSocketState>)? onSocketsChanged;
   const InspectMobilePerkColumn({
     required this.perkColumn,
     required this.sockets,
@@ -22,8 +22,7 @@ class InspectMobilePerkColumn extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<InspectMobilePerkColumn> createState() =>
-      _InspectMobilePerkColumnState();
+  State<InspectMobilePerkColumn> createState() => _InspectMobilePerkColumnState();
 }
 
 class _InspectMobilePerkColumnState extends State<InspectMobilePerkColumn> {

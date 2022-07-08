@@ -37,8 +37,7 @@ class _VaultMobileView extends State<VaultMobileView> {
       slivers: [
         CharacterAppbar(
           onCharacterChange: (newIndex) {
-            Provider.of<CharactersProvider>(context, listen: false)
-                .setCurrentCharacter(newIndex);
+            Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(newIndex);
           },
         ),
         SliverList(
@@ -52,14 +51,11 @@ class _VaultMobileView extends State<VaultMobileView> {
                         name: AppLocalizations.of(context)!.vault,
                       )),
                   Padding(
-                    padding: EdgeInsets.only(
-                        top: globalPadding(context),
-                        bottom: globalPadding(context) * 2),
+                    padding: EdgeInsets.only(top: globalPadding(context), bottom: globalPadding(context) * 2),
                     child: SizedBox(
                       height: 45,
                       child: ListView(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: globalPadding(context)),
+                        padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
                         scrollDirection: Axis.horizontal,
                         children: [
                           InkWell(
@@ -69,8 +65,7 @@ class _VaultMobileView extends State<VaultMobileView> {
                                 });
                               },
                               child: MobileNavItem(
-                                selected:
-                                    currentFilter == DestinyItemType.Weapon,
+                                selected: currentFilter == DestinyItemType.Weapon,
                                 value: AppLocalizations.of(context)!.weapons,
                                 width: vw(context) * 0.29,
                               )),
@@ -81,8 +76,7 @@ class _VaultMobileView extends State<VaultMobileView> {
                                 });
                               },
                               child: MobileNavItem(
-                                selected:
-                                    currentFilter == DestinyItemType.Armor,
+                                selected: currentFilter == DestinyItemType.Armor,
                                 value: AppLocalizations.of(context)!.armor,
                                 width: vw(context) * 0.29,
                               )),
@@ -128,27 +122,16 @@ class _VaultMobileView extends State<VaultMobileView> {
       final items = widget.data.vaultItems
           .where((element) =>
               ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition[element.itemHash]
-                      ?.inventory
-                      ?.bucketTypeHash ==
+                      .manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.inventory?.bucketTypeHash ==
                   bucketHash &&
               (currentFilter == DestinyItemType.Weapon ||
-                  ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition[element.itemHash]
-                          ?.classType ==
-                      Provider.of<CharactersProvider>(context)
-                          .currentCharacter
-                          ?.classType))
+                  ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.classType ==
+                      Provider.of<CharactersProvider>(context).currentCharacter?.classType))
           .toList();
       items.sort((a, b) {
-        int first = Provider.of<ItemProvider>(context, listen: false)
-                .getItemPowerLevel(b.itemInstanceId!) ??
-            0;
-        return first.compareTo(Provider.of<ItemProvider>(context, listen: false)
-                .getItemPowerLevel(a.itemInstanceId!) ??
-            0);
+        int first = Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(b.itemInstanceId!) ?? 0;
+        return first
+            .compareTo(Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(a.itemInstanceId!) ?? 0);
       });
       sections.add(
         VaultMobileSection(

@@ -8,9 +8,7 @@ class CharacterBanner extends StatelessWidget {
   final DestinyCharacterComponent character;
   final double width;
   final double fontSize;
-  const CharacterBanner(
-      {Key? key, required this.character, this.width = 500, this.fontSize = 50})
-      : super(key: key);
+  const CharacterBanner({Key? key, required this.character, this.width = 500, this.fontSize = 50}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,9 +17,7 @@ class CharacterBanner extends StatelessWidget {
       height: width / 4.9375,
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: NetworkImage(
-                DestinyData.bungieLink + character.emblemBackgroundPath!),
-            fit: BoxFit.cover),
+            image: NetworkImage(DestinyData.bungieLink + character.emblemBackgroundPath!), fit: BoxFit.cover),
       ),
       child: Padding(
         padding: EdgeInsets.only(
@@ -33,11 +29,8 @@ class CharacterBanner extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             AutoSizeText(
-                ManifestService
-                        .manifestParsed
-                        .destinyClassDefinition[character.classHash]!
-                        .genderedClassNamesByGenderHash![
-                    character.genderHash.toString()]!,
+                ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
+                    .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: fontSize,
@@ -46,15 +39,10 @@ class CharacterBanner extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                AutoSizeText(character.light.toString(),
-                    style: TextStyle(color: Colors.yellow, fontSize: fontSize)),
+                AutoSizeText(character.light.toString(), style: TextStyle(color: Colors.yellow, fontSize: fontSize)),
                 Image(
                   image: NetworkImage(DestinyData.bungieLink +
-                      ManifestService
-                          .manifestParsed
-                          .destinyStatDefinition[StatsHash.power]!
-                          .displayProperties!
-                          .icon!),
+                      ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!),
                   color: Colors.yellow,
                 ),
               ],

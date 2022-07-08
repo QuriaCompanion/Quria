@@ -18,13 +18,13 @@ class ArmorModsModal extends StatefulWidget {
   final int plugSetsHash;
   final double width;
 
-  const ArmorModsModal(
-      {required this.socket,
-      required this.plugSetsHash,
-      required this.onSocketChange,
-      required this.width,
-      Key? key})
-      : super(key: key);
+  const ArmorModsModal({
+    required this.socket,
+    required this.plugSetsHash,
+    required this.onSocketChange,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ArmorModsModal> createState() => _ArmorModsModalState();
@@ -35,10 +35,8 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
   @override
   void initState() {
     super.initState();
-    plugs = Provider.of<PlugsProvider>(context, listen: false)
-        .getPlugSets(context, widget.plugSetsHash)
-        .toSet()
-        .toList();
+    plugs =
+        Provider.of<PlugsProvider>(context, listen: false).getPlugSets(context, widget.plugSetsHash).toSet().toList();
   }
 
   @override
@@ -46,10 +44,8 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
     return SingleChildScrollView(
       child: Container(
         height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.only(
-            top: globalPadding(context),
-            left: globalPadding(context),
-            right: globalPadding(context)),
+        padding:
+            EdgeInsets.only(top: globalPadding(context), left: globalPadding(context), right: globalPadding(context)),
         decoration: const BoxDecoration(color: black),
         child: SingleChildScrollView(
           child: Column(children: [
@@ -61,14 +57,12 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      textH2(AppLocalizations.of(context)!.mod_equip,
-                          utf8: false),
+                      textH2(AppLocalizations.of(context)!.mod_equip, utf8: false),
                       InkWell(
                         onTap: () => Navigator.pop(context),
                         child: const CircleAvatar(
                           backgroundColor: blackLight,
-                          child:
-                              Icon(Icons.clear, size: 20, color: Colors.white),
+                          child: Icon(Icons.clear, size: 20, color: Colors.white),
                         ),
                       ),
                     ],
@@ -81,9 +75,7 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                   Column(
                     children: [
                       ModDisplay(
-                          width: vw(context) -
-                              globalPadding(context) * 3 -
-                              iconSize(context, widget.width),
+                          width: vw(context) - globalPadding(context) * 3 - iconSize(context, widget.width),
                           padding: globalPadding(context),
                           iconSize: iconSize(context, widget.width),
                           item: widget.socket),
@@ -92,10 +84,9 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                         height: 22,
                         thickness: 1,
                       ),
-                      for (var plug in plugs!)
+                      for (DestinyItemPlug plug in plugs!)
                         Padding(
-                          padding:
-                              EdgeInsets.only(bottom: globalPadding(context)),
+                          padding: EdgeInsets.only(bottom: globalPadding(context)),
                           child: InkWell(
                             onTap: () {
                               showMaterialModalBottomSheet(
@@ -104,13 +95,11 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                                   context: context,
                                   builder: (context) {
                                     return ModModal(
-                                      mod: ManifestService.manifestParsed
-                                              .destinyInventoryItemDefinition[
-                                          plug.plugItemHash]!,
+                                      mod: ManifestService
+                                          .manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!,
                                       onSocketChange: () {
                                         Navigator.pop(context);
-                                        widget
-                                            .onSocketChange(plug.plugItemHash!);
+                                        widget.onSocketChange(plug.plugItemHash!);
                                       },
                                       width: widget.width,
                                     );
@@ -118,9 +107,8 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                             },
                             child: ModWithTypeName(
                                 iconSize: iconSize(context, widget.width),
-                                item: ManifestService.manifestParsed
-                                        .destinyInventoryItemDefinition[
-                                    plug.plugItemHash]!),
+                                item:
+                                    ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!),
                           ),
                         ),
                     ],

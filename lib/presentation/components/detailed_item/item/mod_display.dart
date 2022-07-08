@@ -2,6 +2,8 @@ import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definit
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definition.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
 
 class ModDisplay extends StatelessWidget {
@@ -19,6 +21,10 @@ class ModDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DestinySandboxPerkDefinition? perkItem;
+    if (item.perks != null && item.perks!.isNotEmpty) {
+      perkItem = ManifestService.manifestParsed.destinySandboxPerkDefinition[item.perks?[0].perkHash];
+    }
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,7 +37,7 @@ class ModDisplay extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 textBodyRegular(item.displayProperties!.name!),
-                textCaption(item.displayProperties!.description!,
+                textCaption(perkItem?.displayProperties?.description ?? item.displayProperties?.description ?? "",
                     color: greyLight),
               ],
             ),

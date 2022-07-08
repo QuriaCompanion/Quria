@@ -26,20 +26,16 @@ class ItemModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ItemCardHelper data = DisplayService.getCardData(context,
-        itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
+    ItemCardHelper data =
+        DisplayService.getCardData(context, itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
     return SingleChildScrollView(
         child: Container(
-      decoration: const BoxDecoration(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
-          color: black),
+      decoration: const BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(24)), color: black),
       child: Column(
         children: [
           Padding(
             padding: EdgeInsets.only(
-                top: globalPadding(context),
-                left: globalPadding(context),
-                right: globalPadding(context)),
+                top: globalPadding(context), left: globalPadding(context), right: globalPadding(context)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -51,15 +47,11 @@ class ItemModal extends StatelessWidget {
                     ),
                     SizedBox(width: globalPadding(context)),
                     SizedBox(
-                      width: vw(context) -
-                          itemSize(context, width) -
-                          (globalPadding(context) * 3) -
-                          40,
+                      width: vw(context) - itemSize(context, width) - (globalPadding(context) * 3) - 40,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          textH3(
-                              data.itemDef.displayProperties?.name ?? "Error"),
+                          textH3(data.itemDef.displayProperties?.name ?? "Error"),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -69,15 +61,11 @@ class ItemModal extends StatelessWidget {
                                     height: 12,
                                     margin: const EdgeInsets.only(right: 5),
                                     child: Image(
-                                      image: NetworkImage(
-                                          DestinyData.bungieLink +
-                                              data.elementIcon!),
+                                      image: NetworkImage(DestinyData.bungieLink + data.elementIcon!),
                                     )),
-                              if (data.powerLevel != null)
-                                textBodyBold(data.powerLevel.toString()),
+                              if (data.powerLevel != null) textBodyBold(data.powerLevel.toString()),
                               divider,
-                              textBodyRegular(
-                                  data.itemDef.itemTypeDisplayName!),
+                              textBodyRegular(data.itemDef.itemTypeDisplayName!),
                             ],
                           )
                         ],
@@ -101,9 +89,7 @@ class ItemModal extends StatelessWidget {
             thickness: 1,
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: globalPadding(context),
-                vertical: globalPadding(context) / 2),
+            padding: EdgeInsets.symmetric(horizontal: globalPadding(context), vertical: globalPadding(context) / 2),
             child: ItemComponentDisplayPerks(
               perks: data.perks,
               cosmetics: data.intristics,
@@ -150,8 +136,7 @@ class ItemModal extends StatelessWidget {
                   width: vw(context) * 0.4,
                 ),
                 RoundedButton(
-                  text: textBodyMedium(AppLocalizations.of(context)!.details,
-                      color: Colors.white, utf8: false),
+                  text: textBodyMedium(AppLocalizations.of(context)!.details, color: Colors.white, utf8: false),
                   onPressed: () {
                     Navigator.pop(context);
                     onClick(InspectData(

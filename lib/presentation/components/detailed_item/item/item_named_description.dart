@@ -8,13 +8,11 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 class ItemNamedDescription extends StatelessWidget {
   final DestinyInventoryItemDefinition item;
   final double iconSize;
-  const ItemNamedDescription({required this.item, this.iconSize = 15, Key? key})
-      : super(key: key);
+  const ItemNamedDescription({required this.item, this.iconSize = 15, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    bool isMasterwork =
-        item.plug?.plugCategoryIdentifier?.contains('masterworks.stat') == true;
+    bool isMasterwork = item.plug?.plugCategoryIdentifier?.contains('masterworks.stat') == true;
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -24,24 +22,16 @@ class ItemNamedDescription extends StatelessWidget {
             Image(
                 width: iconSize,
                 height: iconSize,
-                image: NetworkImage(
-                    DestinyData.bungieLink + item.displayProperties!.icon!)),
+                image: NetworkImage(DestinyData.bungieLink + item.displayProperties!.icon!)),
             if (item.iconWatermark != null)
               Image(
-                  width: iconSize,
-                  height: iconSize,
-                  image: NetworkImage(
-                      DestinyData.bungieLink + item.iconWatermark!)),
+                  width: iconSize, height: iconSize, image: NetworkImage(DestinyData.bungieLink + item.iconWatermark!)),
           ],
         ),
         SizedBox(width: globalPadding(context)),
         textBodyRegular(isMasterwork
-            ? ManifestService
-                    .manifestParsed
-                    .destinyStatDefinition[
-                        item.investmentStats![0].statTypeHash]
-                    ?.displayProperties
-                    ?.name ??
+            ? ManifestService.manifestParsed.destinyStatDefinition[item.investmentStats![0].statTypeHash]
+                    ?.displayProperties?.name ??
                 'Unknown'
             : item.displayProperties!.name!),
       ],

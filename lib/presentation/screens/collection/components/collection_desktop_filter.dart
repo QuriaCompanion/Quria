@@ -13,8 +13,7 @@ class CollectionDesktopFilter extends StatelessWidget {
   final int selectedBucket;
   final Map<String, DestinyItemSubType> currentFilter;
   final DestinyItemSubType selectedSubType;
-  final Function(int, Map<String, DestinyItemSubType>, DestinyItemSubType)
-      onFilterChanged;
+  final Function(int, Map<String, DestinyItemSubType>, DestinyItemSubType) onFilterChanged;
   const CollectionDesktopFilter({
     required this.selectedBucket,
     required this.currentFilter,
@@ -48,10 +47,8 @@ class CollectionDesktopFilter extends StatelessWidget {
                     },
                     child: SelectFilterType(
                       width: 93.333,
-                      filterLogo: CollectionFilter
-                          .bucketLogo[InventoryBucket.kineticWeapons]!,
-                      isCurrentFilter:
-                          selectedBucket == InventoryBucket.kineticWeapons,
+                      filterLogo: CollectionFilter.bucketLogo[InventoryBucket.kineticWeapons]!,
+                      isCurrentFilter: selectedBucket == InventoryBucket.kineticWeapons,
                     ),
                   ),
                   spacer,
@@ -65,10 +62,8 @@ class CollectionDesktopFilter extends StatelessWidget {
                     },
                     child: SelectFilterType(
                       width: 93.333,
-                      filterLogo: CollectionFilter
-                          .bucketLogo[InventoryBucket.energyWeapons]!,
-                      isCurrentFilter:
-                          selectedBucket == InventoryBucket.energyWeapons,
+                      filterLogo: CollectionFilter.bucketLogo[InventoryBucket.energyWeapons]!,
+                      isCurrentFilter: selectedBucket == InventoryBucket.energyWeapons,
                     ),
                   ),
                   spacer,
@@ -82,10 +77,8 @@ class CollectionDesktopFilter extends StatelessWidget {
                     },
                     child: SelectFilterType(
                       width: 93.333,
-                      filterLogo: CollectionFilter
-                          .bucketLogo[InventoryBucket.powerWeapons]!,
-                      isCurrentFilter:
-                          selectedBucket == InventoryBucket.powerWeapons,
+                      filterLogo: CollectionFilter.bucketLogo[InventoryBucket.powerWeapons]!,
+                      isCurrentFilter: selectedBucket == InventoryBucket.powerWeapons,
                     ),
                   ),
                 ],
@@ -105,9 +98,7 @@ class CollectionDesktopFilter extends StatelessWidget {
                   padding: const EdgeInsets.all(24),
                   width: 300,
                   height: 72,
-                  decoration: BoxDecoration(
-                      color: blackLight,
-                      borderRadius: BorderRadius.circular(5)),
+                  decoration: BoxDecoration(color: blackLight, borderRadius: BorderRadius.circular(5)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
-import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/inspectSubclassHelper.model.dart';
 import 'package:quria/presentation/screens/builder/build_recap/builder_recap_page.dart';
 import 'package:quria/presentation/screens/builder/builder_results/builder_results_page.dart';
@@ -30,25 +29,21 @@ class AppRouter {
       case routeProfile:
         return MaterialPageRoute(builder: (_) => const ProfileWidget());
       case routeInspectMobile:
-        final InspectData data = settings.arguments as InspectData;
-        return MaterialPageRoute(builder: (_) => MobileInspect(data: data));
+        return MaterialPageRoute(builder: (_) => const MobileInspect());
       case routeVault:
         return MaterialPageRoute(builder: (_) => const VaultPage());
       case routeCollection:
         return MaterialPageRoute(builder: (_) => const CollectionWeaponPage());
       case routeInspectSubclass:
-        final InspectSubclassHelper data =
-            settings.arguments as InspectSubclassHelper;
-        return MaterialPageRoute(
-            builder: (_) => InspectSubclassPage(data: data));
+        final InspectSubclassHelper data = settings.arguments as InspectSubclassHelper;
+        return MaterialPageRoute(builder: (_) => InspectSubclassPage(data: data));
       case routePageSettings:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
       case routePageLegends:
         return MaterialPageRoute(builder: (_) => const LegendsPage());
       case routeCollectionItem:
         final int data = settings.arguments as int;
-        return MaterialPageRoute(
-            builder: (_) => CollectionItemPage(itemHash: data));
+        return MaterialPageRoute(builder: (_) => CollectionItemPage(itemHash: data));
 
       // BUILDER
       // exotic

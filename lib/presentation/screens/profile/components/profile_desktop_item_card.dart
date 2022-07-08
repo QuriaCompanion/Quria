@@ -36,16 +36,14 @@ class _ProfileDesktopItemCardState extends State<ProfileDesktopItemCard> {
   void initState() {
     super.initState();
     data = DisplayService.getCardData(context,
-        itemInstanceId: widget.item.itemInstanceId!,
-        itemHash: widget.item.itemHash);
+        itemInstanceId: widget.item.itemInstanceId!, itemHash: widget.item.itemHash);
   }
 
   @override
   void didUpdateWidget(covariant ProfileDesktopItemCard oldWidget) {
     super.didUpdateWidget(oldWidget);
     data = DisplayService.getCardData(context,
-        itemInstanceId: widget.item.itemInstanceId!,
-        itemHash: widget.item.itemHash);
+        itemInstanceId: widget.item.itemInstanceId!, itemHash: widget.item.itemHash);
   }
 
   @override
@@ -69,17 +67,12 @@ class _ProfileDesktopItemCardState extends State<ProfileDesktopItemCard> {
                   textH3('${widget.inventory.length + 1}/10', color: greyLight)
                 ],
               ),
-              textBodyMedium(isOpen
-                  ? AppLocalizations.of(context)!.close
-                  : AppLocalizations.of(context)!.see_all),
+              textBodyMedium(isOpen ? AppLocalizations.of(context)!.close : AppLocalizations.of(context)!.see_all),
             ],
           ),
         ),
       ),
       ItemComponentDisplay(
-          onClick: (inspectData) {
-            widget.onClick(inspectData);
-          },
           item: widget.item,
           itemDef: data.itemDef,
           elementIcon: data.elementIcon,
@@ -113,17 +106,14 @@ class _ProfileDesktopItemCardState extends State<ProfileDesktopItemCard> {
                   return InkWell(
                     onTap: () {
                       widget.onClick(InspectData(
-                          hash: item.itemHash!,
-                          characterId: widget.characterId,
-                          instanceId: item.itemInstanceId!));
+                          hash: item.itemHash!, characterId: widget.characterId, instanceId: item.itemInstanceId!));
                     },
                     child: ItemIcon(
                       imageSize: iconSize(context, widget.width),
                       displayHash: item.overrideStyleItemHash ?? item.itemHash!,
                       element: dataItem.elementIcon,
                       powerLevel: dataItem.powerLevel,
-                      isMasterworked: item.state == ItemState.Masterwork ||
-                          item.state == const ItemState(5),
+                      isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
                     ),
                   );
                 })

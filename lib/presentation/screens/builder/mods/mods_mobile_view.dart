@@ -9,9 +9,7 @@ import 'package:quria/presentation/screens/builder/mods/mobile_components/mod_mo
 class ModsMobileView extends StatelessWidget {
   final List<ModSlots> armorMods;
   final void Function(List<ModSlots>) onChange;
-  const ModsMobileView(
-      {required this.armorMods, required this.onChange, Key? key})
-      : super(key: key);
+  const ModsMobileView({required this.armorMods, required this.onChange, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

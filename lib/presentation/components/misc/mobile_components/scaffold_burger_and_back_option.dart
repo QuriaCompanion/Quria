@@ -28,8 +28,7 @@ class ScaffoldBurgerAndBackOption extends StatelessWidget {
               child: Container(
                 alignment: Alignment.topCenter,
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top +
-                      globalPadding(context),
+                  top: MediaQuery.of(context).padding.top + globalPadding(context),
                 ),
                 child: SizedBox(
                   width: appBarItem(context),

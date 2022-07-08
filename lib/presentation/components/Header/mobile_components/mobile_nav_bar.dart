@@ -9,19 +9,14 @@ class MobileNavBarCharacterChoice extends StatefulWidget {
   final int index;
   final List<DestinyCharacterComponent> characters;
   const MobileNavBarCharacterChoice(
-      {required this.onCharacterChange,
-      required this.index,
-      required this.characters,
-      Key? key})
+      {required this.onCharacterChange, required this.index, required this.characters, Key? key})
       : super(key: key);
 
   @override
-  State<MobileNavBarCharacterChoice> createState() =>
-      _MobileNavBarCharacterChoiceState();
+  State<MobileNavBarCharacterChoice> createState() => _MobileNavBarCharacterChoiceState();
 }
 
-class _MobileNavBarCharacterChoiceState
-    extends State<MobileNavBarCharacterChoice> {
+class _MobileNavBarCharacterChoiceState extends State<MobileNavBarCharacterChoice> {
   bool choosingCharacter = false;
   @override
   AppBar build(BuildContext context) {
@@ -33,8 +28,7 @@ class _MobileNavBarCharacterChoiceState
             child: Container(
               alignment: Alignment.topCenter,
               padding: EdgeInsets.only(
-                top:
-                    MediaQuery.of(context).padding.top + globalPadding(context),
+                top: MediaQuery.of(context).padding.top + globalPadding(context),
               ),
               child: SizedBox(
                 width: appBarItem(context),

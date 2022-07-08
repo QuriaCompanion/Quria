@@ -16,7 +16,7 @@ class InspectMobilePerkItem extends StatefulWidget {
   final String? instanceId;
   final int index;
   final double width;
-  final Function(List<DestinyItemSocketState>?) onSocketsChanged;
+  final Function(List<DestinyItemSocketState>) onSocketsChanged;
   const InspectMobilePerkItem({
     required this.perk,
     required this.sockets,
@@ -37,10 +37,29 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      bool selected =
-          widget.sockets.any((socket) => socket.plugHash == widget.perk.hash);
+      bool selected = widget.sockets.any((socket) => socket.plugHash == widget.perk.hash);
       return InkWell(
         onTap: () {
+          if (vw(context) > 1000) {
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return Center(
+                    child: SizedBox(
+                        width: vw(context) * 0.25,
+                        child: PerkModal(
+                          width: vw(context) * 0.25,
+                          isSelected: selected,
+                          perk: widget.perk,
+                          instanceId: widget.instanceId,
+                          onSocketsChanged: (newSockets) => widget.onSocketsChanged(newSockets),
+                          characterId: widget.characterId,
+                          index: widget.index,
+                        )),
+                  );
+                });
+            return;
+          }
           showMaterialModalBottomSheet(
               backgroundColor: Colors.transparent,
               expand: false,
@@ -51,8 +70,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
                   isSelected: selected,
                   perk: widget.perk,
                   instanceId: widget.instanceId,
-                  onSocketsChanged: (newSockets) =>
-                      widget.onSocketsChanged(newSockets),
+                  onSocketsChanged: (newSockets) => widget.onSocketsChanged(newSockets),
                   characterId: widget.characterId,
                   index: widget.index,
                 );
@@ -65,18 +83,12 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
             });
             try {
               BungieApiService()
-                  .insertSocketPlugFree(
-                      widget.instanceId!,
-                      widget.perk.hash!,
-                      widget.index,
-                      Provider.of<CharactersProvider>(context, listen: false)
-                          .currentCharacter!
-                          .characterId)
+                  .insertSocketPlugFree(widget.instanceId!, widget.perk.hash!, widget.index,
+                      Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId)
                   .then((value) async {
                 setState(() {
                   loading = false;
-                  widget.onSocketsChanged(
-                      value?.response?.item?.sockets?.data?.sockets);
+                  widget.onSocketsChanged(value?.response?.item?.sockets?.data?.sockets ?? []);
                 });
               });
             } catch (e) {
@@ -87,10 +99,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
           }
         },
         child: PerkItemDisplay(
-            perk: widget.perk,
-            selected: selected,
-            loading: loading,
-            iconSize: itemSize(context, widget.width)),
+            perk: widget.perk, selected: selected, loading: loading, iconSize: itemSize(context, widget.width)),
       );
     });
   }

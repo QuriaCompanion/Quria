@@ -69,15 +69,14 @@ class LoginWidgetState extends State<LoginWidget> {
             ),
             onPressed: () {
               loadingModal();
-              authorizeClick(context);
-              // yannisooLogin();
+              // authorizeClick(context);
+              yannisooLogin();
             },
             width: 250.0,
             height: 60),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-            image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
+        decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -139,8 +138,7 @@ class LoginWidgetState extends State<LoginWidget> {
       } on OAuthException catch (e) {
         Navigator.of(context).pop();
         bool isIOS = Platform.isIOS;
-        String platformMessage =
-            "If this keeps happening, please try to login with a mainstream browser.";
+        String platformMessage = "If this keeps happening, please try to login with a mainstream browser.";
         if (isIOS) {
           platformMessage =
               "Please dont open the auth process in another safari window, this could prevent you from getting logged in.";
@@ -173,9 +171,8 @@ class LoginWidgetState extends State<LoginWidget> {
                 ));
       }
       WidgetsBinding.instance.renderView.automaticSystemUiAdjustment = false;
-      SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-          statusBarColor: Colors.transparent,
-          statusBarBrightness: Brightness.dark));
+      SystemChrome.setSystemUIOverlayStyle(
+          const SystemUiOverlayStyle(statusBarColor: Colors.transparent, statusBarBrightness: Brightness.dark));
     } catch (_) {
       Navigator.of(context).pop();
       showDialog(
@@ -199,19 +196,15 @@ class LoginWidgetState extends State<LoginWidget> {
     GroupUserInfoCard? membership = await AccountService.getMembership();
     if (membership == null) {
       UserMembershipData? membershipData = await widget.api.getMemberships();
-      if (membershipData?.destinyMemberships?.firstWhereOrNull(
-                  (element) => element.crossSaveOverride != null) ==
+      if (membershipData?.destinyMemberships?.firstWhereOrNull((element) => element.crossSaveOverride != null) ==
               null &&
           membershipData?.destinyMemberships?.length != 1) {
         return chooseMembership(membershipData);
       }
       String membershipId = membershipData?.destinyMemberships
-              ?.firstWhereOrNull((element) =>
-                  element.crossSaveOverride == element.membershipType)
+              ?.firstWhereOrNull((element) => element.crossSaveOverride == element.membershipType)
               ?.membershipId ??
-          membershipData!.destinyMemberships!
-              .firstWhere((element) => element.membershipId != null)
-              .membershipId!;
+          membershipData!.destinyMemberships!.firstWhere((element) => element.membershipId != null).membershipId!;
 
       await AccountService.saveMembership(membershipData!, membershipId);
     }

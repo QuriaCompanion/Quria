@@ -1,21 +1,25 @@
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/constants/web_widgets.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/collection_filter.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/screens/collection/collection_item/collection_item_mobile_view.dart';
 import 'package:quria/presentation/screens/collection/components/collection_desktop_filter.dart';
-import 'package:quria/presentation/screens/collection/mobile_components/collection_mobile_item_line.dart';
-import 'package:quria/presentation/var/routes.dart';
+import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 
 class CollectionDesktopView extends StatefulWidget {
   final Iterable<DestinyInventoryItemDefinition> items;
 
-  const CollectionDesktopView({required this.items, Key? key})
-      : super(key: key);
+  const CollectionDesktopView({required this.items, Key? key}) : super(key: key);
 
   @override
   State<CollectionDesktopView> createState() => _CollectionDesktopViewState();
@@ -33,8 +37,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
     selectedSubType = currentFilter.values.first;
     selectedBucket = InventoryBucket.kineticWeapons;
     sortedItems = widget.items.toList();
-    sortedItems.sort((a, b) =>
-        b.inventory!.tierType!.index.compareTo(a.inventory!.tierType!.index));
+    sortedItems.sort((a, b) => b.inventory!.tierType!.index.compareTo(a.inventory!.tierType!.index));
   }
 
   @override
@@ -130,37 +133,77 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                   const Spacer(),
                   SingleChildScrollView(
                     child: SizedBox(
-                      width: (vw(context) - 300) - globalPadding(context) * 2,
+                      width: vw(context) * 0.7,
                       height: vh(context),
                       child: GridView.builder(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 400,
+                            mainAxisExtent: 100,
                             mainAxisSpacing: 20,
                             crossAxisSpacing: 20,
-                            childAspectRatio: 4,
-                            crossAxisCount: 2,
                           ),
                           itemCount: items.length,
                           itemBuilder: (context, index) {
                             return InkWell(
-                              onTap: () => Navigator.pushNamed(
-                                  context, routeCollectionItem,
-                                  arguments: items[index].hash),
+                              onTap: () {
+                                Provider.of<InspectProvider>(context, listen: false)
+                                    .setInspectItem(itemDef: items[index]);
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return desktopCollectionModal(
+                                      context,
+                                      child: CollectionItemMobileView(
+                                        data: items[index],
+                                        width: vw(context) * 0.4,
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
                               child: Container(
                                 decoration: BoxDecoration(
                                   color: blackLight,
-                                  borderRadius:
-                                      BorderRadius.circular(borderRadius),
+                                  borderRadius: BorderRadius.circular(borderRadius),
                                 ),
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                      left: globalPadding(context) / 2),
-                                  child: CollectionItemLine(
-                                    item: items[index],
-                                    width: ((vw(context) - 300) -
-                                            globalPadding(context)) /
-                                        2,
-                                  ),
+                                padding: const EdgeInsets.all(10),
+                                child: Row(
+                                  children: [
+                                    Image(
+                                      image:
+                                          NetworkImage(DestinyData.bungieLink + items[index].displayProperties!.icon!),
+                                      height: 80,
+                                      width: 80,
+                                      fit: BoxFit.fill,
+                                    ),
+                                    const SizedBox(width: 10),
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(width: 200, child: textH2(items[index].displayProperties!.name!)),
+                                        Row(
+                                          children: [
+                                            Image(
+                                              image: NetworkImage(DestinyData.bungieLink +
+                                                  ManifestService
+                                                      .manifestParsed
+                                                      .destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!
+                                                      .displayProperties!
+                                                      .icon!),
+                                              height: 15,
+                                              width: 15,
+                                              fit: BoxFit.fill,
+                                            ),
+                                            const SizedBox(width: 5),
+                                            SizedBox(
+                                                width: 180,
+                                                child: textCaption(items[index].itemTypeAndTierDisplayName!,
+                                                    color: greyLight)),
+                                          ],
+                                        ),
+                                      ],
+                                    )
+                                  ],
                                 ),
                               ),
                             );

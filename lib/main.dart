@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
+import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
 import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
 import 'package:quria/data/providers/builder/builder_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
@@ -12,6 +12,9 @@ import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart'
 import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/collectible_provider.dart';
+import 'package:quria/data/providers/inspect/armor_mod_modal_provider.dart';
+import 'package:quria/data/providers/inspect/inspect_build_provider.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/providers/language_provider.dart';
@@ -51,15 +54,23 @@ class QuriaApp extends StatelessWidget {
   final AppRouter router;
   final Locale? lang;
 
-  const QuriaApp({Key? key, required this.router, required this.lang})
-      : super(key: key);
+  const QuriaApp({Key? key, required this.router, required this.lang}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider<InspectBuildProvider>(
+            create: (context) => InspectBuildProvider(),
+          ),
+          ChangeNotifierProvider<ArmorModModalProvider>(
+            create: (context) => ArmorModModalProvider(),
+          ),
           ChangeNotifierProvider<BuilderExoticProvider>(
             create: (context) => BuilderExoticProvider(),
+          ),
+          ChangeNotifierProvider<InspectProvider>(
+            create: (context) => InspectProvider(),
           ),
           ChangeNotifierProvider<BuilderStatsFilterProvider>(
             create: (context) => BuilderStatsFilterProvider(),

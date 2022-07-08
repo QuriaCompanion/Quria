@@ -19,138 +19,124 @@ import 'package:quria/presentation/screens/builder/build_recap/mobile_components
 
 class BuilderRecapMobileView extends StatelessWidget {
   final Build data;
-  const BuilderRecapMobileView({required this.data, Key? key})
-      : super(key: key);
+  final double width;
+  const BuilderRecapMobileView({required this.data, Key? key, required this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        mobileHeader(context,
-            image: buildHeader,
-            child: Center(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  textH1("Base :T${data.stats.base}"),
-                  textH1("Final :T${data.stats.max}")
-                ],
-              ),
-            )),
-        Padding(
-          padding: EdgeInsets.all(globalPadding(context)),
-          child: Column(
-            children: [
-              mobileSection(context,
-                  title: AppLocalizations.of(context)!.quick_actions,
-                  child: BuilderRecapMobileActions(
-                    width: vw(context),
-                    onAction: (action) async {
-                      switch (action) {
-                        case QuickActions.equip:
-                          showMaterialModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              isDismissible: false,
-                              expand: false,
-                              builder: (context) {
-                                return LoadingModal(
-                                  text1:
-                                      AppLocalizations.of(context)!.equipping,
-                                  text2:
-                                      AppLocalizations.of(context)!.long_action,
-                                );
-                              });
-                          BungieActionsService()
-                              .equipBuild(
-                                context,
-                                build: data,
-                                characterId: Provider.of<CharactersProvider>(
-                                        context,
-                                        listen: false)
-                                    .currentCharacter!
-                                    .characterId!,
-                                mods: Provider.of<BuilderModsProvider>(context)
-                                    .mods,
-                                subclassMods:
-                                    Provider.of<BuilderSubclassModsProvider>(
-                                            context)
-                                        .subclassMods,
-                                subclassId:
-                                    Provider.of<BuilderSubclassProvider>(
-                                            context)
-                                        .subclassId,
-                              )
-                              .then((_) => Navigator.pop(context));
-                          break;
-                        case QuickActions.save:
-                          showMaterialModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              isDismissible: false,
-                              expand: false,
-                              builder: (context) {
-                                return const InProgressModal();
-                              });
-                          break;
-                        case QuickActions.share:
-                          showMaterialModalBottomSheet(
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              isDismissible: false,
-                              expand: false,
-                              builder: (context) {
-                                return const InProgressModal();
-                              });
-                          break;
-                      }
-                    },
-                  )),
-              mobileSection(context,
-                  title: AppLocalizations.of(context)!.helmet,
-                  child: BuilderRecapMobileItem(
-                    width: vw(context),
-                    item: data.equipement[0],
-                    mods:
-                        Provider.of<BuilderModsProvider>(context).mods[0].items,
-                  )),
-              mobileSection(context,
-                  title: AppLocalizations.of(context)!.gauntlets,
-                  child: BuilderRecapMobileItem(
-                    width: vw(context),
-                    item: data.equipement[1],
-                    mods:
-                        Provider.of<BuilderModsProvider>(context).mods[1].items,
-                  )),
-              mobileSection(context,
-                  title: AppLocalizations.of(context)!.chest,
-                  child: BuilderRecapMobileItem(
-                    width: vw(context),
-                    item: data.equipement[2],
-                    mods:
-                        Provider.of<BuilderModsProvider>(context).mods[2].items,
-                  )),
-              mobileSection(context,
-                  title: AppLocalizations.of(context)!.legs,
-                  child: BuilderRecapMobileItem(
-                    width: vw(context),
-                    item: data.equipement[3],
-                    mods:
-                        Provider.of<BuilderModsProvider>(context).mods[3].items,
-                  )),
-              mobileSection(context,
-                  title: AppLocalizations.of(context)!.class_item,
-                  child: BuilderRecapMobileItem(
-                    width: vw(context),
-                    item: data.equipement[4],
-                    mods:
-                        Provider.of<BuilderModsProvider>(context).mods[4].items,
-                  ))
-            ],
-          ),
-        )
-      ],
+    return Container(
+      color: black,
+      child: Column(
+        children: [
+          mobileHeader(context,
+              width: width,
+              image: buildHeader,
+              child: Center(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [textH1("Base :T${data.stats.base}"), textH1("Final :T${data.stats.max}")],
+                ),
+              )),
+          Padding(
+            padding: EdgeInsets.all(globalPadding(context)),
+            child: Column(
+              children: [
+                if (width == vw(context))
+                  mobileSection(context,
+                      title: AppLocalizations.of(context)!.quick_actions,
+                      child: BuilderRecapMobileActions(
+                        width: width,
+                        onAction: (action) async {
+                          switch (action) {
+                            case QuickActions.equip:
+                              showMaterialModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: Colors.transparent,
+                                  isDismissible: false,
+                                  expand: false,
+                                  builder: (context) {
+                                    return LoadingModal(
+                                      text1: AppLocalizations.of(context)!.equipping,
+                                      text2: AppLocalizations.of(context)!.long_action,
+                                    );
+                                  });
+                              BungieActionsService()
+                                  .equipBuild(
+                                    context,
+                                    build: data,
+                                    characterId: Provider.of<CharactersProvider>(context, listen: false)
+                                        .currentCharacter!
+                                        .characterId!,
+                                    mods: Provider.of<BuilderModsProvider>(context).mods,
+                                    subclassMods: Provider.of<BuilderSubclassModsProvider>(context).subclassMods,
+                                    subclassId: Provider.of<BuilderSubclassProvider>(context).subclassId,
+                                  )
+                                  .then((_) => Navigator.pop(context));
+                              break;
+                            case QuickActions.save:
+                              showMaterialModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: Colors.transparent,
+                                  isDismissible: false,
+                                  expand: false,
+                                  builder: (context) {
+                                    return const InProgressModal();
+                                  });
+                              break;
+                            case QuickActions.share:
+                              showMaterialModalBottomSheet(
+                                  context: context,
+                                  backgroundColor: Colors.transparent,
+                                  isDismissible: false,
+                                  expand: false,
+                                  builder: (context) {
+                                    return const InProgressModal();
+                                  });
+                              break;
+                          }
+                        },
+                      )),
+                mobileSection(context,
+                    title: AppLocalizations.of(context)!.helmet,
+                    child: BuilderRecapMobileItem(
+                      width: width,
+                      item: data.equipement[0],
+                      mods: Provider.of<BuilderModsProvider>(context).mods[0].items,
+                    )),
+                mobileSection(context,
+                    title: AppLocalizations.of(context)!.gauntlets,
+                    child: BuilderRecapMobileItem(
+                      width: width,
+                      item: data.equipement[1],
+                      mods: Provider.of<BuilderModsProvider>(context).mods[1].items,
+                    )),
+                mobileSection(context,
+                    title: AppLocalizations.of(context)!.chest,
+                    child: BuilderRecapMobileItem(
+                      width: width,
+                      item: data.equipement[2],
+                      mods: Provider.of<BuilderModsProvider>(context).mods[2].items,
+                    )),
+                mobileSection(context,
+                    title: AppLocalizations.of(context)!.legs,
+                    child: BuilderRecapMobileItem(
+                      width: width,
+                      item: data.equipement[3],
+                      mods: Provider.of<BuilderModsProvider>(context).mods[3].items,
+                    )),
+                mobileSection(context,
+                    title: AppLocalizations.of(context)!.class_item,
+                    child: BuilderRecapMobileItem(
+                      width: width,
+                      item: data.equipement[4],
+                      mods: Provider.of<BuilderModsProvider>(context).mods[4].items,
+                    ))
+              ],
+            ),
+          )
+        ],
+      ),
     );
   }
 }

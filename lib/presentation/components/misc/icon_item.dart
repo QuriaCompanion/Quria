@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -31,34 +32,41 @@ class ItemIcon extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Image(
-            image: NetworkImage(DestinyData.bungieLink +
-                ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[displayHash]!
-                    .displayProperties!
-                    .icon!),
+          ExtendedImage.network(
+            DestinyData.bungieLink +
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!,
+            loadStateChanged: (ExtendedImageState state) {
+              switch (state.extendedImageLoadState) {
+                case LoadState.loading:
+                  return Container(
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white),
+                        color: DestinyData.getTierColor(ManifestService
+                            .manifestParsed.destinyInventoryItemDefinition[displayHash]!.inventory!.tierType!)),
+                  );
+                case LoadState.completed:
+                  return null;
+                case LoadState.failed:
+                  return null;
+              }
+            },
             height: imageSize,
             width: imageSize,
+            timeLimit: const Duration(seconds: 10),
+            cache: true,
             fit: BoxFit.fill,
           ),
-          if (ManifestService
-                  .manifestParsed
-                  .destinyInventoryItemDefinition[displayHash]!
-                  .quality
+          if (ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
                   ?.displayVersionWatermarkIcons?[0] !=
               null)
-            Image(
-              image: NetworkImage(
-                DestinyData.bungieLink +
-                    ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[displayHash]!
-                        .quality!
-                        .displayVersionWatermarkIcons![0],
-              ),
+            ExtendedImage.network(
+              DestinyData.bungieLink +
+                  ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!
+                      .displayVersionWatermarkIcons![0],
               height: imageSize,
+              timeLimit: const Duration(seconds: 10),
               width: imageSize,
+              cache: true,
               fit: BoxFit.fill,
             ),
           if (powerLevel != null)
@@ -77,9 +85,7 @@ class ItemIcon extends StatelessWidget {
                     if (element != null)
                       Padding(
                         padding: const EdgeInsets.only(left: 4),
-                        child: Image(
-                            image: NetworkImage(
-                                DestinyData.bungieLink + element!)),
+                        child: Image(image: NetworkImage(DestinyData.bungieLink + element!)),
                       ),
                     textIcon(powerLevel.toString())
                   ],

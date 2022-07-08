@@ -8,10 +8,7 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 class TalentGridMobileItem extends StatelessWidget {
   final List<DestinyTalentNodeDefinition> talentGridNodes;
   final List<DestinyTalentNode> talentGridComponent;
-  const TalentGridMobileItem(
-      {required this.talentGridNodes,
-      required this.talentGridComponent,
-      Key? key})
+  const TalentGridMobileItem({required this.talentGridNodes, required this.talentGridComponent, Key? key})
       : super(key: key);
 
   @override
@@ -24,9 +21,7 @@ class TalentGridMobileItem extends StatelessWidget {
           pictureBordered(
             size: vw(context) * 0.192,
             image: NetworkImage(DestinyData.bungieLink +
-                talentGridNodes[talentGridComponent
-                        .firstWhere((element) => element.isActivated!)
-                        .nodeIndex!]
+                talentGridNodes[talentGridComponent.firstWhere((element) => element.isActivated!).nodeIndex!]
                     .steps![0]
                     .displayProperties!
                     .icon!),
@@ -35,16 +30,14 @@ class TalentGridMobileItem extends StatelessWidget {
             padding: EdgeInsets.only(
               left: globalPadding(context) / 2,
             ),
-            width: vw(context) -
-                vw(context) * 0.192 -
-                globalPadding(context) * 2.5,
+            width: vw(context) - vw(context) * 0.192 - globalPadding(context) * 2.5,
             child: Wrap(
               alignment: WrapAlignment.start,
               spacing: globalPadding(context) / 2,
               runSpacing: globalPadding(context) / 2,
               children: [
-                for (var node in talentGridComponent.where((element) =>
-                    element.isActivated == null || !element.isActivated!))
+                for (var node
+                    in talentGridComponent.where((element) => element.isActivated == null || !element.isActivated!))
                   InkWell(
                     // onTap: () {
                     //   showMaterialModalBottomSheet(
@@ -71,10 +64,7 @@ class TalentGridMobileItem extends StatelessWidget {
                     // },
                     child: pictureBordered(
                         image: NetworkImage(DestinyData.bungieLink +
-                            talentGridNodes[node.nodeHash!]
-                                .steps![0]
-                                .displayProperties!
-                                .icon!),
+                            talentGridNodes[node.nodeHash!].steps![0].displayProperties!.icon!),
                         size: 44),
                   )
               ],

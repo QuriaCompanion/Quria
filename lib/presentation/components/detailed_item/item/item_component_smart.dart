@@ -21,34 +21,24 @@ class ItemComponentSmart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final instanceInfo = Provider.of<ItemProvider>(context)
-        .getInstanceInfo(item.itemInstanceId!);
-    final DestinyInventoryItemDefinition itemDef = ManifestService
-        .manifestParsed.destinyInventoryItemDefinition[item.itemHash]!;
+    final instanceInfo = Provider.of<ItemProvider>(context).getInstanceInfo(item.itemInstanceId!);
+    final DestinyInventoryItemDefinition itemDef =
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!;
     final String? elementIcon = ManifestService
-            .manifestParsed
-            .destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]
-            ?.displayProperties
-            ?.icon ??
+            .manifestParsed.destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]?.displayProperties?.icon ??
         ManifestService
-            .manifestParsed
-            .destinyEnergyTypeDefinition[instanceInfo?.energy?.energyTypeHash]
-            ?.displayProperties
-            ?.icon;
+            .manifestParsed.destinyEnergyTypeDefinition[instanceInfo?.energy?.energyTypeHash]?.displayProperties?.icon;
     final int? powerLevel = instanceInfo?.primaryStat?.value;
     return Row(
       children: [
         ItemIcon(
           displayHash: item.overrideStyleItemHash ?? item.itemHash!,
           imageSize: itemSize(context, width),
-          isMasterworked: item.state == ItemState.Masterwork ||
-              item.state == const ItemState(5),
+          isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
         ),
         SizedBox(width: globalPadding(context)),
         SizedBox(
-          width: vw(context) -
-              (itemSize(context, width) * 2) -
-              globalPadding(context) * 3,
+          width: vw(context) - (itemSize(context, width) * 2) - globalPadding(context) * 3,
           height: itemSize(context, width),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -64,8 +54,7 @@ class ItemComponentSmart extends StatelessWidget {
                         height: 12,
                         margin: const EdgeInsets.only(right: 5),
                         child: Image(
-                          image: NetworkImage(
-                              DestinyData.bungieLink + elementIcon),
+                          image: NetworkImage(DestinyData.bungieLink + elementIcon),
                         )),
                   if (powerLevel != null) textBodyBold(powerLevel.toString()),
                 ],

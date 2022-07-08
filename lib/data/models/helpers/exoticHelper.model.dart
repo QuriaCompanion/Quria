@@ -6,6 +6,9 @@ class ExoticHelper {
   Map<int, DestinyInventoryItemDefinition> manifest;
   List<DestinyItemComponent> items;
   DestinyClass classType;
-  ExoticHelper(
-      {required this.manifest, required this.classType, required this.items});
+  ExoticHelper({
+    required this.manifest,
+    required this.classType,
+    required this.items,
+  });
 }

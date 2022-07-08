@@ -69,8 +69,7 @@ class AllDestinyManifestComponents {
   @JsonKey(name: 'DestinyGenderDefinition')
   Map<int, DestinyGenderDefinition> destinyGenderDefinition = {};
   @JsonKey(name: 'DestinyInventoryBucketDefinition')
-  Map<int, DestinyInventoryBucketDefinition> destinyInventoryBucketDefinition =
-      {};
+  Map<int, DestinyInventoryBucketDefinition> destinyInventoryBucketDefinition = {};
   @JsonKey(name: 'DestinyRaceDefinition')
   Map<int, DestinyRaceDefinition> destinyRaceDefinition = {};
   @JsonKey(name: 'DestinyTalentGridDefinition')
@@ -78,15 +77,13 @@ class AllDestinyManifestComponents {
   @JsonKey(name: 'DestinyUnlockDefinition')
   Map<int, DestinyUnlockDefinition> destinyUnlockDefinition = {};
   @JsonKey(name: 'DestinyMaterialRequirementSetDefinition')
-  Map<int, DestinyMaterialRequirementSetDefinition>
-      destinyMaterialRequirementSetDefinition = {};
+  Map<int, DestinyMaterialRequirementSetDefinition> destinyMaterialRequirementSetDefinition = {};
   @JsonKey(name: 'DestinySandboxPerkDefinition')
   Map<int, DestinySandboxPerkDefinition> destinySandboxPerkDefinition = {};
   @JsonKey(name: 'DestinyStatGroupDefinition')
   Map<int, DestinyStatGroupDefinition> destinyStatGroupDefinition = {};
   @JsonKey(name: 'DestinyProgressionMappingDefinition')
-  Map<int, DestinyProgressionMappingDefinition>
-      destinyProgressionMappingDefinition = {};
+  Map<int, DestinyProgressionMappingDefinition> destinyProgressionMappingDefinition = {};
   @JsonKey(name: 'DestinyFactionDefinition')
   Map<int, DestinyFactionDefinition> destinyFactionDefinition = {};
   @JsonKey(name: 'DestinyVendorGroupDefinition')
@@ -128,13 +125,11 @@ class AllDestinyManifestComponents {
   @JsonKey(name: 'DestinyPowerCapDefinition')
   Map<int, DestinyPowerCapDefinition> destinyPowerCapDefinition = {};
   @JsonKey(name: 'DestinyPresentationNodeDefinition')
-  Map<int, DestinyPresentationNodeDefinition>
-      destinyPresentationNodeDefinition = {};
+  Map<int, DestinyPresentationNodeDefinition> destinyPresentationNodeDefinition = {};
   @JsonKey(name: 'DestinyProgressionDefinition')
   Map<int, DestinyProgressionDefinition> destinyProgressionDefinition = {};
   @JsonKey(name: 'DestinyProgressionLevelRequirementDefinition')
-  Map<int, DestinyProgressionLevelRequirementDefinition>
-      destinyProgressionLevelRequirementDefinition = {};
+  Map<int, DestinyProgressionLevelRequirementDefinition> destinyProgressionLevelRequirementDefinition = {};
   @JsonKey(name: 'DestinyRecordDefinition')
   Map<int, DestinyRecordDefinition> destinyRecordDefinition = {};
   @JsonKey(name: 'DestinySeasonDefinition')
@@ -142,8 +137,7 @@ class AllDestinyManifestComponents {
   @JsonKey(name: 'DestinySeasonPassDefinition')
   Map<int, DestinySeasonPassDefinition> destinySeasonPassDefinition = {};
   @JsonKey(name: 'DestinySocketCategoryDefinition')
-  Map<int, DestinySocketCategoryDefinition> destinySocketCategoryDefinition =
-      {};
+  Map<int, DestinySocketCategoryDefinition> destinySocketCategoryDefinition = {};
   @JsonKey(name: 'DestinySocketTypeDefinition')
   Map<int, DestinySocketTypeDefinition> destinySocketTypeDefinition = {};
   @JsonKey(name: 'DestinyTraitDefinition')
@@ -155,11 +149,9 @@ class AllDestinyManifestComponents {
   @JsonKey(name: 'DestinyMilestoneDefinition')
   Map<int, DestinyMilestoneDefinition> destinyMilestoneDefinition = {};
   @JsonKey(name: 'DestinyActivityModifierDefinition')
-  Map<int, DestinyActivityModifierDefinition>
-      destinyActivityModifierDefinition = {};
+  Map<int, DestinyActivityModifierDefinition> destinyActivityModifierDefinition = {};
   @JsonKey(name: 'DestinyReportReasonCategoryDefinition')
-  Map<int, DestinyReportReasonCategoryDefinition>
-      destinyReportReasonCategoryDefinition = {};
+  Map<int, DestinyReportReasonCategoryDefinition> destinyReportReasonCategoryDefinition = {};
   @JsonKey(name: 'DestinyArtifactDefinition')
   Map<int, DestinyArtifactDefinition> destinyArtifactDefinition = {};
   @JsonKey(name: 'DestinyBreakerTypeDefinition')
@@ -167,210 +159,164 @@ class AllDestinyManifestComponents {
   @JsonKey(name: 'DestinyChecklistDefinition')
   Map<int, DestinyChecklistDefinition> destinyChecklistDefinition = {};
   @JsonKey(name: 'DestinyHistoricalStatsDefinition')
-  Map<int, DestinyHistoricalStatsDefinition> destinyHistoricalStatsDefinition =
-      {};
+  Map<int, DestinyHistoricalStatsDefinition> destinyHistoricalStatsDefinition = {};
   @JsonKey(name: 'DestinyMilestoneRewardEntryDefinition')
-  Map<int, DestinyMilestoneRewardEntryDefinition>
-      destinyMilestoneRewardEntryDefinition = {};
+  Map<int, DestinyMilestoneRewardEntryDefinition> destinyMilestoneRewardEntryDefinition = {};
   @JsonKey(name: 'DestinyEnergyTypeDefinition')
   Map<int, DestinyEnergyTypeDefinition> destinyEnergyTypeDefinition = {};
   static void setField<T>(int hash, T field) {
     switch (T) {
       case DestinyPlaceDefinition:
-        ManifestService.manifestParsed.destinyPlaceDefinition[hash] =
-            field as DestinyPlaceDefinition;
+        ManifestService.manifestParsed.destinyPlaceDefinition[hash] = field as DestinyPlaceDefinition;
         break;
       case DestinyActivityDefinition:
-        ManifestService.manifestParsed.destinyActivityDefinition[hash] =
-            field as DestinyActivityDefinition;
+        ManifestService.manifestParsed.destinyActivityDefinition[hash] = field as DestinyActivityDefinition;
         break;
       case DestinyActivityTypeDefinition:
-        ManifestService.manifestParsed.destinyActivityTypeDefinition[hash] =
-            field as DestinyActivityTypeDefinition;
+        ManifestService.manifestParsed.destinyActivityTypeDefinition[hash] = field as DestinyActivityTypeDefinition;
         break;
       case DestinyClassDefinition:
-        ManifestService.manifestParsed.destinyClassDefinition[hash] =
-            field as DestinyClassDefinition;
+        ManifestService.manifestParsed.destinyClassDefinition[hash] = field as DestinyClassDefinition;
         break;
       case DestinyGenderDefinition:
-        ManifestService.manifestParsed.destinyGenderDefinition[hash] =
-            field as DestinyGenderDefinition;
+        ManifestService.manifestParsed.destinyGenderDefinition[hash] = field as DestinyGenderDefinition;
         break;
       case DestinyInventoryBucketDefinition:
         ManifestService.manifestParsed.destinyInventoryBucketDefinition[hash] =
             field as DestinyInventoryBucketDefinition;
         break;
       case DestinyRaceDefinition:
-        ManifestService.manifestParsed.destinyRaceDefinition[hash] =
-            field as DestinyRaceDefinition;
+        ManifestService.manifestParsed.destinyRaceDefinition[hash] = field as DestinyRaceDefinition;
         break;
       case DestinyTalentGridDefinition:
-        ManifestService.manifestParsed.destinyTalentGridDefinition[hash] =
-            field as DestinyTalentGridDefinition;
+        ManifestService.manifestParsed.destinyTalentGridDefinition[hash] = field as DestinyTalentGridDefinition;
         break;
       case DestinyUnlockDefinition:
-        ManifestService.manifestParsed.destinyUnlockDefinition[hash] =
-            field as DestinyUnlockDefinition;
+        ManifestService.manifestParsed.destinyUnlockDefinition[hash] = field as DestinyUnlockDefinition;
         break;
       case DestinyMaterialRequirementSetDefinition:
-        ManifestService
-                .manifestParsed.destinyMaterialRequirementSetDefinition[hash] =
+        ManifestService.manifestParsed.destinyMaterialRequirementSetDefinition[hash] =
             field as DestinyMaterialRequirementSetDefinition;
         break;
       case DestinySandboxPerkDefinition:
-        ManifestService.manifestParsed.destinySandboxPerkDefinition[hash] =
-            field as DestinySandboxPerkDefinition;
+        ManifestService.manifestParsed.destinySandboxPerkDefinition[hash] = field as DestinySandboxPerkDefinition;
         break;
       case DestinyStatGroupDefinition:
-        ManifestService.manifestParsed.destinyStatGroupDefinition[hash] =
-            field as DestinyStatGroupDefinition;
+        ManifestService.manifestParsed.destinyStatGroupDefinition[hash] = field as DestinyStatGroupDefinition;
         break;
       case DestinyFactionDefinition:
-        ManifestService.manifestParsed.destinyFactionDefinition[hash] =
-            field as DestinyFactionDefinition;
+        ManifestService.manifestParsed.destinyFactionDefinition[hash] = field as DestinyFactionDefinition;
         break;
       case DestinyVendorGroupDefinition:
-        ManifestService.manifestParsed.destinyVendorGroupDefinition[hash] =
-            field as DestinyVendorGroupDefinition;
+        ManifestService.manifestParsed.destinyVendorGroupDefinition[hash] = field as DestinyVendorGroupDefinition;
         break;
       case DestinyRewardSourceDefinition:
-        ManifestService.manifestParsed.destinyRewardSourceDefinition[hash] =
-            field as DestinyRewardSourceDefinition;
+        ManifestService.manifestParsed.destinyRewardSourceDefinition[hash] = field as DestinyRewardSourceDefinition;
         break;
       case DestinyItemCategoryDefinition:
-        ManifestService.manifestParsed.destinyItemCategoryDefinition[hash] =
-            field as DestinyItemCategoryDefinition;
+        ManifestService.manifestParsed.destinyItemCategoryDefinition[hash] = field as DestinyItemCategoryDefinition;
         break;
       case DestinyDamageTypeDefinition:
-        ManifestService.manifestParsed.destinyDamageTypeDefinition[hash] =
-            field as DestinyDamageTypeDefinition;
+        ManifestService.manifestParsed.destinyDamageTypeDefinition[hash] = field as DestinyDamageTypeDefinition;
         break;
       case DestinyActivityModeDefinition:
-        ManifestService.manifestParsed.destinyActivityModeDefinition[hash] =
-            field as DestinyActivityModeDefinition;
+        ManifestService.manifestParsed.destinyActivityModeDefinition[hash] = field as DestinyActivityModeDefinition;
         break;
       case DestinyActivityGraphDefinition:
-        ManifestService.manifestParsed.destinyActivityGraphDefinition[hash] =
-            field as DestinyActivityGraphDefinition;
+        ManifestService.manifestParsed.destinyActivityGraphDefinition[hash] = field as DestinyActivityGraphDefinition;
         break;
       case DestinyCollectibleDefinition:
-        ManifestService.manifestParsed.destinyCollectibleDefinition[hash] =
-            field as DestinyCollectibleDefinition;
+        ManifestService.manifestParsed.destinyCollectibleDefinition[hash] = field as DestinyCollectibleDefinition;
         break;
       case DestinyStatDefinition:
-        ManifestService.manifestParsed.destinyStatDefinition[hash] =
-            field as DestinyStatDefinition;
+        ManifestService.manifestParsed.destinyStatDefinition[hash] = field as DestinyStatDefinition;
         break;
       case DestinyItemTierTypeDefinition:
-        ManifestService.manifestParsed.destinyItemTierTypeDefinition[hash] =
-            field as DestinyItemTierTypeDefinition;
+        ManifestService.manifestParsed.destinyItemTierTypeDefinition[hash] = field as DestinyItemTierTypeDefinition;
         break;
       case DestinyPresentationNodeDefinition:
         ManifestService.manifestParsed.destinyPresentationNodeDefinition[hash] =
             field as DestinyPresentationNodeDefinition;
         break;
       case DestinyRecordDefinition:
-        ManifestService.manifestParsed.destinyRecordDefinition[hash] =
-            field as DestinyRecordDefinition;
+        ManifestService.manifestParsed.destinyRecordDefinition[hash] = field as DestinyRecordDefinition;
         break;
       case DestinyDestinationDefinition:
-        ManifestService.manifestParsed.destinyDestinationDefinition[hash] =
-            field as DestinyDestinationDefinition;
+        ManifestService.manifestParsed.destinyDestinationDefinition[hash] = field as DestinyDestinationDefinition;
         break;
       case DestinyEquipmentSlotDefinition:
-        ManifestService.manifestParsed.destinyEquipmentSlotDefinition[hash] =
-            field as DestinyEquipmentSlotDefinition;
+        ManifestService.manifestParsed.destinyEquipmentSlotDefinition[hash] = field as DestinyEquipmentSlotDefinition;
         break;
       case DestinyInventoryItemDefinition:
-        ManifestService.manifestParsed.destinyInventoryItemDefinition[hash] =
-            field as DestinyInventoryItemDefinition;
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[hash] = field as DestinyInventoryItemDefinition;
         break;
       case DestinyLocationDefinition:
-        ManifestService.manifestParsed.destinyLocationDefinition[hash] =
-            field as DestinyLocationDefinition;
+        ManifestService.manifestParsed.destinyLocationDefinition[hash] = field as DestinyLocationDefinition;
         break;
       case DestinyLoreDefinition:
-        ManifestService.manifestParsed.destinyLoreDefinition[hash] =
-            field as DestinyLoreDefinition;
+        ManifestService.manifestParsed.destinyLoreDefinition[hash] = field as DestinyLoreDefinition;
         break;
       case DestinyObjectiveDefinition:
-        ManifestService.manifestParsed.destinyObjectiveDefinition[hash] =
-            field as DestinyObjectiveDefinition;
+        ManifestService.manifestParsed.destinyObjectiveDefinition[hash] = field as DestinyObjectiveDefinition;
         break;
       case DestinyProgressionDefinition:
-        ManifestService.manifestParsed.destinyProgressionDefinition[hash] =
-            field as DestinyProgressionDefinition;
+        ManifestService.manifestParsed.destinyProgressionDefinition[hash] = field as DestinyProgressionDefinition;
         break;
       case DestinyProgressionLevelRequirementDefinition:
-        ManifestService.manifestParsed
-                .destinyProgressionLevelRequirementDefinition[hash] =
+        ManifestService.manifestParsed.destinyProgressionLevelRequirementDefinition[hash] =
             field as DestinyProgressionLevelRequirementDefinition;
         break;
       case DestinySocketCategoryDefinition:
-        ManifestService.manifestParsed.destinySocketCategoryDefinition[hash] =
-            field as DestinySocketCategoryDefinition;
+        ManifestService.manifestParsed.destinySocketCategoryDefinition[hash] = field as DestinySocketCategoryDefinition;
         break;
       case DestinySocketTypeDefinition:
-        ManifestService.manifestParsed.destinySocketTypeDefinition[hash] =
-            field as DestinySocketTypeDefinition;
+        ManifestService.manifestParsed.destinySocketTypeDefinition[hash] = field as DestinySocketTypeDefinition;
         break;
       case DestinyVendorDefinition:
-        ManifestService.manifestParsed.destinyVendorDefinition[hash] =
-            field as DestinyVendorDefinition;
+        ManifestService.manifestParsed.destinyVendorDefinition[hash] = field as DestinyVendorDefinition;
         break;
       case DestinyMilestoneDefinition:
-        ManifestService.manifestParsed.destinyMilestoneDefinition[hash] =
-            field as DestinyMilestoneDefinition;
+        ManifestService.manifestParsed.destinyMilestoneDefinition[hash] = field as DestinyMilestoneDefinition;
         break;
       case DestinyActivityModifierDefinition:
         ManifestService.manifestParsed.destinyActivityModifierDefinition[hash] =
             field as DestinyActivityModifierDefinition;
         break;
       case DestinyReportReasonCategoryDefinition:
-        ManifestService
-                .manifestParsed.destinyReportReasonCategoryDefinition[hash] =
+        ManifestService.manifestParsed.destinyReportReasonCategoryDefinition[hash] =
             field as DestinyReportReasonCategoryDefinition;
         break;
       case DestinyPlugSetDefinition:
-        ManifestService.manifestParsed.destinyPlugSetDefinition[hash] =
-            field as DestinyPlugSetDefinition;
+        ManifestService.manifestParsed.destinyPlugSetDefinition[hash] = field as DestinyPlugSetDefinition;
         break;
       case DestinyChecklistDefinition:
-        ManifestService.manifestParsed.destinyChecklistDefinition[hash] =
-            field as DestinyChecklistDefinition;
+        ManifestService.manifestParsed.destinyChecklistDefinition[hash] = field as DestinyChecklistDefinition;
         break;
       case DestinyHistoricalStatsDefinition:
         ManifestService.manifestParsed.destinyHistoricalStatsDefinition[hash] =
             field as DestinyHistoricalStatsDefinition;
         break;
       case DestinyMilestoneRewardEntryDefinition:
-        ManifestService
-                .manifestParsed.destinyMilestoneRewardEntryDefinition[hash] =
+        ManifestService.manifestParsed.destinyMilestoneRewardEntryDefinition[hash] =
             field as DestinyMilestoneRewardEntryDefinition;
         break;
       case DestinyEnergyTypeDefinition:
-        ManifestService.manifestParsed.destinyEnergyTypeDefinition[hash] =
-            field as DestinyEnergyTypeDefinition;
+        ManifestService.manifestParsed.destinyEnergyTypeDefinition[hash] = field as DestinyEnergyTypeDefinition;
         break;
       case DestinySeasonDefinition:
-        ManifestService.manifestParsed.destinySeasonDefinition[hash] =
-            field as DestinySeasonDefinition;
+        ManifestService.manifestParsed.destinySeasonDefinition[hash] = field as DestinySeasonDefinition;
         break;
       case DestinySeasonPassDefinition:
-        ManifestService.manifestParsed.destinySeasonPassDefinition[hash] =
-            field as DestinySeasonPassDefinition;
+        ManifestService.manifestParsed.destinySeasonPassDefinition[hash] = field as DestinySeasonPassDefinition;
         break;
       case DestinyPowerCapDefinition:
-        ManifestService.manifestParsed.destinyPowerCapDefinition[hash] =
-            field as DestinyPowerCapDefinition;
+        ManifestService.manifestParsed.destinyPowerCapDefinition[hash] = field as DestinyPowerCapDefinition;
         break;
       case DestinyMetricDefinition:
-        ManifestService.manifestParsed.destinyMetricDefinition[hash] =
-            field as DestinyMetricDefinition;
+        ManifestService.manifestParsed.destinyMetricDefinition[hash] = field as DestinyMetricDefinition;
         break;
       case DestinyTraitDefinition:
-        ManifestService.manifestParsed.destinyTraitDefinition[hash] =
-            field as DestinyTraitDefinition;
+        ManifestService.manifestParsed.destinyTraitDefinition[hash] = field as DestinyTraitDefinition;
         break;
       default:
         throw Exception('Unknown type');
@@ -398,8 +344,7 @@ class AllDestinyManifestComponents {
         return ManifestService.manifestParsed.destinyInventoryBucketDefinition =
             manifestValue as Map<int, DestinyInventoryBucketDefinition>;
       case DestinyRaceDefinition:
-        return ManifestService.manifestParsed.destinyRaceDefinition =
-            manifestValue as Map<int, DestinyRaceDefinition>;
+        return ManifestService.manifestParsed.destinyRaceDefinition = manifestValue as Map<int, DestinyRaceDefinition>;
       case DestinyTalentGridDefinition:
         return ManifestService.manifestParsed.destinyTalentGridDefinition =
             manifestValue as Map<int, DestinyTalentGridDefinition>;
@@ -407,8 +352,7 @@ class AllDestinyManifestComponents {
         return ManifestService.manifestParsed.destinyUnlockDefinition =
             manifestValue as Map<int, DestinyUnlockDefinition>;
       case DestinyMaterialRequirementSetDefinition:
-        return ManifestService
-                .manifestParsed.destinyMaterialRequirementSetDefinition =
+        return ManifestService.manifestParsed.destinyMaterialRequirementSetDefinition =
             manifestValue as Map<int, DestinyMaterialRequirementSetDefinition>;
       case DestinySandboxPerkDefinition:
         return ManifestService.manifestParsed.destinySandboxPerkDefinition =
@@ -441,14 +385,12 @@ class AllDestinyManifestComponents {
         return ManifestService.manifestParsed.destinyCollectibleDefinition =
             manifestValue as Map<int, DestinyCollectibleDefinition>;
       case DestinyStatDefinition:
-        return ManifestService.manifestParsed.destinyStatDefinition =
-            manifestValue as Map<int, DestinyStatDefinition>;
+        return ManifestService.manifestParsed.destinyStatDefinition = manifestValue as Map<int, DestinyStatDefinition>;
       case DestinyItemTierTypeDefinition:
         return ManifestService.manifestParsed.destinyItemTierTypeDefinition =
             manifestValue as Map<int, DestinyItemTierTypeDefinition>;
       case DestinyPresentationNodeDefinition:
-        return ManifestService
-                .manifestParsed.destinyPresentationNodeDefinition =
+        return ManifestService.manifestParsed.destinyPresentationNodeDefinition =
             manifestValue as Map<int, DestinyPresentationNodeDefinition>;
       case DestinyRecordDefinition:
         return ManifestService.manifestParsed.destinyRecordDefinition =
@@ -466,8 +408,7 @@ class AllDestinyManifestComponents {
         return ManifestService.manifestParsed.destinyLocationDefinition =
             manifestValue as Map<int, DestinyLocationDefinition>;
       case DestinyLoreDefinition:
-        return ManifestService.manifestParsed.destinyLoreDefinition =
-            manifestValue as Map<int, DestinyLoreDefinition>;
+        return ManifestService.manifestParsed.destinyLoreDefinition = manifestValue as Map<int, DestinyLoreDefinition>;
       case DestinyObjectiveDefinition:
         return ManifestService.manifestParsed.destinyObjectiveDefinition =
             manifestValue as Map<int, DestinyObjectiveDefinition>;
@@ -475,10 +416,8 @@ class AllDestinyManifestComponents {
         return ManifestService.manifestParsed.destinyProgressionDefinition =
             manifestValue as Map<int, DestinyProgressionDefinition>;
       case DestinyProgressionLevelRequirementDefinition:
-        return ManifestService
-                .manifestParsed.destinyProgressionLevelRequirementDefinition =
-            manifestValue
-                as Map<int, DestinyProgressionLevelRequirementDefinition>;
+        return ManifestService.manifestParsed.destinyProgressionLevelRequirementDefinition =
+            manifestValue as Map<int, DestinyProgressionLevelRequirementDefinition>;
       case DestinySocketCategoryDefinition:
         return ManifestService.manifestParsed.destinySocketCategoryDefinition =
             manifestValue as Map<int, DestinySocketCategoryDefinition>;
@@ -492,12 +431,10 @@ class AllDestinyManifestComponents {
         return ManifestService.manifestParsed.destinyMilestoneDefinition =
             manifestValue as Map<int, DestinyMilestoneDefinition>;
       case DestinyActivityModifierDefinition:
-        return ManifestService
-                .manifestParsed.destinyActivityModifierDefinition =
+        return ManifestService.manifestParsed.destinyActivityModifierDefinition =
             manifestValue as Map<int, DestinyActivityModifierDefinition>;
       case DestinyReportReasonCategoryDefinition:
-        return ManifestService
-                .manifestParsed.destinyReportReasonCategoryDefinition =
+        return ManifestService.manifestParsed.destinyReportReasonCategoryDefinition =
             manifestValue as Map<int, DestinyReportReasonCategoryDefinition>;
       case DestinyPlugSetDefinition:
         return ManifestService.manifestParsed.destinyPlugSetDefinition =
@@ -509,8 +446,7 @@ class AllDestinyManifestComponents {
         return ManifestService.manifestParsed.destinyHistoricalStatsDefinition =
             manifestValue as Map<int, DestinyHistoricalStatsDefinition>;
       case DestinyMilestoneRewardEntryDefinition:
-        return ManifestService
-                .manifestParsed.destinyMilestoneRewardEntryDefinition =
+        return ManifestService.manifestParsed.destinyMilestoneRewardEntryDefinition =
             manifestValue as Map<int, DestinyMilestoneRewardEntryDefinition>;
       case DestinyEnergyTypeDefinition:
         return ManifestService.manifestParsed.destinyEnergyTypeDefinition =
@@ -538,149 +474,101 @@ class AllDestinyManifestComponents {
   static Map<int, T>? getValue<T>() {
     switch (T) {
       case DestinyPlaceDefinition:
-        return ManifestService.manifestParsed.destinyPlaceDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyPlaceDefinition as Map<int, T>?;
       case DestinyActivityDefinition:
-        return ManifestService.manifestParsed.destinyActivityDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyActivityDefinition as Map<int, T>?;
       case DestinyActivityTypeDefinition:
-        return ManifestService.manifestParsed.destinyActivityTypeDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyActivityTypeDefinition as Map<int, T>?;
       case DestinyClassDefinition:
-        return ManifestService.manifestParsed.destinyClassDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyClassDefinition as Map<int, T>?;
       case DestinyGenderDefinition:
-        return ManifestService.manifestParsed.destinyGenderDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyGenderDefinition as Map<int, T>?;
       case DestinyInventoryBucketDefinition:
-        return ManifestService.manifestParsed.destinyInventoryBucketDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyInventoryBucketDefinition as Map<int, T>?;
       case DestinyRaceDefinition:
-        return ManifestService.manifestParsed.destinyRaceDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyRaceDefinition as Map<int, T>?;
       case DestinyTalentGridDefinition:
-        return ManifestService.manifestParsed.destinyTalentGridDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyTalentGridDefinition as Map<int, T>?;
       case DestinyUnlockDefinition:
-        return ManifestService.manifestParsed.destinyUnlockDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyUnlockDefinition as Map<int, T>?;
       case DestinyMaterialRequirementSetDefinition:
-        return ManifestService.manifestParsed
-            .destinyMaterialRequirementSetDefinition as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyMaterialRequirementSetDefinition as Map<int, T>?;
       case DestinySandboxPerkDefinition:
-        return ManifestService.manifestParsed.destinySandboxPerkDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinySandboxPerkDefinition as Map<int, T>?;
       case DestinyStatGroupDefinition:
-        return ManifestService.manifestParsed.destinyStatGroupDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyStatGroupDefinition as Map<int, T>?;
       case DestinyFactionDefinition:
-        return ManifestService.manifestParsed.destinyFactionDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyFactionDefinition as Map<int, T>?;
       case DestinyVendorGroupDefinition:
-        return ManifestService.manifestParsed.destinyVendorGroupDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyVendorGroupDefinition as Map<int, T>?;
       case DestinyRewardSourceDefinition:
-        return ManifestService.manifestParsed.destinyRewardSourceDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyRewardSourceDefinition as Map<int, T>?;
       case DestinyItemCategoryDefinition:
-        return ManifestService.manifestParsed.destinyItemCategoryDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyItemCategoryDefinition as Map<int, T>?;
       case DestinyDamageTypeDefinition:
-        return ManifestService.manifestParsed.destinyDamageTypeDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyDamageTypeDefinition as Map<int, T>?;
       case DestinyActivityModeDefinition:
-        return ManifestService.manifestParsed.destinyActivityModeDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyActivityModeDefinition as Map<int, T>?;
       case DestinyActivityGraphDefinition:
-        return ManifestService.manifestParsed.destinyActivityGraphDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyActivityGraphDefinition as Map<int, T>?;
       case DestinyCollectibleDefinition:
-        return ManifestService.manifestParsed.destinyCollectibleDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyCollectibleDefinition as Map<int, T>?;
       case DestinyStatDefinition:
-        return ManifestService.manifestParsed.destinyStatDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyStatDefinition as Map<int, T>?;
       case DestinyItemTierTypeDefinition:
-        return ManifestService.manifestParsed.destinyItemTierTypeDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyItemTierTypeDefinition as Map<int, T>?;
       case DestinyPresentationNodeDefinition:
-        return ManifestService.manifestParsed.destinyPresentationNodeDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyPresentationNodeDefinition as Map<int, T>?;
       case DestinyRecordDefinition:
-        return ManifestService.manifestParsed.destinyRecordDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyRecordDefinition as Map<int, T>?;
       case DestinyDestinationDefinition:
-        return ManifestService.manifestParsed.destinyDestinationDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyDestinationDefinition as Map<int, T>?;
       case DestinyEquipmentSlotDefinition:
-        return ManifestService.manifestParsed.destinyEquipmentSlotDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyEquipmentSlotDefinition as Map<int, T>?;
       case DestinyInventoryItemDefinition:
-        return ManifestService.manifestParsed.destinyInventoryItemDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyInventoryItemDefinition as Map<int, T>?;
       case DestinyLocationDefinition:
-        return ManifestService.manifestParsed.destinyLocationDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyLocationDefinition as Map<int, T>?;
       case DestinyLoreDefinition:
-        return ManifestService.manifestParsed.destinyLoreDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyLoreDefinition as Map<int, T>?;
       case DestinyObjectiveDefinition:
-        return ManifestService.manifestParsed.destinyObjectiveDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyObjectiveDefinition as Map<int, T>?;
       case DestinyProgressionDefinition:
-        return ManifestService.manifestParsed.destinyProgressionDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyProgressionDefinition as Map<int, T>?;
       case DestinyProgressionLevelRequirementDefinition:
-        return ManifestService.manifestParsed
-            .destinyProgressionLevelRequirementDefinition as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyProgressionLevelRequirementDefinition as Map<int, T>?;
       case DestinySocketCategoryDefinition:
-        return ManifestService.manifestParsed.destinySocketCategoryDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinySocketCategoryDefinition as Map<int, T>?;
       case DestinySocketTypeDefinition:
-        return ManifestService.manifestParsed.destinySocketTypeDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinySocketTypeDefinition as Map<int, T>?;
       case DestinyVendorDefinition:
-        return ManifestService.manifestParsed.destinyVendorDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyVendorDefinition as Map<int, T>?;
       case DestinyMilestoneDefinition:
-        return ManifestService.manifestParsed.destinyMilestoneDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyMilestoneDefinition as Map<int, T>?;
       case DestinyActivityModifierDefinition:
-        return ManifestService.manifestParsed.destinyActivityModifierDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyActivityModifierDefinition as Map<int, T>?;
       case DestinyReportReasonCategoryDefinition:
-        return ManifestService.manifestParsed
-            .destinyReportReasonCategoryDefinition as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyReportReasonCategoryDefinition as Map<int, T>?;
       case DestinyPlugSetDefinition:
-        return ManifestService.manifestParsed.destinyPlugSetDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyPlugSetDefinition as Map<int, T>?;
       case DestinyChecklistDefinition:
-        return ManifestService.manifestParsed.destinyChecklistDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyChecklistDefinition as Map<int, T>?;
       case DestinyHistoricalStatsDefinition:
-        return ManifestService.manifestParsed.destinyHistoricalStatsDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyHistoricalStatsDefinition as Map<int, T>?;
       case DestinyMilestoneRewardEntryDefinition:
-        return ManifestService.manifestParsed
-            .destinyMilestoneRewardEntryDefinition as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyMilestoneRewardEntryDefinition as Map<int, T>?;
       case DestinyEnergyTypeDefinition:
-        return ManifestService.manifestParsed.destinyEnergyTypeDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyEnergyTypeDefinition as Map<int, T>?;
       case DestinySeasonDefinition:
-        return ManifestService.manifestParsed.destinySeasonDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinySeasonDefinition as Map<int, T>?;
       case DestinySeasonPassDefinition:
-        return ManifestService.manifestParsed.destinySeasonPassDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinySeasonPassDefinition as Map<int, T>?;
       case DestinyPowerCapDefinition:
-        return ManifestService.manifestParsed.destinyPowerCapDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyPowerCapDefinition as Map<int, T>?;
       case DestinyMetricDefinition:
-        return ManifestService.manifestParsed.destinyMetricDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyMetricDefinition as Map<int, T>?;
       case DestinyTraitDefinition:
-        return ManifestService.manifestParsed.destinyTraitDefinition
-            as Map<int, T>?;
+        return ManifestService.manifestParsed.destinyTraitDefinition as Map<int, T>?;
       default:
         throw Exception('Unknown type');
     }
