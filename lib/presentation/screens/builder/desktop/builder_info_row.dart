@@ -48,7 +48,7 @@ class BuilderInfoRow extends StatelessWidget {
                   fit: BoxFit.fill,
                   printError: false,
                 ),
-                textCaption(AppLocalizations.of(context)!.exotic)
+                textCaption(AppLocalizations.of(context)!.exotic, utf8: false)
               ],
             ),
             Container(
@@ -64,7 +64,7 @@ class BuilderInfoRow extends StatelessWidget {
                   width: 80,
                   color: Colors.white,
                 ),
-                textCaption(AppLocalizations.of(context)!.statistics)
+                textCaption(AppLocalizations.of(context)!.statistics, utf8: false)
               ],
             ),
             Container(
@@ -87,7 +87,7 @@ class BuilderInfoRow extends StatelessWidget {
                   fit: BoxFit.fill,
                   printError: false,
                 ),
-                textCaption(AppLocalizations.of(context)!.subclass)
+                textCaption(AppLocalizations.of(context)!.subclass, utf8: false)
               ],
             ),
             Container(
@@ -108,7 +108,7 @@ class BuilderInfoRow extends StatelessWidget {
                   fit: BoxFit.fill,
                   printError: false,
                 ),
-                textCaption(AppLocalizations.of(context)!.armor_mods)
+                textCaption(AppLocalizations.of(context)!.armor_mods, utf8: false)
               ],
             ),
             Container(
@@ -141,7 +141,7 @@ class BuilderInfoRow extends StatelessWidget {
                       powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
                     );
                   }),
-                textCaption(AppLocalizations.of(context)!.class_item)
+                textCaption(AppLocalizations.of(context)!.class_item, utf8: false)
               ],
             ),
           ],

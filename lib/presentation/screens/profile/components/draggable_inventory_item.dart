@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +36,8 @@ class DraggableInventoryItem extends StatelessWidget {
       childWhenDragging: const SizedBox(),
       child: InkWell(
         onTap: () {
+          inspect(item);
+          inspect(Provider.of<ItemProvider>(context, listen: false).getInstanceInfo(item.itemInstanceId));
           Provider.of<InspectProvider>(context, listen: false).setInspectItem(
               itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!, item: item);
           showDialog(

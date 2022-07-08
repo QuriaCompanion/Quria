@@ -12,6 +12,7 @@ import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/navbar_item.dart';
+import 'package:quria/presentation/components/misc/refresh_button.dart';
 import 'package:quria/presentation/screens/profile/components/character_desktop_banner_info.dart';
 import 'package:quria/presentation/screens/settings/settings_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -47,19 +48,19 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         NavBarButton(
-                          name: 'Personnage',
+                          name: AppLocalizations.of(context)!.character,
                           route: routeProfile,
                           selected: routeProfile == widget.currentRoute,
                           icon: "assets/icons/Perso-1.svg",
                         ),
                         NavBarButton(
-                          name: 'QuriaBuilder',
+                          name: AppLocalizations.of(context)!.quria_builder,
                           route: routeExotic,
                           selected: routeExotic == widget.currentRoute,
                           icon: "assets/icons/Quria.svg",
                         ),
                         NavBarButton(
-                          name: 'Collections',
+                          name: AppLocalizations.of(context)!.collections,
                           route: routeCollection,
                           selected: routeCollection == widget.currentRoute,
                           icon: "assets/icons/Collection.svg",
@@ -68,6 +69,7 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                     ),
                     Row(
                       children: [
+                        const RefreshButton(),
                         InkWell(
                           onTap: () {
                             showDialog(
