@@ -1,11 +1,13 @@
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
@@ -14,18 +16,21 @@ import 'package:quria/presentation/var/keys.dart';
 class EquipModal extends StatelessWidget {
   final String instanceId;
   final int itemHash;
+  final double? width;
 
-  const EquipModal({required this.itemHash, required this.instanceId, Key? key})
-      : super(key: key);
+  const EquipModal({
+    required this.itemHash,
+    required this.instanceId,
+    this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<DestinyCharacterComponent> characters =
-        ProfileService().getCharacters();
-    if (ProfileService().isItemEquipped(instanceId)) {
-      final owner = ProfileService().getItemOwner(instanceId);
-      characters =
-          characters.where((element) => element.characterId != owner).toList();
+    List<DestinyCharacterComponent> characters = Provider.of<CharactersProvider>(context).characters;
+    if (Provider.of<InventoryProvider>(context).isItemEquipped(instanceId)) {
+      final owner = Provider.of<InventoryProvider>(context).getItemOwner(instanceId);
+      characters = characters.where((element) => element.characterId != owner).toList();
     }
 
     return SingleChildScrollView(
@@ -70,15 +75,11 @@ class EquipModal extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: () async {
-                    Navigator.pop(context);
                     await BungieActionsService()
-                        .equipItem(
-                            itemId: instanceId,
-                            characterId: character.characterId!,
-                            itemHash: itemHash)
+                        .equipItem(context, itemId: instanceId, characterId: character.characterId!, itemHash: itemHash)
                         .then((_) {
-                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
-                          .showSnackBar(SnackBar(
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                         content: textBodyMedium(
                           AppLocalizations.of(context)!.item_equipped,
                           utf8: false,
@@ -87,6 +88,7 @@ class EquipModal extends StatelessWidget {
                         backgroundColor: Colors.green,
                       ));
                     }, onError: (_) {
+                      Navigator.pop(context);
                       showDialog(
                           context: scaffoldKey.currentContext!,
                           builder: (context) {
@@ -95,12 +97,10 @@ class EquipModal extends StatelessWidget {
                     });
                   },
                   child: CharacterTransferItem(
+                      width: width ?? vw(context),
                       imageLink: DestinyData.bungieLink + character.emblemPath!,
-                      name: ManifestService
-                              .manifestParsed
-                              .destinyClassDefinition[character.classHash]!
-                              .genderedClassNamesByGenderHash![
-                          character.genderHash.toString()]!,
+                      name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
+                          .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                       powerLevel: character.light,
                       icon: "assets/icons/Equip.svg"),
                 ),

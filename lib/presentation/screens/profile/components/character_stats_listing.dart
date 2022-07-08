@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
@@ -27,13 +28,13 @@ class CharacterStatsListingState extends State<CharacterStatsListing> {
   @override
   initState() {
     super.initState();
-    data = DisplayService().getStatsListing(widget.characterId, widget.stats);
+    data = DisplayService.getStatsListing(context, widget.characterId, widget.stats);
   }
 
   @override
   void didUpdateWidget(covariant CharacterStatsListing oldWidget) {
     super.didUpdateWidget(oldWidget);
-    data = DisplayService().getStatsListing(widget.characterId, widget.stats);
+    data = DisplayService.getStatsListing(context, widget.characterId, widget.stats);
   }
 
   @override

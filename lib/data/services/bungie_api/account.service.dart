@@ -17,34 +17,32 @@ class AccountService {
   }
   AccountService._internal();
 
-  Future<void> setCurrentMembershipId(String membershipId) async {
+  static Future<void> setCurrentMembershipId(String membershipId) async {
     await StorageService.setLocalStorage('currentMembership', membershipId);
   }
 
-  Future<String?> getCurrentMembershipId() async {
+  static Future<String?> getCurrentMembershipId() async {
     return await StorageService.getLocalStorage('currentMembership');
   }
 
-  Future<UserMembershipData?> updateMembershipData() async {
+  static Future<UserMembershipData?> updateMembershipData() async {
     membershipData = await BungieApiService().getMemberships();
     await StorageService.setLocalStorage('membershipData', membershipData);
     return membershipData;
   }
 
-  Future<UserMembershipData?> getMembershipData() async {
+  static Future<UserMembershipData?> getMembershipData() async {
     return membershipData ?? await _getStoredMembershipData();
   }
 
-  Future<UserMembershipData?> _getStoredMembershipData() async {
-    Map<String, dynamic>? json =
-        await StorageService.getLocalStorage('membershipData')
-            as Map<String, dynamic>?;
+  static Future<UserMembershipData?> _getStoredMembershipData() async {
+    Map<String, dynamic>? json = await StorageService.getLocalStorage('membershipData') as Map<String, dynamic>?;
     if (json == null) return null;
     membershipData = UserMembershipData.fromJson(json);
     return membershipData;
   }
 
-  void reset() {
+  static void reset() {
     StorageService.removeLocalStorage("bungie_token");
     StorageService.removeLocalStorage("last_refresh");
     StorageService.removeLocalStorage("membershipData");
@@ -53,7 +51,7 @@ class AccountService {
     membershipData = null;
   }
 
-  Future<GroupUserInfoCard?> getMembership() async {
+  static Future<GroupUserInfoCard?> getMembership() async {
     if (currentMembership == null) {
       var membershipData = await _getStoredMembershipData();
       membershipData ??= await updateMembershipData();
@@ -63,14 +61,12 @@ class AccountService {
     return currentMembership;
   }
 
-  GroupUserInfoCard? getMembershipById(
-      UserMembershipData? membershipData, String membershipId) {
-    return membershipData?.destinyMemberships?.firstWhereOrNull(
-        (membership) => membership.membershipId == membershipId);
+  static GroupUserInfoCard? getMembershipById(UserMembershipData? membershipData, String membershipId) {
+    return membershipData?.destinyMemberships
+        ?.firstWhereOrNull((membership) => membership.membershipId == membershipId);
   }
 
-  Future<void> saveMembership(
-      UserMembershipData membershipData, String membershipId) async {
+  static Future<void> saveMembership(UserMembershipData membershipData, String membershipId) async {
     currentMembership = getMembershipById(membershipData, membershipId);
     await setCurrentMembershipId(membershipId);
   }

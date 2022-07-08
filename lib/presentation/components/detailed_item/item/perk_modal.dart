@@ -12,21 +12,23 @@ import 'package:quria/presentation/components/detailed_item/item/stat_progress_b
 
 class PerkModal extends StatelessWidget {
   final DestinyInventoryItemDefinition perk;
+  final double width;
   final int? index;
   final bool? isSelected;
   final String? instanceId;
   final String? characterId;
-  final Function(List<DestinyItemSocketState>?)? onSocketsChanged;
+  final Function(List<DestinyItemSocketState>)? onSocketsChanged;
 
-  const PerkModal(
-      {Key? key,
-      required this.perk,
-      this.onSocketsChanged,
-      this.index,
-      this.isSelected,
-      this.instanceId,
-      this.characterId})
-      : super(key: key);
+  const PerkModal({
+    required this.perk,
+    required this.width,
+    this.onSocketsChanged,
+    this.index,
+    this.isSelected,
+    this.instanceId,
+    this.characterId,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,16 +54,13 @@ class PerkModal extends StatelessWidget {
                       PerkItemDisplay(
                         selected: isSelected ?? false,
                         perk: perk,
-                        iconSize: mobileItemSize(context),
+                        iconSize: itemSize(context, width),
                       ),
                       SizedBox(
                         width: globalPadding(context),
                       ),
                       SizedBox(
-                        width: vw(context) -
-                            mobileItemSize(context) -
-                            (globalPadding(context) * 3) -
-                            40,
+                        width: width - itemSize(context, width) - (globalPadding(context) * 3) - 40,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -108,12 +107,9 @@ class PerkModal extends StatelessWidget {
                       if (perk.investmentStats?.isNotEmpty ?? false) {
                         for (var stat in perk.investmentStats!) {
                           list.add(StatProgressBar(
-                              width: vw(context),
-                              name: ManifestService
-                                      .manifestParsed
-                                      .destinyStatDefinition[stat.statTypeHash]!
-                                      .displayProperties!
-                                      .name ??
+                              width: width - globalPadding(context),
+                              name: ManifestService.manifestParsed.destinyStatDefinition[stat.statTypeHash]!
+                                      .displayProperties!.name ??
                                   'error',
                               value: stat.value?.abs() ?? 0,
                               type: DestinyItemType.Armor));
@@ -132,13 +128,9 @@ class PerkModal extends StatelessWidget {
                   if (instanceId != null && isSelected == false)
                     ElevatedButton(
                       onPressed: () {
-                        BungieApiService()
-                            .insertSocketPlugFree(
-                                instanceId!, perk.hash!, index!, characterId!)
-                            .then(
+                        BungieApiService().insertSocketPlugFree(instanceId!, perk.hash!, index!, characterId!).then(
                           (value) async {
-                            onSocketsChanged!(
-                                value?.response?.item?.sockets?.data?.sockets);
+                            onSocketsChanged!(value?.response?.item?.sockets?.data?.sockets ?? []);
                             Navigator.pop(context);
                           },
                         );
@@ -146,8 +138,8 @@ class PerkModal extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,
                         fixedSize: Size(
-                          vw(context) - globalPadding(context) * 2,
-                          (vw(context) - globalPadding(context) * 2) * 0.147,
+                          width - globalPadding(context) * 2,
+                          (width - globalPadding(context) * 2) * 0.147,
                         ),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(50),

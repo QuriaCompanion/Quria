@@ -1,11 +1,17 @@
 import 'package:flutter/foundation.dart';
+import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 
 class BuilderExoticProvider with ChangeNotifier {
-  int? _exoticHash;
-  int? get exoticHash => _exoticHash;
+  DestinyInventoryItemDefinition? _exotic;
+  DestinyInventoryItemDefinition? get exotic => _exotic;
 
-  void setExoticHash(int? exoticHash) {
-    _exoticHash = exoticHash;
+  void setExoticHash(DestinyInventoryItemDefinition? exotic) {
+    _exotic = exotic;
+    notifyListeners();
+  }
+
+  void reset() {
+    _exotic = null;
     notifyListeners();
   }
 }

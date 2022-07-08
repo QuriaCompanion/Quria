@@ -14,7 +14,7 @@ class FirestoreBuilder {
     required List<DestinyItemComponent> armor,
   }) async {
     var uuid = const Uuid();
-    var userId = await AccountService().getCurrentMembershipId();
+    var userId = await AccountService.getCurrentMembershipId();
 
     String uid = uuid.v1();
     Map<String, dynamic> map = {

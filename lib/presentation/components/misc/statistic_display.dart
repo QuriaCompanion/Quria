@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -27,7 +28,15 @@ class VerticalStatisticDisplay extends StatelessWidget {
           children: [
             SizedBox(
               width: width,
-              child: Image.network(link),
+              child: ExtendedImage.network(
+                link,
+                height: width,
+                width: width,
+                timeLimit: const Duration(seconds: 10),
+                cache: true,
+                filterQuality: FilterQuality.high,
+                fit: BoxFit.fill,
+              ),
             ),
             SizedBox(
               width: width,

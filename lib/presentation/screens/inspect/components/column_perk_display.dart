@@ -13,12 +13,13 @@ class ColumnPerkDisplay extends StatefulWidget {
     required this.item,
     required this.index,
     required this.selectedPerks,
+    required this.width,
     Key? key,
   }) : super(key: key);
   final DestinyInventoryItemDefinition item;
   final int index;
   final InspectHelper selectedPerks;
-
+  final double width;
   @override
   State<ColumnPerkDisplay> createState() => _ColumnPerkDisplayState();
 }
@@ -27,100 +28,116 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? sockets =
-        ManifestService
-            .manifestParsed
-            .destinyPlugSetDefinition[widget.item.sockets!
-                .socketEntries?[widget.index].randomizedPlugSetHash]
-            ?.reusablePlugItems;
+    final List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? sockets = ManifestService
+        .manifestParsed
+        .destinyPlugSetDefinition[widget.item.sockets!.socketEntries?[widget.index].randomizedPlugSetHash]
+        ?.reusablePlugItems;
     return Column(
       children: [
-        if (widget.item.sockets?.socketEntries?[widget.index]
-                .randomizedPlugSetHash !=
-            null)
+        if (widget.item.sockets?.socketEntries?[widget.index].randomizedPlugSetHash != null)
           for (int i = 0; i < sockets!.length; i++)
             Padding(
-              padding:
-                  EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
+              padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
               child: InkWell(
                 onTap: () {
-                  showMaterialModalBottomSheet(
-                      backgroundColor: Colors.transparent,
-                      expand: false,
+                  if (widget.width == vw(context)) {
+                    showMaterialModalBottomSheet(
+                        backgroundColor: Colors.transparent,
+                        expand: false,
+                        context: context,
+                        builder: (context) {
+                          return PerkModal(
+                            width: vw(context),
+                            perk:
+                                ManifestService.manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
+                            onSocketsChanged: (_) {
+                              setState(() {
+                                selectedIndex = i;
+                                switch (widget.index) {
+                                  case 1:
+                                    widget.selectedPerks.firstColumn = ManifestService
+                                        .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
+                                    break;
+                                  case 2:
+                                    widget.selectedPerks.secondColumn = ManifestService
+                                        .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
+                                    break;
+                                  case 3:
+                                    widget.selectedPerks.thirdColumn = ManifestService
+                                        .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
+                                    break;
+                                  case 4:
+                                    widget.selectedPerks.fourthColumn = ManifestService
+                                        .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
+                                    break;
+                                }
+                              });
+                            },
+                          );
+                        });
+                    return;
+                  }
+                  showDialog(
                       context: context,
                       builder: (context) {
-                        return PerkModal(
-                          perk: ManifestService.manifestParsed
-                                  .destinyInventoryItemDefinition[
-                              sockets[i].plugItemHash]!,
-                          onSocketsChanged: (_) {
-                            setState(() {
-                              selectedIndex = i;
-                              switch (widget.index) {
-                                case 1:
-                                  widget.selectedPerks.firstColumn =
-                                      ManifestService.manifestParsed
-                                              .destinyInventoryItemDefinition[
-                                          sockets[i].plugItemHash]!;
-                                  break;
-                                case 2:
-                                  widget.selectedPerks.secondColumn =
-                                      ManifestService.manifestParsed
-                                              .destinyInventoryItemDefinition[
-                                          sockets[i].plugItemHash]!;
-                                  break;
-                                case 3:
-                                  widget.selectedPerks.thirdColumn =
-                                      ManifestService.manifestParsed
-                                              .destinyInventoryItemDefinition[
-                                          sockets[i].plugItemHash]!;
-                                  break;
-                                case 4:
-                                  widget.selectedPerks.fourthColumn =
-                                      ManifestService.manifestParsed
-                                              .destinyInventoryItemDefinition[
-                                          sockets[i].plugItemHash]!;
-                                  break;
-                              }
-                            });
-                          },
+                        return Center(
+                          child: SizedBox(
+                            width: vw(context) * 0.3,
+                            child: PerkModal(
+                              width: vw(context) * 0.3,
+                              perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
+                                  widget.item.sockets?.socketEntries?[widget.index].singleInitialItemHash]!,
+                            ),
+                          ),
                         );
                       });
                 },
                 child: PerkItemDisplay(
                   selected: selectedIndex == i,
-                  perk: ManifestService.manifestParsed
-                      .destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
-                  iconSize: mobileItemSize(context),
+                  perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
+                  iconSize: itemSize(context, widget.width),
                 ),
               ),
             ),
-        if (widget.item.sockets?.socketEntries?[widget.index]
-                .randomizedPlugSetHash ==
-            null)
+        if (widget.item.sockets?.socketEntries?[widget.index].randomizedPlugSetHash == null)
           Padding(
             padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
             child: InkWell(
               onTap: () {
-                showMaterialModalBottomSheet(
+                if (widget.width == vw(context)) {
+                  showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,
                     expand: false,
                     context: context,
                     builder: (context) {
                       return PerkModal(
-                        perk: ManifestService
-                                .manifestParsed.destinyInventoryItemDefinition[
-                            widget.item.sockets?.socketEntries?[widget.index]
-                                .singleInitialItemHash]!,
+                        width: vw(context),
+                        perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
+                            widget.item.sockets?.socketEntries?[widget.index].singleInitialItemHash]!,
+                      );
+                    },
+                  );
+                  return;
+                }
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return Center(
+                        child: SizedBox(
+                          width: vw(context) * 0.3,
+                          child: PerkModal(
+                            width: vw(context) * 0.3,
+                            perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
+                                widget.item.sockets?.socketEntries?[widget.index].singleInitialItemHash]!,
+                          ),
+                        ),
                       );
                     });
               },
               child: PerkItemDisplay(
-                perk: ManifestService
-                        .manifestParsed.destinyInventoryItemDefinition[
-                    widget.item.sockets?.socketEntries?[widget.index]
-                        .singleInitialItemHash]!,
-                iconSize: mobileItemSize(context),
+                perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
+                    widget.item.sockets?.socketEntries?[widget.index].singleInitialItemHash]!,
+                iconSize: itemSize(context, widget.width),
                 selected: true,
               ),
             ),

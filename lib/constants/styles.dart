@@ -19,19 +19,43 @@ const exoticHeader = AssetImage("assets/img/Exotic.png");
 const subclassHeader = AssetImage("assets/img/Subclass.png");
 const modsHeader = AssetImage("assets/img/mods.png");
 const buildHeader = AssetImage("assets/img/build.png");
+const buildHeaderWeb = AssetImage("assets/img/builderWeb.png");
+
 const collectionHeader = AssetImage("assets/img/collection.png");
 const splashBackground = AssetImage("assets/img/base_background.png");
+const splashBackgroundWeb = AssetImage("assets/img/splash_large.png");
 
 double globalPadding(BuildContext context) {
+  if (vw(context) > 1000) {
+    return vw(context) * 0.02;
+  }
   return vw(context) * 0.04266;
 }
 
-double mobileItemSize(BuildContext context) {
-  return (vw(context) - (globalPadding(context) * 6)) / 5;
+double itemSize(BuildContext context, double width) {
+  return (width - (globalPadding(context) * 6)) / 5;
 }
 
 double vw(BuildContext context) {
   return MediaQuery.of(context).size.width;
+}
+
+double iconSize(BuildContext context, double width) {
+  return width / 6.69;
+}
+
+double desktopCharactersColumnSize(BuildContext context) {
+  if (vw(context) > 1600) {
+    return vw(context) * 0.4;
+  }
+  return vw(context) * 0.475;
+}
+
+double itemComponentDisplayTextWidth(BuildContext context, double width) {
+  if (vw(context) > 1000) {
+    return width - (iconSize(context, width) * 2) - globalPadding(context);
+  }
+  return width - (iconSize(context, width) * 2) - globalPadding(context) * 3;
 }
 
 double vh(BuildContext context) {
@@ -43,9 +67,7 @@ double appBarItem(BuildContext context) {
 }
 
 double appBarHeight(BuildContext context) {
-  return MediaQuery.of(context).padding.top +
-      (globalPadding(context) * 2) +
-      appBarItem(context);
+  return MediaQuery.of(context).padding.top + (globalPadding(context) * 2) + appBarItem(context);
 }
 
 const Color backgroundColor = black;
@@ -76,8 +98,7 @@ const hr = Divider(
   height: 22,
   thickness: 1,
 );
-const divider =
-    Text(' | ', style: TextStyle(color: Color.fromRGBO(40, 45, 56, 1)));
+const divider = Text(' | ', style: TextStyle(color: Color.fromRGBO(40, 45, 56, 1)));
 
 BoxDecoration regularShadow = BoxDecoration(
   color: Colors.grey.shade700,
@@ -90,6 +111,5 @@ BoxDecoration regularShadow = BoxDecoration(
     ),
   ],
 );
-const String ghostLink =
-    "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg";
+const String ghostLink = "https://www.bungie.net/common/destiny2_content/screenshots/1715842350.jpg";
 const BoxDecoration blackBackground = BoxDecoration(color: black);

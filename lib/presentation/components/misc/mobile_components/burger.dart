@@ -54,17 +54,14 @@ class _BurgerState extends State<Burger> {
                 ),
                 const SizedBox(height: 16),
                 textH2(
-                  AccountService.membershipData?.bungieNetUser?.uniqueName ??
-                      "an error has occured",
+                  AccountService.membershipData?.bungieNetUser?.uniqueName ?? "an error has occured",
                   utf8: false,
                 )
               ],
             ),
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height -
-                ((vw(context) * 0.58) * 0.74) -
-                globalPadding(context),
+            height: MediaQuery.of(context).size.height - ((vw(context) * 0.58) * 0.74) - globalPadding(context),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -84,9 +81,7 @@ class _BurgerState extends State<Burger> {
                           children: [
                             SvgPicture.asset("assets/icons/Perso-1.svg"),
                             const SizedBox(width: 18),
-                            textBodyHighRegular(
-                                AppLocalizations.of(context)!.character,
-                                utf8: false),
+                            textBodyHighRegular(AppLocalizations.of(context)!.character, utf8: false),
                           ],
                         ),
                       ),
@@ -100,9 +95,7 @@ class _BurgerState extends State<Burger> {
                           children: [
                             SvgPicture.asset("assets/icons/Quria.svg"),
                             const SizedBox(width: 18),
-                            textBodyHighRegular(
-                                AppLocalizations.of(context)!.quria_builder,
-                                utf8: false),
+                            textBodyHighRegular(AppLocalizations.of(context)!.quria_builder, utf8: false),
                           ],
                         ),
                       ),
@@ -116,9 +109,7 @@ class _BurgerState extends State<Burger> {
                           children: [
                             SvgPicture.asset("assets/icons/Coffre.svg"),
                             const SizedBox(width: 18),
-                            textBodyHighRegular(
-                                AppLocalizations.of(context)!.vault,
-                                utf8: false),
+                            textBodyHighRegular(AppLocalizations.of(context)!.vault, utf8: false),
                           ],
                         ),
                       ),
@@ -132,9 +123,7 @@ class _BurgerState extends State<Burger> {
                           children: [
                             SvgPicture.asset("assets/icons/Collection.svg"),
                             const SizedBox(width: 18),
-                            textBodyHighRegular(
-                                AppLocalizations.of(context)!.collections,
-                                utf8: false),
+                            textBodyHighRegular(AppLocalizations.of(context)!.collections, utf8: false),
                           ],
                         ),
                       ),
@@ -161,23 +150,19 @@ class _BurgerState extends State<Burger> {
                 Container(
                   width: vw(context) * 0.58,
                   padding: EdgeInsets.only(
-                      left: globalPadding(context),
-                      right: globalPadding(context),
-                      bottom: globalPadding(context)),
+                      left: globalPadding(context), right: globalPadding(context), bottom: globalPadding(context)),
                   child: InkWell(
                     onTap: () {
                       DisplayService.isProfileUp = false;
-                      ProfileService().reset();
-                      AccountService().reset();
+                      ProfileService.reset(context);
+                      AccountService.reset();
                       Navigator.pushNamed(context, routeLogin);
                     },
                     child: Row(
                       children: [
                         SvgPicture.asset("assets/icons/Off.svg"),
                         const SizedBox(width: 18),
-                        textBodyHighRegular(
-                            AppLocalizations.of(context)!.logout,
-                            utf8: false),
+                        textBodyHighRegular(AppLocalizations.of(context)!.logout, utf8: false),
                       ],
                     ),
                   ),

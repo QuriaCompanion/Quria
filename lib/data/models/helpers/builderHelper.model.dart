@@ -30,31 +30,6 @@ class BuilderHelper {
   });
 }
 
-class BuilderPreparation {
-  String characterId;
-  List<DestinyInventoryItemDefinition> subclassMods;
-  List<int> statOrder;
-  int? exoticHash;
-  List<ModSlots> armorMods;
-  String? subclassInstanceId;
-  String classItemInstanceId;
-  StatWeighing statWeighing;
-  bool considerMasterwork;
-  bool includeSunset;
-  BuilderPreparation({
-    required this.characterId,
-    required this.subclassMods,
-    required this.statOrder,
-    required this.armorMods,
-    required this.classItemInstanceId,
-    required this.statWeighing,
-    required this.considerMasterwork,
-    required this.includeSunset,
-    this.exoticHash,
-    this.subclassInstanceId,
-  });
-}
-
 class BuilderOptionalMods {
   final List<DestinyInventoryItemDefinition?> modSelected;
   final Map<int, int> statValues;

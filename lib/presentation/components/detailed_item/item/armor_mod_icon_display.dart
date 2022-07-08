@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/texts.dart';
@@ -7,9 +8,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 class ArmorModIconDisplay extends StatelessWidget {
   final DestinyInventoryItemDefinition socket;
   final double iconSize;
-  const ArmorModIconDisplay(
-      {required this.iconSize, required this.socket, Key? key})
-      : super(key: key);
+  const ArmorModIconDisplay({required this.iconSize, required this.socket, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,35 +19,37 @@ class ArmorModIconDisplay extends StatelessWidget {
       child: Stack(
         alignment: Alignment.topRight,
         children: [
-          Image(
+          ExtendedImage.network(
+            DestinyData.bungieLink + socket.displayProperties!.icon!,
             width: iconSize,
             height: iconSize,
-            image: NetworkImage(
-                DestinyData.bungieLink + socket.displayProperties!.icon!),
+            timeLimit: const Duration(seconds: 10),
+            cache: true,
+            fit: BoxFit.fill,
+            filterQuality: FilterQuality.high,
+            printError: false,
           ),
           if (socket.investmentStats!.isNotEmpty &&
-              ManifestService
-                      .manifestParsed
-                      .destinyStatDefinition[
-                          socket.investmentStats?[0].statTypeHash]
-                      ?.displayProperties
-                      ?.hasIcon ==
-                  true)
-            Image(
+              ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats?[0].statTypeHash]
+                      ?.displayProperties?.hasIcon ==
+                  true &&
+              ManifestService.manifestParsed.destinyStatDefinition[3578062600]?.displayProperties?.icon != null &&
+              socket.investmentStats?[0].statTypeHash != 3578062600)
+            ExtendedImage.network(
+              DestinyData.bungieLink +
+                  ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!
+                      .displayProperties!.icon!,
               width: iconSize,
               height: iconSize,
-              image: NetworkImage(DestinyData.bungieLink +
-                  ManifestService
-                      .manifestParsed
-                      .destinyStatDefinition[
-                          socket.investmentStats![0].statTypeHash]!
-                      .displayProperties!
-                      .icon!),
+              timeLimit: const Duration(seconds: 10),
+              cache: true,
+              fit: BoxFit.fill,
+              filterQuality: FilterQuality.high,
+              printError: false,
             ),
           Padding(
             padding: const EdgeInsets.only(right: 5.0),
-            child: textBodyBold(
-                socket.plug?.energyCost?.energyCost.toString() ?? ""),
+            child: textBodyBold(socket.plug?.energyCost?.energyCost.toString() ?? ""),
           ),
         ],
       ),

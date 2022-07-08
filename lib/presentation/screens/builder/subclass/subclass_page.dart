@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_steps.dart';
 import 'package:quria/presentation/screens/builder/subclass/subclass_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -21,10 +21,8 @@ class _SubclassPageState extends State<SubclassPage> {
   @override
   void initState() {
     super.initState();
-    data = ProfileService().getSubclassesForCharacter(
-        Provider.of<CharactersProvider>(context, listen: false)
-            .currentCharacter!
-            .characterId!);
+    data = Provider.of<InventoryProvider>(context, listen: false).getSubclassesForCharacter(
+        Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!);
   }
 
   @override

@@ -14,29 +14,27 @@ class VaultPage extends StatefulWidget {
 }
 
 class _VaultPageState extends State<VaultPage> {
-  late Future<VaultHelper> _future;
+  late Future<void> _future;
 
   @override
   void initState() {
     super.initState();
-    _future = DisplayService().getVault();
+    _future = DisplayService.loadManifestAndProfile(context);
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: _future,
-        builder: (context, AsyncSnapshot<VaultHelper> snapshot) {
-          if (snapshot.hasData) {
+        builder: (context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            VaultHelper data = DisplayService.getVault(context);
             if (vw(context) < 1000) {
               return Scaffold(
                 backgroundColor: black,
                 drawer: const Burger(),
                 body: VaultMobileView(
-                  data: snapshot.data!,
-                  onTransfer: () {
-                    setState(() {});
-                  },
+                  data: data,
                 ),
               );
             } else {
@@ -46,9 +44,7 @@ class _VaultPageState extends State<VaultPage> {
             return Container(
                 height: vh(context),
                 width: vw(context),
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover, image: splashBackground)),
+                decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
                 child: Loader(
                   splashColor: Colors.transparent,
                   animationSize: vw(context) * 0.5,

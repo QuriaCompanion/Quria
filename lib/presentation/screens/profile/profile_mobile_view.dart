@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -15,10 +14,8 @@ import 'package:quria/presentation/var/routes.dart';
 
 class ProfileMobileView extends StatefulWidget {
   final ProfileHelper data;
-  final void Function(InspectData) onClick;
   const ProfileMobileView({
     required this.data,
-    required this.onClick,
     Key? key,
   }) : super(key: key);
 
@@ -32,15 +29,9 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
   Widget build(BuildContext context) {
     String icon = widget.data.isNewSubclass
         ? ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition[
-                widget.data.selectedCharacterSubclass!.itemHash]!
-            .screenshot!
-        : ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition[
-                widget.data.selectedCharacterSubclass!.itemHash]!
-            .secondaryIcon!;
+            .manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.screenshot!
+        : ManifestService.manifestParsed
+            .destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!;
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -51,18 +42,17 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
               DestinyData.bungieLink + icon,
             ),
             child: ProfileMobileHeader(
+              width: vw(context),
               stats: widget.data.selectedCharacter!.stats,
               characterSuper: widget.data.characterSuper!,
-              subclassId:
-                  widget.data.selectedCharacterSubclass!.itemInstanceId!,
+              subclassId: widget.data.selectedCharacterSubclass!.itemInstanceId!,
               characterId: widget.data.selectedCharacter!.characterId!,
               isNewSubclass: widget.data.isNewSubclass,
+              subclass: widget.data.selectedCharacterSubclass!,
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(
-                top: globalPadding(context),
-                bottom: globalPadding(context) * 2),
+            padding: EdgeInsets.only(top: globalPadding(context), bottom: globalPadding(context) * 2),
             child: SizedBox(
               height: 45,
               child: Row(
@@ -103,37 +93,24 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
               ),
             ),
           ),
-          for (DestinyItemComponent item
-              in widget.data.selectedCharacterEquipment.where((element) =>
-                  ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition[element.itemHash]
-                      ?.itemType ==
-                  currentFilter))
+          for (DestinyItemComponent item in widget.data.selectedCharacterEquipment.where((element) =>
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemType ==
+              currentFilter))
             Padding(
               padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
               child: Column(
                 children: [
                   RepaintBoundary(
                     child: ProfileMobileItemCard(
-                      onClick: (inspectData) {
-                        widget.onClick(inspectData);
-                      },
+                      width: vw(context),
                       item: item,
                       characterId: widget.data.selectedCharacter!.characterId!,
                       inventory: widget.data.selectedCharacterInventory
                           .where((element) =>
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition[
-                                      element.itemHash]
-                                  ?.equippingBlock
-                                  ?.equipmentSlotTypeHash ==
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition[item.itemHash]
-                                  ?.equippingBlock
-                                  ?.equipmentSlotTypeHash)
+                              ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]
+                                  ?.equippingBlock?.equipmentSlotTypeHash ==
+                              ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]
+                                  ?.equippingBlock?.equipmentSlotTypeHash)
                           .toList(),
                     ),
                   ),

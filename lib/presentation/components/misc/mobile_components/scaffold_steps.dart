@@ -11,8 +11,7 @@ import 'package:quria/presentation/components/misc/rounded_button.dart';
 class ScaffoldSteps<T> extends StatelessWidget {
   final Widget body;
   final String route;
-  const ScaffoldSteps({required this.body, required this.route, Key? key})
-      : super(key: key);
+  const ScaffoldSteps({required this.body, required this.route, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +27,7 @@ class ScaffoldSteps<T> extends StatelessWidget {
               child: Container(
                 alignment: Alignment.topCenter,
                 padding: EdgeInsets.only(
-                  top: MediaQuery.of(context).padding.top +
-                      globalPadding(context),
+                  top: MediaQuery.of(context).padding.top + globalPadding(context),
                 ),
                 child: SizedBox(
                   width: appBarItem(context),

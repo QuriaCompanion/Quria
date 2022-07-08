@@ -1,7 +1,8 @@
-import 'package:flutter/foundation.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quria/data/models/StatWeighing.enum.dart';
 import 'package:quria/data/models/helpers/filterHelper.model.dart';
-
-import '../../models/StatWeighing.enum.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
 class BuilderStatsFilterProvider with ChangeNotifier {
   final List<FilterHelper> _filters = [];
@@ -24,7 +25,19 @@ class BuilderStatsFilterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  init(List<FilterHelper> filters) {
-    _filters.addAll(filters);
+  init(BuildContext context) {
+    if (filters.isEmpty) {
+      final filters = [
+        FilterHelper(name: AppLocalizations.of(context)!.mobility, icon: "mobility.svg", value: StatsHash.mobility),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.resilience, icon: "resilience.svg", value: StatsHash.resilience),
+        FilterHelper(name: AppLocalizations.of(context)!.recovery, icon: "recovery.svg", value: StatsHash.recovery),
+        FilterHelper(
+            name: AppLocalizations.of(context)!.discipline, icon: "discipline.svg", value: StatsHash.discipline),
+        FilterHelper(name: AppLocalizations.of(context)!.intellect, icon: "intellect.svg", value: StatsHash.intellect),
+        FilterHelper(name: AppLocalizations.of(context)!.strength, icon: "strength.svg", value: StatsHash.strength),
+      ];
+      _filters.addAll(filters);
+    }
   }
 }

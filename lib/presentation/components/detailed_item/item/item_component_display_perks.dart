@@ -1,7 +1,6 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
-import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -12,17 +11,19 @@ class ItemComponentDisplayPerks extends StatelessWidget {
   final List<DestinyItemSocketState> armorSockets;
   final DestinyInventoryItemDefinition itemDef;
   final List<DestinyItemSocketState> cosmetics;
+  final double width;
   const ItemComponentDisplayPerks({
     required this.itemDef,
     required this.perks,
     required this.cosmetics,
     required this.armorSockets,
+    required this.width,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double smallIconSize = vw(context) / 11.9;
+    double smallIconSize = width / 11.9;
     return Row(
       children: [
         for (DestinyItemSocketState perk in perks)
@@ -35,8 +36,7 @@ class ItemComponentDisplayPerks extends StatelessWidget {
               ),
               child: PerkItemDisplay(
                 selected: true,
-                perk: ManifestService.manifestParsed
-                    .destinyInventoryItemDefinition[perk.plugHash]!,
+                perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[perk.plugHash]!,
                 iconSize: smallIconSize,
               )),
         if (itemDef.itemType == DestinyItemType.Armor)
@@ -55,10 +55,7 @@ class ItemComponentDisplayPerks extends StatelessWidget {
               child: Image(
                 image: NetworkImage(DestinyData.bungieLink +
                     ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[socket.plugHash]!
-                        .displayProperties!
-                        .icon!),
+                        .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!),
               ),
             ),
         const Spacer(),
@@ -79,10 +76,7 @@ class ItemComponentDisplayPerks extends StatelessWidget {
                 child: Image(
                   image: NetworkImage(DestinyData.bungieLink +
                       ManifestService
-                          .manifestParsed
-                          .destinyInventoryItemDefinition[socket.plugHash]!
-                          .displayProperties!
-                          .icon!),
+                          .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!),
                 ),
               ),
           ],

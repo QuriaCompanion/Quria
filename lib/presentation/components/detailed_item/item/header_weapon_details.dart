@@ -34,8 +34,7 @@ class HeaderWeaponDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DestinyPresentationNodeDefinition? typeOfAmmo = DestinyData.ammoInfoByType[
-        ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!
-            .equippingBlock?.ammoType];
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!.equippingBlock?.ammoType];
     return SizedBox(
       width: width,
       height: height,
@@ -52,20 +51,18 @@ class HeaderWeaponDetails extends StatelessWidget {
                   Row(
                     children: [
                       if (ManifestService
-                              .manifestParsed
-                              .destinyInventoryItemDefinition[itemHash]
-                              ?.defaultDamageTypeHash !=
+                              .manifestParsed.destinyInventoryItemDefinition[itemHash]?.defaultDamageTypeHash !=
                           null)
                         Image(
-                          image: NetworkImage(DestinyData.bungieLink +
-                              ManifestService
-                                  .manifestParsed
-                                  .destinyDamageTypeDefinition[ManifestService
-                                      .manifestParsed
-                                      .destinyInventoryItemDefinition[itemHash]!
-                                      .defaultDamageTypeHash]!
-                                  .displayProperties!
-                                  .icon!),
+                          image: NetworkImage(
+                            DestinyData.bungieLink +
+                                ManifestService
+                                    .manifestParsed
+                                    .destinyDamageTypeDefinition[ManifestService.manifestParsed
+                                        .destinyInventoryItemDefinition[itemHash]!.defaultDamageTypeHash]!
+                                    .displayProperties!
+                                    .icon!,
+                          ),
                           width: iconSize,
                           height: iconSize,
                         ),
@@ -76,13 +73,11 @@ class HeaderWeaponDetails extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             AutoSizeText(
-                              utf8.decode(ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition[itemHash]!
-                                  .displayProperties!
-                                  .name!
-                                  .runes
-                                  .toList()),
+                              utf8.decode(
+                                ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!
+                                    .displayProperties!.name!.runes
+                                    .toList(),
+                              ),
                               maxLines: 1,
                               maxFontSize: fontSize + 5,
                               stepGranularity: 1,
@@ -94,10 +89,7 @@ class HeaderWeaponDetails extends StatelessWidget {
                             ),
                             AutoSizeText(
                               utf8.decode(ManifestService
-                                  .manifestParsed
-                                  .destinyInventoryItemDefinition[itemHash]!
-                                  .itemTypeDisplayName!
-                                  .runes
+                                  .manifestParsed.destinyInventoryItemDefinition[itemHash]!.itemTypeDisplayName!.runes
                                   .toList()),
                               maxLines: 1,
                               maxFontSize: fontSize - 5,
@@ -119,16 +111,12 @@ class HeaderWeaponDetails extends StatelessWidget {
                   children: [
                     Text(
                       '$powerLevel',
-                      style: TextStyle(
-                          color: Colors.yellow, fontSize: fontSize + 5),
+                      style: TextStyle(color: Colors.yellow, fontSize: fontSize + 5),
                     ),
                     Image(
                       image: NetworkImage(DestinyData.bungieLink +
                           ManifestService
-                              .manifestParsed
-                              .destinyStatDefinition[StatsHash.power]!
-                              .displayProperties!
-                              .icon!),
+                              .manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!),
                       width: fontSize + 5,
                       color: Colors.yellow,
                     ),
@@ -140,15 +128,13 @@ class HeaderWeaponDetails extends StatelessWidget {
             Row(
               children: [
                 Image(
-                  image: NetworkImage(DestinyData.bungieLink +
-                      typeOfAmmo.displayProperties!.icon!),
+                  image: NetworkImage(DestinyData.bungieLink + typeOfAmmo.displayProperties!.icon!),
                   width: iconSize,
                   height: iconSize,
                 ),
                 SizedBox(width: childPadding),
                 Text(
-                  utf8.decode(
-                      typeOfAmmo.displayProperties!.name!.runes.toList()),
+                  utf8.decode(typeOfAmmo.displayProperties!.name!.runes.toList()),
                   style: TextStyle(color: Colors.white, fontSize: fontSize),
                 )
               ],

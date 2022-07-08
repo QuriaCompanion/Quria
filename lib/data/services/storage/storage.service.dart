@@ -73,8 +73,7 @@ class StorageService {
   }
 
   static Future<void> getDefinitions<T>(List<int> hashes) async {
-    List<T?> definitions =
-        await DefinitionTableNames.getDefinitions[T]!(hashes);
+    List<T?> definitions = await DefinitionTableNames.getDefinitions[T]!(hashes);
 
     for (int i = 0; i < hashes.length; i++) {
       if (definitions[i] == null) continue;

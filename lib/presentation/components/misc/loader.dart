@@ -35,8 +35,7 @@ class Loader extends StatelessWidget {
             Text(
               waitingMessage!,
               textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: fontSize, fontWeight: fontWeight, color: color),
+              style: TextStyle(fontSize: fontSize, fontWeight: fontWeight, color: color),
             ),
           if (waitingMessage != null)
             SizedBox(
@@ -44,9 +43,7 @@ class Loader extends StatelessWidget {
             ),
           RepaintBoundary(
               child: Lottie.asset('assets/animations/loader.json',
-                  frameRate: FrameRate.max,
-                  width: animationSize,
-                  height: animationSize)),
+                  frameRate: FrameRate.max, width: animationSize, height: animationSize)),
         ],
       ),
     );

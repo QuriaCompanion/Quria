@@ -27,11 +27,10 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
   @override
   void initState() {
     super.initState();
-    currentFilter = CollectionFilter.primary;
+    currentFilter = CollectionFilter.kinetic;
     selectedBucket = InventoryBucket.kineticWeapons;
     sortedItems = widget.items.toList();
-    sortedItems.sort((a, b) =>
-        b.inventory!.tierType!.index.compareTo(a.inventory!.tierType!.index));
+    sortedItems.sort((a, b) => b.inventory!.tierType!.index.compareTo(a.inventory!.tierType!.index));
   }
 
   @override
@@ -56,9 +55,7 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                        top: globalPadding(context),
-                        bottom: globalPadding(context) * 2),
+                    padding: EdgeInsets.only(top: globalPadding(context), bottom: globalPadding(context) * 2),
                     child: SizedBox(
                       height: 45,
                       child: Row(
@@ -67,41 +64,36 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                           InkWell(
                               onTap: () {
                                 setState(() {
-                                  currentFilter = CollectionFilter.primary;
-                                  selectedBucket =
-                                      InventoryBucket.kineticWeapons;
+                                  currentFilter = CollectionFilter.kinetic;
+                                  selectedBucket = InventoryBucket.kineticWeapons;
                                 });
                               },
                               child: MobileNavItem(
-                                selected: selectedBucket ==
-                                    InventoryBucket.kineticWeapons,
+                                selected: selectedBucket == InventoryBucket.kineticWeapons,
                                 value: AppLocalizations.of(context)!.kinetic,
                                 width: vw(context) * 0.29,
                               )),
                           InkWell(
                               onTap: () {
                                 setState(() {
-                                  currentFilter = CollectionFilter.special;
-                                  selectedBucket =
-                                      InventoryBucket.energyWeapons;
+                                  currentFilter = CollectionFilter.energy;
+                                  selectedBucket = InventoryBucket.energyWeapons;
                                 });
                               },
                               child: MobileNavItem(
-                                selected: selectedBucket ==
-                                    InventoryBucket.energyWeapons,
+                                selected: selectedBucket == InventoryBucket.energyWeapons,
                                 value: AppLocalizations.of(context)!.energy,
                                 width: vw(context) * 0.29,
                               )),
                           InkWell(
                               onTap: () {
                                 setState(() {
-                                  currentFilter = CollectionFilter.heavy;
+                                  currentFilter = CollectionFilter.power;
                                   selectedBucket = InventoryBucket.powerWeapons;
                                 });
                               },
                               child: MobileNavItem(
-                                selected: selectedBucket ==
-                                    InventoryBucket.powerWeapons,
+                                selected: selectedBucket == InventoryBucket.powerWeapons,
                                 value: AppLocalizations.of(context)!.power,
                                 width: vw(context) * 0.29,
                               )),
@@ -117,15 +109,11 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
         ),
         for (final entry in currentFilter.entries)
           SliverPadding(
-            padding: EdgeInsets.symmetric(
-                horizontal: globalPadding(context),
-                vertical: globalPadding(context) / 2),
+            padding: EdgeInsets.symmetric(horizontal: globalPadding(context), vertical: globalPadding(context) / 2),
             sliver: CollectionMobileItemSection(
-              sectionName: sortedItems
-                      .firstWhere(
-                          (element) => entry.value == element.itemSubType)
-                      .itemTypeDisplayName ??
-                  'oopsie woopsie',
+              sectionName:
+                  sortedItems.firstWhere((element) => entry.value == element.itemSubType).itemTypeDisplayName ??
+                      'oopsie woopsie',
               items: sortedItems
                   .where((element) =>
                       entry.value == element.itemSubType &&

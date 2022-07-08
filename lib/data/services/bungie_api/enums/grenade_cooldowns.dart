@@ -51,7 +51,7 @@ class GrenadeCooldown {
     7: 84,
     8: 76,
     9: 69,
-    10: 58
+    10: 58,
   };
   static const Map<int, int> tier3 = {
     0: 1,
@@ -64,7 +64,7 @@ class GrenadeCooldown {
     7: 67,
     8: 61,
     9: 55,
-    10: 47
+    10: 47,
   };
   static const Map<int, int> tier4 = {
     0: 1,
@@ -77,7 +77,7 @@ class GrenadeCooldown {
     7: 58,
     8: 52,
     9: 48,
-    10: 40
+    10: 40,
   };
   static const Map<int, int> tier5 = {
     0: 1,
@@ -90,7 +90,7 @@ class GrenadeCooldown {
     7: 51,
     8: 45,
     9: 41,
-    10: 35
+    10: 35,
   };
   static const Map<int, int> tier6 = {
     0: 1,
@@ -103,7 +103,7 @@ class GrenadeCooldown {
     7: 40,
     8: 36,
     9: 33,
-    10: 28
+    10: 28,
   };
   static const Map<int, int> tier7 = {
     0: 1,
@@ -116,6 +116,6 @@ class GrenadeCooldown {
     7: 35,
     8: 32,
     9: 29,
-    10: 24
+    10: 24,
   };
 }

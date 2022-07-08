@@ -7,8 +7,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class CharacterBannerInfo extends StatelessWidget {
   final DestinyCharacterComponent character;
-  const CharacterBannerInfo({required this.character, Key? key})
-      : super(key: key);
+  const CharacterBannerInfo({required this.character, Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,42 +25,37 @@ class CharacterBannerInfo extends StatelessWidget {
                 width: appBarItem(context),
                 height: appBarItem(context),
                 child: Image(
-                  image: NetworkImage(
-                      DestinyData.bungieLink + character.emblemPath!),
+                  image: NetworkImage(DestinyData.bungieLink + character.emblemPath!),
                   fit: BoxFit.fill,
                 ),
               ),
               SizedBox(
                 width: vw(context) * 0.016,
               ),
-              textH3(ManifestService
-                      .manifestParsed
-                      .destinyClassDefinition[character.classHash]!
-                      .genderedClassNamesByGenderHash![
-                  character.genderHash.toString()]!),
+              textH3(
+                ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
+                    .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
+              ),
             ],
           ),
           SizedBox(
             width: vw(context) * 0.18,
-            child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: appBarItem(context),
-                    height: appBarItem(context),
-                    child: Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          ManifestService
-                              .manifestParsed
-                              .destinyStatDefinition[StatsHash.power]!
-                              .displayProperties!
-                              .icon!),
-                      color: yellow,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  textH3(character.light.toString(), color: yellow)
-                ]),
+            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              SizedBox(
+                width: appBarItem(context),
+                height: appBarItem(context),
+                child: Image(
+                  image: NetworkImage(DestinyData.bungieLink +
+                      ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!),
+                  color: yellow,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              textH3(
+                character.light.toString(),
+                color: yellow,
+              )
+            ]),
           )
         ],
       ),

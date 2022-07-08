@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/display/display.service.dart';
+import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
+import 'package:quria/presentation/screens/builder/desktop/builder_desktop_view.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -23,7 +25,6 @@ class ExoticWidget extends StatefulWidget {
 }
 
 class ExoticWidgetState extends State<ExoticWidget> {
-  final DisplayService display = DisplayService();
   late DestinyCharacterComponent currentCharacter;
   late Future<List<DestinyInventoryItemDefinition>> _future;
   bool isLoading = true;
@@ -31,25 +32,22 @@ class ExoticWidgetState extends State<ExoticWidget> {
   @override
   void initState() {
     super.initState();
-    currentCharacter = Provider.of<CharactersProvider>(context, listen: false)
-        .currentCharacter as DestinyCharacterComponent;
-    _future = display.getExotics(currentCharacter.classType!);
+    currentCharacter =
+        Provider.of<CharactersProvider>(context, listen: false).currentCharacter as DestinyCharacterComponent;
+    _future = DisplayService.getExotics(context, currentCharacter.classType!);
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _future,
-      builder: ((context,
-          AsyncSnapshot<List<DestinyInventoryItemDefinition>> snapshot) {
+      builder: ((context, AsyncSnapshot<List<DestinyInventoryItemDefinition>> snapshot) {
         if (snapshot.hasData) isLoading = false;
         if (isLoading) {
           return Container(
               height: vh(context),
               width: vw(context),
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover, image: splashBackground)),
+              decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
               child: Loader(
                 splashColor: Colors.transparent,
                 animationSize: vw(context) * 0.5,
@@ -63,8 +61,7 @@ class ExoticWidgetState extends State<ExoticWidget> {
                 characterId: currentCharacter.characterId!,
                 exotics: snapshot.data!,
                 onCharacterChange: (newIndex) {
-                  Provider.of<CharactersProvider>(context, listen: false)
-                      .setCurrentCharacter(newIndex);
+                  Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(newIndex);
                   Navigator.popAndPushNamed(context, routeExotic);
                 },
               ),
@@ -79,7 +76,7 @@ class ExoticWidgetState extends State<ExoticWidget> {
                   onPressed: () => Navigator.pushNamed(context, routeFilter)),
             );
           } else {
-            return Container();
+            return const ScaffoldDesktop(currentRoute: routeExotic, body: BuilderDesktopView());
           }
         }
       }),

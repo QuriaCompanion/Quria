@@ -14,10 +14,7 @@ class TalentGridMobileView extends StatefulWidget {
   final DestinyItemTalentGridComponent talentGridComponent;
   final DestinyInventoryItemDefinition subclass;
   const TalentGridMobileView(
-      {required this.talentGrid,
-      required this.talentGridComponent,
-      required this.subclass,
-      Key? key})
+      {required this.talentGrid, required this.talentGridComponent, required this.subclass, Key? key})
       : super(key: key);
 
   @override
@@ -30,8 +27,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
     return Column(
       children: [
         mobileHeader(context,
-            image: NetworkImage(
-                DestinyData.bungieLink + widget.subclass.secondaryIcon!),
+            image: NetworkImage(DestinyData.bungieLink + widget.subclass.secondaryIcon!),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,16 +49,13 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
           child: Column(
             children: [
               Container(
-                  padding:
-                      EdgeInsets.symmetric(vertical: globalPadding(context)),
-                  decoration: const BoxDecoration(
-                      color: blackLight,
-                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  padding: EdgeInsets.symmetric(vertical: globalPadding(context)),
+                  decoration:
+                      const BoxDecoration(color: blackLight, borderRadius: BorderRadius.all(Radius.circular(8))),
                   width: double.infinity,
                   child: Center(
                     child: textCaption(
-                      AppLocalizations.of(context)!
-                          .builder_subclass_mods_caption,
+                      AppLocalizations.of(context)!.builder_subclass_mods_caption,
                       utf8: false,
                     ),
                   )),
@@ -72,10 +65,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
                 utf8: false,
                 child: TalentGridMobileItem(
                   talentGridNodes: widget.talentGrid.nodes!,
-                  talentGridComponent: [
-                    widget.talentGridComponent.nodes![2],
-                    widget.talentGridComponent.nodes![3]
-                  ],
+                  talentGridComponent: [widget.talentGridComponent.nodes![2], widget.talentGridComponent.nodes![3]],
                 ),
               ),
               mobileSectionInverted(

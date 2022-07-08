@@ -126,49 +126,32 @@ extension ArmorStatIntExtension on ArmorStatInt {
 class Conditions {
   static amorSockets(DestinyItemSocketState item) {
     return (item.isVisible!) &&
-        ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition[item.plugHash]
-                ?.plug
-                ?.plugCategoryHash !=
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.plug?.plugCategoryHash !=
             2973005342 &&
-        !ManifestService
-            .manifestParsed
-            .destinyInventoryItemDefinition[item.plugHash]!
-            .plug!
-            .plugCategoryIdentifier!
+        !ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]!.plug!.plugCategoryIdentifier!
             .contains('masterworks.stat') &&
-        ManifestService.manifestParsed
-                .destinyInventoryItemDefinition[item.plugHash]?.itemType !=
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.itemType !=
             DestinyItemType.Armor &&
-        ManifestService.manifestParsed
-                .destinyInventoryItemDefinition[item.plugHash]?.itemSubType !=
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.itemSubType !=
             DestinyItemSubType.Ornament &&
-        ManifestService
-                .manifestParsed
-                .destinyInventoryItemDefinition[item.plugHash]
-                ?.inventory
-                ?.tierType !=
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.inventory?.tierType !=
             TierType.Exotic;
   }
 
   static cosmeticSockets(DestinyItemSocketState item) {
     return (item.isVisible!) &&
-            ManifestService.manifestParsed
-                    .destinyInventoryItemDefinition[item.plugHash]?.itemType ==
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.itemType ==
                 DestinyItemType.Armor ||
-        ManifestService.manifestParsed
-                .destinyInventoryItemDefinition[item.plugHash]?.itemSubType ==
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.itemSubType ==
             DestinyItemSubType.Ornament ||
-        ManifestService.manifestParsed
-                .destinyInventoryItemDefinition[item.plugHash]?.itemSubType ==
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.itemSubType ==
             DestinyItemSubType.Shader;
   }
 
   static perkSockets(int? item) {
     return item != null &&
-        DestinyData.perkCategoryHash.contains(ManifestService.manifestParsed
-            .destinyInventoryItemDefinition[item]?.plug?.plugCategoryHash);
+        DestinyData.perkCategoryHash
+            .contains(ManifestService.manifestParsed.destinyInventoryItemDefinition[item]?.plug?.plugCategoryHash);
   }
 }
 
@@ -238,6 +221,9 @@ class DestinyData {
     ]
   ];
   static const String bungieLink = "https://www.bungie.net";
+  static const String exoticArmorLogo = "/common/destiny2_content/icons/d89699e6307ac5d2a306cf054978e251.png";
+  static const String modsLogo = "/common/destiny2_content/icons/53fa0b010b6b5e4b6bf9b8367d2980e0.png";
+  static const String classItemLogo = "/common/destiny2_content/icons/3cfff0f2aa68784762f553eb7997e909.png";
 
   static const Map<TierType, int> tierTypeHashes = {
     TierType.Basic: 3340296461,
@@ -835,17 +821,13 @@ class DestinyData {
     1926152773, // armor cosmetics
     2048875504, // weapon mods
   ];
-  static Map<DestinyAmmunitionType, DestinyPresentationNodeDefinition>
-      ammoInfoByType = {
-    DestinyAmmunitionType.Primary:
-        ManifestService.manifestParsed.destinyPresentationNodeDefinition[
-            ammoTypeHashes[DestinyAmmunitionType.Primary]]!,
-    DestinyAmmunitionType.Special:
-        ManifestService.manifestParsed.destinyPresentationNodeDefinition[
-            ammoTypeHashes[DestinyAmmunitionType.Special]]!,
+  static Map<DestinyAmmunitionType, DestinyPresentationNodeDefinition> ammoInfoByType = {
+    DestinyAmmunitionType.Primary: ManifestService
+        .manifestParsed.destinyPresentationNodeDefinition[ammoTypeHashes[DestinyAmmunitionType.Primary]]!,
+    DestinyAmmunitionType.Special: ManifestService
+        .manifestParsed.destinyPresentationNodeDefinition[ammoTypeHashes[DestinyAmmunitionType.Special]]!,
     DestinyAmmunitionType.Heavy:
-        ManifestService.manifestParsed.destinyPresentationNodeDefinition[
-            ammoTypeHashes[DestinyAmmunitionType.Heavy]]!,
+        ManifestService.manifestParsed.destinyPresentationNodeDefinition[ammoTypeHashes[DestinyAmmunitionType.Heavy]]!,
   };
 
   static Color getAmmoTypeColor(DestinyAmmunitionType type) {
@@ -1011,34 +993,20 @@ enum CurrencyConversionType { inventoryItem, currency }
 
 class CurrencyConversion {
   static const Map<int, CurrencyConversion> purchaseables = {
-    924468777: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 1305274547), //Phaseglass
-    3721881826: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 950899352), //Dusklight
-    1420498062: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 49145143), //Simulation Seeds
-    1812969468: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 3853748946), //Enhancement Cores
-    4153440841: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 2014411539), //Alkane Dust
-    1845310989: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 3487922223), //Datalattice
-    2536947844: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 31293053), //Seraphite
-    3245502278: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 1177810185), //Etheric Spiral
-    778553120: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 592227263), //Baryon Bough
-    1923884703: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 3592324052), //Helium Filaments
-    4106973372: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 293622383), //Spinmetal
-    1760701414: CurrencyConversion(
-        CurrencyConversionType.inventoryItem, 1485756901), //Glacial Starwort
-    2654422615: CurrencyConversion(
-        CurrencyConversionType.currency, 1022552290), //Legendary Shards
-    3664001560: CurrencyConversion(
-        CurrencyConversionType.currency, 3159615086), //Glimmer
+    924468777: CurrencyConversion(CurrencyConversionType.inventoryItem, 1305274547), //Phaseglass
+    3721881826: CurrencyConversion(CurrencyConversionType.inventoryItem, 950899352), //Dusklight
+    1420498062: CurrencyConversion(CurrencyConversionType.inventoryItem, 49145143), //Simulation Seeds
+    1812969468: CurrencyConversion(CurrencyConversionType.inventoryItem, 3853748946), //Enhancement Cores
+    4153440841: CurrencyConversion(CurrencyConversionType.inventoryItem, 2014411539), //Alkane Dust
+    1845310989: CurrencyConversion(CurrencyConversionType.inventoryItem, 3487922223), //Datalattice
+    2536947844: CurrencyConversion(CurrencyConversionType.inventoryItem, 31293053), //Seraphite
+    3245502278: CurrencyConversion(CurrencyConversionType.inventoryItem, 1177810185), //Etheric Spiral
+    778553120: CurrencyConversion(CurrencyConversionType.inventoryItem, 592227263), //Baryon Bough
+    1923884703: CurrencyConversion(CurrencyConversionType.inventoryItem, 3592324052), //Helium Filaments
+    4106973372: CurrencyConversion(CurrencyConversionType.inventoryItem, 293622383), //Spinmetal
+    1760701414: CurrencyConversion(CurrencyConversionType.inventoryItem, 1485756901), //Glacial Starwort
+    2654422615: CurrencyConversion(CurrencyConversionType.currency, 1022552290), //Legendary Shards
+    3664001560: CurrencyConversion(CurrencyConversionType.currency, 3159615086), //Glimmer
   };
 
   final CurrencyConversionType type;

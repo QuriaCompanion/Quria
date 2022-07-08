@@ -28,8 +28,7 @@ class StatNoBar extends StatelessWidget {
       width: width,
       child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
         SizedBox(width: width * 0.4 - 25, child: textCaption(name)),
-        SizedBox(
-            width: 25, child: Center(child: textCaptionBold(value.toString()))),
+        SizedBox(width: 25, child: Center(child: textCaptionBold(value.toString()))),
         SizedBox(
           width: width * 0.5,
         ),

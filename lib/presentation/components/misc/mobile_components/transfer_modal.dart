@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
@@ -13,11 +15,13 @@ import 'package:quria/presentation/var/keys.dart';
 class TransferModal extends StatefulWidget {
   final String instanceId;
   final int itemHash;
-  final void Function() onTransfer;
+  final double? width;
+  final void Function()? onTransfer;
   const TransferModal({
     required this.instanceId,
     required this.itemHash,
-    required this.onTransfer,
+    this.onTransfer,
+    this.width,
     Key? key,
   }) : super(key: key);
 
@@ -28,10 +32,9 @@ class TransferModal extends StatefulWidget {
 class _TransferModalState extends State<TransferModal> {
   @override
   Widget build(BuildContext context) {
-    final owner = ProfileService().getItemOwner(widget.instanceId);
-    final characters = ProfileService()
-        .getCharacters()
-        .where((element) => element.characterId != owner);
+    final owner = Provider.of<InventoryProvider>(context).getItemOwner(widget.instanceId);
+    final characters =
+        Provider.of<CharactersProvider>(context).characters.where((element) => element.characterId != owner);
 
     return SingleChildScrollView(
       child: Container(
@@ -81,17 +84,17 @@ class _TransferModalState extends State<TransferModal> {
                 ),
                 child: InkWell(
                   onTap: () async {
-                    Navigator.pop(context);
                     await BungieActionsService()
                         .transferItem(
+                      context,
                       widget.instanceId,
                       character.characterId!,
                       stackSize: 1,
                       itemHash: widget.itemHash,
                     )
                         .then((_) {
-                      ScaffoldMessenger.of(scaffoldKey.currentContext!)
-                          .showSnackBar(SnackBar(
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                         content: textBodyMedium(
                           AppLocalizations.of(context)!.item_transfered,
                           utf8: false,
@@ -99,7 +102,9 @@ class _TransferModalState extends State<TransferModal> {
                         ),
                         backgroundColor: Colors.green,
                       ));
-                      widget.onTransfer();
+                      if (widget.onTransfer != null) {
+                        widget.onTransfer!();
+                      }
                     }, onError: (_) {
                       showDialog(
                           context: scaffoldKey.currentContext!,
@@ -109,18 +114,16 @@ class _TransferModalState extends State<TransferModal> {
                     });
                   },
                   child: CharacterTransferItem(
+                    width: widget.width ?? vw(context),
                     imageLink: DestinyData.bungieLink + character.emblemPath!,
-                    name: ManifestService
-                            .manifestParsed
-                            .destinyClassDefinition[character.classHash]!
-                            .genderedClassNamesByGenderHash![
-                        character.genderHash.toString()]!,
+                    name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
+                        .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                     icon: "assets/icons/Transfer.svg",
                     powerLevel: character.light,
                   ),
                 ),
               ),
-            if (characters.length < ProfileService().getCharacters().length)
+            if (characters.length < Provider.of<CharactersProvider>(context).characters.length)
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: globalPadding(context) / 2,
@@ -128,24 +131,34 @@ class _TransferModalState extends State<TransferModal> {
                 ),
                 child: InkWell(
                   onTap: () async {
-                    Navigator.pop(context);
-
-                    try {
-                      await BungieActionsService().transferItem(
-                        widget.instanceId,
-                        null,
-                        stackSize: 1,
-                        itemHash: widget.itemHash,
-                      );
-                    } catch (_) {
+                    await BungieActionsService()
+                        .transferItem(
+                      context,
+                      widget.instanceId,
+                      null,
+                      stackSize: 1,
+                      itemHash: widget.itemHash,
+                    )
+                        .then((_) {
+                      Navigator.pop(context);
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+                        content: textBodyMedium(
+                          AppLocalizations.of(context)!.item_transfered,
+                          utf8: false,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.green,
+                      ));
+                    }, onError: (_) {
                       showDialog(
-                          context: context,
+                          context: scaffoldKey.currentContext!,
                           builder: (context) {
                             return const ErrorDialog();
                           });
-                    }
+                    });
                   },
                   child: CharacterTransferItem(
+                    width: widget.width ?? vw(context),
                     imageLink:
                         "https://www.bungie.net/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png",
                     name: AppLocalizations.of(context)!.vault,

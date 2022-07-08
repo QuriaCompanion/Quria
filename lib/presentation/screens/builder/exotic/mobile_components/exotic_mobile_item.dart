@@ -10,19 +10,22 @@ import 'package:quria/presentation/components/detailed_item/item/mod_display.dar
 
 class ExoticMobileItem extends StatefulWidget {
   final DestinyInventoryItemDefinition item;
-  const ExoticMobileItem({required this.item, Key? key}) : super(key: key);
+  final double width;
+  const ExoticMobileItem({
+    required this.item,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<ExoticMobileItem> createState() => _ExoticMobileItemState();
 }
 
-class _ExoticMobileItemState extends State<ExoticMobileItem>
-    with TickerProviderStateMixin {
+class _ExoticMobileItemState extends State<ExoticMobileItem> with TickerProviderStateMixin {
   late DestinyInventoryItemDefinition perk;
 
   late bool dropDownActivated = true;
-  late AnimationController controller = AnimationController(
-      vsync: this, duration: const Duration(milliseconds: 100));
+  late AnimationController controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 100));
   late Animation<double> animation;
 
   @override
@@ -45,34 +48,20 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
   bool isOpen = false;
   @override
   Widget build(BuildContext context) {
-    perk = ManifestService.manifestParsed.destinyInventoryItemDefinition[widget
-        .item.sockets!.socketEntries
+    perk = ManifestService.manifestParsed.destinyInventoryItemDefinition[widget.item.sockets!.socketEntries
         ?.firstWhere((element) =>
-            ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[
-                            element.singleInitialItemHash]
-                        ?.plug
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.singleInitialItemHash]?.plug
                         ?.plugCategoryHash ==
                     1744546145 &&
-                ManifestService
-                        .manifestParsed
-                        .destinyInventoryItemDefinition[
-                            element.singleInitialItemHash]
-                        ?.inventory
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[element.singleInitialItemHash]?.inventory
                         ?.tierType ==
                     TierType.Exotic ||
-            ManifestService
-                    .manifestParsed
-                    .destinyInventoryItemDefinition[
-                        element.singleInitialItemHash]
-                    ?.hash ==
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.singleInitialItemHash]?.hash ==
                 3268255645)
         .singleInitialItemHash]!;
     return Container(
       padding: EdgeInsets.all(globalPadding(context) / 2),
-      decoration: BoxDecoration(
-          color: blackLight, borderRadius: BorderRadius.circular(10)),
+      decoration: BoxDecoration(color: blackLight, borderRadius: BorderRadius.circular(10)),
       child: Column(
         children: [
           Row(
@@ -82,10 +71,9 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
                 child: Row(
                   children: [
                     Image(
-                        width: mobileItemSize(context),
-                        height: mobileItemSize(context),
-                        image: NetworkImage(DestinyData.bungieLink +
-                            widget.item.displayProperties!.icon!)),
+                        width: itemSize(context, widget.width),
+                        height: itemSize(context, widget.width),
+                        image: NetworkImage(DestinyData.bungieLink + widget.item.displayProperties!.icon!)),
                     SizedBox(width: globalPadding(context) / 2),
                     Expanded(
                       child: Column(
@@ -93,8 +81,7 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
                         children: [
                           textBodyBold(widget.item.displayProperties!.name!),
                           SizedBox(height: globalPadding(context) / 3),
-                          textCaption(widget.item.itemTypeDisplayName!,
-                              color: greyLight),
+                          textCaption(widget.item.itemTypeDisplayName!, color: greyLight),
                         ],
                       ),
                     )
@@ -104,9 +91,7 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
               IconButton(
                 onPressed: () {
                   setState(() {
-                    dropDownActivated
-                        ? controller.forward(from: 0)
-                        : controller.reverse(from: 1);
+                    dropDownActivated ? controller.forward(from: 0) : controller.reverse(from: 1);
                     setRotation(180);
                     isOpen = !isOpen;
                   });
@@ -126,10 +111,8 @@ class _ExoticMobileItemState extends State<ExoticMobileItem>
                     thickness: 1,
                   ),
                   ModDisplay(
-                    width: vw(context) -
-                        (globalPadding(context) * 4) -
-                        mobileItemSize(context),
-                    iconSize: mobileItemSize(context),
+                    width: vw(context) - (globalPadding(context) * 4) - itemSize(context, widget.width),
+                    iconSize: itemSize(context, widget.width),
                     padding: globalPadding(context) / 2,
                     item: perk,
                   ),

@@ -1,23 +1,20 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/ArmorMods.model.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
-import 'package:quria/data/models/StatWeighing.enum.dart';
-import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
-import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
-import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
-import 'package:quria/data/providers/builder/builder_mods_provider.dart';
-import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
-import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_burger_and_back_option.dart';
+import 'package:quria/presentation/screens/builder/builder_results/builder_results_desktop_view.dart';
 import 'package:quria/presentation/screens/builder/builder_results/builder_results_mobile_view.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class BuilderResultsPage extends StatefulWidget {
   const BuilderResultsPage({
@@ -30,57 +27,14 @@ class BuilderResultsPage extends StatefulWidget {
 
 class BuilderResultsPageState extends State<BuilderResultsPage> {
   late Future<List<Build>> _future;
-  late List<DestinyInventoryItemDefinition> subclassMods;
-  late List<ModSlots> armorMods;
-  late String characterId;
-  late String? subclassId;
+  late BuilderHelper data;
   final manifest = ManifestService();
   @override
   void initState() {
     super.initState();
-    characterId = Provider.of<CharactersProvider>(context, listen: false)
-        .currentCharacter!
-        .characterId!;
-    subclassId =
-        Provider.of<BuilderSubclassProvider>(context, listen: false).subclassId;
-    subclassMods =
-        Provider.of<BuilderSubclassModsProvider>(context, listen: false)
-            .subclassMods;
-    armorMods = Provider.of<BuilderModsProvider>(context, listen: false).mods;
-
-    List<int> statOrder =
-        Provider.of<BuilderStatsFilterProvider>(context, listen: false)
-            .filters
-            .map((e) => e.value)
-            .toList();
-    StatWeighing statWeighing =
-        Provider.of<BuilderStatsFilterProvider>(context, listen: false)
-            .statWeighing;
-    bool considerMasterwork =
-        Provider.of<BuilderCustomInfoProvider>(context, listen: false)
-            .considerMasterwork;
-    bool includeSunset =
-        Provider.of<BuilderCustomInfoProvider>(context, listen: false)
-            .includeSunset;
-
-    int? exoticHash =
-        Provider.of<BuilderExoticProvider>(context, listen: false).exoticHash;
-    String classItemInstanceId =
-        Provider.of<BuilderCustomInfoProvider>(context, listen: false)
-            .classItemInstanceId;
-
+    data = BuilderService().buildPreparation(context);
     _future = BuilderService().calculateBuilds(
-      data: BuilderPreparation(
-        characterId: characterId,
-        subclassMods: subclassMods,
-        statOrder: statOrder,
-        exoticHash: exoticHash,
-        armorMods: armorMods,
-        statWeighing: statWeighing,
-        considerMasterwork: considerMasterwork,
-        includeSunset: includeSunset,
-        classItemInstanceId: classItemInstanceId,
-      ),
+      data: data,
     );
   }
 
@@ -92,27 +46,36 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
           if (snapshot.hasData) {
             if (vw(context) < 1000) {
               return ScaffoldBurgerAndBackOption(
+                width: vw(context),
                 body: BuilderResultsMobileView(
                   buildResults: snapshot.data!,
-                  mods: armorMods,
-                  characterId: characterId,
-                  subclassId: subclassId,
-                  subclassMods: subclassMods,
                 ),
               );
             } else {
-              return Container();
+              return ScaffoldDesktop(
+                body: BuilderResultsDesktopView(
+                  buildResults: snapshot.data!,
+                ),
+                currentRoute: routeExotic,
+              );
             }
           } else {
             return Container(
                 height: vh(context),
                 width: vw(context),
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        fit: BoxFit.cover, image: splashBackground)),
-                child: Loader(
-                  splashColor: Colors.transparent,
-                  animationSize: vw(context) * 0.5,
+                decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Loader(
+                        splashColor: Colors.transparent,
+                        animationSize: 300,
+                      ),
+                      if (kIsWeb) textH1(AppLocalizations.of(context)!.desktop_ghost_1, utf8: false),
+                      if (kIsWeb) textH1(AppLocalizations.of(context)!.desktop_ghost_2, utf8: false)
+                    ],
+                  ),
                 ));
           }
         });

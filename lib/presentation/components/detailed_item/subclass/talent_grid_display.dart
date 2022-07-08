@@ -37,8 +37,7 @@ class TalentGridDisplay extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Tooltip(
-              message: utf8.decode(
-                  nodeDef.displayProperties!.description!.runes.toList()),
+              message: utf8.decode(nodeDef.displayProperties!.description!.runes.toList()),
               textStyle: TextStyle(
                 fontSize: fontSize,
                 color: Colors.white,
@@ -46,8 +45,7 @@ class TalentGridDisplay extends StatelessWidget {
               child: CircleAvatar(
                 radius: iconSize / 2,
                 child: Image(
-                  image: NetworkImage(DestinyData.bungieLink +
-                      nodeDef.displayProperties!.icon!),
+                  image: NetworkImage(DestinyData.bungieLink + nodeDef.displayProperties!.icon!),
                 ),
               ),
             ),

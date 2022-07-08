@@ -64,6 +64,18 @@ Widget textConnect(String child, {color = Colors.white, utf8 = true}) {
   );
 }
 
+Widget textDesktopTitle(String child, {color = Colors.white, utf8 = true}) {
+  return AutoSizeText(
+    utf8 ? utf8Decode(child) : child,
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(
+      fontSize: 48,
+      fontWeight: FontWeight.w700,
+      color: color,
+    ),
+  );
+}
+
 Widget textH3(String child, {color = Colors.white, utf8 = true}) {
   return AutoSizeText(
     utf8 ? utf8Decode(child) : child,
@@ -102,8 +114,7 @@ Widget textBodyMedium(String child, {color = Colors.white, utf8 = true}) {
   );
 }
 
-Widget textBodyHighRegular(String child,
-    {Color color = Colors.white, bool utf8 = true}) {
+Widget textBodyHighRegular(String child, {Color color = Colors.white, bool utf8 = true}) {
   return AutoSizeText(
     utf8 ? utf8Decode(child) : child,
     maxLines: 15,
@@ -116,8 +127,7 @@ Widget textBodyHighRegular(String child,
   );
 }
 
-Widget textBodyRegular(String child,
-    {color = Colors.white, utf8 = true, center = false}) {
+Widget textBodyRegular(String child, {color = Colors.white, utf8 = true, center = false}) {
   return AutoSizeText(
     utf8 ? utf8Decode(child) : child,
     maxLines: 15,

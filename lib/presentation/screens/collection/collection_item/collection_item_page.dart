@@ -8,8 +8,7 @@ import 'package:quria/presentation/screens/collection/collection_item/collection
 
 class CollectionItemPage extends StatefulWidget {
   final int itemHash;
-  const CollectionItemPage({required this.itemHash, Key? key})
-      : super(key: key);
+  const CollectionItemPage({required this.itemHash, Key? key}) : super(key: key);
 
   @override
   State<CollectionItemPage> createState() => _CollectionItemPageState();
@@ -20,19 +19,18 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
   @override
   void initState() {
     super.initState();
-    _future = DisplayService().getCollectionItem(widget.itemHash);
+    _future = DisplayService.getCollectionItem(widget.itemHash);
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: _future,
-      builder:
-          ((context, AsyncSnapshot<DestinyInventoryItemDefinition?> snapshot) {
+      builder: ((context, AsyncSnapshot<DestinyInventoryItemDefinition?> snapshot) {
         if (snapshot.hasData) {
           if (vw(context) < 1000) {
             return ScaffoldBurgerAndBackOption(
-                body: CollectionItemMobileView(data: snapshot.data!));
+                width: vw(context), body: CollectionItemMobileView(data: snapshot.data!));
           } else {
             return Container();
           }
@@ -40,9 +38,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
           return Container(
               height: vh(context),
               width: vw(context),
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.cover, image: splashBackground)),
+              decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
               child: Loader(
                 splashColor: Colors.transparent,
                 animationSize: vw(context) * 0.5,

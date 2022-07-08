@@ -4,21 +4,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:quria/data/providers/builder/builder_class_item_provider.dart';
+import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
 import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
 import 'package:quria/data/providers/builder/builder_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/collectible_provider.dart';
+import 'package:quria/data/providers/inspect/armor_mod_modal_provider.dart';
+import 'package:quria/data/providers/inspect/inspect_build_provider.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/providers/language_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:quria/data/providers/plugs_provider.dart';
 import 'package:universal_io/io.dart';
 import 'firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
-import 'package:quria/presentation/components/app.dart';
+import 'package:quria/app.dart';
 import 'package:quria/presentation/router.dart';
 import 'package:quria/presentation/screens/login.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -47,15 +54,23 @@ class QuriaApp extends StatelessWidget {
   final AppRouter router;
   final Locale? lang;
 
-  const QuriaApp({Key? key, required this.router, required this.lang})
-      : super(key: key);
+  const QuriaApp({Key? key, required this.router, required this.lang}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider<InspectBuildProvider>(
+            create: (context) => InspectBuildProvider(),
+          ),
+          ChangeNotifierProvider<ArmorModModalProvider>(
+            create: (context) => ArmorModModalProvider(),
+          ),
           ChangeNotifierProvider<BuilderExoticProvider>(
             create: (context) => BuilderExoticProvider(),
+          ),
+          ChangeNotifierProvider<InspectProvider>(
+            create: (context) => InspectProvider(),
           ),
           ChangeNotifierProvider<BuilderStatsFilterProvider>(
             create: (context) => BuilderStatsFilterProvider(),
@@ -77,7 +92,19 @@ class QuriaApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<LanguageProvider>(
             create: (context) => LanguageProvider(),
-          )
+          ),
+          ChangeNotifierProvider<InventoryProvider>(
+            create: (context) => InventoryProvider(),
+          ),
+          ChangeNotifierProvider<ItemProvider>(
+            create: (context) => ItemProvider(),
+          ),
+          ChangeNotifierProvider<PlugsProvider>(
+            create: (context) => PlugsProvider(),
+          ),
+          ChangeNotifierProvider<CollectibleProvider>(
+            create: (context) => CollectibleProvider(),
+          ),
         ],
         builder: (context, child) {
           final currentLang = Provider.of<LanguageProvider>(context).language ??
