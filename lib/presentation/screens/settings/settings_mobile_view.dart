@@ -147,16 +147,13 @@ class SettingsMobileView extends StatelessWidget {
                           )));
                 });
           },
-          leading: ExtendedImage.network(
-            "https://www.bungie.net/7/ca/destiny/logos/crossSave.png",
+          leading: ExtendedImage.asset(
+            "assets/img/crossSave.png",
             width: 35,
             height: 35,
             colorBlendMode: BlendMode.clear,
-            timeLimit: const Duration(seconds: 10),
-            cache: true,
             filterQuality: FilterQuality.high,
             fit: BoxFit.fill,
-            printError: false,
           ),
           title: textBodyHighRegular(
             AppLocalizations.of(context)!.change_platform,
