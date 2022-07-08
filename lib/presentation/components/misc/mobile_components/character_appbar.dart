@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/presentation/components/Header/mobile_components/mobile_character_choice.dart';
+import 'package:quria/presentation/components/misc/refresh_button.dart';
 
 class CharacterAppbar extends StatefulWidget {
   final Function(int) onCharacterChange;
@@ -61,19 +62,29 @@ class _CharacterAppbarState extends State<CharacterAppbar> {
             filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
             child: Padding(
               padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top + globalPadding(context)),
-              child: MobileCharacterChoice(
-                callback: (newIndex) {
-                  setState(() {
-                    widget.onCharacterChange(newIndex);
-                    choosingCharacter = !choosingCharacter;
-                  });
-                },
-                choosingCharacter: () {
-                  setState(() {
-                    choosingCharacter = !choosingCharacter;
-                  });
-                },
-                characters: characters,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(
+                    width: 56,
+                  ),
+                  MobileCharacterChoice(
+                    callback: (newIndex) {
+                      setState(() {
+                        widget.onCharacterChange(newIndex);
+                        choosingCharacter = !choosingCharacter;
+                      });
+                    },
+                    choosingCharacter: () {
+                      setState(() {
+                        choosingCharacter = !choosingCharacter;
+                      });
+                    },
+                    characters: characters,
+                  ),
+                  const RefreshButton()
+                ],
               ),
             ),
           ),

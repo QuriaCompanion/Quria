@@ -56,7 +56,7 @@ class _NavBarButtonState extends State<NavBarButton> with AnimationMixin {
               children: [
                 SvgPicture.asset(widget.icon, color: widget.selected ? yellow : color.value),
                 const SizedBox(width: 5),
-                textBodyBold(widget.name, color: widget.selected ? yellow : color.value),
+                textBodyBold(widget.name, color: widget.selected ? yellow : color.value, utf8: false),
               ],
             ),
           ],

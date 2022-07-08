@@ -24,6 +24,18 @@ class ArmorModDesktopModal extends StatelessWidget {
   Widget build(BuildContext context) {
     List<DestinyItemPlug> plugs =
         Provider.of<PlugsProvider>(context, listen: false).getPlugSets(context, plugSetsHash).toSet().toList();
+    plugs.sort((a, b) {
+      if (ManifestService.manifestParsed.destinyInventoryItemDefinition[a.plugItemHash]?.investmentStats != null &&
+          ManifestService.manifestParsed.destinyInventoryItemDefinition[b.plugItemHash]?.investmentStats != null &&
+          ManifestService.manifestParsed.destinyInventoryItemDefinition[a.plugItemHash]!.investmentStats!.isNotEmpty &&
+          ManifestService.manifestParsed.destinyInventoryItemDefinition[b.plugItemHash]!.investmentStats!.isNotEmpty) {
+        return ManifestService
+            .manifestParsed.destinyInventoryItemDefinition[a.plugItemHash]!.investmentStats![0].statTypeHash!
+            .compareTo(ManifestService
+                .manifestParsed.destinyInventoryItemDefinition[b.plugItemHash]!.investmentStats![0].statTypeHash!);
+      }
+      return 0;
+    });
     return Container(
       decoration: BoxDecoration(color: black, borderRadius: BorderRadius.circular(8)),
       padding: EdgeInsets.all(globalPadding(context)),

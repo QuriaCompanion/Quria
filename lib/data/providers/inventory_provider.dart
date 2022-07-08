@@ -39,7 +39,7 @@ class InventoryProvider with ChangeNotifier {
                   ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
                           ?.equipmentSlotTypeHash ==
                       slotTypeHash &&
-                  item.location != ItemLocation.Postmaster,
+                  item.bucketHash != 215593132,
             )
             .toList() ??
         [];
@@ -53,7 +53,7 @@ class InventoryProvider with ChangeNotifier {
             ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
                     ?.equipmentSlotTypeHash ==
                 slotTypeHash &&
-            item.location != ItemLocation.Postmaster,
+            item.bucketHash != 215593132,
       ),
     );
     _characterEquipment.forEach((id, equipment) {
@@ -64,7 +64,7 @@ class InventoryProvider with ChangeNotifier {
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
                         ?.equipmentSlotTypeHash ==
                     slotTypeHash &&
-                item.location != ItemLocation.Postmaster,
+                item.bucketHash != 215593132,
           ),
         );
       }
@@ -77,7 +77,7 @@ class InventoryProvider with ChangeNotifier {
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
                         ?.equipmentSlotTypeHash ==
                     slotTypeHash &&
-                item.location != ItemLocation.Postmaster,
+                item.bucketHash != 215593132,
           ),
         );
       }
