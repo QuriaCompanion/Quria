@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
@@ -43,7 +44,6 @@ class LoginWidgetState extends State<LoginWidget> {
     AuthService.getToken().then((value) => {
           if (value != null) {checkMembership()}
         });
-
     getInitialUri().then((value) {
       if (!value.toString().contains('code=')) {
       } else {
@@ -69,8 +69,8 @@ class LoginWidgetState extends State<LoginWidget> {
             ),
             onPressed: () {
               loadingModal();
-              // authorizeClick(context);
-              yannisooLogin();
+              authorizeClick(context);
+              // yannisooLogin();
             },
             width: 250.0,
             height: 60),

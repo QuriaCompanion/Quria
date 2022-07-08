@@ -14,7 +14,6 @@ import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart'
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/screens/collection/collection_item/collection_item_mobile_view.dart';
 import 'package:quria/presentation/screens/collection/components/collection_desktop_filter.dart';
-import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 
 class CollectionDesktopView extends StatefulWidget {
   final Iterable<DestinyInventoryItemDefinition> items;

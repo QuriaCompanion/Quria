@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -146,10 +147,16 @@ class SettingsMobileView extends StatelessWidget {
                           )));
                 });
           },
-          leading: Image.network(
-            "https://www.bungie.net/7/ca//destiny/logos/crossSave.png",
+          leading: ExtendedImage.network(
+            "https://www.bungie.net/7/ca/destiny/logos/crossSave.png",
             width: 35,
             height: 35,
+            colorBlendMode: BlendMode.clear,
+            timeLimit: const Duration(seconds: 10),
+            cache: true,
+            filterQuality: FilterQuality.high,
+            fit: BoxFit.fill,
+            printError: false,
           ),
           title: textBodyHighRegular(
             AppLocalizations.of(context)!.change_platform,
@@ -163,10 +170,25 @@ class SettingsMobileView extends StatelessWidget {
         divider,
         ListTile(
           onTap: () {
+            if (vw(context) < 1000) {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return ChooseLanguage(
+                      width: vw(context),
+                    );
+                  });
+              return;
+            }
             showDialog(
                 context: context,
                 builder: (context) {
-                  return const ChooseLanguage();
+                  return Center(
+                      child: SizedBox(
+                          width: vw(context) * 0.4,
+                          child: ChooseLanguage(
+                            width: vw(context) * .4,
+                          )));
                 });
           },
           leading: const Icon(Icons.language, size: 35, color: Colors.white),

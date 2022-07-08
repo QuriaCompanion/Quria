@@ -64,7 +64,7 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Loader(
+                      const Loader(
                         splashColor: Colors.transparent,
                         animationSize: 300,
                       ),

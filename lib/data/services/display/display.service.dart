@@ -78,7 +78,9 @@ class DisplayService {
   }
 
   static Future<void> profileLoader(BuildContext context) async {
-    isProfileUp ? ProfileService().fetchProfileData(context) : await ProfileService().fetchProfileData(context);
+    isProfileUp
+        ? ProfileService().fetchProfileData(context)
+        : await ProfileService().fetchProfileData(context, force: true);
     isProfileUp = true;
     return;
   }

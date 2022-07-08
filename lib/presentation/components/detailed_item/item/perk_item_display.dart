@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -36,11 +37,16 @@ class PerkItemDisplay extends StatelessWidget {
             child: CircleAvatar(
               radius: radius * 0.75,
               backgroundColor: selected ? blueEquipped : const Color(0xFF505155),
-              child: Image(
-                  width: iconSize * 0.5,
-                  image: NetworkImage(
-                    DestinyData.bungieLink + perk.displayProperties!.icon!,
-                  )),
+              child: ExtendedImage.network(
+                DestinyData.bungieLink + perk.displayProperties!.icon!,
+                width: iconSize * 0.5,
+                height: iconSize * 0.5,
+                timeLimit: const Duration(seconds: 10),
+                cache: true,
+                fit: BoxFit.fill,
+                filterQuality: FilterQuality.high,
+                printError: false,
+              ),
             ),
           ),
         ),

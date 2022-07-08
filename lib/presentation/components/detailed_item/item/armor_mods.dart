@@ -12,7 +12,6 @@ import 'package:quria/data/providers/inspect/armor_mod_modal_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
-import 'package:quria/data/providers/plugs_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_afinity.dart';

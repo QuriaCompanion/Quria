@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:simple_animations/anicoto/animation_mixin.dart';
 import 'package:simple_animations/simple_animations.dart';
 
 class NavBarButton extends StatefulWidget {

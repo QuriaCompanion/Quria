@@ -5,6 +5,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_modal.dart';
@@ -58,6 +59,10 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                             width: vw(context),
                             item: item,
                             onClick: (inspect) {
+                              Provider.of<InspectProvider>(context, listen: false).setInspectItem(
+                                  itemDef:
+                                      ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
+                                  item: item);
                               Navigator.pushNamed(context, routeInspectMobile, arguments: inspect);
                             },
                           );

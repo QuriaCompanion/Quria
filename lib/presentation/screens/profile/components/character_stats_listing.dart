@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';

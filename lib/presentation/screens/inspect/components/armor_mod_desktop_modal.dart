@@ -25,7 +25,7 @@ class ArmorModDesktopModal extends StatelessWidget {
     List<DestinyItemPlug> plugs =
         Provider.of<PlugsProvider>(context, listen: false).getPlugSets(context, plugSetsHash).toSet().toList();
     return Container(
-      decoration: BoxDecoration(color: blackLight, borderRadius: BorderRadius.circular(8)),
+      decoration: BoxDecoration(color: black, borderRadius: BorderRadius.circular(8)),
       padding: EdgeInsets.all(globalPadding(context)),
       child: Column(
         mainAxisSize: MainAxisSize.min,

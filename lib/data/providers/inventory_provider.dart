@@ -1,6 +1,7 @@
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:bungie_api/enums/item_location.dart';
 import 'package:bungie_api/models/destiny_inventory_component.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
@@ -36,8 +37,9 @@ class InventoryProvider with ChangeNotifier {
             ?.where(
               (item) =>
                   ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
-                      ?.equipmentSlotTypeHash ==
-                  slotTypeHash,
+                          ?.equipmentSlotTypeHash ==
+                      slotTypeHash &&
+                  item.location != ItemLocation.Postmaster,
             )
             .toList() ??
         [];
@@ -46,28 +48,37 @@ class InventoryProvider with ChangeNotifier {
   List<DestinyItemComponent> getVaultInventoryForCharacterByBucket(String characterId, int slotTypeHash) {
     final List<DestinyItemComponent> inventory = [];
     inventory.addAll(
-      _profileInventory.where((item) =>
-          ManifestService
-              .manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock?.equipmentSlotTypeHash ==
-          slotTypeHash),
+      _profileInventory.where(
+        (item) =>
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
+                    ?.equipmentSlotTypeHash ==
+                slotTypeHash &&
+            item.location != ItemLocation.Postmaster,
+      ),
     );
     _characterEquipment.forEach((id, equipment) {
       if (id != characterId && equipment.items != null) {
         inventory.addAll(
-          equipment.items!.where((item) =>
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
-                  ?.equipmentSlotTypeHash ==
-              slotTypeHash),
+          equipment.items!.where(
+            (item) =>
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
+                        ?.equipmentSlotTypeHash ==
+                    slotTypeHash &&
+                item.location != ItemLocation.Postmaster,
+          ),
         );
       }
     });
     _characterInventory.forEach((id, equipment) {
       if (id != characterId && equipment.items != null) {
         inventory.addAll(
-          equipment.items!.where((item) =>
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
-                  ?.equipmentSlotTypeHash ==
-              slotTypeHash),
+          equipment.items!.where(
+            (item) =>
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
+                        ?.equipmentSlotTypeHash ==
+                    slotTypeHash &&
+                item.location != ItemLocation.Postmaster,
+          ),
         );
       }
     });

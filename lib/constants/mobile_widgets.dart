@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
@@ -108,7 +109,7 @@ Widget mobileCard(
       child: child);
 }
 
-Widget pictureBordered({required ImageProvider image, double size = 44}) {
+Widget pictureBordered({required String image, double size = 44}) {
   return Container(
     width: size,
     height: size,
@@ -118,6 +119,16 @@ Widget pictureBordered({required ImageProvider image, double size = 44}) {
         width: 1,
       ),
     ),
-    child: Image(image: image),
+    child: ExtendedImage.network(
+      image,
+      width: size,
+      height: size,
+      colorBlendMode: BlendMode.clear,
+      timeLimit: const Duration(seconds: 10),
+      cache: true,
+      filterQuality: FilterQuality.high,
+      fit: BoxFit.fill,
+      printError: false,
+    ),
   );
 }

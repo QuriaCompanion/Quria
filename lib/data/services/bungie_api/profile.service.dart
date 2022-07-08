@@ -106,9 +106,10 @@ class ProfileService {
   Future<void> fetchProfileData(
     BuildContext context, {
     List<DestinyComponentType>? components,
+    bool force = false,
   }) async {
     try {
-      if (_lastUpdated != null && DateTime.now().difference(_lastUpdated!).inSeconds < 30) {
+      if (!force && _lastUpdated != null && DateTime.now().difference(_lastUpdated!).inSeconds < 30) {
         return;
       }
       await _updateProfileData(context, updateComponents);

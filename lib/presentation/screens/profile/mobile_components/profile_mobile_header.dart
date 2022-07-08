@@ -43,9 +43,10 @@ class ProfileMobileHeader extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(bottom: globalPadding(context)),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
+          SizedBox(width: globalPadding(context)),
           InkWell(
             onTap: () {
               if (vw(context) == width) {
@@ -121,17 +122,19 @@ class ProfileMobileHeader extends StatelessWidget {
                   cache: true,
                   filterQuality: FilterQuality.high,
                   fit: BoxFit.fill,
+                  printError: false,
                 ),
               ],
             ),
           ),
+          SizedBox(width: globalPadding(context)),
           SizedBox(
             height: width * 0.17,
             child: CharacterStatsListing(
               stats: stats!,
               characterId: characterId,
               direction: Axis.horizontal,
-              width: width * 0.6,
+              width: vw(context) < 1000 ? width * 0.6 : 400,
             ),
           ),
         ],

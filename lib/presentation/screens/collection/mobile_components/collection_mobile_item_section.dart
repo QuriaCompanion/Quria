@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/presentation/screens/collection/mobile_components/collection_mobile_item_line.dart';
 import 'package:quria/presentation/var/routes.dart';
 import 'dart:math';
@@ -109,8 +111,11 @@ class _CollectionMobileItemSectionState extends State<CollectionMobileItemSectio
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(((context, index) {
                     return InkWell(
-                      onTap: () =>
-                          Navigator.pushNamed(context, routeCollectionItem, arguments: widget.items[index].hash),
+                      onTap: () {
+                        Provider.of<InspectProvider>(context, listen: false)
+                            .setInspectItem(itemDef: widget.items[index]);
+                        Navigator.pushNamed(context, routeCollectionItem, arguments: widget.items[index].hash);
+                      },
                       child: Padding(
                           padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
                           child: CollectionItemLine(

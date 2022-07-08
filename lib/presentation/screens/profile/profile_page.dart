@@ -1,6 +1,5 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
@@ -9,7 +8,6 @@ import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
-import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/screens/profile/profile_desktop_view.dart';

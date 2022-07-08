@@ -1,11 +1,8 @@
-import 'dart:convert';
-
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';

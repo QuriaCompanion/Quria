@@ -1,5 +1,4 @@
 import 'package:extended_image/extended_image.dart';
-import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/texts.dart';
@@ -27,11 +26,15 @@ class ArmorModIconDisplay extends StatelessWidget {
             timeLimit: const Duration(seconds: 10),
             cache: true,
             fit: BoxFit.fill,
+            filterQuality: FilterQuality.high,
+            printError: false,
           ),
           if (socket.investmentStats!.isNotEmpty &&
               ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats?[0].statTypeHash]
                       ?.displayProperties?.hasIcon ==
-                  true)
+                  true &&
+              ManifestService.manifestParsed.destinyStatDefinition[3578062600]?.displayProperties?.icon != null &&
+              socket.investmentStats?[0].statTypeHash != 3578062600)
             ExtendedImage.network(
               DestinyData.bungieLink +
                   ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!
@@ -41,6 +44,8 @@ class ArmorModIconDisplay extends StatelessWidget {
               timeLimit: const Duration(seconds: 10),
               cache: true,
               fit: BoxFit.fill,
+              filterQuality: FilterQuality.high,
+              printError: false,
             ),
           Padding(
             padding: const EdgeInsets.only(right: 5.0),

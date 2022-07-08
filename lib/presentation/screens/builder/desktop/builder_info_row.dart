@@ -1,5 +1,6 @@
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -30,14 +31,22 @@ class BuilderInfoRow extends StatelessWidget {
           children: [
             Column(
               children: [
-                Image(
+                ExtendedImage.network(
+                  DestinyData.bungieLink +
+                      (Provider.of<BuilderExoticProvider>(context).exotic?.displayProperties?.icon ??
+                          DestinyData.exoticArmorLogo),
                   width: 80,
                   height: 80,
-                  image: NetworkImage(
-                    DestinyData.bungieLink +
-                        (Provider.of<BuilderExoticProvider>(context).exotic?.displayProperties?.icon ??
-                            DestinyData.exoticArmorLogo),
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 1,
                   ),
+                  colorBlendMode: BlendMode.clear,
+                  timeLimit: const Duration(seconds: 10),
+                  cache: true,
+                  filterQuality: FilterQuality.high,
+                  fit: BoxFit.fill,
+                  printError: false,
                 ),
                 textCaption(AppLocalizations.of(context)!.exotic_perk)
               ],
@@ -65,14 +74,18 @@ class BuilderInfoRow extends StatelessWidget {
             ),
             Column(
               children: [
-                Image(
+                ExtendedImage.network(
+                  DestinyData.bungieLink +
+                      (Provider.of<BuilderSubclassProvider>(context).subclass?.displayProperties?.icon ??
+                          DestinyData.exoticArmorLogo),
                   width: 80,
                   height: 80,
-                  image: NetworkImage(
-                    DestinyData.bungieLink +
-                        (Provider.of<BuilderSubclassProvider>(context).subclass?.displayProperties?.icon ??
-                            DestinyData.exoticArmorLogo),
-                  ),
+                  colorBlendMode: BlendMode.clear,
+                  timeLimit: const Duration(seconds: 10),
+                  cache: true,
+                  filterQuality: FilterQuality.high,
+                  fit: BoxFit.fill,
+                  printError: false,
                 ),
                 textCaption(AppLocalizations.of(context)!.builder_subclass_mods_title)
               ],
@@ -84,12 +97,16 @@ class BuilderInfoRow extends StatelessWidget {
             ),
             Column(
               children: [
-                const Image(
+                ExtendedImage.network(
+                  DestinyData.bungieLink + DestinyData.modsLogo,
                   width: 80,
                   height: 80,
-                  image: NetworkImage(
-                    DestinyData.bungieLink + DestinyData.modsLogo,
-                  ),
+                  colorBlendMode: BlendMode.clear,
+                  timeLimit: const Duration(seconds: 10),
+                  cache: true,
+                  filterQuality: FilterQuality.high,
+                  fit: BoxFit.fill,
+                  printError: false,
                 ),
                 textCaption(AppLocalizations.of(context)!.armor_mods)
               ],
@@ -102,12 +119,16 @@ class BuilderInfoRow extends StatelessWidget {
             Column(
               children: [
                 if (Provider.of<BuilderCustomInfoProvider>(context).classItem == null)
-                  const Image(
+                  ExtendedImage.network(
+                    DestinyData.bungieLink + DestinyData.classItemLogo,
                     width: 80,
                     height: 80,
-                    image: NetworkImage(
-                      DestinyData.bungieLink + DestinyData.classItemLogo,
-                    ),
+                    colorBlendMode: BlendMode.clear,
+                    timeLimit: const Duration(seconds: 10),
+                    cache: true,
+                    filterQuality: FilterQuality.high,
+                    fit: BoxFit.fill,
+                    printError: false,
                   ),
                 if (Provider.of<BuilderCustomInfoProvider>(context).classItem != null)
                   Builder(builder: (context) {

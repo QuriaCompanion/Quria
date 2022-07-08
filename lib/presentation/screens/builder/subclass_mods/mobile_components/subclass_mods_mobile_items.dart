@@ -65,7 +65,7 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
             },
             child: pictureBordered(
               size: widget.width == vw(context) ? widget.width * 0.192 : 90,
-              image: NetworkImage(DestinyData.bungieLink + widget.item.displayProperties!.icon!),
+              image: DestinyData.bungieLink + widget.item.displayProperties!.icon!,
             ),
           ),
           Container(
@@ -122,9 +122,9 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                         widget.onSocketChange(ManifestService.manifestParsed.destinyInventoryItemDefinition[plug]!);
                       },
                       child: pictureBordered(
-                          image: NetworkImage(DestinyData.bungieLink +
+                          image: DestinyData.bungieLink +
                               ManifestService
-                                  .manifestParsed.destinyInventoryItemDefinition[plug]!.displayProperties!.icon!),
+                                  .manifestParsed.destinyInventoryItemDefinition[plug]!.displayProperties!.icon!,
                           size: 44),
                     )
               ],

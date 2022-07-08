@@ -55,6 +55,8 @@ class ItemIcon extends StatelessWidget {
             timeLimit: const Duration(seconds: 10),
             cache: true,
             fit: BoxFit.fill,
+            filterQuality: FilterQuality.high,
+            printError: false,
           ),
           if (ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
                   ?.displayVersionWatermarkIcons?[0] !=
@@ -68,6 +70,8 @@ class ItemIcon extends StatelessWidget {
               width: imageSize,
               cache: true,
               fit: BoxFit.fill,
+              filterQuality: FilterQuality.high,
+              printError: false,
             ),
           if (powerLevel != null)
             Positioned(

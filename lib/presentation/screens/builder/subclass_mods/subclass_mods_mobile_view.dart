@@ -231,8 +231,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                     });
                               },
                               child: pictureBordered(
-                                image: NetworkImage(
-                                    DestinyData.bungieLink + displayedSockets[7 + i].displayProperties!.icon!),
+                                image: DestinyData.bungieLink + displayedSockets[7 + i].displayProperties!.icon!,
                                 size: widget.width == vw(context) ? itemSize(context, widget.width) : 80,
                               ),
                             ),

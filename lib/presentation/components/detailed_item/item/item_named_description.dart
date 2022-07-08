@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -19,13 +20,27 @@ class ItemNamedDescription extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Image(
+            ExtendedImage.network(
+              DestinyData.bungieLink + item.displayProperties!.icon!,
+              width: iconSize,
+              height: iconSize,
+              timeLimit: const Duration(seconds: 10),
+              cache: true,
+              fit: BoxFit.fill,
+              filterQuality: FilterQuality.high,
+              printError: false,
+            ),
+            if (item.iconWatermark != null)
+              ExtendedImage.network(
+                DestinyData.bungieLink + item.iconWatermark!,
                 width: iconSize,
                 height: iconSize,
-                image: NetworkImage(DestinyData.bungieLink + item.displayProperties!.icon!)),
-            if (item.iconWatermark != null)
-              Image(
-                  width: iconSize, height: iconSize, image: NetworkImage(DestinyData.bungieLink + item.iconWatermark!)),
+                timeLimit: const Duration(seconds: 10),
+                cache: true,
+                fit: BoxFit.fill,
+                filterQuality: FilterQuality.high,
+                printError: false,
+              ),
           ],
         ),
         SizedBox(width: globalPadding(context)),
