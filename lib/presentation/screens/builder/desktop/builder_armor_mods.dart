@@ -38,7 +38,7 @@ class BuilderArmorMods extends StatelessWidget {
                 children: [
                   textH3(mods.value.title),
                   SizedBox(
-                    width: vw(context) * 0.15,
+                    width: vw(context) * 0.22,
                     child: ModsMobileSection(
                         width: vw(context) * 0.3,
                         items: mods.value.items,

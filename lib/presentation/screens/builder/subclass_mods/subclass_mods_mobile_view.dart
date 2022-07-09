@@ -34,17 +34,14 @@ class SubclassModsMobileView extends StatefulWidget {
 
 class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
   late final List<DestinyInventoryItemDefinition> displayedSockets;
+  int aspectOne = 0;
+  int aspectTwo = 0;
   @override
   void initState() {
     super.initState();
     displayedSockets =
         widget.sockets!.map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e.plugHash]!).toList();
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    int aspectOne = 0;
-    int aspectTwo = 0;
     if (displayedSockets.isNotEmpty) {
       aspectOne = displayedSockets[5].investmentStats?.firstWhereIndexedOrNull((i, _) {
             return i == 0;
@@ -55,6 +52,14 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
           })?.value ??
           0;
     }
+    widget.onChange(
+      displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
+      6,
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       color: black,
       child: Column(

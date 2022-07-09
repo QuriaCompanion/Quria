@@ -1,10 +1,9 @@
 import 'dart:convert';
 
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 
 Widget textH1(String child, {color = Colors.white, utf8 = true, maxLines = 1}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     maxLines: maxLines,
@@ -17,7 +16,7 @@ Widget textH1(String child, {color = Colors.white, utf8 = true, maxLines = 1}) {
 }
 
 Widget textH2(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
@@ -29,7 +28,7 @@ Widget textH2(String child, {color = Colors.white, utf8 = true}) {
 }
 
 Widget textQuria(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
@@ -41,7 +40,7 @@ Widget textQuria(String child, {color = Colors.white, utf8 = true}) {
 }
 
 Widget textCompanion(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
@@ -53,7 +52,7 @@ Widget textCompanion(String child, {color = Colors.white, utf8 = true}) {
 }
 
 Widget textConnect(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
@@ -65,7 +64,7 @@ Widget textConnect(String child, {color = Colors.white, utf8 = true}) {
 }
 
 Widget textDesktopTitle(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
@@ -77,7 +76,7 @@ Widget textDesktopTitle(String child, {color = Colors.white, utf8 = true}) {
 }
 
 Widget textH3(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
@@ -89,7 +88,7 @@ Widget textH3(String child, {color = Colors.white, utf8 = true}) {
 }
 
 Widget textBodyBold(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     maxLines: 15,
     overflow: TextOverflow.ellipsis,
@@ -102,7 +101,7 @@ Widget textBodyBold(String child, {color = Colors.white, utf8 = true}) {
 }
 
 Widget textBodyMedium(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     maxLines: 15,
     overflow: TextOverflow.ellipsis,
@@ -115,7 +114,7 @@ Widget textBodyMedium(String child, {color = Colors.white, utf8 = true}) {
 }
 
 Widget textBodyHighRegular(String child, {Color color = Colors.white, bool utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     maxLines: 15,
     overflow: TextOverflow.ellipsis,
@@ -128,7 +127,7 @@ Widget textBodyHighRegular(String child, {Color color = Colors.white, bool utf8 
 }
 
 Widget textBodyRegular(String child, {color = Colors.white, utf8 = true, center = false}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     maxLines: 15,
     textAlign: center ? TextAlign.center : null,
@@ -142,7 +141,7 @@ Widget textBodyRegular(String child, {color = Colors.white, utf8 = true, center 
 }
 
 Widget textCaptionBold(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
@@ -154,7 +153,7 @@ Widget textCaptionBold(String child, {color = Colors.white, utf8 = true}) {
 }
 
 Widget textCaption(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     maxLines: 15,
@@ -167,7 +166,7 @@ Widget textCaption(String child, {color = Colors.white, utf8 = true}) {
 }
 
 Widget textIcon(String child, {color = Colors.white, utf8 = true}) {
-  return AutoSizeText(
+  return Text(
     utf8 ? utf8Decode(child) : child,
     overflow: TextOverflow.ellipsis,
     maxLines: 15,

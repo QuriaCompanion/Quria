@@ -35,8 +35,8 @@ class BuilderInfoRow extends StatelessWidget {
                   DestinyData.bungieLink +
                       (Provider.of<BuilderExoticProvider>(context).exotic?.displayProperties?.icon ??
                           DestinyData.exoticArmorLogo),
-                  width: 80,
-                  height: 80,
+                  height: vw(context) * .05,
+                  width: vw(context) * .05,
                   border: Border.all(
                     color: Colors.white,
                     width: 1,
@@ -60,8 +60,8 @@ class BuilderInfoRow extends StatelessWidget {
               children: [
                 SvgPicture.asset(
                   "assets/icons/${Provider.of<BuilderStatsFilterProvider>(context).filters[0].icon}",
-                  height: 80,
-                  width: 80,
+                  height: vw(context) * .05,
+                  width: vw(context) * .05,
                   color: Colors.white,
                 ),
                 textCaption(AppLocalizations.of(context)!.statistics, utf8: false)
@@ -78,8 +78,8 @@ class BuilderInfoRow extends StatelessWidget {
                   DestinyData.bungieLink +
                       (Provider.of<BuilderSubclassProvider>(context).subclass?.displayProperties?.icon ??
                           DestinyData.exoticArmorLogo),
-                  width: 80,
-                  height: 80,
+                  height: vw(context) * .05,
+                  width: vw(context) * .05,
                   colorBlendMode: BlendMode.clear,
                   timeLimit: const Duration(seconds: 10),
                   cache: true,
@@ -99,8 +99,8 @@ class BuilderInfoRow extends StatelessWidget {
               children: [
                 ExtendedImage.network(
                   DestinyData.bungieLink + DestinyData.modsLogo,
-                  width: 80,
-                  height: 80,
+                  height: vw(context) * .05,
+                  width: vw(context) * .05,
                   colorBlendMode: BlendMode.clear,
                   timeLimit: const Duration(seconds: 10),
                   cache: true,
@@ -121,8 +121,8 @@ class BuilderInfoRow extends StatelessWidget {
                 if (Provider.of<BuilderCustomInfoProvider>(context).classItem == null)
                   ExtendedImage.network(
                     DestinyData.bungieLink + DestinyData.classItemLogo,
-                    width: 80,
-                    height: 80,
+                    height: vw(context) * .05,
+                    width: vw(context) * .05,
                     colorBlendMode: BlendMode.clear,
                     timeLimit: const Duration(seconds: 10),
                     cache: true,
@@ -135,7 +135,7 @@ class BuilderInfoRow extends StatelessWidget {
                     DestinyItemComponent item = Provider.of<BuilderCustomInfoProvider>(context).classItem!;
                     return ItemIcon(
                       displayHash: item.overrideStyleItemHash ?? item.itemHash!,
-                      imageSize: 80,
+                      imageSize: vw(context) * .05,
                       isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
                       element: Provider.of<ItemProvider>(context).getItemElement(item),
                       powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),

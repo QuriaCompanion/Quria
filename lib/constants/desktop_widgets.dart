@@ -57,7 +57,7 @@ Widget desktopHeader(
 Widget builderContainer(BuildContext context, {required Widget child}) {
   return Center(
     child: Container(
-      width: vw(context) * 0.55,
+      width: vw(context) * 0.75,
       padding: EdgeInsets.all(globalPadding(context)),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8),
@@ -73,6 +73,7 @@ Widget desktopRegularModal(BuildContext context, {required Widget child}) {
     children: [
       Center(
         child: SizedBox(
+          height: vh(context) * 0.9,
           width: vw(context) * 0.4,
           child: Material(
             type: MaterialType.card,
@@ -82,7 +83,7 @@ Widget desktopRegularModal(BuildContext context, {required Widget child}) {
         ),
       ),
       Positioned(
-        top: vh(context) * 0.2,
+        top: vh(context) * 0.15,
         right: vw(context) * 0.2,
         child: Material(
           type: MaterialType.card,
@@ -93,7 +94,7 @@ Widget desktopRegularModal(BuildContext context, {required Widget child}) {
                 callback: () {
                   Navigator.pop(context);
                 },
-                icon: 'assets/icons/Close.svg',
+                icon: 'assets/icons/closeDesktop.svg',
               ),
             ],
           ),
@@ -109,6 +110,7 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
     children: [
       Center(
         child: SizedBox(
+          height: vh(context) * 0.9,
           width: vw(context) * 0.4,
           child: Material(
             type: MaterialType.card,
@@ -118,7 +120,7 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
         ),
       ),
       Positioned(
-        top: vh(context) * 0.2,
+        top: vh(context) * 0.15,
         right: vw(context) * 0.2,
         child: Material(
           type: MaterialType.card,
@@ -129,7 +131,7 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
                 callback: () {
                   Navigator.pop(context);
                 },
-                icon: 'assets/icons/Close.svg',
+                icon: 'assets/icons/closeDesktop.svg',
               ),
               SizedBox(
                 height: vw(context) * 0.02,
@@ -145,7 +147,7 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
                     subclassId: Provider.of<BuilderSubclassProvider>(context, listen: false).subclassId,
                   );
                 },
-                icon: 'assets/icons/Equip.svg',
+                icon: 'assets/icons/equipDesktop.svg',
               ),
               SizedBox(
                 height: vw(context) * 0.02,
@@ -158,7 +160,7 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
                         return const InProgressModal();
                       });
                 },
-                icon: 'assets/icons/Save.svg',
+                icon: 'assets/icons/saveDesktop.svg',
               ),
               SizedBox(
                 height: vw(context) * 0.02,
@@ -171,7 +173,7 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
                         return const InProgressModal();
                       });
                 },
-                icon: 'assets/icons/Share.svg',
+                icon: 'assets/icons/shareDesktop.svg',
               ),
             ],
           ),
@@ -187,6 +189,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
     children: [
       Center(
         child: SizedBox(
+          height: vh(context) * 0.9,
           width: vw(context) * 0.4,
           child: Material(
             type: MaterialType.card,
@@ -196,7 +199,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
         ),
       ),
       Positioned(
-        top: vh(context) * 0.2,
+        top: vh(context) * 0.15,
         right: vw(context) * 0.2,
         child: Material(
           type: MaterialType.card,
@@ -207,7 +210,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                 callback: () {
                   Navigator.pop(context);
                 },
-                icon: 'assets/icons/Close.svg',
+                icon: 'assets/icons/closeDesktop.svg',
               ),
               SizedBox(
                 height: vw(context) * 0.02,
@@ -228,7 +231,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                         );
                       });
                 },
-                icon: 'assets/icons/Equip.svg',
+                icon: 'assets/icons/equipDesktop.svg',
               ),
               SizedBox(
                 height: vw(context) * 0.02,
@@ -249,7 +252,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                         );
                       });
                 },
-                icon: 'assets/icons/Transfer.svg',
+                icon: 'assets/icons/transferDesktop.svg',
               ),
               SizedBox(
                 height: vw(context) * 0.02,
@@ -264,7 +267,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                         );
                       });
                 },
-                icon: 'assets/icons/Share.svg',
+                icon: 'assets/icons/shareDesktop.svg',
               ),
               SizedBox(
                 height: vw(context) * 0.02,
@@ -284,7 +287,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                         );
                       });
                 },
-                icon: 'assets/icons/Collection.svg',
+                icon: 'assets/icons/collectionDesktop.svg',
               ),
             ],
           ),
@@ -299,6 +302,7 @@ Widget desktopCollectionModal(BuildContext context, {required Widget child}) {
     children: [
       Center(
         child: SizedBox(
+          height: vh(context) * 0.9,
           width: vw(context) * 0.4,
           child: Material(
             type: MaterialType.card,
@@ -308,7 +312,7 @@ Widget desktopCollectionModal(BuildContext context, {required Widget child}) {
         ),
       ),
       Positioned(
-        top: vh(context) * 0.2,
+        top: vh(context) * 0.15,
         right: vw(context) * 0.2,
         child: Material(
           type: MaterialType.card,
@@ -319,7 +323,7 @@ Widget desktopCollectionModal(BuildContext context, {required Widget child}) {
                 callback: () {
                   Navigator.pop(context);
                 },
-                icon: 'assets/icons/Close.svg',
+                icon: 'assets/icons/closeDesktop.svg',
               ),
               SizedBox(
                 height: vw(context) * 0.02,
@@ -334,7 +338,7 @@ Widget desktopCollectionModal(BuildContext context, {required Widget child}) {
                         );
                       });
                 },
-                icon: 'assets/icons/Share.svg',
+                icon: 'assets/icons/shareDesktop.svg',
               ),
             ],
           ),

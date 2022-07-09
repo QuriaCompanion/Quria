@@ -29,89 +29,86 @@ class CollectionDesktopFilter extends StatelessWidget {
       width: 10,
     );
     return SizedBox(
-      height: vh(context),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 100,
-              child: Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      onFilterChanged(
-                        InventoryBucket.kineticWeapons,
-                        CollectionFilter.kinetic,
-                        selectedSubType,
-                      );
-                    },
-                    child: SelectFilterType(
-                      width: 93.333,
-                      filterLogo: CollectionFilter.bucketLogo[InventoryBucket.kineticWeapons]!,
-                      isCurrentFilter: selectedBucket == InventoryBucket.kineticWeapons,
-                    ),
-                  ),
-                  spacer,
-                  InkWell(
-                    onTap: () {
-                      onFilterChanged(
-                        InventoryBucket.energyWeapons,
-                        CollectionFilter.energy,
-                        selectedSubType,
-                      );
-                    },
-                    child: SelectFilterType(
-                      width: 93.333,
-                      filterLogo: CollectionFilter.bucketLogo[InventoryBucket.energyWeapons]!,
-                      isCurrentFilter: selectedBucket == InventoryBucket.energyWeapons,
-                    ),
-                  ),
-                  spacer,
-                  InkWell(
-                    onTap: () {
-                      onFilterChanged(
-                        InventoryBucket.powerWeapons,
-                        CollectionFilter.power,
-                        selectedSubType,
-                      );
-                    },
-                    child: SelectFilterType(
-                      width: 93.333,
-                      filterLogo: CollectionFilter.bucketLogo[InventoryBucket.powerWeapons]!,
-                      isCurrentFilter: selectedBucket == InventoryBucket.powerWeapons,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            for (final entry in currentFilter.entries)
-              InkWell(
-                onTap: () {
-                  onFilterChanged(
-                    selectedBucket,
-                    currentFilter,
-                    entry.value,
-                  );
-                },
-                child: Container(
-                  margin: const EdgeInsets.only(top: 16),
-                  padding: const EdgeInsets.all(24),
-                  width: 300,
-                  height: 72,
-                  decoration: BoxDecoration(color: blackLight, borderRadius: BorderRadius.circular(5)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      textH3(entry.key, utf8: false),
-                      textCaptionBold(
-                          '${items.where((element) => entry.value == element.itemSubType && element.inventory?.bucketTypeHash == selectedBucket && element.inventory?.tierType != TierType.Exotic).length}',
-                          color: greyLight)
-                    ],
+      child: Column(
+        children: [
+          SizedBox(
+            height: 100,
+            child: Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    onFilterChanged(
+                      InventoryBucket.kineticWeapons,
+                      CollectionFilter.kinetic,
+                      selectedSubType,
+                    );
+                  },
+                  child: SelectFilterType(
+                    width: 93.333,
+                    filterLogo: CollectionFilter.bucketLogo[InventoryBucket.kineticWeapons]!,
+                    isCurrentFilter: selectedBucket == InventoryBucket.kineticWeapons,
                   ),
                 ),
+                spacer,
+                InkWell(
+                  onTap: () {
+                    onFilterChanged(
+                      InventoryBucket.energyWeapons,
+                      CollectionFilter.energy,
+                      selectedSubType,
+                    );
+                  },
+                  child: SelectFilterType(
+                    width: 93.333,
+                    filterLogo: CollectionFilter.bucketLogo[InventoryBucket.energyWeapons]!,
+                    isCurrentFilter: selectedBucket == InventoryBucket.energyWeapons,
+                  ),
+                ),
+                spacer,
+                InkWell(
+                  onTap: () {
+                    onFilterChanged(
+                      InventoryBucket.powerWeapons,
+                      CollectionFilter.power,
+                      selectedSubType,
+                    );
+                  },
+                  child: SelectFilterType(
+                    width: 93.333,
+                    filterLogo: CollectionFilter.bucketLogo[InventoryBucket.powerWeapons]!,
+                    isCurrentFilter: selectedBucket == InventoryBucket.powerWeapons,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          for (final entry in currentFilter.entries)
+            InkWell(
+              onTap: () {
+                onFilterChanged(
+                  selectedBucket,
+                  currentFilter,
+                  entry.value,
+                );
+              },
+              child: Container(
+                margin: const EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.all(24),
+                width: 300,
+                height: 72,
+                decoration: BoxDecoration(color: blackLight, borderRadius: BorderRadius.circular(5)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    textH3(entry.key, utf8: false),
+                    textCaptionBold(
+                        '${items.where((element) => entry.value == element.itemSubType && element.inventory?.bucketTypeHash == selectedBucket && element.inventory?.tierType != TierType.Exotic).length}',
+                        color: greyLight)
+                  ],
+                ),
               ),
-          ],
-        ),
+            ),
+        ],
       ),
     );
   }

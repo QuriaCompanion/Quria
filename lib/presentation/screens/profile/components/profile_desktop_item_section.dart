@@ -1,15 +1,18 @@
 import 'package:bungie_api/destiny2.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
+import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 import 'package:quria/presentation/screens/profile/components/draggable_inventory_item.dart';
 
 class ProfileDesktopItemSection extends StatefulWidget {
@@ -81,13 +84,31 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                       List<dynamic> accepted,
                       List<dynamic> rejected,
                     ) {
-                      return ItemIcon(
-                        displayHash: equippedItem.overrideStyleItemHash ?? equippedItem.itemHash!,
-                        imageSize: itemSize,
-                        isMasterworked:
-                            equippedItem.state == ItemState.Masterwork || equippedItem.state == const ItemState(5),
-                        element: Provider.of<ItemProvider>(context).getItemElement(equippedItem),
-                        powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(equippedItem.itemInstanceId!),
+                      return InkWell(
+                        onTap: () {
+                          Provider.of<InspectProvider>(context, listen: false).setInspectItem(
+                              itemDef:
+                                  ManifestService.manifestParsed.destinyInventoryItemDefinition[equippedItem.itemHash]!,
+                              item: equippedItem);
+                          showDialog(
+                              context: context,
+                              barrierColor: const Color.fromARGB(110, 0, 0, 0),
+                              builder: (context) {
+                                return desktopItemModal(context,
+                                    child: InspectItem(
+                                      width: vw(context) * 0.4,
+                                    ));
+                              });
+                        },
+                        child: ItemIcon(
+                          displayHash: equippedItem.overrideStyleItemHash ?? equippedItem.itemHash!,
+                          imageSize: itemSize,
+                          isMasterworked:
+                              equippedItem.state == ItemState.Masterwork || equippedItem.state == const ItemState(5),
+                          element: Provider.of<ItemProvider>(context).getItemElement(equippedItem),
+                          powerLevel:
+                              Provider.of<ItemProvider>(context).getItemPowerLevel(equippedItem.itemInstanceId!),
+                        ),
                       );
                     },
                     onAccept: (DestinyItemComponent data) {

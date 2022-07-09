@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:quria/constants/styles.dart';
@@ -41,9 +42,20 @@ class Loader extends StatelessWidget {
             SizedBox(
               height: spacing,
             ),
-          RepaintBoundary(
-              child: Lottie.asset('assets/animations/loader.json',
-                  frameRate: FrameRate.max, width: animationSize, height: animationSize)),
+          if (kIsWeb)
+            Image.asset(
+              'assets/animations/ghostLoader.gif',
+              width: animationSize,
+              height: animationSize,
+            ),
+          if (!kIsWeb)
+            RepaintBoundary(
+                child: Lottie.asset(
+              'assets/animations/loader.json',
+              frameRate: FrameRate.max,
+              width: animationSize,
+              height: animationSize,
+            )),
         ],
       ),
     );
