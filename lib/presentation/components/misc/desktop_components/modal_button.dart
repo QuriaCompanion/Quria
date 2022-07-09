@@ -85,7 +85,6 @@ class _ModalButtonState extends State<ModalButton> with AnimationMixin {
             height: vw(context) * 0.015,
             width: vw(context) * 0.015,
             color: black,
-            fit: BoxFit.fill,
           ),
         ],
       ),
