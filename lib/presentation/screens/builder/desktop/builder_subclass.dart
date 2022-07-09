@@ -70,7 +70,7 @@ class BuilderSubclass extends StatelessWidget {
                     },
                     color: grey,
                     subclass: subclass,
-                    width: vw(context) * 0.1,
+                    width: vw(context) * 0.15,
                   ),
                 ),
               ),

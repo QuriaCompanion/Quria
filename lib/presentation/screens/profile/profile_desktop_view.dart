@@ -47,15 +47,17 @@ class ProfileDesktopView extends StatelessWidget {
             subclass: data.selectedCharacterSubclass!,
           ),
         ),
+        ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          itemCount: buckets.length,
+          itemBuilder: ((context, index) => ProfileDesktopItemSection(
+                data: data,
+                bucket: buckets[index],
+              )),
+        ),
         SizedBox(
-          height: vh(context) * 0.8,
-          child: ListView.builder(
-            itemCount: buckets.length,
-            itemBuilder: ((context, index) => ProfileDesktopItemSection(
-                  data: data,
-                  bucket: buckets[index],
-                )),
-          ),
+          height: globalPadding(context),
         )
       ],
     );

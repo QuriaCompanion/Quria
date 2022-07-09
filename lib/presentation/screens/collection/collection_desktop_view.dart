@@ -132,8 +132,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                   const Spacer(),
                   SingleChildScrollView(
                     child: SizedBox(
-                      width: vw(context) * 0.7,
-                      height: vh(context),
+                      width: vw(context) - (globalPadding(context) * 2) - 400,
                       child: GridView.builder(
                           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 400,
@@ -141,6 +140,8 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                             mainAxisSpacing: 20,
                             crossAxisSpacing: 20,
                           ),
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
                           itemCount: items.length,
                           itemBuilder: (context, index) {
                             return InkWell(

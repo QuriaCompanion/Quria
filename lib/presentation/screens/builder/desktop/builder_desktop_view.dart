@@ -67,7 +67,7 @@ class BuilderDesktopView extends StatelessWidget {
             isDisabled: Provider.of<BuilderCustomInfoProvider>(context).classItem == null,
             disabledColor: grey,
             text: textBodyBold(
-              AppLocalizations.of(context)!.builder,
+              AppLocalizations.of(context)!.see_builds,
               color: black,
               utf8: false,
             ),

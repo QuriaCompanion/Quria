@@ -134,7 +134,7 @@ class ProfileMobileHeader extends StatelessWidget {
               stats: stats!,
               characterId: characterId,
               direction: Axis.horizontal,
-              width: vw(context) < 1000 ? width * 0.6 : 400,
+              width: vw(context) < 1000 ? width * 0.6 : 300,
             ),
           ),
         ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
 import 'dart:math' as math;
 
@@ -79,7 +80,13 @@ class _ModalButtonState extends State<ModalButton> with AnimationMixin {
                   border: Border.all(color: color.value ?? Colors.white),
                 ),
               )),
-          SvgPicture.asset(widget.icon, height: vw(context) * 0.015, width: vw(context) * 0.015, color: black),
+          SvgPicture.asset(
+            widget.icon,
+            height: vw(context) * 0.015,
+            width: vw(context) * 0.015,
+            color: black,
+            fit: BoxFit.fill,
+          ),
         ],
       ),
     );

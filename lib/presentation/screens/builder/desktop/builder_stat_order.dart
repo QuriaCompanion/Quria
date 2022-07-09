@@ -69,7 +69,7 @@ class BuilderStatOrder extends StatelessWidget {
             ),
             RepaintBoundary(
               child: SizedBox(
-                width: (vw(context) * 0.55 - (globalPadding(context) * 2)) * 0.95,
+                width: (vw(context) * 0.75 - (globalPadding(context) * 2)) * 0.95,
                 height: 56 * 6,
                 child: const FilterWidget(
                   color: grey,
