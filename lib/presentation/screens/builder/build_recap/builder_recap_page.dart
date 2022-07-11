@@ -19,7 +19,7 @@ class _BuilderRecapPageState extends State<BuilderRecapPage> {
       return ScaffoldBurgerAndBackOption(
           width: vw(context), body: BuilderRecapMobileView(width: vw(context), data: widget.data));
     } else {
-      return Container();
+      return ScaffoldBurgerAndBackOption(width: vw(context), body: const SizedBox());
     }
   }
 }

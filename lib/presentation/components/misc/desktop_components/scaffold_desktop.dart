@@ -80,7 +80,8 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                                 return Center(
                                   child: Container(
                                     width: vw(context) * 0.4,
-                                    decoration: BoxDecoration(color: black, borderRadius: BorderRadius.circular(10)),
+                                    decoration:
+                                        BoxDecoration(color: blackLight, borderRadius: BorderRadius.circular(10)),
                                     child: Padding(
                                       padding: EdgeInsets.all(globalPadding(context)),
                                       child: Column(
@@ -98,6 +99,10 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                                                 ),
                                               ),
                                             ],
+                                          ),
+                                          const Divider(
+                                            color: greyLight,
+                                            thickness: 2,
                                           ),
                                           for (var character in characters.asMap().entries)
                                             Padding(
@@ -176,7 +181,7 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(20),
                                       ),
-                                      color: black,
+                                      color: blackLight,
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(16),
@@ -195,6 +200,10 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                                                 ),
                                               ),
                                             ],
+                                          ),
+                                          const Divider(
+                                            color: greyLight,
+                                            thickness: 2,
                                           ),
                                           const SettingsMobileView(
                                             height: 600,

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
+import 'package:quria/presentation/screens/profile/profile_desktop_view.dart';
 import 'package:quria/presentation/screens/vault/vault_mobile_view.dart';
 
 class VaultPage extends StatefulWidget {
@@ -38,7 +40,10 @@ class _VaultPageState extends State<VaultPage> {
                 ),
               );
             } else {
-              return Container();
+              ProfileHelper data = DisplayService.getProfileData(context);
+              return ProfileDesktopView(
+                data: data,
+              );
             }
           } else {
             return Container(

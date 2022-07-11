@@ -24,7 +24,7 @@ class _LegendsPageState extends State<LegendsPage> {
 
   @override
   Widget build(BuildContext context) {
-    const divider = Divider(color: Colors.white);
+    const divider = Divider(color: greyLight);
     return FutureBuilder(
         future: _future,
         builder: (context, AsyncSnapshot<List<Donator>> snapshot) {
@@ -101,20 +101,33 @@ class _LegendsPageState extends State<LegendsPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: Center(child: textH3(AppLocalizations.of(context)!.donors, utf8: false)),
                 ),
-                for (Donator donator in snapshot.data!)
-                  ListTile(
-                    title: textBodyMedium(donator.supporterName, utf8: false),
-                    subtitle: Row(
+                Center(
+                  child: GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 200,
+                      childAspectRatio: 1.7,
+                    ),
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) => Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
-                          Icons.coffee,
-                          size: 15,
-                          color: Colors.white,
+                        textBodyMedium(snapshot.data![index].supporterName, utf8: false),
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(
+                              Icons.coffee,
+                              size: 15,
+                              color: Colors.white,
+                            ),
+                            textBodyMedium(" x${snapshot.data![index].supportCoffees}", utf8: false),
+                          ],
                         ),
-                        textBodyMedium(donator.supportCoffees.toString(), utf8: false),
                       ],
                     ),
                   ),
+                )
               ],
             );
           }
