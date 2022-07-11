@@ -8,8 +8,10 @@ import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
 import 'package:bungie_api/models/destiny_talent_node.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:collection/collection.dart';
 
@@ -44,7 +46,73 @@ class InventoryProvider with ChangeNotifier {
         [];
   }
 
-  List<DestinyItemComponent> getVaultInventoryForCharacterByBucket(String characterId, int slotTypeHash) {
+  List<DestinyItemComponent> getItemsForBuildCreation(BuildContext context, {required int slotTypeHash}) {
+    DestinyClass classType = Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.classType!;
+    final List<DestinyItemComponent> inventory = [];
+    inventory.addAll(
+      _profileInventory.where(
+        (item) =>
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
+                    ?.equipmentSlotTypeHash ==
+                slotTypeHash &&
+            (!InventoryBucket.armorBucketHashes.contains(ManifestService.manifestParsed
+                    .destinyInventoryItemDefinition[item.itemHash]?.equippingBlock?.equipmentSlotTypeHash) ||
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.classType == classType) &&
+            (!(InventoryBucket.subclass ==
+                    ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
+                        ?.equipmentSlotTypeHash) ||
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.classType == classType) &&
+            item.bucketHash != 215593132,
+      ),
+    );
+    _characterEquipment.forEach((id, equipment) {
+      if (equipment.items != null) {
+        inventory.addAll(
+          equipment.items!.where(
+            (item) =>
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
+                        ?.equipmentSlotTypeHash ==
+                    slotTypeHash &&
+                (!InventoryBucket.armorBucketHashes.contains(ManifestService.manifestParsed
+                        .destinyInventoryItemDefinition[item.itemHash]?.equippingBlock?.equipmentSlotTypeHash) ||
+                    ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.classType ==
+                        classType) &&
+                (!(InventoryBucket.subclass ==
+                        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
+                            ?.equipmentSlotTypeHash) ||
+                    ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.classType ==
+                        classType) &&
+                item.bucketHash != 215593132,
+          ),
+        );
+      }
+    });
+    _characterInventory.forEach((id, equipment) {
+      if (equipment.items != null) {
+        inventory.addAll(
+          equipment.items!.where(
+            (item) =>
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
+                        ?.equipmentSlotTypeHash ==
+                    slotTypeHash &&
+                (!InventoryBucket.armorBucketHashes.contains(ManifestService.manifestParsed
+                        .destinyInventoryItemDefinition[item.itemHash]?.equippingBlock?.equipmentSlotTypeHash) ||
+                    ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.classType ==
+                        classType) &&
+                (!(InventoryBucket.subclass ==
+                        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.equippingBlock
+                            ?.equipmentSlotTypeHash) ||
+                    ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.classType ==
+                        classType) &&
+                item.bucketHash != 215593132,
+          ),
+        );
+      }
+    });
+    return inventory;
+  }
+
+  List<DestinyItemComponent> getVaultInventoryForCharacterByBucket(String? characterId, int slotTypeHash) {
     final List<DestinyItemComponent> inventory = [];
     inventory.addAll(
       _profileInventory.where(

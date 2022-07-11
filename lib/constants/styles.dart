@@ -20,10 +20,11 @@ const subclassHeader = AssetImage("assets/img/Subclass.png");
 const modsHeader = AssetImage("assets/img/mods.png");
 const buildHeader = AssetImage("assets/img/build.png");
 const buildHeaderWeb = AssetImage("assets/img/builderWeb.png");
+const ghostBuild = AssetImage("assets/img/ghostBuild.png");
 
 const collectionHeader = AssetImage("assets/img/collection.png");
 const splashBackground = AssetImage("assets/img/base_background.png");
-const splashBackgroundWeb = AssetImage("assets/img/splash_large.png");
+const splashBackgroundWeb = AssetImage("assets/img/backgroundDesktop.jfif");
 
 double globalPadding(BuildContext context) {
   if (vw(context) > 1000) {

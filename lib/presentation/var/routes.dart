@@ -21,5 +21,6 @@ const String routeInspectSubclass = "/inspect-subclass";
 const String routeCollectionItem = "/collection-item";
 const String routePageSettings = "/settings";
 const String routePageLegends = "/legends";
+const String routeCreateBuild = "/create-build";
 
 final navKey = GlobalKey<NavigatorState>();

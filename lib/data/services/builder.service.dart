@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/enums/tier_type.dart';
@@ -21,9 +23,12 @@ import 'package:quria/data/providers/builder/builder_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
+import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:http/http.dart' as http;
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class BuilderService {
@@ -66,6 +71,21 @@ class BuilderService {
       considerMasterwork: considerMasterwork,
       exotic: exotic,
     );
+  }
+
+  Future<void> createBuild(BuildContext context, String name) async {
+    final build = Provider.of<CreateBuildProvider>(context, listen: false).items;
+
+    await http.post(Uri.parse("http://localhost:3000/build"),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({
+          "name": name,
+          "bungieName": AccountService.membershipData?.bungieNetUser?.uniqueName,
+          "items": build.map((e) => e.toJson()).toList(),
+          "usedTimes": 0,
+          "preset": {}
+        }));
+    return;
   }
 
   Future<List<Build>> calculateBuilds({

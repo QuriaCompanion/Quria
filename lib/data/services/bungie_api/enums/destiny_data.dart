@@ -7,7 +7,9 @@ import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
+import 'package:quria/data/models/Item.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_definition.dart';
+import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class StatsHash {
@@ -124,7 +126,7 @@ extension ArmorStatIntExtension on ArmorStatInt {
 }
 
 class Conditions {
-  static amorSockets(DestinyItemSocketState item) {
+  static bool armorSockets(DestinyItemSocketState item) {
     return (item.isVisible!) &&
         ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.plug?.plugCategoryHash !=
             2973005342 &&
@@ -138,7 +140,7 @@ class Conditions {
             TierType.Exotic;
   }
 
-  static cosmeticSockets(DestinyItemSocketState item) {
+  static bool cosmeticSockets(DestinyItemSocketState item) {
     return (item.isVisible!) &&
             ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.itemType ==
                 DestinyItemType.Armor ||
@@ -148,7 +150,29 @@ class Conditions {
             DestinyItemSubType.Shader;
   }
 
-  static perkSockets(int? item) {
+  static bool isBuildValid(List<Item> items) {
+    final exoticArmor = [];
+    for (Item item in items) {
+      ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.inventory?.tierType ==
+                  TierType.Exotic &&
+              InventoryBucket.armorBucketHashes.contains(ManifestService
+                  .manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.inventory?.bucketTypeHash)
+          ? exoticArmor.add(item)
+          : null;
+    }
+    final exoticWeapon = [];
+    for (Item item in items) {
+      ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.inventory?.tierType ==
+                  TierType.Exotic &&
+              InventoryBucket.weaponBucketHashes.contains(ManifestService
+                  .manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.inventory?.bucketTypeHash)
+          ? exoticWeapon.add(item)
+          : null;
+    }
+    return exoticArmor.length > 1 || exoticWeapon.length > 1;
+  }
+
+  static bool perkSockets(int? item) {
     return item != null &&
         DestinyData.perkCategoryHash
             .contains(ManifestService.manifestParsed.destinyInventoryItemDefinition[item]?.plug?.plugCategoryHash);

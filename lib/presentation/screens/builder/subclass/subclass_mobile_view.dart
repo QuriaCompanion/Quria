@@ -1,17 +1,15 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/presentation/screens/builder/subclass/mobile_components/subclass_mobile_card.dart';
-import 'package:quria/presentation/var/routes.dart';
 
 class SubclassMobileView extends StatelessWidget {
   final List<DestinyItemComponent> subclasses;
-  const SubclassMobileView({required this.subclasses, Key? key}) : super(key: key);
+  final void Function(DestinyItemComponent)? onSelect;
+  const SubclassMobileView({required this.subclasses, Key? key, this.onSelect}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,17 +38,7 @@ class SubclassMobileView extends StatelessWidget {
             for (final subclass in subclasses)
               SubclassMobileCard(
                 onTap: (subclassDef) {
-                  Provider.of<BuilderSubclassProvider>(context, listen: false)
-                      .setSubclass(subclass.itemInstanceId, subclassDef);
-                  subclassDef.talentGrid?.talentGridHash == 0
-                      ? Navigator.pushNamed(
-                          context,
-                          routeSubclassMod,
-                        )
-                      : Navigator.pushNamed(
-                          context,
-                          routeClassItemChoice,
-                        );
+                  onSelect?.call(subclass);
                 },
                 subclass: subclass,
                 width: (vw(context) - globalPadding(context) * 3) / 2,

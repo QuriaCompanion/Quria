@@ -14,6 +14,8 @@
     "understood": "Entendido",
     "searching": "Buscando...",
     "character": "Personajes",
+    "builds": "Builds",
+    "create_build_field": "Enter the name of your build",
     "vault": "Almacén",
     "settings": "Ajustes",
     "login": "Acceso",

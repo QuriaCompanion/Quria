@@ -103,6 +103,20 @@ class _BurgerState extends State<Burger> {
                       InkWell(
                         onTap: () {
                           Navigator.pop(context);
+                          Navigator.pushNamed(context, routeCreateBuild);
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/icons/Builds.svg"),
+                            const SizedBox(width: 18),
+                            textBodyHighRegular(AppLocalizations.of(context)!.builds, utf8: false),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 32),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
                           Navigator.pushNamed(context, routeVault);
                         },
                         child: Row(
