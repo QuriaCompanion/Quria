@@ -22,5 +22,7 @@ const String routeCollectionItem = "/collection-item";
 const String routePageSettings = "/settings";
 const String routePageLegends = "/legends";
 const String routeCreateBuild = "/create-build";
+const String routeListBuilds = "/list-builds";
+const String routeDetailsBuild = "/details-build";
 
 final navKey = GlobalKey<NavigatorState>();

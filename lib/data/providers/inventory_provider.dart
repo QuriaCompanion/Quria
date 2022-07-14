@@ -109,10 +109,20 @@ class InventoryProvider with ChangeNotifier {
         );
       }
     });
+    inventory.sort((a, b) {
+      if (Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(a.itemInstanceId) == null ||
+          Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(a.itemInstanceId) == null) {
+        return 1;
+      }
+      return Provider.of<ItemProvider>(context, listen: false)
+          .getItemPowerLevel(b.itemInstanceId)!
+          .compareTo(Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(a.itemInstanceId)!);
+    });
     return inventory;
   }
 
-  List<DestinyItemComponent> getVaultInventoryForCharacterByBucket(String? characterId, int slotTypeHash) {
+  List<DestinyItemComponent> getVaultInventoryForCharacterByBucket(
+      BuildContext context, String? characterId, int slotTypeHash) {
     final List<DestinyItemComponent> inventory = [];
     inventory.addAll(
       _profileInventory.where(
@@ -149,6 +159,16 @@ class InventoryProvider with ChangeNotifier {
         );
       }
     });
+    inventory.sort((a, b) {
+      if (Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(a.itemInstanceId) == null ||
+          Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(a.itemInstanceId) == null) {
+        return 1;
+      }
+      return Provider.of<ItemProvider>(context, listen: false)
+          .getItemPowerLevel(b.itemInstanceId)!
+          .compareTo(Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(a.itemInstanceId)!);
+    });
+
     return inventory;
   }
 
@@ -259,8 +279,7 @@ class InventoryProvider with ChangeNotifier {
     return null;
   }
 
-  int? getCurrentSuperHashForCharacter(BuildContext context, String characterId) {
-    DestinyItemComponent? subclass = getCurrentSubClassForCharacter(characterId);
+  int? getSuperHashForSubclass(BuildContext context, DestinyItemComponent subclass) {
     List<DestinyItemSocketState>? sockets =
         Provider.of<ItemProvider>(context, listen: false).getItemSockets(subclass.itemInstanceId!);
     DestinyItemSocketState? newSuper = sockets.firstWhereOrNull((element) =>
@@ -281,6 +300,11 @@ class InventoryProvider with ChangeNotifier {
           .nodes?[oldSuper.nodeIndex!].steps?[0].nodeStepHash;
     }
     return null;
+  }
+
+  int? getCurrentSuperHashForCharacter(BuildContext context, String characterId) {
+    DestinyItemComponent? subclass = getCurrentSubClassForCharacter(characterId);
+    return getSuperHashForSubclass(context, subclass);
   }
 
   String? getItemOwner(String itemInstanceId) {

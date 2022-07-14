@@ -8,10 +8,12 @@ import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/builds/create/create_build_section.dart';
 import 'package:quria/presentation/var/keys.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class CreateBuildMobileView extends StatefulWidget {
   const CreateBuildMobileView({Key? key}) : super(key: key);
@@ -22,11 +24,12 @@ class CreateBuildMobileView extends StatefulWidget {
 
 class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
   late TextEditingController _controller;
+  final String _text = '';
 
   @override
   void initState() {
     super.initState();
-    _controller = TextEditingController();
+    _controller = TextEditingController()..text = Provider.of<CreateBuildProvider>(context, listen: false).name ?? '';
   }
 
   @override
@@ -34,8 +37,6 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
     _controller.dispose();
     super.dispose();
   }
-
-  final _text = '';
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +50,11 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               textH1(
-                AppLocalizations.of(context)!.builder_stats_order_title,
+                AppLocalizations.of(context)!.create_build,
                 utf8: false,
               ),
               textBodyRegular(
-                AppLocalizations.of(context)!.builder_stats_order_subtitle,
+                AppLocalizations.of(context)!.create_build_subtitle,
                 utf8: false,
               ),
             ],
@@ -75,51 +76,17 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                     hintText: AppLocalizations.of(context)!.create_build_field,
                     hintStyle: const TextStyle(color: Colors.white)),
               ),
-              mobileSection(
-                context,
-                title: AppLocalizations.of(context)!.subclass,
-                child: const CreateBuildSection(bucketHash: InventoryBucket.subclass),
-              ),
-              mobileSection(
-                context,
-                title: AppLocalizations.of(context)!.kinetic,
-                child: const CreateBuildSection(bucketHash: InventoryBucket.kineticWeapons),
-              ),
-              mobileSection(
-                context,
-                title: AppLocalizations.of(context)!.energy,
-                child: const CreateBuildSection(bucketHash: InventoryBucket.energyWeapons),
-              ),
-              mobileSection(
-                context,
-                title: AppLocalizations.of(context)!.power,
-                child: const CreateBuildSection(bucketHash: InventoryBucket.powerWeapons),
-              ),
-              mobileSection(
-                context,
-                title: AppLocalizations.of(context)!.helmet,
-                child: const CreateBuildSection(bucketHash: InventoryBucket.helmet),
-              ),
-              mobileSection(
-                context,
-                title: AppLocalizations.of(context)!.gauntlets,
-                child: const CreateBuildSection(bucketHash: InventoryBucket.gauntlets),
-              ),
-              mobileSection(
-                context,
-                title: AppLocalizations.of(context)!.chest,
-                child: const CreateBuildSection(bucketHash: InventoryBucket.chestArmor),
-              ),
-              mobileSection(
-                context,
-                title: AppLocalizations.of(context)!.legs,
-                child: const CreateBuildSection(bucketHash: InventoryBucket.legArmor),
-              ),
-              mobileSection(
-                context,
-                title: AppLocalizations.of(context)!.class_item,
-                child: const CreateBuildSection(bucketHash: InventoryBucket.classArmor),
-              ),
+              for (final bucket in InventoryBucket.loadoutBucketHashes)
+                mobileSection(
+                  context,
+                  title:
+                      ManifestService.manifestParsed.destinyInventoryBucketDefinition[bucket]!.displayProperties!.name!,
+                  utf8: true,
+                  child: CreateBuildSection(
+                    bucketHash: bucket,
+                    width: vw(context),
+                  ),
+                ),
               if (_controller.value.text.isEmpty) textBodyBold("You need to name your build!", color: crucible),
               if (Conditions.isBuildValid(Provider.of<CreateBuildProvider>(context).items))
                 textBodyBold("You have too many exotics!", color: crucible),
@@ -130,16 +97,33 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                   text: textBodyMedium(AppLocalizations.of(context)!.save, utf8: false, color: black),
                   onPressed: () async {
                     try {
-                      await BuilderService().createBuild(context, _controller.text).then((value) {
-                        ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
-                          content: textBodyMedium(
-                            AppLocalizations.of(context)!.item_transfered,
-                            utf8: false,
-                            color: Colors.white,
-                          ),
-                          backgroundColor: Colors.green,
-                        ));
-                      });
+                      if (Provider.of<CreateBuildProvider>(context, listen: false).id != null) {
+                        await BuilderService().updateBuild(context, _controller.text).then((value) {
+                          ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+                            content: textBodyMedium(
+                              AppLocalizations.of(context)!.build_delete_success,
+                              utf8: false,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: Colors.green,
+                          ));
+                          Provider.of<CreateBuildProvider>(context, listen: false).clear();
+                          Navigator.pushNamed(context, routeListBuilds);
+                        });
+                      } else {
+                        await BuilderService().createBuild(context, _controller.text).then((value) {
+                          ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+                            content: textBodyMedium(
+                              AppLocalizations.of(context)!.build_delete_success,
+                              utf8: false,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: Colors.green,
+                          ));
+                          Provider.of<CreateBuildProvider>(context, listen: false).clear();
+                          Navigator.pushNamed(context, routeListBuilds);
+                        });
+                      }
                     } catch (e) {
                       return showDialog(context: context, builder: (context) => const ErrorDialog());
                     }

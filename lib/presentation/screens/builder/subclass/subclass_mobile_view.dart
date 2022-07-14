@@ -8,8 +8,9 @@ import 'package:quria/presentation/screens/builder/subclass/mobile_components/su
 
 class SubclassMobileView extends StatelessWidget {
   final List<DestinyItemComponent> subclasses;
+  final double width;
   final void Function(DestinyItemComponent)? onSelect;
-  const SubclassMobileView({required this.subclasses, Key? key, this.onSelect}) : super(key: key);
+  const SubclassMobileView({required this.subclasses, Key? key, this.onSelect, required this.width}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class SubclassMobileView extends StatelessWidget {
       children: [
         mobileHeader(context,
             image: subclassHeader,
+            width: width,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,7 +43,7 @@ class SubclassMobileView extends StatelessWidget {
                   onSelect?.call(subclass);
                 },
                 subclass: subclass,
-                width: (vw(context) - globalPadding(context) * 3) / 2,
+                width: (width - globalPadding(context) * 3) / 2,
               ),
           ],
         ),

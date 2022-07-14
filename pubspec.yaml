@@ -30,6 +30,7 @@ dependencies:
   bungie_api: ^13.14.0
   universal_io: ^2.0.4
   lottie: ^1.2.2
+  flutter_layout_grid: ^1.0.3
   cupertino_icons: ^1.0.2
   modal_bottom_sheet: ^2.0.1
   sleek_circular_slider: ^2.0.1

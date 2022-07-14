@@ -9,6 +9,7 @@ import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_build_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/modal_button.dart';
 import 'package:quria/presentation/components/misc/mobile_components/equip_modal.dart';
@@ -154,11 +155,7 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
               ),
               ModalButton(
                 callback: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const InProgressModal();
-                      });
+                  BuilderService().redirectToBuildSaving(context, data: data);
                 },
                 icon: 'assets/icons/saveDesktop.svg',
               ),

@@ -11,10 +11,10 @@ import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
+import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
-import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
@@ -132,11 +132,7 @@ class BuilderResultsDesktopItem extends StatelessWidget {
               RoundedButton(
                 text: textBodyMedium(AppLocalizations.of(context)!.save, color: Colors.white),
                 onPressed: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const Center(child: InProgressModal());
-                      });
+                  BuilderService().redirectToBuildSaving(context, data: buildResult);
                 },
                 textColor: Colors.white,
                 buttonColor: grey,

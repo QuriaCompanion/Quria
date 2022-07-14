@@ -13,6 +13,7 @@ import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/collectible_provider.dart';
 import 'package:quria/data/providers/create_build_provider.dart';
+import 'package:quria/data/providers/details_build_provider.dart';
 import 'package:quria/data/providers/inspect/armor_mod_modal_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_build_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
@@ -61,6 +62,9 @@ class QuriaApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
+          ChangeNotifierProvider<DetailsBuildProvider>(
+            create: (context) => DetailsBuildProvider(),
+          ),
           ChangeNotifierProvider<InspectBuildProvider>(
             create: (context) => InspectBuildProvider(),
           ),

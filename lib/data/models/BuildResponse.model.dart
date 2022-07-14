@@ -36,12 +36,12 @@ class Armor {
   int displayHash;
   int type;
 
-  DestinyInventoryItemDefinition? mods;
+  DestinyInventoryItemDefinition? mod;
   Armor({
     required this.hash,
     required this.itemInstanceId,
     required this.displayHash,
     required this.type,
-    this.mods,
+    this.mod,
   });
 }

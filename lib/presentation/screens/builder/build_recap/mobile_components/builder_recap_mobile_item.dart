@@ -53,8 +53,8 @@ class BuilderRecapMobileItem extends StatelessWidget {
         }
       }
     }
-    if (item.mods != null) {
-      for (var stat in item.mods!.investmentStats!) {
+    if (item.mod != null) {
+      for (var stat in item.mod!.investmentStats!) {
         // if it has a cost to the armor it reduces the armor mod space
         if (stat.statTypeHash == 3779394102 ||
             stat.statTypeHash == 3344745325 ||
@@ -120,7 +120,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: globalPadding(context) / 2),
               child: ArmorModIconDisplay(
                 iconSize: 44,
-                socket: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.mods?.hash] ??
+                socket: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.mod?.hash] ??
                     ManifestService.manifestParsed.destinyInventoryItemDefinition[481675395]!,
               ),
             ),

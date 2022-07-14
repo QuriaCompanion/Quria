@@ -14,17 +14,17 @@ const Color blueEquipped = Color(0xFF59A1E7);
 
 const Color solar = Color(0xFF753D24);
 
-const statisticHeader = AssetImage("assets/img/Stats.png");
-const exoticHeader = AssetImage("assets/img/Exotic.png");
-const subclassHeader = AssetImage("assets/img/Subclass.png");
-const modsHeader = AssetImage("assets/img/mods.png");
-const buildHeader = AssetImage("assets/img/build.png");
-const buildHeaderWeb = AssetImage("assets/img/builderWeb.png");
-const ghostBuild = AssetImage("assets/img/ghostBuild.png");
+const ImageProvider<Object> statisticHeader = AssetImage("assets/img/Stats.png");
+const ImageProvider<Object> exoticHeader = AssetImage("assets/img/Exotic.png");
+const ImageProvider<Object> subclassHeader = AssetImage("assets/img/Subclass.png");
+const ImageProvider<Object> modsHeader = AssetImage("assets/img/mods.png");
+const ImageProvider<Object> buildHeader = AssetImage("assets/img/build.png");
+const ImageProvider<Object> buildHeaderWeb = AssetImage("assets/img/builderWeb.png");
+const ImageProvider<Object> ghostBuild = AssetImage("assets/img/ghostBuild.png");
 
-const collectionHeader = AssetImage("assets/img/collection.png");
-const splashBackground = AssetImage("assets/img/base_background.png");
-const splashBackgroundWeb = AssetImage("assets/img/backgroundDesktop.jfif");
+const ImageProvider<Object> collectionHeader = AssetImage("assets/img/collection.png");
+const ImageProvider<Object> splashBackground = AssetImage("assets/img/base_background.png");
+const ImageProvider<Object> splashBackgroundWeb = AssetImage("assets/img/backgroundDesktop.jfif");
 
 double globalPadding(BuildContext context) {
   if (vw(context) > 1000) {

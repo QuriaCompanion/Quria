@@ -35,7 +35,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
         .getCharacterInventoryByBucket(widget.data.selectedCharacter!.characterId!, widget.bucket);
 
     List<DestinyItemComponent> inventory = Provider.of<InventoryProvider>(context)
-        .getVaultInventoryForCharacterByBucket(widget.data.selectedCharacter!.characterId!, widget.bucket);
+        .getVaultInventoryForCharacterByBucket(context, widget.data.selectedCharacter!.characterId!, widget.bucket);
 
     DestinyItemComponent equippedItem = Provider.of<InventoryProvider>(context)
         .getCharacterEquipmentByBucket(widget.data.selectedCharacter!.characterId!, widget.bucket);

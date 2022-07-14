@@ -18,10 +18,12 @@ import 'package:quria/presentation/components/misc/rounded_button.dart';
 class ChooseItemModal extends StatefulWidget {
   final int bucketHash;
   final bool isEquipped;
+  final double width;
   const ChooseItemModal({
-    Key? key,
     required this.bucketHash,
+    required this.width,
     this.isEquipped = true,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -42,7 +44,7 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
   Widget build(BuildContext context) {
     final item = Provider.of<CreateBuildProvider>(context).getEquippedItemByBucket(widget.bucketHash);
     if (item != null) {
-      data = DisplayService.getCardData(context, itemInstanceId: item.instanceId!, itemHash: item.itemHash);
+      data = DisplayService.getCardData(context, itemInstanceId: item.instanceId, itemHash: item.itemHash);
     }
     return SafeArea(
       child: Container(
@@ -77,14 +79,14 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
                       children: [
                         ItemIcon(
                           displayHash: Provider.of<InventoryProvider>(context)
-                                  .getItemByInstanceId(item!.instanceId!)
+                                  .getItemByInstanceId(item!.instanceId)
                                   ?.overrideStyleItemHash ??
-                              item.itemHash!,
-                          imageSize: itemSize(context, vw(context)),
+                              item.itemHash,
+                          imageSize: itemSize(context, widget.width),
                         ),
                         SizedBox(width: globalPadding(context)),
                         SizedBox(
-                          width: vw(context) - itemSize(context, vw(context)) - (globalPadding(context) * 3) - 40,
+                          width: widget.width - itemSize(context, widget.width) - (globalPadding(context) * 3) - 40,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -120,7 +122,7 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
                       cosmetics: data!.intristics,
                       itemDef: data!.itemDef,
                       armorSockets: data!.armorSockets,
-                      width: vw(context) > 1000 ? vw(context) * 0.4 : vw(context),
+                      width: widget.width > 1000 ? widget.width * 0.4 : widget.width,
                     ),
                     Divider(
                       height: globalPadding(context),
@@ -131,9 +133,9 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
                 ),
               GridView.builder(
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: vw(context) * 0.148,
-                  mainAxisSpacing: globalPadding(context),
-                  crossAxisSpacing: globalPadding(context),
+                  maxCrossAxisExtent: widget.width == vw(context) ? widget.width * 0.148 : 75,
+                  mainAxisSpacing: widget.width == vw(context) ? globalPadding(context) : 8,
+                  crossAxisSpacing: widget.width == vw(context) ? globalPadding(context) : 8,
                 ),
                 itemCount: items.length,
                 shrinkWrap: true,
@@ -180,7 +182,7 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
                   },
                   child: ItemIcon(
                     displayHash: items[index].overrideStyleItemHash ?? items[index].itemHash!,
-                    imageSize: vw(context) * 0.148,
+                    imageSize: widget.width == vw(context) ? widget.width * 0.148 : 70,
                     isMasterworked:
                         items[index].state == ItemState.Masterwork || items[index].state == const ItemState(5),
                     element: Provider.of<ItemProvider>(context).getItemElement(items[index]),
@@ -191,7 +193,7 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
               SizedBox(height: globalPadding(context)),
               RoundedButton(
                 text: textBodyMedium("ajouter", color: black),
-                width: vw(context),
+                width: widget.width,
                 onPressed: () => Navigator.pop(context),
               ),
             ],

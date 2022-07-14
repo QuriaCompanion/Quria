@@ -60,6 +60,12 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                           icon: "assets/icons/Quria.svg",
                         ),
                         NavBarButton(
+                          name: AppLocalizations.of(context)!.builds,
+                          route: routeListBuilds,
+                          selected: routeListBuilds == widget.currentRoute,
+                          icon: "assets/icons/Builds.svg",
+                        ),
+                        NavBarButton(
                           name: AppLocalizations.of(context)!.collections,
                           route: routeCollection,
                           selected: routeCollection == widget.currentRoute,

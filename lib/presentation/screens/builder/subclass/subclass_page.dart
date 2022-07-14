@@ -35,6 +35,7 @@ class _SubclassPageState extends State<SubclassPage> {
       return ScaffoldSteps(
         route: routeMod,
         body: SubclassMobileView(
+          width: vw(context),
           subclasses: data,
           onSelect: (subclass) {
             Provider.of<BuilderSubclassProvider>(context, listen: false).setSubclass(subclass.itemInstanceId,

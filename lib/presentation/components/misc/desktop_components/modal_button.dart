@@ -9,12 +9,12 @@ import 'package:simple_animations/simple_animations.dart';
 class ModalButton extends StatefulWidget {
   final void Function() callback;
   final String icon;
-  final String? text;
+  final double? width;
   const ModalButton({
     required this.callback,
     required this.icon,
+    this.width,
     Key? key,
-    this.text,
   }) : super(key: key);
 
   @override
@@ -65,8 +65,8 @@ class _ModalButtonState extends State<ModalButton> with AnimationMixin {
           Transform.rotate(
               angle: -math.pi / 4,
               child: Container(
-                height: (vw(context) * 0.04) - 10,
-                width: (vw(context) * 0.04) - 10,
+                height: widget.width != null ? widget.width! - 10 : (vw(context) * 0.04) - 10,
+                width: widget.width != null ? widget.width! - 10 : (vw(context) * 0.04) - 10,
                 decoration: BoxDecoration(
                   color: color.value ?? Colors.white,
                 ),
@@ -74,16 +74,16 @@ class _ModalButtonState extends State<ModalButton> with AnimationMixin {
           Transform.rotate(
               angle: angle.value,
               child: Container(
-                height: vw(context) * 0.04,
-                width: vw(context) * 0.04,
+                height: widget.width ?? vw(context) * 0.04,
+                width: widget.width ?? vw(context) * 0.04,
                 decoration: BoxDecoration(
                   border: Border.all(color: color.value ?? Colors.white),
                 ),
               )),
           SvgPicture.asset(
             widget.icon,
-            height: vw(context) * 0.015,
-            width: vw(context) * 0.015,
+            height: widget.width != null ? widget.width! / 2 : vw(context) * 0.015,
+            width: widget.width != null ? widget.width! / 2 : vw(context) * 0.015,
             color: black,
           ),
         ],
