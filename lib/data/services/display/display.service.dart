@@ -206,7 +206,7 @@ class DisplayService {
         sockets.where((element) => Conditions.perkSockets(element.plugHash)).toList();
 
     final List<DestinyItemSocketState> armorSockets =
-        sockets.where((element) => Conditions.amorSockets(element)).toList();
+        sockets.where((element) => Conditions.armorSockets(element)).toList();
     final List<DestinyItemSocketState> intristics = sockets
         .where((element) =>
             element.plugHash != null &&

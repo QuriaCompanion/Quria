@@ -52,10 +52,6 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
           })?.value ??
           0;
     }
-    widget.onChange(
-      displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
-      6,
-    );
   }
 
   @override
@@ -243,9 +239,6 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                           ),
                       ],
                     )),
-                SizedBox(
-                  height: globalPadding(context) * 4,
-                ),
               ],
             ),
           )

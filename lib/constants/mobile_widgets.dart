@@ -53,6 +53,7 @@ Widget mobileSection(
   BuildContext context, {
   required String title,
   required Widget child,
+  bool utf8 = false,
   Color dividerColor = blackLight,
 }) {
   return Padding(
@@ -60,7 +61,7 @@ Widget mobileSection(
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        textH2(title, utf8: false),
+        textH2(title, utf8: utf8),
         Divider(
           color: dividerColor,
           height: 22,

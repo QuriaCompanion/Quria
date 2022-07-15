@@ -1,12 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/data/models/Item.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
+import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
@@ -97,6 +100,64 @@ class BungieActionsService {
     }
   }
 
+  Future<void> equipStoredBuild(
+    BuildContext context, {
+    required List<Item> items,
+  }) async {
+    List<String> itemsIds = [];
+    List<List<int?>> socketsHashes = [];
+    List<DestinyItemComponent> characterInventory = [];
+    String characterId = Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!;
+
+    characterInventory
+        .addAll(Provider.of<InventoryProvider>(context, listen: false).getCharacterEquipment(characterId));
+    characterInventory
+        .addAll(Provider.of<InventoryProvider>(context, listen: false).getCharacterInventory(characterId));
+
+    // transfer all items to character
+    for (int i = 0; i < items.length; i++) {
+      itemsIds.add(items[i].instanceId);
+      socketsHashes.add((Provider.of<ItemProvider>(context, listen: false).getItemSockets(items[i].instanceId))
+          .map((e) => e.plugHash)
+          .toList());
+      if (!characterInventory.map((e) => e.itemInstanceId).contains(items[i].instanceId)) {
+        await transferItem(
+          context,
+          items[i].instanceId,
+          characterId,
+          itemHash: items[i].itemHash,
+          stackSize: 1,
+        );
+      }
+    }
+    // equip all items
+    await api.equipItems(itemsIds, characterId).then((value) {
+      for (final id in itemsIds) {
+        Provider.of<InventoryProvider>(context, listen: false).moveItem(id, characterId, false);
+      }
+    }, onError: (_) => null);
+
+    // get armors from build
+    List<Item> armors =
+        items.where((element) => InventoryBucket.armorBucketHashes.contains(element.bucketHash)).toList();
+    // remove all mods
+    // TODO: what if armor has 5 slots?
+    for (int i = 0; i < armors.length; i++) {
+      for (int index = 0; index < 4; index++) {
+        try {
+          int hash = ManifestService.manifestParsed.destinyInventoryItemDefinition[items[i].itemHash]!.sockets!
+              .socketEntries![index].singleInitialItemHash!;
+          if (socketsHashes[i][index] != hash && socketsHashes[i][index] != armors[i].mods[index]) {
+            await api.insertSocketPlugFree(armors[i].instanceId, hash, index, characterId);
+            await api.insertSocketPlugFree(armors[i].instanceId, armors[i].mods[index], index, characterId);
+          }
+        } catch (e) {
+          continue;
+        }
+      }
+    }
+  }
+
   Future<void> equipBuild(
     BuildContext context, {
     required Build build,
@@ -174,9 +235,9 @@ class BungieActionsService {
     // add new mods
     for (int i = 0; i < 5; i++) {
       try {
-        if (socketsHashes[i][0] != build.equipement[i].mods!.hash!) {
+        if (socketsHashes[i][0] != build.equipement[i].mod!.hash!) {
           api.insertSocketPlugFree(
-              build.equipement[i].itemInstanceId[i], build.equipement[i].mods!.hash!, 0, characterId);
+              build.equipement[i].itemInstanceId[i], build.equipement[i].mod!.hash!, 0, characterId);
         }
       } catch (e) {
         continue;

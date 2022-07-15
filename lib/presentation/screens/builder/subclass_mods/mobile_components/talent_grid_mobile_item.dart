@@ -8,18 +8,23 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 class TalentGridMobileItem extends StatelessWidget {
   final List<DestinyTalentNodeDefinition> talentGridNodes;
   final List<DestinyTalentNode> talentGridComponent;
-  const TalentGridMobileItem({required this.talentGridNodes, required this.talentGridComponent, Key? key})
-      : super(key: key);
+  final double width;
+  const TalentGridMobileItem({
+    required this.talentGridNodes,
+    required this.talentGridComponent,
+    required this.width,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: vw(context) - globalPadding(context) * 2,
+      width: width - globalPadding(context) * 2,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           pictureBordered(
-            size: vw(context) * 0.192,
+            size: width * 0.192,
             image: DestinyData.bungieLink +
                 talentGridNodes[talentGridComponent.firstWhere((element) => element.isActivated!).nodeIndex!]
                     .steps![0]
@@ -30,7 +35,7 @@ class TalentGridMobileItem extends StatelessWidget {
             padding: EdgeInsets.only(
               left: globalPadding(context) / 2,
             ),
-            width: vw(context) - vw(context) * 0.192 - globalPadding(context) * 2.5,
+            width: width - width * 0.192 - globalPadding(context) * 2.5,
             child: Wrap(
               alignment: WrapAlignment.start,
               spacing: globalPadding(context) / 2,

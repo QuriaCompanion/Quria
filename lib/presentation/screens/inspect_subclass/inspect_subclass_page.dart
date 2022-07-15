@@ -98,6 +98,7 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
             DestinyInventoryItemDefinition definition =
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[itemComponent.itemHash]!;
             return TalentGridMobileView(
+              width: vw(context),
               talentGrid:
                   ManifestService.manifestParsed.destinyTalentGridDefinition[talentGridComponent.talentGridHash]!,
               talentGridComponent: talentGridComponent,

@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/enums/tier_type.dart';
@@ -8,6 +10,8 @@ import 'package:bungie_api/models/destiny_item_sockets_component.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
+import 'package:quria/data/models/BuildStored.model.dart';
+import 'package:quria/data/models/Item.model.dart';
 import 'package:quria/data/models/StatWeighing.enum.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -20,13 +24,20 @@ import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
 import 'package:quria/data/providers/builder/builder_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
+import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
+import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:http/http.dart' as http;
+import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class BuilderService {
+  final String _backendURl = 'https://quria-companion-back-end.herokuapp.com/';
   BuilderHelper buildPreparation(BuildContext context) {
     DestinyCharacterComponent character =
         Provider.of<CharactersProvider>(context, listen: false).currentCharacter as DestinyCharacterComponent;
@@ -66,6 +77,176 @@ class BuilderService {
       considerMasterwork: considerMasterwork,
       exotic: exotic,
     );
+  }
+
+  Future<void> createBuild(BuildContext context, String name) async {
+    final build = Provider.of<CreateBuildProvider>(context, listen: false).items;
+
+    await http.post(Uri.parse("${_backendURl}build"),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({
+          "name": name,
+          "bungieName": AccountService.currentMembership?.membershipId,
+          "items": build.map((e) => e.toJson()).toList(),
+          "usedTimes": 0,
+          "className": Provider.of<CharactersProvider>(context, listen: false).currentCharacter?.classType?.value,
+          "preset": {}
+        }));
+    return;
+  }
+
+  Map<String, int> statCalculator(BuildContext context, {required DestinyItemComponent item}) {
+    // instanciate stats
+    Map<String, int> investmentStats = {
+      StatsStringHash.mobility: 0,
+      StatsStringHash.resilience: 0,
+      StatsStringHash.recovery: 0,
+      StatsStringHash.discipline: 0,
+      StatsStringHash.intellect: 0,
+      StatsStringHash.strength: 0,
+    };
+    if (item.state == ItemState.Masterwork || item.state == const ItemState(5)) {
+      investmentStats = {
+        StatsStringHash.mobility: 2,
+        StatsStringHash.resilience: 2,
+        StatsStringHash.recovery: 2,
+        StatsStringHash.discipline: 2,
+        StatsStringHash.intellect: 2,
+        StatsStringHash.strength: 2,
+      };
+    }
+    // get sockets for the item
+    List<DestinyItemSocketState>? sockets =
+        Provider.of<ItemProvider>(context, listen: false).getItemSockets(item.itemInstanceId);
+    // get only the sockets that actually contain stats
+    Iterable<DestinyItemSocketState> plugs = sockets.where(((element) => element.isVisible == false));
+    // get the inventory def for given sockets
+    if (plugs.isEmpty) return investmentStats;
+    Iterable<DestinyInventoryItemDefinition?> plm =
+        plugs.map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e.plugHash]);
+    // foreach inventory def, get the stats and adds the to investmentStats
+    for (DestinyInventoryItemDefinition? entry in plm) {
+      if (entry?.investmentStats != null) {
+        for (DestinyItemInvestmentStatDefinition newStats in entry!.investmentStats!) {
+          investmentStats[newStats.statTypeHash!.toString()] =
+              investmentStats[newStats.statTypeHash!.toString()]! + newStats.value!;
+        }
+      }
+    }
+    return investmentStats;
+  }
+
+  buildStatCalculator(BuildContext context, {required List<Item> items}) {
+    Map<String, int> stats = {
+      StatsStringHash.mobility: 0,
+      StatsStringHash.resilience: 0,
+      StatsStringHash.recovery: 0,
+      StatsStringHash.discipline: 0,
+      StatsStringHash.intellect: 0,
+      StatsStringHash.strength: 0,
+    };
+    for (Item item in items.where((element) => InventoryBucket.armorBucketHashes.contains(element.bucketHash))) {
+      final itemComponent = Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(item.instanceId);
+
+      // loops through the mods in this armor
+      for (int? modHash in item.mods) {
+        final mod = ManifestService.manifestParsed.destinyInventoryItemDefinition[modHash];
+        // check if the mod has bonus stats
+        if (mod != null && mod.investmentStats != null && mod.investmentStats!.isNotEmpty) {
+          // loops through the bonus stats
+          for (var stat in mod.investmentStats!) {
+            // if it gives a bonus to stat it adds it to the correct stat
+            if (stat.statTypeHash == StatsHash.mobility ||
+                stat.statTypeHash == StatsHash.resilience ||
+                stat.statTypeHash == StatsHash.recovery ||
+                stat.statTypeHash == StatsHash.discipline ||
+                stat.statTypeHash == StatsHash.intellect ||
+                stat.statTypeHash == StatsHash.strength) {
+              stats[stat.statTypeHash!.toString()] = stats[stat.statTypeHash.toString()]! + stat.value!;
+            }
+          }
+        }
+      }
+      if (itemComponent == null) continue;
+      for (final newStats in statCalculator(context, item: itemComponent).entries) {
+        stats[newStats.key] = stats[newStats.key]! + newStats.value;
+      }
+    }
+
+    return stats;
+  }
+
+  void redirectToBuildSaving(BuildContext context, {required Build data}) {
+    List<Item> items = [];
+    for (int i = 0; i < data.equipement.length; i++) {
+      List<int> mods = Provider.of<BuilderModsProvider>(context, listen: false)
+          .mods[i]
+          .items
+          .where((element) => element?.hash != null)
+          .map((item) => item!.hash!)
+          .toList();
+
+      mods.add(data.equipement[i].mod!.hash!);
+      items.add(
+        Item(
+            instanceId: data.equipement[i].itemInstanceId,
+            itemHash: data.equipement[i].hash,
+            isEquipped: true,
+            bucketHash: ManifestService
+                .manifestParsed.destinyInventoryItemDefinition[data.equipement[i].hash]!.inventory!.bucketTypeHash!,
+            mods: mods),
+      );
+    }
+    if (Provider.of<BuilderSubclassProvider>(context, listen: false).subclassId != null) {
+      final List<int> subclassMods = Provider.of<BuilderSubclassModsProvider>(context, listen: false)
+          .subclassMods
+          .where((element) => element.hash != null)
+          .map((e) => e.hash!)
+          .toList();
+      items.add(
+        Item(
+            instanceId: Provider.of<BuilderSubclassProvider>(context, listen: false).subclassId!,
+            itemHash: Provider.of<BuilderSubclassProvider>(context, listen: false).subclass!.hash!,
+            isEquipped: true,
+            bucketHash: InventoryBucket.subclass,
+            mods: subclassMods),
+      );
+    }
+    Provider.of<CreateBuildProvider>(context, listen: false).setBuild(items);
+    Navigator.pushNamed(context, routeCreateBuild);
+  }
+
+  Future<void> updateBuild(BuildContext context, String name) async {
+    final build = Provider.of<CreateBuildProvider>(context, listen: false).items;
+    final id = Provider.of<CreateBuildProvider>(context, listen: false).id;
+
+    await http.put(Uri.parse("${_backendURl}build"),
+        headers: {"Content-Type": "application/json"},
+        body: json.encode({
+          "id": id,
+          "name": name,
+          "bungieName": AccountService.currentMembership?.membershipId,
+          "items": build.map((e) => e.toJson()).toList(),
+          "usedTimes": 0,
+          "className": Provider.of<CharactersProvider>(context, listen: false).currentCharacter?.classType?.value,
+          "preset": {}
+        }));
+    return;
+  }
+
+  Future<List<BuildStored>> getBuilds() async {
+    String? bungieName = AccountService.currentMembership?.membershipId;
+    final response = await http.get(Uri.parse("${_backendURl}builds/$bungieName"));
+    if (response.statusCode == 200) {
+      List<dynamic> builds = json.decode(response.body);
+      return builds.map((e) => BuildStored.fromMap(e)).toList();
+    }
+    return [];
+  }
+
+  Future<void> deleteBuild(String id) async {
+    await http.delete(Uri.parse("${_backendURl}build/$id"));
+    return;
   }
 
   Future<List<Build>> calculateBuilds({
@@ -380,31 +561,31 @@ class BuilderService {
                   hash: helmet.itemHash!,
                   displayHash: helmet.overrideStyleItemHash ?? helmet.itemHash!,
                   itemInstanceId: helmet.itemInstanceId!,
-                  mods: optionalModsResult.modSelected[0],
+                  mod: optionalModsResult.modSelected[0],
                   type: 0),
               Armor(
                   hash: gauntlet.itemHash!,
                   displayHash: gauntlet.overrideStyleItemHash ?? gauntlet.itemHash!,
                   itemInstanceId: gauntlet.itemInstanceId!,
-                  mods: optionalModsResult.modSelected[1],
+                  mod: optionalModsResult.modSelected[1],
                   type: 1),
               Armor(
                   hash: chest.itemHash!,
                   displayHash: chest.overrideStyleItemHash ?? chest.itemHash!,
                   itemInstanceId: chest.itemInstanceId!,
-                  mods: optionalModsResult.modSelected[2],
+                  mod: optionalModsResult.modSelected[2],
                   type: 2),
               Armor(
                   hash: leg.itemHash!,
                   displayHash: leg.overrideStyleItemHash ?? leg.itemHash!,
                   itemInstanceId: leg.itemInstanceId!,
-                  mods: optionalModsResult.modSelected[3],
+                  mod: optionalModsResult.modSelected[3],
                   type: 3),
               Armor(
                   hash: builderHelper.classItem.itemHash!,
                   displayHash: builderHelper.classItem.overrideStyleItemHash ?? builderHelper.classItem.itemHash!,
                   itemInstanceId: builderHelper.classItem.itemInstanceId!,
-                  mods: optionalModsResult.modSelected[4],
+                  mod: optionalModsResult.modSelected[4],
                   type: 4)
             ];
             builds.add(Build(

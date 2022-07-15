@@ -13,8 +13,13 @@ class TalentGridMobileView extends StatefulWidget {
   final DestinyTalentGridDefinition talentGrid;
   final DestinyItemTalentGridComponent talentGridComponent;
   final DestinyInventoryItemDefinition subclass;
+  final double width;
   const TalentGridMobileView(
-      {required this.talentGrid, required this.talentGridComponent, required this.subclass, Key? key})
+      {required this.talentGrid,
+      required this.talentGridComponent,
+      required this.subclass,
+      Key? key,
+      required this.width})
       : super(key: key);
 
   @override
@@ -26,22 +31,18 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        mobileHeader(context,
-            image: NetworkImage(DestinyData.bungieLink + widget.subclass.secondaryIcon!),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                textH1(
-                  AppLocalizations.of(context)!.builder_subclass_mods_title,
-                  utf8: false,
-                ),
-                textBodyRegular(
-                  AppLocalizations.of(context)!.builder_subclass_mods_subtitle,
-                  utf8: false,
-                ),
-              ],
-            )),
+        mobileHeader(
+          context,
+          width: widget.width,
+          image: NetworkImage(DestinyData.bungieLink + widget.subclass.secondaryIcon!),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              textH1(widget.subclass.displayProperties?.name ?? ""),
+            ],
+          ),
+        ),
         Padding(
           padding: EdgeInsets.symmetric(
             horizontal: globalPadding(context),
@@ -64,6 +65,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
                 title: AppLocalizations.of(context)!.class_ability,
                 utf8: false,
                 child: TalentGridMobileItem(
+                  width: widget.width,
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [widget.talentGridComponent.nodes![2], widget.talentGridComponent.nodes![3]],
                 ),
@@ -73,6 +75,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
                 title: AppLocalizations.of(context)!.jumps,
                 utf8: false,
                 child: TalentGridMobileItem(
+                  width: widget.width,
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
                     widget.talentGridComponent.nodes![4],
@@ -86,6 +89,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
                 title: AppLocalizations.of(context)!.grenades,
                 utf8: false,
                 child: TalentGridMobileItem(
+                  width: widget.width,
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
                     widget.talentGridComponent.nodes![7],
@@ -99,6 +103,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
                 title: AppLocalizations.of(context)!.sections,
                 utf8: false,
                 child: TalentGridMobileItem(
+                  width: widget.width,
                   talentGridNodes: widget.talentGrid.nodes!,
                   talentGridComponent: [
                     widget.talentGridComponent.nodes![11],

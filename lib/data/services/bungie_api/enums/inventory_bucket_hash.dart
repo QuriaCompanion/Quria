@@ -43,9 +43,16 @@ class InventoryBucket {
     chestArmor,
     legArmor,
     classArmor,
-    ghost,
-    vehicle,
-    ships,
+  ];
+  static const List<int> loadoutNoSubclass = [
+    kineticWeapons,
+    energyWeapons,
+    powerWeapons,
+    helmet,
+    gauntlets,
+    chestArmor,
+    legArmor,
+    classArmor,
   ];
 
   static const armorBucketHashes = [

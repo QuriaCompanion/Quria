@@ -45,19 +45,26 @@ class BuilderCustomInfo extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              CustomCheckbox(
-                color: grey,
-                text: AppLocalizations.of(context)!.builder_class_item_keep_sunset,
-                value: Provider.of<BuilderCustomInfoProvider>(context).includeSunset,
-                onChanged: (newValue) =>
-                    Provider.of<BuilderCustomInfoProvider>(context, listen: false).setRemoveSunset(newValue),
-              ),
-              CustomCheckbox(
+              Expanded(
+                child: CustomCheckbox(
                   color: grey,
-                  text: AppLocalizations.of(context)!.builder_class_item_assume_masterwork,
-                  value: Provider.of<BuilderCustomInfoProvider>(context).considerMasterwork,
+                  text: AppLocalizations.of(context)!.builder_class_item_keep_sunset,
+                  value: Provider.of<BuilderCustomInfoProvider>(context).includeSunset,
                   onChanged: (newValue) =>
-                      Provider.of<BuilderCustomInfoProvider>(context, listen: false).setConsiderMasterwork(newValue)),
+                      Provider.of<BuilderCustomInfoProvider>(context, listen: false).setRemoveSunset(newValue),
+                ),
+              ),
+              SizedBox(
+                width: globalPadding(context),
+              ),
+              Expanded(
+                child: CustomCheckbox(
+                    color: grey,
+                    text: AppLocalizations.of(context)!.builder_class_item_assume_masterwork,
+                    value: Provider.of<BuilderCustomInfoProvider>(context).considerMasterwork,
+                    onChanged: (newValue) =>
+                        Provider.of<BuilderCustomInfoProvider>(context, listen: false).setConsiderMasterwork(newValue)),
+              ),
             ],
           ),
         ),
