@@ -96,7 +96,6 @@ class _DetailsBuildMobileActionsState extends State<DetailsBuildMobileActions> {
                         },
                       );
                     });
-                BuilderService().deleteBuild(build.id);
               }),
         ],
       ),
@@ -132,7 +131,7 @@ class DeleteConfirmation extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              textBodyBold(text, utf8: false),
+              Expanded(child: textBodyBold(text, utf8: false)),
               InkWell(
                 onTap: () => Navigator.pop(context),
                 child: const CircleAvatar(
@@ -147,7 +146,8 @@ class DeleteConfirmation extends StatelessWidget {
             ],
           ),
           SizedBox(height: globalPadding(context)),
-          RoundedButton(text: textBodyBold("Supprimer"), buttonColor: crucible, width: width, onPressed: onDelete),
+          RoundedButton(
+              text: textBodyBold("Supprimer"), buttonColor: crucible, width: width, onPressed: () => onDelete),
         ],
       ),
     );

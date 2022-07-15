@@ -246,7 +246,6 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                                     ),
                                   );
                                 });
-                            BuilderService().deleteBuild(_build.id);
                           },
                           width: 50,
                           icon: 'assets/icons/trash.svg',

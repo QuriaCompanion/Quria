@@ -57,6 +57,7 @@ class ListBuildMobile extends StatelessWidget {
             child: ListView.separated(
               itemCount: builds.length,
               padding: EdgeInsets.zero,
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               separatorBuilder: (context, index) => SizedBox(
                 height: globalPadding(context),
