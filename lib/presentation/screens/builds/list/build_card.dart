@@ -71,7 +71,7 @@ class BuildCard extends StatelessWidget {
                                     .screenshot!)
                             : ghostBuild),
                   ),
-                  child: textH3(buildStored.name),
+                  child: textH3(buildStored.name, utf8: false),
                 ),
                 Padding(
                   padding: EdgeInsets.only(
