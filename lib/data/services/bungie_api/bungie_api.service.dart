@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:bungie_api/enums/destiny_socket_array_type.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_free_action_request.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_request_entry.dart';
