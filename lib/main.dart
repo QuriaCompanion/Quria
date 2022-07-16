@@ -23,6 +23,7 @@ import 'package:quria/data/providers/language_provider.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:quria/data/providers/plugs_provider.dart';
+import 'package:uni_links_desktop/uni_links_desktop.dart';
 import 'package:universal_io/io.dart';
 import 'firebase_options.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -37,6 +38,12 @@ void main() async {
   StorageService.init();
   String? storedLang = await StorageService.getLocalStorage<String?>('lang');
   Locale? lang;
+  if (Platform.isMacOS || Platform.isWindows) {
+    enableUniLinksDesktop();
+    if (Platform.isWindows) {
+      registerProtocol('quria');
+    }
+  }
   if (storedLang != null) {
     lang = Locale.fromSubtags(languageCode: storedLang);
   }

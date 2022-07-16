@@ -111,16 +111,10 @@ class BuilderResultsMobileItem extends StatelessWidget {
                           text2: AppLocalizations.of(context)!.please_wait,
                         );
                       });
+                  final items = BuilderService().changeBuildToListOfItems(context, data: buildResult);
                   BungieActionsService()
-                      .equipBuild(
-                        context,
-                        build: buildResult,
-                        characterId:
-                            Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
-                        mods: Provider.of<BuilderModsProvider>(context, listen: false).mods,
-                        subclassMods: Provider.of<BuilderSubclassModsProvider>(context, listen: false).subclassMods,
-                        subclassId: Provider.of<BuilderSubclassProvider>(context, listen: false).subclassId,
-                      )
+                      .equipStoredBuild(context, items: items)
+                      .then((_) => Navigator.pop(context))
                       .then((value) => Navigator.pop(context));
                 },
                 width: vw(context) * 0.4,

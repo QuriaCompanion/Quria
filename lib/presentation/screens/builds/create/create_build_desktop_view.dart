@@ -235,6 +235,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                         TextField(
                           controller: _controller,
                           autofocus: false,
+                          maxLength: 45,
                           onChanged: (text) => setState(() => _text),
                           style: const TextStyle(color: Colors.white),
                           decoration: InputDecoration(

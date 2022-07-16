@@ -62,17 +62,9 @@ class BuilderRecapMobileView extends StatelessWidget {
                                       text2: AppLocalizations.of(context)!.long_action,
                                     );
                                   });
+                              final items = BuilderService().changeBuildToListOfItems(context, data: data);
                               BungieActionsService()
-                                  .equipBuild(
-                                    context,
-                                    build: data,
-                                    characterId: Provider.of<CharactersProvider>(context, listen: false)
-                                        .currentCharacter!
-                                        .characterId!,
-                                    mods: Provider.of<BuilderModsProvider>(context).mods,
-                                    subclassMods: Provider.of<BuilderSubclassModsProvider>(context).subclassMods,
-                                    subclassId: Provider.of<BuilderSubclassProvider>(context).subclassId,
-                                  )
+                                  .equipStoredBuild(context, items: items)
                                   .then((_) => Navigator.pop(context));
                               break;
                             case QuickActions.save:

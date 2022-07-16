@@ -4,6 +4,7 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   isar_flutter_libs
+  protocol_handler
   url_launcher_windows
 )
 
