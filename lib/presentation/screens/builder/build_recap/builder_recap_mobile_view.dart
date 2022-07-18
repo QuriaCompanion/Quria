@@ -7,9 +7,6 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/providers/builder/builder_mods_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
-import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/quick_actions.enum.dart';
@@ -62,17 +59,9 @@ class BuilderRecapMobileView extends StatelessWidget {
                                       text2: AppLocalizations.of(context)!.long_action,
                                     );
                                   });
+                              final items = BuilderService().changeBuildToListOfItems(context, data: data);
                               BungieActionsService()
-                                  .equipBuild(
-                                    context,
-                                    build: data,
-                                    characterId: Provider.of<CharactersProvider>(context, listen: false)
-                                        .currentCharacter!
-                                        .characterId!,
-                                    mods: Provider.of<BuilderModsProvider>(context).mods,
-                                    subclassMods: Provider.of<BuilderSubclassModsProvider>(context).subclassMods,
-                                    subclassId: Provider.of<BuilderSubclassProvider>(context).subclassId,
-                                  )
+                                  .equipStoredBuild(context, items: items)
                                   .then((_) => Navigator.pop(context));
                               break;
                             case QuickActions.save:

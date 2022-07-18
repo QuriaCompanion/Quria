@@ -176,17 +176,17 @@ class BuilderService {
     return stats;
   }
 
-  void redirectToBuildSaving(BuildContext context, {required Build data}) {
+  List<Item> changeBuildToListOfItems(BuildContext context, {required Build data}) {
     List<Item> items = [];
     for (int i = 0; i < data.equipement.length; i++) {
-      List<int> mods = Provider.of<BuilderModsProvider>(context, listen: false)
+      List<int> mods = [];
+      mods.add(data.equipement[i].mod!.hash!);
+      mods.addAll(Provider.of<BuilderModsProvider>(context, listen: false)
           .mods[i]
           .items
           .where((element) => element?.hash != null)
-          .map((item) => item!.hash!)
-          .toList();
+          .map((item) => item!.hash!));
 
-      mods.add(data.equipement[i].mod!.hash!);
       items.add(
         Item(
             instanceId: data.equipement[i].itemInstanceId,
@@ -212,6 +212,11 @@ class BuilderService {
             mods: subclassMods),
       );
     }
+    return items;
+  }
+
+  void redirectToBuildSaving(BuildContext context, {required Build data}) {
+    final items = changeBuildToListOfItems(context, data: data);
     Provider.of<CreateBuildProvider>(context, listen: false).setBuild(items);
     Navigator.pushNamed(context, routeCreateBuild);
   }

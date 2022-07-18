@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.quria.quriaCompanion",
+      "sha256_cert_fingerprints": [
+        "D5:95:29:A4:7B:5C:41:DA:AB:3D:BF:5A:EB:5F:8E:4F:2F:95:56:87:A5:BF:7C:CD:69:9A:B5:15:56:AD:5E:39"
+      ]
+    }
+  }
+]

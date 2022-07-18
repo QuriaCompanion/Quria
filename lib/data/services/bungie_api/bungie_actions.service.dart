@@ -1,3 +1,7 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:bungie_api/enums/tier_type.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/Item.model.dart';
@@ -117,9 +121,6 @@ class BungieActionsService {
     // transfer all items to character
     for (int i = 0; i < items.length; i++) {
       itemsIds.add(items[i].instanceId);
-      socketsHashes.add((Provider.of<ItemProvider>(context, listen: false).getItemSockets(items[i].instanceId))
-          .map((e) => e.plugHash)
-          .toList());
       if (!characterInventory.map((e) => e.itemInstanceId).contains(items[i].instanceId)) {
         await transferItem(
           context,
@@ -136,21 +137,54 @@ class BungieActionsService {
         Provider.of<InventoryProvider>(context, listen: false).moveItem(id, characterId, false);
       }
     }, onError: (_) => null);
+    final exoticInstanceId = items
+        .firstWhereOrNull((element) =>
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.inventory?.tierType ==
+            TierType.Exotic)
+        ?.instanceId;
+    if (exoticInstanceId != null) {
+      await api.equipItem(exoticInstanceId, characterId).then((value) {
+        for (final id in itemsIds) {
+          Provider.of<InventoryProvider>(context, listen: false).moveItem(id, characterId, false);
+        }
+      }, onError: (_) => null);
+    }
 
     // get armors from build
-    List<Item> armors =
+    final List<Item> armors =
         items.where((element) => InventoryBucket.armorBucketHashes.contains(element.bucketHash)).toList();
     // remove all mods
     // TODO: what if armor has 5 slots?
     for (int i = 0; i < armors.length; i++) {
       for (int index = 0; index < 4; index++) {
+        socketsHashes.add((Provider.of<ItemProvider>(context, listen: false).getItemSockets(items[i].instanceId))
+            .map((e) => e.plugHash)
+            .toList());
         try {
           int hash = ManifestService.manifestParsed.destinyInventoryItemDefinition[items[i].itemHash]!.sockets!
               .socketEntries![index].singleInitialItemHash!;
-          if (socketsHashes[i][index] != hash && socketsHashes[i][index] != armors[i].mods[index]) {
+          if (socketsHashes[i][index] != hash || socketsHashes[i][index] != armors[i].mods[index]) {
             await api.insertSocketPlugFree(armors[i].instanceId, hash, index, characterId);
+          }
+        } catch (e) {
+          continue;
+        }
+      }
+      for (int index = 0; index < 4; index++) {
+        try {
+          if (socketsHashes[i][index] != armors[i].mods[index]) {
             await api.insertSocketPlugFree(armors[i].instanceId, armors[i].mods[index], index, characterId);
           }
+        } catch (e) {
+          continue;
+        }
+      }
+    }
+    final subclass = items.firstWhereOrNull((element) => InventoryBucket.subclass == element.bucketHash);
+    if (subclass != null) {
+      for (int i = 0; i < subclass.mods.length; i++) {
+        try {
+          await api.insertSocketPlugFree(subclass.instanceId, subclass.mods[i], i, characterId);
         } catch (e) {
           continue;
         }

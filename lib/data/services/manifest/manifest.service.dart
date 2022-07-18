@@ -30,7 +30,6 @@ class ManifestService {
   static DestinyManifest? _manifestInfo;
   static String language = "en";
   static final AllDestinyManifestComponents manifestParsed = AllDestinyManifestComponents();
-  static final manifestList = DefinitionTableNames();
   final StorageService storage = StorageService();
   static final ManifestService _singleton = ManifestService._internal();
 
@@ -71,8 +70,8 @@ class ManifestService {
         await isar.destinyCollectibleDefinitions.putAll(manifests[10] as List<DestinyCollectibleDefinition>);
         await isar.destinyInventoryBucketDefinitions.putAll(manifests[11] as List<DestinyInventoryBucketDefinition>);
       });
-
       await mainManifestInfo();
+      manifests.clear();
       saveManifestVersion();
     } else {
       await mainManifestInfo();

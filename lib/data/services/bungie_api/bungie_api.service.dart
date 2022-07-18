@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:bungie_api/enums/destiny_socket_array_type.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_free_action_request.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_request_entry.dart';
@@ -51,19 +50,19 @@ class BungieApiService {
   }
 
   static String? get clientSecret {
-    if (kIsWeb || Platform.isWindows) {
+    if (kIsWeb) {
       return "RVWOYmsG93EwUFekyNcVsMc-WoQIRM11AdMyQ-HoT0o";
     }
     return "lBsMpYu9FS4mr2k.OehferZifIpdEpMKBpXTzzeOuEg";
   }
 
   static String? get apiKey {
-    if (kIsWeb || Platform.isWindows) return "8e66dfa160d24a67aa33dfe141c95468";
+    if (kIsWeb) return "8e66dfa160d24a67aa33dfe141c95468";
     return "cb4b462f9f8b4b00a43242c6d56afcad";
   }
 
   static String? get clientId {
-    if (kIsWeb || Platform.isWindows) return "36906";
+    if (kIsWeb) return "36906";
     return "40171";
   }
 

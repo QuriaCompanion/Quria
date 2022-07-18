@@ -6,9 +6,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
-import 'package:quria/data/providers/builder/builder_mods_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
@@ -111,16 +108,10 @@ class BuilderResultsMobileItem extends StatelessWidget {
                           text2: AppLocalizations.of(context)!.please_wait,
                         );
                       });
+                  final items = BuilderService().changeBuildToListOfItems(context, data: buildResult);
                   BungieActionsService()
-                      .equipBuild(
-                        context,
-                        build: buildResult,
-                        characterId:
-                            Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
-                        mods: Provider.of<BuilderModsProvider>(context, listen: false).mods,
-                        subclassMods: Provider.of<BuilderSubclassModsProvider>(context, listen: false).subclassMods,
-                        subclassId: Provider.of<BuilderSubclassProvider>(context, listen: false).subclassId,
-                      )
+                      .equipStoredBuild(context, items: items)
+                      .then((_) => Navigator.pop(context))
                       .then((value) => Navigator.pop(context));
                 },
                 width: vw(context) * 0.4,
