@@ -15,6 +15,7 @@ import 'package:bungie_api/models/destiny_item_socket_entry_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/models/Donator.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
@@ -28,6 +29,7 @@ import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
+import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/grenade_cooldowns.dart';
 import 'package:quria/data/services/bungie_api/enums/melee_cooldowns.enum.dart';
@@ -88,6 +90,11 @@ class DisplayService {
   static Future<void> loadManifestAndProfile(BuildContext context) async {
     await manifestLoader().then((value) async => await profileLoader(context));
     return;
+  }
+
+  static Future<BuildStored?> loadBuild(BuildContext context, String id) async {
+    await loadManifestAndProfile(context);
+    return BuilderService().getBuild(id);
   }
 
   static int remainingModPoints(int base, Map<int, DestinyItemSocketState> mods) {

@@ -1,9 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
-
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
@@ -18,18 +16,13 @@ import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/var/keys.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class DetailsBuildMobileActions extends StatefulWidget {
+class DetailsBuildMobileActions extends StatelessWidget {
   final double width;
   const DetailsBuildMobileActions({
     required this.width,
     Key? key,
   }) : super(key: key);
 
-  @override
-  State<DetailsBuildMobileActions> createState() => _DetailsBuildMobileActionsState();
-}
-
-class _DetailsBuildMobileActionsState extends State<DetailsBuildMobileActions> {
   @override
   Widget build(BuildContext context) {
     BuildStored build = Provider.of<DetailsBuildProvider>(context, listen: false).buildStored!;
@@ -41,26 +34,21 @@ class _DetailsBuildMobileActionsState extends State<DetailsBuildMobileActions> {
           QuickAction(
               icon: "assets/icons/Equip.svg",
               title: AppLocalizations.of(context)!.equip,
-              width: widget.width,
+              width: width,
               onTap: () {
                 BungieActionsService().equipStoredBuild(context, items: build.items);
               }),
           QuickAction(
               icon: "assets/icons/Share.svg",
               title: AppLocalizations.of(context)!.share,
-              width: widget.width,
+              width: width,
               onTap: () {
-                showMaterialModalBottomSheet(
-                    backgroundColor: Colors.transparent,
-                    context: context,
-                    builder: (context) {
-                      return const InProgressModal();
-                    });
+                BuilderService().shareBuild(build.id);
               }),
           QuickAction(
               icon: "assets/icons/Save.svg",
               title: AppLocalizations.of(context)!.modify,
-              width: widget.width,
+              width: width,
               onTap: () {
                 Provider.of<CreateBuildProvider>(context, listen: false).modifyBuild(build);
                 Navigator.of(context).pushNamed(routeCreateBuild);
@@ -68,7 +56,7 @@ class _DetailsBuildMobileActionsState extends State<DetailsBuildMobileActions> {
           QuickAction(
               icon: "assets/icons/trash.svg",
               title: AppLocalizations.of(context)!.delete,
-              width: widget.width,
+              width: width,
               onTap: () {
                 showMaterialModalBottomSheet(
                     context: context,
@@ -76,7 +64,7 @@ class _DetailsBuildMobileActionsState extends State<DetailsBuildMobileActions> {
                     builder: (context) {
                       return DeleteConfirmation(
                         text: AppLocalizations.of(context)!.build_delete_confirm,
-                        width: widget.width,
+                        width: width,
                         onDelete: () async {
                           try {
                             await BuilderService().deleteBuild(build.id).then((_) {

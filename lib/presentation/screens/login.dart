@@ -40,15 +40,26 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   void initState() {
     super.initState();
-    AuthService.getToken().then((value) => {
-          if (value != null) {checkMembership()}
-        });
-    getInitialUri().then((value) {
-      if (!value.toString().contains('code=')) {
-      } else {
+    getInitialUri().then((uri) {
+      AuthService.getToken().then((value) async {
+        if (value != null) {
+          await checkMembership();
+          if (!mounted) return;
+          inspect(uri?.path);
+          if (uri?.queryParameters["buildId"] != null) {
+            Navigator.pushReplacementNamed(context, routeForeignBuild, arguments: uri!.queryParameters["buildId"]);
+            return;
+          } else {
+            Navigator.pushReplacementNamed(context, routeProfile);
+            return;
+          }
+        }
+      });
+      if (uri.toString().contains('code=')) {
         // You are connected, you can grab the code from the url.
-        final fragments = value!.toString().split('=');
+        final fragments = uri!.toString().split('=');
         authCode(fragments[1].replaceAll("#/", ""));
+        return;
       }
     });
   }
@@ -191,7 +202,7 @@ class LoginWidgetState extends State<LoginWidget> {
     }
   }
 
-  void checkMembership() async {
+  Future<void> checkMembership() async {
     GroupUserInfoCard? membership = await AccountService.getMembership();
     if (membership == null) {
       UserMembershipData? membershipData = await widget.api.getMemberships();
@@ -207,8 +218,6 @@ class LoginWidgetState extends State<LoginWidget> {
 
       await AccountService.saveMembership(membershipData!, membershipId);
     }
-    if (!mounted) return;
-    Navigator.pushReplacementNamed(context, routeProfile);
   }
 
   void loadingModal() {
@@ -259,7 +268,5 @@ class LoginWidgetState extends State<LoginWidget> {
       await AuthService.saveToken(token);
     }
     await AccountService.getMembership();
-    if (!mounted) return;
-    Navigator.pushReplacementNamed(context, routeProfile);
   }
 }
