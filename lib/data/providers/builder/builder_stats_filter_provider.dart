@@ -25,6 +25,12 @@ class BuilderStatsFilterProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  setNewStatsFilters(List<FilterHelper> filters) {
+    _filters.clear();
+    _filters.addAll(filters);
+    notifyListeners();
+  }
+
   init(BuildContext context) {
     if (filters.isEmpty) {
       final filters = [

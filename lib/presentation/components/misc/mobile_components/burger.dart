@@ -158,6 +158,23 @@ class _BurgerState extends State<Burger> {
                           ],
                         ),
                       ),
+                      const SizedBox(height: 32),
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                          Navigator.pushNamed(context, routeForeignBuild, arguments: "pmtJTN1qhL37VASqSHDp");
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset("assets/icons/Quria.svg"),
+                            const SizedBox(width: 18),
+                            textBodyHighRegular(
+                              "test",
+                              utf8: false,
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),

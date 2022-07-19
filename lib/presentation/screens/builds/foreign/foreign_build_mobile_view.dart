@@ -52,6 +52,7 @@ class _ForeignBuildMobileViewState extends State<ForeignBuildMobileView> {
                 context,
                 title: AppLocalizations.of(context)!.quick_actions,
                 child: ForeignBuildMobileActions(
+                  storeBuild: widget.foreignBuild,
                   width: vw(context),
                 ),
               ),
