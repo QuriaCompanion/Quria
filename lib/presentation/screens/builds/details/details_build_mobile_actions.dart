@@ -10,7 +10,6 @@ import 'package:quria/data/providers/details_build_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
-import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
 import 'package:quria/presentation/components/misc/quick_action.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/var/keys.dart';

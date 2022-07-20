@@ -35,78 +35,80 @@ class ForeignBuildMobileActions extends StatelessWidget {
               title: AppLocalizations.of(context)!.save,
               width: width,
               onTap: () {
-                Provider.of<BuilderExoticProvider>(context, listen: false).setExoticHash(
-                    ManifestService.manifestParsed.destinyInventoryItemDefinition[storeBuild.preset.exoticHash]);
-                final List<ModSlots> armorMods = [
-                  // helmet
-                  ModSlots(
-                      title: AppLocalizations.of(context)!.helmet,
-                      elementSocketEntries: ManifestService
-                          .manifestParsed.destinyInventoryItemDefinition[3473581026]!.sockets!.socketEntries!,
-                      items: [
-                        null,
-                        for (int index = 0; index < storeBuild.preset.armorMods["helmet"]!.length; index++)
-                          ManifestService.manifestParsed
-                              .destinyInventoryItemDefinition[storeBuild.preset.armorMods["helmet"]?[index]],
-                      ]),
-                  // gauntlets
-                  ModSlots(
-                      title: AppLocalizations.of(context)!.gauntlets,
-                      elementSocketEntries: ManifestService
-                          .manifestParsed.destinyInventoryItemDefinition[2771648715]!.sockets!.socketEntries!,
-                      items: [
-                        null,
-                        for (int index = 0; index < storeBuild.preset.armorMods["gauntlets"]!.length; index++)
-                          ManifestService.manifestParsed
-                              .destinyInventoryItemDefinition[storeBuild.preset.armorMods["gauntlets"]?[index]],
-                      ]),
-                  // chest
-                  ModSlots(
-                      title: AppLocalizations.of(context)!.chest,
-                      elementSocketEntries: ManifestService
-                          .manifestParsed.destinyInventoryItemDefinition[549825413]!.sockets!.socketEntries!,
-                      items: [
-                        null,
-                        for (int index = 0; index < storeBuild.preset.armorMods["chest"]!.length; index++)
-                          ManifestService.manifestParsed
-                              .destinyInventoryItemDefinition[storeBuild.preset.armorMods["chest"]?[index]],
-                      ]),
-                  // legs
-                  ModSlots(
-                      title: AppLocalizations.of(context)!.legs,
-                      elementSocketEntries: ManifestService
-                          .manifestParsed.destinyInventoryItemDefinition[4287863773]!.sockets!.socketEntries!,
-                      items: [
-                        null,
-                        for (int index = 0; index < storeBuild.preset.armorMods["leg"]!.length; index++)
-                          ManifestService.manifestParsed
-                              .destinyInventoryItemDefinition[storeBuild.preset.armorMods["leg"]?[index]],
-                      ]),
-                  // class items
-                  ModSlots(
-                      title: AppLocalizations.of(context)!.builder_mods_title,
-                      elementSocketEntries: ManifestService
-                          .manifestParsed.destinyInventoryItemDefinition[3500810712]!.sockets!.socketEntries!,
-                      items: [
-                        null,
-                        for (int index = 0; index < storeBuild.preset.armorMods["classItem"]!.length; index++)
-                          ManifestService.manifestParsed
-                              .destinyInventoryItemDefinition[storeBuild.preset.armorMods["classItem"]?[index]],
-                      ]),
-                ];
-                Provider.of<BuilderModsProvider>(context, listen: false).setMods(armorMods);
-                final filters = [
-                  for (int value in storeBuild.preset.statOrder)
-                    FilterHelper(name: fromIntToName(context, value), icon: fromIntToIcon(value), value: value),
-                ];
-                Provider.of<BuilderStatsFilterProvider>(context, listen: false).setNewStatsFilters(filters);
-                Provider.of<BuilderSubclassProvider>(context, listen: false).setSubclass(null,
-                    ManifestService.manifestParsed.destinyInventoryItemDefinition[storeBuild.preset.subclassHash]);
-                Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(storeBuild
-                    .preset.subclassMods
-                    .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)
-                    .toList());
-                Navigator.pushNamed(context, routeClassItemChoice);
+                if (storeBuild.preset != null) {
+                  Provider.of<BuilderExoticProvider>(context, listen: false).setExoticHash(
+                      ManifestService.manifestParsed.destinyInventoryItemDefinition[storeBuild.preset?.exoticHash]);
+                  final List<ModSlots> armorMods = [
+                    // helmet
+                    ModSlots(
+                        title: AppLocalizations.of(context)!.helmet,
+                        elementSocketEntries: ManifestService
+                            .manifestParsed.destinyInventoryItemDefinition[3473581026]!.sockets!.socketEntries!,
+                        items: [
+                          null,
+                          for (int index = 0; index < storeBuild.preset!.armorMods["helmet"]!.length; index++)
+                            ManifestService.manifestParsed
+                                .destinyInventoryItemDefinition[storeBuild.preset!.armorMods["helmet"]?[index]],
+                        ]),
+                    // gauntlets
+                    ModSlots(
+                        title: AppLocalizations.of(context)!.gauntlets,
+                        elementSocketEntries: ManifestService
+                            .manifestParsed.destinyInventoryItemDefinition[2771648715]!.sockets!.socketEntries!,
+                        items: [
+                          null,
+                          for (int index = 0; index < storeBuild.preset!.armorMods["gauntlets"]!.length; index++)
+                            ManifestService.manifestParsed
+                                .destinyInventoryItemDefinition[storeBuild.preset!.armorMods["gauntlets"]?[index]],
+                        ]),
+                    // chest
+                    ModSlots(
+                        title: AppLocalizations.of(context)!.chest,
+                        elementSocketEntries: ManifestService
+                            .manifestParsed.destinyInventoryItemDefinition[549825413]!.sockets!.socketEntries!,
+                        items: [
+                          null,
+                          for (int index = 0; index < storeBuild.preset!.armorMods["chest"]!.length; index++)
+                            ManifestService.manifestParsed
+                                .destinyInventoryItemDefinition[storeBuild.preset!.armorMods["chest"]?[index]],
+                        ]),
+                    // legs
+                    ModSlots(
+                        title: AppLocalizations.of(context)!.legs,
+                        elementSocketEntries: ManifestService
+                            .manifestParsed.destinyInventoryItemDefinition[4287863773]!.sockets!.socketEntries!,
+                        items: [
+                          null,
+                          for (int index = 0; index < storeBuild.preset!.armorMods["leg"]!.length; index++)
+                            ManifestService.manifestParsed
+                                .destinyInventoryItemDefinition[storeBuild.preset!.armorMods["leg"]?[index]],
+                        ]),
+                    // class items
+                    ModSlots(
+                        title: AppLocalizations.of(context)!.builder_mods_title,
+                        elementSocketEntries: ManifestService
+                            .manifestParsed.destinyInventoryItemDefinition[3500810712]!.sockets!.socketEntries!,
+                        items: [
+                          null,
+                          for (int index = 0; index < storeBuild.preset!.armorMods["classItem"]!.length; index++)
+                            ManifestService.manifestParsed
+                                .destinyInventoryItemDefinition[storeBuild.preset!.armorMods["classItem"]?[index]],
+                        ]),
+                  ];
+                  Provider.of<BuilderModsProvider>(context, listen: false).setMods(armorMods);
+                  final filters = [
+                    for (int value in storeBuild.preset!.statOrder)
+                      FilterHelper(name: fromIntToName(context, value), icon: fromIntToIcon(value), value: value),
+                  ];
+                  Provider.of<BuilderStatsFilterProvider>(context, listen: false).setNewStatsFilters(filters);
+                  Provider.of<BuilderSubclassProvider>(context, listen: false).setSubclass(null,
+                      ManifestService.manifestParsed.destinyInventoryItemDefinition[storeBuild.preset!.subclassHash]);
+                  Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(storeBuild
+                      .preset!.subclassMods
+                      .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)
+                      .toList());
+                  Navigator.pushNamed(context, routeClassItemChoice);
+                }
               }),
         ],
       ),

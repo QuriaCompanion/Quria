@@ -15,7 +15,7 @@ class BuildStored {
   int usedTimes;
   DestinyClass? className;
   DateTime date;
-  Preset preset;
+  Preset? preset;
   BuildStored(
     this.id,
     this.name,
@@ -58,11 +58,13 @@ class BuildStored {
       'usedTimes': usedTimes,
       'className': className?.value,
       'date': date.millisecondsSinceEpoch,
-      'preset': preset.toMap(),
+      'preset': preset?.toMap(),
     };
   }
 
   factory BuildStored.fromMap(Map<String, dynamic> map) {
+    final presetString = map['preset'] as String?;
+    final preset = presetString != null ? Preset.fromMap(map['preset'] as Map<String, dynamic>) : null;
     return BuildStored(
       map['id'] as String,
       map['name'] as String,
@@ -75,7 +77,7 @@ class BuildStored {
       map['usedTimes'] as int,
       decodeDestinyClass(map['className']) ?? DestinyClass.Unknown,
       DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
-      Preset.fromJson(map['preset'] as String),
+      preset,
     );
   }
 

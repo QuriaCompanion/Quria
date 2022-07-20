@@ -45,11 +45,16 @@ class Preset {
 
   factory Preset.fromMap(Map<String, dynamic> map) {
     return Preset(
-      statOrder: List<int>.from((map['statOrder'] as List<int>)),
+      statOrder: List<int>.from((map['statOrder'])),
       exoticHash: map['exoticHash'] != null ? map['exoticHash'] as int : null,
       subclassHash: map['subclassHash'] != null ? map['subclassHash'] as int : null,
-      armorMods: Map<String, List<int>>.from((map['armorMods'] as Map<String, List<int>>)),
-      subclassMods: List<int>.from((map['subclassMods'] as List<int>)),
+      armorMods: Map<String, List<dynamic>>.from(map['armorMods']).map(
+        (k, v) => MapEntry(
+          k,
+          (v).cast<int>(),
+        ),
+      ),
+      subclassMods: List<int>.from(map['subclassMods']),
     );
   }
 
