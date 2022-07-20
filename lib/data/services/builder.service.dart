@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';

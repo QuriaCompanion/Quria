@@ -9,11 +9,10 @@ import 'package:quria/data/models/Item.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
-import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/components/misc/icon_item.dart';
+import 'package:quria/presentation/components/detailed_item/item/item_component_display_build.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/builder/subclass/subclass_mobile_view.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_mobile_view.dart';
@@ -230,74 +229,59 @@ class CreateBuildSection extends StatelessWidget {
 
     final item = Provider.of<CreateBuildProvider>(context).getEquippedItemByBucket(bucketHash);
     itemComponent = Provider.of<InventoryProvider>(context).getItemByInstanceId(item?.instanceId ?? "undefined");
-    return Container(
-      width: width,
-      decoration: BoxDecoration(
-        color: blackLight,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      padding: EdgeInsets.all(
-        width == vw(context) ? globalPadding(context) : 16,
-      ),
-      child: Row(
-        children: [
-          if (itemComponent != null && item != null && bucketHash != InventoryBucket.subclass)
-            InkWell(
-              onTap: () {
-                openModal(context);
-              },
-              child: ItemIcon(
-                displayHash: Provider.of<InventoryProvider>(context)
-                        .getItemByInstanceId(item.instanceId)
-                        ?.overrideStyleItemHash ??
-                    item.itemHash,
-                imageSize: width == vw(context) ? itemSize(context, width) : 80,
-                isMasterworked:
-                    itemComponent.state == ItemState.Masterwork || itemComponent.state == const ItemState(5),
-                element: Provider.of<ItemProvider>(context).getItemElement(itemComponent),
-                powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.instanceId),
-              ),
-            )
-          else if (itemComponent == null && item != null && bucketHash != InventoryBucket.subclass)
-            InkWell(
-              onTap: () {
-                openModal(context);
-              },
-              child: SizedBox(
-                width: width == vw(context) ? itemSize(context, width) : 80,
-                height: width == vw(context) ? itemSize(context, width) : 80,
-                child: const Icon(
-                  Icons.question_mark_outlined,
-                  color: Colors.white,
-                ),
-              ),
-            )
-          else if (item != null)
-            InkWell(
-              onTap: () {
-                onpenSubclassModal(context);
-              },
-              child: ItemIcon(
-                displayHash: item.itemHash,
-                imageSize: width == vw(context) ? itemSize(context, width) : 80,
-              ),
-            )
-          else
-            InkWell(
-              onTap: () {
-                bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context);
-              },
-              child: SizedBox(
-                width: width == vw(context) ? itemSize(context, width) : 80,
-                height: width == vw(context) ? itemSize(context, width) : 80,
-                child: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
+    return Row(
+      children: [
+        if (itemComponent != null && item != null && bucketHash != InventoryBucket.subclass)
+          ItemComponentDisplayBuild(
+            item: itemComponent,
+            itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
+            width: width,
+            perks: item.mods,
+            isSubclass: false,
+            callback: () {
+              openModal(context);
+            },
+          )
+        else if (itemComponent == null && item != null && bucketHash != InventoryBucket.subclass)
+          InkWell(
+            onTap: () {
+              bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context);
+            },
+            child: SizedBox(
+              width: width == vw(context) ? itemSize(context, width) : 80,
+              height: width == vw(context) ? itemSize(context, width) : 80,
+              child: const Icon(
+                Icons.question_mark_outlined,
+                color: Colors.white,
               ),
             ),
-        ],
-      ),
+          )
+        else if (item != null)
+          ItemComponentDisplayBuild(
+            item: itemComponent,
+            itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
+            width: width,
+            perks: item.mods,
+            isSubclass: true,
+            callback: () {
+              onpenSubclassModal(context);
+            },
+          )
+        else
+          InkWell(
+            onTap: () {
+              bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context);
+            },
+            child: SizedBox(
+              width: width == vw(context) ? itemSize(context, width) : 80,
+              height: width == vw(context) ? itemSize(context, width) : 80,
+              child: const Icon(
+                Icons.add,
+                color: Colors.white,
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

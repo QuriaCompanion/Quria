@@ -10,7 +10,6 @@ import 'package:quria/data/providers/builder/builder_mods_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/quick_actions.enum.dart';
-import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/screens/builder/build_recap/mobile_components/builder_recap_mobile_actions.dart';
 import 'package:quria/presentation/screens/builder/build_recap/mobile_components/builder_recap_mobile_item.dart';
@@ -66,16 +65,6 @@ class BuilderRecapMobileView extends StatelessWidget {
                               break;
                             case QuickActions.save:
                               BuilderService().redirectToBuildSaving(context, data: data);
-                              break;
-                            case QuickActions.share:
-                              showMaterialModalBottomSheet(
-                                  context: context,
-                                  backgroundColor: Colors.transparent,
-                                  isDismissible: false,
-                                  expand: false,
-                                  builder: (context) {
-                                    return const InProgressModal();
-                                  });
                               break;
                           }
                         },

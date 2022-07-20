@@ -63,8 +63,13 @@ class BuildStored {
   }
 
   factory BuildStored.fromMap(Map<String, dynamic> map) {
-    final presetString = map['preset'] as String?;
-    final preset = presetString != null ? Preset.fromMap(map['preset'] as Map<String, dynamic>) : null;
+    String? presetString;
+    try {
+      presetString = map['preset'] as String?;
+    } catch (e) {
+      presetString = null;
+    }
+    final preset = presetString != null ? Preset.fromJson(presetString) : null;
     return BuildStored(
       map['id'] as String,
       map['name'] as String,

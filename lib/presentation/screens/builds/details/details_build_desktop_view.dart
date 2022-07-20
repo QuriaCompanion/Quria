@@ -276,7 +276,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                             const SizedBox(height: 16),
                             DetailsBuildSection(
                               bucketHash: bucket,
-                              width: 400,
+                              width: 600,
                             )
                           ],
                         ),

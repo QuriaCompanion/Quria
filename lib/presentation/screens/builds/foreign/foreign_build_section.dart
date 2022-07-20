@@ -8,7 +8,7 @@ import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/components/misc/icon_item.dart';
+import 'package:quria/presentation/components/detailed_item/item/item_component_display_build.dart';
 import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -24,37 +24,35 @@ class ForeignBuildSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final itemDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[item?.itemHash];
-    return Container(
+    return SizedBox(
       width: width,
-      decoration: BoxDecoration(
-        color: blackLight,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      padding: EdgeInsets.all(
-        width == vw(context) ? globalPadding(context) : 16,
-      ),
       child: Row(
         children: [
           if (itemDef?.inventory?.bucketTypeHash == InventoryBucket.subclass)
-            InkWell(
-              onTap: () {
+            ItemComponentDisplayBuild(
+              itemDef: itemDef!,
+              width: width,
+              perks: item?.mods ?? [],
+              isSubclass: true,
+              callback: () {
                 Navigator.of(context).pushNamed(
                   routeInspectSubclass,
                   arguments: InspectSubclassHelper(
-                    isNewSubclass: ManifestService.manifestParsed.destinyInventoryItemDefinition[itemDef?.hash] != null,
+                    isNewSubclass:
+                        ManifestService.manifestParsed.destinyInventoryItemDefinition[item?.itemHash] != null,
                     subclassId: item!.instanceId,
                     characterId: Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
                   ),
                 );
               },
-              child: ItemIcon(
-                displayHash: item!.itemHash,
-                imageSize: width == vw(context) ? itemSize(context, width) : 80,
-              ),
             )
           else if (itemDef != null)
-            InkWell(
-              onTap: () {
+            ItemComponentDisplayBuild(
+              itemDef: itemDef,
+              width: width,
+              perks: item?.mods ?? [],
+              isSubclass: false,
+              callback: () {
                 Provider.of<InspectProvider>(context, listen: false).setInspectItem(itemDef: itemDef);
                 if (vw(context) < 1000) {
                   Navigator.pushNamed(context, routeCollectionItem, arguments: itemDef.hash);
@@ -70,10 +68,6 @@ class ForeignBuildSection extends StatelessWidget {
                       });
                 }
               },
-              child: ItemIcon(
-                displayHash: itemDef.hash!,
-                imageSize: width == vw(context) ? itemSize(context, width) : 80,
-              ),
             )
           else
             SizedBox(

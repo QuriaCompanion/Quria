@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
@@ -40,14 +41,22 @@ class LoginWidgetState extends State<LoginWidget> {
   @override
   void initState() {
     super.initState();
-    getInitialUri().then((uri) {
+    getInitialUri().then((Uri? uri) {
       AuthService.getToken().then((value) async {
+        String? storedUri = await StorageService.getLocalStorage("initUri");
+        StorageService.removeLocalStorage("initUri");
+        Uri? previousUri;
+        if (storedUri != null) {
+          previousUri = Uri.parse(storedUri);
+        }
         if (value != null) {
           await checkMembership();
           if (!mounted) return;
           inspect(uri?.path);
-          if (uri?.queryParameters["buildId"] != null) {
-            Navigator.pushReplacementNamed(context, routeForeignBuild, arguments: uri!.queryParameters["buildId"]);
+
+          if (uri?.queryParameters["buildId"] != null || previousUri?.queryParameters["buildId"] != null) {
+            Navigator.pushReplacementNamed(context, routeForeignBuild,
+                arguments: uri?.queryParameters["buildId"] ?? previousUri?.queryParameters["buildId"]);
             return;
           } else {
             Navigator.pushReplacementNamed(context, routeProfile);
@@ -79,8 +88,8 @@ class LoginWidgetState extends State<LoginWidget> {
             ),
             onPressed: () {
               loadingModal();
-              authorizeClick(context);
-              // yannisooLogin();
+              // authorizeClick(context);
+              yannisooLogin();
             },
             width: 250.0,
             height: 60),
@@ -134,6 +143,9 @@ class LoginWidgetState extends State<LoginWidget> {
   }
 
   void authorizeClick(BuildContext context) async {
+    final Uri? uri = await getInitialUri();
+    await StorageService.setLocalStorage("initUri", uri.toString());
+    if (!mounted) return;
     try {
       try {
         try {
@@ -241,11 +253,22 @@ class LoginWidgetState extends State<LoginWidget> {
           builder: (context) {
             return ChooseMembership(
                 memberships: membershipData!.destinyMemberships!,
-                onSelected: (membership) {
+                onSelected: (membership) async {
                   Navigator.of(context).pop();
                   AccountService.saveMembership(membershipData, membership);
-                  Navigator.pushReplacementNamed(context, routeProfile);
-                  return;
+                  final previousUri = await StorageService.getLocalStorage("initUri");
+                  StorageService.removeLocalStorage("initUri");
+                  final uri = Uri.parse(previousUri);
+                  inspect(uri);
+                  if (!mounted) return;
+                  if (previousUri?.queryParameters["buildId"] != null) {
+                    Navigator.pushReplacementNamed(context, routeForeignBuild,
+                        arguments: previousUri!.queryParameters["buildId"]);
+                    return;
+                  } else {
+                    Navigator.pushReplacementNamed(context, routeProfile);
+                    return;
+                  }
                 });
           });
     } catch (_) {
