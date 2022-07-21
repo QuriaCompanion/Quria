@@ -88,14 +88,16 @@ class LoginWidgetState extends State<LoginWidget> {
             ),
             onPressed: () {
               loadingModal();
-              authorizeClick(context);
-              // yannisooLogin();
+              // authorizeClick(context);
+              yannisooLogin();
             },
             width: 250.0,
             height: 60),
       ),
       body: Container(
-        decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
+        decoration: BoxDecoration(
+            image:
+                DecorationImage(fit: BoxFit.cover, image: vw(context) < 1000 ? splashBackground : splashBackgroundWeb)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

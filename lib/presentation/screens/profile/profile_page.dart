@@ -10,6 +10,7 @@ import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
+import 'package:quria/presentation/components/misc/page_loader.dart';
 import 'package:quria/presentation/screens/profile/profile_desktop_view.dart';
 import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -74,15 +75,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
             ));
           }
         }
-        return Container(
-          height: vh(context),
-          width: vw(context),
-          decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
-          child: Loader(
-            splashColor: Colors.transparent,
-            animationSize: vw(context) * 0.5,
-          ),
-        );
+        return const PageLoader();
       }),
     );
   }

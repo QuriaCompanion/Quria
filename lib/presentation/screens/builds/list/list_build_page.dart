@@ -7,6 +7,7 @@ import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
+import 'package:quria/presentation/components/misc/page_loader.dart';
 import 'package:quria/presentation/screens/builds/list/list_build_desktop.dart';
 import 'package:quria/presentation/screens/builds/list/list_build_mobile.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -51,15 +52,7 @@ class _ListBuildPageState extends State<ListBuildPage> {
             currentRoute: routeListBuilds,
           );
         } else {
-          return Container(
-            height: vh(context),
-            width: vw(context),
-            decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
-            child: Loader(
-              splashColor: Colors.transparent,
-              animationSize: vw(context) * 0.5,
-            ),
-          );
+          return const PageLoader();
         }
       }),
     );

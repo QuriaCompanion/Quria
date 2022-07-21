@@ -249,9 +249,17 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                           height: 16,
                         ),
                         if (_controller.value.text.isEmpty)
-                          textBodyBold("You need to name your build!", color: crucible),
+                          textBodyBold(
+                            AppLocalizations.of(context)!.build_no_name,
+                            color: crucible,
+                            utf8: false,
+                          ),
                         if (Conditions.isBuildValid(Provider.of<CreateBuildProvider>(context).items))
-                          textBodyBold("You have too many exotics!", color: crucible),
+                          textBodyBold(
+                            AppLocalizations.of(context)!.build_too_many_exotic,
+                            color: crucible,
+                            utf8: false,
+                          ),
                         RoundedButton(
                             width: vw(context),
                             disabledColor: Colors.white,

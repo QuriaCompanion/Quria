@@ -92,14 +92,15 @@ class BuildCard extends StatelessWidget {
                       Wrap(
                         runAlignment: WrapAlignment.start,
                         alignment: WrapAlignment.start,
-                        spacing: 8,
-                        runSpacing: 8,
                         children: [
                           for (final bucket in InventoryBucket.armorBucketHashes)
                             if (buildStored.items
                                 .where((element) => element.bucketHash == bucket && element.isEquipped)
                                 .isNotEmpty)
-                              BuildCardItem(width: width, buildStored: buildStored, bucket: bucket)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+                                child: BuildCardItem(width: width, buildStored: buildStored, bucket: bucket),
+                              )
                             else
                               SizedBox(
                                 height: width / 8 + 8,
@@ -109,17 +110,21 @@ class BuildCard extends StatelessWidget {
                       Wrap(
                         runAlignment: WrapAlignment.start,
                         alignment: WrapAlignment.start,
-                        spacing: 8,
-                        runSpacing: 8,
                         children: [
                           for (final bucket in InventoryBucket.weaponBucketHashes)
                             if (buildStored.items
                                 .where((element) => element.bucketHash == bucket && element.isEquipped)
                                 .isNotEmpty)
-                              BuildCardItem(width: width, buildStored: buildStored, bucket: bucket)
+                              Padding(
+                                padding: const EdgeInsets.only(right: 8.0, bottom: 8.0),
+                                child: BuildCardItem(width: width, buildStored: buildStored, bucket: bucket),
+                              )
                             else
-                              SizedBox(
-                                height: width / 8 + 8,
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8.0),
+                                child: SizedBox(
+                                  height: width / 8 + 8,
+                                ),
                               ),
                         ],
                       ),

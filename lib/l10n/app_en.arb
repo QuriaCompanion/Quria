@@ -10,6 +10,8 @@
     "builder_list": "My builds",
     "create_build": "Create a build",
     "update_build": "Update a build",
+    "build_no_name": "You need to name your build",
+    "build_too_many_exotic": "You have too many exotics!",
     "build_created_success": "Your build was succesfully created",
     "build_update_success": "Your build was succesfully updated",
     "build_delete_confirm": "Are you sure you want to delete this build ?",

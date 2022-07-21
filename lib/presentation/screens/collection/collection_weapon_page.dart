@@ -8,6 +8,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
+import 'package:quria/presentation/components/misc/page_loader.dart';
 import 'package:quria/presentation/screens/collection/collection_mobile_view.dart';
 import 'package:quria/presentation/screens/collection/collection_desktop_view.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -47,7 +48,7 @@ class _CollectionWeaponPageState extends State<CollectionWeaponPage> {
               );
             }
           } else {
-            return const Loader();
+            return const PageLoader();
           }
         });
   }

@@ -51,9 +51,12 @@ class ProfileDesktopView extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
           itemCount: buckets.length,
-          itemBuilder: ((context, index) => ProfileDesktopItemSection(
-                data: data,
-                bucket: buckets[index],
+          itemBuilder: ((context, index) => Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: ProfileDesktopItemSection(
+                  data: data,
+                  bucket: buckets[index],
+                ),
               )),
         ),
         SizedBox(
