@@ -88,8 +88,8 @@ class LoginWidgetState extends State<LoginWidget> {
             ),
             onPressed: () {
               loadingModal();
-              // authorizeClick(context);
-              yannisooLogin();
+              authorizeClick(context);
+              // yannisooLogin();
             },
             width: 250.0,
             height: 60),
@@ -293,5 +293,7 @@ class LoginWidgetState extends State<LoginWidget> {
       await AuthService.saveToken(token);
     }
     await AccountService.getMembership();
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, routeProfile);
   }
 }
