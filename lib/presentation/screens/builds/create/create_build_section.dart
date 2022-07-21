@@ -229,59 +229,62 @@ class CreateBuildSection extends StatelessWidget {
 
     final item = Provider.of<CreateBuildProvider>(context).getEquippedItemByBucket(bucketHash);
     itemComponent = Provider.of<InventoryProvider>(context).getItemByInstanceId(item?.instanceId ?? "undefined");
-    return Row(
-      children: [
-        if (itemComponent != null && item != null && bucketHash != InventoryBucket.subclass)
-          ItemComponentDisplayBuild(
-            item: itemComponent,
-            itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
-            width: width,
-            perks: item.mods,
-            isSubclass: false,
-            callback: () {
-              openModal(context);
-            },
-          )
-        else if (itemComponent == null && item != null && bucketHash != InventoryBucket.subclass)
-          InkWell(
-            onTap: () {
-              bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context);
-            },
-            child: SizedBox(
-              width: width == vw(context) ? itemSize(context, width) : 80,
-              height: width == vw(context) ? itemSize(context, width) : 80,
-              child: const Icon(
-                Icons.question_mark_outlined,
-                color: Colors.white,
+    return SizedBox(
+      width: width,
+      child: Row(
+        children: [
+          if (itemComponent != null && item != null && bucketHash != InventoryBucket.subclass)
+            ItemComponentDisplayBuild(
+              item: itemComponent,
+              itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
+              width: width,
+              perks: item.mods,
+              isSubclass: false,
+              callback: () {
+                openModal(context);
+              },
+            )
+          else if (itemComponent == null && item != null && bucketHash != InventoryBucket.subclass)
+            InkWell(
+              onTap: () {
+                bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context);
+              },
+              child: SizedBox(
+                width: width == vw(context) ? itemSize(context, width) : 80,
+                height: width == vw(context) ? itemSize(context, width) : 80,
+                child: const Icon(
+                  Icons.question_mark_outlined,
+                  color: Colors.white,
+                ),
+              ),
+            )
+          else if (item != null)
+            ItemComponentDisplayBuild(
+              item: itemComponent,
+              itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
+              width: width,
+              perks: item.mods,
+              isSubclass: true,
+              callback: () {
+                onpenSubclassModal(context);
+              },
+            )
+          else
+            InkWell(
+              onTap: () {
+                bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context);
+              },
+              child: SizedBox(
+                width: width == vw(context) ? itemSize(context, width) : 80,
+                height: width == vw(context) ? itemSize(context, width) : 80,
+                child: const Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
               ),
             ),
-          )
-        else if (item != null)
-          ItemComponentDisplayBuild(
-            item: itemComponent,
-            itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
-            width: width,
-            perks: item.mods,
-            isSubclass: true,
-            callback: () {
-              onpenSubclassModal(context);
-            },
-          )
-        else
-          InkWell(
-            onTap: () {
-              bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context);
-            },
-            child: SizedBox(
-              width: width == vw(context) ? itemSize(context, width) : 80,
-              height: width == vw(context) ? itemSize(context, width) : 80,
-              child: const Icon(
-                Icons.add,
-                color: Colors.white,
-              ),
-            ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }

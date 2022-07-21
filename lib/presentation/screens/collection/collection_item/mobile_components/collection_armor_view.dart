@@ -5,7 +5,6 @@ import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_origin.dart';
-import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_stats.dart';
 
 class CollectionArmorView extends StatelessWidget {
   final double width;
@@ -19,8 +18,6 @@ class CollectionArmorView extends StatelessWidget {
     final itemDef = Provider.of<InspectProvider>(context).itemDef!;
     return Column(
       children: [
-        mobileSection(context,
-            title: AppLocalizations.of(context)!.statistics, child: InspectMobileStats(width: vw(context))),
         mobileSection(context,
             title: AppLocalizations.of(context)!.origin,
             child: InspectMobileOrigin(collectionHash: itemDef.collectibleHash)),

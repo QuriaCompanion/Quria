@@ -301,7 +301,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                   padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
                   child: Wrap(
                     alignment: WrapAlignment.start,
-                    crossAxisAlignment: WrapCrossAlignment.center,
+                    crossAxisAlignment: WrapCrossAlignment.start,
                     children: [
                       for (final bucket in InventoryBucket.loadoutNoSubclass)
                         Padding(

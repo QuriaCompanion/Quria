@@ -59,7 +59,7 @@ class _ItemComponentDisplayBuildState extends State<ItemComponentDisplayBuild> w
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: widget.width - globalPadding(context) * 2,
+      width: widget.width == vw(context) ? widget.width - globalPadding(context) * 2 : widget.width,
       child: Column(
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

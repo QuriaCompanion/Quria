@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -199,11 +200,16 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                         ),
                         ModalButton(
                           callback: () {
-                            showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return const InProgressModal();
-                                });
+                            Clipboard.setData(
+                                ClipboardData(text: "https://quriacompanion.app/build?buildId=${_build.id}"));
+                            ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+                              content: textBodyMedium(
+                                AppLocalizations.of(context)!.build_copy,
+                                utf8: false,
+                                color: Colors.white,
+                              ),
+                              backgroundColor: Colors.green,
+                            ));
                           },
                           width: 50,
                           icon: 'assets/icons/shareDesktop.svg',
@@ -261,7 +267,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                 padding: EdgeInsets.all(globalPadding(context)),
                 child: Wrap(
                   alignment: WrapAlignment.start,
-                  crossAxisAlignment: WrapCrossAlignment.center,
+                  crossAxisAlignment: WrapCrossAlignment.start,
                   children: [
                     for (final bucket in InventoryBucket.loadoutNoSubclass)
                       Padding(
