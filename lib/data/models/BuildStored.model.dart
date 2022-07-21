@@ -5,6 +5,7 @@ import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:quria/data/models/Item.model.dart';
+import 'package:quria/data/models/Preset.model.dart';
 
 class BuildStored {
   String id;
@@ -14,6 +15,7 @@ class BuildStored {
   int usedTimes;
   DestinyClass? className;
   DateTime date;
+  Preset? preset;
   BuildStored(
     this.id,
     this.name,
@@ -22,6 +24,7 @@ class BuildStored {
     this.usedTimes,
     this.className,
     this.date,
+    this.preset,
   );
 
   BuildStored copyWith({
@@ -32,6 +35,7 @@ class BuildStored {
     int? usedTimes,
     DestinyClass? className,
     DateTime? date,
+    Preset? preset,
   }) {
     return BuildStored(
       id ?? this.id,
@@ -41,6 +45,7 @@ class BuildStored {
       usedTimes ?? this.usedTimes,
       className ?? this.className,
       date ?? this.date,
+      preset ?? this.preset,
     );
   }
 
@@ -53,10 +58,18 @@ class BuildStored {
       'usedTimes': usedTimes,
       'className': className?.value,
       'date': date.millisecondsSinceEpoch,
+      'preset': preset?.toMap(),
     };
   }
 
   factory BuildStored.fromMap(Map<String, dynamic> map) {
+    String? presetString;
+    try {
+      presetString = map['preset'] as String?;
+    } catch (e) {
+      presetString = null;
+    }
+    final preset = presetString != null ? Preset.fromJson(presetString) : null;
     return BuildStored(
       map['id'] as String,
       map['name'] as String,
@@ -69,6 +82,7 @@ class BuildStored {
       map['usedTimes'] as int,
       decodeDestinyClass(map['className']) ?? DestinyClass.Unknown,
       DateTime.fromMillisecondsSinceEpoch(map['date'] as int),
+      preset,
     );
   }
 
@@ -78,7 +92,7 @@ class BuildStored {
 
   @override
   String toString() {
-    return 'BuildStored(id: $id, name: $name, items: $items, bungieName: $bungieName, usedTimes: $usedTimes, className: $className, date: $date)';
+    return 'BuildStored(id: $id, name: $name, items: $items, bungieName: $bungieName, usedTimes: $usedTimes, className: $className, date: $date, preset: $preset)';
   }
 
   @override
@@ -91,7 +105,8 @@ class BuildStored {
         other.bungieName == bungieName &&
         other.usedTimes == usedTimes &&
         other.className == className &&
-        other.date == date;
+        other.date == date &&
+        other.preset == preset;
   }
 
   @override
@@ -102,6 +117,7 @@ class BuildStored {
         bungieName.hashCode ^
         usedTimes.hashCode ^
         className.hashCode ^
-        date.hashCode;
+        date.hashCode ^
+        preset.hashCode;
   }
 }

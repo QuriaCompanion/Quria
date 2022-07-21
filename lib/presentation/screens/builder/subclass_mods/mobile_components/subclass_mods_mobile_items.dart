@@ -16,7 +16,7 @@ class SubclassMobileItems extends StatefulWidget {
   final int? plugSetHash;
   final void Function(DestinyInventoryItemDefinition) onSocketChange;
   const SubclassMobileItems(
-      {required this.item, required this.plugSetHash, required this.onSocketChange, Key? key, required this.width})
+      {required this.item, this.plugSetHash, required this.onSocketChange, Key? key, required this.width})
       : super(key: key);
 
   @override

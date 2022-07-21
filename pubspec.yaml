@@ -36,6 +36,7 @@ dependencies:
   sleek_circular_slider: ^2.0.1
   auto_size_text: ^3.0.0
   sliver_tools: ^0.2.5
+  flutter_share: ^2.0.0
   extended_image: ^6.2.1
   isolate_manager: ^2.0.1
   simple_animations: ^4.2.0

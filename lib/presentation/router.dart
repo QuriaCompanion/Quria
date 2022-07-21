@@ -11,6 +11,7 @@ import 'package:quria/presentation/screens/builder/subclass/subclass_page.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_page.dart';
 import 'package:quria/presentation/screens/builds/create/create_build_page.dart';
 import 'package:quria/presentation/screens/builds/details/details_build_page.dart';
+import 'package:quria/presentation/screens/builds/foreign/foreign_build_page.dart';
 import 'package:quria/presentation/screens/builds/list/list_build_page.dart';
 import 'package:quria/presentation/screens/collection/collection_item/collection_item_page.dart';
 import 'package:quria/presentation/screens/collection/collection_weapon_page.dart';
@@ -77,6 +78,10 @@ class AppRouter {
 
       case routeCreateBuild:
         return MaterialPageRoute(builder: (_) => const CreateBuildPage());
+
+      case routeForeignBuild:
+        final String data = settings.arguments as String;
+        return MaterialPageRoute(builder: (_) => ForeignBuildPage(id: data));
 
       case routeListBuilds:
         return MaterialPageRoute(builder: (_) => const ListBuildPage());

@@ -1,17 +1,22 @@
 import 'dart:convert';
 
 import 'package:bungie_api/enums/destiny_class.dart';
+import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_investment_stat_definition.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/models/destiny_item_sockets_component.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_share/flutter_share.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/models/Item.model.dart';
+import 'package:quria/data/models/Preset.model.dart';
 import 'package:quria/data/models/StatWeighing.enum.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -19,6 +24,7 @@ import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/foundation.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
+import 'package:quria/data/models/helpers/filterHelper.model.dart';
 import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
 import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
 import 'package:quria/data/providers/builder/builder_mods_provider.dart';
@@ -34,6 +40,7 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 class BuilderService {
@@ -90,9 +97,77 @@ class BuilderService {
           "items": build.map((e) => e.toJson()).toList(),
           "usedTimes": 0,
           "className": Provider.of<CharactersProvider>(context, listen: false).currentCharacter?.classType?.value,
-          "preset": {}
+          "preset": calculatePreset(context, data: build).toJson(),
         }));
     return;
+  }
+
+  void useForeignBuild(BuildContext context, Preset preset) {
+    Provider.of<BuilderExoticProvider>(context, listen: false)
+        .setExoticHash(ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.exoticHash]);
+    final List<ModSlots> armorMods = [
+      // helmet
+      ModSlots(
+          title: AppLocalizations.of(context)!.helmet,
+          elementSocketEntries:
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[3473581026]!.sockets!.socketEntries!,
+          items: [
+            null,
+            for (int index = 0; index < preset.armorMods["helmet"]!.length; index++)
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.armorMods["helmet"]?[index]],
+          ]),
+      // gauntlets
+      ModSlots(
+          title: AppLocalizations.of(context)!.gauntlets,
+          elementSocketEntries:
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[2771648715]!.sockets!.socketEntries!,
+          items: [
+            null,
+            for (int index = 0; index < preset.armorMods["gauntlets"]!.length; index++)
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.armorMods["gauntlets"]?[index]],
+          ]),
+      // chest
+      ModSlots(
+          title: AppLocalizations.of(context)!.chest,
+          elementSocketEntries:
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[549825413]!.sockets!.socketEntries!,
+          items: [
+            null,
+            for (int index = 0; index < preset.armorMods["chest"]!.length; index++)
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.armorMods["chest"]?[index]],
+          ]),
+      // legs
+      ModSlots(
+          title: AppLocalizations.of(context)!.legs,
+          elementSocketEntries:
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[4287863773]!.sockets!.socketEntries!,
+          items: [
+            null,
+            for (int index = 0; index < preset.armorMods["leg"]!.length; index++)
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.armorMods["leg"]?[index]],
+          ]),
+      // class items
+      ModSlots(
+          title: AppLocalizations.of(context)!.builder_mods_title,
+          elementSocketEntries:
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[3500810712]!.sockets!.socketEntries!,
+          items: [
+            null,
+            for (int index = 0; index < preset.armorMods["classItem"]!.length; index++)
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.armorMods["classItem"]?[index]],
+          ]),
+    ];
+    Provider.of<BuilderModsProvider>(context, listen: false).setMods(armorMods);
+    final filters = [
+      for (int value in preset.statOrder)
+        FilterHelper(name: fromIntToName(context, value), icon: fromIntToIcon(value), value: value),
+    ];
+    Provider.of<BuilderStatsFilterProvider>(context, listen: false).setNewStatsFilters(filters);
+    Provider.of<BuilderSubclassProvider>(context, listen: false)
+        .setSubclass(null, ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.subclassHash]);
+    Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(
+        preset.subclassMods.map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!).toList());
+    Navigator.pushNamed(context, routeClassItemChoice);
   }
 
   Map<String, int> statCalculator(BuildContext context, {required DestinyItemComponent item}) {
@@ -136,7 +211,7 @@ class BuilderService {
     return investmentStats;
   }
 
-  buildStatCalculator(BuildContext context, {required List<Item> items}) {
+  Map<String, int> buildStatCalculator(BuildContext context, {required List<Item> items}) {
     Map<String, int> stats = {
       StatsStringHash.mobility: 0,
       StatsStringHash.resilience: 0,
@@ -221,6 +296,52 @@ class BuilderService {
     Navigator.pushNamed(context, routeCreateBuild);
   }
 
+  Preset calculatePreset(BuildContext context, {required List<Item> data}) {
+    List<String> stats = [];
+    final mapStats = BuilderService().buildStatCalculator(context, items: data);
+    stats = mapStats.keys.toList(growable: false)..sort((k1, k2) => mapStats[k2]!.compareTo(mapStats[k1]!));
+    final armor = data.where((element) =>
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemType ==
+        DestinyItemType.Armor);
+    final int? exoticHash = armor
+        .firstWhereOrNull((element) =>
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.inventory?.tierType ==
+            TierType.Exotic)
+        ?.itemHash;
+    final helmetItem = armor.firstWhereOrNull((element) =>
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemSubType ==
+        DestinyItemSubType.HelmetArmor);
+    final gauntletItem = armor.firstWhereOrNull((element) =>
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemSubType ==
+        DestinyItemSubType.GauntletsArmor);
+    final chestItem = armor.firstWhereOrNull((element) =>
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemSubType ==
+        DestinyItemSubType.ChestArmor);
+    final legItem = armor.firstWhereOrNull((element) =>
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemSubType ==
+        DestinyItemSubType.LegArmor);
+    final classItem = armor.firstWhereOrNull((element) =>
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemSubType ==
+        DestinyItemSubType.HelmetArmor);
+    Map<String, List<int>> armorMods = {
+      "helmet": helmetItem != null ? helmetItem.mods.sublist(1).toList() : [],
+      "gauntlets": gauntletItem != null ? gauntletItem.mods.sublist(1).toList() : [],
+      "chest": chestItem != null ? chestItem.mods.sublist(1).toList() : [],
+      "leg": legItem != null ? legItem.mods.sublist(1).toList() : [],
+      "classItem": classItem != null ? classItem.mods.sublist(1).toList() : [],
+    };
+    final Item? subclass = data.firstWhereOrNull((element) =>
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemType ==
+        DestinyItemType.Subclass);
+    List<int> subclassMods = subclass != null ? subclass.mods : [];
+    return Preset(
+        statOrder: stats.map((e) => int.parse(e)).toList(),
+        exoticHash: exoticHash,
+        armorMods: armorMods,
+        subclassMods: subclassMods,
+        subclassHash: subclass?.itemHash);
+  }
+
   Future<void> updateBuild(BuildContext context, String name) async {
     final build = Provider.of<CreateBuildProvider>(context, listen: false).items;
     final id = Provider.of<CreateBuildProvider>(context, listen: false).id;
@@ -234,7 +355,7 @@ class BuilderService {
           "items": build.map((e) => e.toJson()).toList(),
           "usedTimes": 0,
           "className": Provider.of<CharactersProvider>(context, listen: false).currentCharacter?.classType?.value,
-          "preset": {}
+          "preset": calculatePreset(context, data: build).toJson(),
         }));
     return;
   }
@@ -247,6 +368,28 @@ class BuilderService {
       return builds.map((e) => BuildStored.fromMap(e)).toList();
     }
     return [];
+  }
+
+  Future<void> shareBuild(String id) async {
+    await FlutterShare.share(
+        title: 'QuriaCompanion',
+        text: 'Check out my new build: ',
+        linkUrl: 'https://quriacompanion.app/build?buildId=$id',
+        chooserTitle: 'Open Quria Companion');
+  }
+
+  Future<BuildStored?> getBuild(String id) async {
+    final response = await http.get(Uri.parse("${_backendURl}build/$id"));
+    if (response.statusCode == 200) {
+      final build = BuildStored.fromJson(response.body);
+      final List<int> itemIds = [];
+      for (final Item item in build.items) {
+        itemIds.add(item.itemHash);
+      }
+      await StorageService.getDefinitions<DestinyInventoryItemDefinition>(itemIds);
+      return build;
+    }
+    return null;
   }
 
   Future<void> deleteBuild(String id) async {

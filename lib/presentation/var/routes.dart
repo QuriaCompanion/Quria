@@ -24,5 +24,6 @@ const String routePageLegends = "/legends";
 const String routeCreateBuild = "/create-build";
 const String routeListBuilds = "/list-builds";
 const String routeDetailsBuild = "/details-build";
+const String routeForeignBuild = "/foreign-build";
 
 final navKey = GlobalKey<NavigatorState>();

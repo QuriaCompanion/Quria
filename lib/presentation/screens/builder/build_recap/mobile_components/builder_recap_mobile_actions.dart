@@ -29,11 +29,6 @@ class BuilderRecapMobileActions extends StatelessWidget {
             icon: "assets/icons/Save.svg",
             title: AppLocalizations.of(context)!.save,
             onTap: () => onAction(QuickActions.save)),
-        QuickAction(
-            width: width,
-            icon: "assets/icons/Share.svg",
-            title: AppLocalizations.of(context)!.share,
-            onTap: () => onAction(QuickActions.share)),
       ],
     );
   }
