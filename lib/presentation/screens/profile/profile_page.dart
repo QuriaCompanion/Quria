@@ -8,7 +8,6 @@ import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
-import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/components/misc/page_loader.dart';
 import 'package:quria/presentation/screens/profile/profile_desktop_view.dart';

@@ -42,7 +42,7 @@ class DetailsBuildMobileActions extends StatelessWidget {
               title: AppLocalizations.of(context)!.share,
               width: width,
               onTap: () {
-                BuilderService().shareBuild(build.id);
+                BuilderService().shareBuild(context, id: build.id);
               }),
           QuickAction(
               icon: "assets/icons/Save.svg",
@@ -69,7 +69,7 @@ class DetailsBuildMobileActions extends StatelessWidget {
                             await BuilderService().deleteBuild(build.id).then((_) {
                               ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                                 content: textBodyMedium(
-                                  AppLocalizations.of(context)!.build_created_success,
+                                  AppLocalizations.of(context)!.build_delete_success,
                                   utf8: false,
                                   color: Colors.white,
                                 ),
@@ -134,7 +134,13 @@ class DeleteConfirmation extends StatelessWidget {
           ),
           SizedBox(height: globalPadding(context)),
           RoundedButton(
-              text: textBodyBold("Supprimer"), buttonColor: crucible, width: width, onPressed: () => onDelete),
+              text: textBodyBold(
+                AppLocalizations.of(context)!.delete,
+                utf8: false,
+              ),
+              buttonColor: crucible,
+              width: width,
+              onPressed: () => onDelete()),
         ],
       ),
     );

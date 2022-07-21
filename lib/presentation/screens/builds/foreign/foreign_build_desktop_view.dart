@@ -13,7 +13,6 @@ import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/models/Item.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/providers/characters_provider.dart';
-import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -24,7 +23,6 @@ import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_b
 import 'package:quria/presentation/screens/builds/foreign/foreign_build_section.dart';
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
 import 'package:quria/presentation/var/keys.dart';
-import 'package:quria/presentation/var/routes.dart';
 
 class ForeignBuildDesktopView extends StatefulWidget {
   final BuildStored foreignBuild;
@@ -153,9 +151,10 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ModalButton(
+                          text: AppLocalizations.of(context)!.save,
                           callback: () {
                             if (widget.foreignBuild.preset != null) {
-                              BuilderService().useForeignBuild(context, widget.foreignBuild.preset!);
+                              BuilderService().useForeignBuild(context, widget.foreignBuild);
                               return;
                             }
                             ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(

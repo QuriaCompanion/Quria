@@ -87,7 +87,7 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
                         });
                   });
                 },
-                sockets: sockets.sockets,
+                displayedSockets: sockets.displayedSockets,
                 subclass: sockets.def!,
               );
             }

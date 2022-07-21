@@ -41,7 +41,7 @@ String fromIntToIcon(int value) {
     case 1943323491:
       return "recovery.svg";
     case 1735777505:
-      return "resilience.svg";
+      return "discipline.svg";
     case 144602215:
       return "intellect.svg";
     case 4244567218:

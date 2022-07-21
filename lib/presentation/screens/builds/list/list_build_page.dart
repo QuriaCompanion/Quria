@@ -5,7 +5,6 @@ import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
-import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_characters.dart';
 import 'package:quria/presentation/components/misc/page_loader.dart';
 import 'package:quria/presentation/screens/builds/list/list_build_desktop.dart';

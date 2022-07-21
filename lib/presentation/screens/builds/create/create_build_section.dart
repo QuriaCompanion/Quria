@@ -99,7 +99,7 @@ class CreateBuildSection extends StatelessWidget {
                                 children: [
                                   SubclassModsMobileView(
                                     width: vw(context) * 0.4,
-                                    sockets: sockets.sockets,
+                                    displayedSockets: sockets.displayedSockets,
                                     subclass: ManifestService
                                         .manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
                                     onChange: (newSockets, i) async {
@@ -180,6 +180,9 @@ class CreateBuildSection extends StatelessWidget {
                   expand: true,
                   context: context,
                   builder: (context) {
+                    final displayedSockets = Provider.of<CreateBuildProvider>(context)
+                        .getEquippedItemByBucket(InventoryBucket.subclass)!
+                        .mods;
                     return SingleChildScrollView(
                       child: Container(
                         color: black,
@@ -187,7 +190,11 @@ class CreateBuildSection extends StatelessWidget {
                           children: [
                             SubclassModsMobileView(
                               width: vw(context),
-                              sockets: sockets.sockets,
+                              displayedSockets: displayedSockets
+                                  .where(
+                                      (e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e] != null)
+                                  .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)
+                                  .toList(),
                               subclass:
                                   ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
                               onChange: (newSockets, i) async {

@@ -14,6 +14,8 @@
     "build_no_name": "Vous devez nommer votre build",
     "build_too_many_exotic": "Vous avez trop d'éxotique",
     "add": "Ajouter",
+    "add_an_equipment": "Ajouter un equipment",
+    "build_share_text": "Regarde mon nouveau build!",
     "build_created_success": "Build créé avec succès",
     "build_update_success": "Build modifié avec succès",
     "build_delete_confirm": "Êtes-vous sûr de vouloir supprimer ce build ?",    
