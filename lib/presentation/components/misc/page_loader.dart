@@ -20,6 +20,7 @@ class PageLoader extends StatelessWidget {
           image:
               DecorationImage(fit: BoxFit.cover, image: vw(context) < 1000 ? splashBackground : splashBackgroundWeb)),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Loader(
             splashColor: Colors.transparent,

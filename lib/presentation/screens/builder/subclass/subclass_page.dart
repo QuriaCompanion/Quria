@@ -2,9 +2,12 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/models/helpers/socketsHelper.model.dart';
+import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_steps.dart';
@@ -38,8 +41,13 @@ class _SubclassPageState extends State<SubclassPage> {
           width: vw(context),
           subclasses: data,
           onSelect: (subclass) {
-            Provider.of<BuilderSubclassProvider>(context, listen: false).setSubclass(subclass.itemInstanceId,
-                ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]);
+            if (Provider.of<BuilderSubclassProvider>(context, listen: false).subclass !=
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]) {
+              Provider.of<BuilderSubclassProvider>(context, listen: false).setSubclass(subclass.itemInstanceId,
+                  ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]);
+              SocketsHelper data = DisplayService.getSubclassMods(context, subclass.itemInstanceId!);
+              Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(data.displayedSockets);
+            }
             ManifestService
                         .manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]?.talentGrid?.talentGridHash ==
                     0
