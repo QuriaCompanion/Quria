@@ -327,6 +327,7 @@ class BuilderService {
   }
 
   void redirectToBuildSaving(BuildContext context, {required Build data}) {
+    Provider.of<CreateBuildProvider>(context, listen: false).clear();
     final items = changeBuildToListOfItems(context, data: data);
     Provider.of<CreateBuildProvider>(context, listen: false).setBuild(items);
     Navigator.pushNamed(context, routeCreateBuild);
