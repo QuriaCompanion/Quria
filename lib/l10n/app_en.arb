@@ -112,6 +112,7 @@
     "mod_equip": "Equip a mod",
     "unknown": "Unknown",
     "no_characters": "You do not own any characters on this platform, please choose a different one",
+    "build_character_not_available": "You do not own the character of this build, please choose a different build",
     "close": "Close",
     "see_all": "See all",
     "manifest_deleted": "The manifest has been deleted",

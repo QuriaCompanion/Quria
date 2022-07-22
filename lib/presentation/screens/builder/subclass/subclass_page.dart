@@ -53,6 +53,7 @@ class _SubclassPageState extends State<SubclassPage> {
                   );
           },
         ),
+        previousRoute: routeFilter,
       );
     } else {
       return const ScaffoldDesktop(currentRoute: routeExotic, body: BuilderDesktopView());
