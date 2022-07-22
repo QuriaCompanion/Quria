@@ -219,6 +219,21 @@ class SettingsMobileView extends StatelessWidget {
               leading: const Icon(Icons.handshake, size: 35, color: Colors.white),
               title: textBodyHighRegular('Hall of Fame', utf8: false),
             ),
+            if (vw(context) > 1000) divider,
+            if (vw(context) > 1000)
+              ListTile(
+                onTap: () {
+                  DisplayService.isProfileUp = false;
+                  ProfileService.reset(context);
+                  AccountService.reset();
+                  Navigator.pushNamed(context, routeLogin);
+                },
+                leading: SvgPicture.asset(
+                  "assets/icons/Off.svg",
+                  height: 35,
+                ),
+                title: textBodyHighRegular(AppLocalizations.of(context)!.logout, utf8: false),
+              ),
           ],
         ),
         SizedBox(

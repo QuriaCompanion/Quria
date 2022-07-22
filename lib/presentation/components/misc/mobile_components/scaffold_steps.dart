@@ -12,10 +12,12 @@ class ScaffoldSteps<T> extends StatelessWidget {
   final Widget body;
   final String route;
   final String? previousRoute;
+  final VoidCallback? onNext;
   const ScaffoldSteps({
     required this.body,
     required this.route,
     this.previousRoute,
+    this.onNext,
     Key? key,
   }) : super(key: key);
 
@@ -83,7 +85,10 @@ class ScaffoldSteps<T> extends StatelessWidget {
                 ),
                 width: 200,
                 height: 56,
-                onPressed: () => Navigator.pushNamed(context, route)),
+                onPressed: () {
+                  onNext?.call();
+                  Navigator.pushNamed(context, route);
+                }),
           ],
         ),
       ),

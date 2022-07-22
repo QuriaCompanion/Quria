@@ -61,6 +61,10 @@ class _SubclassPageState extends State<SubclassPage> {
                   );
           },
         ),
+        onNext: () {
+          Provider.of<BuilderSubclassProvider>(context, listen: false).reset();
+          Provider.of<BuilderSubclassModsProvider>(context, listen: false).reset();
+        },
         previousRoute: routeFilter,
       );
     } else {
