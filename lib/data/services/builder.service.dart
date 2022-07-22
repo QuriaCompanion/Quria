@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
-import 'package:bungie_api/models/destiny_item_tier_type_definition.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/enums/item_state.dart';

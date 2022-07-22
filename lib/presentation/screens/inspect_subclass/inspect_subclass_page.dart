@@ -8,11 +8,9 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/inspectSubclassHelper.model.dart';
-import 'package:quria/data/models/helpers/socketsHelper.model.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
-import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
@@ -20,7 +18,7 @@ import 'package:quria/presentation/components/misc/mobile_components/scaffold_bu
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_mobile_view.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/talent_grid_mobile_view.dart';
 
-class InspectSubclassPage extends StatefulWidget {
+class InspectSubclassPage extends StatelessWidget {
   final InspectSubclassHelper data;
   const InspectSubclassPage({
     required this.data,
@@ -28,25 +26,18 @@ class InspectSubclassPage extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<InspectSubclassPage> createState() => _InspectSubclassPageState();
-}
-
-class _InspectSubclassPageState extends State<InspectSubclassPage> {
-  late SocketsHelper sockets;
-  @override
-  void initState() {
-    super.initState();
-    sockets = DisplayService.getSubclassMods(context, widget.data.subclassId);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final sockets = Provider.of<ItemProvider>(context).getItemSockets(data.subclassId);
+    final displayedSockets =
+        sockets.map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e.plugHash]!).toList();
+    final def = ManifestService.manifestParsed.destinyInventoryItemDefinition[
+        Provider.of<InventoryProvider>(context).getItemByInstanceId(data.subclassId)?.itemHash];
     if (vw(context) < 1000) {
       return ScaffoldBurgerAndBackOption(
         width: vw(context),
         body: Builder(builder: (context) {
           return Builder(builder: (context) {
-            if (widget.data.isNewSubclass) {
+            if (data.isNewSubclass) {
               return SubclassModsMobileView(
                 width: vw(context),
                 onChange: (mods, index) async {
@@ -63,12 +54,12 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
                       });
                   await BungieApiService()
                       .insertSocketPlugFree(
-                    widget.data.subclassId,
+                    data.subclassId,
                     mods[index].hash!,
                     index,
-                    widget.data.characterId,
+                    data.characterId,
                   )
-                      .then((_) {
+                      .then((value) {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: textBodyMedium(
@@ -78,6 +69,8 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
                       ),
                       backgroundColor: Colors.green,
                     ));
+                    Provider.of<ItemProvider>(context, listen: false)
+                        .setNewSockets(data.subclassId, value?.response?.item?.sockets?.data?.sockets ?? []);
                   }, onError: (_) {
                     Navigator.pop(context);
                     showDialog(
@@ -87,14 +80,14 @@ class _InspectSubclassPageState extends State<InspectSubclassPage> {
                         });
                   });
                 },
-                displayedSockets: sockets.displayedSockets,
-                subclass: sockets.def!,
+                displayedSockets: displayedSockets,
+                subclass: def!,
               );
             }
             DestinyItemTalentGridComponent talentGridComponent =
-                Provider.of<ItemProvider>(context).getTalentGrid(widget.data.subclassId)!;
+                Provider.of<ItemProvider>(context).getTalentGrid(data.subclassId)!;
             DestinyItemComponent itemComponent =
-                Provider.of<InventoryProvider>(context).getItemByInstanceId(widget.data.subclassId)!;
+                Provider.of<InventoryProvider>(context).getItemByInstanceId(data.subclassId)!;
             DestinyInventoryItemDefinition definition =
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[itemComponent.itemHash]!;
             return TalentGridMobileView(
