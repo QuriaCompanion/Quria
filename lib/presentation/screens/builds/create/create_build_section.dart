@@ -85,6 +85,14 @@ class CreateBuildSection extends StatelessWidget {
                   } else {
                     Provider.of<CreateBuildProvider>(context, listen: false).addItem(newItem);
                   }
+                  if (ManifestService.manifestParsed.destinyInventoryItemDefinition[
+                          Provider.of<InventoryProvider>(context, listen: false).getSuperHashForSubclass(
+                              context,
+                              Provider.of<InventoryProvider>(context, listen: false)
+                                  .getItemByInstanceId(subclass.itemInstanceId!)!)] ==
+                      null) {
+                    return;
+                  }
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -173,6 +181,14 @@ class CreateBuildSection extends StatelessWidget {
                   Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem);
                 } else {
                   Provider.of<CreateBuildProvider>(context, listen: false).addItem(newItem);
+                }
+                if (ManifestService.manifestParsed.destinyInventoryItemDefinition[
+                        Provider.of<InventoryProvider>(context, listen: false).getSuperHashForSubclass(
+                            context,
+                            Provider.of<InventoryProvider>(context, listen: false)
+                                .getItemByInstanceId(subclass.itemInstanceId!)!)] ==
+                    null) {
+                  return;
                 }
                 showMaterialModalBottomSheet(
                   backgroundColor: Colors.transparent,
