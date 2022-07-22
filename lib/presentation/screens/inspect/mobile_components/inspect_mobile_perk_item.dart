@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
@@ -77,7 +79,7 @@ class _InspectMobilePerkItemState extends State<InspectMobilePerkItem> {
               });
         },
         onLongPress: () {
-          if (widget.instanceId != null) {
+          if (widget.instanceId != null && !selected) {
             setState(() {
               loading = true;
             });
