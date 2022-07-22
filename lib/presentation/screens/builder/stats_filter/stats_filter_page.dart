@@ -21,6 +21,7 @@ class _StatsFilterPageState extends State<StatsFilterPage> {
       return const ScaffoldSteps(
         route: routeSubclass,
         body: StatsFilterMobileView(),
+        previousRoute: routeExotic,
       );
     } else {
       return const ScaffoldDesktop(currentRoute: routeExotic, body: BuilderDesktopView());

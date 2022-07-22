@@ -8,9 +8,11 @@ import 'package:quria/presentation/components/misc/mobile_components/burger.dart
 class ScaffoldBurgerAndBackOption extends StatelessWidget {
   final Widget body;
   final double width;
+  final String? previousRoute;
   const ScaffoldBurgerAndBackOption({
     required this.body,
     required this.width,
+    this.previousRoute,
     Key? key,
   }) : super(key: key);
 
@@ -59,7 +61,7 @@ class ScaffoldBurgerAndBackOption extends StatelessWidget {
         child: FloatingActionButton(
           backgroundColor: Colors.white,
           onPressed: () {
-            Navigator.pop(context);
+            previousRoute == null ? Navigator.pop(context) : Navigator.pushNamed(context, previousRoute!);
           },
           child: const Icon(
             Icons.chevron_left_rounded,

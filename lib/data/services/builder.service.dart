@@ -14,6 +14,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
@@ -105,6 +106,29 @@ class BuilderService {
   }
 
   void useForeignBuild(BuildContext context, BuildStored foreignBuild) {
+    List<DestinyCharacterComponent> characters = Provider.of<CharactersProvider>(context, listen: false).characters;
+    int? characterIndex;
+    for (int index = 0; index < characters.length; index++) {
+      if (characters[index].classType == foreignBuild.className) {
+        characterIndex = index;
+        Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(index);
+      }
+    }
+
+    if (characterIndex != null) {
+      Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(characterIndex);
+    } else {
+      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+        content: textBodyMedium(
+          AppLocalizations.of(context)!.build_character_not_available,
+          utf8: false,
+          color: Colors.white,
+        ),
+        backgroundColor: crucible,
+      ));
+      return;
+    }
+
     Provider.of<BuilderExoticProvider>(context, listen: false)
         .setExoticHash(ManifestService.manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.exoticHash]);
     final List<ModSlots> armorMods = [
