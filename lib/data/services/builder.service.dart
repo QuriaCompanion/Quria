@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/enums/tier_type.dart';
@@ -13,6 +14,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/constants/styles.dart';
+import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/models/Item.model.dart';
@@ -39,15 +42,17 @@ import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:http/http.dart' as http;
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
+import 'package:quria/presentation/var/keys.dart';
 import 'package:quria/presentation/var/routes.dart';
+import 'package:universal_io/io.dart';
 
 class BuilderService {
   final String _backendURl = 'https://quria-companion-back-end.herokuapp.com/';
   BuilderHelper buildPreparation(BuildContext context) {
-    DestinyCharacterComponent character =
-        Provider.of<CharactersProvider>(context, listen: false).currentCharacter as DestinyCharacterComponent;
+    DestinyCharacterComponent character = Provider.of<CharactersProvider>(context, listen: false).currentCharacter!;
     bool includeSunset = Provider.of<BuilderCustomInfoProvider>(context, listen: false).includeSunset;
 
     List<DestinyItemComponent> armors = Provider.of<InventoryProvider>(context, listen: false)
@@ -67,8 +72,7 @@ class BuilderService {
 
     DestinyInventoryItemDefinition? exotic = Provider.of<BuilderExoticProvider>(context, listen: false).exotic;
 
-    DestinyItemComponent classItem =
-        Provider.of<BuilderCustomInfoProvider>(context, listen: false).classItem as DestinyItemComponent;
+    DestinyItemComponent classItem = Provider.of<BuilderCustomInfoProvider>(context, listen: false).classItem!;
 
     Map<String, DestinyItemSocketsComponent> sockets = Provider.of<ItemProvider>(context, listen: false).sockets;
 
@@ -86,7 +90,7 @@ class BuilderService {
     );
   }
 
-  Future<void> createBuild(BuildContext context, String name) async {
+  Future<void> createBuild(BuildContext context, String name, {Preset? preset}) async {
     final build = Provider.of<CreateBuildProvider>(context, listen: false).items;
 
     await http.post(Uri.parse("${_backendURl}build"),
@@ -97,77 +101,132 @@ class BuilderService {
           "items": build.map((e) => e.toJson()).toList(),
           "usedTimes": 0,
           "className": Provider.of<CharactersProvider>(context, listen: false).currentCharacter?.classType?.value,
-          "preset": calculatePreset(context, data: build).toJson(),
+          "preset": preset != null ? preset.toJson() : calculatePreset(context, data: build).toJson(),
         }));
     return;
   }
 
-  void useForeignBuild(BuildContext context, Preset preset) {
-    Provider.of<BuilderExoticProvider>(context, listen: false)
-        .setExoticHash(ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.exoticHash]);
-    final List<ModSlots> armorMods = [
-      // helmet
-      ModSlots(
-          title: AppLocalizations.of(context)!.helmet,
-          elementSocketEntries:
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[3473581026]!.sockets!.socketEntries!,
-          items: [
-            null,
-            for (int index = 0; index < preset.armorMods["helmet"]!.length; index++)
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.armorMods["helmet"]?[index]],
-          ]),
-      // gauntlets
-      ModSlots(
-          title: AppLocalizations.of(context)!.gauntlets,
-          elementSocketEntries:
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[2771648715]!.sockets!.socketEntries!,
-          items: [
-            null,
-            for (int index = 0; index < preset.armorMods["gauntlets"]!.length; index++)
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.armorMods["gauntlets"]?[index]],
-          ]),
-      // chest
-      ModSlots(
-          title: AppLocalizations.of(context)!.chest,
-          elementSocketEntries:
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[549825413]!.sockets!.socketEntries!,
-          items: [
-            null,
-            for (int index = 0; index < preset.armorMods["chest"]!.length; index++)
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.armorMods["chest"]?[index]],
-          ]),
-      // legs
-      ModSlots(
-          title: AppLocalizations.of(context)!.legs,
-          elementSocketEntries:
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[4287863773]!.sockets!.socketEntries!,
-          items: [
-            null,
-            for (int index = 0; index < preset.armorMods["leg"]!.length; index++)
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.armorMods["leg"]?[index]],
-          ]),
-      // class items
-      ModSlots(
-          title: AppLocalizations.of(context)!.builder_mods_title,
-          elementSocketEntries:
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[3500810712]!.sockets!.socketEntries!,
-          items: [
-            null,
-            for (int index = 0; index < preset.armorMods["classItem"]!.length; index++)
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.armorMods["classItem"]?[index]],
-          ]),
-    ];
-    Provider.of<BuilderModsProvider>(context, listen: false).setMods(armorMods);
-    final filters = [
-      for (int value in preset.statOrder)
-        FilterHelper(name: fromIntToName(context, value), icon: fromIntToIcon(value), value: value),
-    ];
-    Provider.of<BuilderStatsFilterProvider>(context, listen: false).setNewStatsFilters(filters);
-    Provider.of<BuilderSubclassProvider>(context, listen: false)
-        .setSubclass(null, ManifestService.manifestParsed.destinyInventoryItemDefinition[preset.subclassHash]);
-    Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(
-        preset.subclassMods.map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!).toList());
-    Navigator.pushNamed(context, routeClassItemChoice);
+  void useForeignBuild(BuildContext context, BuildStored foreignBuild) async {
+    List<DestinyCharacterComponent> characters = Provider.of<CharactersProvider>(context, listen: false).characters;
+    int? characterIndex;
+    for (int index = 0; index < characters.length; index++) {
+      if (characters[index].classType == foreignBuild.className) {
+        characterIndex = index;
+        Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(index);
+      }
+    }
+
+    if (characterIndex != null) {
+      Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(characterIndex);
+    } else {
+      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+        content: textBodyMedium(
+          AppLocalizations.of(context)!.build_character_not_available,
+          utf8: false,
+          color: Colors.white,
+        ),
+        backgroundColor: crucible,
+      ));
+      return;
+    }
+
+    await DisplayService.getExotics(
+            context, Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.classType!)
+        .then((exotics) {
+      final exoticItem = foreignBuild.items.firstWhereOrNull((element) {
+        return InventoryBucket.armorBucketHashes.contains(element.bucketHash) &&
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.inventory?.tierType ==
+                TierType.Exotic;
+      });
+
+      if (!exotics.contains(ManifestService.manifestParsed.destinyInventoryItemDefinition[exoticItem?.itemHash])) {
+        ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+          content: textBodyMedium(
+            AppLocalizations.of(context)!.build_no_exotic,
+            utf8: false,
+            color: Colors.white,
+          ),
+          backgroundColor: crucible,
+        ));
+        return;
+      }
+
+      Provider.of<BuilderExoticProvider>(context, listen: false).setExoticHash(
+          ManifestService.manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.exoticHash]);
+      final List<ModSlots> armorMods = [
+        // helmet
+        ModSlots(
+            title: AppLocalizations.of(context)!.helmet,
+            elementSocketEntries:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[3473581026]!.sockets!.socketEntries!,
+            items: [
+              null,
+              for (int index = 0; index < foreignBuild.preset!.armorMods["helmet"]!.length; index++)
+                ManifestService
+                    .manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.armorMods["helmet"]?[index]],
+            ]),
+        // gauntlets
+        ModSlots(
+            title: AppLocalizations.of(context)!.gauntlets,
+            elementSocketEntries:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[2771648715]!.sockets!.socketEntries!,
+            items: [
+              null,
+              for (int index = 0; index < foreignBuild.preset!.armorMods["gauntlets"]!.length; index++)
+                ManifestService
+                    .manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.armorMods["gauntlets"]?[index]],
+            ]),
+        // chest
+        ModSlots(
+            title: AppLocalizations.of(context)!.chest,
+            elementSocketEntries:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[549825413]!.sockets!.socketEntries!,
+            items: [
+              null,
+              for (int index = 0; index < foreignBuild.preset!.armorMods["chest"]!.length; index++)
+                ManifestService
+                    .manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.armorMods["chest"]?[index]],
+            ]),
+        // legs
+        ModSlots(
+            title: AppLocalizations.of(context)!.legs,
+            elementSocketEntries:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[4287863773]!.sockets!.socketEntries!,
+            items: [
+              null,
+              for (int index = 0; index < foreignBuild.preset!.armorMods["leg"]!.length; index++)
+                ManifestService
+                    .manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.armorMods["leg"]?[index]],
+            ]),
+        // class items
+        ModSlots(
+            title: AppLocalizations.of(context)!.class_item,
+            elementSocketEntries:
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[3500810712]!.sockets!.socketEntries!,
+            items: [
+              null,
+              for (int index = 0; index < foreignBuild.preset!.armorMods["classItem"]!.length; index++)
+                ManifestService
+                    .manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.armorMods["classItem"]?[index]],
+            ]),
+      ];
+      Provider.of<BuilderModsProvider>(context, listen: false).setMods(armorMods);
+      final filters = [
+        for (int value in foreignBuild.preset!.statOrder)
+          FilterHelper(name: fromIntToName(context, value), icon: fromIntToIcon(value), value: value),
+      ];
+      Provider.of<BuilderStatsFilterProvider>(context, listen: false).setNewStatsFilters(filters);
+      Provider.of<BuilderSubclassProvider>(context, listen: false).setSubclass(
+        foreignBuild.items.firstWhereOrNull((element) => element.bucketHash == InventoryBucket.subclass)?.instanceId,
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.subclassHash],
+      );
+      Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(
+        foreignBuild.preset!.subclassMods
+            .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)
+            .toList(),
+      );
+      Navigator.pushNamed(context, routeClassItemChoice);
+    });
   }
 
   Map<String, int> statCalculator(BuildContext context, {required DestinyItemComponent item}) {
@@ -291,6 +350,7 @@ class BuilderService {
   }
 
   void redirectToBuildSaving(BuildContext context, {required Build data}) {
+    Provider.of<CreateBuildProvider>(context, listen: false).clear();
     final items = changeBuildToListOfItems(context, data: data);
     Provider.of<CreateBuildProvider>(context, listen: false).setBuild(items);
     Navigator.pushNamed(context, routeCreateBuild);
@@ -298,8 +358,12 @@ class BuilderService {
 
   Preset calculatePreset(BuildContext context, {required List<Item> data}) {
     List<String> stats = [];
-    final mapStats = BuilderService().buildStatCalculator(context, items: data);
-    stats = mapStats.keys.toList(growable: false)..sort((k1, k2) => mapStats[k2]!.compareTo(mapStats[k1]!));
+    List<int> filters =
+        Provider.of<BuilderStatsFilterProvider>(context, listen: false).filters.map((e) => e.value).toList();
+    if (filters.isEmpty) {
+      final mapStats = BuilderService().buildStatCalculator(context, items: data);
+      stats = mapStats.keys.toList(growable: false)..sort((k1, k2) => mapStats[k2]!.compareTo(mapStats[k1]!));
+    }
     final armor = data.where((element) =>
         ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemType ==
         DestinyItemType.Armor);
@@ -322,7 +386,7 @@ class BuilderService {
         DestinyItemSubType.LegArmor);
     final classItem = armor.firstWhereOrNull((element) =>
         ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.itemSubType ==
-        DestinyItemSubType.HelmetArmor);
+        DestinyItemSubType.ClassArmor);
     Map<String, List<int>> armorMods = {
       "helmet": helmetItem != null ? helmetItem.mods.sublist(1).toList() : [],
       "gauntlets": gauntletItem != null ? gauntletItem.mods.sublist(1).toList() : [],
@@ -335,7 +399,8 @@ class BuilderService {
         DestinyItemType.Subclass);
     List<int> subclassMods = subclass != null ? subclass.mods : [];
     return Preset(
-        statOrder: stats.map((e) => int.parse(e)).toList(),
+        statOrder: filters.isEmpty ? stats.map((e) => int.parse(e)).toList() : filters,
+        statWeighing: Provider.of<BuilderStatsFilterProvider>(context, listen: false).statWeighing,
         exoticHash: exoticHash,
         armorMods: armorMods,
         subclassMods: subclassMods,
@@ -370,10 +435,22 @@ class BuilderService {
     return [];
   }
 
-  Future<void> shareBuild(String id) async {
+  Future<void> shareBuild(BuildContext context, {required String id}) async {
+    if (kIsWeb || Platform.isWindows) {
+      Clipboard.setData(ClipboardData(text: "https://quriacompanion.app/build?buildId=$id"));
+      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+        content: textBodyMedium(
+          AppLocalizations.of(context)!.build_copy,
+          utf8: false,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.green,
+      ));
+      return;
+    }
     await FlutterShare.share(
         title: 'QuriaCompanion',
-        text: 'Check out my new build: ',
+        text: AppLocalizations.of(context)!.build_share_text,
         linkUrl: 'https://quriacompanion.app/build?buildId=$id',
         chooserTitle: 'Open Quria Companion');
   }

@@ -26,6 +26,7 @@ class ModsPage extends StatelessWidget {
             Provider.of<BuilderModsProvider>(context, listen: false).setMods(newMods);
           },
         ),
+        previousRoute: routeSubclass,
       );
     } else {
       return const ScaffoldDesktop(currentRoute: routeExotic, body: BuilderDesktopView());

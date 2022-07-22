@@ -1,4 +1,3 @@
-import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +5,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:collection/collection.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:collection/collection.dart';
 import 'package:quria/data/providers/inspect/armor_mod_modal_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -15,13 +14,13 @@ import 'package:quria/presentation/screens/builder/subclass_mods/mobile_componen
 import 'package:quria/presentation/screens/inspect/components/armor_mod_desktop_modal.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
-class SubclassModsMobileView extends StatefulWidget {
-  final List<DestinyItemSocketState>? sockets;
+class SubclassModsMobileView extends StatelessWidget {
+  final List<DestinyInventoryItemDefinition> displayedSockets;
   final DestinyInventoryItemDefinition subclass;
   final Future<void> Function(List<DestinyInventoryItemDefinition>, int) onChange;
   final double width;
   const SubclassModsMobileView({
-    required this.sockets,
+    required this.displayedSockets,
     required this.subclass,
     required this.onChange,
     Key? key,
@@ -29,40 +28,23 @@ class SubclassModsMobileView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<SubclassModsMobileView> createState() => _SubclassModsMobileViewState();
-}
-
-class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
-  late final List<DestinyInventoryItemDefinition> displayedSockets;
-  int aspectOne = 0;
-  int aspectTwo = 0;
-  @override
-  void initState() {
-    super.initState();
-    displayedSockets =
-        widget.sockets!.map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e.plugHash]!).toList();
-
-    if (displayedSockets.isNotEmpty) {
-      aspectOne = displayedSockets[5].investmentStats?.firstWhereIndexedOrNull((i, _) {
-            return i == 0;
-          })?.value ??
-          0;
-      aspectTwo = displayedSockets[6].investmentStats?.firstWhereIndexedOrNull((i, _) {
-            return i == 0;
-          })?.value ??
-          0;
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
+    int aspectOne = displayedSockets[5].investmentStats?.firstWhereIndexedOrNull((i, _) {
+          return i == 0;
+        })?.value ??
+        0;
+    int aspectTwo = displayedSockets[6].investmentStats?.firstWhereIndexedOrNull((i, _) {
+          return i == 0;
+        })?.value ??
+        0;
+
     return Container(
       color: black,
       child: Column(
         children: [
           mobileHeader(context,
-              image: NetworkImage(DestinyData.bungieLink + widget.subclass.screenshot!),
-              width: widget.width,
+              image: NetworkImage(DestinyData.bungieLink + subclass.screenshot!),
+              width: width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,66 +80,51 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                   mobileSectionInverted(context,
                       title: displayedSockets[i].itemTypeDisplayName ?? "error",
                       child: SubclassMobileItems(
-                          width: widget.width,
+                          width: width,
                           item: displayedSockets[i],
                           onSocketChange: (newSocket) {
                             if (!displayedSockets.contains(newSocket)) {
-                              widget
-                                  .onChange(
+                              displayedSockets[i] = newSocket;
+                              onChange(
                                 displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
-                                6,
-                              )
-                                  .then((_) {
-                                setState(() {
-                                  displayedSockets[i] = newSocket;
-                                });
-                              }, onError: (_) => null);
+                                i,
+                              );
                             }
                           },
-                          plugSetHash: widget.subclass.sockets?.socketEntries?[i].reusablePlugSetHash)),
+                          plugSetHash: subclass.sockets?.socketEntries?[i].reusablePlugSetHash)),
                 mobileSectionInverted(context,
                     title: displayedSockets[5].itemTypeDisplayName ?? "Aspects",
                     child: Column(
                       children: [
                         SubclassMobileItems(
-                            width: widget.width,
+                            width: width,
                             item: displayedSockets[5],
                             onSocketChange: (newSocket) {
                               if (!displayedSockets.contains(newSocket)) {
-                                widget
-                                    .onChange(
+                                displayedSockets[5] = newSocket;
+                                onChange(
                                   displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
                                   5,
-                                )
-                                    .then((_) {
-                                  setState(() {
-                                    displayedSockets[5] = newSocket;
-                                  });
-                                }, onError: (_) => null);
+                                );
                               }
                             },
-                            plugSetHash: widget.subclass.sockets!.socketEntries![5].reusablePlugSetHash!),
+                            plugSetHash: subclass.sockets!.socketEntries![5].reusablePlugSetHash!),
                         SizedBox(
                           height: globalPadding(context) / 2,
                         ),
                         SubclassMobileItems(
-                            width: widget.width,
+                            width: width,
                             item: displayedSockets[6],
                             onSocketChange: (newSocket) {
                               if (!displayedSockets.contains(newSocket)) {
-                                widget
-                                    .onChange(
+                                displayedSockets[6] = newSocket;
+                                onChange(
                                   displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
                                   6,
-                                )
-                                    .then((_) {
-                                  setState(() {
-                                    displayedSockets[6] = newSocket;
-                                  });
-                                }, onError: (_) => null);
+                                );
                               }
                             },
-                            plugSetHash: widget.subclass.sockets!.socketEntries![6].reusablePlugSetHash!),
+                            plugSetHash: subclass.sockets!.socketEntries![6].reusablePlugSetHash!),
                       ],
                     )),
                 mobileSectionInverted(context,
@@ -169,31 +136,25 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                             padding: i != 4 ? EdgeInsets.only(right: globalPadding(context)) : EdgeInsets.zero,
                             child: InkWell(
                               onTap: () {
-                                if (widget.width == vw(context)) {
+                                if (width == vw(context)) {
                                   showMaterialModalBottomSheet(
                                       backgroundColor: Colors.transparent,
                                       expand: true,
                                       context: context,
                                       builder: (context) {
                                         return ArmorModsModal(
-                                          width: widget.width,
+                                          width: width,
                                           socket: displayedSockets[7 + i],
-                                          plugSetsHash:
-                                              widget.subclass.sockets!.socketEntries![7 + i].reusablePlugSetHash!,
+                                          plugSetsHash: subclass.sockets!.socketEntries![7 + i].reusablePlugSetHash!,
                                           onSocketChange: (itemHash) {
                                             if (!displayedSockets.contains(ManifestService
-                                                .manifestParsed.destinyInventoryItemDefinition[itemHash]!)) {
-                                              widget
-                                                  .onChange(
+                                                .manifestParsed.destinyInventoryItemDefinition[itemHash])) {
+                                              displayedSockets[7 + i] = ManifestService
+                                                  .manifestParsed.destinyInventoryItemDefinition[itemHash]!;
+                                              onChange(
                                                 displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
-                                                6,
-                                              )
-                                                  .then((_) {
-                                                setState(() {
-                                                  displayedSockets[7 + i] = ManifestService
-                                                      .manifestParsed.destinyInventoryItemDefinition[itemHash]!;
-                                                });
-                                              }, onError: (_) => null);
+                                                7 + i,
+                                              );
                                             }
                                           },
                                         );
@@ -210,21 +171,16 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                                             width: vw(context) * 0.4,
                                             child: ArmorModDesktopModal(
                                               plugSetsHash:
-                                                  widget.subclass.sockets!.socketEntries![7 + i].reusablePlugSetHash!,
+                                                  subclass.sockets!.socketEntries![7 + i].reusablePlugSetHash!,
                                               onSocketChange: (itemHash) async {
                                                 if (!displayedSockets.contains(ManifestService
                                                     .manifestParsed.destinyInventoryItemDefinition[itemHash]!)) {
-                                                  widget
-                                                      .onChange(
+                                                  displayedSockets[7 + i] = ManifestService
+                                                      .manifestParsed.destinyInventoryItemDefinition[itemHash]!;
+                                                  onChange(
                                                     displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
-                                                    6,
-                                                  )
-                                                      .then((_) {
-                                                    setState(() {
-                                                      displayedSockets[7 + i] = ManifestService
-                                                          .manifestParsed.destinyInventoryItemDefinition[itemHash]!;
-                                                    });
-                                                  }, onError: (_) => null);
+                                                    7 + i,
+                                                  );
                                                 }
                                               },
                                             )),
@@ -233,7 +189,7 @@ class _SubclassModsMobileViewState extends State<SubclassModsMobileView> {
                               },
                               child: pictureBordered(
                                 image: DestinyData.bungieLink + displayedSockets[7 + i].displayProperties!.icon!,
-                                size: widget.width == vw(context) ? itemSize(context, widget.width) : 80,
+                                size: width == vw(context) ? itemSize(context, width) : 80,
                               ),
                             ),
                           ),

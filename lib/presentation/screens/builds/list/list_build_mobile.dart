@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
+import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
 import 'package:quria/presentation/screens/builds/list/build_card.dart';
@@ -42,6 +43,7 @@ class ListBuildMobile extends StatelessWidget {
                 InkWell(
                     onTap: () {
                       Provider.of<CreateBuildProvider>(context, listen: false).clear();
+                      Provider.of<BuilderStatsFilterProvider>(context, listen: false).reset();
                       Navigator.pushNamed(context, routeCreateBuild);
                     },
                     child: MobileNavItem(

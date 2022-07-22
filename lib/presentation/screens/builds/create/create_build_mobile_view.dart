@@ -103,7 +103,7 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                         await BuilderService().updateBuild(context, _controller.text).then((value) {
                           ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                             content: textBodyMedium(
-                              AppLocalizations.of(context)!.build_delete_success,
+                              AppLocalizations.of(context)!.build_update_success,
                               utf8: false,
                               color: Colors.white,
                             ),
@@ -116,7 +116,7 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                         await BuilderService().createBuild(context, _controller.text).then((value) {
                           ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                             content: textBodyMedium(
-                              AppLocalizations.of(context)!.build_delete_success,
+                              AppLocalizations.of(context)!.build_created_success,
                               utf8: false,
                               color: Colors.white,
                             ),

@@ -5,10 +5,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/Item.model.dart';
-import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
-import 'package:quria/data/models/ArmorMods.model.dart';
-import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
@@ -185,103 +182,6 @@ class BungieActionsService {
       for (int i = 0; i < subclass.mods.length; i++) {
         try {
           await api.insertSocketPlugFree(subclass.instanceId, subclass.mods[i], i, characterId);
-        } catch (e) {
-          continue;
-        }
-      }
-    }
-  }
-
-  Future<void> equipBuild(
-    BuildContext context, {
-    required Build build,
-    required String characterId,
-    required List<ModSlots> mods,
-    required List<DestinyInventoryItemDefinition> subclassMods,
-    String? subclassId,
-  }) async {
-    List<String> itemsIds = [];
-    List<List<int?>> socketsHashes = [];
-    List<int?> subclassSocketsHashes = [];
-    List<DestinyItemComponent> characterInventory = [];
-    characterInventory
-        .addAll(Provider.of<InventoryProvider>(context, listen: false).getCharacterEquipment(characterId));
-    characterInventory
-        .addAll(Provider.of<InventoryProvider>(context, listen: false).getCharacterInventory(characterId));
-
-    if (subclassId != null) {
-      itemsIds.add(subclassId);
-      if (subclassMods.isNotEmpty) {
-        subclassSocketsHashes.addAll((Provider.of<ItemProvider>(context, listen: false).getItemSockets(subclassId))
-            .map((e) => e.plugHash)
-            .toList());
-      }
-    }
-    // transfer all items to character
-    for (int i = 0; i < build.equipement.length; i++) {
-      itemsIds.add(build.equipement[i].itemInstanceId);
-      socketsHashes.add(
-          (Provider.of<ItemProvider>(context, listen: false).getItemSockets(build.equipement[i].itemInstanceId))
-              .map((e) => e.plugHash)
-              .toList());
-      if (!characterInventory.map((e) => e.itemInstanceId).contains(build.equipement[i].itemInstanceId)) {
-        await transferItem(
-          context,
-          build.equipement[i].itemInstanceId,
-          characterId,
-          itemHash: build.equipement[i].hash,
-          stackSize: 1,
-        );
-      }
-    }
-    // equip all items
-    await api.equipItems(itemsIds, characterId).then((value) {
-      for (final id in itemsIds) {
-        Provider.of<InventoryProvider>(context, listen: false).moveItem(id, characterId, false);
-      }
-    }, onError: (_) => null);
-
-    // remove all mods
-    // TODO: what if armor has 5 slots?
-    for (int i = 0; i < 5; i++) {
-      for (int index = 0; index < 4; index++) {
-        try {
-          int hash = ManifestService.manifestParsed.destinyInventoryItemDefinition[build.equipement[i].hash]!.sockets!
-              .socketEntries![index].singleInitialItemHash!;
-          if (socketsHashes[i][index] != hash && socketsHashes[i][index] != mods[i].items[index]?.hash) {
-            await api.insertSocketPlugFree(build.equipement[i].itemInstanceId, hash, index, characterId);
-          }
-        } catch (e) {
-          continue;
-        }
-      }
-    }
-    for (int subclassIndex = 0; subclassIndex < subclassMods.length; subclassIndex++) {
-      try {
-        if (subclassMods[subclassIndex].hash != subclassSocketsHashes[subclassIndex]) {
-          await api.insertSocketPlugFree(subclassId!, subclassMods[subclassIndex].hash!, subclassIndex, characterId);
-        }
-      } catch (e) {
-        continue;
-      }
-    }
-
-    // add new mods
-    for (int i = 0; i < 5; i++) {
-      try {
-        if (socketsHashes[i][0] != build.equipement[i].mod!.hash!) {
-          api.insertSocketPlugFree(
-              build.equipement[i].itemInstanceId[i], build.equipement[i].mod!.hash!, 0, characterId);
-        }
-      } catch (e) {
-        continue;
-      }
-      for (int index = 1; index < 5; index++) {
-        try {
-          if (socketsHashes[i][index] != mods[i].items[index]?.hash) {
-            api.insertSocketPlugFree(
-                build.equipement[i].itemInstanceId[i], mods[i].items[index]!.hash!, index, characterId);
-          }
         } catch (e) {
           continue;
         }

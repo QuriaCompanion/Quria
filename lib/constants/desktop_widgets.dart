@@ -1,12 +1,9 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
-import 'package:quria/data/providers/builder/builder_mods_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
-import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_build_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
@@ -92,6 +89,7 @@ Widget desktopRegularModal(BuildContext context, {required Widget child}) {
           child: Column(
             children: [
               ModalButton(
+                text: AppLocalizations.of(context)!.close,
                 callback: () {
                   Navigator.pop(context);
                 },
@@ -129,6 +127,7 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
           child: Column(
             children: [
               ModalButton(
+                text: AppLocalizations.of(context)!.close,
                 callback: () {
                   Navigator.pop(context);
                 },
@@ -138,15 +137,10 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
                 height: vw(context) * 0.02,
               ),
               ModalButton(
+                text: AppLocalizations.of(context)!.equip,
                 callback: () {
-                  BungieActionsService().equipBuild(
-                    context,
-                    build: data,
-                    characterId: Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
-                    mods: Provider.of<BuilderModsProvider>(context, listen: false).mods,
-                    subclassMods: Provider.of<BuilderSubclassModsProvider>(context, listen: false).subclassMods,
-                    subclassId: Provider.of<BuilderSubclassProvider>(context, listen: false).subclassId,
-                  );
+                  final items = BuilderService().changeBuildToListOfItems(context, data: data);
+                  BungieActionsService().equipStoredBuild(context, items: items).then((_) => Navigator.pop(context));
                 },
                 icon: 'assets/icons/equipDesktop.svg',
               ),
@@ -154,23 +148,11 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
                 height: vw(context) * 0.02,
               ),
               ModalButton(
+                text: AppLocalizations.of(context)!.save,
                 callback: () {
                   BuilderService().redirectToBuildSaving(context, data: data);
                 },
                 icon: 'assets/icons/saveDesktop.svg',
-              ),
-              SizedBox(
-                height: vw(context) * 0.02,
-              ),
-              ModalButton(
-                callback: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return const InProgressModal();
-                      });
-                },
-                icon: 'assets/icons/shareDesktop.svg',
               ),
             ],
           ),
@@ -204,6 +186,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
           child: Column(
             children: [
               ModalButton(
+                text: AppLocalizations.of(context)!.close,
                 callback: () {
                   Navigator.pop(context);
                 },
@@ -213,6 +196,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                 height: vw(context) * 0.02,
               ),
               ModalButton(
+                text: AppLocalizations.of(context)!.equip,
                 callback: () {
                   showDialog(
                       context: context,
@@ -234,6 +218,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                 height: vw(context) * 0.02,
               ),
               ModalButton(
+                text: AppLocalizations.of(context)!.transfer,
                 callback: () {
                   showDialog(
                       context: context,
@@ -255,6 +240,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                 height: vw(context) * 0.02,
               ),
               ModalButton(
+                text: AppLocalizations.of(context)!.share,
                 callback: () {
                   showDialog(
                       context: context,
@@ -270,6 +256,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                 height: vw(context) * 0.02,
               ),
               ModalButton(
+                text: AppLocalizations.of(context)!.collections,
                 callback: () {
                   Navigator.pop(context);
                   showDialog(
@@ -317,6 +304,7 @@ Widget desktopCollectionModal(BuildContext context, {required Widget child}) {
           child: Column(
             children: [
               ModalButton(
+                text: AppLocalizations.of(context)!.close,
                 callback: () {
                   Navigator.pop(context);
                 },
@@ -326,6 +314,7 @@ Widget desktopCollectionModal(BuildContext context, {required Widget child}) {
                 height: vw(context) * 0.02,
               ),
               ModalButton(
+                text: AppLocalizations.of(context)!.share,
                 callback: () {
                   showDialog(
                       context: context,

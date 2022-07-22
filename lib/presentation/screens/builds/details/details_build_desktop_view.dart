@@ -1,7 +1,6 @@
 import 'dart:math' as math;
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,18 +15,15 @@ import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/providers/details_build_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
-import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
-import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/modal_button.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
-import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
-import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_mobile_view.dart';
+import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_build_view.dart';
 import 'package:quria/presentation/screens/builds/details/details_build_mobile_actions.dart';
 import 'package:quria/presentation/screens/builds/details/details_build_section.dart';
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
@@ -98,48 +94,11 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                                         DisplayService.getSubclassMods(context, _subclass!.itemInstanceId!);
                                     return desktopRegularModal(
                                       context,
-                                      child: SubclassModsMobileView(
+                                      child: SubclassModsBuildView(
                                         width: vw(context) * 0.4,
-                                        sockets: sockets.sockets,
+                                        sockets: sockets.displayedSockets.map((e) => e.hash!).toList(),
                                         subclass: ManifestService
                                             .manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!,
-                                        onChange: (mods, i) async {
-                                          await BungieApiService()
-                                              .insertSocketPlugFree(
-                                            _subclass!.itemInstanceId!,
-                                            mods[i].hash!,
-                                            i,
-                                            Provider.of<CharactersProvider>(context, listen: false)
-                                                .currentCharacter
-                                                ?.characterId,
-                                          )
-                                              .then((value) {
-                                            Provider.of<ItemProvider>(context).setNewSockets(
-                                              _subclass!.itemInstanceId!,
-                                              value?.response?.item?.sockets?.data?.sockets ?? [],
-                                            );
-                                            ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(
-                                                content: textBodyMedium(
-                                                  AppLocalizations.of(context)!.item_equipped,
-                                                  utf8: false,
-                                                  color: Colors.white,
-                                                ),
-                                                backgroundColor: Colors.green,
-                                              ),
-                                            );
-                                          }, onError: (_) {
-                                            Navigator.pop(context);
-                                            showDialog(
-                                                context: context,
-                                                builder: (context) {
-                                                  return Center(
-                                                    child:
-                                                        SizedBox(width: vw(context) * 0.4, child: const ErrorDialog()),
-                                                  );
-                                                });
-                                          });
-                                        },
                                       ),
                                     );
                                   });
@@ -192,6 +151,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ModalButton(
+                          text: AppLocalizations.of(context)!.equip,
                           callback: () {
                             BungieActionsService().equipStoredBuild(context, items: _build.items);
                           },
@@ -199,22 +159,15 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                           icon: 'assets/icons/equipDesktop.svg',
                         ),
                         ModalButton(
+                          text: AppLocalizations.of(context)!.share,
                           callback: () {
-                            Clipboard.setData(
-                                ClipboardData(text: "https://quriacompanion.app/build?buildId=${_build.id}"));
-                            ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
-                              content: textBodyMedium(
-                                AppLocalizations.of(context)!.build_copy,
-                                utf8: false,
-                                color: Colors.white,
-                              ),
-                              backgroundColor: Colors.green,
-                            ));
+                            BuilderService().shareBuild(context, id: _build.id);
                           },
                           width: 50,
                           icon: 'assets/icons/shareDesktop.svg',
                         ),
                         ModalButton(
+                          text: AppLocalizations.of(context)!.modify,
                           callback: () {
                             Provider.of<CreateBuildProvider>(context, listen: false).modifyBuild(_build);
                             Navigator.of(context).pushNamed(routeCreateBuild);
@@ -223,6 +176,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                           icon: 'assets/icons/saveDesktop.svg',
                         ),
                         ModalButton(
+                          text: AppLocalizations.of(context)!.delete,
                           callback: () {
                             showDialog(
                                 context: context,

@@ -10,8 +10,8 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
-import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
+import 'package:quria/presentation/components/misc/page_loader.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/builder/desktop/builder_desktop_view.dart';
 import 'package:quria/presentation/screens/builder/exotic/exotic_mobile_view.dart';
@@ -44,14 +44,7 @@ class ExoticWidgetState extends State<ExoticWidget> {
       builder: ((context, AsyncSnapshot<List<DestinyInventoryItemDefinition>> snapshot) {
         if (snapshot.hasData) isLoading = false;
         if (isLoading) {
-          return Container(
-              height: vh(context),
-              width: vw(context),
-              decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.cover, image: splashBackground)),
-              child: Loader(
-                splashColor: Colors.transparent,
-                animationSize: vw(context) * 0.5,
-              ));
+          return const PageLoader();
         } else {
           if (vw(context) < 1000) {
             return Scaffold(

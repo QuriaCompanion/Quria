@@ -11,7 +11,15 @@ import 'package:quria/presentation/components/misc/rounded_button.dart';
 class ScaffoldSteps<T> extends StatelessWidget {
   final Widget body;
   final String route;
-  const ScaffoldSteps({required this.body, required this.route, Key? key}) : super(key: key);
+  final String? previousRoute;
+  final VoidCallback? onNext;
+  const ScaffoldSteps({
+    required this.body,
+    required this.route,
+    this.previousRoute,
+    this.onNext,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +69,7 @@ class ScaffoldSteps<T> extends StatelessWidget {
             FloatingActionButton(
               backgroundColor: Colors.white,
               onPressed: () {
-                Navigator.pop(context);
+                previousRoute == null ? Navigator.pop(context) : Navigator.pushNamed(context, previousRoute!);
               },
               child: const Icon(
                 Icons.chevron_left_rounded,
@@ -77,7 +85,10 @@ class ScaffoldSteps<T> extends StatelessWidget {
                 ),
                 width: 200,
                 height: 56,
-                onPressed: () => Navigator.pushNamed(context, route)),
+                onPressed: () {
+                  onNext?.call();
+                  Navigator.pushNamed(context, route);
+                }),
           ],
         ),
       ),

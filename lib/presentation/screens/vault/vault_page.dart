@@ -3,7 +3,6 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
-import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/components/misc/page_loader.dart';
 import 'package:quria/presentation/screens/profile/profile_desktop_view.dart';

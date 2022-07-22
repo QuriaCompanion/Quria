@@ -46,4 +46,9 @@ class BuilderStatsFilterProvider with ChangeNotifier {
       _filters.addAll(filters);
     }
   }
+
+  reset() {
+    _filters.clear();
+    notifyListeners();
+  }
 }

@@ -29,7 +29,7 @@ class ForeignBuildMobileActions extends StatelessWidget {
               width: width,
               onTap: () {
                 if (storeBuild.preset != null) {
-                  BuilderService().useForeignBuild(context, storeBuild.preset!);
+                  BuilderService().useForeignBuild(context, storeBuild);
                   return;
                 }
                 ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(

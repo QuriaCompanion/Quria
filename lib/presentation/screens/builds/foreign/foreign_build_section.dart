@@ -10,7 +10,6 @@ import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart'
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display_build.dart';
 import 'package:quria/presentation/screens/collection/collection_item/collection_item_mobile_view.dart';
-import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 class ForeignBuildSection extends StatelessWidget {

@@ -1,5 +1,4 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
-import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -67,6 +66,9 @@ class BuilderSubclass extends StatelessWidget {
                       }
                       Provider.of<BuilderSubclassProvider>(context, listen: false)
                           .setSubclass(subclass.itemInstanceId, subclassDef);
+                      SocketsHelper data = DisplayService.getSubclassMods(context, subclass.itemInstanceId!);
+                      Provider.of<BuilderSubclassModsProvider>(context, listen: false)
+                          .setSubclassMods(data.displayedSockets);
                     },
                     color: grey,
                     subclass: subclass,
@@ -87,21 +89,15 @@ class BuilderSubclass extends StatelessWidget {
                       context: context,
                       barrierColor: const Color.fromARGB(110, 0, 0, 0),
                       builder: (context) {
-                        SocketsHelper data = DisplayService.getSubclassMods(
-                            context, Provider.of<BuilderSubclassProvider>(context).subclassId!);
-                        List<DestinyItemSocketState> sockets = data.sockets;
+                        final displayedSockets = Provider.of<BuilderSubclassModsProvider>(context).subclassMods;
                         DestinyInventoryItemDefinition subclass =
                             Provider.of<BuilderSubclassProvider>(context).subclass!;
-                        List<DestinyInventoryItemDefinition> chosenSockets =
-                            Provider.of<BuilderSubclassModsProvider>(context).subclassMods;
-                        if (chosenSockets.isEmpty) {
-                          chosenSockets = data.displayedSockets;
-                        }
+
                         return desktopRegularModal(
                           context,
                           child: SubclassModsMobileView(
                             width: vw(context) * 0.4,
-                            sockets: sockets,
+                            displayedSockets: displayedSockets,
                             subclass: subclass,
                             onChange: (mods, i) async {
                               Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(mods);

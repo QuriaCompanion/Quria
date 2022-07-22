@@ -3,18 +3,22 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 
+import 'package:quria/data/models/StatWeighing.enum.dart';
+
 class Preset {
   final List<int> statOrder;
   final int? exoticHash;
   final int? subclassHash;
   final Map<String, List<int>> armorMods;
   final List<int> subclassMods;
+  final StatWeighing? statWeighing;
   Preset({
     required this.statOrder,
-    this.exoticHash,
-    this.subclassHash,
     required this.armorMods,
     required this.subclassMods,
+    this.exoticHash,
+    this.subclassHash,
+    this.statWeighing,
   });
 
   Preset copyWith({
@@ -23,6 +27,7 @@ class Preset {
     int? subclassHash,
     Map<String, List<int>>? armorMods,
     List<int>? subclassMods,
+    StatWeighing? statWeighing,
   }) {
     return Preset(
       statOrder: statOrder ?? this.statOrder,
@@ -30,6 +35,7 @@ class Preset {
       subclassHash: subclassHash ?? this.subclassHash,
       armorMods: armorMods ?? this.armorMods,
       subclassMods: subclassMods ?? this.subclassMods,
+      statWeighing: statWeighing ?? this.statWeighing,
     );
   }
 
@@ -40,6 +46,7 @@ class Preset {
       'subclassHash': subclassHash,
       'armorMods': armorMods,
       'subclassMods': subclassMods,
+      'statWeighing': statWeighing?.toString(),
     };
   }
 
@@ -55,6 +62,7 @@ class Preset {
         ),
       ),
       subclassMods: List<int>.from(map['subclassMods']),
+      statWeighing: map['statWeighing'] != null ? getStatWeighingFromString(map['statWeighing'] as String) : null,
     );
   }
 
@@ -64,7 +72,7 @@ class Preset {
 
   @override
   String toString() {
-    return 'Preset(statOrder: $statOrder, exoticHash: $exoticHash, subclassHash: $subclassHash, armorMods: $armorMods, subclassMods: $subclassMods)';
+    return 'Preset(statOrder: $statOrder, exoticHash: $exoticHash, subclassHash: $subclassHash, armorMods: $armorMods, subclassMods: $subclassMods, statWeighing: $statWeighing)';
   }
 
   @override
@@ -75,7 +83,8 @@ class Preset {
         other.exoticHash == exoticHash &&
         other.subclassHash == subclassHash &&
         mapEquals(other.armorMods, armorMods) &&
-        listEquals(other.subclassMods, subclassMods);
+        listEquals(other.subclassMods, subclassMods) &&
+        other.statWeighing == statWeighing;
   }
 
   @override
@@ -84,6 +93,7 @@ class Preset {
         exoticHash.hashCode ^
         subclassHash.hashCode ^
         armorMods.hashCode ^
-        subclassMods.hashCode;
+        subclassMods.hashCode ^
+        statWeighing.hashCode;
   }
 }

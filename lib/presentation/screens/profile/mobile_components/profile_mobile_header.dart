@@ -69,7 +69,7 @@ class ProfileMobileHeader extends StatelessWidget {
                       context,
                       child: SubclassModsMobileView(
                         width: vw(context) * 0.4,
-                        sockets: sockets.sockets,
+                        displayedSockets: sockets.displayedSockets,
                         subclass: ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
                         onChange: (mods, i) async {
                           await BungieApiService()

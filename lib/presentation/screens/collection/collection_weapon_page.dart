@@ -6,7 +6,6 @@ import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definit
 import 'package:quria/data/services/bungie_api/enums/collection_filter.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
-import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/components/misc/page_loader.dart';
 import 'package:quria/presentation/screens/collection/collection_mobile_view.dart';

@@ -94,7 +94,16 @@ class DisplayService {
 
   static Future<BuildStored?> loadBuild(BuildContext context, String id) async {
     await loadManifestAndProfile(context);
-    return BuilderService().getBuild(id);
+    BuildStored? storedBuild = await BuilderService().getBuild(id);
+    List<int> ids = [];
+    if (storedBuild != null) {
+      for (final item in storedBuild.items) {
+        ids.add(item.itemHash);
+        ids.addAll(item.mods);
+      }
+      await StorageService.getDefinitions<DestinyInventoryItemDefinition>(ids);
+    }
+    return storedBuild;
   }
 
   static int remainingModPoints(int base, Map<int, DestinyItemSocketState> mods) {

@@ -73,8 +73,10 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                     isEquipped: true,
                     bucketHash: InventoryBucket.subclass,
                     mods: sockets.sockets.where((e) => e.plugHash != null).map((e) => e.plugHash!).toList());
-                if (item != null) {
+                if (item != null && item.itemHash != newItem.itemHash) {
                   Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem);
+                } else if (item != null) {
+                  Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem..mods = item.mods);
                 } else {
                   Provider.of<CreateBuildProvider>(context, listen: false).addItem(newItem);
                 }
@@ -89,6 +91,9 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                 showDialog(
                   context: context,
                   builder: (context) {
+                    final displayedSockets = Provider.of<CreateBuildProvider>(context)
+                        .getEquippedItemByBucket(InventoryBucket.subclass)!
+                        .mods;
                     return Center(
                       child: SizedBox(
                         width: vw(context) * 0.4,
@@ -100,7 +105,11 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                               children: [
                                 SubclassModsMobileView(
                                   width: vw(context) * 0.4,
-                                  sockets: sockets.sockets,
+                                  displayedSockets: displayedSockets
+                                      .where((e) =>
+                                          ManifestService.manifestParsed.destinyInventoryItemDefinition[e] != null)
+                                      .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)
+                                      .toList(),
                                   subclass:
                                       ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
                                   onChange: (newSockets, i) async {
@@ -270,27 +279,31 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                               try {
                                 if (Provider.of<CreateBuildProvider>(context, listen: false).id != null) {
                                   await BuilderService().updateBuild(context, _controller.text).then((value) {
-                                    ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
-                                      content: textBodyMedium(
-                                        AppLocalizations.of(context)!.build_created_success,
-                                        utf8: false,
-                                        color: Colors.white,
+                                    ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
+                                      SnackBar(
+                                        content: textBodyMedium(
+                                          AppLocalizations.of(context)!.build_update_success,
+                                          utf8: false,
+                                          color: Colors.white,
+                                        ),
+                                        backgroundColor: Colors.green,
                                       ),
-                                      backgroundColor: Colors.green,
-                                    ));
+                                    );
                                     Provider.of<CreateBuildProvider>(context, listen: false).clear();
                                     Navigator.pushNamed(context, routeListBuilds);
                                   });
                                 } else {
                                   await BuilderService().createBuild(context, _controller.text).then((value) {
-                                    ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
-                                      content: textBodyMedium(
-                                        AppLocalizations.of(context)!.build_created_success,
-                                        utf8: false,
-                                        color: Colors.white,
+                                    ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
+                                      SnackBar(
+                                        content: textBodyMedium(
+                                          AppLocalizations.of(context)!.build_created_success,
+                                          utf8: false,
+                                          color: Colors.white,
+                                        ),
+                                        backgroundColor: Colors.green,
                                       ),
-                                      backgroundColor: Colors.green,
-                                    ));
+                                    );
                                     Provider.of<CreateBuildProvider>(context, listen: false).clear();
                                     Navigator.pushNamed(context, routeListBuilds);
                                   });

@@ -1,4 +1,8 @@
-import 'package:bungie_api/destiny2.dart';
+import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:bungie_api/enums/item_state.dart';
+import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:bungie_api/models/destiny_item_socket_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
@@ -57,7 +61,7 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  textH2("Ajouter une equipement", utf8: false),
+                  textH2(AppLocalizations.of(context)!.add_an_equipment, utf8: false),
                   InkWell(
                     onTap: () => Navigator.pop(context),
                     child: const CircleAvatar(
@@ -192,7 +196,10 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
               ),
               SizedBox(height: globalPadding(context)),
               RoundedButton(
-                text: textBodyMedium("ajouter", color: black),
+                text: textBodyMedium(
+                  AppLocalizations.of(context)!.add,
+                  color: black,
+                ),
                 width: widget.width,
                 onPressed: () => Navigator.pop(context),
               ),
