@@ -113,6 +113,7 @@
     "unknown": "Inconnue",
     "no_characters": "Vous n'avez pas de personnage sur cette plateforme, veuillez changer de plateforme",
     "build_character_not_available": "Vous n'avez pas le personnage spécifié de ce build, veuillez choisir un build différent",
+    "build_no_exotic": "Vous ne possédez pas l'éxotique de ce build, veuillez choisir un build différent",
     "close": "Fermer",
     "see_all": "Tout voir",
     "manifest_deleted": "Les données du manifeste on été supprimées",
