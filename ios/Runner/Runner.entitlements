@@ -3,6 +3,8 @@
 <plist version="1.0">
 <dict>
 	<key>com.apple.developer.associated-domains</key>
-	<string>https://quriacompanion.app/</string>
+	<array>
+		<string>applinks:https://quriacompanion.app/</string>
+	</array>
 </dict>
 </plist>
