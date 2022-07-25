@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/helpers/inspectSubclassHelper.model.dart';
-import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/details_build_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
@@ -12,6 +10,8 @@ import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display_build.dart';
+import 'package:quria/presentation/components/misc/mobile_components/scaffold_burger_and_back_option.dart';
+import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_build_view.dart';
 import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 
@@ -70,14 +70,18 @@ class DetailsBuildSection extends StatelessWidget {
               perks: item.mods,
               isSubclass: true,
               callback: () {
-                Navigator.of(context).pushNamed(
-                  routeInspectSubclass,
-                  arguments: InspectSubclassHelper(
-                    isNewSubclass: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash] != null,
-                    subclassId: item.instanceId,
-                    characterId: Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
-                  ),
-                );
+                showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ScaffoldBurgerAndBackOption(
+                        width: vw(context),
+                        body: SubclassModsBuildView(
+                          sockets: item.mods,
+                          subclass: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
+                          width: vw(context),
+                        ),
+                      );
+                    });
               },
             )
           else if (item != null)

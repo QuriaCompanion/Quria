@@ -85,8 +85,8 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                             width: vw(context) * 0.3,
                             child: PerkModal(
                               width: vw(context) * 0.3,
-                              perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
-                                  widget.item.sockets?.socketEntries?[widget.index].singleInitialItemHash]!,
+                              perk: ManifestService
+                                  .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
                             ),
                           ),
                         );

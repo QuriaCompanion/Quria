@@ -43,10 +43,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
   Widget build(BuildContext context) {
     double borderRadius = 8;
     List<DestinyInventoryItemDefinition> items = sortedItems
-        .where((element) =>
-            selectedSubType == element.itemSubType &&
-            element.inventory?.bucketTypeHash == selectedBucket &&
-            element.inventory?.tierType != TierType.Exotic)
+        .where((element) => selectedSubType == element.itemSubType && element.inventory?.tierType != TierType.Exotic)
         .toList();
     return SingleChildScrollView(
       child: Column(
@@ -125,8 +122,12 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                       onFilterChanged: (bucket, filter, subtype) {
                         setState(() {
                           currentFilter = filter;
-                          selectedBucket = bucket;
-                          selectedSubType = subtype;
+                          if (bucket != selectedBucket) {
+                            selectedBucket = bucket;
+                            selectedSubType = currentFilter.values.first;
+                          } else {
+                            selectedSubType = subtype;
+                          }
                         });
                       }),
                   const Spacer(),

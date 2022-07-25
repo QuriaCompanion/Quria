@@ -83,28 +83,34 @@ class CollectionDesktopFilter extends StatelessWidget {
             ),
           ),
           for (final entry in currentFilter.entries)
-            InkWell(
-              onTap: () {
-                onFilterChanged(
-                  selectedBucket,
-                  currentFilter,
-                  entry.value,
-                );
-              },
-              child: Container(
-                margin: const EdgeInsets.only(top: 16),
-                padding: const EdgeInsets.all(24),
-                width: 300,
-                height: 72,
-                decoration: BoxDecoration(color: blackLight, borderRadius: BorderRadius.circular(5)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    textH3(entry.key, utf8: false),
-                    textCaptionBold(
-                        '${items.where((element) => entry.value == element.itemSubType && element.inventory?.bucketTypeHash == selectedBucket && element.inventory?.tierType != TierType.Exotic).length}',
-                        color: greyLight)
-                  ],
+            Container(
+              margin: const EdgeInsets.only(top: 16),
+              width: 300,
+              height: 72,
+              decoration: BoxDecoration(
+                  color: blackLight,
+                  borderRadius: BorderRadius.circular(5),
+                  border:
+                      Border.all(color: selectedSubType == entry.value ? Colors.white : Colors.transparent, width: 1)),
+              child: InkWell(
+                onTap: () {
+                  onFilterChanged(
+                    selectedBucket,
+                    currentFilter,
+                    entry.value,
+                  );
+                },
+                child: Padding(
+                  padding: const EdgeInsets.all(24),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      textH3(entry.key, utf8: false),
+                      textCaptionBold(
+                          '${items.where((element) => entry.value == element.itemSubType && element.inventory?.bucketTypeHash == selectedBucket && element.inventory?.tierType != TierType.Exotic).length}',
+                          color: greyLight)
+                    ],
+                  ),
                 ),
               ),
             ),

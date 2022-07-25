@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
@@ -14,6 +15,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 import 'package:quria/presentation/screens/profile/components/draggable_inventory_item.dart';
+import 'package:quria/presentation/var/keys.dart';
 
 class ProfileDesktopItemSection extends StatefulWidget {
   final ProfileHelper data;
@@ -113,13 +115,33 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                     },
                     onAccept: (DestinyItemComponent data) {
                       if (data != equippedItem) {
-                        BungieActionsService().equipItem(
+                        BungieActionsService()
+                            .equipItem(
                           context,
                           itemId: data.itemInstanceId!,
                           characterId:
                               Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
                           itemHash: data.itemHash!,
-                        );
+                        )
+                            .then((_) {
+                          ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+                            content: textBodyMedium(
+                              AppLocalizations.of(context)!.item_equipped,
+                              utf8: false,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: Colors.green,
+                          ));
+                        }, onError: (error) {
+                          ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+                            content: textBodyMedium(
+                              AppLocalizations.of(context)!.error_base,
+                              utf8: false,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: crucible,
+                          ));
+                        });
                       }
                     },
                   ),
@@ -149,9 +171,28 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                     onAccept: (DestinyItemComponent data) {
                       if (Provider.of<InventoryProvider>(context, listen: false).getItemOwner(data.itemInstanceId!) !=
                           widget.data.selectedCharacter?.characterId) {
-                        BungieActionsService().transferItem(
-                            context, data.itemInstanceId!, widget.data.selectedCharacter?.characterId,
-                            itemHash: data.itemHash!, stackSize: 1);
+                        BungieActionsService()
+                            .transferItem(context, data.itemInstanceId!, widget.data.selectedCharacter?.characterId,
+                                itemHash: data.itemHash!, stackSize: 1)
+                            .then((_) {
+                          ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+                            content: textBodyMedium(
+                              AppLocalizations.of(context)!.item_transfered,
+                              utf8: false,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: Colors.green,
+                          ));
+                        }, onError: (error) {
+                          ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+                            content: textBodyMedium(
+                              AppLocalizations.of(context)!.error_base,
+                              utf8: false,
+                              color: Colors.white,
+                            ),
+                            backgroundColor: crucible,
+                          ));
+                        });
                       }
                     },
                   ),
@@ -197,7 +238,26 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                       Provider.of<InventoryProvider>(context, listen: false).getItemOwner(data.itemInstanceId!) ==
                           widget.data.selectedCharacter?.characterId) {
                     BungieActionsService()
-                        .transferItem(context, data.itemInstanceId!, null, itemHash: data.itemHash!, stackSize: 1);
+                        .transferItem(context, data.itemInstanceId!, null, itemHash: data.itemHash!, stackSize: 1)
+                        .then((_) {
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+                        content: textBodyMedium(
+                          AppLocalizations.of(context)!.item_transfered,
+                          utf8: false,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: Colors.green,
+                      ));
+                    }, onError: (error) {
+                      ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
+                        content: textBodyMedium(
+                          AppLocalizations.of(context)!.error_base,
+                          utf8: false,
+                          color: Colors.white,
+                        ),
+                        backgroundColor: crucible,
+                      ));
+                    });
                   }
                 },
               ),

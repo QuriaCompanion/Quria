@@ -345,6 +345,10 @@ class InventoryProvider with ChangeNotifier {
     return allItems;
   }
 
+  List<DestinyItemComponent> getAllSpecimens(DestinyItemComponent item) {
+    return getAllItems().where((element) => element.itemHash == item.itemHash).toList()..remove(item);
+  }
+
   List<DestinyItemComponent> getArmorForClass(DestinyClass classType,
       {DestinyItemSubType? itemSubType, bool includeSunset = true}) {
     List<DestinyItemComponent> allItems = getAllItems();

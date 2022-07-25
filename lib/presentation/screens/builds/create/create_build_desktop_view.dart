@@ -1,6 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/constants/web_widgets.dart';
@@ -53,95 +54,81 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
 
     return showDialog(
       context: context,
-      builder: (context) => Center(
+      builder: (context) => desktopRegularModal(
+        context,
         child: Container(
           color: black,
-          width: vw(context) * 0.4,
-          height: vh(context) * 0.9,
-          child: SingleChildScrollView(
-            child: SubclassMobileView(
-              width: vw(context) * 0.4,
-              subclasses: data,
-              onSelect: (subclass) {
-                Navigator.pop(context);
-                final sockets = DisplayService.getSubclassMods(context, subclass.itemInstanceId!);
-                final item = Provider.of<CreateBuildProvider>(context, listen: false)
-                    .getEquippedItemByBucket(InventoryBucket.subclass);
-                final newItem = Item(
-                    itemHash: subclass.itemHash!,
-                    instanceId: subclass.itemInstanceId!,
-                    isEquipped: true,
-                    bucketHash: InventoryBucket.subclass,
-                    mods: sockets.sockets.where((e) => e.plugHash != null).map((e) => e.plugHash!).toList());
-                if (item != null && item.itemHash != newItem.itemHash) {
-                  Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem);
-                } else if (item != null) {
-                  Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem..mods = item.mods);
-                } else {
-                  Provider.of<CreateBuildProvider>(context, listen: false).addItem(newItem);
-                }
-                if (ManifestService.manifestParsed.destinyInventoryItemDefinition[
-                        Provider.of<InventoryProvider>(context, listen: false).getSuperHashForSubclass(
-                            context,
-                            Provider.of<InventoryProvider>(context, listen: false)
-                                .getItemByInstanceId(subclass.itemInstanceId!)!)] ==
-                    null) {
-                  return;
-                }
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    final displayedSockets = Provider.of<CreateBuildProvider>(context)
-                        .getEquippedItemByBucket(InventoryBucket.subclass)!
-                        .mods;
-                    return Center(
-                      child: SizedBox(
-                        width: vw(context) * 0.4,
-                        height: vh(context) * 0.9,
-                        child: SingleChildScrollView(
-                          child: Container(
-                            color: black,
-                            child: Column(
-                              children: [
-                                SubclassModsMobileView(
-                                  width: vw(context) * 0.4,
-                                  displayedSockets: displayedSockets
-                                      .where((e) =>
-                                          ManifestService.manifestParsed.destinyInventoryItemDefinition[e] != null)
-                                      .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)
-                                      .toList(),
-                                  subclass:
-                                      ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
-                                  onChange: (newSockets, i) async {
-                                    Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(
-                                        newItem,
-                                        newItem
-                                          ..mods =
-                                              newSockets.where((e) => e.hash != null).map((e) => e.hash!).toList());
-                                  },
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.all(globalPadding(context)),
-                                  child: RoundedButton(
-                                    width: vw(context),
-                                    text: textBodyMedium(
-                                      AppLocalizations.of(context)!.save,
-                                      color: black,
-                                      utf8: false,
-                                    ),
-                                    onPressed: () => Navigator.pop(context),
-                                  ),
-                                ),
-                              ],
+          child: SubclassMobileView(
+            width: vw(context) * 0.4,
+            subclasses: data,
+            onSelect: (subclass) {
+              Navigator.pop(context);
+              final sockets = DisplayService.getSubclassMods(context, subclass.itemInstanceId!);
+              final item = Provider.of<CreateBuildProvider>(context, listen: false)
+                  .getEquippedItemByBucket(InventoryBucket.subclass);
+              final newItem = Item(
+                  itemHash: subclass.itemHash!,
+                  instanceId: subclass.itemInstanceId!,
+                  isEquipped: true,
+                  bucketHash: InventoryBucket.subclass,
+                  mods: sockets.sockets.where((e) => e.plugHash != null).map((e) => e.plugHash!).toList());
+              if (item != null && item.itemHash != newItem.itemHash) {
+                Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem);
+              } else if (item != null) {
+                Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem..mods = item.mods);
+              } else {
+                Provider.of<CreateBuildProvider>(context, listen: false).addItem(newItem);
+              }
+              if (ManifestService.manifestParsed.destinyInventoryItemDefinition[
+                      Provider.of<InventoryProvider>(context, listen: false).getSuperHashForSubclass(
+                          context,
+                          Provider.of<InventoryProvider>(context, listen: false)
+                              .getItemByInstanceId(subclass.itemInstanceId!)!)] ==
+                  null) {
+                return;
+              }
+              showDialog(
+                context: context,
+                builder: (context) {
+                  final displayedSockets =
+                      Provider.of<CreateBuildProvider>(context).getEquippedItemByBucket(InventoryBucket.subclass)!.mods;
+                  return desktopRegularModal(
+                    context,
+                    child: Container(
+                      color: black,
+                      child: Column(
+                        children: [
+                          SubclassModsMobileView(
+                            width: vw(context) * 0.4,
+                            displayedSockets: displayedSockets
+                                .where((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e] != null)
+                                .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)
+                                .toList(),
+                            subclass: ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
+                            onChange: (newSockets, i) async {
+                              Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(newItem,
+                                  newItem..mods = newSockets.where((e) => e.hash != null).map((e) => e.hash!).toList());
+                            },
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(globalPadding(context)),
+                            child: RoundedButton(
+                              width: vw(context),
+                              text: textBodyMedium(
+                                AppLocalizations.of(context)!.save,
+                                color: black,
+                                utf8: false,
+                              ),
+                              onPressed: () => Navigator.pop(context),
                             ),
                           ),
-                        ),
+                        ],
                       ),
-                    );
-                  },
-                );
-              },
-            ),
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ),
       ),
