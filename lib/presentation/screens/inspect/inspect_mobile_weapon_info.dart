@@ -9,6 +9,7 @@ import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mob
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_perks.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_origin.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_intrinsics.dart';
+import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_specimens.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_stats.dart';
 
 class InspectMobileWeaponInfo extends StatefulWidget {
@@ -61,6 +62,13 @@ class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
           context,
           title: AppLocalizations.of(context)!.cosmetics,
           child: MobileInspectCosmetics(
+            width: widget.width,
+          ),
+        ),
+        mobileSection(
+          context,
+          title: AppLocalizations.of(context)!.other_specimens,
+          child: InspectMobileSpecimens(
             width: widget.width,
           ),
         ),

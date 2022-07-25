@@ -232,6 +232,18 @@ class LoginWidgetState extends State<LoginWidget> {
 
       await AccountService.saveMembership(membershipData!, membershipId);
     }
+    final previousUri = await StorageService.getLocalStorage("initUri");
+    StorageService.removeLocalStorage("initUri");
+    if (!mounted) return;
+    if (previousUri != null) {
+      final uri = Uri.parse(previousUri);
+      inspect(uri);
+      if (uri.queryParameters["buildId"] != null) {
+        Navigator.pushReplacementNamed(context, routeForeignBuild, arguments: previousUri!.queryParameters["buildId"]);
+        return;
+      }
+    }
+    Navigator.pushReplacementNamed(context, routeProfile);
   }
 
   void loadingModal() {

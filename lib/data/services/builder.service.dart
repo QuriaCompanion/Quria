@@ -115,7 +115,6 @@ class BuilderService {
         Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(index);
       }
     }
-
     if (characterIndex != null) {
       Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(characterIndex);
     } else {
@@ -130,16 +129,14 @@ class BuilderService {
       return;
     }
 
-    await DisplayService.getExotics(
-            context, Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.classType!)
-        .then((exotics) {
+    await DisplayService.getExotics(context, characters[characterIndex].classType!).then((exotics) {
       final exoticItem = foreignBuild.items.firstWhereOrNull((element) {
         return InventoryBucket.armorBucketHashes.contains(element.bucketHash) &&
             ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.inventory?.tierType ==
                 TierType.Exotic;
       });
 
-      if (!exotics.contains(ManifestService.manifestParsed.destinyInventoryItemDefinition[exoticItem?.itemHash])) {
+      if (!exotics.map((e) => e.hash).contains(exoticItem?.itemHash)) {
         ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
           content: textBodyMedium(
             AppLocalizations.of(context)!.build_no_exotic,

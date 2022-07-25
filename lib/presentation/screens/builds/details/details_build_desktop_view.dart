@@ -10,7 +10,6 @@ import 'package:quria/constants/texts.dart';
 import 'package:quria/constants/web_widgets.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/models/Item.model.dart';
-import 'package:quria/data/models/helpers/socketsHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/providers/details_build_provider.dart';
@@ -19,7 +18,6 @@ import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
-import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/modal_button.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
@@ -39,15 +37,16 @@ class DetailsBuildDesktopView extends StatefulWidget {
 
 class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
   late final BuildStored _build;
+  late final Item? subclassItem;
   DestinyItemComponent? _subclass;
   @override
   void initState() {
     super.initState();
     _build = Provider.of<DetailsBuildProvider>(context, listen: false).buildStored!;
-    final Item? subclassItem =
+    subclassItem =
         Provider.of<DetailsBuildProvider>(context, listen: false).getEquippedItemByBucket(InventoryBucket.subclass);
     if (subclassItem != null) {
-      _subclass = Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(subclassItem.instanceId);
+      _subclass = Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(subclassItem!.instanceId);
     }
   }
 
@@ -90,13 +89,11 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                               showDialog(
                                   context: context,
                                   builder: (context) {
-                                    SocketsHelper sockets =
-                                        DisplayService.getSubclassMods(context, _subclass!.itemInstanceId!);
                                     return desktopRegularModal(
                                       context,
                                       child: SubclassModsBuildView(
                                         width: vw(context) * 0.4,
-                                        sockets: sockets.displayedSockets.map((e) => e.hash!).toList(),
+                                        sockets: subclassItem!.mods,
                                         subclass: ManifestService
                                             .manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!,
                                       ),
