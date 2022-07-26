@@ -35,6 +35,8 @@
     "logout": "Logout",
     "login_splash": "LOGIN TO CONTINUE",
     "quria_builder": "Quria Builder",
+    "recover": "Recover",
+    "postmaster": "Postmaster",
     "equipping": "We are equipping your character",
     "long_action": "This action can take a while ...",
     "item_equipped": "The item has been equipped",

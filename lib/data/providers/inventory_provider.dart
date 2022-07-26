@@ -369,6 +369,15 @@ class InventoryProvider with ChangeNotifier {
     return neededItem;
   }
 
+  List<DestinyItemComponent> getPostmasterItemsForCharacter(String characterId) {
+    if (_characterInventory[characterId] == null) return [];
+
+    return _characterInventory[characterId]!
+        .items!
+        .where((element) => element.bucketHash == InventoryBucket.lostItems)
+        .toList();
+  }
+
   void reset() {
     _characterEquipment.clear();
     _characterInventory.clear();
@@ -387,6 +396,14 @@ class InventoryProvider with ChangeNotifier {
 
   void setCharacterEquipment(Map<String, DestinyInventoryComponent> characterEquipement) {
     _characterEquipment = characterEquipement;
+    notifyListeners();
+  }
+
+  void pullFromPostmaster(DestinyItemComponent item, String characterId) {
+    _characterInventory[characterId]!.items!.remove(item);
+    _characterInventory[characterId]!.items!.add(item
+      ..bucketHash =
+          ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.inventory?.bucketTypeHash);
     notifyListeners();
   }
 

@@ -83,7 +83,7 @@ class ItemProvider with ChangeNotifier {
 
   String? getItemElement(DestinyItemComponent item) {
     final itemDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash];
-    final instanceInfo = getInstanceInfo(item.itemInstanceId!);
+    final instanceInfo = getInstanceInfo(item.itemInstanceId);
     return ManifestService
             .manifestParsed.destinyDamageTypeDefinition[itemDef?.defaultDamageTypeHash]?.displayProperties?.icon ??
         ManifestService
