@@ -59,7 +59,7 @@ class _SubclassPageState extends State<SubclassPage> {
                   )
                 : Navigator.pushNamed(
                     context,
-                    routeClassItemChoice,
+                    routeMod,
                   );
           },
         ),
