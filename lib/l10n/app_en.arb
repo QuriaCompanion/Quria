@@ -87,6 +87,7 @@
     "see_builds": "See builds",
     "builds": "Builds",
     "subclass": "Subclass",
+    "change_subclass": "Change subclass",
     "exotic": "Exotic",
     "create_build_field": "Give a name to your build",
     "designer": "Designer",

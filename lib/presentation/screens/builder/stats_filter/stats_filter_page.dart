@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_steps.dart';
@@ -18,9 +19,10 @@ class _StatsFilterPageState extends State<StatsFilterPage> {
   @override
   Widget build(BuildContext context) {
     if (vw(context) < 1000) {
-      return const ScaffoldSteps(
+      return ScaffoldSteps(
+        actionText: AppLocalizations.of(context)!.next,
         route: routeSubclass,
-        body: StatsFilterMobileView(),
+        body: const StatsFilterMobileView(),
         previousRoute: routeExotic,
       );
     } else {

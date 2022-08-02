@@ -161,7 +161,7 @@ class InventoryProvider with ChangeNotifier {
     });
     inventory.sort((a, b) {
       if (Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(a.itemInstanceId) == null ||
-          Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(a.itemInstanceId) == null) {
+          Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(b.itemInstanceId) == null) {
         return 1;
       }
       return Provider.of<ItemProvider>(context, listen: false)

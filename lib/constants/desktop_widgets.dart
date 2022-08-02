@@ -17,6 +17,7 @@ import 'package:quria/presentation/components/misc/mobile_components/equip_modal
 import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/transfer_modal.dart';
+import 'package:quria/presentation/screens/builder/subclass/subclass_mobile_view.dart';
 import 'package:quria/presentation/screens/collection/collection_item/collection_item_mobile_view.dart';
 import 'package:quria/presentation/var/keys.dart';
 
@@ -100,6 +101,79 @@ Widget desktopRegularModal(BuildContext context, {required Widget child}) {
                   Navigator.pop(context);
                 },
                 icon: 'assets/icons/closeDesktop.svg',
+              ),
+            ],
+          ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget desktopSubclassModal(BuildContext context, {required Widget child}) {
+  final characterId = Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!;
+  final subclasses = Provider.of<InventoryProvider>(context, listen: false).getSubclassesForCharacter(characterId);
+  return Stack(
+    children: [
+      Center(
+        child: SizedBox(
+          height: vh(context) * 0.9,
+          width: vw(context) * 0.4,
+          child: Material(
+            type: MaterialType.card,
+            color: Colors.transparent,
+            child: SingleChildScrollView(child: child),
+          ),
+        ),
+      ),
+      Positioned(
+        top: vh(context) * 0.15,
+        right: vw(context) * 0.2,
+        child: Material(
+          type: MaterialType.card,
+          color: Colors.transparent,
+          child: Column(
+            children: [
+              ModalButton(
+                text: AppLocalizations.of(context)!.close,
+                callback: () {
+                  Navigator.pop(context);
+                },
+                icon: 'assets/icons/closeDesktop.svg',
+              ),
+              SizedBox(
+                height: vw(context) * 0.02,
+              ),
+              ModalButton(
+                text: AppLocalizations.of(context)!.change_subclass,
+                callback: () {
+                  Navigator.pop(context);
+                  showDialog(
+                      context: context,
+                      builder: ((context) {
+                        return desktopRegularModal(
+                          context,
+                          child: Container(
+                            color: black,
+                            child: SubclassMobileView(
+                              width: vw(context) * 0.4,
+                              subclasses: subclasses,
+                              onSelect: (newSubclass) {
+                                BungieActionsService()
+                                    .equipItem(
+                                      context,
+                                      itemId: newSubclass.itemInstanceId!,
+                                      characterId: characterId,
+                                      itemHash: newSubclass.itemHash!,
+                                    )
+                                    .then((_) => Navigator.pop(context));
+                              },
+                            ),
+                          ),
+                        );
+                      }));
+                },
+                icon: 'assets/icons/transferDesktop.svg',
               ),
             ],
           ),

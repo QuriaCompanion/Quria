@@ -65,7 +65,7 @@ class ProfileMobileHeader extends StatelessWidget {
                 builder: (context) {
                   SocketsHelper sockets = DisplayService.getSubclassMods(context, subclassId);
                   if (isNewSubclass) {
-                    return desktopRegularModal(
+                    return desktopSubclassModal(
                       context,
                       child: SubclassModsMobileView(
                         width: vw(context) * 0.4,

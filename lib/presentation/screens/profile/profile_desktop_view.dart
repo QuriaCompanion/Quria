@@ -25,7 +25,7 @@ class ProfileDesktopView extends StatelessWidget {
       InventoryBucket.kineticWeapons,
       InventoryBucket.energyWeapons,
       InventoryBucket.powerWeapons,
-      ...InventoryBucket.armorBucketHashes
+      ...InventoryBucket.armorBucketHashes,
     ];
     String icon = data.isNewSubclass
         ? ManifestService
