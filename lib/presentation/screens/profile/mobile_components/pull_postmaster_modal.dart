@@ -14,7 +14,6 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display_perks.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
-import 'package:quria/presentation/components/misc/mobile_components/transfer_modal.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/presentation/var/keys.dart';

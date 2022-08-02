@@ -13,7 +13,6 @@ import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/modal_button.dart';
-import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/equip_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
