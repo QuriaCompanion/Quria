@@ -15,6 +15,7 @@ class PerkModal extends StatelessWidget {
   final double width;
   final int? index;
   final bool? isSelected;
+  final bool? isCollection;
   final String? instanceId;
   final String? characterId;
   final Function(List<DestinyItemSocketState>)? onSocketsChanged;
@@ -27,6 +28,7 @@ class PerkModal extends StatelessWidget {
     this.isSelected,
     this.instanceId,
     this.characterId,
+    this.isCollection,
     Key? key,
   }) : super(key: key);
 
@@ -111,7 +113,7 @@ class PerkModal extends StatelessWidget {
                               name: ManifestService.manifestParsed.destinyStatDefinition[stat.statTypeHash]!
                                       .displayProperties!.name ??
                                   'error',
-                              value: stat.value?.abs() ?? 0,
+                              value: stat.value ?? 0,
                               type: DestinyItemType.Armor));
                         }
                         list.add(
@@ -130,10 +132,32 @@ class PerkModal extends StatelessWidget {
                       onPressed: () {
                         BungieApiService().insertSocketPlugFree(instanceId!, perk.hash!, index!, characterId!).then(
                           (value) async {
-                            onSocketsChanged!(value?.response?.item?.sockets?.data?.sockets ?? []);
+                            onSocketsChanged?.call(value?.response?.item?.sockets?.data?.sockets ?? []);
                             Navigator.pop(context);
                           },
                         );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.white,
+                        fixedSize: Size(
+                          width - globalPadding(context) * 2,
+                          (width - globalPadding(context) * 2) * 0.147,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                      child: textBodyMedium(
+                        AppLocalizations.of(context)!.equip,
+                        color: black,
+                        utf8: false,
+                      ),
+                    ),
+                  if (isCollection == true && isSelected == false)
+                    ElevatedButton(
+                      onPressed: () {
+                        onSocketsChanged?.call([]);
+                        Navigator.pop(context);
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,

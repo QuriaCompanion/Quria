@@ -1,9 +1,14 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/helpers/inspectHelper.model.dart';
+import 'package:quria/data/models/perk.model.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/screens/collection/collection_item/mobile_components/collection_armor_view.dart';
 import 'package:quria/presentation/screens/collection/collection_item/mobile_components/collection_weapon_view.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_header.dart';
@@ -27,6 +32,28 @@ class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
   void initState() {
     super.initState();
     data = widget.data;
+    if (data.sockets?.socketEntries != null) {
+      List<Perk> perks = [];
+      for (int index = 0; index < data.sockets!.socketEntries!.length; index++) {
+        final perkHash = ManifestService
+            .manifestParsed
+            .destinyPlugSetDefinition[data.sockets!.socketEntries?[index].randomizedPlugSetHash]
+            ?.reusablePlugItems?[0]
+            .plugItemHash;
+        if (Conditions.perkSockets(perkHash)) {
+          perks.add(Perk(itemHash: perkHash!));
+        }
+      }
+      Map<int, Perk> perkMap = perks.asMap();
+      InspectWeaponStatus initStatus = InspectWeaponStatus(
+        firstColumn: perkMap.containsKey(0) ? perks[0] : null,
+        secondColumn: perkMap.containsKey(1) ? perks[1] : null,
+        thirdColumn: perkMap.containsKey(2) ? perks[2] : null,
+        fourthColumn: perkMap.containsKey(3) ? perks[3] : null,
+        fifthColumn: perkMap.containsKey(4) ? perks[4] : null,
+      );
+      Provider.of<InspectProvider>(context, listen: false).setInitInspectWeaponStatus(initStatus);
+    }
   }
 
   @override

@@ -1,6 +1,7 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
+import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 
 class StatProgressBar extends StatelessWidget {
@@ -10,6 +11,8 @@ class StatProgressBar extends StatelessWidget {
   final double width;
   final double padding;
   final double height;
+  final int? bonus;
+  final int? masterwork;
   const StatProgressBar({
     required this.name,
     required this.value,
@@ -17,15 +20,21 @@ class StatProgressBar extends StatelessWidget {
     this.type = DestinyItemType.Weapon,
     this.padding = 8,
     this.height = 20,
+    this.bonus,
+    this.masterwork,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     late double percentage;
+    late double bonusPercentage;
     type == DestinyItemType.Weapon ? percentage = value / 100 : percentage = value / 42;
+    bonusPercentage = bonus != null ? bonus! / 100 : 0;
     if (percentage < 0) percentage = 0;
     if (percentage > 1) percentage = 1;
+    if (bonusPercentage < 0) bonusPercentage = 0;
+    if (bonusPercentage > 1) bonusPercentage = 1;
     return Container(
       padding: EdgeInsets.symmetric(vertical: padding),
       width: width,
@@ -34,16 +43,47 @@ class StatProgressBar extends StatelessWidget {
         SizedBox(
           width: 25,
           child: Center(
-            child: textCaptionBold(value.toString()),
+            child: textCaptionBold(bonus != null ? bonus.toString() : value.toString()),
           ),
         ),
-        LinearPercentIndicator(
-          percent: percentage < 0 ? 0.0 : percentage,
-          barRadius: Radius.circular(height / 2),
-          progressColor: Colors.white,
-          backgroundColor: Colors.white.withOpacity(0.5),
-          lineHeight: height,
-          width: width * 0.5,
+        Stack(
+          children: [
+            if (percentage < bonusPercentage)
+              LinearPercentIndicator(
+                percent: bonusPercentage,
+                barRadius: Radius.circular(height / 2),
+                progressColor: yellow,
+                backgroundColor: grey,
+                lineHeight: height,
+                width: width * 0.5,
+              ),
+            if (percentage < bonusPercentage)
+              LinearPercentIndicator(
+                percent: bonusPercentage,
+                barRadius: Radius.circular(height / 2),
+                progressColor: Colors.blue,
+                backgroundColor: grey,
+                lineHeight: height,
+                width: width * 0.5,
+              ),
+            LinearPercentIndicator(
+              percent: percentage,
+              barRadius: Radius.circular(height / 2),
+              progressColor: bonus != null && percentage > bonusPercentage ? crucible : Colors.white,
+              backgroundColor: percentage < bonusPercentage ? Colors.transparent : grey,
+              lineHeight: height,
+              width: width * 0.5,
+            ),
+            if (bonus != null && percentage > bonusPercentage)
+              LinearPercentIndicator(
+                percent: bonusPercentage,
+                barRadius: Radius.circular(height / 2),
+                progressColor: Colors.white,
+                backgroundColor: Colors.transparent,
+                lineHeight: height,
+                width: width * 0.5,
+              ),
+          ],
         ),
       ]),
     );

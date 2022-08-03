@@ -116,7 +116,7 @@ class ProfileMobileHeader extends StatelessWidget {
                       Provider.of<InventoryProvider>(context).getItemByInstanceId(subclassId)!;
                   DestinyInventoryItemDefinition definition =
                       ManifestService.manifestParsed.destinyInventoryItemDefinition[itemComponent.itemHash]!;
-                  return desktopRegularModal(context,
+                  return desktopSubclassModal(context,
                       child: Container(
                         color: black,
                         child: TalentGridMobileView(

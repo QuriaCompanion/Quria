@@ -17,12 +17,14 @@ class CollectionWeaponView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final itemDef = Provider.of<InspectProvider>(context).itemDef!;
+
     return Column(
       children: [
         mobileSection(
           context,
           title: AppLocalizations.of(context)!.statistics,
           child: InspectMobileStats(
+            bonusStats: Provider.of<InspectProvider>(context).getBonusStats(),
             width: width,
           ),
         ),

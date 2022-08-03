@@ -3,9 +3,11 @@ import 'package:quria/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/inspectHelper.model.dart';
+import 'package:quria/data/models/perk.model.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
+import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/screens/inspect/components/column_perk_display.dart';
 
@@ -45,11 +47,10 @@ class _PerkListState extends State<PerkList> {
                   for (int index = 0; index < itemDef.sockets!.socketEntries!.length; index++)
                     if (Conditions.perkSockets(itemDef.sockets!.socketEntries![index].singleInitialItemHash))
                       Padding(
-                        padding: EdgeInsets.only(right: index != 5 ? globalPadding(context) : 0),
+                        padding: EdgeInsets.only(right: index != 6 ? globalPadding(context) : 0),
                         child: ColumnPerkDisplay(
                           item: itemDef,
                           index: index,
-                          selectedPerks: InspectHelper(),
                           width: widget.width,
                         ),
                       )
