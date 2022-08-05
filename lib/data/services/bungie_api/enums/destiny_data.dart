@@ -174,9 +174,15 @@ class Conditions {
   }
 
   static bool perkSockets(int? item) {
-    return item != null &&
-        DestinyData.perkCategoryHash
-            .contains(ManifestService.manifestParsed.destinyInventoryItemDefinition[item]?.plug?.plugCategoryHash);
+    final socketCategory = ManifestService.manifestParsed.destinyInventoryItemDefinition[item]?.itemCategoryHashes;
+    if (socketCategory?.isNotEmpty ?? false) {
+      for (final socket in socketCategory!) {
+        if (DestinyData.perkCategoryHash.contains(socket)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 
   static bool isEquipped(int? index, int? hash, InspectWeaponStatus? status) {
@@ -211,17 +217,21 @@ class DestinyData {
   };
 
   static const List<int> perkCategoryHash = [
-    2619833294,
-    2833605196,
-    1757026848,
-    7906839,
-    1806783418,
-    164955586,
-    1202604782,
-    2718120384,
-    577918720,
-    3886533313,
-    3962145884,
+    3708671066,
+    3085181971,
+    1709863189,
+    1334054322,
+    3072652064,
+    4184407433,
+    3055157023,
+    2076918099,
+    3836367751,
+    2411768833,
+    3866509906,
+    444756050,
+    3360831066,
+    2840834688,
+    2779167812
   ];
 
   static const List<int> modCategoryHash = [

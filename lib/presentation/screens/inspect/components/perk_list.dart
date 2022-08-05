@@ -7,7 +7,6 @@ import 'package:quria/data/models/perk.model.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
-import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/screens/inspect/components/column_perk_display.dart';
 

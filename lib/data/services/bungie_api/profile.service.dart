@@ -266,8 +266,7 @@ class ProfileService {
       if (plugs != null) {
         for (List<DestinyItemPlugBase> plug in plugs.values) {
           if (plug.any((element) => element.plugItemHash == socket.plugHash) &&
-              DestinyData.perkCategoryHash.contains(ManifestService
-                  .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.plug!.plugCategoryHash!)) {
+              Conditions.perkSockets(socket.plugHash)) {
             List<DestinyInventoryItemDefinition> plugDefitions = [];
             for (DestinyItemPlugBase plug in plug) {
               final plugDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash];
@@ -280,12 +279,11 @@ class ProfileService {
       }
       if (ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]?.displayProperties?.icon !=
               null &&
-          DestinyData.perkCategoryHash.contains(
-            ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.plug!.plugCategoryHash!,
-          ) &&
-          !perks.any((element) => element.contains(
-                ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!,
-              ))) {
+          Conditions.perkSockets(socket.plugHash) &&
+          !perks.any(
+            (element) =>
+                element.contains(ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!),
+          )) {
         perks.add([ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!]);
       }
     }
