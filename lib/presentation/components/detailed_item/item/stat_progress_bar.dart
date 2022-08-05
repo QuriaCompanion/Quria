@@ -28,9 +28,11 @@ class StatProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     late double percentage;
-    late double bonusPercentage;
+    double bonusPercentage = 0;
     type == DestinyItemType.Weapon ? percentage = value / 100 : percentage = value / 42;
-    bonusPercentage = bonus != null ? bonus! / 100 : 0;
+    if (bonus != null) {
+      bonusPercentage = type == DestinyItemType.Weapon ? bonus! / 100 : bonus! / 42;
+    }
     if (percentage < 0) percentage = 0;
     if (percentage > 1) percentage = 1;
     if (bonusPercentage < 0) bonusPercentage = 0;
@@ -48,15 +50,6 @@ class StatProgressBar extends StatelessWidget {
         ),
         Stack(
           children: [
-            if (percentage < bonusPercentage)
-              LinearPercentIndicator(
-                percent: bonusPercentage,
-                barRadius: Radius.circular(height / 2),
-                progressColor: yellow,
-                backgroundColor: grey,
-                lineHeight: height,
-                width: width * 0.5,
-              ),
             if (percentage < bonusPercentage)
               LinearPercentIndicator(
                 percent: bonusPercentage,

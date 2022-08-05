@@ -86,7 +86,7 @@ class SubclassModsMobileView extends StatelessWidget {
                             if (!displayedSockets.contains(newSocket)) {
                               displayedSockets[i] = newSocket;
                               onChange(
-                                displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
+                                displayedSockets,
                                 i,
                               );
                             }
@@ -103,7 +103,7 @@ class SubclassModsMobileView extends StatelessWidget {
                               if (!displayedSockets.contains(newSocket)) {
                                 displayedSockets[5] = newSocket;
                                 onChange(
-                                  displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
+                                  displayedSockets,
                                   5,
                                 );
                               }
@@ -119,7 +119,7 @@ class SubclassModsMobileView extends StatelessWidget {
                               if (!displayedSockets.contains(newSocket)) {
                                 displayedSockets[6] = newSocket;
                                 onChange(
-                                  displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
+                                  displayedSockets,
                                   6,
                                 );
                               }
@@ -152,7 +152,7 @@ class SubclassModsMobileView extends StatelessWidget {
                                               displayedSockets[7 + i] = ManifestService
                                                   .manifestParsed.destinyInventoryItemDefinition[itemHash]!;
                                               onChange(
-                                                displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
+                                                displayedSockets,
                                                 7 + i,
                                               );
                                             }
@@ -178,7 +178,7 @@ class SubclassModsMobileView extends StatelessWidget {
                                                   displayedSockets[7 + i] = ManifestService
                                                       .manifestParsed.destinyInventoryItemDefinition[itemHash]!;
                                                   onChange(
-                                                    displayedSockets.take(7 + aspectOne + aspectTwo).toList(),
+                                                    displayedSockets,
                                                     7 + i,
                                                   );
                                                 }
