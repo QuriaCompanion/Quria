@@ -14,9 +14,10 @@ import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/loading_modal.dart';
-import 'package:quria/presentation/components/misc/mobile_components/scaffold_burger_and_back_option.dart';
+import 'package:quria/presentation/components/misc/mobile_components/scaffold_steps.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_mobile_view.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/talent_grid_mobile_view.dart';
+import 'package:quria/presentation/var/routes.dart';
 
 class InspectSubclassPage extends StatelessWidget {
   final InspectSubclassHelper data;
@@ -33,8 +34,9 @@ class InspectSubclassPage extends StatelessWidget {
     final def = ManifestService.manifestParsed.destinyInventoryItemDefinition[
         Provider.of<InventoryProvider>(context).getItemByInstanceId(data.subclassId)?.itemHash];
     if (vw(context) < 1000) {
-      return ScaffoldBurgerAndBackOption(
-        width: vw(context),
+      return ScaffoldSteps(
+        actionText: AppLocalizations.of(context)!.change_subclass,
+        route: routeChangeSubclass,
         body: Builder(builder: (context) {
           return Builder(builder: (context) {
             if (data.isNewSubclass) {

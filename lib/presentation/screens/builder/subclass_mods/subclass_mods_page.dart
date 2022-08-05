@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
@@ -20,6 +21,7 @@ class SubclassModsPage extends StatelessWidget {
 
     if (vw(context) < 1000) {
       return ScaffoldSteps(
+          actionText: AppLocalizations.of(context)!.next,
           route: routeMod,
           body: SubclassModsMobileView(
             displayedSockets: chosenSockets,

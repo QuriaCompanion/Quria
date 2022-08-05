@@ -5,6 +5,7 @@ import 'package:quria/data/models/ArmorMods.model.dart';
 import 'package:quria/data/providers/builder/builder_mods_provider.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_desktop.dart';
 import 'package:quria/presentation/components/misc/mobile_components/scaffold_steps.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/presentation/screens/builder/desktop/builder_desktop_view.dart';
 import 'package:quria/presentation/screens/builder/mods/mods_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -19,6 +20,7 @@ class ModsPage extends StatelessWidget {
 
     if (vw(context) < 1000) {
       return ScaffoldSteps(
+        actionText: AppLocalizations.of(context)!.next,
         route: routeClassItemChoice,
         body: ModsMobileView(
           armorMods: armorMods,

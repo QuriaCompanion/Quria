@@ -1,4 +1,5 @@
-import 'package:bungie_api/destiny2.dart';
+import 'package:bungie_api/enums/item_state.dart';
+import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
@@ -50,14 +51,20 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            textH2(
-              ManifestService
-                      .manifestParsed
-                      .destinyEquipmentSlotDefinition[ManifestService.manifestParsed
-                          .destinyInventoryItemDefinition[equippedItem.itemHash]?.equippingBlock?.equipmentSlotTypeHash]
-                      ?.displayProperties
-                      ?.name ??
-                  "error",
+            SizedBox(
+              width: 288,
+              child: textH2(
+                ManifestService
+                        .manifestParsed
+                        .destinyEquipmentSlotDefinition[ManifestService
+                            .manifestParsed
+                            .destinyInventoryItemDefinition[equippedItem.itemHash]
+                            ?.equippingBlock
+                            ?.equipmentSlotTypeHash]
+                        ?.displayProperties
+                        ?.name ??
+                    "error",
+              ),
             ),
             SizedBox(
               width: vw(context) * 0.7,
@@ -74,7 +81,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
             Container(
               decoration: BoxDecoration(
                 color: blackLight,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(8),
               ),
               padding: const EdgeInsets.all(16),
               child: Row(
@@ -203,7 +210,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
               width: vw(context) * 0.7,
               decoration: BoxDecoration(
                 color: blackLight,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(8),
               ),
               padding: const EdgeInsets.all(16),
               child: DragTarget<DestinyItemComponent>(

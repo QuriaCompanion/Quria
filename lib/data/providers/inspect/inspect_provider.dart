@@ -10,6 +10,7 @@ import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/models/helpers/inspectHelper.model.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
@@ -18,8 +19,11 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 class InspectProvider with ChangeNotifier {
   DestinyItemComponent? _item;
   DestinyInventoryItemDefinition? _itemDef;
+  InspectWeaponStatus? _weaponStatus;
+
   DestinyItemComponent? get item => _item;
   DestinyInventoryItemDefinition? get itemDef => _itemDef;
+  InspectWeaponStatus? get weaponStatus => _weaponStatus;
 
   void setInspectItem({
     DestinyItemComponent? item,
@@ -28,6 +32,36 @@ class InspectProvider with ChangeNotifier {
     _item = item;
     _itemDef = itemDef;
     notifyListeners();
+  }
+
+  void setInitInspectWeaponStatus(InspectWeaponStatus? status) {
+    _weaponStatus = status;
+  }
+
+  void setWeaponStatus(InspectWeaponStatus? status) {
+    _weaponStatus = status;
+    notifyListeners();
+  }
+
+  Map<int, int> getBonusStats() {
+    Map<int, int> bonusStats = {};
+    List<DestinyInventoryItemDefinition?> perks = [];
+    if (_weaponStatus != null) {
+      perks.add(ManifestService.manifestParsed.destinyInventoryItemDefinition[_weaponStatus?.firstColumn?.itemHash]);
+      perks.add(ManifestService.manifestParsed.destinyInventoryItemDefinition[_weaponStatus?.secondColumn?.itemHash]);
+      perks.add(ManifestService.manifestParsed.destinyInventoryItemDefinition[_weaponStatus?.thirdColumn?.itemHash]);
+      perks.add(ManifestService.manifestParsed.destinyInventoryItemDefinition[_weaponStatus?.fourthColumn?.itemHash]);
+      perks.add(ManifestService.manifestParsed.destinyInventoryItemDefinition[_weaponStatus?.fifthColumn?.itemHash]);
+    }
+    for (final perk in perks) {
+      if (perk?.investmentStats?.isNotEmpty ?? false) {
+        for (final stat in perk!.investmentStats!) {
+          final increasing = (bonusStats[stat.statTypeHash] ?? 0) + (stat.value ?? 0);
+          bonusStats[stat.statTypeHash!] = increasing;
+        }
+      }
+    }
+    return bonusStats;
   }
 
   Map<String, DestinyStat> getItemStats(BuildContext context) {
@@ -39,7 +73,10 @@ class InspectProvider with ChangeNotifier {
   }
 
   String getImageLink(BuildContext context) {
-    return DestinyData.bungieLink + _itemDef!.screenshot!;
+    // TODO: this image isn't the best choice, but it's the best I can do for now.
+    return _itemDef?.screenshot != null
+        ? DestinyData.bungieLink + _itemDef!.screenshot!
+        : "${DestinyData.bungieLink}/common/destiny2_content/screenshots/2345794502.jpg";
   }
 
   String? getElementIcon(BuildContext context) {

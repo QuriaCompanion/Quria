@@ -65,7 +65,7 @@ class ProfileMobileHeader extends StatelessWidget {
                 builder: (context) {
                   SocketsHelper sockets = DisplayService.getSubclassMods(context, subclassId);
                   if (isNewSubclass) {
-                    return desktopRegularModal(
+                    return desktopSubclassModal(
                       context,
                       child: SubclassModsMobileView(
                         width: vw(context) * 0.4,
@@ -116,7 +116,7 @@ class ProfileMobileHeader extends StatelessWidget {
                       Provider.of<InventoryProvider>(context).getItemByInstanceId(subclassId)!;
                   DestinyInventoryItemDefinition definition =
                       ManifestService.manifestParsed.destinyInventoryItemDefinition[itemComponent.itemHash]!;
-                  return desktopRegularModal(context,
+                  return desktopSubclassModal(context,
                       child: Container(
                         color: black,
                         child: TalentGridMobileView(

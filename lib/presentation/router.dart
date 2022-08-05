@@ -17,6 +17,7 @@ import 'package:quria/presentation/screens/collection/collection_item/collection
 import 'package:quria/presentation/screens/collection/collection_weapon_page.dart';
 
 import 'package:quria/presentation/screens/inspect/inspect_mobile.dart';
+import 'package:quria/presentation/screens/inspect_subclass/change_subclass_page.dart';
 import 'package:quria/presentation/screens/inspect_subclass/inspect_subclass_page.dart';
 import 'package:quria/presentation/screens/legends/legends_page.dart';
 import 'package:quria/presentation/screens/login.dart';
@@ -41,6 +42,9 @@ class AppRouter {
       case routeInspectSubclass:
         final InspectSubclassHelper data = settings.arguments as InspectSubclassHelper;
         return MaterialPageRoute(builder: (_) => InspectSubclassPage(data: data));
+
+      case routeChangeSubclass:
+        return MaterialPageRoute(builder: (_) => const ChangeSubclassPage());
       case routePageSettings:
         return MaterialPageRoute(builder: (_) => const SettingsPage());
       case routePageLegends:
@@ -90,7 +94,7 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const DetailsBuildPage());
 
       default:
-        return MaterialPageRoute(builder: (_) => const CollectionWeaponPage());
+        return MaterialPageRoute(builder: (_) => LoginWidget());
       // return MaterialPageRoute(builder: (_) => LoginWidget());
     }
   }

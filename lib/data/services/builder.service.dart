@@ -311,7 +311,9 @@ class BuilderService {
     List<Item> items = [];
     for (int i = 0; i < data.equipement.length; i++) {
       List<int> mods = [];
-      mods.add(data.equipement[i].mod!.hash!);
+      if (data.equipement[i].mod != null) {
+        mods.add(data.equipement[i].mod!.hash!);
+      }
       mods.addAll(Provider.of<BuilderModsProvider>(context, listen: false)
           .mods[i]
           .items

@@ -8,6 +8,7 @@ import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
+import 'package:quria/presentation/screens/profile/components/postmasters_items.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_item_card.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_header.dart';
 import 'package:quria/presentation/var/routes.dart';
@@ -25,6 +26,7 @@ class ProfileMobileView extends StatefulWidget {
 
 class _ProfileMobileViewState extends State<ProfileMobileView> {
   DestinyItemType currentFilter = DestinyItemType.Weapon;
+  bool isPostmasterOpen = false;
   @override
   Widget build(BuildContext context) {
     String icon = widget.data.isNewSubclass
@@ -55,12 +57,13 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
             padding: EdgeInsets.only(top: globalPadding(context), bottom: globalPadding(context) * 2),
             child: SizedBox(
               height: 45,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
                 children: [
                   InkWell(
                       onTap: () {
                         setState(() {
+                          isPostmasterOpen = false;
                           currentFilter = DestinyItemType.Weapon;
                         });
                       },
@@ -72,12 +75,25 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                   InkWell(
                       onTap: () {
                         setState(() {
+                          isPostmasterOpen = false;
                           currentFilter = DestinyItemType.Armor;
                         });
                       },
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Armor,
                         value: AppLocalizations.of(context)!.armor,
+                        width: vw(context) * 0.29,
+                      )),
+                  InkWell(
+                      onTap: () {
+                        setState(() {
+                          isPostmasterOpen = true;
+                          currentFilter = DestinyItemType.Currency;
+                        });
+                      },
+                      child: MobileNavItem(
+                        selected: isPostmasterOpen,
+                        value: AppLocalizations.of(context)!.postmaster,
                         width: vw(context) * 0.29,
                       )),
                   InkWell(
@@ -120,6 +136,13 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                     color: grey,
                   ),
                 ],
+              ),
+            ),
+          if (isPostmasterOpen)
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: globalPadding(context)),
+              child: PostmasterItems(
+                width: vw(context),
               ),
             )
         ]);

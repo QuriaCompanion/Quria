@@ -11,8 +11,10 @@ import 'package:quria/presentation/components/detailed_item/item/stat_progress_b
 
 class InspectMobileStats extends StatelessWidget {
   final double width;
+  final Map<int, int>? bonusStats;
   const InspectMobileStats({
     required this.width,
+    this.bonusStats,
     Key? key,
   }) : super(key: key);
 
@@ -24,22 +26,22 @@ class InspectMobileStats extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         for (int statHash in DestinyData.linearStatBySubType[itemDef.itemSubType]!)
-          StatProgressBar(
-            width: width,
-            name: ManifestService.manifestParsed.destinyStatDefinition[statHash]!.displayProperties!.name ?? 'error',
-            value: stats[statHash.toString()]?.value ?? itemDef.stats?.stats?[statHash.toString()]?.value ?? 0,
-            type: itemDef.itemType,
-          ),
+          Builder(builder: (context) {
+            int baseStats = stats[statHash.toString()]?.value ?? itemDef.stats?.stats?[statHash.toString()]?.value ?? 0;
+            int bonusStatInt = bonusStats?.containsKey(statHash) ?? false ? bonusStats![statHash]! : 0;
+            return StatProgressBar(
+              width: width,
+              name: ManifestService.manifestParsed.destinyStatDefinition[statHash]!.displayProperties!.name ?? 'error',
+              value: baseStats,
+              bonus: bonusStatInt + baseStats,
+              type: itemDef.itemType,
+            );
+          }),
         Builder(builder: (context) {
           List<String> unusedStats = [];
           unusedStats.addAll(stats.keys.where(
               (statHash) => !DestinyData.linearStatBySubType[itemDef.itemSubType]!.contains(int.parse(statHash))));
 
-          // else {
-          //   unusedStats.addAll(item.stats!.stats!.keys.where((statHash) =>
-          //       !DestinyData.linearStatBySubType[item.itemSubType]!
-          //           .contains(int.parse(statHash))));
-          // }
           int armorTotal = 0;
           if (itemDef.itemType == DestinyItemType.Armor) {
             for (int statHash in DestinyData.linearStatBySubType[itemDef.itemSubType]!) {

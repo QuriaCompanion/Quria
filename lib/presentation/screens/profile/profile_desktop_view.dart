@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
+import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/screens/profile/components/postmaster_items_desktop.dart';
 import 'package:quria/presentation/screens/profile/components/profile_desktop_item_section.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_header.dart';
 
@@ -21,7 +25,7 @@ class ProfileDesktopView extends StatelessWidget {
       InventoryBucket.kineticWeapons,
       InventoryBucket.energyWeapons,
       InventoryBucket.powerWeapons,
-      ...InventoryBucket.armorBucketHashes
+      ...InventoryBucket.armorBucketHashes,
     ];
     String icon = data.isNewSubclass
         ? ManifestService
@@ -30,7 +34,7 @@ class ProfileDesktopView extends StatelessWidget {
             .manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         desktopHeader(
           context,
@@ -47,6 +51,10 @@ class ProfileDesktopView extends StatelessWidget {
             subclass: data.selectedCharacterSubclass!,
           ),
         ),
+        if (Provider.of<InventoryProvider>(context)
+            .getPostmasterItemsForCharacter(Provider.of<CharactersProvider>(context).currentCharacter!.characterId!)
+            .isNotEmpty)
+          const PostmasterItemsDesktop(),
         ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,

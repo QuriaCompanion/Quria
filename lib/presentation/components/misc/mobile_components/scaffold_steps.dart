@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -11,11 +10,13 @@ import 'package:quria/presentation/components/misc/rounded_button.dart';
 class ScaffoldSteps<T> extends StatelessWidget {
   final Widget body;
   final String route;
+  final String actionText;
   final String? previousRoute;
   final VoidCallback? onNext;
   const ScaffoldSteps({
     required this.body,
     required this.route,
+    required this.actionText,
     this.previousRoute,
     this.onNext,
     Key? key,
@@ -79,7 +80,7 @@ class ScaffoldSteps<T> extends StatelessWidget {
             ),
             RoundedButton(
                 text: textBodyBold(
-                  AppLocalizations.of(context)!.next,
+                  actionText,
                   utf8: false,
                   color: black,
                 ),

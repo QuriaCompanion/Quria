@@ -1,46 +1,43 @@
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_entry_plug_item_randomized_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/helpers/inspectHelper.model.dart';
+import 'package:quria/data/models/perk.model.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/perk_item_display.dart';
 import 'package:quria/presentation/components/detailed_item/item/perk_modal.dart';
 
-class ColumnPerkDisplay extends StatefulWidget {
+@immutable
+class ColumnPerkDisplay extends StatelessWidget {
   const ColumnPerkDisplay({
     required this.item,
     required this.index,
-    required this.selectedPerks,
     required this.width,
     Key? key,
   }) : super(key: key);
   final DestinyInventoryItemDefinition item;
   final int index;
-  final InspectHelper selectedPerks;
   final double width;
-  @override
-  State<ColumnPerkDisplay> createState() => _ColumnPerkDisplayState();
-}
 
-class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
-  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-    final List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? sockets = ManifestService
-        .manifestParsed
-        .destinyPlugSetDefinition[widget.item.sockets!.socketEntries?[widget.index].randomizedPlugSetHash]
-        ?.reusablePlugItems;
+    final List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? sockets = ManifestService.manifestParsed
+        .destinyPlugSetDefinition[item.sockets!.socketEntries?[index].randomizedPlugSetHash]?.reusablePlugItems;
+    final InspectWeaponStatus? status = Provider.of<InspectProvider>(context).weaponStatus;
     return Column(
       children: [
-        if (widget.item.sockets?.socketEntries?[widget.index].randomizedPlugSetHash != null)
+        if (item.sockets?.socketEntries?[index].randomizedPlugSetHash != null)
           for (int i = 0; i < sockets!.length; i++)
             Padding(
               padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
               child: InkWell(
                 onTap: () {
-                  if (widget.width == vw(context)) {
+                  if (width == vw(context)) {
                     showMaterialModalBottomSheet(
                         backgroundColor: Colors.transparent,
                         expand: false,
@@ -48,30 +45,34 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                         builder: (context) {
                           return PerkModal(
                             width: vw(context),
+                            isCollection: true,
+                            isSelected: Conditions.isEquipped(index, sockets[i].plugItemHash, status),
                             perk:
                                 ManifestService.manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
                             onSocketsChanged: (_) {
-                              setState(() {
-                                selectedIndex = i;
-                                switch (widget.index) {
-                                  case 1:
-                                    widget.selectedPerks.firstColumn = ManifestService
-                                        .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
-                                    break;
-                                  case 2:
-                                    widget.selectedPerks.secondColumn = ManifestService
-                                        .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
-                                    break;
-                                  case 3:
-                                    widget.selectedPerks.thirdColumn = ManifestService
-                                        .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
-                                    break;
-                                  case 4:
-                                    widget.selectedPerks.fourthColumn = ManifestService
-                                        .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!;
-                                    break;
-                                }
-                              });
+                              final newPerk = Perk(itemHash: sockets[i].plugItemHash!);
+                              switch (index) {
+                                case 1:
+                                  Provider.of<InspectProvider>(context, listen: false)
+                                      .setWeaponStatus(status?..firstColumn = newPerk);
+                                  break;
+                                case 2:
+                                  Provider.of<InspectProvider>(context, listen: false)
+                                      .setWeaponStatus(status?..secondColumn = newPerk);
+                                  break;
+                                case 3:
+                                  Provider.of<InspectProvider>(context, listen: false)
+                                      .setWeaponStatus(status?..thirdColumn = newPerk);
+                                  break;
+                                case 4:
+                                  Provider.of<InspectProvider>(context, listen: false)
+                                      .setWeaponStatus(status?..fourthColumn = newPerk);
+                                  break;
+                                case 5:
+                                  Provider.of<InspectProvider>(context, listen: false)
+                                      .setWeaponStatus(status?..fifthColumn = newPerk);
+                                  break;
+                              }
                             },
                           );
                         });
@@ -85,26 +86,53 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                             width: vw(context) * 0.3,
                             child: PerkModal(
                               width: vw(context) * 0.3,
+                              isSelected: Conditions.isEquipped(index, sockets[i].plugItemHash, status),
+                              isCollection: true,
                               perk: ManifestService
                                   .manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
+                              onSocketsChanged: (_) {
+                                final newPerk = Perk(itemHash: sockets[i].plugItemHash!);
+                                switch (index) {
+                                  case 1:
+                                    Provider.of<InspectProvider>(context, listen: false)
+                                        .setWeaponStatus(status?..firstColumn = newPerk);
+                                    break;
+                                  case 2:
+                                    Provider.of<InspectProvider>(context, listen: false)
+                                        .setWeaponStatus(status?..secondColumn = newPerk);
+                                    break;
+                                  case 3:
+                                    Provider.of<InspectProvider>(context, listen: false)
+                                        .setWeaponStatus(status?..thirdColumn = newPerk);
+                                    break;
+                                  case 4:
+                                    Provider.of<InspectProvider>(context, listen: false)
+                                        .setWeaponStatus(status?..fourthColumn = newPerk);
+                                    break;
+                                  case 5:
+                                    Provider.of<InspectProvider>(context, listen: false)
+                                        .setWeaponStatus(status?..fifthColumn = newPerk);
+                                    break;
+                                }
+                              },
                             ),
                           ),
                         );
                       });
                 },
                 child: PerkItemDisplay(
-                  selected: selectedIndex == i,
+                  selected: Conditions.isEquipped(index, sockets[i].plugItemHash, status),
                   perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[sockets[i].plugItemHash]!,
-                  iconSize: itemSize(context, widget.width),
+                  iconSize: itemSize(context, width),
                 ),
               ),
             ),
-        if (widget.item.sockets?.socketEntries?[widget.index].randomizedPlugSetHash == null)
+        if (item.sockets?.socketEntries?[index].randomizedPlugSetHash == null)
           Padding(
             padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
             child: InkWell(
               onTap: () {
-                if (widget.width == vw(context)) {
+                if (width == vw(context)) {
                   showMaterialModalBottomSheet(
                     backgroundColor: Colors.transparent,
                     expand: false,
@@ -112,8 +140,10 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                     builder: (context) {
                       return PerkModal(
                         width: vw(context),
-                        perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
-                            widget.item.sockets?.socketEntries?[widget.index].singleInitialItemHash]!,
+                        isSelected: true,
+                        isCollection: true,
+                        perk: ManifestService.manifestParsed
+                            .destinyInventoryItemDefinition[item.sockets?.socketEntries?[index].singleInitialItemHash]!,
                       );
                     },
                   );
@@ -127,17 +157,19 @@ class _ColumnPerkDisplayState extends State<ColumnPerkDisplay> {
                           width: vw(context) * 0.3,
                           child: PerkModal(
                             width: vw(context) * 0.3,
+                            isCollection: true,
+                            isSelected: true,
                             perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
-                                widget.item.sockets?.socketEntries?[widget.index].singleInitialItemHash]!,
+                                item.sockets?.socketEntries?[index].singleInitialItemHash]!,
                           ),
                         ),
                       );
                     });
               },
               child: PerkItemDisplay(
-                perk: ManifestService.manifestParsed.destinyInventoryItemDefinition[
-                    widget.item.sockets?.socketEntries?[widget.index].singleInitialItemHash]!,
-                iconSize: itemSize(context, widget.width),
+                perk: ManifestService.manifestParsed
+                    .destinyInventoryItemDefinition[item.sockets?.socketEntries?[index].singleInitialItemHash]!,
+                iconSize: itemSize(context, width),
                 selected: true,
               ),
             ),

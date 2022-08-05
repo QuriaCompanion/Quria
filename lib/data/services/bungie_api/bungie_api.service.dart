@@ -126,7 +126,8 @@ class BungieApiService {
     return response.response;
   }
 
-  Future<int?> pullFromPostMaster(int itemHash, int stackSize, String itemId, String characterId) async {
+  Future<int?> pullFromPostMaster(
+      {required int itemHash, required int stackSize, required String itemId, required String characterId}) async {
     BungieNetToken? token = await AuthService.getToken();
     GroupUserInfoCard? membership = await AccountService.getMembership();
     Int32Response response = await Destiny2.pullFromPostmaster(
