@@ -30,7 +30,6 @@ class LoginWidget extends StatefulWidget {
   final String title = "Login";
   final BungieApiService api = BungieApiService();
   final bool forceReauth;
-
   LoginWidget({Key? key, this.forceReauth = true}) : super(key: key);
 
   @override

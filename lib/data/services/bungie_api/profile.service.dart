@@ -267,13 +267,13 @@ class ProfileService {
         for (List<DestinyItemPlugBase> plug in plugs.values) {
           if (plug.any((element) => element.plugItemHash == socket.plugHash) &&
               Conditions.perkSockets(socket.plugHash)) {
-            List<DestinyInventoryItemDefinition> plugDefitions = [];
+            List<DestinyInventoryItemDefinition> plugDefinitions = [];
             for (DestinyItemPlugBase plug in plug) {
               final plugDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash];
               if (plugDef == null) continue;
-              plugDefitions.add(plugDef);
+              plugDefinitions.add(plugDef);
             }
-            perks.add(plugDefitions);
+            perks.add(plugDefinitions);
           }
         }
       }
