@@ -5,6 +5,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/services/display/weapon_score.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/equip_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/in_progress_modal.dart';
 import 'package:quria/presentation/components/misc/mobile_components/transfer_modal.dart';
@@ -27,6 +28,7 @@ class _InspectMobileActionsState extends State<InspectMobileActions> {
   @override
   Widget build(BuildContext context) {
     DestinyItemComponent item = Provider.of<InspectProvider>(context).item!;
+    WeaponScoreService().getWeaponScore(context, item);
     return Padding(
       padding: EdgeInsets.only(top: globalPadding(context) / 2),
       child: Row(

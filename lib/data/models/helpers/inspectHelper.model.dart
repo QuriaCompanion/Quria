@@ -55,13 +55,13 @@ class InspectWeaponStatus {
 
   factory InspectWeaponStatus.fromMap(Map<String, dynamic> map) {
     return InspectWeaponStatus(
-      firstColumn: map['firstColumn'] != null ? Perk.fromMap(map['firstColumn'] as Map<int, dynamic>) : null,
-      secondColumn: map['secondColumn'] != null ? Perk.fromMap(map['secondColumn'] as Map<int, dynamic>) : null,
-      thirdColumn: map['thirdColumn'] != null ? Perk.fromMap(map['thirdColumn'] as Map<int, dynamic>) : null,
-      fourthColumn: map['fourthColumn'] != null ? Perk.fromMap(map['fourthColumn'] as Map<int, dynamic>) : null,
-      fifthColumn: map['fifthColumn'] != null ? Perk.fromMap(map['fifthColumn'] as Map<int, dynamic>) : null,
-      masterwork: map['masterwork'] != null ? Perk.fromMap(map['masterwork'] as Map<int, dynamic>) : null,
-      mod: map['mod'] != null ? Perk.fromMap(map['mod'] as Map<int, dynamic>) : null,
+      firstColumn: map['firstColumn'] != null ? Perk.fromMap(map['firstColumn'] as Map<String, dynamic>) : null,
+      secondColumn: map['secondColumn'] != null ? Perk.fromMap(map['secondColumn'] as Map<String, dynamic>) : null,
+      thirdColumn: map['thirdColumn'] != null ? Perk.fromMap(map['thirdColumn'] as Map<String, dynamic>) : null,
+      fourthColumn: map['fourthColumn'] != null ? Perk.fromMap(map['fourthColumn'] as Map<String, dynamic>) : null,
+      fifthColumn: map['fifthColumn'] != null ? Perk.fromMap(map['fifthColumn'] as Map<String, dynamic>) : null,
+      masterwork: map['masterwork'] != null ? Perk.fromMap(map['masterwork'] as Map<String, dynamic>) : null,
+      mod: map['mod'] != null ? Perk.fromMap(map['mod'] as Map<String, dynamic>) : null,
     );
   }
 

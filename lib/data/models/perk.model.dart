@@ -30,7 +30,7 @@ class Perk {
     };
   }
 
-  factory Perk.fromMap(Map<int, dynamic> map) {
+  factory Perk.fromMap(Map<String, dynamic> map) {
     return Perk(
       itemHash: map['itemHash'] as int,
       valuePve: map['valuePve'] != null ? map['valuePve'] as int : null,
@@ -40,7 +40,7 @@ class Perk {
 
   String toJson() => json.encode(toMap());
 
-  factory Perk.fromJson(String source) => Perk.fromMap(json.decode(source) as Map<int, dynamic>);
+  factory Perk.fromJson(String source) => Perk.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'Perk(itemHash: $itemHash, valuePve: $valuePve, valuePvp: $valuePvp)';
