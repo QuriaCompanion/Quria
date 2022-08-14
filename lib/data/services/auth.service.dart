@@ -8,21 +8,21 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:bungie_api/helpers/bungie_net_token.dart';
 import 'package:bungie_api/helpers/oauth.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 import 'bungie_api/bungie_api.service.dart';
+import 'bungie_api/enums/destiny_data.dart';
 
 bool initialLinkHandled = false;
 
 class AuthService {
   static BungieNetToken? _currentToken;
   static GroupUserInfoCard? _currentMembership;
-
   static bool waitingAuthCode = false;
   final Map<String, String> headers = {"Accept": "application/json", "Access-Control-Allow-Origin": "*"};
 
   static const bungieUrl = "https://www.bungie.net/Platform/";
-
-  static late StreamSubscription<String?> linkStreamSub;
+  static late StreamSubscription<Uri?> linkStreamSub;
 
   static final AuthService _singleton = AuthService._internal();
 
@@ -108,63 +108,7 @@ class AuthService {
     }
   }
 
-  static Future<String> authorize(String lang, [bool forceReauth = true]) async {
-    var browser = BungieAuthBrowser();
-    // print("test");
-    // final AuthorizationResponse? result =
-    //     await const FlutterAppAuth().authorize(
-    //   AuthorizationRequest(
-    //     BungieApiService.clientId!,
-    //     'quria://',
-    //     discoveryUrl: 'https://www.bungie.net/fr/OAuth/Authorize',
-    //   ),
-    // );
-    // inspect(result);
-    // return result?.authorizationCode ?? "";
-
-    OAuth.openOAuth(browser, BungieApiService.clientId!, lang, forceReauth);
-    Stream<String?> stream = linkStream;
-    Completer<String> completer = Completer();
-
-    linkStreamSub = stream.listen((link) {
-      Uri uri = Uri.parse(link!);
-      if (uri.queryParameters.containsKey("code") || uri.queryParameters.containsKey("error")) {
-        closeInAppWebView();
-        linkStreamSub.cancel();
-      }
-      if (uri.queryParameters.containsKey("code")) {
-        String? code = uri.queryParameters["code"];
-        completer.complete(code);
-      } else {
-        String? errorType = uri.queryParameters["error"];
-        String? errorDescription = uri.queryParameters["error_description"];
-        try {
-          throw OAuthException(errorType!, errorDescription!);
-        } on OAuthException catch (e, stack) {
-          completer.completeError(e, stack);
-        }
-      }
-    });
-
-    return completer.future;
-  }
-
   static bool get isLogged {
     return _currentMembership != null;
-  }
-}
-
-class BungieAuthBrowser implements OAuthBrowser {
-  BungieAuthBrowser() : super();
-
-  @override
-  dynamic open(String url) async {
-    if (Platform.isIOS) {
-      // ignore: deprecated_member_use
-      await launch(url, forceSafariVC: true, statusBarBrightness: Brightness.dark);
-    } else {
-      // ignore: deprecated_member_use
-      await launch(url, forceSafariVC: true);
-    }
   }
 }
