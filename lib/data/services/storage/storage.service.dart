@@ -57,7 +57,7 @@ class StorageService {
 
   /// Given a storage [key] , return the value from localStorage.
   static Future<T> getLocalStorage<T>(String key) async {
-    return _storage.ready.then((_) async => await _storage.getItem(key) as T);
+    return await _storage.ready.then((_) async => await _storage.getItem(key) as T);
   }
 
   /// Given a storage [key] , removes localStorage entry
