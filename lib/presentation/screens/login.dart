@@ -132,7 +132,7 @@ class LoginWidgetState extends State<LoginWidget> {
 
   void redirect(String lang) async {
     final authorizationEndpoint =
-        "https://www.bungie.net/$lang/OAuth/Authorize?client_id=${BungieApiService.clientId}&response_type=code";
+        "https://www.bungie.net/$lang/OAuth/Authorize?client_id=${BungieApiService.clientId}&response_type=code&reauth=true";
     if (kIsWeb) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         html.window.location.assign(authorizationEndpoint);
@@ -146,7 +146,8 @@ class LoginWidgetState extends State<LoginWidget> {
               javascriptMode: JavascriptMode.unrestricted,
               navigationDelegate: (NavigationRequest request) {
                 final uri = Uri.parse(request.url);
-                if (uri.queryParameters.containsKey("code") || uri.queryParameters.containsKey("error")) {
+                inspect(uri);
+                if (uri.scheme == "quria") {
                   if (uri.queryParameters.containsKey("code")) {
                     authCode(uri.queryParameters["code"]!);
                     Navigator.pop(context);
