@@ -42,11 +42,11 @@ class AccountService {
     return membershipData;
   }
 
-  static void reset() {
-    StorageService.removeLocalStorage("bungie_token");
-    StorageService.removeLocalStorage("last_refresh");
-    StorageService.removeLocalStorage("membershipData");
-    StorageService.removeLocalStorage("currentMembership");
+  static Future<void> reset() async {
+    await StorageService.removeLocalStorage("bungie_token");
+    await StorageService.removeLocalStorage("last_refresh");
+    await StorageService.removeLocalStorage("membershipData");
+    await StorageService.removeLocalStorage("currentMembership");
     currentMembership = null;
     membershipData = null;
   }

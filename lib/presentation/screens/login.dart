@@ -25,12 +25,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:quria/data/services/auth.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class LoginWidget extends StatefulWidget {
   final String title = "Login";
   final BungieApiService api = BungieApiService();
   final bool forceReauth;
-
   LoginWidget({Key? key, this.forceReauth = true}) : super(key: key);
 
   @override
@@ -88,8 +88,8 @@ class LoginWidgetState extends State<LoginWidget> {
             ),
             onPressed: () {
               loadingModal();
-              // authorizeClick(context);
-              yannisooLogin();
+              authorizeClick(context);
+              // yannisooLogin();
             },
             width: 250.0,
             height: 60),
@@ -131,16 +131,41 @@ class LoginWidgetState extends State<LoginWidget> {
   }
 
   void redirect(String lang) async {
+    final authorizationEndpoint =
+        "https://www.bungie.net/$lang/OAuth/Authorize?client_id=${BungieApiService.clientId}&response_type=code&reauth=true";
     if (kIsWeb) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        String clientId = BungieApiService.clientId!;
-        final authorizationEndpoint =
-            "https://www.bungie.net/$lang/OAuth/Authorize?client_id=$clientId&response_type=code";
         html.window.location.assign(authorizationEndpoint);
       });
     } else {
-      String code = await AuthService.authorize(lang, widget.forceReauth);
-      authCode(code);
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return WebView(
+              initialUrl: authorizationEndpoint,
+              javascriptMode: JavascriptMode.unrestricted,
+              navigationDelegate: (NavigationRequest request) {
+                final uri = Uri.parse(request.url);
+                inspect(uri);
+                if (uri.scheme == "quria") {
+                  if (uri.queryParameters.containsKey("code")) {
+                    authCode(uri.queryParameters["code"]!);
+                    Navigator.pop(context);
+                  } else {
+                    String? errorType = uri.queryParameters["error"];
+                    String? errorDescription = uri.queryParameters["error_description"];
+                    try {
+                      throw OAuthException(errorType!, errorDescription!);
+                    } on OAuthException catch (_) {
+                      rethrow;
+                    }
+                  }
+                  Navigator.pop(context);
+                }
+                return NavigationDecision.navigate;
+              },
+            );
+          });
     }
   }
 

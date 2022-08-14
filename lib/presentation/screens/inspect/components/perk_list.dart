@@ -2,8 +2,6 @@ import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
-import 'package:quria/data/models/helpers/inspectHelper.model.dart';
-import 'package:quria/data/models/perk.model.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
