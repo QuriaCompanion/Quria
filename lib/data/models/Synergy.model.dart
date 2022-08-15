@@ -2,8 +2,8 @@
 import 'dart:convert';
 
 class Synergy {
-  final String perkOne;
-  final String perkTwo;
+  final int perkOne;
+  final int perkTwo;
   final int valuePvp;
   final int valuePve;
   Synergy({
@@ -14,8 +14,8 @@ class Synergy {
   });
 
   Synergy copyWith({
-    String? perkOne,
-    String? perkTwo,
+    int? perkOne,
+    int? perkTwo,
     int? valuePvp,
     int? valuePve,
   }) {
@@ -38,8 +38,8 @@ class Synergy {
 
   factory Synergy.fromMap(Map<String, dynamic> map) {
     return Synergy(
-      perkOne: map['perkOne'] as String,
-      perkTwo: map['perkTwo'] as String,
+      perkOne: map['perkOne'] as int,
+      perkTwo: map['perkTwo'] as int,
       valuePvp: map['valuePvp'] as int,
       valuePve: map['valuePve'] as int,
     );
