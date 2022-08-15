@@ -92,6 +92,7 @@ flutter:
     - assets/
     - assets/img/
     - assets/icons/
+    - assets/icons/damage/
     - assets/icons/weapons/
     - assets/animations/
     # The following line ensures that the Material Icons font is

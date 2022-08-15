@@ -1,6 +1,8 @@
+import 'package:bungie_api/enums/damage_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
+import 'package:bungie_api/enums/tier_type.dart';
 
-const Map<DestinyItemSubType, String> filtersLogo = {
+const Map<DestinyItemSubType, String> filtersItemTypeLogo = {
   DestinyItemSubType.AutoRifle: 'assets/icons/weapons/6.af807f3.svg',
   DestinyItemSubType.Shotgun: 'assets/icons/weapons/7.fcc36d5.svg',
   DestinyItemSubType.Machinegun: 'assets/icons/weapons/8.fdcd699.svg',
@@ -18,4 +20,20 @@ const Map<DestinyItemSubType, String> filtersLogo = {
   DestinyItemSubType.TraceRifle: 'assets/icons/weapons/25.qsdsd.svg',
   DestinyItemSubType.Bow: 'assets/icons/weapons/31.ecbab7e.svg',
   DestinyItemSubType.Glaive: 'assets/icons/weapons/33.b246aa9.svg',
+};
+
+const Map<DamageType, String> filtersDamageTypeLogo = {
+  DamageType.Kinetic: 'assets/icons/damage/kinetic.svg',
+  DamageType.Arc: 'assets/icons/damage/arc.svg',
+  DamageType.Void: 'assets/icons/damage/void.svg',
+  DamageType.Stasis: 'assets/icons/damage/stasis.svg',
+  DamageType.Thermal: 'assets/icons/damage/solar.svg',
+};
+
+const Map<TierType, String> filtersTierTypeLogo = {
+  TierType.Basic: 'assets/icons/weapons/common.svg',
+  TierType.Common: 'assets/icons/weapons/uncommon.svg',
+  TierType.Rare: 'assets/icons/weapons/rare.svg',
+  TierType.Superior: 'assets/icons/weapons/legendary.svg',
+  TierType.Exotic: 'assets/icons/weapons/exotic.svg',
 };

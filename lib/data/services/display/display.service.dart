@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:bungie_api/enums/damage_type.dart';
+import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
@@ -26,6 +28,7 @@ import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/models/helpers/socketsHelper.model.dart';
 import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/filters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
@@ -388,5 +391,18 @@ class DisplayService {
     } else {
       throw Exception('Failed to load album');
     }
+  }
+
+  static bool isItemItemActive(BuildContext context, DestinyInventoryItemDefinition item) {
+    final filters = Provider.of<FiltersProvider>(context).activeFilters;
+    if (filters.isEmpty) {
+      return true;
+    }
+    for (dynamic filter in filters) {
+      if (filter.runtimeType == TierType && item.inventory?.tierType != filter) return false;
+      if (filter.runtimeType == DamageType && item.damageTypes?[0] != filter) return false;
+      if (filter.runtimeType == DestinyItemSubType && item.itemSubType != filter) return false;
+    }
+    return true;
   }
 }

@@ -12,11 +12,11 @@ class FiltersProvider with ChangeNotifier {
     TierType.Exotic: false,
   };
   final Map<DamageType, bool> _element = {
-    DamageType.Arc: false,
-    DamageType.Thermal: false,
-    DamageType.Void: false,
-    DamageType.Stasis: false,
     DamageType.Kinetic: false,
+    DamageType.Stasis: false,
+    DamageType.Thermal: false,
+    DamageType.Arc: false,
+    DamageType.Void: false,
   };
   final Map<DestinyItemSubType, bool> _type = {
     DestinyItemSubType.AutoRifle: false,
@@ -39,12 +39,13 @@ class FiltersProvider with ChangeNotifier {
   };
   final Map<int, bool> _archetype = {};
   final Map<int, bool> _perks = {};
+  List<dynamic> get activeFilters => _activeFilters;
+  final List<dynamic> _activeFilters = [];
   Map<TierType, bool> get rarity => _rarity;
   Map<DamageType, bool> get element => _element;
   Map<DestinyItemSubType, bool> get type => _type;
   Map<int, bool> get archetype => _archetype;
   Map<int, bool> get perks => _perks;
-
   changeFilter<T>(T item, bool value) {
     switch (T) {
       case TierType:
@@ -58,6 +59,12 @@ class FiltersProvider with ChangeNotifier {
         break;
       default:
         break;
+    }
+    if (value) {
+      activeFilters.add(item);
+      activeFilters.toSet();
+    } else {
+      activeFilters.remove(item);
     }
     notifyListeners();
   }
