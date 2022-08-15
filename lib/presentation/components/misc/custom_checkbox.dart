@@ -6,7 +6,7 @@ class CustomCheckbox extends StatelessWidget {
   final String text;
   final bool value;
   final Color color;
-  final Function onChanged;
+  final Function(bool) onChanged;
   const CustomCheckbox({
     required this.text,
     required this.value,

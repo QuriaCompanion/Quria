@@ -22,8 +22,8 @@ class CollectionFilter {
   };
   static const Map<String, DestinyItemSubType> power = {
     "Mitrailleuse": DestinyItemSubType.Machinegun,
-    "Lance roquettes": DestinyItemSubType.RocketLauncher,
-    "lance grenade": DestinyItemSubType.GrenadeLauncher,
+    "Lance roquette": DestinyItemSubType.RocketLauncher,
+    "Lance grenade": DestinyItemSubType.GrenadeLauncher,
     "Epée": DestinyItemSubType.Sword,
     "Fusion linéaire": DestinyItemSubType.FusionRifleLine,
   };

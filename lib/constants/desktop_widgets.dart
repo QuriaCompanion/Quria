@@ -491,12 +491,13 @@ Widget desktopCollectionModal(BuildContext context, {required Widget child}) {
                 text: AppLocalizations.of(context)!.share,
                 callback: () {
                   showDialog(
-                      context: context,
-                      builder: (context) {
-                        return Center(
-                          child: SizedBox(width: vw(context) * 0.25, child: const InProgressModal()),
-                        );
-                      });
+                    context: context,
+                    builder: (context) {
+                      return Center(
+                        child: SizedBox(width: vw(context) * 0.25, child: const InProgressModal()),
+                      );
+                    },
+                  );
                 },
                 icon: 'assets/icons/shareDesktop.svg',
               ),
