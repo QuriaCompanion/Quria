@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/presentation/components/detailed_item/item/weapon_score_display.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_actions.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_cosmetics.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_perks.dart';
@@ -46,6 +47,7 @@ class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
             width: widget.width - globalPadding(context) * 2,
           ),
         ),
+        mobileSection(context, title: 'Notation Quria', child: const WeaponScoreDisplay()),
         mobileSection(
           context,
           title: AppLocalizations.of(context)!.perks,

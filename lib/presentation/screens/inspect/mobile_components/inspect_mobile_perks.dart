@@ -12,6 +12,7 @@ import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
+import 'package:quria/presentation/components/detailed_item/item/weapon_score_display.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_perk_column.dart';
 
 class InspectMobilePerks extends StatefulWidget {
