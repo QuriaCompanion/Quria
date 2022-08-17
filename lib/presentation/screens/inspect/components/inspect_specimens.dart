@@ -54,7 +54,9 @@ class InspectSpecimens extends StatelessWidget {
             width: itemSize(context, width),
             child: Image(
               image: NetworkImage(DestinyData.bungieLink +
-                  (character?.emblemPath ?? "/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png")),
+                  (character?.emblemPath != null
+                      ? '${character!.emblemPath!}?t=123456'
+                      : "/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png?t=123456")),
             ),
           ),
           SizedBox(

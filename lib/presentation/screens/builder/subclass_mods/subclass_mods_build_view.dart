@@ -41,7 +41,7 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
           children: [
             mobileHeader(
               context,
-              image: NetworkImage(DestinyData.bungieLink + widget.subclass.screenshot!),
+              image: NetworkImage('${DestinyData.bungieLink}${widget.subclass.screenshot!}?t=12345456'),
               width: widget.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +138,8 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
                                       });
                                 },
                                 child: pictureBordered(
-                                  image: DestinyData.bungieLink + displayedSockets[7 + i].displayProperties!.icon!,
+                                  image:
+                                      '${DestinyData.bungieLink}${displayedSockets[7 + i].displayProperties!.icon!}?t=12345456',
                                   size: widget.width == vw(context) ? itemSize(context, widget.width) : 80,
                                 ),
                               ),

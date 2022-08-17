@@ -57,8 +57,8 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
         webHeader(
           context,
           image: ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass?.itemHash]?.screenshot != null
-              ? NetworkImage(DestinyData.bungieLink +
-                  ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.screenshot!)
+              ? NetworkImage(
+                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.screenshot!}?t=123465')
               : ghostBuild,
           child: textDesktopTitle(
             _build.name,
@@ -112,12 +112,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                                   ),
                                 ),
                                 ExtendedImage.network(
-                                  DestinyData.bungieLink +
-                                      ManifestService
-                                          .manifestParsed
-                                          .destinyInventoryItemDefinition[_subclass!.itemHash]!
-                                          .displayProperties!
-                                          .icon!,
+                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.displayProperties!.icon!}?t=123465',
                                   height: 75,
                                   width: 75,
                                   timeLimit: const Duration(seconds: 10),

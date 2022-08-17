@@ -23,7 +23,7 @@ class InspectMobileHeader extends StatelessWidget {
           child: Row(
             children: [
               if (iconElement != null)
-                Image(height: 16, width: 16, image: NetworkImage(DestinyData.bungieLink + iconElement!)),
+                Image(height: 16, width: 16, image: NetworkImage('${DestinyData.bungieLink}${iconElement!}?t=123426')),
               if (iconElement != null) const SizedBox(width: 8),
               if (power != null) textH2(power.toString()),
               if (power != null && iconElement != null) divider,

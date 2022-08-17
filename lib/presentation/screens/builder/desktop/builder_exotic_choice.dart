@@ -76,7 +76,7 @@ class _BuilderExoticChoiceState extends State<BuilderExoticChoice> {
                               ),
                             ),
                             child: ExtendedImage.network(
-                              DestinyData.bungieLink + exotics[index].displayProperties!.icon!,
+                              '${DestinyData.bungieLink}${exotics[index].displayProperties!.icon!}?t=123465',
                               width: 80,
                               height: 80,
                               timeLimit: const Duration(seconds: 10),

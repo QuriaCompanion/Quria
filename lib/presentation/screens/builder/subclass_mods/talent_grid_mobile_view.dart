@@ -34,7 +34,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
         mobileHeader(
           context,
           width: widget.width,
-          image: NetworkImage(DestinyData.bungieLink + widget.subclass.secondaryIcon!),
+          image: NetworkImage('${DestinyData.bungieLink}${widget.subclass.secondaryIcon!}?t=12345456'),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,

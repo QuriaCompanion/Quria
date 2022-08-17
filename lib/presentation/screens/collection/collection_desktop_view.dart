@@ -171,8 +171,8 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                                 child: Row(
                                   children: [
                                     Image(
-                                      image:
-                                          NetworkImage(DestinyData.bungieLink + items[index].displayProperties!.icon!),
+                                      image: NetworkImage(
+                                          '${DestinyData.bungieLink}${items[index].displayProperties!.icon!}?t=123456'),
                                       height: 80,
                                       width: 80,
                                       fit: BoxFit.fill,
@@ -185,12 +185,8 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                                         Row(
                                           children: [
                                             Image(
-                                              image: NetworkImage(DestinyData.bungieLink +
-                                                  ManifestService
-                                                      .manifestParsed
-                                                      .destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!
-                                                      .displayProperties!
-                                                      .icon!),
+                                              image: NetworkImage(
+                                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!.displayProperties!.icon!}?t=123456'),
                                               height: 15,
                                               width: 15,
                                               fit: BoxFit.fill,

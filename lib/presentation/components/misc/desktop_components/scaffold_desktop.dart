@@ -135,7 +135,7 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                                                         width: 50,
                                                         height: 50,
                                                         image: NetworkImage(
-                                                            DestinyData.bungieLink + character.value.emblemPath!)),
+                                                            '${DestinyData.bungieLink}${character.value.emblemPath!}?t=123456')),
                                                     textBodyBold(ManifestService
                                                             .manifestParsed
                                                             .destinyClassDefinition[character.value.classHash]!
@@ -146,12 +146,8 @@ class _ScaffoldDesktopState extends State<ScaffoldDesktop> {
                                                         Image(
                                                           width: 30,
                                                           height: 30,
-                                                          image: NetworkImage(DestinyData.bungieLink +
-                                                              ManifestService
-                                                                  .manifestParsed
-                                                                  .destinyStatDefinition[StatsHash.power]!
-                                                                  .displayProperties!
-                                                                  .icon!),
+                                                          image: NetworkImage(
+                                                              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t=123456'),
                                                           color: yellow,
                                                           fit: BoxFit.cover,
                                                         ),

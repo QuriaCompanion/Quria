@@ -33,8 +33,7 @@ class ItemIcon extends StatelessWidget {
       child: Stack(
         children: [
           ExtendedImage.network(
-            DestinyData.bungieLink +
-                ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!,
+            '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!}?t=${imageSize.toInt()}',
             loadStateChanged: (ExtendedImageState state) {
               switch (state.extendedImageLoadState) {
                 case LoadState.loading:
@@ -65,9 +64,7 @@ class ItemIcon extends StatelessWidget {
                       ?.displayVersionWatermarkIcons?[0] !=
                   "")
             ExtendedImage.network(
-              DestinyData.bungieLink +
-                  ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!
-                      .displayVersionWatermarkIcons![0],
+              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!.displayVersionWatermarkIcons![0]}?t=${imageSize.toInt()}',
               height: imageSize,
               timeLimit: const Duration(seconds: 10),
               width: imageSize,
@@ -92,7 +89,8 @@ class ItemIcon extends StatelessWidget {
                     if (element != null)
                       Padding(
                         padding: const EdgeInsets.only(left: 4),
-                        child: Image(image: NetworkImage(DestinyData.bungieLink + element!)),
+                        child:
+                            Image(image: NetworkImage('${DestinyData.bungieLink}${element!}?t=${imageSize.toInt()}')),
                       ),
                     textIcon(powerLevel.toString())
                   ],

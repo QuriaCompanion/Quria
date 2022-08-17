@@ -28,10 +28,8 @@ class ProfileDesktopView extends StatelessWidget {
       ...InventoryBucket.armorBucketHashes,
     ];
     String icon = data.isNewSubclass
-        ? ManifestService
-            .manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.screenshot!
-        : ManifestService
-            .manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!;
+        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t=123456'
+        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t=123456';
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

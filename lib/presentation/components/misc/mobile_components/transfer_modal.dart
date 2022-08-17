@@ -115,7 +115,7 @@ class _TransferModalState extends State<TransferModal> {
                   },
                   child: CharacterTransferItem(
                     width: widget.width ?? vw(context),
-                    imageLink: DestinyData.bungieLink + character.emblemPath!,
+                    imageLink: '${DestinyData.bungieLink}${character.emblemPath!}?t=123456',
                     name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
                         .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                     icon: "assets/icons/Transfer.svg",

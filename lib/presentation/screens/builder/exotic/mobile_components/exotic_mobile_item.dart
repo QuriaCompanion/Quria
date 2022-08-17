@@ -73,7 +73,8 @@ class _ExoticMobileItemState extends State<ExoticMobileItem> with TickerProvider
                     Image(
                         width: itemSize(context, widget.width),
                         height: itemSize(context, widget.width),
-                        image: NetworkImage(DestinyData.bungieLink + widget.item.displayProperties!.icon!)),
+                        image:
+                            NetworkImage('${DestinyData.bungieLink}${widget.item.displayProperties!.icon!}?t=123456')),
                     SizedBox(width: globalPadding(context) / 2),
                     Expanded(
                       child: Column(

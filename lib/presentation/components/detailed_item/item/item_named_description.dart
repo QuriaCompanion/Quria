@@ -21,7 +21,7 @@ class ItemNamedDescription extends StatelessWidget {
         Stack(
           children: [
             ExtendedImage.network(
-              DestinyData.bungieLink + item.displayProperties!.icon!,
+              '${DestinyData.bungieLink}${item.displayProperties!.icon!}?t=123456',
               width: iconSize,
               height: iconSize,
               timeLimit: const Duration(seconds: 10),
@@ -32,7 +32,7 @@ class ItemNamedDescription extends StatelessWidget {
             ),
             if (item.iconWatermark != null)
               ExtendedImage.network(
-                DestinyData.bungieLink + item.iconWatermark!,
+                '${DestinyData.bungieLink}${item.iconWatermark!}?t=123456',
                 width: iconSize,
                 height: iconSize,
                 timeLimit: const Duration(seconds: 10),

@@ -20,7 +20,7 @@ class ArmorModIconDisplay extends StatelessWidget {
         alignment: Alignment.topRight,
         children: [
           ExtendedImage.network(
-            DestinyData.bungieLink + socket.displayProperties!.icon!,
+            '${DestinyData.bungieLink}${socket.displayProperties!.icon!}?t=123456',
             width: iconSize,
             height: iconSize,
             timeLimit: const Duration(seconds: 10),
@@ -36,9 +36,7 @@ class ArmorModIconDisplay extends StatelessWidget {
               ManifestService.manifestParsed.destinyStatDefinition[3578062600]?.displayProperties?.icon != null &&
               socket.investmentStats?[0].statTypeHash != 3578062600)
             ExtendedImage.network(
-              DestinyData.bungieLink +
-                  ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!
-                      .displayProperties!.icon!,
+              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!.displayProperties!.icon!}?t=132456',
               width: iconSize,
               height: iconSize,
               timeLimit: const Duration(seconds: 10),

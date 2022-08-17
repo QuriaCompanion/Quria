@@ -36,7 +36,7 @@ class _BurgerState extends State<Burger> {
               image: DecorationImage(
                   fit: BoxFit.fitHeight,
                   image: NetworkImage(
-                      '${DestinyData.bungieLink}/img/UserThemes/${AccountService.membershipData?.bungieNetUser?.profileThemeName}/header.jpg')),
+                      '${DestinyData.bungieLink}/img/UserThemes/${AccountService.membershipData?.bungieNetUser?.profileThemeName}/header.jpg?t=123456')),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +49,7 @@ class _BurgerState extends State<Burger> {
                     image: DecorationImage(
                         fit: BoxFit.fill,
                         image: NetworkImage(
-                            '${DestinyData.bungieLink}${AccountService.membershipData?.bungieNetUser?.profilePicturePath}')),
+                            '${DestinyData.bungieLink}${AccountService.membershipData?.bungieNetUser?.profilePicturePath}?t=123456')),
                   ),
                 ),
                 const SizedBox(height: 16),

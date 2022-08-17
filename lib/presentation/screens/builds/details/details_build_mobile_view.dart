@@ -40,13 +40,8 @@ class _DetailsBuildMobileViewState extends State<DetailsBuildMobileView> {
                           ?.itemHash]
                       ?.screenshot !=
                   null
-              ? NetworkImage(DestinyData.bungieLink +
-                  ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition[Provider.of<DetailsBuildProvider>(context, listen: false)
-                          .getEquippedItemByBucket(InventoryBucket.subclass)!
-                          .itemHash]!
-                      .screenshot!)
+              ? NetworkImage(
+                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<DetailsBuildProvider>(context, listen: false).getEquippedItemByBucket(InventoryBucket.subclass)!.itemHash]!.screenshot!}?t=12345456')
               : ghostBuild,
           child: textH1(
             _build.name,

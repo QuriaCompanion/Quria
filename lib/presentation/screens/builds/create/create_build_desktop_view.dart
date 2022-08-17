@@ -184,16 +184,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                                   ),
                                 ),
                                 ExtendedImage.network(
-                                  DestinyData.bungieLink +
-                                      ManifestService
-                                          .manifestParsed
-                                          .destinyInventoryItemDefinition[Provider.of<CreateBuildProvider>(context)
-                                              .items
-                                              .where((element) => element.bucketHash == InventoryBucket.subclass)
-                                              .first
-                                              .itemHash]!
-                                          .displayProperties!
-                                          .icon!,
+                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<CreateBuildProvider>(context).items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t=123456',
                                   height: 75,
                                   width: 75,
                                   timeLimit: const Duration(seconds: 10),

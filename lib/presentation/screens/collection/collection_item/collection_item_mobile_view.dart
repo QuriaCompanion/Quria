@@ -64,7 +64,7 @@ class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
         children: [
           mobileHeader(
             context,
-            image: NetworkImage(DestinyData.bungieLink + data.screenshot!),
+            image: NetworkImage('${DestinyData.bungieLink}${data.screenshot!}?t=123456'),
             child: InspectMobileHeader(
               name: data.displayProperties!.name!,
               type: data.itemTypeAndTierDisplayName!,

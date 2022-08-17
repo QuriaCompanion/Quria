@@ -37,8 +37,9 @@ class _ForeignBuildMobileViewState extends State<ForeignBuildMobileView> {
       children: [
         mobileHeader(
           context,
-          image:
-              subclass?.screenshot != null ? NetworkImage(DestinyData.bungieLink + subclass!.screenshot!) : ghostBuild,
+          image: subclass?.screenshot != null
+              ? NetworkImage('${DestinyData.bungieLink}${subclass!.screenshot!}?t=123546')
+              : ghostBuild,
           child: textH1(
             widget.foreignBuild.name,
             utf8: false,

@@ -30,10 +30,8 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
   @override
   Widget build(BuildContext context) {
     String icon = widget.data.isNewSubclass
-        ? ManifestService
-            .manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.screenshot!
-        : ManifestService.manifestParsed
-            .destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!;
+        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t=123456'
+        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t=123456';
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

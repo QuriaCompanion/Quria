@@ -54,9 +54,8 @@ class ItemComponentDisplayPerks extends StatelessWidget {
                 ),
               ),
               child: Image(
-                image: NetworkImage(DestinyData.bungieLink +
-                    ManifestService
-                        .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!),
+                image: NetworkImage(
+                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!}?t=123456'),
               ),
             ),
         const Spacer(),
@@ -75,9 +74,8 @@ class ItemComponentDisplayPerks extends StatelessWidget {
                   ),
                 ),
                 child: Image(
-                  image: NetworkImage(DestinyData.bungieLink +
-                      ManifestService
-                          .manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!),
+                  image: NetworkImage(
+                      '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!}?t=123456'),
                 ),
               ),
           ],

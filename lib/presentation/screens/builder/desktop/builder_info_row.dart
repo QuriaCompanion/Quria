@@ -32,9 +32,7 @@ class BuilderInfoRow extends StatelessWidget {
             Column(
               children: [
                 ExtendedImage.network(
-                  DestinyData.bungieLink +
-                      (Provider.of<BuilderExoticProvider>(context).exotic?.displayProperties?.icon ??
-                          DestinyData.exoticArmorLogo),
+                  '${DestinyData.bungieLink}${Provider.of<BuilderExoticProvider>(context).exotic?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t=123456',
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   border: Border.all(
@@ -75,9 +73,7 @@ class BuilderInfoRow extends StatelessWidget {
             Column(
               children: [
                 ExtendedImage.network(
-                  DestinyData.bungieLink +
-                      (Provider.of<BuilderSubclassProvider>(context).subclass?.displayProperties?.icon ??
-                          DestinyData.exoticArmorLogo),
+                  '${DestinyData.bungieLink}${Provider.of<BuilderSubclassProvider>(context).subclass?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t=123456',
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   colorBlendMode: BlendMode.clear,
@@ -98,7 +94,7 @@ class BuilderInfoRow extends StatelessWidget {
             Column(
               children: [
                 ExtendedImage.network(
-                  DestinyData.bungieLink + DestinyData.modsLogo,
+                  '${DestinyData.bungieLink}${DestinyData.modsLogo}?t=123456',
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   colorBlendMode: BlendMode.clear,
@@ -120,7 +116,7 @@ class BuilderInfoRow extends StatelessWidget {
               children: [
                 if (Provider.of<BuilderCustomInfoProvider>(context).classItem == null)
                   ExtendedImage.network(
-                    DestinyData.bungieLink + DestinyData.classItemLogo,
+                    '${DestinyData.bungieLink}${DestinyData.classItemLogo}?t=123456',
                     height: vw(context) * .05,
                     width: vw(context) * .05,
                     colorBlendMode: BlendMode.clear,

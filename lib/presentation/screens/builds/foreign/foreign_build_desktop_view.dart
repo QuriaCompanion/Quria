@@ -56,7 +56,7 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
         webHeader(
           context,
           image: subclassDef?.screenshot != null
-              ? NetworkImage(DestinyData.bungieLink + subclassDef!.screenshot!)
+              ? NetworkImage('${DestinyData.bungieLink}${subclassDef!.screenshot!}?t=123456')
               : ghostBuild,
           child: textDesktopTitle(
             widget.foreignBuild.name,
@@ -120,7 +120,7 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
                                   ),
                                 ),
                                 ExtendedImage.network(
-                                  DestinyData.bungieLink + subclassDef!.displayProperties!.icon!,
+                                  '${DestinyData.bungieLink}${subclassDef!.displayProperties!.icon!}?t=123456',
                                   height: 75,
                                   width: 75,
                                   timeLimit: const Duration(seconds: 10),
