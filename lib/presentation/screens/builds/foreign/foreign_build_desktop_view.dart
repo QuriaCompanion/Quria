@@ -91,7 +91,7 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
                                       return desktopRegularModal(
                                         context,
                                         child: SubclassModsBuildView(
-                                          width: vw(context) * 0.4,
+                                          width: modalWidth(context),
                                           sockets: subclassItem!.mods,
                                           subclass: subclassDef!,
                                         ),

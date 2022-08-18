@@ -38,8 +38,8 @@ class ListBuildMobile extends StatelessWidget {
                 MobileNavItem(
                   selected: true,
                   value: AppLocalizations.of(context)!.builder_list,
-                  width: vw(context) * 0.43,
                 ),
+                SizedBox(width: globalPadding(context)),
                 InkWell(
                     onTap: () {
                       Provider.of<CreateBuildProvider>(context, listen: false).clear();
@@ -48,7 +48,6 @@ class ListBuildMobile extends StatelessWidget {
                     },
                     child: MobileNavItem(
                       value: AppLocalizations.of(context)!.create_build,
-                      width: vw(context) * 0.43,
                     )),
               ],
             ),

@@ -523,8 +523,12 @@ class BuilderService {
     }
 
     /// Calculate the perfect mods to reach higher stats in the required order
-    BuilderOptionalMods optionalMods(Map<int, int> statistics, List<int> armorModspace, List<int> statOrder,
-        Map<int, DestinyInventoryItemDefinition> manifest) {
+    BuilderOptionalMods optionalMods(
+      Map<int, int> statistics,
+      List<int> armorModspace,
+      List<int> statOrder,
+      Map<int, DestinyInventoryItemDefinition> manifest,
+    ) {
       // this will be the list of optional mods that will be added to the build pre calculated
       final List<DestinyInventoryItemDefinition?> modSelected = [];
 
@@ -542,7 +546,6 @@ class BuilderService {
         // if there are still some points available
         if (armorModspace[i] > 0) {
           // then we loop through the stat by priority order
-
           for (var statHash in statOrder) {
             // check if the stat is not already maxed out
             if (statistics[statHash]! < 100) {
@@ -724,6 +727,15 @@ class BuilderService {
             statTiers[StatsHash.discipline] = (statistics[StatsHash.discipline]! / 10).floor();
             statTiers[StatsHash.intellect] = (statistics[StatsHash.intellect]! / 10).floor();
             statTiers[StatsHash.strength] = (statistics[StatsHash.strength]! / 10).floor();
+            statTiers[StatsHash.mobility] = statTiers[StatsHash.mobility]! > 10 ? 10 : statTiers[StatsHash.mobility]!;
+            statTiers[StatsHash.resilience] =
+                statTiers[StatsHash.resilience]! > 10 ? 10 : statTiers[StatsHash.resilience]!;
+            statTiers[StatsHash.recovery] = statTiers[StatsHash.recovery]! > 10 ? 10 : statTiers[StatsHash.recovery]!;
+            statTiers[StatsHash.discipline] =
+                statTiers[StatsHash.discipline]! > 10 ? 10 : statTiers[StatsHash.discipline]!;
+            statTiers[StatsHash.intellect] =
+                statTiers[StatsHash.intellect]! > 10 ? 10 : statTiers[StatsHash.intellect]!;
+            statTiers[StatsHash.strength] = statTiers[StatsHash.strength]! > 10 ? 10 : statTiers[StatsHash.strength]!;
             int baseTier = statTiers[StatsHash.mobility]! +
                 statTiers[StatsHash.resilience]! +
                 statTiers[StatsHash.recovery]! +

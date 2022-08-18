@@ -38,28 +38,38 @@ class WeaponScoreService {
         .firstWhereOrNull((element) => element.itemHash == perkList[0].plugHash && perkList[0].isEnabled == true);
     pveScore += perkOne?.valuePve ?? 0;
     pvpScore += perkOne?.valuePvp ?? 0;
-    final Perk? perkTwo = weaponScore.columnTwo
-        .firstWhereOrNull((element) => element.itemHash == perkList[1].plugHash && perkList[1].isEnabled == true);
-    pveScore += perkTwo?.valuePve ?? 0;
-    pvpScore += perkTwo?.valuePvp ?? 0;
-    final Perk? perkThree = weaponScore.columnThree
-        .firstWhereOrNull((element) => element.itemHash == perkList[2].plugHash && perkList[2].isEnabled == true);
-    pveScore += perkThree?.valuePve ?? 0;
-    pvpScore += perkThree?.valuePvp ?? 0;
-    final Perk? perkFour = weaponScore.columnFour
-        .firstWhereOrNull((element) => element.itemHash == perkList[3].plugHash && perkList[3].isEnabled == true);
-    pveScore += perkFour?.valuePve ?? 0;
-    pvpScore += perkFour?.valuePvp ?? 0;
-    final Perk? perkFive = weaponScore.columnFive
-        .firstWhereOrNull((element) => element.itemHash == perkList[4].plugHash && perkList[4].isEnabled == true);
-    pveScore += perkFive?.valuePve ?? 0;
-    pvpScore += perkFive?.valuePvp ?? 0;
+    if (perkList.length >= 2) {
+      final Perk? perkTwo = weaponScore.columnTwo
+          .firstWhereOrNull((element) => element.itemHash == perkList[1].plugHash && perkList[1].isEnabled == true);
+      pveScore += perkTwo?.valuePve ?? 0;
+      pvpScore += perkTwo?.valuePvp ?? 0;
+    }
 
-    for (Synergy synergy in weaponScore.synergies) {
-      if (synergy.perkOne == perkList[3].plugHash && synergy.perkOne == perkList[4].plugHash) {
-        pveScore += synergy.valuePve;
-        pvpScore += synergy.valuePvp;
+    if (perkList.length >= 3) {
+      final Perk? perkThree = weaponScore.columnThree
+          .firstWhereOrNull((element) => element.itemHash == perkList[2].plugHash && perkList[2].isEnabled == true);
+      pveScore += perkThree?.valuePve ?? 0;
+      pvpScore += perkThree?.valuePvp ?? 0;
+    }
+
+    if (perkList.length >= 4) {
+      final Perk? perkFour = weaponScore.columnFour
+          .firstWhereOrNull((element) => element.itemHash == perkList[3].plugHash && perkList[3].isEnabled == true);
+      pveScore += perkFour?.valuePve ?? 0;
+      pvpScore += perkFour?.valuePvp ?? 0;
+      for (Synergy synergy in weaponScore.synergies) {
+        if (synergy.perkOne == perkList[3].plugHash && synergy.perkOne == perkList[4].plugHash) {
+          pveScore += synergy.valuePve;
+          pvpScore += synergy.valuePvp;
+        }
       }
+    }
+
+    if (perkList.length >= 5) {
+      final Perk? perkFive = weaponScore.columnFive
+          .firstWhereOrNull((element) => element.itemHash == perkList[4].plugHash && perkList[4].isEnabled == true);
+      pveScore += perkFive?.valuePve ?? 0;
+      pvpScore += perkFive?.valuePvp ?? 0;
     }
     final DestinyItemSocketState? masterworkSocket = sockets.firstWhereOrNull((element) =>
         ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugStyle ==

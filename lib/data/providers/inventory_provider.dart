@@ -345,7 +345,8 @@ class InventoryProvider with ChangeNotifier {
     return allItems;
   }
 
-  List<DestinyItemComponent> getAllSpecimens(DestinyItemComponent item) {
+  List<DestinyItemComponent> getAllSpecimens(DestinyItemComponent? item) {
+    if (item == null) return [];
     return getAllItems().where((element) => element.itemHash == item.itemHash).toList()..remove(item);
   }
 

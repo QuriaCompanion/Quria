@@ -68,7 +68,7 @@ class ProfileMobileHeader extends StatelessWidget {
                     return desktopSubclassModal(
                       context,
                       child: SubclassModsMobileView(
-                        width: vw(context) * 0.4,
+                        width: modalWidth(context),
                         displayedSockets: sockets.displayedSockets,
                         subclass: ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
                         onChange: (mods, i) async {
@@ -120,7 +120,7 @@ class ProfileMobileHeader extends StatelessWidget {
                       child: Container(
                         color: black,
                         child: TalentGridMobileView(
-                          width: vw(context) * .4,
+                          width: modalWidth(context),
                           talentGrid: ManifestService
                               .manifestParsed.destinyTalentGridDefinition[talentGridComponent.talentGridHash]!,
                           talentGridComponent: talentGridComponent,
@@ -161,7 +161,7 @@ class ProfileMobileHeader extends StatelessWidget {
               stats: stats!,
               characterId: characterId,
               direction: Axis.horizontal,
-              width: vw(context) < 1000 ? width * 0.6 : 300,
+              width: isMobile(context) ? width * 0.6 : 300,
             ),
           ),
         ],

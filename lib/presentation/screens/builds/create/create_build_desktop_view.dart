@@ -59,7 +59,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
         child: Container(
           color: black,
           child: SubclassMobileView(
-            width: vw(context) * 0.4,
+            width: modalWidth(context),
             subclasses: data,
             onSelect: (subclass) {
               Navigator.pop(context);
@@ -99,7 +99,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                       child: Column(
                         children: [
                           SubclassModsMobileView(
-                            width: vw(context) * 0.4,
+                            width: modalWidth(context),
                             displayedSockets: displayedSockets
                                 .where((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e] != null)
                                 .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)

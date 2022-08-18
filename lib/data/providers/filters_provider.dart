@@ -39,8 +39,13 @@ class FiltersProvider with ChangeNotifier {
   };
   final Map<int, bool> _archetype = {};
   final Map<int, bool> _perks = {};
-  List<dynamic> get activeFilters => _activeFilters;
-  final List<dynamic> _activeFilters = [];
+  final List<TierType> _rarityFilters = [];
+  final List<DamageType> _elementFilters = [];
+  final List<DestinyItemSubType> _typeFilters = [];
+
+  List<TierType> get rarityFilters => _rarityFilters;
+  List<DamageType> get elementFilters => _elementFilters;
+  List<DestinyItemSubType> get typeFilters => _typeFilters;
   Map<TierType, bool> get rarity => _rarity;
   Map<DamageType, bool> get element => _element;
   Map<DestinyItemSubType, bool> get type => _type;
@@ -50,21 +55,33 @@ class FiltersProvider with ChangeNotifier {
     switch (T) {
       case TierType:
         _rarity[item as TierType] = value;
+        if (value) {
+          _rarityFilters.add(item);
+          _rarityFilters.toSet();
+        } else {
+          _rarityFilters.remove(item);
+        }
         break;
       case DamageType:
         _element[item as DamageType] = value;
+        if (value) {
+          _elementFilters.add(item);
+          _elementFilters.toSet();
+        } else {
+          _elementFilters.remove(item);
+        }
         break;
       case DestinyItemSubType:
         _type[item as DestinyItemSubType] = value;
+        if (value) {
+          _typeFilters.add(item);
+          _typeFilters.toSet();
+        } else {
+          _typeFilters.remove(item);
+        }
         break;
       default:
         break;
-    }
-    if (value) {
-      activeFilters.add(item);
-      activeFilters.toSet();
-    } else {
-      activeFilters.remove(item);
     }
     notifyListeners();
   }

@@ -48,7 +48,7 @@ class DetailsBuildSection extends StatelessWidget {
                 Provider.of<InspectProvider>(context, listen: false).setInspectItem(
                     itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
                     item: Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(item.instanceId));
-                if (vw(context) < 1000) {
+                if (isMobile(context)) {
                   Navigator.pushNamed(context, routeInspectMobile);
                 } else {
                   showDialog(
@@ -57,7 +57,7 @@ class DetailsBuildSection extends StatelessWidget {
                       builder: (context) {
                         return desktopItemModal(context,
                             child: InspectItem(
-                              width: vw(context) * 0.4,
+                              width: modalWidth(context),
                             ));
                       });
                 }

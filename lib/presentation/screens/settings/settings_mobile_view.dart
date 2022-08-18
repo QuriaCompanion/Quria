@@ -107,7 +107,7 @@ class SettingsMobileView extends StatelessWidget {
             divider,
             ListTile(
               onTap: () {
-                if (vw(context) < 1000) {
+                if (isMobile(context)) {
                   showDialog(
                       context: context,
                       builder: (context) {
@@ -170,7 +170,7 @@ class SettingsMobileView extends StatelessWidget {
             divider,
             ListTile(
               onTap: () {
-                if (vw(context) < 1000) {
+                if (isMobile(context)) {
                   showDialog(
                       context: context,
                       builder: (context) {
@@ -200,7 +200,7 @@ class SettingsMobileView extends StatelessWidget {
             divider,
             ListTile(
               onTap: () {
-                if (vw(context) < 1000) {
+                if (isMobile(context)) {
                   Navigator.pushReplacementNamed(context, routePageLegends);
                   return;
                 }

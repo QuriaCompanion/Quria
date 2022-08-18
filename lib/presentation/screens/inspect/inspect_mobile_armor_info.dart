@@ -32,7 +32,7 @@ class _InspectMobileArmorInfoState extends State<InspectMobileArmorInfo> {
     String? afinityIcon = Provider.of<InspectProvider>(context).getAfinityIcon(context);
 
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      if (vw(context) < 1000)
+      if (isMobile(context))
         mobileSection(
           context,
           title: AppLocalizations.of(context)!.quick_actions,

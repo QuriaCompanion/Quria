@@ -71,8 +71,8 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                               child: MobileNavItem(
                                 selected: selectedBucket == InventoryBucket.kineticWeapons,
                                 value: AppLocalizations.of(context)!.kinetic,
-                                width: vw(context) * 0.29,
                               )),
+                          SizedBox(width: globalPadding(context)),
                           InkWell(
                               onTap: () {
                                 setState(() {
@@ -83,8 +83,8 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                               child: MobileNavItem(
                                 selected: selectedBucket == InventoryBucket.energyWeapons,
                                 value: AppLocalizations.of(context)!.energy,
-                                width: vw(context) * 0.29,
                               )),
+                          SizedBox(width: globalPadding(context)),
                           InkWell(
                               onTap: () {
                                 setState(() {
@@ -95,7 +95,6 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                               child: MobileNavItem(
                                 selected: selectedBucket == InventoryBucket.powerWeapons,
                                 value: AppLocalizations.of(context)!.power,
-                                width: vw(context) * 0.29,
                               )),
                         ],
                       ),

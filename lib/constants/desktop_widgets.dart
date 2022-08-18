@@ -79,7 +79,7 @@ Widget desktopRegularModal(BuildContext context, {required Widget child}) {
       Center(
         child: SizedBox(
           height: vh(context) * 0.9,
-          width: vw(context) * 0.4,
+          width: modalWidth(context),
           child: Material(
             type: MaterialType.card,
             color: Colors.transparent,
@@ -89,7 +89,7 @@ Widget desktopRegularModal(BuildContext context, {required Widget child}) {
       ),
       Positioned(
         top: vh(context) * 0.15,
-        right: vw(context) * 0.2,
+        right: vw(context) < 1280 ? vw(context) * 0.1 : vw(context) * 0.2,
         child: Material(
           type: MaterialType.card,
           color: Colors.transparent,
@@ -118,7 +118,7 @@ Widget desktopSubclassModal(BuildContext context, {required Widget child}) {
       Center(
         child: SizedBox(
           height: vh(context) * 0.9,
-          width: vw(context) * 0.4,
+          width: modalWidth(context),
           child: Material(
             type: MaterialType.card,
             color: Colors.transparent,
@@ -128,7 +128,7 @@ Widget desktopSubclassModal(BuildContext context, {required Widget child}) {
       ),
       Positioned(
         top: vh(context) * 0.15,
-        right: vw(context) * 0.2,
+        right: vw(context) < 1280 ? vw(context) * 0.1 : vw(context) * 0.2,
         child: Material(
           type: MaterialType.card,
           color: Colors.transparent,
@@ -156,7 +156,7 @@ Widget desktopSubclassModal(BuildContext context, {required Widget child}) {
                           child: Container(
                             color: black,
                             child: SubclassMobileView(
-                              width: vw(context) * 0.4,
+                              width: modalWidth(context),
                               subclasses: subclasses,
                               onSelect: (newSubclass) {
                                 BungieActionsService()
@@ -190,7 +190,7 @@ Widget desktopPostmasterModal(BuildContext context, {required Widget child}) {
       Center(
         child: SizedBox(
           height: vh(context) * 0.9,
-          width: vw(context) * 0.4,
+          width: modalWidth(context),
           child: Material(
             type: MaterialType.card,
             color: Colors.transparent,
@@ -200,7 +200,7 @@ Widget desktopPostmasterModal(BuildContext context, {required Widget child}) {
       ),
       Positioned(
         top: vh(context) * 0.15,
-        right: vw(context) * 0.2,
+        right: vw(context) < 1280 ? vw(context) * 0.1 : vw(context) * 0.2,
         child: Material(
           type: MaterialType.card,
           color: Colors.transparent,
@@ -226,7 +226,7 @@ Widget desktopPostmasterModal(BuildContext context, {required Widget child}) {
                       builder: ((context) {
                         return Center(
                           child: SizedBox(
-                            width: vw(context) * 0.4,
+                            width: modalWidth(context),
                             height: vw(context) * 0.1,
                             child: LoadingModal(
                               text1: AppLocalizations.of(context)!.equipping,
@@ -284,7 +284,7 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
       Center(
         child: SizedBox(
           height: vh(context) * 0.9,
-          width: vw(context) * 0.4,
+          width: modalWidth(context),
           child: Material(
             type: MaterialType.card,
             color: Colors.transparent,
@@ -294,7 +294,7 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
       ),
       Positioned(
         top: vh(context) * 0.15,
-        right: vw(context) * 0.2,
+        right: vw(context) < 1280 ? vw(context) * 0.1 : vw(context) * 0.2,
         child: Material(
           type: MaterialType.card,
           color: Colors.transparent,
@@ -343,7 +343,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
       Center(
         child: SizedBox(
           height: vh(context) * 0.9,
-          width: vw(context) * 0.4,
+          width: modalWidth(context),
           child: Material(
             type: MaterialType.card,
             color: Colors.transparent,
@@ -353,7 +353,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
       ),
       Positioned(
         top: vh(context) * 0.15,
-        right: vw(context) * 0.2,
+        right: vw(context) < 1280 ? vw(context) * 0.1 : vw(context) * 0.2,
         child: Material(
           type: MaterialType.card,
           color: Colors.transparent,
@@ -440,7 +440,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                           context,
                           child: CollectionItemMobileView(
                             data: Provider.of<InspectProvider>(context).itemDef!,
-                            width: vw(context) * 0.4,
+                            width: modalWidth(context),
                           ),
                         );
                       });
@@ -461,7 +461,7 @@ Widget desktopCollectionModal(BuildContext context, {required Widget child}) {
       Center(
         child: SizedBox(
           height: vh(context) * 0.9,
-          width: vw(context) * 0.4,
+          width: modalWidth(context),
           child: Material(
             type: MaterialType.card,
             color: Colors.transparent,
@@ -471,7 +471,7 @@ Widget desktopCollectionModal(BuildContext context, {required Widget child}) {
       ),
       Positioned(
         top: vh(context) * 0.15,
-        right: vw(context) * 0.2,
+        right: vw(context) < 1280 ? vw(context) * 0.1 : vw(context) * 0.2,
         child: Material(
           type: MaterialType.card,
           color: Colors.transparent,

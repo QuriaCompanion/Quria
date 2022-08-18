@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/presentation/components/misc/desktop_components/appbar_desktop_default.dart';
 import 'package:quria/presentation/components/misc/filter_section_drawer.dart';
-import 'package:quria/presentation/var/keys.dart';
 
 class ScaffoldSearchbarDesktop extends StatelessWidget {
   final Widget body;
@@ -16,6 +15,7 @@ class ScaffoldSearchbarDesktop extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final GlobalKey<ScaffoldState> filterScaffoldKey = GlobalKey<ScaffoldState>();
     return Scaffold(
       key: filterScaffoldKey,
       backgroundColor: black,
@@ -35,6 +35,7 @@ class ScaffoldSearchbarDesktop extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         automaticallyImplyLeading: false,
+        actions: <Widget>[Container()],
         flexibleSpace: Builder(
           builder: (context) {
             return AppbarDesktopDefault(currentRoute: currentRoute);

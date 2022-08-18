@@ -1,7 +1,6 @@
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/constants/texts.dart';
 import 'dart:math' as math;
 
 class FilterBadgeText extends StatelessWidget {
@@ -39,7 +38,7 @@ class FilterBadgeText extends StatelessWidget {
     return Tooltip(
       message: text,
       child: Container(
-        width: 100,
+        width: isMobile(context) ? vw(context) * 0.2 : 100,
         height: 40,
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: item.value ? yellow : grey),

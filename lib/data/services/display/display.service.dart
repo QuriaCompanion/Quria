@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'package:bungie_api/enums/damage_type.dart';
-import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
@@ -17,6 +15,7 @@ import 'package:bungie_api/models/destiny_item_socket_entry_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/models/Donator.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
@@ -351,11 +350,16 @@ class DisplayService {
   }
 
   static Future<Iterable<DestinyInventoryItemDefinition>> getCollectionByType(DestinyItemType type) async {
-    return await StorageService.isar.destinyInventoryItemDefinitions
+    final items = await StorageService.isar.destinyInventoryItemDefinitions
         .filter()
         .itemTypeEqualTo(type)
         .sortByDefaultDamageType()
         .findAll();
+    for (int i = 0; i < items.length; i++) {
+      DestinyInventoryItemDefinition def = items[i];
+      AllDestinyManifestComponents.setField<DestinyInventoryItemDefinition>(def.hash!, def);
+    }
+    return items;
   }
 
   static SocketsHelper getSubclassMods(BuildContext context, String subclassInstanceId) {
@@ -394,14 +398,17 @@ class DisplayService {
   }
 
   static bool isItemItemActive(BuildContext context, DestinyInventoryItemDefinition item) {
-    final filters = Provider.of<FiltersProvider>(context).activeFilters;
-    if (filters.isEmpty) {
-      return true;
+    final rarities = Provider.of<FiltersProvider>(context).rarityFilters;
+    final types = Provider.of<FiltersProvider>(context).typeFilters;
+    final elements = Provider.of<FiltersProvider>(context).elementFilters;
+    if (rarities.isNotEmpty && !rarities.contains(item.inventory?.tierType)) {
+      return false;
     }
-    for (dynamic filter in filters) {
-      if (filter.runtimeType == TierType && item.inventory?.tierType != filter) return false;
-      if (filter.runtimeType == DamageType && item.damageTypes?[0] != filter) return false;
-      if (filter.runtimeType == DestinyItemSubType && item.itemSubType != filter) return false;
+    if (types.isNotEmpty && !types.contains(item.itemSubType)) {
+      return false;
+    }
+    if (elements.isNotEmpty && !elements.contains(item.damageTypes?[0])) {
+      return false;
     }
     return true;
   }

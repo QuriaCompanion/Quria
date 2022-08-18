@@ -1,6 +1,5 @@
 import 'package:bungie_api/enums/damage_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
-import 'package:bungie_api/enums/tier_type.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/filters_logo.dart';
@@ -27,7 +26,7 @@ class FilterBadge<T> extends StatelessWidget {
     }
 
     return Container(
-      width: 100,
+      width: isMobile(context) ? vw(context) * 0.2 : 100,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: item.value ? yellow : grey),
       child: SvgPicture.asset(

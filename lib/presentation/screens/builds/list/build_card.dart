@@ -86,7 +86,7 @@ class BuildCard extends StatelessWidget {
                         stats: BuilderService().buildStatCalculator(context, items: buildStored.items),
                         characterId: Provider.of<CharactersProvider>(context).currentCharacter!.characterId!,
                         direction: Axis.horizontal,
-                        width: vw(context) < 1000 ? width * 0.6 : 300,
+                        width: isMobile(context) ? width * 0.6 : 300,
                       ),
                       const SizedBox(height: 16),
                       Wrap(

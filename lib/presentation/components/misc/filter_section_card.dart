@@ -12,9 +12,9 @@ class FilterSectionCard extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: blackLight,
+        color: isMobile(context) ? Colors.transparent : blackLight,
       ),
-      padding: EdgeInsets.all(globalPadding(context) / 2),
+      padding: isMobile(context) ? EdgeInsets.zero : EdgeInsets.all(globalPadding(context) / 2),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -22,11 +22,13 @@ class FilterSectionCard extends StatelessWidget {
           textH2(title, utf8: false),
           SizedBox(height: globalPadding(context) / 2),
           SizedBox(
-            width: 350,
-            child: Wrap(
-              spacing: 15,
-              runSpacing: 15,
-              children: children,
+            width: isMobile(context) ? vw(context) * 0.5 : 350,
+            child: Center(
+              child: Wrap(
+                spacing: 15,
+                runSpacing: 15,
+                children: children,
+              ),
             ),
           )
         ],

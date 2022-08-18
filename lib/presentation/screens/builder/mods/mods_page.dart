@@ -18,7 +18,7 @@ class ModsPage extends StatelessWidget {
     Provider.of<BuilderModsProvider>(context, listen: false).init(context);
     List<ModSlots> armorMods = Provider.of<BuilderModsProvider>(context).mods;
 
-    if (vw(context) < 1000) {
+    if (isMobile(context)) {
       return ScaffoldSteps(
         actionText: AppLocalizations.of(context)!.next,
         route: routeClassItemChoice,

@@ -46,7 +46,7 @@ class ExoticWidgetState extends State<ExoticWidget> {
         if (isLoading) {
           return const PageLoader();
         } else {
-          if (vw(context) < 1000) {
+          if (isMobile(context)) {
             return Scaffold(
               backgroundColor: black,
               drawer: const Burger(),

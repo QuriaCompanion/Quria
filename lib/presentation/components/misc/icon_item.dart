@@ -63,16 +63,16 @@ class ItemIcon extends StatelessWidget {
                 filterQuality: FilterQuality.high,
                 printError: false,
               ),
-              if (ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
-                          ?.displayVersionWatermarkIcons?[0] !=
-                      null &&
-                  ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
-                          ?.displayVersionWatermarkIcons?[0] !=
+              if ((ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
+                          ?.displayVersionWatermarkIcons?.isNotEmpty ??
+                      false) &&
+                  ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!
+                          .displayVersionWatermarkIcons!.last !=
                       "")
                 ExtendedImage.network(
                   DestinyData.bungieLink +
                       ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!
-                          .displayVersionWatermarkIcons![0],
+                          .displayVersionWatermarkIcons!.last,
                   height: imageSize,
                   timeLimit: const Duration(seconds: 10),
                   width: imageSize,
