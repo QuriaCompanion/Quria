@@ -55,13 +55,7 @@ class HeaderWeaponDetails extends StatelessWidget {
                           null)
                         Image(
                           image: NetworkImage(
-                            DestinyData.bungieLink +
-                                ManifestService
-                                    .manifestParsed
-                                    .destinyDamageTypeDefinition[ManifestService.manifestParsed
-                                        .destinyInventoryItemDefinition[itemHash]!.defaultDamageTypeHash]!
-                                    .displayProperties!
-                                    .icon!,
+                            '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!.defaultDamageTypeHash]!.displayProperties!.icon!}?t=${iconSize.toInt()}',
                           ),
                           width: iconSize,
                           height: iconSize,
@@ -114,9 +108,8 @@ class HeaderWeaponDetails extends StatelessWidget {
                       style: TextStyle(color: Colors.yellow, fontSize: fontSize + 5),
                     ),
                     Image(
-                      image: NetworkImage(DestinyData.bungieLink +
-                          ManifestService
-                              .manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!),
+                      image: NetworkImage(
+                          '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t=123456'),
                       width: fontSize + 5,
                       color: Colors.yellow,
                     ),
@@ -128,7 +121,8 @@ class HeaderWeaponDetails extends StatelessWidget {
             Row(
               children: [
                 Image(
-                  image: NetworkImage(DestinyData.bungieLink + typeOfAmmo.displayProperties!.icon!),
+                  image: NetworkImage(
+                      '${DestinyData.bungieLink}${typeOfAmmo.displayProperties!.icon!}?t=${iconSize.toInt()}'),
                   width: iconSize,
                   height: iconSize,
                 ),

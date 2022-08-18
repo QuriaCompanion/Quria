@@ -98,7 +98,7 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay> with Ticker
                                 height: 12,
                                 margin: const EdgeInsets.only(right: 5),
                                 child: Image(
-                                  image: NetworkImage(DestinyData.bungieLink + widget.elementIcon!),
+                                  image: NetworkImage('${DestinyData.bungieLink}${widget.elementIcon!}?t=12'),
                                 )),
                           textBodyBold(widget.powerLevel.toString()),
                           divider,

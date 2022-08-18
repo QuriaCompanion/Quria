@@ -61,14 +61,8 @@ class BuildCard extends StatelessWidget {
                         image: buildStored.items
                                 .where((element) => element.bucketHash == InventoryBucket.subclass)
                                 .isNotEmpty
-                            ? NetworkImage(DestinyData.bungieLink +
-                                ManifestService
-                                    .manifestParsed
-                                    .destinyInventoryItemDefinition[buildStored.items
-                                        .where((element) => element.bucketHash == InventoryBucket.subclass)
-                                        .first
-                                        .itemHash]!
-                                    .screenshot!)
+                            ? NetworkImage(
+                                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.screenshot!}?t=123456')
                             : ghostBuild),
                   ),
                   child: textH3(buildStored.name, utf8: false),
@@ -178,15 +172,7 @@ class BuildCard extends StatelessWidget {
                     ),
                   ),
                   ExtendedImage.network(
-                    DestinyData.bungieLink +
-                        ManifestService
-                            .manifestParsed
-                            .destinyInventoryItemDefinition[buildStored.items
-                                .where((element) => element.bucketHash == InventoryBucket.subclass)
-                                .first
-                                .itemHash]!
-                            .displayProperties!
-                            .icon!,
+                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t=123456',
                     height: 75,
                     width: 75,
                     timeLimit: const Duration(seconds: 10),

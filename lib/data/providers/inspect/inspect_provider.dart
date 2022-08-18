@@ -84,8 +84,8 @@ class InspectProvider with ChangeNotifier {
   String getImageLink(BuildContext context) {
     // TODO: this image isn't the best choice, but it's the best I can do for now.
     return _itemDef?.screenshot != null
-        ? DestinyData.bungieLink + _itemDef!.screenshot!
-        : "${DestinyData.bungieLink}/common/destiny2_content/screenshots/2345794502.jpg";
+        ? '${DestinyData.bungieLink}${_itemDef!.screenshot!}?t=123456'
+        : "${DestinyData.bungieLink}/common/destiny2_content/screenshots/2345794502.jpg?t=1589788";
   }
 
   String? getElementIcon(BuildContext context) {

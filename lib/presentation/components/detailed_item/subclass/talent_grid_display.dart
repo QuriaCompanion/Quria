@@ -45,7 +45,8 @@ class TalentGridDisplay extends StatelessWidget {
               child: CircleAvatar(
                 radius: iconSize / 2,
                 child: Image(
-                  image: NetworkImage(DestinyData.bungieLink + nodeDef.displayProperties!.icon!),
+                  image: NetworkImage(
+                      '${DestinyData.bungieLink}${nodeDef.displayProperties!.icon!}?t=${iconSize.toInt()}'),
                 ),
               ),
             ),

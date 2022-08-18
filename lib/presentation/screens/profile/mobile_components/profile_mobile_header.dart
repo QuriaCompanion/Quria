@@ -142,7 +142,7 @@ class ProfileMobileHeader extends StatelessWidget {
                   ),
                 ),
                 ExtendedImage.network(
-                  DestinyData.bungieLink + characterSuper,
+                  '${DestinyData.bungieLink}$characterSuper?t=123456',
                   height: width * 0.17,
                   width: width * 0.17,
                   timeLimit: const Duration(seconds: 10),

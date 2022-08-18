@@ -38,7 +38,7 @@ class PerkItemDisplay extends StatelessWidget {
               radius: radius * 0.75,
               backgroundColor: selected ? blueEquipped : const Color(0xFF505155),
               child: ExtendedImage.network(
-                DestinyData.bungieLink + perk.displayProperties!.icon!,
+                '${DestinyData.bungieLink}${perk.displayProperties!.icon!}?t=123456',
                 width: iconSize * 0.5,
                 height: iconSize * 0.5,
                 timeLimit: const Duration(seconds: 10),

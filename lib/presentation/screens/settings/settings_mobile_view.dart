@@ -1,4 +1,5 @@
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -13,6 +14,7 @@ import 'package:quria/presentation/components/misc/choose_membership.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/screens/legends/legends_page.dart';
 import 'package:quria/presentation/var/routes.dart';
+import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SettingsMobileView extends StatelessWidget {
@@ -66,25 +68,27 @@ class SettingsMobileView extends StatelessWidget {
                 ),
               ),
             ),
-            divider,
-            ListTile(
-              onTap: () {
-                launchUrl(Uri.parse("https://www.buymeacoffee.com/quria?s=03"), mode: LaunchMode.externalApplication);
-              },
-              leading: SvgPicture.asset(
-                "assets/icons/buymeacoffee.svg",
-                width: 35,
-                height: 35,
+            if (kIsWeb || !Platform.isIOS) ...[
+              divider,
+              ListTile(
+                onTap: () {
+                  launchUrl(Uri.parse("https://www.buymeacoffee.com/quria?s=03"), mode: LaunchMode.externalApplication);
+                },
+                leading: SvgPicture.asset(
+                  "assets/icons/buymeacoffee.svg",
+                  width: 35,
+                  height: 35,
+                ),
+                title: textBodyHighRegular(
+                  "BuyMeACofee",
+                  utf8: false,
+                ),
+                subtitle: textBodyMedium(
+                  AppLocalizations.of(context)!.support,
+                  utf8: false,
+                ),
               ),
-              title: textBodyHighRegular(
-                "BuyMeACofee",
-                utf8: false,
-              ),
-              subtitle: textBodyMedium(
-                AppLocalizations.of(context)!.support,
-                utf8: false,
-              ),
-            ),
+            ],
             divider,
             ListTile(
               onTap: () {

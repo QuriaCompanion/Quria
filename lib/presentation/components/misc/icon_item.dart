@@ -26,94 +26,81 @@ class ItemIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: imageSize,
-          height: imageSize,
-          decoration: BoxDecoration(
-            border: Border.all(color: isMasterworked ? yellow : Colors.white),
-          ),
-          child: Stack(
-            children: [
-              ExtendedImage.network(
-                DestinyData.bungieLink +
-                    ManifestService
-                        .manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!,
-                loadStateChanged: (ExtendedImageState state) {
-                  switch (state.extendedImageLoadState) {
-                    case LoadState.loading:
-                      return Container(
-                        decoration: BoxDecoration(
-                            border: Border.all(color: Colors.white),
-                            color: DestinyData.getTierColor(ManifestService
-                                .manifestParsed.destinyInventoryItemDefinition[displayHash]!.inventory!.tierType!)),
-                      );
-                    case LoadState.completed:
-                      return null;
-                    case LoadState.failed:
-                      return null;
-                  }
-                },
-                height: imageSize,
-                width: imageSize,
-                timeLimit: const Duration(seconds: 10),
-                cache: true,
-                fit: BoxFit.fill,
-                filterQuality: FilterQuality.high,
-                printError: false,
-              ),
-              if ((ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
-                          ?.displayVersionWatermarkIcons?.isNotEmpty ??
-                      false) &&
-                  ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!
-                          .displayVersionWatermarkIcons!.last !=
-                      "")
-                ExtendedImage.network(
-                  DestinyData.bungieLink +
-                      ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!
-                          .displayVersionWatermarkIcons!.last,
-                  height: imageSize,
-                  timeLimit: const Duration(seconds: 10),
-                  width: imageSize,
-                  cache: true,
-                  fit: BoxFit.fill,
-                  filterQuality: FilterQuality.high,
-                  printError: false,
-                ),
-              if (powerLevel != null)
-                Positioned(
-                  bottom: 0,
-                  right: 0,
-                  child: Container(
-                    width: imageSize,
-                    height: imageSize / 4,
+    return Container(
+      width: imageSize,
+      height: imageSize,
+      decoration: BoxDecoration(
+        border: Border.all(color: isMasterworked ? yellow : Colors.white),
+      ),
+      child: Stack(
+        children: [
+          ExtendedImage.network(
+            '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!}?t=${imageSize.toInt()}',
+            loadStateChanged: (ExtendedImageState state) {
+              switch (state.extendedImageLoadState) {
+                case LoadState.loading:
+                  return Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.5),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        if (element != null)
-                          Padding(
-                            padding: const EdgeInsets.only(left: 4),
-                            child: Image(image: NetworkImage(DestinyData.bungieLink + element!)),
-                          ),
-                        textIcon(powerLevel.toString())
-                      ],
-                    ),
-                  ),
-                ),
-            ],
-          ),
-        ),
-        if (!isActive)
-          Container(
-            width: imageSize,
+                        border: Border.all(color: Colors.white),
+                        color: DestinyData.getTierColor(ManifestService
+                            .manifestParsed.destinyInventoryItemDefinition[displayHash]!.inventory!.tierType!)),
+                  );
+                case LoadState.completed:
+                  return null;
+                case LoadState.failed:
+                  return null;
+              }
+            },
             height: imageSize,
-            color: black.withOpacity(0.7),
+            width: imageSize,
+            timeLimit: const Duration(seconds: 10),
+            cache: true,
+            fit: BoxFit.fill,
+            filterQuality: FilterQuality.high,
+            printError: false,
           ),
-      ],
+          if ((ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
+                      ?.displayVersionWatermarkIcons?.isNotEmpty ??
+                  false) &&
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!
+                      .displayVersionWatermarkIcons!.last !=
+                  "")
+            ExtendedImage.network(
+              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!.displayVersionWatermarkIcons!.last}?t=${imageSize.toInt()}',
+              height: imageSize,
+              timeLimit: const Duration(seconds: 10),
+              width: imageSize,
+              cache: true,
+              fit: BoxFit.fill,
+              filterQuality: FilterQuality.high,
+              printError: false,
+            ),
+          if (powerLevel != null)
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                width: imageSize,
+                height: imageSize / 4,
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    if (element != null)
+                      Padding(
+                        padding: const EdgeInsets.only(left: 4),
+                        child:
+                            Image(image: NetworkImage('${DestinyData.bungieLink}${element!}?t=${imageSize.toInt()}')),
+                      ),
+                    textIcon(powerLevel.toString())
+                  ],
+                ),
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
