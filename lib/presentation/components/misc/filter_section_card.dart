@@ -25,8 +25,8 @@ class FilterSectionCard extends StatelessWidget {
             width: isMobile(context) ? vw(context) * 0.5 : 350,
             child: Center(
               child: Wrap(
-                spacing: 15,
-                runSpacing: 15,
+                spacing: 8,
+                runSpacing: 8,
                 children: children,
               ),
             ),

@@ -104,6 +104,7 @@ class _InspectMobileWeaponRecommendationsState extends State<InspectMobileWeapon
                           ),
                           SizedBox(height: globalPadding(context)),
                           InspectMobileStats(
+                            bonusStats: Provider.of<InspectProvider>(context).getBonusStats(),
                             width: widget.width - globalPadding(context) * 2,
                           ),
                           const Divider(

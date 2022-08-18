@@ -21,6 +21,7 @@ class CollectionWeaponView extends StatelessWidget {
 
     return Column(
       children: [
+        mobileSection(context, title: "QuriaNotation", child: const WeaponScoreDisplay()),
         mobileSection(
           context,
           title: AppLocalizations.of(context)!.statistics,
@@ -29,7 +30,6 @@ class CollectionWeaponView extends StatelessWidget {
             width: width,
           ),
         ),
-        mobileSection(context, title: "QuriaNotation", child: const WeaponScoreDisplay()),
         mobileSection(
           context,
           title: AppLocalizations.of(context)!.perks,

@@ -26,7 +26,7 @@ class FilterBadge<T> extends StatelessWidget {
     }
 
     return Container(
-      width: isMobile(context) ? vw(context) * 0.2 : 100,
+      width: isMobile(context) ? vw(context) * 0.2 : 112,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: item.value ? yellow : grey),
       child: SvgPicture.asset(
