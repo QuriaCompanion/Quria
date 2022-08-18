@@ -154,9 +154,8 @@ class ManifestService {
 /// promise of void
 Future<List> _typeManifests(ManifestHelper manifestInfo) async {
   Future<String> getManifestRemote<T>() async {
-    http.Response res = await http.get(Uri.parse(DestinyData.bungieLink +
-        manifestInfo
-            .manifest.jsonWorldComponentContentPaths![manifestInfo.language]![DefinitionTableNames.fromClass[T]!]!));
+    http.Response res = await http.get(Uri.parse(
+        '${DestinyData.bungieLink}${manifestInfo.manifest.jsonWorldComponentContentPaths![manifestInfo.language]![DefinitionTableNames.fromClass[T]!]!}?t=123456'));
     return res.body;
   }
 
