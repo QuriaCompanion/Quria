@@ -58,7 +58,7 @@ class _InspectMobileWeaponRecommendationsState extends State<InspectMobileWeapon
         }
         Perk? perkFive;
         if (perkList.length >= 5) {
-          perkFour = value.columnFive
+          perkFive = value.columnFive
               .firstWhereOrNull((element) => element.itemHash == perkList[3].plugHash && perkList[3].isEnabled == true);
         }
         InspectWeaponStatus initStatus = InspectWeaponStatus(

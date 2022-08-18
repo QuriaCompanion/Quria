@@ -35,11 +35,8 @@ class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
     if (data.sockets?.socketEntries != null) {
       List<Perk> perks = [];
       for (int index = 0; index < data.sockets!.socketEntries!.length; index++) {
-        final perkHash = ManifestService
-            .manifestParsed
-            .destinyPlugSetDefinition[data.sockets!.socketEntries?[index].randomizedPlugSetHash]
-            ?.reusablePlugItems?[0]
-            .plugItemHash;
+        final perkHash = data.sockets!.socketEntries?[index].singleInitialItemHash;
+
         if (Conditions.perkSockets(perkHash)) {
           perks.add(Perk(itemHash: perkHash!));
         }
