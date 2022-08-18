@@ -23,17 +23,17 @@ const Map<DestinyItemSubType, String> filtersItemTypeLogo = {
 };
 
 const Map<DamageType, String> filtersDamageTypeLogo = {
-  DamageType.Kinetic: 'assets/icons/damage/kinetic.svg',
-  DamageType.Arc: 'assets/icons/damage/arc.svg',
-  DamageType.Void: 'assets/icons/damage/void.svg',
-  DamageType.Stasis: 'assets/icons/damage/stasis.svg',
-  DamageType.Thermal: 'assets/icons/damage/solar.svg',
+  DamageType.Kinetic: 'assets/icons/damage/kinetic.png',
+  DamageType.Arc: 'assets/icons/damage/arc.png',
+  DamageType.Void: 'assets/icons/damage/void.png',
+  DamageType.Stasis: 'assets/icons/damage/stasis.png',
+  DamageType.Thermal: 'assets/icons/damage/solar.png',
 };
 
 const Map<TierType, String> filtersTierTypeLogo = {
-  TierType.Basic: 'assets/icons/weapons/common.svg',
-  TierType.Common: 'assets/icons/weapons/uncommon.svg',
-  TierType.Rare: 'assets/icons/weapons/rare.svg',
-  TierType.Superior: 'assets/icons/weapons/legendary.svg',
-  TierType.Exotic: 'assets/icons/weapons/exotic.svg',
+  TierType.Basic: 'assets/icons/White.png',
+  TierType.Common: 'assets/icons/Green.png',
+  TierType.Rare: 'assets/icons/Blue.png',
+  TierType.Superior: 'assets/icons/Legendary.png',
+  TierType.Exotic: 'assets/icons/Exotic.png',
 };

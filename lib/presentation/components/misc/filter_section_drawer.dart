@@ -8,7 +8,8 @@ import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/filters_provider.dart';
 import 'package:quria/presentation/components/misc/custom_close_button.dart';
 import 'package:quria/presentation/components/misc/filter_badge.dart';
-import 'package:quria/presentation/components/misc/filter_badge_text.dart';
+import 'package:quria/presentation/components/misc/filter_badge_element.dart';
+import 'package:quria/presentation/components/misc/filter_badge_rarity.dart';
 import 'package:quria/presentation/components/misc/filter_section_card.dart';
 
 class FilterSectionDrawer extends StatelessWidget {
@@ -18,8 +19,8 @@ class FilterSectionDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: black,
-      height: vh(context),
-      width: isMobile(context) ? vw(context) * 0.5 + globalPadding(context) : 350 + globalPadding(context) * 2,
+      height: isMobile(context) ? null : vh(context),
+      width: isMobile(context) ? vw(context) : 350 + globalPadding(context) * 2,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -70,7 +71,7 @@ class FilterSectionDrawer extends StatelessWidget {
                               Provider.of<FiltersProvider>(context, listen: false)
                                   .changeFilter<DamageType>(item.key, !item.value);
                             },
-                            child: FilterBadge<DamageType>(item: item),
+                            child: FilterBadgeElement(item: item),
                           ),
                       ],
                     ),

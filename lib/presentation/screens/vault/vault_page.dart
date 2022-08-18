@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/models/helpers/vaultHelper.model.dart';
@@ -40,12 +41,15 @@ class _VaultPageState extends State<VaultPage> {
               return Scaffold(
                 key: filterScaffoldKey,
                 backgroundColor: black,
-                endDrawer: const FilterSectionDrawer(),
                 drawer: const Burger(),
                 floatingActionButton: FloatingActionButton(
                   backgroundColor: Colors.white,
                   onPressed: () {
-                    filterScaffoldKey.currentState!.openEndDrawer();
+                    showMaterialModalBottomSheet(
+                        context: context,
+                        builder: (context) {
+                          return const FilterSectionDrawer();
+                        });
                   },
                   child: SvgPicture.asset(
                     "assets/icons/filter.svg",

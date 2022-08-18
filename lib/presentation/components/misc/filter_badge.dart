@@ -28,11 +28,18 @@ class FilterBadge<T> extends StatelessWidget {
     return Container(
       width: isMobile(context) ? vw(context) * 0.2 : 112,
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(5), color: item.value ? yellow : grey),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5),
+        color: grey,
+        border: Border.all(
+          color: item.value ? vanguard : grey,
+          width: 1,
+        ),
+      ),
       child: SvgPicture.asset(
         logoMap[item.key],
-        width: 20,
-        height: 20,
+        width: 24,
+        height: 24,
         color: Colors.white,
       ),
     );
