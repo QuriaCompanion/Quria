@@ -8,7 +8,6 @@ import 'package:quria/data/models/helpers/inspectHelper.model.dart';
 import 'package:quria/data/models/perk.model.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
-import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/screens/collection/collection_item/mobile_components/collection_armor_view.dart';
 import 'package:quria/presentation/screens/collection/collection_item/mobile_components/collection_weapon_view.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_header.dart';

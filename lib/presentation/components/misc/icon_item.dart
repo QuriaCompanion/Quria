@@ -99,6 +99,12 @@ class ItemIcon extends StatelessWidget {
                 ),
               ),
             ),
+          if (!isActive)
+            Container(
+              width: imageSize,
+              height: imageSize,
+              color: black.withOpacity(0.7),
+            ),
         ],
       ),
     );

@@ -172,22 +172,26 @@ class Conditions {
   }
 
   static bool perkSockets(int? item) {
+    // return true;
     final socketDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[item];
     final socketCategory = socketDef?.itemCategoryHashes;
-    if (socketCategory?.isNotEmpty ?? false) {
-      for (final socket in socketCategory!) {
-        if (socketCategory.length == 1) {}
-        if (DestinyData.perkCategoryHash.contains(socket) ||
-            socketCategory.length == 1 &&
-                !cosmeticSockets(item) &&
-                socketDef?.displayProperties?.icon != null &&
-                socketDef?.inventory?.tierType == TierType.Superior &&
-                !socketDef!.plug!.plugCategoryIdentifier!.contains('masterworks.stat') &&
-                socketDef.hash != 1922808508 &&
-                socketDef.hash != 4029346515 &&
-                socketDef.hash != 659359923) {
-          return true;
-        }
+    if (socketDef?.plug?.plugCategoryIdentifier == "intrinsics" ||
+        (socketDef?.plug?.plugCategoryIdentifier != null &&
+            socketDef!.plug!.plugCategoryIdentifier!.contains('crafting'))) return false;
+    if (socketCategory?.isEmpty ?? true) return true;
+    for (final socket in socketCategory!) {
+      if (DestinyData.perkCategoryHash.contains(socket) ||
+          socketCategory.length == 1 &&
+              !cosmeticSockets(item) &&
+              socketDef?.displayProperties?.icon != null &&
+              // socketDef?.inventory?.tierType == TierType.Superior &&
+              socket != 2237038328 &&
+              !socketDef!.plug!.plugCategoryIdentifier!.contains('masterwork') &&
+              socketDef.plug?.plugCategoryIdentifier != "mementos" &&
+              socketDef.hash != 1922808508 &&
+              socketDef.hash != 4029346515 &&
+              socketDef.hash != 659359923) {
+        return true;
       }
     }
     return false;
