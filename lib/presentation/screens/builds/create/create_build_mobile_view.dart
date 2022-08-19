@@ -1,10 +1,16 @@
+import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/Item.model.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/create_build_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
@@ -76,6 +82,50 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                     ),
                     hintText: AppLocalizations.of(context)!.create_build_field,
                     hintStyle: const TextStyle(color: Colors.white)),
+              ),
+              RoundedButton(
+                width: vw(context),
+                disabledColor: Colors.transparent,
+                buttonColor: Colors.transparent,
+                textColor: Colors.white,
+                text: textBodyMedium(
+                  AppLocalizations.of(context)!.use_my_stuff,
+                  utf8: false,
+                  color: Colors.white,
+                ),
+                onPressed: () async {
+                  final inventory = Provider.of<InventoryProvider>(context, listen: false)
+                      .getCharacterEquipment(
+                        Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
+                      )
+                      .where((element) => InventoryBucket.loadoutBucketHashes.contains(element.bucketHash));
+                  final List<Item> newItems = [];
+                  for (var itemComponent in inventory) {
+                    List<DestinyItemSocketState> sockets =
+                        Provider.of<ItemProvider>(context, listen: false).getItemSockets(itemComponent.itemInstanceId!);
+
+                    final mods = sockets
+                        .where((element) {
+                          final itemType = ManifestService
+                              .manifestParsed.destinyInventoryItemDefinition[itemComponent.itemHash]?.itemType;
+                          if (itemType == DestinyItemType.Armor) return Conditions.armorSockets(element);
+                          if (itemType == DestinyItemType.Weapon) {
+                            return Conditions.perkSockets(element.plugHash);
+                          }
+                          return true;
+                        })
+                        .where((element) => element.plugHash != null)
+                        .map((element) => element.plugHash!)
+                        .toList();
+                    newItems.add(Item(
+                        itemHash: itemComponent.itemHash!,
+                        instanceId: itemComponent.itemInstanceId!,
+                        isEquipped: true,
+                        bucketHash: itemComponent.bucketHash!,
+                        mods: mods));
+                  }
+                  Provider.of<CreateBuildProvider>(context, listen: false).replaceItems(newItems);
+                },
               ),
               for (final bucket in InventoryBucket.loadoutBucketHashes)
                 mobileSection(

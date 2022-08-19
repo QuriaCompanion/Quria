@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bungie_api/enums/plug_ui_styles.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
@@ -20,7 +18,6 @@ class WeaponScoreService {
   final String _backendURl = 'https://quria-companion-back-end.herokuapp.com/';
   Future<WeaponScore?> getWeaponScore(String id) async {
     final response = await http.get(Uri.parse("${_backendURl}weapon-score/$id"));
-    inspect(response);
     if (response.statusCode == 200) {
       return WeaponScore.fromJson(response.body);
     }
