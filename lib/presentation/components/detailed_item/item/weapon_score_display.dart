@@ -1,3 +1,4 @@
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -77,7 +78,16 @@ class _WeaponScoreDisplayState extends State<WeaponScoreDisplay> {
                 ],
               );
             } else {
-              return textH3("noScore");
+              return Container(
+                padding: EdgeInsets.all(globalPadding(context)) * 0.875,
+                decoration: const BoxDecoration(color: blackLight, borderRadius: BorderRadius.all(Radius.circular(8))),
+                child: Center(
+                  child: textCaption(
+                    AppLocalizations.of(context)!.no_score,
+                    utf8: false,
+                  ),
+                ),
+              );
             }
           } else {
             return const Loader();

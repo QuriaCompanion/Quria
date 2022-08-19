@@ -1,4 +1,5 @@
 import 'package:bungie_api/enums/damage_type.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class FilterSectionDrawer extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      textH2("Filtres"),
+                      textH2(AppLocalizations.of(context)!.filters, utf8: false),
                       const CustomCloseButton(),
                     ],
                   ),
@@ -49,7 +50,7 @@ class FilterSectionDrawer extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     FilterSectionCard(
-                      title: "Rareté",
+                      title: AppLocalizations.of(context)!.rarity,
                       children: [
                         for (MapEntry<TierType, bool> item in Provider.of<FiltersProvider>(context).rarity.entries)
                           InkWell(
@@ -63,7 +64,7 @@ class FilterSectionDrawer extends StatelessWidget {
                     ),
                     SizedBox(height: globalPadding(context) / 2),
                     FilterSectionCard(
-                      title: "Dégats",
+                      title: AppLocalizations.of(context)!.damage_type,
                       children: [
                         for (MapEntry<DamageType, bool> item in Provider.of<FiltersProvider>(context).element.entries)
                           InkWell(
@@ -77,7 +78,7 @@ class FilterSectionDrawer extends StatelessWidget {
                     ),
                     SizedBox(height: globalPadding(context) / 2),
                     FilterSectionCard(
-                      title: "Type d'arme",
+                      title: AppLocalizations.of(context)!.weapon_type,
                       children: [
                         for (MapEntry<DestinyItemSubType, bool> item
                             in Provider.of<FiltersProvider>(context).type.entries)

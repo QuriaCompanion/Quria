@@ -2,6 +2,7 @@ import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -88,7 +89,7 @@ class _InspectMobileWeaponRecommendationsState extends State<InspectMobileWeapon
                   textBodyRegular('${weaponScore.notes}', utf8: false, color: greyLight),
                   textBodyBold('- ${weaponScore.author}', utf8: false, color: greyLight),
                   mobileSection(context,
-                      title: "Optimiser mon arme",
+                      title: AppLocalizations.of(context)!.optimise_my_weapon,
                       child: Column(
                         children: [
                           Container(
@@ -97,7 +98,7 @@ class _InspectMobileWeaponRecommendationsState extends State<InspectMobileWeapon
                                 color: blackLight, borderRadius: BorderRadius.all(Radius.circular(8))),
                             child: Center(
                               child: textCaption(
-                                "Ajuste les perks pour visualiser les impacts sur la note et sur les statistiques de l'arme.",
+                                AppLocalizations.of(context)!.ajust_perks,
                                 utf8: false,
                               ),
                             ),
@@ -120,10 +121,19 @@ class _InspectMobileWeaponRecommendationsState extends State<InspectMobileWeapon
                 ],
               );
             } else {
-              return textH3("noScore");
+              return Container(
+                padding: EdgeInsets.all(globalPadding(context)) * 0.875,
+                decoration: const BoxDecoration(color: blackLight, borderRadius: BorderRadius.all(Radius.circular(8))),
+                child: Center(
+                  child: textCaption(
+                    AppLocalizations.of(context)!.no_score,
+                    utf8: false,
+                  ),
+                ),
+              );
             }
           } else {
-            return const Loader();
+            return const Center(child: Loader());
           }
         }));
   }

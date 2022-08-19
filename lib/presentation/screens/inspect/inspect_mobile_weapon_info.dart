@@ -36,34 +36,38 @@ class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                InkWell(
+                Expanded(
+                  child: InkWell(
+                      onTap: () {
+                        if (weaponInfo != InspectWeaponInfo.statistics) {
+                          setState(
+                            () {
+                              weaponInfo = InspectWeaponInfo.statistics;
+                            },
+                          );
+                        }
+                      },
+                      child: MobileNavItem(
+                        selected: weaponInfo == InspectWeaponInfo.statistics,
+                        value: AppLocalizations.of(context)!.statistics,
+                      )),
+                ),
+                SizedBox(width: globalPadding(context)),
+                Expanded(
+                  child: InkWell(
                     onTap: () {
-                      if (weaponInfo != InspectWeaponInfo.statistics) {
+                      if (weaponInfo != InspectWeaponInfo.recommendations) {
                         setState(
                           () {
-                            weaponInfo = InspectWeaponInfo.statistics;
+                            weaponInfo = InspectWeaponInfo.recommendations;
                           },
                         );
                       }
                     },
                     child: MobileNavItem(
-                      selected: weaponInfo == InspectWeaponInfo.statistics,
-                      value: AppLocalizations.of(context)!.statistics,
-                    )),
-                SizedBox(width: globalPadding(context)),
-                InkWell(
-                  onTap: () {
-                    if (weaponInfo != InspectWeaponInfo.recommendations) {
-                      setState(
-                        () {
-                          weaponInfo = InspectWeaponInfo.recommendations;
-                        },
-                      );
-                    }
-                  },
-                  child: MobileNavItem(
-                    selected: weaponInfo == InspectWeaponInfo.recommendations,
-                    value: AppLocalizations.of(context)!.weapons,
+                      selected: weaponInfo == InspectWeaponInfo.recommendations,
+                      value: AppLocalizations.of(context)!.recommendation_quria,
+                    ),
                   ),
                 ),
               ],

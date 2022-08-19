@@ -33,6 +33,7 @@ class InspectProvider with ChangeNotifier {
     required DestinyInventoryItemDefinition itemDef,
   }) {
     _weaponStatus = null;
+    _weaponScore = null;
     _item = item;
     _itemDef = itemDef;
     notifyListeners();

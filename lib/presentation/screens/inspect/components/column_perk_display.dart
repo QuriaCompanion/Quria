@@ -127,7 +127,8 @@ class ColumnPerkDisplay extends StatelessWidget {
                 ),
               ),
             ),
-        if (item.sockets?.socketEntries?[index].randomizedPlugSetHash == null)
+        if (item.sockets?.socketEntries?[index].randomizedPlugSetHash == null &&
+            item.sockets?.socketEntries?[index].singleInitialItemHash != 0)
           Padding(
             padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
             child: InkWell(
