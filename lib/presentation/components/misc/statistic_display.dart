@@ -20,7 +20,7 @@ class VerticalStatisticDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String link = DestinyData.bungieLink + icon;
+    String link = '${DestinyData.bungieLink}$icon?t=123456';
     return SizedBox(
         width: width,
         child: Column(

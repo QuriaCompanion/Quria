@@ -56,7 +56,7 @@ class ForeignBuildSection extends StatelessWidget {
               isSubclass: false,
               callback: () {
                 Provider.of<InspectProvider>(context, listen: false).setInspectItem(itemDef: itemDef);
-                if (vw(context) < 1000) {
+                if (isMobile(context)) {
                   Navigator.pushNamed(context, routeCollectionItem, arguments: itemDef.hash);
                 } else {
                   showDialog(
@@ -64,10 +64,7 @@ class ForeignBuildSection extends StatelessWidget {
                       barrierColor: const Color.fromARGB(110, 0, 0, 0),
                       builder: (context) {
                         return desktopCollectionModal(context,
-                            child: CollectionItemMobileView(
-                              data: itemDef,
-                              width: vw(context) * 0.4,
-                            ));
+                            child: CollectionItemMobileView(data: itemDef, width: modalWidth(context)));
                       });
                 }
               },

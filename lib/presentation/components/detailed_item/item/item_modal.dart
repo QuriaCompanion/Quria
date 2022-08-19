@@ -61,7 +61,7 @@ class ItemModal extends StatelessWidget {
                                     height: 12,
                                     margin: const EdgeInsets.only(right: 5),
                                     child: Image(
-                                      image: NetworkImage(DestinyData.bungieLink + data.elementIcon!),
+                                      image: NetworkImage('${DestinyData.bungieLink}${data.elementIcon!}?t=12'),
                                     )),
                               if (data.powerLevel != null) textBodyBold(data.powerLevel.toString()),
                               divider,

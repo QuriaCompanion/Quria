@@ -54,7 +54,8 @@ class ItemComponentSmart extends StatelessWidget {
                         height: 12,
                         margin: const EdgeInsets.only(right: 5),
                         child: Image(
-                          image: NetworkImage(DestinyData.bungieLink + elementIcon),
+                          image: NetworkImage(
+                              '${DestinyData.bungieLink}$elementIcon?t=${itemSize(context, width).toInt()}'),
                         )),
                   if (powerLevel != null) textBodyBold(powerLevel.toString()),
                 ],

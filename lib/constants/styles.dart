@@ -67,8 +67,16 @@ double appBarItem(BuildContext context) {
   return vw(context) * 0.064;
 }
 
+double modalWidth(BuildContext context) {
+  return vw(context) < 1280 ? vw(context) * 0.6 : vw(context) * 0.4;
+}
+
 double appBarHeight(BuildContext context) {
   return MediaQuery.of(context).padding.top + (globalPadding(context) * 2) + appBarItem(context);
+}
+
+bool isMobile(BuildContext context) {
+  return vw(context) < 1000;
 }
 
 const Color backgroundColor = black;

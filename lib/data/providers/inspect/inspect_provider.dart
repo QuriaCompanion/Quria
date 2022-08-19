@@ -9,6 +9,7 @@ import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/data/models/WeaponScore.model.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/inspectHelper.model.dart';
 import 'package:quria/data/providers/item_provider.dart';
@@ -20,15 +21,19 @@ class InspectProvider with ChangeNotifier {
   DestinyItemComponent? _item;
   DestinyInventoryItemDefinition? _itemDef;
   InspectWeaponStatus? _weaponStatus;
+  WeaponScore? _weaponScore;
 
   DestinyItemComponent? get item => _item;
   DestinyInventoryItemDefinition? get itemDef => _itemDef;
   InspectWeaponStatus? get weaponStatus => _weaponStatus;
+  WeaponScore? get weaponScore => _weaponScore;
 
   void setInspectItem({
     DestinyItemComponent? item,
     required DestinyInventoryItemDefinition itemDef,
   }) {
+    _weaponStatus = null;
+    _weaponScore = null;
     _item = item;
     _itemDef = itemDef;
     notifyListeners();
@@ -40,6 +45,11 @@ class InspectProvider with ChangeNotifier {
 
   void setWeaponStatus(InspectWeaponStatus? status) {
     _weaponStatus = status;
+    notifyListeners();
+  }
+
+  void setWeaponScore(WeaponScore? score) {
+    _weaponScore = score;
     notifyListeners();
   }
 
@@ -75,8 +85,8 @@ class InspectProvider with ChangeNotifier {
   String getImageLink(BuildContext context) {
     // TODO: this image isn't the best choice, but it's the best I can do for now.
     return _itemDef?.screenshot != null
-        ? DestinyData.bungieLink + _itemDef!.screenshot!
-        : "${DestinyData.bungieLink}/common/destiny2_content/screenshots/2345794502.jpg";
+        ? '${DestinyData.bungieLink}${_itemDef!.screenshot!}?t=123456'
+        : "${DestinyData.bungieLink}/common/destiny2_content/screenshots/2345794502.jpg?t=1589788";
   }
 
   String? getElementIcon(BuildContext context) {

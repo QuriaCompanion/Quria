@@ -28,7 +28,7 @@ class _CollectionItemPageState extends State<CollectionItemPage> {
       future: _future,
       builder: ((context, AsyncSnapshot<DestinyInventoryItemDefinition?> snapshot) {
         if (snapshot.hasData) {
-          if (vw(context) < 1000) {
+          if (isMobile(context)) {
             return ScaffoldBurgerAndBackOption(
                 width: vw(context), body: CollectionItemMobileView(data: snapshot.data!));
           } else {

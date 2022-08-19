@@ -33,7 +33,7 @@ class InspectSubclassPage extends StatelessWidget {
         sockets.map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e.plugHash]!).toList();
     final def = ManifestService.manifestParsed.destinyInventoryItemDefinition[
         Provider.of<InventoryProvider>(context).getItemByInstanceId(data.subclassId)?.itemHash];
-    if (vw(context) < 1000) {
+    if (isMobile(context)) {
       return ScaffoldSteps(
         actionText: AppLocalizations.of(context)!.change_subclass,
         route: routeChangeSubclass,

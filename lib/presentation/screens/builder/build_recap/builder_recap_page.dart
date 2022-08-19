@@ -15,7 +15,7 @@ class BuilderRecapPage extends StatefulWidget {
 class _BuilderRecapPageState extends State<BuilderRecapPage> {
   @override
   Widget build(BuildContext context) {
-    if (vw(context) < 1000) {
+    if (isMobile(context)) {
       return ScaffoldBurgerAndBackOption(
           width: vw(context), body: BuilderRecapMobileView(width: vw(context), data: widget.data));
     } else {

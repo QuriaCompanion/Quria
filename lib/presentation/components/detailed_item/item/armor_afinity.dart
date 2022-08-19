@@ -33,7 +33,8 @@ class ArmorAfinity extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Image(width: 18, height: 18, image: NetworkImage(DestinyData.bungieLink + afinityIcon)),
+                      Image(
+                          width: 18, height: 18, image: NetworkImage('${DestinyData.bungieLink}$afinityIcon?t=123456')),
                       SizedBox(width: (width - (globalPadding(context) * 2)) * 0.005),
                       textH2(pointsAvailable.toString()),
                     ],

@@ -25,11 +25,8 @@ class TalentGridMobileItem extends StatelessWidget {
         children: [
           pictureBordered(
             size: width * 0.192,
-            image: DestinyData.bungieLink +
-                talentGridNodes[talentGridComponent.firstWhere((element) => element.isActivated!).nodeIndex!]
-                    .steps![0]
-                    .displayProperties!
-                    .icon!,
+            image:
+                '${DestinyData.bungieLink}${talentGridNodes[talentGridComponent.firstWhere((element) => element.isActivated!).nodeIndex!].steps![0].displayProperties!.icon!}?t=123456',
           ),
           Container(
             padding: EdgeInsets.only(
@@ -69,7 +66,7 @@ class TalentGridMobileItem extends StatelessWidget {
                     // },
                     child: pictureBordered(
                         image:
-                            DestinyData.bungieLink + talentGridNodes[node.nodeHash!].steps![0].displayProperties!.icon!,
+                            '${DestinyData.bungieLink}${talentGridNodes[node.nodeHash!].steps![0].displayProperties!.icon!}?t=123456',
                         size: 44),
                   )
               ],

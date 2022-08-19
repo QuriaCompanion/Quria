@@ -99,8 +99,8 @@ class EquipModal extends StatelessWidget {
                   child: CharacterTransferItem(
                       width: width ?? vw(context),
                       imageLink: DestinyData.bungieLink + character.emblemPath!,
-                      name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
-                          .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
+                      name:
+                          "${ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!.genderedClassNamesByGenderHash![character.genderHash.toString()]!}?t=123456",
                       powerLevel: character.light,
                       icon: "assets/icons/Equip.svg"),
                 ),

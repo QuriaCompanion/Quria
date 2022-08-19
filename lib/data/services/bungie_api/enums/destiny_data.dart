@@ -141,13 +141,11 @@ class Conditions {
             TierType.Exotic;
   }
 
-  static bool cosmeticSockets(DestinyItemSocketState item) {
-    return (item.isVisible!) &&
-            ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.itemType ==
-                DestinyItemType.Armor ||
-        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.itemSubType ==
+  static bool cosmeticSockets(int? plugHash) {
+    return ManifestService.manifestParsed.destinyInventoryItemDefinition[plugHash]?.itemType == DestinyItemType.Armor ||
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[plugHash]?.itemSubType ==
             DestinyItemSubType.Ornament ||
-        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.plugHash]?.itemSubType ==
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[plugHash]?.itemSubType ==
             DestinyItemSubType.Shader;
   }
 
@@ -174,12 +172,26 @@ class Conditions {
   }
 
   static bool perkSockets(int? item) {
-    final socketCategory = ManifestService.manifestParsed.destinyInventoryItemDefinition[item]?.itemCategoryHashes;
-    if (socketCategory?.isNotEmpty ?? false) {
-      for (final socket in socketCategory!) {
-        if (DestinyData.perkCategoryHash.contains(socket)) {
-          return true;
-        }
+    // return true;
+    final socketDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[item];
+    final socketCategory = socketDef?.itemCategoryHashes;
+    if (socketDef?.plug?.plugCategoryIdentifier == "intrinsics" ||
+        (socketDef?.plug?.plugCategoryIdentifier != null &&
+            socketDef!.plug!.plugCategoryIdentifier!.contains('crafting'))) return false;
+    if (socketCategory?.isEmpty ?? true) return true;
+    for (final socket in socketCategory!) {
+      if (DestinyData.perkCategoryHash.contains(socket) ||
+          socketCategory.length == 1 &&
+              !cosmeticSockets(item) &&
+              socketDef?.displayProperties?.icon != null &&
+              // socketDef?.inventory?.tierType == TierType.Superior &&
+              socket != 2237038328 &&
+              !socketDef!.plug!.plugCategoryIdentifier!.contains('masterwork') &&
+              socketDef.plug?.plugCategoryIdentifier != "mementos" &&
+              socketDef.hash != 1922808508 &&
+              socketDef.hash != 4029346515 &&
+              socketDef.hash != 659359923) {
+        return true;
       }
     }
     return false;

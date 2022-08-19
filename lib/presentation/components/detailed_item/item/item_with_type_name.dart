@@ -16,7 +16,7 @@ class ItemWithTypeName extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         ExtendedImage.network(
-          DestinyData.bungieLink + item.displayProperties!.icon!,
+          '${DestinyData.bungieLink}${item.displayProperties!.icon!}?t=123456',
           height: iconSize,
           width: iconSize,
           timeLimit: const Duration(seconds: 10),

@@ -42,7 +42,7 @@ class BuilderResultsPageState extends State<BuilderResultsPage> {
         future: _future,
         builder: (BuildContext context, AsyncSnapshot<List<Build>> snapshot) {
           if (snapshot.hasData) {
-            if (vw(context) < 1000) {
+            if (isMobile(context)) {
               return ScaffoldBurgerAndBackOption(
                 width: vw(context),
                 body: BuilderResultsMobileView(

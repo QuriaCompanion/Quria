@@ -11,7 +11,9 @@ import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/collection_filter.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
+import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/screens/collection/collection_item/collection_item_mobile_view.dart';
 import 'package:quria/presentation/screens/collection/components/collection_desktop_filter.dart';
 
@@ -36,14 +38,24 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
     selectedSubType = currentFilter.values.first;
     selectedBucket = InventoryBucket.kineticWeapons;
     sortedItems = widget.items.toList();
-    sortedItems.sort((a, b) => b.inventory!.tierType!.index.compareTo(a.inventory!.tierType!.index));
+    sortedItems.sort((a, b) {
+      final int tier = b.inventory!.tierType!.index.compareTo(a.inventory!.tierType!.index);
+      if (tier != 0) return tier;
+      final int damage = a.defaultDamageType!.index.compareTo(b.defaultDamageType!.index);
+      if (damage != 0) return damage;
+      final int name = a.displayProperties!.name!.compareTo(b.displayProperties!.name!);
+      return name;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     double borderRadius = 8;
     List<DestinyInventoryItemDefinition> items = sortedItems
-        .where((element) => selectedSubType == element.itemSubType && element.inventory?.tierType != TierType.Exotic)
+        .where((element) =>
+            selectedSubType == element.itemSubType &&
+            element.inventory?.tierType != TierType.Exotic &&
+            DisplayService.isItemItemActive(context, element))
         .toList();
     return SingleChildScrollView(
       child: Column(
@@ -56,85 +68,86 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
           Container(
             width: vw(context),
             padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Column(children: [
-              // Padding(
-              //   padding:
-              //       EdgeInsets.only(top: globalPadding(context), bottom: 50),
-              //   child: SizedBox(
-              //     height: 45,
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.start,
-              //       children: [
-              //         InkWell(
-              //             onTap: () {
-              //               setState(() {
-              //                 currentFilter = CollectionFilter.kinetic;
-              //                 selectedBucket = InventoryBucket.kineticWeapons;
-              //               });
-              //             },
-              //             child: MobileNavItem(
-              //               selected: selectedBucket ==
-              //                   InventoryBucket.kineticWeapons,
-              //               value: "Cinétique",
-              //               width: vw(context) * 0.10,
-              //             )),
-              //         InkWell(
-              //             onTap: () {
-              //               setState(() {
-              //                 currentFilter = CollectionFilter.energy;
-              //                 selectedBucket = InventoryBucket.energyWeapons;
-              //               });
-              //             },
-              //             child: MobileNavItem(
-              //               selected: selectedBucket ==
-              //                   InventoryBucket.energyWeapons,
-              //               value: "Énergétique",
-              //               width: vw(context) * 0.10,
-              //             )),
-              //         InkWell(
-              //             onTap: () {
-              //               setState(() {
-              //                 currentFilter = CollectionFilter.power;
-              //                 selectedBucket = InventoryBucket.powerWeapons;
-              //               });
-              //             },
-              //             child: MobileNavItem(
-              //               selected: selectedBucket ==
-              //                   InventoryBucket.powerWeapons,
-              //               value: "Puissante",
-              //               width: vw(context) * 0.10,
-              //             )),
-              //       ],
-              //     ),
-              //   ),
-              // ),
-              SizedBox(
-                height: globalPadding(context),
-              ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CollectionDesktopFilter(
-                      items: sortedItems,
-                      selectedBucket: selectedBucket,
-                      selectedSubType: selectedSubType,
-                      currentFilter: currentFilter,
-                      onFilterChanged: (bucket, filter, subtype) {
-                        setState(() {
-                          currentFilter = filter;
-                          if (bucket != selectedBucket) {
-                            selectedBucket = bucket;
-                            selectedSubType = currentFilter.values.first;
-                          } else {
-                            selectedSubType = subtype;
-                          }
-                        });
-                      }),
-                  const Spacer(),
-                  SingleChildScrollView(
-                    child: SizedBox(
-                      width: vw(context) - (globalPadding(context) * 2) - 400,
-                      child: GridView.builder(
+            child: Column(
+              children: [
+                // Padding(
+                //   padding:
+                //       EdgeInsets.only(top: globalPadding(context), bottom: 50),
+                //   child: SizedBox(
+                //     height: 45,
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.start,
+                //       children: [
+                //         InkWell(
+                //             onTap: () {
+                //               setState(() {
+                //                 currentFilter = CollectionFilter.kinetic;
+                //                 selectedBucket = InventoryBucket.kineticWeapons;
+                //               });
+                //             },
+                //             child: MobileNavItem(
+                //               selected: selectedBucket ==
+                //                   InventoryBucket.kineticWeapons,
+                //               value: "Cinétique",
+                //               width: vw(context) * 0.10,
+                //             )),
+                //         InkWell(
+                //             onTap: () {
+                //               setState(() {
+                //                 currentFilter = CollectionFilter.energy;
+                //                 selectedBucket = InventoryBucket.energyWeapons;
+                //               });
+                //             },
+                //             child: MobileNavItem(
+                //               selected: selectedBucket ==
+                //                   InventoryBucket.energyWeapons,
+                //               value: "Énergétique",
+                //               width: vw(context) * 0.10,
+                //             )),
+                //         InkWell(
+                //             onTap: () {
+                //               setState(() {
+                //                 currentFilter = CollectionFilter.power;
+                //                 selectedBucket = InventoryBucket.powerWeapons;
+                //               });
+                //             },
+                //             child: MobileNavItem(
+                //               selected: selectedBucket ==
+                //                   InventoryBucket.powerWeapons,
+                //               value: "Puissante",
+                //               width: vw(context) * 0.10,
+                //             )),
+                //       ],
+                //     ),
+                //   ),
+                // ),
+                SizedBox(
+                  height: globalPadding(context),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CollectionDesktopFilter(
+                        items: sortedItems,
+                        selectedBucket: selectedBucket,
+                        selectedSubType: selectedSubType,
+                        currentFilter: currentFilter,
+                        onFilterChanged: (bucket, filter, subtype) {
+                          setState(() {
+                            currentFilter = filter;
+                            if (bucket != selectedBucket) {
+                              selectedBucket = bucket;
+                              selectedSubType = currentFilter.values.first;
+                            } else {
+                              selectedSubType = subtype;
+                            }
+                          });
+                        }),
+                    const Spacer(),
+                    SingleChildScrollView(
+                      child: SizedBox(
+                        width: vw(context) - (globalPadding(context) * 2) - 400,
+                        child: GridView.builder(
                           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                             maxCrossAxisExtent: 400,
                             mainAxisExtent: 100,
@@ -154,10 +167,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                                   builder: (context) {
                                     return desktopCollectionModal(
                                       context,
-                                      child: CollectionItemMobileView(
-                                        data: items[index],
-                                        width: vw(context) * 0.4,
-                                      ),
+                                      child: CollectionItemMobileView(data: items[index], width: modalWidth(context)),
                                     );
                                   },
                                 );
@@ -170,13 +180,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
                                   children: [
-                                    Image(
-                                      image:
-                                          NetworkImage(DestinyData.bungieLink + items[index].displayProperties!.icon!),
-                                      height: 80,
-                                      width: 80,
-                                      fit: BoxFit.fill,
-                                    ),
+                                    ItemIcon(displayHash: items[index].hash!, imageSize: 80),
                                     const SizedBox(width: 10),
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -185,12 +189,8 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                                         Row(
                                           children: [
                                             Image(
-                                              image: NetworkImage(DestinyData.bungieLink +
-                                                  ManifestService
-                                                      .manifestParsed
-                                                      .destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!
-                                                      .displayProperties!
-                                                      .icon!),
+                                              image: NetworkImage(
+                                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!.displayProperties!.icon!}?t=123456'),
                                               height: 15,
                                               width: 15,
                                               fit: BoxFit.fill,
@@ -208,12 +208,14 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                                 ),
                               ),
                             );
-                          }),
-                    ),
-                  )
-                ],
-              )
-            ]),
+                          },
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
           )
         ],
       ),

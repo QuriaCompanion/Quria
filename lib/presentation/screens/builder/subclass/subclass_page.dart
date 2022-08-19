@@ -35,7 +35,7 @@ class _SubclassPageState extends State<SubclassPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (vw(context) < 1000) {
+    if (isMobile(context)) {
       return ScaffoldSteps(
         actionText: AppLocalizations.of(context)!.next,
         route: routeMod,

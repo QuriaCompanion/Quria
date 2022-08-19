@@ -49,7 +49,7 @@ class BuilderResultsDesktopView extends StatelessWidget {
                           return desktopBuildModal(
                             context,
                             child: BuilderRecapMobileView(
-                              width: vw(context) * 0.4,
+                              width: modalWidth(context),
                               data: buildResults[index],
                             ),
                           );

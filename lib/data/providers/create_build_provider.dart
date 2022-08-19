@@ -20,6 +20,12 @@ class CreateBuildProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void replaceItems(List<Item> items) {
+    _items.clear();
+    _items.addAll(items);
+    notifyListeners();
+  }
+
   void replaceItem(Item previousItem, Item item) {
     _items.remove(previousItem);
     _items.add(item);

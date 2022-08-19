@@ -94,7 +94,7 @@ class _ModModalState extends State<ModModal> {
                               name: ManifestService.manifestParsed.destinyStatDefinition[stat.statTypeHash]!
                                       .displayProperties!.name ??
                                   'error',
-                              value: stat.value?.abs() ?? 0,
+                              value: stat.value ?? 0,
                               type: DestinyItemType.Armor,
                             ),
                           );

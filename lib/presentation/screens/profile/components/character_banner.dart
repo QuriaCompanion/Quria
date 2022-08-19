@@ -17,7 +17,8 @@ class CharacterBanner extends StatelessWidget {
       height: width / 4.9375,
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: NetworkImage(DestinyData.bungieLink + character.emblemBackgroundPath!), fit: BoxFit.cover),
+            image: NetworkImage('${DestinyData.bungieLink}${character.emblemBackgroundPath!}?t=123456'),
+            fit: BoxFit.cover),
       ),
       child: Padding(
         padding: EdgeInsets.only(
@@ -41,8 +42,8 @@ class CharacterBanner extends StatelessWidget {
               children: [
                 AutoSizeText(character.light.toString(), style: TextStyle(color: Colors.yellow, fontSize: fontSize)),
                 Image(
-                  image: NetworkImage(DestinyData.bungieLink +
-                      ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!),
+                  image: NetworkImage(
+                      '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t=123456'),
                   color: Colors.yellow,
                 ),
               ],

@@ -19,7 +19,7 @@ class ItemComponentDisplayPerksBuild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double smallIconSize = width == vw(context) ? width / 11.9 : 60;
+    double smallIconSize = isMobile(context) ? width / 11.9 : 40;
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [

@@ -26,7 +26,7 @@ class CollectionItemLine extends StatelessWidget {
           child: Stack(
             children: [
               Image(
-                image: NetworkImage(DestinyData.bungieLink + item.displayProperties!.icon!),
+                image: NetworkImage('${DestinyData.bungieLink}${item.displayProperties!.icon!}?t=123456'),
                 height: iconSize(context, width),
                 width: iconSize(context, width),
                 fit: BoxFit.fill,
@@ -34,7 +34,7 @@ class CollectionItemLine extends StatelessWidget {
               if (item.iconWatermark != null)
                 Image(
                   image: NetworkImage(
-                    DestinyData.bungieLink + item.iconWatermark!,
+                    '${DestinyData.bungieLink}${item.iconWatermark!}?t=123456',
                   ),
                   height: iconSize(context, width),
                   width: iconSize(context, width),

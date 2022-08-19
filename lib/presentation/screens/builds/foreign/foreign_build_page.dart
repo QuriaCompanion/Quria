@@ -34,7 +34,7 @@ class _ForeignBuildPageState extends State<ForeignBuildPage> {
             if (snapshot.data == null) {
               return Container();
             }
-            if (vw(context) < 1000) {
+            if (isMobile(context)) {
               return ScaffoldCharacters(
                 body: ForeignBuildMobileView(
                   foreignBuild: snapshot.data!,

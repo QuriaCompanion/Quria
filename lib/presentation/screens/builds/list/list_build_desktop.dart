@@ -33,7 +33,6 @@ class ListBuildDesktop extends StatelessWidget {
                 MobileNavItem(
                   selected: true,
                   value: AppLocalizations.of(context)!.builder_list,
-                  width: vw(context) * 0.43,
                 ),
                 InkWell(
                     onTap: () {
@@ -42,7 +41,6 @@ class ListBuildDesktop extends StatelessWidget {
                     },
                     child: MobileNavItem(
                       value: AppLocalizations.of(context)!.create_build,
-                      width: vw(context) * 0.43,
                     )),
               ],
             ),

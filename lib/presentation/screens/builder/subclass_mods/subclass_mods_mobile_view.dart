@@ -43,7 +43,7 @@ class SubclassModsMobileView extends StatelessWidget {
       child: Column(
         children: [
           mobileHeader(context,
-              image: NetworkImage(DestinyData.bungieLink + subclass.screenshot!),
+              image: NetworkImage('${DestinyData.bungieLink}${subclass.screenshot!}?t=12345456'),
               width: width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -188,7 +188,8 @@ class SubclassModsMobileView extends StatelessWidget {
                                     });
                               },
                               child: pictureBordered(
-                                image: DestinyData.bungieLink + displayedSockets[7 + i].displayProperties!.icon!,
+                                image:
+                                    '${DestinyData.bungieLink}${displayedSockets[7 + i].displayProperties!.icon!}?t=12345456',
                                 size: width == vw(context) ? itemSize(context, width) : 80,
                               ),
                             ),
@@ -197,6 +198,9 @@ class SubclassModsMobileView extends StatelessWidget {
                     )),
               ],
             ),
+          ),
+          SizedBox(
+            height: globalPadding(context) * 3,
           )
         ],
       ),

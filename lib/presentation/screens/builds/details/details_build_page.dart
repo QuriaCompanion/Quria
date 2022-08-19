@@ -11,7 +11,7 @@ class DetailsBuildPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (vw(context) < 1000) {
+    if (isMobile(context)) {
       return const ScaffoldBurger(
         body: DetailsBuildMobileView(),
       );

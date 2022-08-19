@@ -18,7 +18,7 @@ class StatsFilterPage extends StatefulWidget {
 class _StatsFilterPageState extends State<StatsFilterPage> {
   @override
   Widget build(BuildContext context) {
-    if (vw(context) < 1000) {
+    if (isMobile(context)) {
       return ScaffoldSteps(
         actionText: AppLocalizations.of(context)!.next,
         route: routeSubclass,

@@ -30,6 +30,7 @@ class _CharacterAppbarState extends State<CharacterAppbar> {
   Widget build(BuildContext context) {
     return SliverAppBar(
       floating: true,
+      actions: <Widget>[Container()],
       leading: Builder(
         builder: (context) {
           return InkWell(

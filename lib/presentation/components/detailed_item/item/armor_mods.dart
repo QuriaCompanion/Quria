@@ -76,7 +76,7 @@ class ArmorMods extends StatelessWidget {
                     : EdgeInsets.zero,
                 child: InkWell(
                   onTap: () {
-                    if (vw(context) < 1000) {
+                    if (isMobile(context)) {
                       showMaterialModalBottomSheet(
                           backgroundColor: Colors.transparent,
                           expand: true,

@@ -1,17 +1,9 @@
-import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:quria/constants/mobile_widgets.dart';
-import 'package:quria/data/providers/inspect/inspect_provider.dart';
-import 'package:quria/presentation/components/detailed_item/item/weapon_score_display.dart';
-import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_actions.dart';
-import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_cosmetics.dart';
-import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_perks.dart';
-import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_origin.dart';
-import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_intrinsics.dart';
-import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_specimens.dart';
-import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_stats.dart';
+import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
+import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_recommendations.dart';
+import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_statistics.dart';
 
 class InspectMobileWeaponInfo extends StatefulWidget {
   final double width;
@@ -25,63 +17,65 @@ class InspectMobileWeaponInfo extends StatefulWidget {
   State<InspectMobileWeaponInfo> createState() => _InspectMobileWeaponInfoState();
 }
 
+enum InspectWeaponInfo {
+  statistics,
+  recommendations,
+}
+
 class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
+  InspectWeaponInfo weaponInfo = InspectWeaponInfo.statistics;
   @override
   Widget build(BuildContext context) {
-    final itemDef = Provider.of<InspectProvider>(context).itemDef!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (vw(context) < 1000)
-          mobileSection(
-            context,
-            title: AppLocalizations.of(context)!.quick_actions,
-            child: InspectMobileActions(
-              width: widget.width,
+        Padding(
+          padding: EdgeInsets.only(top: globalPadding(context), bottom: globalPadding(context) * 2),
+          child: SizedBox(
+            height: 45,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  child: InkWell(
+                      onTap: () {
+                        if (weaponInfo != InspectWeaponInfo.statistics) {
+                          setState(
+                            () {
+                              weaponInfo = InspectWeaponInfo.statistics;
+                            },
+                          );
+                        }
+                      },
+                      child: MobileNavItem(
+                        selected: weaponInfo == InspectWeaponInfo.statistics,
+                        value: AppLocalizations.of(context)!.statistics,
+                      )),
+                ),
+                SizedBox(width: globalPadding(context)),
+                Expanded(
+                  child: InkWell(
+                    onTap: () {
+                      if (weaponInfo != InspectWeaponInfo.recommendations) {
+                        setState(
+                          () {
+                            weaponInfo = InspectWeaponInfo.recommendations;
+                          },
+                        );
+                      }
+                    },
+                    child: MobileNavItem(
+                      selected: weaponInfo == InspectWeaponInfo.recommendations,
+                      value: AppLocalizations.of(context)!.recommendation_quria,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
-        mobileSection(
-          context,
-          title: AppLocalizations.of(context)!.statistics,
-          child: InspectMobileStats(
-            width: widget.width - globalPadding(context) * 2,
-          ),
         ),
-        mobileSection(context, title: 'Notation Quria', child: const WeaponScoreDisplay()),
-        mobileSection(
-          context,
-          title: AppLocalizations.of(context)!.perks,
-          child: InspectMobilePerks(
-            width: widget.width,
-          ),
-        ),
-        mobileSection(
-          context,
-          title: AppLocalizations.of(context)!.mods_and_intrinsics,
-          child: InspectMobileIntrinsics(width: widget.width),
-        ),
-        mobileSection(
-          context,
-          title: AppLocalizations.of(context)!.cosmetics,
-          child: MobileInspectCosmetics(
-            width: widget.width,
-          ),
-        ),
-        mobileSection(
-          context,
-          title: AppLocalizations.of(context)!.other_specimens,
-          child: InspectMobileSpecimens(
-            width: widget.width,
-          ),
-        ),
-        if (itemDef.collectibleHash != null)
-          mobileSection(
-            context,
-            title: AppLocalizations.of(context)!.origin,
-            child: InspectMobileOrigin(
-              collectionHash: itemDef.collectibleHash,
-            ),
-          ),
+        if (weaponInfo == InspectWeaponInfo.statistics) InspectMobileWeaponStatistics(width: widget.width),
+        if (weaponInfo == InspectWeaponInfo.recommendations) InspectMobileWeaponRecommendations(width: widget.width)
       ],
     );
   }

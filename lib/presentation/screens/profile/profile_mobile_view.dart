@@ -30,10 +30,8 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
   @override
   Widget build(BuildContext context) {
     String icon = widget.data.isNewSubclass
-        ? ManifestService
-            .manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.screenshot!
-        : ManifestService.manifestParsed
-            .destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!;
+        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t=123456'
+        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t=123456';
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,8 +68,8 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Weapon,
                         value: AppLocalizations.of(context)!.weapons,
-                        width: vw(context) * 0.29,
                       )),
+                  SizedBox(width: globalPadding(context)),
                   InkWell(
                       onTap: () {
                         setState(() {
@@ -82,8 +80,8 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Armor,
                         value: AppLocalizations.of(context)!.armor,
-                        width: vw(context) * 0.29,
                       )),
+                  SizedBox(width: globalPadding(context)),
                   InkWell(
                       onTap: () {
                         setState(() {
@@ -94,8 +92,8 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       child: MobileNavItem(
                         selected: isPostmasterOpen,
                         value: AppLocalizations.of(context)!.postmaster,
-                        width: vw(context) * 0.29,
                       )),
+                  SizedBox(width: globalPadding(context)),
                   InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, routeVault);
@@ -103,7 +101,6 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       child: MobileNavItem(
                         selected: false,
                         value: AppLocalizations.of(context)!.vault,
-                        width: vw(context) * 0.29,
                       )),
                 ],
               ),

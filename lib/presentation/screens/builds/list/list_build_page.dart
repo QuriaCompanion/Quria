@@ -38,7 +38,7 @@ class _ListBuildPageState extends State<ListBuildPage> {
               .where((element) =>
                   element.className == Provider.of<CharactersProvider>(context).currentCharacter?.classType)
               .toList();
-          if (vw(context) < 1000) {
+          if (isMobile(context)) {
             return ScaffoldCharacters(
                 body: ListBuildMobile(
               builds: builds,

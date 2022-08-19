@@ -3,9 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/models/WeaponScore.model.model.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/presentation/components/detailed_item/item/weapon_score_display.dart';
 import 'package:quria/presentation/screens/inspect/components/perk_list.dart';
+import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_recommendations.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_origin.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_stats.dart';
 
@@ -21,22 +23,24 @@ class CollectionWeaponView extends StatelessWidget {
 
     return Column(
       children: [
-        mobileSection(
-          context,
-          title: AppLocalizations.of(context)!.statistics,
-          child: InspectMobileStats(
-            bonusStats: Provider.of<InspectProvider>(context).getBonusStats(),
-            width: width,
+        InspectMobileWeaponRecommendations(width: width),
+        if (Provider.of<InspectProvider>(context).weaponScore == null) ...[
+          mobileSection(
+            context,
+            title: AppLocalizations.of(context)!.statistics,
+            child: InspectMobileStats(
+              bonusStats: Provider.of<InspectProvider>(context).getBonusStats(),
+              width: width,
+            ),
           ),
-        ),
-        mobileSection(context, title: "QuriaNotation", child: const WeaponScoreDisplay()),
-        mobileSection(
-          context,
-          title: AppLocalizations.of(context)!.perks,
-          child: PerkList(
-            width: width,
+          mobileSection(
+            context,
+            title: AppLocalizations.of(context)!.perks,
+            child: PerkList(
+              width: width,
+            ),
           ),
-        ),
+        ],
         mobileSection(context,
             title: AppLocalizations.of(context)!.origin,
             child: InspectMobileOrigin(collectionHash: itemDef.collectibleHash)),
