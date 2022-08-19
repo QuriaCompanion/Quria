@@ -31,14 +31,14 @@ class CollectionItemMobileView extends StatefulWidget {
 
 class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
   late DestinyInventoryItemDefinition data;
-  late Future<WeaponScore?> _future;
   @override
   void initState() {
     super.initState();
     data = widget.data;
-    _future =
-        WeaponScoreService().getWeaponScore('${Provider.of<InspectProvider>(context, listen: false).itemDef?.hash}');
-    _future.then((value) {
+
+    WeaponScoreService()
+        .getWeaponScore('${Provider.of<InspectProvider>(context, listen: false).itemDef?.hash}')
+        .then((value) {
       if (value != null) {
         Provider.of<InspectProvider>(context, listen: false).setWeaponScore(value);
         if (data.sockets?.socketEntries != null) {

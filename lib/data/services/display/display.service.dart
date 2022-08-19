@@ -271,6 +271,7 @@ class DisplayService {
     List<int> socketList = [];
     for (var sockets in item.sockets!.socketEntries!) {
       if (Conditions.perkSockets(sockets.singleInitialItemHash)) {
+        socketList.add(sockets.singleInitialItemHash!);
         if (sockets.randomizedPlugSetHash != null) {
           for (var socket in ManifestService
               .manifestParsed.destinyPlugSetDefinition[sockets.randomizedPlugSetHash]!.reusablePlugItems!) {
