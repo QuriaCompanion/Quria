@@ -276,7 +276,9 @@ class BuilderService {
       StatsStringHash.intellect: 0,
       StatsStringHash.strength: 0,
     };
-    for (Item item in items.where((element) => InventoryBucket.armorBucketHashes.contains(element.bucketHash))) {
+    for (Item item in items.where((element) =>
+        InventoryBucket.armorBucketHashes.contains(element.bucketHash) ||
+        element.bucketHash == InventoryBucket.subclass)) {
       final itemComponent = Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(item.instanceId);
 
       // loops through the mods in this armor
