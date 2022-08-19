@@ -97,7 +97,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
                     builder: (context) {
                       return desktopItemModal(context,
                           child: InspectItem(
-                            width: vw(context) * 0.4,
+                            width: modalWidth(context),
                           ));
                     },
                   );

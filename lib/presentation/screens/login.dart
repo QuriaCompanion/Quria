@@ -97,7 +97,7 @@ class LoginWidgetState extends State<LoginWidget> {
       body: Container(
         decoration: BoxDecoration(
             image:
-                DecorationImage(fit: BoxFit.cover, image: vw(context) < 1000 ? splashBackground : splashBackgroundWeb)),
+                DecorationImage(fit: BoxFit.cover, image: isMobile(context) ? splashBackground : splashBackgroundWeb)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

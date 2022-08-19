@@ -12,6 +12,7 @@ import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/screens/inspect/inspect_item.dart';
@@ -105,7 +106,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                               builder: (context) {
                                 return desktopItemModal(context,
                                     child: InspectItem(
-                                      width: vw(context) * 0.4,
+                                      width: modalWidth(context),
                                     ));
                               });
                         },
@@ -115,6 +116,8 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                           isMasterworked:
                               equippedItem.state == ItemState.Masterwork || equippedItem.state == const ItemState(5),
                           element: Provider.of<ItemProvider>(context).getItemElement(equippedItem),
+                          isActive: DisplayService.isItemItemActive(context,
+                              ManifestService.manifestParsed.destinyInventoryItemDefinition[equippedItem.itemHash]!),
                           powerLevel:
                               Provider.of<ItemProvider>(context).getItemPowerLevel(equippedItem.itemInstanceId!),
                         ),

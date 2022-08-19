@@ -92,7 +92,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                                     return desktopRegularModal(
                                       context,
                                       child: SubclassModsBuildView(
-                                        width: vw(context) * 0.4,
+                                        width: modalWidth(context),
                                         sockets: subclassItem!.mods,
                                         subclass: ManifestService
                                             .manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!,

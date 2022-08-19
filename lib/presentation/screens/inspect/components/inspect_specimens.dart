@@ -7,10 +7,14 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/RatedScore.model.dart';
+import 'package:quria/data/models/WeaponScore.model.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
+import 'package:quria/data/services/display/weapon_score.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display_perks_build.dart';
 
@@ -40,6 +44,11 @@ class InspectSpecimens extends StatelessWidget {
         .where((element) => element.plugHash != null)
         .map((element) => element.plugHash!)
         .toList();
+    final WeaponScore? weaponScore = Provider.of<InspectProvider>(context, listen: false).weaponScore;
+    RatedScore? ratedScore;
+    if (weaponScore != null) {
+      ratedScore = WeaponScoreService().getRatedScore(context, item, weaponScore);
+    }
     return Container(
       decoration: BoxDecoration(
         color: blackLight,
@@ -63,18 +72,21 @@ class InspectSpecimens extends StatelessWidget {
             width: globalPadding(context) / 2,
           ),
           SizedBox(
-            height: itemSize(context, width),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: [
                 textBodyBold(character != null
                     ? ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
                         .genderedClassNamesByGenderHash![character.genderHash.toString()]!
                     : AppLocalizations.of(context)!.vault),
+                SizedBox(
+                  height: globalPadding(context),
+                ),
                 ItemComponentDisplayPerksBuild(
                   itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
-                  width: width,
+                  width: width * 0.5,
                   perks: mods,
                 ),
               ],
@@ -82,13 +94,31 @@ class InspectSpecimens extends StatelessWidget {
           ),
           const Spacer(),
           Column(
+            mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
                 children: [
+                  Image(
+                    width: itemSize(context, width) / 4,
+                    image: NetworkImage(
+                        '${DestinyData.bungieLink}${Provider.of<ItemProvider>(context).getItemElement(item)}?t=123456'),
+                  ),
                   textH3(Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!).toString()),
                 ],
               ),
+              SizedBox(
+                height: globalPadding(context),
+              ),
+              Column(
+                children: [
+                  if (ratedScore != null) ...[
+                    textH3('PVE: ${ratedScore.scorePve.round()}/100'),
+                    textH3('PVP: ${ratedScore.scorePvp.round()}/100'),
+                  ],
+                ],
+              )
             ],
           ),
         ],

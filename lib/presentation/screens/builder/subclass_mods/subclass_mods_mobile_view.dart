@@ -198,6 +198,9 @@ class SubclassModsMobileView extends StatelessWidget {
                     )),
               ],
             ),
+          ),
+          SizedBox(
+            height: globalPadding(context) * 3,
           )
         ],
       ),

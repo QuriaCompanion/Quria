@@ -96,7 +96,7 @@ class BuilderSubclass extends StatelessWidget {
                         return desktopRegularModal(
                           context,
                           child: SubclassModsMobileView(
-                            width: vw(context) * 0.4,
+                            width: modalWidth(context),
                             displayedSockets: displayedSockets,
                             subclass: subclass,
                             onChange: (mods, i) async {

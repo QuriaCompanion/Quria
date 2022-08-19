@@ -14,7 +14,7 @@ class InspectMobileSpecimens extends StatelessWidget {
   Widget build(BuildContext context) {
     final item = Provider.of<InspectProvider>(context).item!;
     return Column(children: [
-      for (final item in Provider.of<InventoryProvider>(context, listen: false).getAllSpecimens(item))
+      for (final item in Provider.of<InventoryProvider>(context).getAllSpecimens(item))
         Padding(
           padding: EdgeInsets.only(bottom: globalPadding(context)),
           child: InkWell(

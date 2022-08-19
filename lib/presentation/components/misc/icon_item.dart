@@ -10,6 +10,7 @@ class ItemIcon extends StatelessWidget {
   final double imageSize;
   final bool isMasterworked;
   final bool isSunset;
+  final bool isActive;
   final int? powerLevel;
   final String? element;
   const ItemIcon({
@@ -17,6 +18,7 @@ class ItemIcon extends StatelessWidget {
     required this.imageSize,
     this.isMasterworked = false,
     this.isSunset = false,
+    this.isActive = true,
     this.powerLevel,
     this.element,
     Key? key,
@@ -57,14 +59,14 @@ class ItemIcon extends StatelessWidget {
             filterQuality: FilterQuality.high,
             printError: false,
           ),
-          if (ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
-                      ?.displayVersionWatermarkIcons?[0] !=
-                  null &&
-              ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
-                      ?.displayVersionWatermarkIcons?[0] !=
+          if ((ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality
+                      ?.displayVersionWatermarkIcons?.isNotEmpty ??
+                  false) &&
+              ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!
+                      .displayVersionWatermarkIcons!.last !=
                   "")
             ExtendedImage.network(
-              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!.displayVersionWatermarkIcons![0]}?t=${imageSize.toInt()}',
+              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!.displayVersionWatermarkIcons!.last}?t=${imageSize.toInt()}',
               height: imageSize,
               timeLimit: const Duration(seconds: 10),
               width: imageSize,
@@ -96,6 +98,12 @@ class ItemIcon extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+          if (!isActive)
+            Container(
+              width: imageSize,
+              height: imageSize,
+              color: black.withOpacity(0.7),
             ),
         ],
       ),

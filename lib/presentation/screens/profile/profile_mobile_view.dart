@@ -68,8 +68,8 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Weapon,
                         value: AppLocalizations.of(context)!.weapons,
-                        width: vw(context) * 0.29,
                       )),
+                  SizedBox(width: globalPadding(context)),
                   InkWell(
                       onTap: () {
                         setState(() {
@@ -80,8 +80,8 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       child: MobileNavItem(
                         selected: currentFilter == DestinyItemType.Armor,
                         value: AppLocalizations.of(context)!.armor,
-                        width: vw(context) * 0.29,
                       )),
+                  SizedBox(width: globalPadding(context)),
                   InkWell(
                       onTap: () {
                         setState(() {
@@ -92,8 +92,8 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       child: MobileNavItem(
                         selected: isPostmasterOpen,
                         value: AppLocalizations.of(context)!.postmaster,
-                        width: vw(context) * 0.29,
                       )),
+                  SizedBox(width: globalPadding(context)),
                   InkWell(
                       onTap: () {
                         Navigator.pushNamed(context, routeVault);
@@ -101,7 +101,6 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
                       child: MobileNavItem(
                         selected: false,
                         value: AppLocalizations.of(context)!.vault,
-                        width: vw(context) * 0.29,
                       )),
                 ],
               ),

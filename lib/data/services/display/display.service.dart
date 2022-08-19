@@ -15,6 +15,7 @@ import 'package:bungie_api/models/destiny_item_socket_entry_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:provider/provider.dart';
+import 'package:quria/data/models/AllDestinyManifestComponents.model.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/models/Donator.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
@@ -26,6 +27,7 @@ import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/models/helpers/socketsHelper.model.dart';
 import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/filters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
@@ -269,6 +271,7 @@ class DisplayService {
     List<int> socketList = [];
     for (var sockets in item.sockets!.socketEntries!) {
       if (Conditions.perkSockets(sockets.singleInitialItemHash)) {
+        socketList.add(sockets.singleInitialItemHash!);
         if (sockets.randomizedPlugSetHash != null) {
           for (var socket in ManifestService
               .manifestParsed.destinyPlugSetDefinition[sockets.randomizedPlugSetHash]!.reusablePlugItems!) {
@@ -348,11 +351,16 @@ class DisplayService {
   }
 
   static Future<Iterable<DestinyInventoryItemDefinition>> getCollectionByType(DestinyItemType type) async {
-    return await StorageService.isar.destinyInventoryItemDefinitions
+    final items = await StorageService.isar.destinyInventoryItemDefinitions
         .filter()
         .itemTypeEqualTo(type)
         .sortByDefaultDamageType()
         .findAll();
+    for (int i = 0; i < items.length; i++) {
+      DestinyInventoryItemDefinition def = items[i];
+      AllDestinyManifestComponents.setField<DestinyInventoryItemDefinition>(def.hash!, def);
+    }
+    return items;
   }
 
   static SocketsHelper getSubclassMods(BuildContext context, String subclassInstanceId) {
@@ -388,5 +396,21 @@ class DisplayService {
     } else {
       throw Exception('Failed to load album');
     }
+  }
+
+  static bool isItemItemActive(BuildContext context, DestinyInventoryItemDefinition item) {
+    final rarities = Provider.of<FiltersProvider>(context).rarityFilters;
+    final types = Provider.of<FiltersProvider>(context).typeFilters;
+    final elements = Provider.of<FiltersProvider>(context).elementFilters;
+    if (rarities.isNotEmpty && !rarities.contains(item.inventory?.tierType)) {
+      return false;
+    }
+    if (types.isNotEmpty && !types.contains(item.itemSubType)) {
+      return false;
+    }
+    if (elements.isNotEmpty && !elements.contains(item.damageTypes?[0])) {
+      return false;
+    }
+    return true;
   }
 }

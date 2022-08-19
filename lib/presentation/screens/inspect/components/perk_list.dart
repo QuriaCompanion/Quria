@@ -44,7 +44,7 @@ class _PerkListState extends State<PerkList> {
                   for (int index = 0; index < itemDef.sockets!.socketEntries!.length; index++)
                     if (Conditions.perkSockets(itemDef.sockets!.socketEntries![index].singleInitialItemHash))
                       Padding(
-                        padding: EdgeInsets.only(right: index != 6 ? globalPadding(context) : 0),
+                        padding: EdgeInsets.only(right: index != 5 ? globalPadding(context) : 0),
                         child: ColumnPerkDisplay(
                           item: itemDef,
                           index: index,

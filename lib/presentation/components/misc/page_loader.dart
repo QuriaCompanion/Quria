@@ -17,8 +17,7 @@ class PageLoader extends StatelessWidget {
       height: vh(context),
       width: vw(context),
       decoration: BoxDecoration(
-          image:
-              DecorationImage(fit: BoxFit.cover, image: vw(context) < 1000 ? splashBackground : splashBackgroundWeb)),
+          image: DecorationImage(fit: BoxFit.cover, image: isMobile(context) ? splashBackground : splashBackgroundWeb)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

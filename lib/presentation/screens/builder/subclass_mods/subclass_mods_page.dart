@@ -19,7 +19,7 @@ class SubclassModsPage extends StatelessWidget {
     DestinyInventoryItemDefinition subclass = Provider.of<BuilderSubclassProvider>(context).subclass!;
     List<DestinyInventoryItemDefinition> chosenSockets = Provider.of<BuilderSubclassModsProvider>(context).subclassMods;
 
-    if (vw(context) < 1000) {
+    if (isMobile(context)) {
       return ScaffoldSteps(
           actionText: AppLocalizations.of(context)!.next,
           route: routeMod,

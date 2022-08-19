@@ -10,6 +10,7 @@ import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/screens/inspect/inspect_item.dart';
@@ -47,10 +48,12 @@ class PostmasterItems extends StatelessWidget {
                       context: context,
                       barrierColor: const Color.fromARGB(110, 0, 0, 0),
                       builder: (context) {
-                        return desktopPostmasterModal(context,
-                            child: InspectItem(
-                              width: vw(context) * 0.4,
-                            ));
+                        return desktopPostmasterModal(
+                          context,
+                          child: InspectItem(
+                            width: modalWidth(context),
+                          ),
+                        );
                       });
                 } else {
                   showMaterialModalBottomSheet(
@@ -74,9 +77,11 @@ class PostmasterItems extends StatelessWidget {
             },
             child: ItemIcon(
               displayHash: item.overrideStyleItemHash ?? item.itemHash!,
-              imageSize: vw(context) < 1000 ? itemSize(context, width) : 56,
+              imageSize: isMobile(context) ? itemSize(context, width) : 56,
               isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
               element: Provider.of<ItemProvider>(context).getItemElement(item),
+              isActive: DisplayService.isItemItemActive(
+                  context, ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!),
               powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId),
             ),
           )

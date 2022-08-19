@@ -8,6 +8,7 @@ import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
+import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_appbar.dart';
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
@@ -67,8 +68,8 @@ class _VaultMobileView extends State<VaultMobileView> {
                               child: MobileNavItem(
                                 selected: currentFilter == DestinyItemType.Weapon,
                                 value: AppLocalizations.of(context)!.weapons,
-                                width: vw(context) * 0.29,
                               )),
+                          SizedBox(width: globalPadding(context)),
                           InkWell(
                               onTap: () {
                                 setState(() {
@@ -78,8 +79,8 @@ class _VaultMobileView extends State<VaultMobileView> {
                               child: MobileNavItem(
                                 selected: currentFilter == DestinyItemType.Armor,
                                 value: AppLocalizations.of(context)!.armor,
-                                width: vw(context) * 0.29,
                               )),
+                          SizedBox(width: globalPadding(context)),
                           InkWell(
                               onTap: () {
                                 Navigator.pushNamed(context, routeProfile);
@@ -87,7 +88,6 @@ class _VaultMobileView extends State<VaultMobileView> {
                               child: MobileNavItem(
                                 selected: false,
                                 value: AppLocalizations.of(context)!.character,
-                                width: vw(context) * 0.29,
                               )),
                         ],
                       ),
@@ -126,8 +126,11 @@ class _VaultMobileView extends State<VaultMobileView> {
                   bucketHash &&
               (currentFilter == DestinyItemType.Weapon ||
                   ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.classType ==
-                      Provider.of<CharactersProvider>(context).currentCharacter?.classType))
+                      Provider.of<CharactersProvider>(context).currentCharacter?.classType) &&
+              DisplayService.isItemItemActive(
+                  context, ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]!))
           .toList();
+
       items.sort((a, b) {
         int first = Provider.of<ItemProvider>(context, listen: false).getItemPowerLevel(b.itemInstanceId!) ?? 0;
         return first

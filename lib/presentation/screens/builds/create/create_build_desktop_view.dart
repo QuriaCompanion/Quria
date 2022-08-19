@@ -1,3 +1,4 @@
+import 'package:bungie_api/destiny2.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ import 'package:quria/data/models/Item.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
@@ -59,7 +61,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
         child: Container(
           color: black,
           child: SubclassMobileView(
-            width: vw(context) * 0.4,
+            width: modalWidth(context),
             subclasses: data,
             onSelect: (subclass) {
               Navigator.pop(context);
@@ -99,7 +101,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                       child: Column(
                         children: [
                           SubclassModsMobileView(
-                            width: vw(context) * 0.4,
+                            width: modalWidth(context),
                             displayedSockets: displayedSockets
                                 .where((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e] != null)
                                 .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)
@@ -289,7 +291,54 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                               } catch (e) {
                                 return showDialog(context: context, builder: (context) => const ErrorDialog());
                               }
-                            })
+                            }),
+                        const SizedBox(height: 16),
+                        RoundedButton(
+                          width: vw(context),
+                          disabledColor: Colors.transparent,
+                          buttonColor: Colors.transparent,
+                          textColor: Colors.white,
+                          text: textBodyMedium(
+                            AppLocalizations.of(context)!.use_my_stuff,
+                            utf8: false,
+                            color: Colors.white,
+                          ),
+                          onPressed: () async {
+                            final inventory = Provider.of<InventoryProvider>(context, listen: false)
+                                .getCharacterEquipment(
+                                  Provider.of<CharactersProvider>(context, listen: false)
+                                      .currentCharacter!
+                                      .characterId!,
+                                )
+                                .where((element) => InventoryBucket.loadoutBucketHashes.contains(element.bucketHash));
+                            final List<Item> newItems = [];
+                            for (var itemComponent in inventory) {
+                              List<DestinyItemSocketState> sockets = Provider.of<ItemProvider>(context, listen: false)
+                                  .getItemSockets(itemComponent.itemInstanceId!);
+
+                              final mods = sockets
+                                  .where((element) {
+                                    final itemType = ManifestService.manifestParsed
+                                        .destinyInventoryItemDefinition[itemComponent.itemHash]?.itemType;
+                                    if (itemType == DestinyItemType.Armor) return Conditions.armorSockets(element);
+                                    if (itemType == DestinyItemType.Weapon) {
+                                      return Conditions.perkSockets(element.plugHash);
+                                    }
+                                    return true;
+                                  })
+                                  .where((element) => element.plugHash != null)
+                                  .map((element) => element.plugHash!)
+                                  .toList();
+                              newItems.add(Item(
+                                  itemHash: itemComponent.itemHash!,
+                                  instanceId: itemComponent.itemInstanceId!,
+                                  isEquipped: true,
+                                  bucketHash: itemComponent.bucketHash!,
+                                  mods: mods));
+                            }
+                            Provider.of<CreateBuildProvider>(context, listen: false).replaceItems(newItems);
+                          },
+                        ),
                       ],
                     ),
                   ),

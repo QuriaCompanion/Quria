@@ -20,7 +20,7 @@ class ChangeSubclassPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final characterId = Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!;
     final subclasses = Provider.of<InventoryProvider>(context, listen: false).getSubclassesForCharacter(characterId);
-    if (vw(context) < 1000) {
+    if (isMobile(context)) {
       return ScaffoldBurgerAndBackOption(
         width: vw(context),
         body: SubclassMobileView(
