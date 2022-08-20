@@ -37,6 +37,7 @@ class ItemIcon extends StatelessWidget {
             '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!}?t=${imageSize.toInt()}',
             height: imageSize,
             width: imageSize,
+            filterQuality: FilterQuality.high,
             fit: BoxFit.fill,
           ),
           if ((ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality

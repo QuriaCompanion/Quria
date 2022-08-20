@@ -123,6 +123,7 @@ Widget pictureBordered({required String image, double size = 44}) {
       image,
       width: size,
       height: size,
+      filterQuality: FilterQuality.high,
       fit: BoxFit.fill,
     ),
   );

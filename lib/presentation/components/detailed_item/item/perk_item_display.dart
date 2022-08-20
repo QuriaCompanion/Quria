@@ -40,6 +40,7 @@ class PerkItemDisplay extends StatelessWidget {
                 '${DestinyData.bungieLink}${perk.displayProperties!.icon!}?t=123456',
                 width: iconSize * 0.5,
                 height: iconSize * 0.5,
+                filterQuality: FilterQuality.high,
                 fit: BoxFit.fill,
               ),
             ),

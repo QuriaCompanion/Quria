@@ -19,6 +19,7 @@ class ItemWithTypeName extends StatelessWidget {
           height: iconSize,
           width: iconSize,
           fit: BoxFit.fill,
+          filterQuality: FilterQuality.high,
         ),
         SizedBox(width: globalPadding(context)),
         Column(
