@@ -1,6 +1,6 @@
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
-import 'package:extended_image/extended_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -31,20 +31,23 @@ class BuilderInfoRow extends StatelessWidget {
           children: [
             Column(
               children: [
-                ExtendedImage.network(
-                  '${DestinyData.bungieLink}${Provider.of<BuilderExoticProvider>(context).exotic?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t=123456',
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white,
+                      width: 1,
+                    ),
+                  ),
                   height: vw(context) * .05,
                   width: vw(context) * .05,
-                  border: Border.all(
-                    color: Colors.white,
-                    width: 1,
+                  child: Image.network(
+                    '${DestinyData.bungieLink}${Provider.of<BuilderExoticProvider>(context).exotic?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t=123456',
+                    height: vw(context) * .05,
+                    width: vw(context) * .05,
+                    colorBlendMode: BlendMode.clear,
+                    filterQuality: FilterQuality.high,
+                    fit: BoxFit.fill,
                   ),
-                  colorBlendMode: BlendMode.clear,
-                  timeLimit: const Duration(seconds: 10),
-                  cache: true,
-                  filterQuality: FilterQuality.high,
-                  fit: BoxFit.fill,
-                  printError: false,
                 ),
                 textCaption(AppLocalizations.of(context)!.exotic, utf8: false)
               ],
@@ -72,16 +75,13 @@ class BuilderInfoRow extends StatelessWidget {
             ),
             Column(
               children: [
-                ExtendedImage.network(
+                Image.network(
                   '${DestinyData.bungieLink}${Provider.of<BuilderSubclassProvider>(context).subclass?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t=123456',
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   colorBlendMode: BlendMode.clear,
-                  timeLimit: const Duration(seconds: 10),
-                  cache: true,
                   filterQuality: FilterQuality.high,
                   fit: BoxFit.fill,
-                  printError: false,
                 ),
                 textCaption(AppLocalizations.of(context)!.subclass, utf8: false)
               ],
@@ -93,16 +93,13 @@ class BuilderInfoRow extends StatelessWidget {
             ),
             Column(
               children: [
-                ExtendedImage.network(
+                Image.network(
                   '${DestinyData.bungieLink}${DestinyData.modsLogo}?t=123456',
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   colorBlendMode: BlendMode.clear,
-                  timeLimit: const Duration(seconds: 10),
-                  cache: true,
                   filterQuality: FilterQuality.high,
                   fit: BoxFit.fill,
-                  printError: false,
                 ),
                 textCaption(AppLocalizations.of(context)!.armor_mods, utf8: false)
               ],
@@ -115,16 +112,13 @@ class BuilderInfoRow extends StatelessWidget {
             Column(
               children: [
                 if (Provider.of<BuilderCustomInfoProvider>(context).classItem == null)
-                  ExtendedImage.network(
+                  Image.network(
                     '${DestinyData.bungieLink}${DestinyData.classItemLogo}?t=123456',
                     height: vw(context) * .05,
                     width: vw(context) * .05,
                     colorBlendMode: BlendMode.clear,
-                    timeLimit: const Duration(seconds: 10),
-                    cache: true,
                     filterQuality: FilterQuality.high,
                     fit: BoxFit.fill,
-                    printError: false,
                   ),
                 if (Provider.of<BuilderCustomInfoProvider>(context).classItem != null)
                   Builder(builder: (context) {

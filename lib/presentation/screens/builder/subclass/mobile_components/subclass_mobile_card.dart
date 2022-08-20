@@ -48,6 +48,7 @@ class SubclassMobileCard extends StatelessWidget {
                       ),
                     ),
                     Image(
+                      filterQuality: FilterQuality.high,
                       image: NetworkImage('${DestinyData.bungieLink}${subclassDef.displayProperties!.icon!}?t=123456'),
                       height: width / 2 * 1.2,
                       width: width / 2 * 1.2,

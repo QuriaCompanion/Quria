@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -75,15 +74,12 @@ class _BuilderExoticChoiceState extends State<BuilderExoticChoice> {
                                 width: 1,
                               ),
                             ),
-                            child: ExtendedImage.network(
+                            child: Image.network(
                               '${DestinyData.bungieLink}${exotics[index].displayProperties!.icon!}?t=123465',
                               width: 80,
                               height: 80,
-                              timeLimit: const Duration(seconds: 10),
-                              cache: true,
                               fit: BoxFit.fill,
                               filterQuality: FilterQuality.high,
-                              printError: false,
                             ),
                           ),
                         ),

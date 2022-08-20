@@ -64,6 +64,7 @@ class PullPostmasterModal extends StatelessWidget {
                                     height: 12,
                                     margin: const EdgeInsets.only(right: 5),
                                     child: Image(
+                                      filterQuality: FilterQuality.high,
                                       image: NetworkImage('${DestinyData.bungieLink}${data.elementIcon!}?t=123456'),
                                     )),
                               if (data.powerLevel != null) textBodyBold(data.powerLevel.toString()),

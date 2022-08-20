@@ -1,6 +1,6 @@
 import 'dart:math' as math;
 import 'package:bungie_api/models/destiny_item_component.dart';
-import 'package:extended_image/extended_image.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -111,15 +111,12 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                                     decoration: BoxDecoration(border: Border.all(color: Colors.white)),
                                   ),
                                 ),
-                                ExtendedImage.network(
+                                Image.network(
                                   '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.displayProperties!.icon!}?t=123465',
                                   height: 75,
                                   width: 75,
-                                  timeLimit: const Duration(seconds: 10),
-                                  cache: true,
                                   filterQuality: FilterQuality.high,
                                   fit: BoxFit.fill,
-                                  printError: false,
                                 ),
                               ],
                             ),

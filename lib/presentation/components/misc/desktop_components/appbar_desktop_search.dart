@@ -120,6 +120,7 @@ class AppbarDesktopSearch extends StatelessWidget {
                                           Image(
                                               width: 50,
                                               height: 50,
+                                              filterQuality: FilterQuality.high,
                                               image:
                                                   NetworkImage(DestinyData.bungieLink + character.value.emblemPath!)),
                                           textBodyBold(ManifestService
@@ -131,6 +132,7 @@ class AppbarDesktopSearch extends StatelessWidget {
                                               Image(
                                                 width: 30,
                                                 height: 30,
+                                                filterQuality: FilterQuality.high,
                                                 image: NetworkImage(DestinyData.bungieLink +
                                                     ManifestService
                                                         .manifestParsed

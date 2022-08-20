@@ -62,6 +62,7 @@ class InspectSpecimens extends StatelessWidget {
           SizedBox(
             width: itemSize(context, width),
             child: Image(
+              filterQuality: FilterQuality.high,
               image: NetworkImage(DestinyData.bungieLink +
                   (character?.emblemPath != null
                       ? '${character!.emblemPath!}?t=123456'
@@ -101,6 +102,7 @@ class InspectSpecimens extends StatelessWidget {
               Row(
                 children: [
                   Image(
+                    filterQuality: FilterQuality.high,
                     width: itemSize(context, width) / 4,
                     image: NetworkImage(
                         '${DestinyData.bungieLink}${Provider.of<ItemProvider>(context).getItemElement(item)}?t=123456'),

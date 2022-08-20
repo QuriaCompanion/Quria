@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/texts.dart';
@@ -13,21 +12,23 @@ class ArmorModIconDisplay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.white),
+        color: Colors.transparent,
+      ),
       width: iconSize,
       height: iconSize,
       child: Stack(
         alignment: Alignment.topRight,
         children: [
-          ExtendedImage.network(
-            '${DestinyData.bungieLink}${socket.displayProperties!.icon!}?t=123456',
+          Image(
+            image: NetworkImage(
+              '${DestinyData.bungieLink}${socket.displayProperties!.icon!}?t=123456',
+            ),
             width: iconSize,
             height: iconSize,
-            timeLimit: const Duration(seconds: 10),
-            cache: true,
-            fit: BoxFit.fill,
             filterQuality: FilterQuality.high,
-            printError: false,
+            fit: BoxFit.fill,
           ),
           if (socket.investmentStats!.isNotEmpty &&
               ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats?[0].statTypeHash]
@@ -35,15 +36,14 @@ class ArmorModIconDisplay extends StatelessWidget {
                   true &&
               ManifestService.manifestParsed.destinyStatDefinition[3578062600]?.displayProperties?.icon != null &&
               socket.investmentStats?[0].statTypeHash != 3578062600)
-            ExtendedImage.network(
-              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!.displayProperties!.icon!}?t=132456',
+            Image(
+              image: NetworkImage(
+                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!.displayProperties!.icon!}?t=132456',
+              ),
               width: iconSize,
               height: iconSize,
-              timeLimit: const Duration(seconds: 10),
-              cache: true,
-              fit: BoxFit.fill,
               filterQuality: FilterQuality.high,
-              printError: false,
+              fit: BoxFit.fill,
             ),
           Padding(
             padding: const EdgeInsets.only(right: 5.0),

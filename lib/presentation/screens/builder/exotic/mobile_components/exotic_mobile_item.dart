@@ -71,6 +71,7 @@ class _ExoticMobileItemState extends State<ExoticMobileItem> with TickerProvider
                 child: Row(
                   children: [
                     Image(
+                        filterQuality: FilterQuality.high,
                         width: itemSize(context, widget.width),
                         height: itemSize(context, widget.width),
                         image:

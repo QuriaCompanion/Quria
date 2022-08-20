@@ -42,6 +42,7 @@ class CharacterBanner extends StatelessWidget {
               children: [
                 AutoSizeText(character.light.toString(), style: TextStyle(color: Colors.yellow, fontSize: fontSize)),
                 Image(
+                  filterQuality: FilterQuality.high,
                   image: NetworkImage(
                       '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t=123456'),
                   color: Colors.yellow,

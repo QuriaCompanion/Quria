@@ -47,6 +47,7 @@ class TalentGridDisplay extends StatelessWidget {
                 child: Image(
                   image: NetworkImage(
                       '${DestinyData.bungieLink}${nodeDef.displayProperties!.icon!}?t=${iconSize.toInt()}'),
+                  filterQuality: FilterQuality.high,
                 ),
               ),
             ),

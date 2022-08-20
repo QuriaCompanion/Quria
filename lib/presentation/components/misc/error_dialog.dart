@@ -29,7 +29,10 @@ class ErrorDialog extends StatelessWidget {
         child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           const ClipRRect(
               borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
-              child: Image(image: AssetImage('assets/img/error.png'))),
+              child: Image(
+                image: AssetImage('assets/img/error.png'),
+                filterQuality: FilterQuality.high,
+              )),
           textH3(AppLocalizations.of(context)!.error_title, utf8: false),
           Center(
             child: textBodyRegular(error, utf8: false, center: true),

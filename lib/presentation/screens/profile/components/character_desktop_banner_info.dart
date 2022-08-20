@@ -20,12 +20,16 @@ class CharacterDesktopBannerInfo extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Image(
-              width: 32, height: 32, image: NetworkImage('${DestinyData.bungieLink}${character.emblemPath!}?t=123456')),
+              filterQuality: FilterQuality.high,
+              width: 32,
+              height: 32,
+              image: NetworkImage('${DestinyData.bungieLink}${character.emblemPath!}?t=123456')),
           textBodyBold(ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
               .genderedClassNamesByGenderHash![character.genderHash.toString()]!),
           Row(
             children: [
               Image(
+                filterQuality: FilterQuality.high,
                 width: 20,
                 height: 20,
                 image: NetworkImage(

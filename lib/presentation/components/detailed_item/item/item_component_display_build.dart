@@ -93,6 +93,7 @@ class _ItemComponentDisplayBuildState extends State<ItemComponentDisplayBuild> w
                                   height: 12,
                                   child: Image(
                                     image: NetworkImage('${DestinyData.bungieLink}${widget.elementIcon!}?t=123456'),
+                                    filterQuality: FilterQuality.high,
                                   )),
                             if (widget.powerLevel != null) textBodyBold(widget.powerLevel.toString()),
                             divider,

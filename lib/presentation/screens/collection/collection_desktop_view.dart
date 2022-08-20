@@ -189,6 +189,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                                         Row(
                                           children: [
                                             Image(
+                                              filterQuality: FilterQuality.high,
                                               image: NetworkImage(
                                                   '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!.displayProperties!.icon!}?t=123456'),
                                               height: 15,

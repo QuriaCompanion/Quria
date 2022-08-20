@@ -59,6 +59,7 @@ class HeaderWeaponDetails extends StatelessWidget {
                           ),
                           width: iconSize,
                           height: iconSize,
+                          filterQuality: FilterQuality.high,
                         ),
                       SizedBox(width: childPadding),
                       SizedBox(
@@ -111,6 +112,7 @@ class HeaderWeaponDetails extends StatelessWidget {
                       image: NetworkImage(
                           '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t=123456'),
                       width: fontSize + 5,
+                      filterQuality: FilterQuality.high,
                       color: Colors.yellow,
                     ),
                   ],
@@ -123,6 +125,7 @@ class HeaderWeaponDetails extends StatelessWidget {
                 Image(
                   image: NetworkImage(
                       '${DestinyData.bungieLink}${typeOfAmmo.displayProperties!.icon!}?t=${iconSize.toInt()}'),
+                  filterQuality: FilterQuality.high,
                   width: iconSize,
                   height: iconSize,
                 ),

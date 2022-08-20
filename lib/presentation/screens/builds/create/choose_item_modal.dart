@@ -104,6 +104,7 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
                                         height: 12,
                                         margin: const EdgeInsets.only(right: 5),
                                         child: Image(
+                                          filterQuality: FilterQuality.high,
                                           image:
                                               NetworkImage('${DestinyData.bungieLink}${data!.elementIcon!}?t=123456'),
                                         )),
