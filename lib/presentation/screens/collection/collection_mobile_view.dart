@@ -58,8 +58,8 @@ class _CollectionMobileViewState extends State<CollectionMobileView> {
                     padding: EdgeInsets.only(top: globalPadding(context), bottom: globalPadding(context) * 2),
                     child: SizedBox(
                       height: 45,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
                         children: [
                           InkWell(
                               onTap: () {

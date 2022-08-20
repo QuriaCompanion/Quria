@@ -14,7 +14,7 @@ class MobileNavItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
       decoration: BoxDecoration(color: selected ? blackLight : black, borderRadius: BorderRadius.circular(99)),
       child: Center(
-        child: textBodyBold(value, utf8: false),
+        child: textBodyBold(value, utf8: false, center: true),
       ),
     );
   }

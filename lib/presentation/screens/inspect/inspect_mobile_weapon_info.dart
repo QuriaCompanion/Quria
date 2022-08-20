@@ -32,7 +32,6 @@ class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
         Padding(
           padding: EdgeInsets.only(top: globalPadding(context), bottom: globalPadding(context) * 2),
           child: SizedBox(
-            height: 45,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
