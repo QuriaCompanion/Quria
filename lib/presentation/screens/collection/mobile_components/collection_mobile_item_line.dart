@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
 class CollectionItemLine extends StatelessWidget {
@@ -31,7 +30,7 @@ class CollectionItemLine extends StatelessWidget {
               Image(
                 filterQuality: FilterQuality.high,
                 image: CachedNetworkImageProvider(
-                    '${DestinyData.bungieLink}${item.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
+                    '${DestinyData.bungieLink}${item.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456'),
                 height: iconSize(context, width),
                 width: iconSize(context, width),
                 fit: BoxFit.fill,
@@ -40,7 +39,7 @@ class CollectionItemLine extends StatelessWidget {
                 Image(
                   filterQuality: FilterQuality.high,
                   image: CachedNetworkImageProvider(
-                    '${DestinyData.bungieLink}${item.iconWatermark!}?t={${Random().nextInt(100)}}123456',
+                    '${DestinyData.bungieLink}${item.iconWatermark!}?t={${BungieApiService.randomUserInt}}123456',
                   ),
                   height: iconSize(context, width),
                   width: iconSize(context, width),

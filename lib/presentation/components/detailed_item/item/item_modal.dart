@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +6,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
 import 'package:quria/data/models/helpers/itemCardHelper.model.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display_perks.dart';
@@ -65,7 +64,7 @@ class ItemModal extends StatelessWidget {
                                     margin: const EdgeInsets.only(right: 5),
                                     child: Image(
                                       image: CachedNetworkImageProvider(
-                                          '${DestinyData.bungieLink}${data.elementIcon!}?t={${Random().nextInt(100)}}12'),
+                                          '${DestinyData.bungieLink}${data.elementIcon!}?t={${BungieApiService.randomUserInt}}12'),
                                       filterQuality: FilterQuality.high,
                                     )),
                               if (data.powerLevel != null) textBodyBold(data.powerLevel.toString()),

@@ -1,10 +1,9 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
 class ArmorAfinity extends StatelessWidget {
@@ -40,7 +39,7 @@ class ArmorAfinity extends StatelessWidget {
                         width: 18,
                         height: 18,
                         image: CachedNetworkImageProvider(
-                            '${DestinyData.bungieLink}$afinityIcon?t={${Random().nextInt(100)}}123456'),
+                            '${DestinyData.bungieLink}$afinityIcon?t={${BungieApiService.randomUserInt}}123456'),
                         filterQuality: FilterQuality.high,
                       ),
                       SizedBox(width: (width - (globalPadding(context) * 2)) * 0.005),

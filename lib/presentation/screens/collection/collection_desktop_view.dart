@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,6 +9,7 @@ import 'package:quria/constants/texts.dart';
 import 'package:quria/constants/web_widgets.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/collection_filter.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
@@ -194,7 +193,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                                             Image(
                                               filterQuality: FilterQuality.high,
                                               image: CachedNetworkImageProvider(
-                                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
+                                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456'),
                                               height: 15,
                                               width: 15,
                                               fit: BoxFit.fill,

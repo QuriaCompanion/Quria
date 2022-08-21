@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/mod_display.dart';
@@ -76,7 +77,7 @@ class _ExoticMobileItemState extends State<ExoticMobileItem> with TickerProvider
                         width: itemSize(context, widget.width),
                         height: itemSize(context, widget.width),
                         image: CachedNetworkImageProvider(
-                            '${DestinyData.bungieLink}${widget.item.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456')),
+                            '${DestinyData.bungieLink}${widget.item.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456')),
                     SizedBox(width: globalPadding(context) / 2),
                     Expanded(
                       child: Column(

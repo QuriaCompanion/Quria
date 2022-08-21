@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -15,6 +13,7 @@ import 'package:quria/data/models/helpers/itemCardHelper.model.dart';
 import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -109,7 +108,7 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
                                         child: Image(
                                           filterQuality: FilterQuality.high,
                                           image: CachedNetworkImageProvider(
-                                              '${DestinyData.bungieLink}${data!.elementIcon!}?t={${Random().nextInt(100)}}123456'),
+                                              '${DestinyData.bungieLink}${data!.elementIcon!}?t={${BungieApiService.randomUserInt}}123456'),
                                         )),
                                   if (data!.powerLevel != null) textBodyBold(data!.powerLevel.toString()),
                                   divider,

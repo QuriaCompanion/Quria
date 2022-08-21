@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +7,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/screens/builder/subclass_mods/mobile_components/talent_grid_mobile_item.dart';
 
@@ -38,7 +37,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
           context,
           width: widget.width,
           image: CachedNetworkImageProvider(
-              '${DestinyData.bungieLink}${widget.subclass.secondaryIcon!}?t={${Random().nextInt(100)}}12345456'),
+              '${DestinyData.bungieLink}${widget.subclass.secondaryIcon!}?t={${BungieApiService.randomUserInt}}12345456'),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,

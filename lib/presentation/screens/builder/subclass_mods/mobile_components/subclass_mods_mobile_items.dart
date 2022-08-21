@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
@@ -8,6 +6,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/plugs_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/mod_modal.dart';
@@ -68,7 +67,7 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
             child: pictureBordered(
               size: widget.width == vw(context) ? widget.width * 0.192 : 90,
               image:
-                  '${DestinyData.bungieLink}${widget.item.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
+                  '${DestinyData.bungieLink}${widget.item.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456',
             ),
           ),
           Container(
@@ -126,7 +125,7 @@ class _SubclassMobileItemsState extends State<SubclassMobileItems> {
                       },
                       child: pictureBordered(
                           image:
-                              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[plug]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
+                              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[plug]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456',
                           size: 44),
                     )
               ],

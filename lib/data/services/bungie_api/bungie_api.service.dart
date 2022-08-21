@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 import 'package:bungie_api/enums/destiny_socket_array_type.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_free_action_request.dart';
 import 'package:bungie_api/models/destiny_insert_plugs_request_entry.dart';
@@ -37,6 +38,7 @@ class BungieApiService {
   static const String baseUrl = 'https://www.bungie.net';
   static const String apiUrl = "$baseUrl/Platform";
   static final BungieApiService _singleton = BungieApiService._internal();
+  static final randomUserInt = Random().nextInt(1000000);
 
   factory BungieApiService() {
     return _singleton;

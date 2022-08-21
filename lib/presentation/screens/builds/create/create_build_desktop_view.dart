@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bungie_api/destiny2.dart';
 
 import 'package:flutter/material.dart';
@@ -16,6 +14,7 @@ import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/display/display.service.dart';
@@ -188,7 +187,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                                   ),
                                 ),
                                 Image.network(
-                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<CreateBuildProvider>(context).items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
+                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<CreateBuildProvider>(context).items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456',
                                   height: 75,
                                   width: 75,
                                   filterQuality: FilterQuality.high,

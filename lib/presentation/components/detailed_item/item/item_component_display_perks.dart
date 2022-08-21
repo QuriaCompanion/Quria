@@ -1,11 +1,10 @@
-import 'dart:math';
-
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/perk_item_display.dart';
@@ -58,7 +57,7 @@ class ItemComponentDisplayPerks extends StatelessWidget {
               ),
               child: Image(
                 image: CachedNetworkImageProvider(
-                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
+                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456'),
                 filterQuality: FilterQuality.high,
               ),
             ),
@@ -79,7 +78,7 @@ class ItemComponentDisplayPerks extends StatelessWidget {
                 ),
                 child: Image(
                   image: CachedNetworkImageProvider(
-                      '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
+                      '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456'),
                   filterQuality: FilterQuality.high,
                 ),
               ),

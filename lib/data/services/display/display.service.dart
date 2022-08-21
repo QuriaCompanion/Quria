@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -32,6 +31,7 @@ import 'package:quria/data/providers/filters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/grenade_cooldowns.dart';
 import 'package:quria/data/services/bungie_api/enums/melee_cooldowns.enum.dart';
@@ -175,7 +175,7 @@ class DisplayService {
 
       int? powerLevel = instanceInfo.primaryStat?.value;
 
-      String imageLink = '${DestinyData.bungieLink}${itemDef.screenshot!}?t={${Random().nextInt(100)}}123456';
+      String imageLink = '${DestinyData.bungieLink}${itemDef.screenshot!}?t={${BungieApiService.randomUserInt}}123456';
 
       String? elementIcon = ManifestService
               .manifestParsed.destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]?.displayProperties?.icon ??

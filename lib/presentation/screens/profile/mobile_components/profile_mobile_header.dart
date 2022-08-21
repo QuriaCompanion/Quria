@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
 import 'package:flutter/material.dart';
@@ -143,7 +141,7 @@ class ProfileMobileHeader extends StatelessWidget {
                   ),
                 ),
                 Image.network(
-                  '${DestinyData.bungieLink}$characterSuper?t={${Random().nextInt(100)}}123456',
+                  '${DestinyData.bungieLink}$characterSuper?t={${BungieApiService.randomUserInt}}123456',
                   height: width * 0.17,
                   width: width * 0.17,
                   filterQuality: FilterQuality.high,

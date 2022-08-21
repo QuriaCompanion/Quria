@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +7,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -42,7 +41,7 @@ class _ForeignBuildMobileViewState extends State<ForeignBuildMobileView> {
           context,
           image: subclass?.screenshot != null
               ? CachedNetworkImageProvider(
-                  '${DestinyData.bungieLink}${subclass!.screenshot!}?t={${Random().nextInt(100)}}123546')
+                  '${DestinyData.bungieLink}${subclass!.screenshot!}?t={${BungieApiService.randomUserInt}}123546')
               : ghostBuild,
           child: textH1(
             widget.foreignBuild.name,

@@ -1,9 +1,9 @@
-import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_content.dart';
@@ -19,8 +19,8 @@ class ProfileMobileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String icon = data.isNewSubclass
-        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t={${Random().nextInt(100)}}123456'
-        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t={${Random().nextInt(100)}}123456';
+        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t={${BungieApiService.randomUserInt}}123456'
+        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t={${BungieApiService.randomUserInt}}123456';
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
