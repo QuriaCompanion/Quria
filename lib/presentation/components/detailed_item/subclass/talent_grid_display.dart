@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bungie_api/models/destiny_node_step_definition.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
@@ -46,7 +47,7 @@ class TalentGridDisplay extends StatelessWidget {
               child: CircleAvatar(
                 radius: iconSize / 2,
                 child: Image(
-                  image: NetworkImage(
+                  image: CachedNetworkImageProvider(
                       '${DestinyData.bungieLink}${nodeDef.displayProperties!.icon!}?t={${Random().nextInt(100)}}${iconSize.toInt()}'),
                   filterQuality: FilterQuality.high,
                 ),

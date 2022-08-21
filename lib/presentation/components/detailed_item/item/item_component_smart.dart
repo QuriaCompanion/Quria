@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bungie_api/enums/item_state.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -56,7 +57,7 @@ class ItemComponentSmart extends StatelessWidget {
                       height: 12,
                       margin: const EdgeInsets.only(right: 5),
                       child: Image(
-                        image: NetworkImage(
+                        image: CachedNetworkImageProvider(
                             '${DestinyData.bungieLink}$elementIcon?t={${Random().nextInt(100)}}${itemSize(context, width).toInt()}'),
                         filterQuality: FilterQuality.high,
                       ),

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -29,7 +30,7 @@ class CollectionItemLine extends StatelessWidget {
             children: [
               Image(
                 filterQuality: FilterQuality.high,
-                image: NetworkImage(
+                image: CachedNetworkImageProvider(
                     '${DestinyData.bungieLink}${item.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                 height: iconSize(context, width),
                 width: iconSize(context, width),
@@ -38,7 +39,7 @@ class CollectionItemLine extends StatelessWidget {
               if (item.iconWatermark != null)
                 Image(
                   filterQuality: FilterQuality.high,
-                  image: NetworkImage(
+                  image: CachedNetworkImageProvider(
                     '${DestinyData.bungieLink}${item.iconWatermark!}?t={${Random().nextInt(100)}}123456',
                   ),
                   height: iconSize(context, width),

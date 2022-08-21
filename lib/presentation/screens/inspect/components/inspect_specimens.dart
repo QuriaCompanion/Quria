@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -65,7 +66,7 @@ class InspectSpecimens extends StatelessWidget {
             width: itemSize(context, width),
             child: Image(
               filterQuality: FilterQuality.high,
-              image: NetworkImage(DestinyData.bungieLink +
+              image: CachedNetworkImageProvider(DestinyData.bungieLink +
                   (character?.emblemPath != null
                       ? '${character!.emblemPath!}?t={${Random().nextInt(100)}}123456'
                       : "/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png?t={${Random().nextInt(100)}}123456")),
@@ -106,7 +107,7 @@ class InspectSpecimens extends StatelessWidget {
                   Image(
                     filterQuality: FilterQuality.high,
                     width: itemSize(context, width) / 4,
-                    image: NetworkImage(
+                    image: CachedNetworkImageProvider(
                         '${DestinyData.bungieLink}${Provider.of<ItemProvider>(context).getItemElement(item)}?t={${Random().nextInt(100)}}123456'),
                   ),
                   textH3(Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!).toString()),

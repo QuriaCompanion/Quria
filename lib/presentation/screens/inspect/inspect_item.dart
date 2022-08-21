@@ -1,4 +1,5 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
@@ -54,7 +55,7 @@ class InspectItem extends StatelessWidget {
                   mobileHeader(
                     context,
                     width: width,
-                    image: NetworkImage(imageLink),
+                    image: CachedNetworkImageProvider(imageLink),
                     child: InspectMobileHeader(
                       name: itemDef!.displayProperties!.name!,
                       iconElement: elementIcon,

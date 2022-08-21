@@ -1,4 +1,5 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'dart:math' as math;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -56,7 +57,7 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
         webHeader(
           context,
           image: subclassDef?.screenshot != null
-              ? NetworkImage(
+              ? CachedNetworkImageProvider(
                   '${DestinyData.bungieLink}${subclassDef!.screenshot!}?t={${math.Random().nextInt(100)}}123456')
               : ghostBuild,
           child: textDesktopTitle(

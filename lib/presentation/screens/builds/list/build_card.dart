@@ -1,4 +1,5 @@
 import 'package:bungie_api/enums/item_state.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -61,7 +62,7 @@ class BuildCard extends StatelessWidget {
                         image: buildStored.items
                                 .where((element) => element.bucketHash == InventoryBucket.subclass)
                                 .isNotEmpty
-                            ? NetworkImage(
+                            ? CachedNetworkImageProvider(
                                 '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.screenshot!}?t={${math.Random().nextInt(100)}}123456')
                             : ghostBuild),
                   ),

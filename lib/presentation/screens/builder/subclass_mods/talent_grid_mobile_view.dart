@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/mobile_widgets.dart';
@@ -36,7 +37,7 @@ class _TalentGridMobileViewState extends State<TalentGridMobileView> {
         mobileHeader(
           context,
           width: widget.width,
-          image: NetworkImage(
+          image: CachedNetworkImageProvider(
               '${DestinyData.bungieLink}${widget.subclass.secondaryIcon!}?t={${Random().nextInt(100)}}12345456'),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

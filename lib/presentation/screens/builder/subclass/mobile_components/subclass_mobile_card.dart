@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class SubclassMobileCard extends StatelessWidget {
                     ),
                     Image(
                       filterQuality: FilterQuality.high,
-                      image: NetworkImage(
+                      image: CachedNetworkImageProvider(
                           '${DestinyData.bungieLink}${subclassDef.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                       height: width / 2 * 1.2,
                       width: width / 2 * 1.2,

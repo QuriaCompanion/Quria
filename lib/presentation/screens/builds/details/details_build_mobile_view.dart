@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
@@ -42,7 +43,7 @@ class _DetailsBuildMobileViewState extends State<DetailsBuildMobileView> {
                           ?.itemHash]
                       ?.screenshot !=
                   null
-              ? NetworkImage(
+              ? CachedNetworkImageProvider(
                   '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<DetailsBuildProvider>(context, listen: false).getEquippedItemByBucket(InventoryBucket.subclass)!.itemHash]!.screenshot!}?t={${Random().nextInt(100)}}12345456')
               : ghostBuild,
           child: textH1(

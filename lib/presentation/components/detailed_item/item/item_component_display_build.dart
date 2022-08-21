@@ -1,4 +1,5 @@
 import 'package:bungie_api/enums/item_state.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
@@ -92,7 +93,7 @@ class _ItemComponentDisplayBuildState extends State<ItemComponentDisplayBuild> w
                                   width: 12,
                                   height: 12,
                                   child: Image(
-                                    image: NetworkImage(
+                                    image: CachedNetworkImageProvider(
                                         '${DestinyData.bungieLink}${widget.elementIcon!}?t={${Random().nextInt(100)}}123456'),
                                     filterQuality: FilterQuality.high,
                                   )),

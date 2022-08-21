@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
@@ -192,7 +193,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                                           children: [
                                             Image(
                                               filterQuality: FilterQuality.high,
-                                              image: NetworkImage(
+                                              image: CachedNetworkImageProvider(
                                                   '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                                               height: 15,
                                               width: 15,

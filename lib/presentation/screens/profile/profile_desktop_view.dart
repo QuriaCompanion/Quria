@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
@@ -38,7 +39,7 @@ class ProfileDesktopView extends StatelessWidget {
       children: [
         desktopHeader(
           context,
-          image: NetworkImage(
+          image: CachedNetworkImageProvider(
             DestinyData.bungieLink + icon,
           ),
           child: ProfileMobileHeader(

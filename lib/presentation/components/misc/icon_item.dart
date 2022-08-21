@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -72,7 +73,7 @@ class ItemIcon extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 4),
                         child: Image(
-                          image: NetworkImage(
+                          image: CachedNetworkImageProvider(
                               '${DestinyData.bungieLink}${element!}?t={${Random().nextInt(100)}}${imageSize.toInt()}'),
                           filterQuality: FilterQuality.high,
                         ),

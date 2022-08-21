@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,7 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
           children: [
             mobileHeader(
               context,
-              image: NetworkImage(
+              image: CachedNetworkImageProvider(
                   '${DestinyData.bungieLink}${widget.subclass.screenshot!}?t={${Random().nextInt(100)}}12345456'),
               width: widget.width,
               child: Column(

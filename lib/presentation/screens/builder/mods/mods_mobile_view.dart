@@ -49,7 +49,6 @@ class ModsMobileView extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: globalPadding(context) * 4),
       ],
     );
   }

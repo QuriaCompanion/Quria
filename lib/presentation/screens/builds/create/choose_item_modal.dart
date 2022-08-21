@@ -4,6 +4,7 @@ import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -107,7 +108,7 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
                                         margin: const EdgeInsets.only(right: 5),
                                         child: Image(
                                           filterQuality: FilterQuality.high,
-                                          image: NetworkImage(
+                                          image: CachedNetworkImageProvider(
                                               '${DestinyData.bungieLink}${data!.elementIcon!}?t={${Random().nextInt(100)}}123456'),
                                         )),
                                   if (data!.powerLevel != null) textBodyBold(data!.powerLevel.toString()),

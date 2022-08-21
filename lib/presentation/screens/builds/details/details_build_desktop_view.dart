@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'dart:math';
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
         webHeader(
           context,
           image: ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass?.itemHash]?.screenshot != null
-              ? NetworkImage(
+              ? CachedNetworkImageProvider(
                   '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.screenshot!}?t={${Random().nextInt(100)}}123465')
               : ghostBuild,
           child: textDesktopTitle(

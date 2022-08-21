@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
@@ -26,7 +27,7 @@ class ProfileMobileView extends StatelessWidget {
         children: [
           mobileHeader(
             context,
-            image: NetworkImage(
+            image: CachedNetworkImageProvider(
               DestinyData.bungieLink + icon,
             ),
             child: ProfileMobileHeader(

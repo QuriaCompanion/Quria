@@ -32,6 +32,7 @@ dependencies:
   universal_io: ^2.0.4
   lottie: ^1.4.1
   cupertino_icons: ^1.0.5
+  cached_network_image: ^3.2.1
   modal_bottom_sheet: ^2.1.0
   sleek_circular_slider: ^2.0.1
   auto_size_text: ^3.0.0

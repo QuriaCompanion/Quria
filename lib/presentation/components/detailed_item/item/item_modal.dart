@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
@@ -63,7 +64,7 @@ class ItemModal extends StatelessWidget {
                                     height: 12,
                                     margin: const EdgeInsets.only(right: 5),
                                     child: Image(
-                                      image: NetworkImage(
+                                      image: CachedNetworkImageProvider(
                                           '${DestinyData.bungieLink}${data.elementIcon!}?t={${Random().nextInt(100)}}12'),
                                       filterQuality: FilterQuality.high,
                                     )),

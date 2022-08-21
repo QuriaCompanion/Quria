@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/texts.dart';
@@ -24,7 +25,7 @@ class ArmorModIconDisplay extends StatelessWidget {
         alignment: Alignment.topRight,
         children: [
           Image(
-            image: NetworkImage(
+            image: CachedNetworkImageProvider(
               '${DestinyData.bungieLink}${socket.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
             ),
             width: iconSize,
@@ -39,7 +40,7 @@ class ArmorModIconDisplay extends StatelessWidget {
               ManifestService.manifestParsed.destinyStatDefinition[3578062600]?.displayProperties?.icon != null &&
               socket.investmentStats?[0].statTypeHash != 3578062600)
             Image(
-              image: NetworkImage(
+              image: CachedNetworkImageProvider(
                 '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}132456',
               ),
               width: iconSize,

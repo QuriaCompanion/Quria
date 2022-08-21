@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 
@@ -31,7 +32,7 @@ class SelectFilterType extends StatelessWidget {
         child: Center(
           child: Image(
             filterQuality: FilterQuality.high,
-            image: NetworkImage(filterLogo),
+            image: CachedNetworkImageProvider(filterLogo),
           ),
         ),
       ),

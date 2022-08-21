@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -19,7 +20,7 @@ class CharacterBanner extends StatelessWidget {
       height: width / 4.9375,
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: NetworkImage(
+            image: CachedNetworkImageProvider(
                 '${DestinyData.bungieLink}${character.emblemBackgroundPath!}?t={${Random().nextInt(100)}}123456'),
             fit: BoxFit.cover),
       ),
@@ -46,7 +47,7 @@ class CharacterBanner extends StatelessWidget {
                 AutoSizeText(character.light.toString(), style: TextStyle(color: Colors.yellow, fontSize: fontSize)),
                 Image(
                   filterQuality: FilterQuality.high,
-                  image: NetworkImage(
+                  image: CachedNetworkImageProvider(
                       '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                   color: Colors.yellow,
                 ),
