@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 
@@ -41,7 +43,7 @@ class BuilderInfoRow extends StatelessWidget {
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   child: Image.network(
-                    '${DestinyData.bungieLink}${Provider.of<BuilderExoticProvider>(context).exotic?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t=123456',
+                    '${DestinyData.bungieLink}${Provider.of<BuilderExoticProvider>(context).exotic?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t={${Random().nextInt(100)}}123456',
                     height: vw(context) * .05,
                     width: vw(context) * .05,
                     colorBlendMode: BlendMode.clear,
@@ -76,7 +78,7 @@ class BuilderInfoRow extends StatelessWidget {
             Column(
               children: [
                 Image.network(
-                  '${DestinyData.bungieLink}${Provider.of<BuilderSubclassProvider>(context).subclass?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t=123456',
+                  '${DestinyData.bungieLink}${Provider.of<BuilderSubclassProvider>(context).subclass?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t={${Random().nextInt(100)}}123456',
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   colorBlendMode: BlendMode.clear,
@@ -94,7 +96,7 @@ class BuilderInfoRow extends StatelessWidget {
             Column(
               children: [
                 Image.network(
-                  '${DestinyData.bungieLink}${DestinyData.modsLogo}?t=123456',
+                  '${DestinyData.bungieLink}${DestinyData.modsLogo}?t={${Random().nextInt(100)}}123456',
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   colorBlendMode: BlendMode.clear,
@@ -113,7 +115,7 @@ class BuilderInfoRow extends StatelessWidget {
               children: [
                 if (Provider.of<BuilderCustomInfoProvider>(context).classItem == null)
                   Image.network(
-                    '${DestinyData.bungieLink}${DestinyData.classItemLogo}?t=123456',
+                    '${DestinyData.bungieLink}${DestinyData.classItemLogo}?t={${Random().nextInt(100)}}123456',
                     height: vw(context) * .05,
                     width: vw(context) * .05,
                     colorBlendMode: BlendMode.clear,

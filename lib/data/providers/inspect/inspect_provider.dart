@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/plug_ui_styles.dart';
@@ -85,8 +87,8 @@ class InspectProvider with ChangeNotifier {
   String getImageLink(BuildContext context) {
     // TODO: this image isn't the best choice, but it's the best I can do for now.
     return _itemDef?.screenshot != null
-        ? '${DestinyData.bungieLink}${_itemDef!.screenshot!}?t=123456'
-        : "${DestinyData.bungieLink}/common/destiny2_content/screenshots/2345794502.jpg?t=1589788";
+        ? '${DestinyData.bungieLink}${_itemDef!.screenshot!}?t={${Random().nextInt(100)}}123456'
+        : "${DestinyData.bungieLink}/common/destiny2_content/screenshots/2345794502.jpg?t={${Random().nextInt(100)}}1589788";
   }
 
   String? getElementIcon(BuildContext context) {

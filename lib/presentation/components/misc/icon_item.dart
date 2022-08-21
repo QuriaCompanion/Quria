@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -34,7 +36,7 @@ class ItemIcon extends StatelessWidget {
       child: Stack(
         children: [
           Image.network(
-            '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!}?t=${imageSize.toInt()}',
+            '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}${imageSize.toInt()}',
             height: imageSize,
             width: imageSize,
             filterQuality: FilterQuality.high,
@@ -47,7 +49,7 @@ class ItemIcon extends StatelessWidget {
                       .displayVersionWatermarkIcons!.last !=
                   "")
             Image.network(
-              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!.displayVersionWatermarkIcons!.last}?t=${imageSize.toInt()}',
+              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!.displayVersionWatermarkIcons!.last}?t={${Random().nextInt(100)}}${imageSize.toInt()}',
               height: imageSize,
               width: imageSize,
               fit: BoxFit.fill,
@@ -70,7 +72,8 @@ class ItemIcon extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(left: 4),
                         child: Image(
-                          image: NetworkImage('${DestinyData.bungieLink}${element!}?t=${imageSize.toInt()}'),
+                          image: NetworkImage(
+                              '${DestinyData.bungieLink}${element!}?t={${Random().nextInt(100)}}${imageSize.toInt()}'),
                           filterQuality: FilterQuality.high,
                         ),
                       ),

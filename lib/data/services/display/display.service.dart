@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -174,7 +175,7 @@ class DisplayService {
 
       int? powerLevel = instanceInfo.primaryStat?.value;
 
-      String imageLink = '${DestinyData.bungieLink}${itemDef.screenshot!}?t=123456';
+      String imageLink = '${DestinyData.bungieLink}${itemDef.screenshot!}?t={${Random().nextInt(100)}}123456';
 
       String? elementIcon = ManifestService
               .manifestParsed.destinyDamageTypeDefinition[itemDef.defaultDamageTypeHash]?.displayProperties?.icon ??

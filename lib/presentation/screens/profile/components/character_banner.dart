@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +19,8 @@ class CharacterBanner extends StatelessWidget {
       height: width / 4.9375,
       decoration: BoxDecoration(
         image: DecorationImage(
-            image: NetworkImage('${DestinyData.bungieLink}${character.emblemBackgroundPath!}?t=123456'),
+            image: NetworkImage(
+                '${DestinyData.bungieLink}${character.emblemBackgroundPath!}?t={${Random().nextInt(100)}}123456'),
             fit: BoxFit.cover),
       ),
       child: Padding(
@@ -44,7 +47,7 @@ class CharacterBanner extends StatelessWidget {
                 Image(
                   filterQuality: FilterQuality.high,
                   image: NetworkImage(
-                      '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t=123456'),
+                      '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                   color: Colors.yellow,
                 ),
               ],

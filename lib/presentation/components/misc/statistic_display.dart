@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -19,7 +21,7 @@ class VerticalStatisticDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String link = '${DestinyData.bungieLink}$icon?t=123456';
+    String link = '${DestinyData.bungieLink}$icon?t={${Random().nextInt(100)}}123456';
     return SizedBox(
         width: width,
         child: Column(

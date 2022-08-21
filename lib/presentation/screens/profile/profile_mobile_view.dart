@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
@@ -30,8 +32,8 @@ class _ProfileMobileViewState extends State<ProfileMobileView> {
   @override
   Widget build(BuildContext context) {
     String icon = widget.data.isNewSubclass
-        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t=123456'
-        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t=123456';
+        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t={${Random().nextInt(100)}}123456'
+        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[widget.data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t={${Random().nextInt(100)}}123456';
     return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,

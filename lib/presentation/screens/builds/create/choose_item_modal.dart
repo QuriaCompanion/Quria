@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -105,8 +107,8 @@ class _ChooseItemModalState extends State<ChooseItemModal> {
                                         margin: const EdgeInsets.only(right: 5),
                                         child: Image(
                                           filterQuality: FilterQuality.high,
-                                          image:
-                                              NetworkImage('${DestinyData.bungieLink}${data!.elementIcon!}?t=123456'),
+                                          image: NetworkImage(
+                                              '${DestinyData.bungieLink}${data!.elementIcon!}?t={${Random().nextInt(100)}}123456'),
                                         )),
                                   if (data!.powerLevel != null) textBodyBold(data!.powerLevel.toString()),
                                   divider,

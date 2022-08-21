@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -15,7 +17,7 @@ class ItemWithTypeName extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Image.network(
-          '${DestinyData.bungieLink}${item.displayProperties!.icon!}?t=123456',
+          '${DestinyData.bungieLink}${item.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
           height: iconSize,
           width: iconSize,
           fit: BoxFit.fill,

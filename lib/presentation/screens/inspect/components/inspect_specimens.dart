@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -65,8 +67,8 @@ class InspectSpecimens extends StatelessWidget {
               filterQuality: FilterQuality.high,
               image: NetworkImage(DestinyData.bungieLink +
                   (character?.emblemPath != null
-                      ? '${character!.emblemPath!}?t=123456'
-                      : "/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png?t=123456")),
+                      ? '${character!.emblemPath!}?t={${Random().nextInt(100)}}123456'
+                      : "/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png?t={${Random().nextInt(100)}}123456")),
             ),
           ),
           SizedBox(
@@ -105,7 +107,7 @@ class InspectSpecimens extends StatelessWidget {
                     filterQuality: FilterQuality.high,
                     width: itemSize(context, width) / 4,
                     image: NetworkImage(
-                        '${DestinyData.bungieLink}${Provider.of<ItemProvider>(context).getItemElement(item)}?t=123456'),
+                        '${DestinyData.bungieLink}${Provider.of<ItemProvider>(context).getItemElement(item)}?t={${Random().nextInt(100)}}123456'),
                   ),
                   textH3(Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!).toString()),
                 ],

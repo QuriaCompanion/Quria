@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -23,7 +25,8 @@ class CharacterDesktopBannerInfo extends StatelessWidget {
               filterQuality: FilterQuality.high,
               width: 32,
               height: 32,
-              image: NetworkImage('${DestinyData.bungieLink}${character.emblemPath!}?t=123456')),
+              image:
+                  NetworkImage('${DestinyData.bungieLink}${character.emblemPath!}?t={${Random().nextInt(100)}}123456')),
           textBodyBold(ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
               .genderedClassNamesByGenderHash![character.genderHash.toString()]!),
           Row(
@@ -33,7 +36,7 @@ class CharacterDesktopBannerInfo extends StatelessWidget {
                 width: 20,
                 height: 20,
                 image: NetworkImage(
-                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t=123456'),
+                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                 color: yellow,
                 fit: BoxFit.cover,
               ),

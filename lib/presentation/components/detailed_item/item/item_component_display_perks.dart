@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +57,7 @@ class ItemComponentDisplayPerks extends StatelessWidget {
               ),
               child: Image(
                 image: NetworkImage(
-                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!}?t=123456'),
+                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                 filterQuality: FilterQuality.high,
               ),
             ),
@@ -76,7 +78,7 @@ class ItemComponentDisplayPerks extends StatelessWidget {
                 ),
                 child: Image(
                   image: NetworkImage(
-                      '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!}?t=123456'),
+                      '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.plugHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                   filterQuality: FilterQuality.high,
                 ),
               ),

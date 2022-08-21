@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:math';
 import 'package:bungie_api/models/destiny_item_component.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -58,7 +59,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
           context,
           image: ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass?.itemHash]?.screenshot != null
               ? NetworkImage(
-                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.screenshot!}?t=123465')
+                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.screenshot!}?t={${Random().nextInt(100)}}123465')
               : ghostBuild,
           child: textDesktopTitle(
             _build.name,
@@ -112,7 +113,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                                   ),
                                 ),
                                 Image.network(
-                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.displayProperties!.icon!}?t=123465',
+                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123465',
                                   height: 75,
                                   width: 75,
                                   filterQuality: FilterQuality.high,

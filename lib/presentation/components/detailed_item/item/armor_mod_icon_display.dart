@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/texts.dart';
@@ -23,7 +25,7 @@ class ArmorModIconDisplay extends StatelessWidget {
         children: [
           Image(
             image: NetworkImage(
-              '${DestinyData.bungieLink}${socket.displayProperties!.icon!}?t=123456',
+              '${DestinyData.bungieLink}${socket.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
             ),
             width: iconSize,
             height: iconSize,
@@ -38,7 +40,7 @@ class ArmorModIconDisplay extends StatelessWidget {
               socket.investmentStats?[0].statTypeHash != 3578062600)
             Image(
               image: NetworkImage(
-                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!.displayProperties!.icon!}?t=132456',
+                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}132456',
               ),
               width: iconSize,
               height: iconSize,

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -27,7 +29,8 @@ class CollectionItemLine extends StatelessWidget {
             children: [
               Image(
                 filterQuality: FilterQuality.high,
-                image: NetworkImage('${DestinyData.bungieLink}${item.displayProperties!.icon!}?t=123456'),
+                image: NetworkImage(
+                    '${DestinyData.bungieLink}${item.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                 height: iconSize(context, width),
                 width: iconSize(context, width),
                 fit: BoxFit.fill,
@@ -36,7 +39,7 @@ class CollectionItemLine extends StatelessWidget {
                 Image(
                   filterQuality: FilterQuality.high,
                   image: NetworkImage(
-                    '${DestinyData.bungieLink}${item.iconWatermark!}?t=123456',
+                    '${DestinyData.bungieLink}${item.iconWatermark!}?t={${Random().nextInt(100)}}123456',
                   ),
                   height: iconSize(context, width),
                   width: iconSize(context, width),

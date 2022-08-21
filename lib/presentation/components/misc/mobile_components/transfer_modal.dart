@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -115,7 +117,7 @@ class _TransferModalState extends State<TransferModal> {
                   },
                   child: CharacterTransferItem(
                     width: widget.width ?? vw(context),
-                    imageLink: '${DestinyData.bungieLink}${character.emblemPath!}?t=123456',
+                    imageLink: '${DestinyData.bungieLink}${character.emblemPath!}?t={${Random().nextInt(100)}}123456',
                     name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
                         .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                     icon: "assets/icons/Transfer.svg",

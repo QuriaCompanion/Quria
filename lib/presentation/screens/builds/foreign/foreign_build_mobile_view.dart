@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/mobile_widgets.dart';
@@ -38,7 +40,7 @@ class _ForeignBuildMobileViewState extends State<ForeignBuildMobileView> {
         mobileHeader(
           context,
           image: subclass?.screenshot != null
-              ? NetworkImage('${DestinyData.bungieLink}${subclass!.screenshot!}?t=123546')
+              ? NetworkImage('${DestinyData.bungieLink}${subclass!.screenshot!}?t={${Random().nextInt(100)}}123546')
               : ghostBuild,
           child: textH1(
             widget.foreignBuild.name,

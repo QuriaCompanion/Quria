@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/destiny2.dart';
 
 import 'package:flutter/material.dart';
@@ -186,7 +188,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                                   ),
                                 ),
                                 Image.network(
-                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<CreateBuildProvider>(context).items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t=123456',
+                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<CreateBuildProvider>(context).items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
                                   height: 75,
                                   width: 75,
                                   filterQuality: FilterQuality.high,

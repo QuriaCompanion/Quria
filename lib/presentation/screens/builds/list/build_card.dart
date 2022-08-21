@@ -62,7 +62,7 @@ class BuildCard extends StatelessWidget {
                                 .where((element) => element.bucketHash == InventoryBucket.subclass)
                                 .isNotEmpty
                             ? NetworkImage(
-                                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.screenshot!}?t=123456')
+                                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.screenshot!}?t={${math.Random().nextInt(100)}}123456')
                             : ghostBuild),
                   ),
                   child: textH3(buildStored.name, utf8: false),
@@ -172,7 +172,7 @@ class BuildCard extends StatelessWidget {
                     ),
                   ),
                   Image.network(
-                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t=123456',
+                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t={${math.Random().nextInt(100)}}123456',
                     height: 75,
                     width: 75,
                     filterQuality: FilterQuality.high,

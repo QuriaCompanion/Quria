@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
@@ -36,7 +38,7 @@ class ArmorAfinity extends StatelessWidget {
                       Image(
                         width: 18,
                         height: 18,
-                        image: NetworkImage('${DestinyData.bungieLink}$afinityIcon?t=123456'),
+                        image: NetworkImage('${DestinyData.bungieLink}$afinityIcon?t={${Random().nextInt(100)}}123456'),
                         filterQuality: FilterQuality.high,
                       ),
                       SizedBox(width: (width - (globalPadding(context) * 2)) * 0.005),
