@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -36,7 +38,7 @@ class _BurgerState extends State<Burger> {
               image: DecorationImage(
                   fit: BoxFit.fitHeight,
                   image: NetworkImage(
-                      '${DestinyData.bungieLink}/img/UserThemes/${AccountService.membershipData?.bungieNetUser?.profileThemeName}/header.jpg?t=123456')),
+                      '${DestinyData.bungieLink}/img/UserThemes/${AccountService.membershipData?.bungieNetUser?.profileThemeName}/header.jpg?t={${Random().nextInt(100)}}123456')),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +51,7 @@ class _BurgerState extends State<Burger> {
                     image: DecorationImage(
                         fit: BoxFit.fill,
                         image: NetworkImage(
-                            '${DestinyData.bungieLink}${AccountService.membershipData?.bungieNetUser?.profilePicturePath}?t=123456')),
+                            '${DestinyData.bungieLink}${AccountService.membershipData?.bungieNetUser?.profilePicturePath}?t={${Random().nextInt(100)}}123456')),
                   ),
                 ),
                 const SizedBox(height: 16),

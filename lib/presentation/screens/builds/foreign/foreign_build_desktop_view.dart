@@ -2,7 +2,7 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:collection/collection.dart';
 import 'dart:math' as math;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:extended_image/extended_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
@@ -56,7 +56,8 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
         webHeader(
           context,
           image: subclassDef?.screenshot != null
-              ? NetworkImage('${DestinyData.bungieLink}${subclassDef!.screenshot!}?t=123456')
+              ? NetworkImage(
+                  '${DestinyData.bungieLink}${subclassDef!.screenshot!}?t={${math.Random().nextInt(100)}}123456')
               : ghostBuild,
           child: textDesktopTitle(
             widget.foreignBuild.name,
@@ -119,15 +120,12 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
                                     decoration: BoxDecoration(border: Border.all(color: Colors.white)),
                                   ),
                                 ),
-                                ExtendedImage.network(
-                                  '${DestinyData.bungieLink}${subclassDef!.displayProperties!.icon!}?t=123456',
+                                Image.network(
+                                  '${DestinyData.bungieLink}${subclassDef!.displayProperties!.icon!}?t={${math.Random().nextInt(100)}}123456',
                                   height: 75,
                                   width: 75,
-                                  timeLimit: const Duration(seconds: 10),
-                                  cache: true,
                                   filterQuality: FilterQuality.high,
                                   fit: BoxFit.fill,
-                                  printError: false,
                                 ),
                               ],
                             ),

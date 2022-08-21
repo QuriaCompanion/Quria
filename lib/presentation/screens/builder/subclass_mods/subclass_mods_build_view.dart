@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +43,8 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
           children: [
             mobileHeader(
               context,
-              image: NetworkImage('${DestinyData.bungieLink}${widget.subclass.screenshot!}?t=12345456'),
+              image: NetworkImage(
+                  '${DestinyData.bungieLink}${widget.subclass.screenshot!}?t={${Random().nextInt(100)}}12345456'),
               width: widget.width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -139,7 +142,7 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
                                 },
                                 child: pictureBordered(
                                   image:
-                                      '${DestinyData.bungieLink}${displayedSockets[7 + i].displayProperties!.icon!}?t=12345456',
+                                      '${DestinyData.bungieLink}${displayedSockets[7 + i].displayProperties!.icon!}?t={${Random().nextInt(100)}}12345456',
                                   size: widget.width == vw(context) ? itemSize(context, widget.width) : 80,
                                 ),
                               ),

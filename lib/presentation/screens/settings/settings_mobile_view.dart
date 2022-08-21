@@ -1,4 +1,3 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -154,7 +153,7 @@ class SettingsMobileView extends StatelessWidget {
                               )));
                     });
               },
-              leading: ExtendedImage.asset(
+              leading: Image.asset(
                 "assets/img/crossSave.png",
                 width: 35,
                 height: 35,

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
@@ -28,8 +30,8 @@ class ProfileDesktopView extends StatelessWidget {
       ...InventoryBucket.armorBucketHashes,
     ];
     String icon = data.isNewSubclass
-        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t=123456'
-        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t=123456';
+        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t={${Random().nextInt(100)}}123456'
+        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t={${Random().nextInt(100)}}123456';
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,

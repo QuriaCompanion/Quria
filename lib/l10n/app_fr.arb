@@ -76,6 +76,7 @@
     "builder_stats_order_tier_2": "2 premières statistiques maximisé",
     "builder_stats_order_tier_3": "3 premières statistiques maximisé",
     "recommendation_quria": "Recommandation Quria",
+    "weapon_specialist": "Spécialiste arme",    
     "optimise_my_weapon": "Optimiser mon arme",
     "use_my_stuff": "Copier mon équipement",
     "ajust_perks": "Ajuste les perks pour visualiser les impacts sur la note et sur les statistiques de l'arme",
@@ -148,5 +149,6 @@
     "change_language": "Changer de langue",
     "fr": "Français",
     "en": "Anglais",
-    "es": "Espagnol"
+    "es": "Espagnol",
+    "it": "Italien"
 }

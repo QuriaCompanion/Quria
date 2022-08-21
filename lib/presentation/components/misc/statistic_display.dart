@@ -1,4 +1,5 @@
-import 'package:extended_image/extended_image.dart';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -20,7 +21,7 @@ class VerticalStatisticDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String link = '${DestinyData.bungieLink}$icon?t=123456';
+    String link = '${DestinyData.bungieLink}$icon?t={${Random().nextInt(100)}}123456';
     return SizedBox(
         width: width,
         child: Column(
@@ -28,12 +29,10 @@ class VerticalStatisticDisplay extends StatelessWidget {
           children: [
             SizedBox(
               width: width,
-              child: ExtendedImage.network(
+              child: Image.network(
                 link,
                 height: width,
                 width: width,
-                timeLimit: const Duration(seconds: 10),
-                cache: true,
                 filterQuality: FilterQuality.high,
                 fit: BoxFit.fill,
               ),

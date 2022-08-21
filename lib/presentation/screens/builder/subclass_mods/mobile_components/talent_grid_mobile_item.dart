@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/models/destiny_talent_node.dart';
 import 'package:bungie_api/models/destiny_talent_node_definition.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +28,7 @@ class TalentGridMobileItem extends StatelessWidget {
           pictureBordered(
             size: width * 0.192,
             image:
-                '${DestinyData.bungieLink}${talentGridNodes[talentGridComponent.firstWhere((element) => element.isActivated!).nodeIndex!].steps![0].displayProperties!.icon!}?t=123456',
+                '${DestinyData.bungieLink}${talentGridNodes[talentGridComponent.firstWhere((element) => element.isActivated!).nodeIndex!].steps![0].displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
           ),
           Container(
             padding: EdgeInsets.only(
@@ -66,7 +68,7 @@ class TalentGridMobileItem extends StatelessWidget {
                     // },
                     child: pictureBordered(
                         image:
-                            '${DestinyData.bungieLink}${talentGridNodes[node.nodeHash!].steps![0].displayProperties!.icon!}?t=123456',
+                            '${DestinyData.bungieLink}${talentGridNodes[node.nodeHash!].steps![0].displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
                         size: 44),
                   )
               ],

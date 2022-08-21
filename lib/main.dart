@@ -134,6 +134,7 @@ class QuriaApp extends StatelessWidget {
             supportedLocales: const [
               Locale('en', ''), // English, no country code
               Locale('es', ''), // Spanish, no country code
+              Locale('it', ''),
               Locale('fr', ''),
             ],
             theme: ThemeData(fontFamily: 'Inter'),

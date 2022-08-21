@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
@@ -55,10 +56,11 @@ class HeaderWeaponDetails extends StatelessWidget {
                           null)
                         Image(
                           image: NetworkImage(
-                            '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!.defaultDamageTypeHash]!.displayProperties!.icon!}?t=${iconSize.toInt()}',
+                            '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!.defaultDamageTypeHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}${iconSize.toInt()}',
                           ),
                           width: iconSize,
                           height: iconSize,
+                          filterQuality: FilterQuality.high,
                         ),
                       SizedBox(width: childPadding),
                       SizedBox(
@@ -109,8 +111,9 @@ class HeaderWeaponDetails extends StatelessWidget {
                     ),
                     Image(
                       image: NetworkImage(
-                          '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t=123456'),
+                          '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                       width: fontSize + 5,
+                      filterQuality: FilterQuality.high,
                       color: Colors.yellow,
                     ),
                   ],
@@ -122,7 +125,8 @@ class HeaderWeaponDetails extends StatelessWidget {
               children: [
                 Image(
                   image: NetworkImage(
-                      '${DestinyData.bungieLink}${typeOfAmmo.displayProperties!.icon!}?t=${iconSize.toInt()}'),
+                      '${DestinyData.bungieLink}${typeOfAmmo.displayProperties!.icon!}?t={${Random().nextInt(100)}}${iconSize.toInt()}'),
+                  filterQuality: FilterQuality.high,
                   width: iconSize,
                   height: iconSize,
                 ),

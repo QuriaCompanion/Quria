@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -88,7 +90,8 @@ class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
                 children: [
                   mobileHeader(
                     context,
-                    image: NetworkImage('${DestinyData.bungieLink}${data.screenshot!}?t=123456'),
+                    image:
+                        NetworkImage('${DestinyData.bungieLink}${data.screenshot!}?t={${Random().nextInt(100)}}123456'),
                     child: InspectMobileHeader(
                       name: data.displayProperties!.name!,
                       type: data.itemTypeAndTierDisplayName!,

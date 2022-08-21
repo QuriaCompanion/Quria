@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -23,7 +25,12 @@ class InspectMobileHeader extends StatelessWidget {
           child: Row(
             children: [
               if (iconElement != null)
-                Image(height: 16, width: 16, image: NetworkImage('${DestinyData.bungieLink}${iconElement!}?t=123426')),
+                Image(
+                  height: 16,
+                  width: 16,
+                  filterQuality: FilterQuality.high,
+                  image: NetworkImage('${DestinyData.bungieLink}${iconElement!}?t={${Random().nextInt(100)}}123426'),
+                ),
               if (iconElement != null) const SizedBox(width: 8),
               if (power != null) textH2(power.toString()),
               if (power != null && iconElement != null) divider,

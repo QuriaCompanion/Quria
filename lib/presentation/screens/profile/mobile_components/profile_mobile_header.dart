@@ -1,6 +1,7 @@
+import 'dart:math';
+
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -141,15 +142,12 @@ class ProfileMobileHeader extends StatelessWidget {
                     decoration: BoxDecoration(border: Border.all(color: Colors.white)),
                   ),
                 ),
-                ExtendedImage.network(
-                  '${DestinyData.bungieLink}$characterSuper?t=123456',
+                Image.network(
+                  '${DestinyData.bungieLink}$characterSuper?t={${Random().nextInt(100)}}123456',
                   height: width * 0.17,
                   width: width * 0.17,
-                  timeLimit: const Duration(seconds: 10),
-                  cache: true,
                   filterQuality: FilterQuality.high,
                   fit: BoxFit.fill,
-                  printError: false,
                 ),
               ],
             ),

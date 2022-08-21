@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -61,7 +63,9 @@ class ItemModal extends StatelessWidget {
                                     height: 12,
                                     margin: const EdgeInsets.only(right: 5),
                                     child: Image(
-                                      image: NetworkImage('${DestinyData.bungieLink}${data.elementIcon!}?t=12'),
+                                      image: NetworkImage(
+                                          '${DestinyData.bungieLink}${data.elementIcon!}?t={${Random().nextInt(100)}}12'),
+                                      filterQuality: FilterQuality.high,
                                     )),
                               if (data.powerLevel != null) textBodyBold(data.powerLevel.toString()),
                               divider,

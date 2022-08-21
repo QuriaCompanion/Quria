@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +45,8 @@ class SubclassModsMobileView extends StatelessWidget {
       child: Column(
         children: [
           mobileHeader(context,
-              image: NetworkImage('${DestinyData.bungieLink}${subclass.screenshot!}?t=12345456'),
+              image:
+                  NetworkImage('${DestinyData.bungieLink}${subclass.screenshot!}?t={${Random().nextInt(100)}}12345456'),
               width: width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -189,7 +192,7 @@ class SubclassModsMobileView extends StatelessWidget {
                               },
                               child: pictureBordered(
                                 image:
-                                    '${DestinyData.bungieLink}${displayedSockets[7 + i].displayProperties!.icon!}?t=12345456',
+                                    '${DestinyData.bungieLink}${displayedSockets[7 + i].displayProperties!.icon!}?t={${Random().nextInt(100)}}12345456',
                                 size: width == vw(context) ? itemSize(context, width) : 80,
                               ),
                             ),

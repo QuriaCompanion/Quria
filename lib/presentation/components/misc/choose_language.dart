@@ -104,6 +104,22 @@ class ChooseLanguage extends StatelessWidget {
                     const Divider(color: Colors.white)
                   ],
                 ),
+                Column(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        changeLanguage(context, lang: 'it');
+                      },
+                      child: ListTile(
+                        title: textBodyHighRegular(
+                          AppLocalizations.of(context)!.it,
+                          utf8: false,
+                        ),
+                      ),
+                    ),
+                    const Divider(color: Colors.white)
+                  ],
+                ),
               ],
             ),
           ],

@@ -30,6 +30,7 @@ class SelectFilterType extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8.0),
         child: Center(
           child: Image(
+            filterQuality: FilterQuality.high,
             image: NetworkImage(filterLogo),
           ),
         ),

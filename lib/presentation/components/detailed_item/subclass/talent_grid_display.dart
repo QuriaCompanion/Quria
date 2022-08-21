@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bungie_api/models/destiny_node_step_definition.dart';
@@ -46,7 +47,8 @@ class TalentGridDisplay extends StatelessWidget {
                 radius: iconSize / 2,
                 child: Image(
                   image: NetworkImage(
-                      '${DestinyData.bungieLink}${nodeDef.displayProperties!.icon!}?t=${iconSize.toInt()}'),
+                      '${DestinyData.bungieLink}${nodeDef.displayProperties!.icon!}?t={${Random().nextInt(100)}}${iconSize.toInt()}'),
+                  filterQuality: FilterQuality.high,
                 ),
               ),
             ),

@@ -87,10 +87,11 @@ Widget textH3(String child, {color = Colors.white, utf8 = true}) {
   );
 }
 
-Widget textBodyBold(String child, {color = Colors.white, utf8 = true}) {
+Widget textBodyBold(String child, {color = Colors.white, utf8 = true, center = false}) {
   return Text(
     utf8 ? utf8Decode(child) : child,
     maxLines: 15,
+    textAlign: center ? TextAlign.center : TextAlign.left,
     overflow: TextOverflow.ellipsis,
     style: TextStyle(
       fontSize: 14,

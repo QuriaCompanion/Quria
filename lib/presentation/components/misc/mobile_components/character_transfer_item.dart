@@ -35,6 +35,7 @@ class CharacterTransferItem extends StatelessWidget {
               SizedBox(
                 width: 44,
                 child: Image(
+                  filterQuality: FilterQuality.high,
                   image: NetworkImage(imageLink),
                 ),
               ),

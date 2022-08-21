@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:flutter/material.dart';
@@ -189,8 +191,9 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                                         Row(
                                           children: [
                                             Image(
+                                              filterQuality: FilterQuality.high,
                                               image: NetworkImage(
-                                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!.displayProperties!.icon!}?t=123456'),
+                                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[items[index].defaultDamageTypeHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
                                               height: 15,
                                               width: 15,
                                               fit: BoxFit.fill,

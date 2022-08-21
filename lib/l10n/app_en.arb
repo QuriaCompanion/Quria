@@ -74,6 +74,7 @@
     "builder_stats_order_tier_2": "Highest tiers for the first 2 stats",
     "builder_stats_order_tier_3": "Highest tiers for the first 3 stats",
     "recommendation_quria": "Quria's recommendation",
+    "weapon_specialist": "Weapon Specialist",    
     "optimise_my_weapon": "Optimise my weapon",
     "use_my_stuff": "Copy my equipement",
     "ajust_perks": "Change perks to show how it impacts the score and the stats of the weapon",
@@ -148,5 +149,6 @@
     "change_language": "Change language",
     "fr": "French",
     "en": "English",
-    "es": "Spanish"
+    "es": "Spanish",
+    "it": "Italian"
 }

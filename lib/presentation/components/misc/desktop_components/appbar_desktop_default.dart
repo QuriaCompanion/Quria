@@ -117,6 +117,7 @@ class AppbarDesktopDefault extends StatelessWidget {
                                           Image(
                                               width: 50,
                                               height: 50,
+                                              filterQuality: FilterQuality.high,
                                               image:
                                                   NetworkImage(DestinyData.bungieLink + character.value.emblemPath!)),
                                           textBodyBold(ManifestService
@@ -135,6 +136,7 @@ class AppbarDesktopDefault extends StatelessWidget {
                                                         .displayProperties!
                                                         .icon!),
                                                 color: yellow,
+                                                filterQuality: FilterQuality.high,
                                                 fit: BoxFit.cover,
                                               ),
                                               textBodyBold(character.value.light.toString(), color: yellow),

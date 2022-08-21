@@ -1,5 +1,5 @@
 import 'package:bungie_api/enums/bungie_membership_type.dart';
-import 'package:extended_image/extended_image.dart';
+
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/models/group_user_info_card.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,7 @@ class ChooseMembership extends StatelessWidget {
                       leading: Builder(builder: (context) {
                         if (membership?.crossSaveOverride == membership?.membershipType) {
                           return SizedBox(
-                            child: ExtendedImage.asset(
+                            child: Image.asset(
                               "assets/img/crossSave.png",
                               width: 35,
                               height: 35,

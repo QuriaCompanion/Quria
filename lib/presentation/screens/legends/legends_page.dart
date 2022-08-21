@@ -89,6 +89,26 @@ class _LegendsPageState extends State<LegendsPage> {
                 divider,
                 ListTile(
                   leading: const Icon(
+                    Icons.rate_review,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  title: textBodyBold('Jean-Michel Osiris', utf8: false),
+                  subtitle: textBodyMedium(AppLocalizations.of(context)!.weapon_specialist, utf8: false),
+                ),
+                divider,
+                ListTile(
+                  leading: const Icon(
+                    Icons.rate_review,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  title: textBodyBold('Paranoiiak', utf8: false),
+                  subtitle: textBodyMedium(AppLocalizations.of(context)!.weapon_specialist, utf8: false),
+                ),
+                divider,
+                ListTile(
+                  leading: const Icon(
                     Icons.language,
                     color: Colors.white,
                     size: 35,

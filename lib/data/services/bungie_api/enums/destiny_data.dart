@@ -177,16 +177,17 @@ class Conditions {
     final socketCategory = socketDef?.itemCategoryHashes;
     if (socketDef?.plug?.plugCategoryIdentifier == "intrinsics" ||
         (socketDef?.plug?.plugCategoryIdentifier != null &&
-            socketDef!.plug!.plugCategoryIdentifier!.contains('crafting'))) return false;
+            socketDef!.plug!.plugCategoryIdentifier!.contains('crafting')) ||
+        socketDef == null) return false;
     if (socketCategory?.isEmpty ?? true) return true;
     for (final socket in socketCategory!) {
       if (DestinyData.perkCategoryHash.contains(socket) ||
           socketCategory.length == 1 &&
               !cosmeticSockets(item) &&
-              socketDef?.displayProperties?.icon != null &&
+              socketDef.displayProperties?.icon != null &&
               // socketDef?.inventory?.tierType == TierType.Superior &&
               socket != 2237038328 &&
-              !socketDef!.plug!.plugCategoryIdentifier!.contains('masterwork') &&
+              !socketDef.plug!.plugCategoryIdentifier!.contains('masterwork') &&
               socketDef.plug?.plugCategoryIdentifier != "mementos" &&
               socketDef.hash != 1922808508 &&
               socketDef.hash != 4029346515 &&

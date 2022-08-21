@@ -1,5 +1,5 @@
 import 'package:bungie_api/enums/item_state.dart';
-import 'package:extended_image/extended_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
@@ -62,7 +62,7 @@ class BuildCard extends StatelessWidget {
                                 .where((element) => element.bucketHash == InventoryBucket.subclass)
                                 .isNotEmpty
                             ? NetworkImage(
-                                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.screenshot!}?t=123456')
+                                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.screenshot!}?t={${math.Random().nextInt(100)}}123456')
                             : ghostBuild),
                   ),
                   child: textH3(buildStored.name, utf8: false),
@@ -171,15 +171,12 @@ class BuildCard extends StatelessWidget {
                       decoration: BoxDecoration(border: Border.all(color: Colors.white)),
                     ),
                   ),
-                  ExtendedImage.network(
-                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t=123456',
+                  Image.network(
+                    '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[buildStored.items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t={${math.Random().nextInt(100)}}123456',
                     height: 75,
                     width: 75,
-                    timeLimit: const Duration(seconds: 10),
-                    cache: true,
                     filterQuality: FilterQuality.high,
                     fit: BoxFit.fill,
-                    printError: false,
                   ),
                 ],
               ),
