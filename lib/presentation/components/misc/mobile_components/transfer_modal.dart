@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +6,7 @@ import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/error_dialog.dart';
@@ -117,7 +116,8 @@ class _TransferModalState extends State<TransferModal> {
                   },
                   child: CharacterTransferItem(
                     width: widget.width ?? vw(context),
-                    imageLink: '${DestinyData.bungieLink}${character.emblemPath!}?t={${Random().nextInt(100)}}123456',
+                    imageLink:
+                        '${DestinyData.bungieLink}${character.emblemPath!}?t={${BungieApiService.randomUserInt}}123456',
                     name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
                         .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                     icon: "assets/icons/Transfer.svg",

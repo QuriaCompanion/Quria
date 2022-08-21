@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -15,6 +14,7 @@ import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/weapon_score.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -65,10 +65,10 @@ class InspectSpecimens extends StatelessWidget {
             width: itemSize(context, width),
             child: Image(
               filterQuality: FilterQuality.high,
-              image: NetworkImage(DestinyData.bungieLink +
+              image: CachedNetworkImageProvider(DestinyData.bungieLink +
                   (character?.emblemPath != null
-                      ? '${character!.emblemPath!}?t={${Random().nextInt(100)}}123456'
-                      : "/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png?t={${Random().nextInt(100)}}123456")),
+                      ? '${character!.emblemPath!}?t={${BungieApiService.randomUserInt}}123456'
+                      : "/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png?t={${BungieApiService.randomUserInt}}123456")),
             ),
           ),
           SizedBox(
@@ -106,8 +106,8 @@ class InspectSpecimens extends StatelessWidget {
                   Image(
                     filterQuality: FilterQuality.high,
                     width: itemSize(context, width) / 4,
-                    image: NetworkImage(
-                        '${DestinyData.bungieLink}${Provider.of<ItemProvider>(context).getItemElement(item)}?t={${Random().nextInt(100)}}123456'),
+                    image: CachedNetworkImageProvider(
+                        '${DestinyData.bungieLink}${Provider.of<ItemProvider>(context).getItemElement(item)}?t={${BungieApiService.randomUserInt}}123456'),
                   ),
                   textH3(Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!).toString()),
                 ],

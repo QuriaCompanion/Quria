@@ -1,8 +1,8 @@
-import 'dart:math';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
@@ -24,8 +24,8 @@ class ArmorModIconDisplay extends StatelessWidget {
         alignment: Alignment.topRight,
         children: [
           Image(
-            image: NetworkImage(
-              '${DestinyData.bungieLink}${socket.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
+            image: CachedNetworkImageProvider(
+              '${DestinyData.bungieLink}${socket.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456',
             ),
             width: iconSize,
             height: iconSize,
@@ -39,8 +39,8 @@ class ArmorModIconDisplay extends StatelessWidget {
               ManifestService.manifestParsed.destinyStatDefinition[3578062600]?.displayProperties?.icon != null &&
               socket.investmentStats?[0].statTypeHash != 3578062600)
             Image(
-              image: NetworkImage(
-                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}132456',
+              image: CachedNetworkImageProvider(
+                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[socket.investmentStats![0].statTypeHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}132456',
               ),
               width: iconSize,
               height: iconSize,

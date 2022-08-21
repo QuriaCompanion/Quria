@@ -1,6 +1,6 @@
 import 'dart:math' as math;
-import 'dart:math';
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +17,7 @@ import 'package:quria/data/providers/details_build_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -58,8 +59,8 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
         webHeader(
           context,
           image: ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass?.itemHash]?.screenshot != null
-              ? NetworkImage(
-                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.screenshot!}?t={${Random().nextInt(100)}}123465')
+              ? CachedNetworkImageProvider(
+                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.screenshot!}?t={${BungieApiService.randomUserInt}}123465')
               : ghostBuild,
           child: textDesktopTitle(
             _build.name,
@@ -113,7 +114,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                                   ),
                                 ),
                                 Image.network(
-                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123465',
+                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[_subclass!.itemHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123465',
                                   height: 75,
                                   width: 75,
                                   filterQuality: FilterQuality.high,

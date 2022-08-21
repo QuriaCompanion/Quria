@@ -1,4 +1,5 @@
 import 'package:bungie_api/enums/item_state.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -8,6 +9,7 @@ import 'dart:math';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display_perks.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
@@ -98,8 +100,8 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay> with Ticker
                                 height: 12,
                                 margin: const EdgeInsets.only(right: 5),
                                 child: Image(
-                                  image: NetworkImage(
-                                      '${DestinyData.bungieLink}${widget.elementIcon!}?t={${Random().nextInt(100)}}12'),
+                                  image: CachedNetworkImageProvider(
+                                      '${DestinyData.bungieLink}${widget.elementIcon!}?t={${BungieApiService.randomUserInt}}12'),
                                   filterQuality: FilterQuality.high,
                                 )),
                           textBodyBold(widget.powerLevel.toString()),

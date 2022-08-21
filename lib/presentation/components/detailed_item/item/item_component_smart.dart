@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:bungie_api/enums/item_state.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
@@ -8,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/item_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
@@ -56,8 +56,8 @@ class ItemComponentSmart extends StatelessWidget {
                       height: 12,
                       margin: const EdgeInsets.only(right: 5),
                       child: Image(
-                        image: NetworkImage(
-                            '${DestinyData.bungieLink}$elementIcon?t={${Random().nextInt(100)}}${itemSize(context, width).toInt()}'),
+                        image: CachedNetworkImageProvider(
+                            '${DestinyData.bungieLink}$elementIcon?t={${BungieApiService.randomUserInt}}${itemSize(context, width).toInt()}'),
                         filterQuality: FilterQuality.high,
                       ),
                     ),

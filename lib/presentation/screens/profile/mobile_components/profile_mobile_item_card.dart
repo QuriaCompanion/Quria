@@ -1,7 +1,6 @@
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -60,25 +59,17 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
       children: [
         Container(
           margin: const EdgeInsets.only(bottom: 10),
-          child: InkWell(
-            onTap: () {
-              setState(() {
-                isOpen = !isOpen;
-              });
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    textH2(data.itemCategory.displayProperties!.name!),
-                    const SizedBox(width: 20),
-                    textH3('${widget.inventory.length + 1}/10', color: greyLight)
-                  ],
-                ),
-                textBodyMedium(isOpen ? AppLocalizations.of(context)!.close : AppLocalizations.of(context)!.see_all),
-              ],
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  textH2(data.itemCategory.displayProperties!.name!),
+                  const SizedBox(width: 20),
+                  textH3('${widget.inventory.length + 1}/10', color: greyLight)
+                ],
+              ),
+            ],
           ),
         ),
         ItemComponentDisplay(
@@ -91,39 +82,37 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
             armorSockets: data.armorSockets,
             width: vw(context),
             characterId: widget.characterId),
-        if (isOpen)
-          const Divider(
-            color: greyLight,
-            height: 22,
-            thickness: 1,
-          ),
-        if (isOpen)
-          Wrap(
-            spacing: globalPadding(context) / 2,
-            runSpacing: globalPadding(context) / 2,
-            children: [
-              for (final item in widget.inventory)
-                Builder(builder: (context) {
-                  final dataItem = DisplayService.getCardData(context,
-                      itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
-                  return InkWell(
-                    onTap: () {
-                      Provider.of<InspectProvider>(context, listen: false).setInspectItem(
-                          itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
-                          item: item);
-                      Navigator.pushNamed(context, routeInspectMobile);
-                    },
-                    child: ItemIcon(
-                      imageSize: itemSize(context, widget.width),
-                      displayHash: item.overrideStyleItemHash ?? item.itemHash!,
-                      element: dataItem.elementIcon,
-                      powerLevel: dataItem.powerLevel,
-                      isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
-                    ),
-                  );
-                })
-            ],
-          )
+        const Divider(
+          color: greyLight,
+          height: 22,
+          thickness: 1,
+        ),
+        Wrap(
+          spacing: globalPadding(context) / 2,
+          runSpacing: globalPadding(context) / 2,
+          children: [
+            for (final item in widget.inventory)
+              Builder(builder: (context) {
+                final dataItem =
+                    DisplayService.getCardData(context, itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
+                return InkWell(
+                  onTap: () {
+                    Provider.of<InspectProvider>(context, listen: false).setInspectItem(
+                        itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
+                        item: item);
+                    Navigator.pushNamed(context, routeInspectMobile);
+                  },
+                  child: ItemIcon(
+                    imageSize: itemSize(context, widget.width),
+                    displayHash: item.overrideStyleItemHash ?? item.itemHash!,
+                    element: dataItem.elementIcon,
+                    powerLevel: dataItem.powerLevel,
+                    isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
+                  ),
+                );
+              })
+          ],
+        )
       ],
     );
   }

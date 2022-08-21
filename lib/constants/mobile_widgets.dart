@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
@@ -119,8 +120,8 @@ Widget pictureBordered({required String image, double size = 44}) {
         width: 1,
       ),
     ),
-    child: Image.network(
-      image,
+    child: CachedNetworkImage(
+      imageUrl: image,
       width: size,
       height: size,
       filterQuality: FilterQuality.high,

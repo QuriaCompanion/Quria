@@ -1,8 +1,8 @@
-import 'dart:math';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
 class InspectMobileHeader extends StatelessWidget {
@@ -29,7 +29,8 @@ class InspectMobileHeader extends StatelessWidget {
                   height: 16,
                   width: 16,
                   filterQuality: FilterQuality.high,
-                  image: NetworkImage('${DestinyData.bungieLink}${iconElement!}?t={${Random().nextInt(100)}}123426'),
+                  image: CachedNetworkImageProvider(
+                      '${DestinyData.bungieLink}${iconElement!}?t={${BungieApiService.randomUserInt}}123426'),
                 ),
               if (iconElement != null) const SizedBox(width: 8),
               if (power != null) textH2(power.toString()),

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
@@ -9,6 +7,7 @@ import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
 
@@ -77,7 +76,7 @@ class _BuilderExoticChoiceState extends State<BuilderExoticChoice> {
                               ),
                             ),
                             child: Image.network(
-                              '${DestinyData.bungieLink}${exotics[index].displayProperties!.icon!}?t={${Random().nextInt(100)}}123465',
+                              '${DestinyData.bungieLink}${exotics[index].displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123465',
                               width: 80,
                               height: 80,
                               fit: BoxFit.fill,

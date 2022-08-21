@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/plug_ui_styles.dart';
@@ -15,6 +13,7 @@ import 'package:quria/data/models/WeaponScore.model.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/models/helpers/inspectHelper.model.dart';
 import 'package:quria/data/providers/item_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -87,8 +86,8 @@ class InspectProvider with ChangeNotifier {
   String getImageLink(BuildContext context) {
     // TODO: this image isn't the best choice, but it's the best I can do for now.
     return _itemDef?.screenshot != null
-        ? '${DestinyData.bungieLink}${_itemDef!.screenshot!}?t={${Random().nextInt(100)}}123456'
-        : "${DestinyData.bungieLink}/common/destiny2_content/screenshots/2345794502.jpg?t={${Random().nextInt(100)}}1589788";
+        ? '${DestinyData.bungieLink}${_itemDef!.screenshot!}?t={${BungieApiService.randomUserInt}}123456'
+        : "${DestinyData.bungieLink}/common/destiny2_content/screenshots/2345794502.jpg?t={${BungieApiService.randomUserInt}}1589788";
   }
 
   String? getElementIcon(BuildContext context) {

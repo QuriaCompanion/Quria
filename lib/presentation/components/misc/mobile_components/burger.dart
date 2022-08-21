@@ -1,11 +1,11 @@
-import 'dart:math';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
@@ -37,8 +37,8 @@ class _BurgerState extends State<Burger> {
             decoration: BoxDecoration(
               image: DecorationImage(
                   fit: BoxFit.fitHeight,
-                  image: NetworkImage(
-                      '${DestinyData.bungieLink}/img/UserThemes/${AccountService.membershipData?.bungieNetUser?.profileThemeName}/header.jpg?t={${Random().nextInt(100)}}123456')),
+                  image: CachedNetworkImageProvider(
+                      '${DestinyData.bungieLink}/img/UserThemes/${AccountService.membershipData?.bungieNetUser?.profileThemeName}/header.jpg?t={${BungieApiService.randomUserInt}}123456')),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -50,8 +50,8 @@ class _BurgerState extends State<Burger> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                         fit: BoxFit.fill,
-                        image: NetworkImage(
-                            '${DestinyData.bungieLink}${AccountService.membershipData?.bungieNetUser?.profilePicturePath}?t={${Random().nextInt(100)}}123456')),
+                        image: CachedNetworkImageProvider(
+                            '${DestinyData.bungieLink}${AccountService.membershipData?.bungieNetUser?.profilePicturePath}?t={${BungieApiService.randomUserInt}}123456')),
                   ),
                 ),
                 const SizedBox(height: 16),

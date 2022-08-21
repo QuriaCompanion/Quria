@@ -72,7 +72,13 @@ class ScaffoldBurgerAndBackOption extends StatelessWidget {
       ),
       body: Container(
         decoration: blackBackground,
-        child: SingleChildScrollView(child: body),
+        child: SingleChildScrollView(
+            child: Column(
+          children: [
+            body,
+            SizedBox(height: 56 + globalPadding(context) * 2),
+          ],
+        )),
       ),
     );
   }

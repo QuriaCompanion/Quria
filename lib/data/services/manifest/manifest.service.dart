@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:bungie_api/models/destiny_manifest.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -156,7 +155,7 @@ class ManifestService {
 Future<List> _typeManifests(ManifestHelper manifestInfo) async {
   Future<String> getManifestRemote<T>() async {
     http.Response res = await http.get(Uri.parse(
-        '${DestinyData.bungieLink}${manifestInfo.manifest.jsonWorldComponentContentPaths![manifestInfo.language]![DefinitionTableNames.fromClass[T]!]!}?t={${Random().nextInt(100)}}123456'));
+        '${DestinyData.bungieLink}${manifestInfo.manifest.jsonWorldComponentContentPaths![manifestInfo.language]![DefinitionTableNames.fromClass[T]!]!}?t={${BungieApiService.randomUserInt}}123456'));
     return res.body;
   }
 

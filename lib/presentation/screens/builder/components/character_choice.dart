@@ -1,4 +1,5 @@
 import 'package:bungie_api/enums/destiny_class.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
@@ -21,17 +22,17 @@ class CharacterChoiceState extends State<CharacterChoice> {
             onTap: () {
               widget.callback(DestinyClass.Warlock);
             },
-            child: Image(image: NetworkImage(ClassLogo.warlock.link))),
+            child: Image(image: CachedNetworkImageProvider(ClassLogo.warlock.link))),
         InkWell(
             onTap: () {
               widget.callback(DestinyClass.Hunter);
             },
-            child: Image(image: NetworkImage(ClassLogo.hunter.link))),
+            child: Image(image: CachedNetworkImageProvider(ClassLogo.hunter.link))),
         InkWell(
             onTap: () {
               widget.callback(DestinyClass.Titan);
             },
-            child: Image(image: NetworkImage(ClassLogo.titan.link))),
+            child: Image(image: CachedNetworkImageProvider(ClassLogo.titan.link))),
       ],
     );
   }

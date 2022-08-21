@@ -1,8 +1,7 @@
-import 'dart:math';
-
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
@@ -39,7 +38,7 @@ class PerkItemDisplay extends StatelessWidget {
               radius: radius * 0.75,
               backgroundColor: selected ? blueEquipped : const Color(0xFF505155),
               child: Image.network(
-                '${DestinyData.bungieLink}${perk.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456',
+                '${DestinyData.bungieLink}${perk.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456',
                 width: iconSize * 0.5,
                 height: iconSize * 0.5,
                 filterQuality: FilterQuality.high,

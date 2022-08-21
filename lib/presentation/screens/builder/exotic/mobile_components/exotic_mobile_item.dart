@@ -1,9 +1,11 @@
 import 'package:bungie_api/enums/tier_type.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/mod_display.dart';
@@ -74,8 +76,8 @@ class _ExoticMobileItemState extends State<ExoticMobileItem> with TickerProvider
                         filterQuality: FilterQuality.high,
                         width: itemSize(context, widget.width),
                         height: itemSize(context, widget.width),
-                        image: NetworkImage(
-                            '${DestinyData.bungieLink}${widget.item.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456')),
+                        image: CachedNetworkImageProvider(
+                            '${DestinyData.bungieLink}${widget.item.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456')),
                     SizedBox(width: globalPadding(context) / 2),
                     Expanded(
                       child: Column(

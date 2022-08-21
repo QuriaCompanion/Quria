@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
@@ -8,6 +7,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/providers/details_build_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -42,8 +42,8 @@ class _DetailsBuildMobileViewState extends State<DetailsBuildMobileView> {
                           ?.itemHash]
                       ?.screenshot !=
                   null
-              ? NetworkImage(
-                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<DetailsBuildProvider>(context, listen: false).getEquippedItemByBucket(InventoryBucket.subclass)!.itemHash]!.screenshot!}?t={${Random().nextInt(100)}}12345456')
+              ? CachedNetworkImageProvider(
+                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<DetailsBuildProvider>(context, listen: false).getEquippedItemByBucket(InventoryBucket.subclass)!.itemHash]!.screenshot!}?t={${BungieApiService.randomUserInt}}12345456')
               : ghostBuild,
           child: textH1(
             _build.name,

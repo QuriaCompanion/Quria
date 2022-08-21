@@ -1,4 +1,5 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:collection/collection.dart';
 import 'dart:math' as math;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,6 +16,7 @@ import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definit
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/builder.service.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -56,8 +58,8 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
         webHeader(
           context,
           image: subclassDef?.screenshot != null
-              ? NetworkImage(
-                  '${DestinyData.bungieLink}${subclassDef!.screenshot!}?t={${math.Random().nextInt(100)}}123456')
+              ? CachedNetworkImageProvider(
+                  '${DestinyData.bungieLink}${subclassDef!.screenshot!}?t={${BungieApiService.randomUserInt}}123456')
               : ghostBuild,
           child: textDesktopTitle(
             widget.foreignBuild.name,
@@ -121,7 +123,7 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
                                   ),
                                 ),
                                 Image.network(
-                                  '${DestinyData.bungieLink}${subclassDef!.displayProperties!.icon!}?t={${math.Random().nextInt(100)}}123456',
+                                  '${DestinyData.bungieLink}${subclassDef!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456',
                                   height: 75,
                                   width: 75,
                                   filterQuality: FilterQuality.high,

@@ -1,10 +1,12 @@
 import 'package:bungie_api/enums/item_state.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display_perks_build.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
@@ -92,8 +94,8 @@ class _ItemComponentDisplayBuildState extends State<ItemComponentDisplayBuild> w
                                   width: 12,
                                   height: 12,
                                   child: Image(
-                                    image: NetworkImage(
-                                        '${DestinyData.bungieLink}${widget.elementIcon!}?t={${Random().nextInt(100)}}123456'),
+                                    image: CachedNetworkImageProvider(
+                                        '${DestinyData.bungieLink}${widget.elementIcon!}?t={${BungieApiService.randomUserInt}}123456'),
                                     filterQuality: FilterQuality.high,
                                   )),
                             if (widget.powerLevel != null) textBodyBold(widget.powerLevel.toString()),

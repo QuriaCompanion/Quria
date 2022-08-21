@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_definition.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
@@ -55,8 +56,8 @@ class HeaderWeaponDetails extends StatelessWidget {
                               .manifestParsed.destinyInventoryItemDefinition[itemHash]?.defaultDamageTypeHash !=
                           null)
                         Image(
-                          image: NetworkImage(
-                            '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!.defaultDamageTypeHash]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}${iconSize.toInt()}',
+                          image: CachedNetworkImageProvider(
+                            '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyDamageTypeDefinition[ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!.defaultDamageTypeHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}${iconSize.toInt()}',
                           ),
                           width: iconSize,
                           height: iconSize,
@@ -110,8 +111,8 @@ class HeaderWeaponDetails extends StatelessWidget {
                       style: TextStyle(color: Colors.yellow, fontSize: fontSize + 5),
                     ),
                     Image(
-                      image: NetworkImage(
-                          '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t={${Random().nextInt(100)}}123456'),
+                      image: CachedNetworkImageProvider(
+                          '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyStatDefinition[StatsHash.power]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456'),
                       width: fontSize + 5,
                       filterQuality: FilterQuality.high,
                       color: Colors.yellow,
@@ -124,8 +125,8 @@ class HeaderWeaponDetails extends StatelessWidget {
             Row(
               children: [
                 Image(
-                  image: NetworkImage(
-                      '${DestinyData.bungieLink}${typeOfAmmo.displayProperties!.icon!}?t={${Random().nextInt(100)}}${iconSize.toInt()}'),
+                  image: CachedNetworkImageProvider(
+                      '${DestinyData.bungieLink}${typeOfAmmo.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}${iconSize.toInt()}'),
                   filterQuality: FilterQuality.high,
                   width: iconSize,
                   height: iconSize,

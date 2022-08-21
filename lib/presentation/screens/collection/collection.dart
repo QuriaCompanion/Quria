@@ -346,7 +346,7 @@
 //           padding: const EdgeInsets.symmetric(vertical: 8.0),
 //           child: Center(
 //               child: Image(
-//             image: NetworkImage(filterLogo),
+//             image: CachedNetworkImageProvider(filterLogo),
 //           )),
 //         ));
 //   }

@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
@@ -11,6 +10,7 @@ import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definit
 import 'package:quria/data/models/helpers/inspectHelper.model.dart';
 import 'package:quria/data/models/perk.model.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/weapon_score.service.dart';
 import 'package:quria/presentation/screens/collection/collection_item/mobile_components/collection_armor_view.dart';
@@ -90,8 +90,8 @@ class _CollectionItemMobileViewState extends State<CollectionItemMobileView> {
                 children: [
                   mobileHeader(
                     context,
-                    image:
-                        NetworkImage('${DestinyData.bungieLink}${data.screenshot!}?t={${Random().nextInt(100)}}123456'),
+                    image: CachedNetworkImageProvider(
+                        '${DestinyData.bungieLink}${data.screenshot!}?t={${BungieApiService.randomUserInt}}123456'),
                     child: InspectMobileHeader(
                       name: data.displayProperties!.name!,
                       type: data.itemTypeAndTierDisplayName!,

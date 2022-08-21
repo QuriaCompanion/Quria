@@ -1,4 +1,5 @@
 import 'package:bungie_api/models/destiny_character_component.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -121,8 +122,8 @@ class AppbarDesktopSearch extends StatelessWidget {
                                               width: 50,
                                               height: 50,
                                               filterQuality: FilterQuality.high,
-                                              image:
-                                                  NetworkImage(DestinyData.bungieLink + character.value.emblemPath!)),
+                                              image: CachedNetworkImageProvider(
+                                                  DestinyData.bungieLink + character.value.emblemPath!)),
                                           textBodyBold(ManifestService
                                               .manifestParsed
                                               .destinyClassDefinition[character.value.classHash]!
@@ -133,7 +134,7 @@ class AppbarDesktopSearch extends StatelessWidget {
                                                 width: 30,
                                                 height: 30,
                                                 filterQuality: FilterQuality.high,
-                                                image: NetworkImage(DestinyData.bungieLink +
+                                                image: CachedNetworkImageProvider(DestinyData.bungieLink +
                                                     ManifestService
                                                         .manifestParsed
                                                         .destinyStatDefinition[StatsHash.power]!

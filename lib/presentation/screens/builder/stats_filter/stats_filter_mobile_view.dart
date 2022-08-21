@@ -87,9 +87,6 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
             ],
           ),
         ),
-        SizedBox(
-          height: globalPadding(context) * 4,
-        )
       ],
     );
   }

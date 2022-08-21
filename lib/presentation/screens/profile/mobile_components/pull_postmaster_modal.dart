@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:bungie_api/models/destiny_item_component.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
@@ -67,8 +66,8 @@ class PullPostmasterModal extends StatelessWidget {
                                     margin: const EdgeInsets.only(right: 5),
                                     child: Image(
                                       filterQuality: FilterQuality.high,
-                                      image: NetworkImage(
-                                          '${DestinyData.bungieLink}${data.elementIcon!}?t={${Random().nextInt(100)}}123456'),
+                                      image: CachedNetworkImageProvider(
+                                          '${DestinyData.bungieLink}${data.elementIcon!}?t={${BungieApiService.randomUserInt}}123456'),
                                     )),
                               if (data.powerLevel != null) textBodyBold(data.powerLevel.toString()),
                               divider,

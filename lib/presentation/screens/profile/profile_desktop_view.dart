@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
@@ -7,6 +6,7 @@ import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -30,15 +30,15 @@ class ProfileDesktopView extends StatelessWidget {
       ...InventoryBucket.armorBucketHashes,
     ];
     String icon = data.isNewSubclass
-        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t={${Random().nextInt(100)}}123456'
-        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t={${Random().nextInt(100)}}123456';
+        ? '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.screenshot!}?t={${BungieApiService.randomUserInt}}123456'
+        : '${ManifestService.manifestParsed.destinyInventoryItemDefinition[data.selectedCharacterSubclass!.itemHash]!.secondaryIcon!}?t={${BungieApiService.randomUserInt}}123456';
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         desktopHeader(
           context,
-          image: NetworkImage(
+          image: CachedNetworkImageProvider(
             DestinyData.bungieLink + icon,
           ),
           child: ProfileMobileHeader(
