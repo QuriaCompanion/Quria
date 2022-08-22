@@ -75,6 +75,7 @@
     "builder_stats_order_tier_1": "Prima statistica massimizzata",  
     "builder_stats_order_tier_2": "2 prime statistiche massimizzate",
     "builder_stats_order_tier_3": "3 prime statistiche massimizzate", 
+    "builder_custom_sunset_tooltip": "Se attivato, potrà integrare elementi sunset nel tuo build.",
     "recommendation_quria": "Quria ti raccomanda ",     
     "optimise_my_weapon": "Ottimizzare l’arma", 
     "ajust_perks": "Aggiungi i perk per visualizzare l’impatto sulla valutazione e sulle statistiche dell’arma", 

@@ -117,6 +117,16 @@ class _LegendsPageState extends State<LegendsPage> {
                   subtitle: textBodyMedium(AppLocalizations.of(context)!.translator, utf8: false),
                 ),
                 divider,
+                ListTile(
+                  leading: const Icon(
+                    Icons.language,
+                    color: Colors.white,
+                    size: 35,
+                  ),
+                  title: textBodyBold('@Matt_Erry'),
+                  subtitle: textBodyMedium(AppLocalizations.of(context)!.translator, utf8: false),
+                ),
+                divider,
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Center(child: textH3(AppLocalizations.of(context)!.donors, utf8: false)),

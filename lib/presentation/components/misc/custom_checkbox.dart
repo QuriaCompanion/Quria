@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/presentation/components/misc/tooltip.dart';
 
 class CustomCheckbox extends StatelessWidget {
   final String text;
+  final String? tooltip;
   final bool value;
   final Color color;
   final Function(bool) onChanged;
@@ -11,6 +13,7 @@ class CustomCheckbox extends StatelessWidget {
     required this.text,
     required this.value,
     required this.onChanged,
+    this.tooltip,
     this.color = blackLight,
     Key? key,
   }) : super(key: key);
@@ -56,6 +59,10 @@ class CustomCheckbox extends StatelessWidget {
               width: globalPadding(context),
             ),
             textBodyBold(text, utf8: false),
+            if (tooltip != null) ...[
+              const Spacer(),
+              TooltipInfo(message: tooltip!),
+            ]
           ],
         ),
       ),

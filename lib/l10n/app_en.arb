@@ -73,6 +73,7 @@
     "builder_stats_order_tier_1": "Highest tiers for the first stat",
     "builder_stats_order_tier_2": "Highest tiers for the first 2 stats",
     "builder_stats_order_tier_3": "Highest tiers for the first 3 stats",
+    "builder_custom_sunset_tooltip": "If checked, this will inclued sunsetted items within your build.",
     "recommendation_quria": "Quria's recommendation",
     "weapon_specialist": "Weapon Specialist",    
     "optimise_my_weapon": "Optimise my weapon",

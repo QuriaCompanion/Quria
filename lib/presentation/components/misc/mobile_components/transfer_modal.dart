@@ -118,7 +118,7 @@ class _TransferModalState extends State<TransferModal> {
                     width: widget.width ?? vw(context),
                     imageLink:
                         '${DestinyData.bungieLink}${character.emblemPath!}?t={${BungieApiService.randomUserInt}}123456',
-                    name: ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
+                    name: ManifestService.manifestParsed.destinyClassDefinition[character.itemSubType]!
                         .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                     icon: "assets/icons/Transfer.svg",
                     powerLevel: character.light,

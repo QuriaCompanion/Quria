@@ -6,6 +6,7 @@ import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -25,12 +26,14 @@ class DraggableInventoryItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final DestinyInventoryItemDefinition itemDefintion =
         ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!;
+    final String? itemOwner = Provider.of<InventoryProvider>(context).getItemOwner(item.itemInstanceId!);
     return Draggable<DestinyItemComponent>(
       // Data is the value this Draggable stores.
       data: item,
       feedback: ItemIcon(
         displayHash: item.overrideStyleItemHash ?? item.itemHash!,
         imageSize: size,
+        itemOwner: itemOwner,
         isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
         element: Provider.of<ItemProvider>(context).getItemElement(item),
         powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
@@ -57,6 +60,7 @@ class DraggableInventoryItem extends StatelessWidget {
           isActive: DisplayService.isItemItemActive(context, itemDefintion),
           imageSize: size,
           isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
+          itemOwner: itemOwner,
           element: Provider.of<ItemProvider>(context).getItemElement(item),
           powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
         ),

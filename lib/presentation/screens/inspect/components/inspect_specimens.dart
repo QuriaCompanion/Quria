@@ -81,7 +81,7 @@ class InspectSpecimens extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 textBodyBold(character != null
-                    ? ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
+                    ? ManifestService.manifestParsed.destinyClassDefinition[character.itemSubType]!
                         .genderedClassNamesByGenderHash![character.genderHash.toString()]!
                     : AppLocalizations.of(context)!.vault),
                 SizedBox(

@@ -23,24 +23,32 @@ class BungieActionsService {
   }
   BungieActionsService._internal();
 
-  Future<void> transferItem(BuildContext context, String itemId, String? characterId,
-      {int? itemHash, int? stackSize}) async {
+  Future<void> transferItem(
+    BuildContext context,
+    String itemId,
+    String? characterId, {
+    int? itemHash,
+    int? stackSize,
+    bool notify = true,
+  }) async {
     try {
       final owner = Provider.of<InventoryProvider>(context, listen: false).getItemOwner(itemId);
       if (owner == characterId || owner == null || characterId == null) {
         await api
             .transferItem(itemId, characterId ?? owner,
                 itemHash: itemHash, stackSize: stackSize, transferToVault: characterId == null)
-            .then(
-                (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, false));
+            .then((value) => Provider.of<InventoryProvider>(context, listen: false)
+                .moveItem(itemId, characterId, false, owner, notify: notify));
       } else {
         await api
             .transferItem(itemId, owner, itemHash: itemHash, stackSize: stackSize, transferToVault: true)
-            .then((value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, null, false));
-        await api
-            .transferItem(itemId, characterId, itemHash: itemHash, stackSize: stackSize, transferToVault: false)
-            .then(
-                (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, false));
+            .then((value) async {
+          Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, null, false, owner, notify: false);
+          await api
+              .transferItem(itemId, characterId, itemHash: itemHash, stackSize: stackSize, transferToVault: false)
+              .then((value) => Provider.of<InventoryProvider>(context, listen: false)
+                  .moveItem(itemId, characterId, false, null, notify: notify));
+        });
       }
     } catch (e) {
       try {
@@ -55,12 +63,19 @@ class BungieActionsService {
           await api
               .transferItem(slotItems.first.itemInstanceId!, characterId,
                   itemHash: slotItems.first.itemHash, stackSize: 1, transferToVault: true)
-              .then((value) => Provider.of<InventoryProvider>(context, listen: false)
-                  .moveItem(slotItems.first.itemInstanceId!, null, false));
-          await api
-              .transferItem(itemId, characterId, itemHash: itemHash, stackSize: stackSize, transferToVault: false)
-              .then((value) =>
-                  Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, false));
+              .then((value) async {
+            Provider.of<InventoryProvider>(context, listen: false).moveItem(
+              slotItems.first.itemInstanceId!,
+              null,
+              false,
+              Provider.of<InventoryProvider>(context, listen: false).getItemOwner(slotItems.first.itemInstanceId!),
+              notify: false,
+            );
+            await api
+                .transferItem(itemId, characterId, itemHash: itemHash, stackSize: stackSize, transferToVault: false)
+                .then((value) => Provider.of<InventoryProvider>(context, listen: false)
+                    .moveItem(itemId, characterId, false, null, notify: notify));
+          });
         }
       } catch (e) {
         rethrow;
@@ -74,30 +89,24 @@ class BungieActionsService {
     required String characterId,
     required int itemHash,
   }) async {
+    final owner = Provider.of<InventoryProvider>(context, listen: false).getItemOwner(itemId);
     try {
-      final owner = Provider.of<InventoryProvider>(context, listen: false).getItemOwner(itemId);
       if (owner == characterId) {
         await api.equipItem(itemId, characterId).then(
-            (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, true));
+              (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(
+                itemId,
+                characterId,
+                true,
+                owner,
+              ),
+            );
       } else {
-        await transferItem(context, itemId, characterId, itemHash: itemHash, stackSize: 1);
-        await api.equipItem(itemId, characterId).then(
-            (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, true));
+        await transferItem(context, itemId, characterId, itemHash: itemHash, stackSize: 1, notify: false);
+        await api.equipItem(itemId, characterId).then((value) =>
+            Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, true, owner));
       }
     } catch (e) {
-      try {
-        await transferItem(
-          context,
-          itemId,
-          characterId,
-          itemHash: itemHash,
-          stackSize: 1,
-        ).then((value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, false));
-        await api.equipItem(itemId, characterId).then(
-            (value) => Provider.of<InventoryProvider>(context, listen: false).moveItem(itemId, characterId, true));
-      } catch (e) {
-        rethrow;
-      }
+      rethrow;
     }
   }
 
@@ -131,7 +140,8 @@ class BungieActionsService {
     // equip all items
     await api.equipItems(itemsIds, characterId).then((value) {
       for (final id in itemsIds) {
-        Provider.of<InventoryProvider>(context, listen: false).moveItem(id, characterId, false);
+        Provider.of<InventoryProvider>(context, listen: false)
+            .moveItem(id, characterId, false, Provider.of<InventoryProvider>(context, listen: false).getItemOwner(id));
       }
     }, onError: (_) => null);
     final exoticInstanceId = items
@@ -142,7 +152,8 @@ class BungieActionsService {
     if (exoticInstanceId != null) {
       await api.equipItem(exoticInstanceId, characterId).then((value) {
         for (final id in itemsIds) {
-          Provider.of<InventoryProvider>(context, listen: false).moveItem(id, characterId, false);
+          Provider.of<InventoryProvider>(context, listen: false).moveItem(
+              id, characterId, false, Provider.of<InventoryProvider>(context, listen: false).getItemOwner(id));
         }
       }, onError: (_) => null);
     }

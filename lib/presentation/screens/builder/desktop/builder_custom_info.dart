@@ -8,7 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
+import 'package:quria/data/providers/builder_quria_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
@@ -52,6 +52,7 @@ class BuilderCustomInfo extends StatelessWidget {
                   value: Provider.of<BuilderCustomInfoProvider>(context).includeSunset,
                   onChanged: (newValue) =>
                       Provider.of<BuilderCustomInfoProvider>(context, listen: false).setRemoveSunset(newValue),
+                  tooltip: AppLocalizations.of(context)!.builder_custom_sunset_tooltip,
                 ),
               ),
               SizedBox(

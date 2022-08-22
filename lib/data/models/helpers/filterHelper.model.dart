@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+@immutable
 class FilterHelper {
-  final String name;
   final String icon;
-  // hash of the given stat
   final int value;
-  FilterHelper({
-    required this.name,
+  const FilterHelper({
     required this.icon,
     required this.value,
   });

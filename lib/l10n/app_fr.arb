@@ -75,6 +75,7 @@
     "builder_stats_order_tier_1": "Première statistique maximisé",
     "builder_stats_order_tier_2": "2 premières statistiques maximisé",
     "builder_stats_order_tier_3": "3 premières statistiques maximisé",
+    "builder_custom_sunset_tooltip": "Si coché, cela pourra prendre des éléments sunset dans ton build.",
     "recommendation_quria": "Recommandation Quria",
     "weapon_specialist": "Spécialiste arme",    
     "optimise_my_weapon": "Optimiser mon arme",

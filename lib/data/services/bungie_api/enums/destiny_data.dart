@@ -4,6 +4,7 @@ import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_energy_type.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:bungie_api/enums/plug_ui_styles.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
@@ -147,6 +148,18 @@ class Conditions {
             DestinyItemSubType.Ornament ||
         ManifestService.manifestParsed.destinyInventoryItemDefinition[plugHash]?.itemSubType ==
             DestinyItemSubType.Shader;
+  }
+
+  static bool isIntristicSockets(int? itemHash) {
+    return itemHash != null &&
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]?.displayProperties?.icon != null &&
+            DestinyData.modCategoryHash.contains(
+                ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]!.plug!.plugCategoryHash) ||
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]?.plug?.plugStyle ==
+            PlugUiStyles.Masterwork ||
+        ManifestService.manifestParsed.destinyInventoryItemDefinition[itemHash]?.plug?.plugCategoryIdentifier
+                ?.contains('masterworks.stat') ==
+            true;
   }
 
   static bool isBuildValid(List<Item> items) {

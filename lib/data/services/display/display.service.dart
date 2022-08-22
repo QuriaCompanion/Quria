@@ -108,9 +108,9 @@ class DisplayService {
     return storedBuild;
   }
 
-  static int remainingModPoints(int base, Map<int, DestinyItemSocketState> mods) {
+  static int remainingModPoints(int base, List<DestinyItemSocketState> mods) {
     int remaining = base;
-    for (final modState in mods.values) {
+    for (final modState in mods) {
       DestinyInventoryItemDefinition? mod =
           ManifestService.manifestParsed.destinyInventoryItemDefinition[modState.plugHash];
       // check if the mod has bonus stats
@@ -399,19 +399,4 @@ class DisplayService {
     }
   }
 
-  static bool isItemItemActive(BuildContext context, DestinyInventoryItemDefinition item) {
-    final rarities = Provider.of<FiltersProvider>(context).rarityFilters;
-    final types = Provider.of<FiltersProvider>(context).typeFilters;
-    final elements = Provider.of<FiltersProvider>(context).elementFilters;
-    if (rarities.isNotEmpty && !rarities.contains(item.inventory?.tierType)) {
-      return false;
-    }
-    if (types.isNotEmpty && !types.contains(item.itemSubType)) {
-      return false;
-    }
-    if (elements.isNotEmpty && !elements.contains(item.damageTypes?[0])) {
-      return false;
-    }
-    return true;
-  }
-}
+

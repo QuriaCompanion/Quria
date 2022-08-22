@@ -1,25 +1,32 @@
 import 'package:bungie_api/destiny2.dart';
-import 'package:flutter/foundation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:quria/data/models/providers/collectible.model.dart';
 
-class CollectibleProvider with ChangeNotifier {
-  DestinyProfileCollectiblesComponent? _profileCollectibles = DestinyProfileCollectiblesComponent();
-  Map<String, DestinyCollectiblesComponent> _characterCollectibles = {};
-  DestinyProfileCollectiblesComponent? get profilePlugSets => _profileCollectibles;
-  Map<String, DestinyCollectiblesComponent> get profileCharacterPlugSets => _characterCollectibles;
+class CollectibleNotifier extends StateNotifier<CollectibleModel> {
+  CollectibleNotifier()
+      : super(const CollectibleModel(
+          profileCollectibles: null,
+          characterCollectibles: {},
+        ));
+  void reset() {
+    state = state.copyWith(
+      profileCollectibles: null,
+      characterCollectibles: {},
+    );
+  }
 
   void setProfileCollectible(DestinyProfileCollectiblesComponent? profileCollectible) {
-    _profileCollectibles = profileCollectible;
-    notifyListeners();
+    state = state.copyWith(
+      profileCollectibles: profileCollectible,
+    );
   }
 
-  void setCharacterCollectible(Map<String, DestinyCollectiblesComponent> characterCollectible) {
-    _characterCollectibles = characterCollectible;
-    notifyListeners();
-  }
-
-  void reset() {
-    _profileCollectibles = null;
-    _characterCollectibles = {};
-    notifyListeners();
+  void setCharacterCollectible(Map<String, DestinyCollectiblesComponent> characterCollectibles) {
+    state = state.copyWith(
+      characterCollectibles: characterCollectibles,
+    );
   }
 }
+
+final collectibleProvider =
+    StateNotifierProvider<CollectibleNotifier, CollectibleModel>((ref) => CollectibleNotifier());

@@ -1,16 +1,14 @@
 import 'dart:async';
 import 'package:bungie_api/models/destiny_plug_sets_component.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
 import 'package:bungie_api/models/destiny_item_plug_base.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
-import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
-import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
-import 'package:quria/data/providers/builder/builder_mods_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_mods_provider.dart';
+import 'package:quria/data/providers/builder_quria_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/collectible_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
@@ -120,16 +118,13 @@ class ProfileService {
     }
   }
 
-  static reset(BuildContext context) {
-    Provider.of<CharactersProvider>(context, listen: false).reset();
-    Provider.of<CollectibleProvider>(context, listen: false).reset();
-    Provider.of<InventoryProvider>(context, listen: false).reset();
-    Provider.of<ItemProvider>(context, listen: false).reset();
-    Provider.of<PlugsProvider>(context, listen: false).reset();
-    Provider.of<BuilderSubclassModsProvider>(context, listen: false).reset();
-    Provider.of<BuilderModsProvider>(context, listen: false).reset();
-    Provider.of<BuilderExoticProvider>(context, listen: false).reset();
-    Provider.of<BuilderCustomInfoProvider>(context, listen: false).reset();
+  static reset(WidgetRef ref) {
+    ref.read(charactersProvider).clear();
+    ref.read(itemProvider.notifier).reset();
+    ref.read(collectibleProvider.notifier).reset();
+    ref.read(inventoryProvider.notifier).reset();
+    ref.read(plugsProvider.notifier).reset();
+    ref.read(builderQuriaProvider.notifier).reset();
   }
 
   Future<void> _updateProfileData(BuildContext context, List<DestinyComponentType> components) async {

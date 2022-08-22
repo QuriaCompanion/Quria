@@ -1,20 +1,20 @@
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/providers/language_provider.dart';
+import 'package:quria/data/providers/language_notifier.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ChooseLanguage extends StatelessWidget {
+class ChooseLanguage extends ConsumerWidget {
   final double width;
   const ChooseLanguage({Key? key, required this.width}) : super(key: key);
 
-  void changeLanguage(BuildContext context, {required String lang}) async {
-    Provider.of<LanguageProvider>(context, listen: false).setLanguage(Locale.fromSubtags(languageCode: lang));
+  void changeLanguage(BuildContext context, {required String lang, required WidgetRef ref}) async {
+    ref.read(languageProvider.notifier).setLanguage(Locale.fromSubtags(languageCode: lang));
     DisplayService.isProfileUp = false;
     DisplayService.isManifestUp = false;
     ProfileService.reset(context);
@@ -22,7 +22,7 @@ class ChooseLanguage extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Material(
       child: Container(
         decoration: const BoxDecoration(
@@ -60,7 +60,7 @@ class ChooseLanguage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        changeLanguage(context, lang: 'fr');
+                        changeLanguage(context, lang: 'fr', ref: ref);
                       },
                       child: ListTile(
                         title: textBodyHighRegular(
@@ -76,7 +76,7 @@ class ChooseLanguage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        changeLanguage(context, lang: 'en');
+                        changeLanguage(context, lang: 'en', ref: ref);
                       },
                       child: ListTile(
                         title: textBodyHighRegular(
@@ -92,7 +92,7 @@ class ChooseLanguage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        changeLanguage(context, lang: 'es');
+                        changeLanguage(context, lang: 'es', ref: ref);
                       },
                       child: ListTile(
                         title: textBodyHighRegular(
@@ -108,7 +108,7 @@ class ChooseLanguage extends StatelessWidget {
                   children: [
                     InkWell(
                       onTap: () {
-                        changeLanguage(context, lang: 'it');
+                        changeLanguage(context, lang: 'it', ref: ref);
                       },
                       child: ListTile(
                         title: textBodyHighRegular(

@@ -1,42 +1,22 @@
 import 'package:bungie_api/models/destiny_character_component.dart';
-import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class CharactersProvider with ChangeNotifier {
-  List<DestinyCharacterComponent> _characters = [];
-  DestinyCharacterComponent? _currentCharacter;
-  int _characterIndex = 0;
-  List<DestinyCharacterComponent> get characters => _characters;
-  DestinyCharacterComponent? get currentCharacter => _currentCharacter;
-  int get characterIndex => _characterIndex;
-  void setCharacters(List<DestinyCharacterComponent> characters) {
-    _characters = characters;
-    notifyListeners();
-  }
-
-  void setCurrentCharacter(int index) {
-    _characterIndex = index;
-    _currentCharacter = _characters[index];
-    notifyListeners();
-  }
-
-  void init(Map<String, DestinyCharacterComponent>? characters) {
-    if (characters == null) {
-      return;
-    }
-    List<DestinyCharacterComponent> list = characters.values.toList();
-    list.sort((charA, charB) {
-      DateTime dateA = DateTime.parse(charA.dateLastPlayed!);
-      DateTime dateB = DateTime.parse(charB.dateLastPlayed!);
-      return dateB.compareTo(dateA);
-    });
-    _currentCharacter = list[_characterIndex];
-    _characters = list;
-  }
-
-  void reset() {
-    _characters = [];
-    _currentCharacter = null;
-    _characterIndex = 0;
-    notifyListeners();
-  }
+void setCurrentCharacter(int index, WidgetRef ref) {
+  ref.read(charactersProvider).swap(0, index);
 }
+
+void init(Map<String, DestinyCharacterComponent>? characters, WidgetRef ref) {
+  if (characters == null) {
+    return;
+  }
+  List<DestinyCharacterComponent> list = characters.values.toList();
+  list.sort((charA, charB) {
+    DateTime dateA = DateTime.parse(charA.dateLastPlayed!);
+    DateTime dateB = DateTime.parse(charB.dateLastPlayed!);
+    return dateB.compareTo(dateA);
+  });
+  ref.read(charactersProvider.notifier).update((state) => state..replaceRange(0, state.length, list));
+}
+
+final charactersProvider = StateProvider<List<DestinyCharacterComponent>>((ref) => []);

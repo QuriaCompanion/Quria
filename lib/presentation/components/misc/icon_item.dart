@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -11,6 +13,8 @@ class ItemIcon extends StatelessWidget {
   final double imageSize;
   final bool isMasterworked;
   final bool isSunset;
+  final bool isResonant;
+  final String? itemOwner;
   final bool isActive;
   final int? powerLevel;
   final String? element;
@@ -18,15 +22,23 @@ class ItemIcon extends StatelessWidget {
     required this.displayHash,
     required this.imageSize,
     this.isMasterworked = false,
+    this.isResonant = false,
     this.isSunset = false,
     this.isActive = true,
     this.powerLevel,
     this.element,
+    this.itemOwner,
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    String? imageUrl;
+    if (itemOwner != null && itemOwner != Provider.of<CharactersProvider>(context).currentCharacter?.characterId) {
+      final characters = Provider.of<CharactersProvider>(context).characters;
+      final character = characters.firstWhere((c) => c.characterId == itemOwner);
+      imageUrl = character.emblemPath;
+    }
     return Container(
       width: imageSize,
       height: imageSize,
@@ -35,8 +47,9 @@ class ItemIcon extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Image.network(
-            '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}${imageSize.toInt()}',
+          CachedNetworkImage(
+            imageUrl:
+                '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}${imageSize.toInt()}',
             height: imageSize,
             width: imageSize,
             filterQuality: FilterQuality.high,
@@ -48,8 +61,9 @@ class ItemIcon extends StatelessWidget {
               ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!
                       .displayVersionWatermarkIcons!.last !=
                   "")
-            Image.network(
-              '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!.displayVersionWatermarkIcons!.last}?t={${BungieApiService.randomUserInt}}${imageSize.toInt()}',
+            CachedNetworkImage(
+              imageUrl:
+                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[displayHash]!.quality!.displayVersionWatermarkIcons!.last}?t={${BungieApiService.randomUserInt}}${imageSize.toInt()}',
               height: imageSize,
               width: imageSize,
               fit: BoxFit.fill,
@@ -71,9 +85,9 @@ class ItemIcon extends StatelessWidget {
                     if (element != null)
                       Padding(
                         padding: const EdgeInsets.only(left: 4),
-                        child: Image(
-                          image: CachedNetworkImageProvider(
-                              '${DestinyData.bungieLink}${element!}?t={${BungieApiService.randomUserInt}}${imageSize.toInt()}'),
+                        child: CachedNetworkImage(
+                          imageUrl:
+                              '${DestinyData.bungieLink}${element!}?t={${BungieApiService.randomUserInt}}${imageSize.toInt()}',
                           filterQuality: FilterQuality.high,
                         ),
                       ),
@@ -88,6 +102,16 @@ class ItemIcon extends StatelessWidget {
               height: imageSize,
               color: black.withOpacity(0.7),
             ),
+          if (imageUrl != null)
+            Positioned(
+              top: 0,
+              right: 0,
+              child: CachedNetworkImage(
+                imageUrl: DestinyData.bungieLink + imageUrl,
+                width: imageSize / 3,
+                height: imageSize / 3,
+              ),
+            )
         ],
       ),
     );

@@ -1,62 +1,52 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/models/Item.model.dart';
+import 'package:quria/data/models/providers/create_build.model.dart';
 
-class CreateBuildProvider with ChangeNotifier {
-  final List<Item> _items = [];
-  String? _name;
-  String? _id;
-  List<Item> get items => _items;
-  String? get name => _name;
-  String? get id => _id;
-
-  Item? getEquippedItemByBucket(int bucketHash) {
-    return _items.firstWhereOrNull((item) => item.isEquipped && item.bucketHash == bucketHash);
-  }
+class CreateBuildNotifier extends StateNotifier<CreateBuildModel> {
+  CreateBuildNotifier() : super(const CreateBuildModel());
 
   void addItem(Item item) {
-    _items.add(item);
-    notifyListeners();
+    state.items.add(item);
   }
 
   void replaceItems(List<Item> items) {
-    _items.clear();
-    _items.addAll(items);
-    notifyListeners();
+    state.items.replaceRange(0, state.items.length, items);
   }
 
   void replaceItem(Item previousItem, Item item) {
-    _items.remove(previousItem);
-    _items.add(item);
-    notifyListeners();
+    state.items.remove(previousItem);
+    state.items.add(item);
   }
 
   void removeItem(Item item) {
-    _items.remove(item);
-    notifyListeners();
+    state.items.remove(item);
   }
 
   void setBuild(List<Item> items) {
-    _id = null;
-    _name = null;
-    _items.clear();
-    _items.addAll(items);
-    notifyListeners();
+    state.items.clear();
+    state.items.addAll(items);
+    state = state.copyWith(id: null, name: null, items: items);
   }
 
   void modifyBuild(BuildStored buildStored) {
-    _items.clear();
-    _items.addAll(buildStored.items);
-    _name = buildStored.name;
-    _id = buildStored.id;
-    notifyListeners();
+    state.items.clear();
+    state.items.addAll(buildStored.items);
+    state = state.copyWith(id: null, name: null, items: state.items);
   }
 
   void clear() {
-    _items.clear();
-    _id = null;
-    _name = null;
-    notifyListeners();
+    state.items.clear();
+    state = state.copyWith(id: null, name: null, items: state.items);
   }
 }
+
+final createBuildProvider =
+    StateNotifierProvider<CreateBuildNotifier, CreateBuildModel>((ref) => CreateBuildNotifier());
+
+final getEquippedItemByBucketProvider = StateProviderFamily<Item?, int>((ref, bucketHash) {
+  return ref
+      .watch(createBuildProvider.select((value) => value.items))
+      .firstWhereOrNull((element) => element.bucketHash == bucketHash);
+});

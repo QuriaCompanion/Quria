@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
+import 'package:quria/data/providers/builder_quria_provider.dart';
 import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
