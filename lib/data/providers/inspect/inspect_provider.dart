@@ -32,6 +32,13 @@ class InspectNotifier extends StateNotifier<InspectItemModel?> {
   }
 }
 
+enum InspectWeaponInfo {
+  statistics,
+  recommendations,
+}
+
+final subtabInspectProvider = StateProvider<InspectWeaponInfo>((ref) => InspectWeaponInfo.statistics);
+
 final inspectProvider = StateNotifierProvider<InspectNotifier, InspectItemModel?>(((ref) => InspectNotifier()));
 
 final inspectBonusStatProvider = StateProvider<Map<int, int>>((ref) {

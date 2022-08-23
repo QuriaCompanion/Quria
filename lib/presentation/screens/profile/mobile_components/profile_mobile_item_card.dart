@@ -1,7 +1,7 @@
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/itemCardHelper.model.dart';
@@ -12,7 +12,7 @@ import 'package:quria/presentation/components/detailed_item/item/item_component_
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ProfileMobileItemCard extends StatefulWidget {
+class ProfileMobileItemCard extends ConsumerStatefulWidget {
   final DestinyItemComponent item;
   final String characterId;
   final double width;
@@ -26,10 +26,10 @@ class ProfileMobileItemCard extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ProfileMobileItemCard> createState() => _ProfileMobileItemCardState();
+  ProfileMobileItemCardState createState() => ProfileMobileItemCardState();
 }
 
-class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
+class ProfileMobileItemCardState extends ConsumerState<ProfileMobileItemCard> {
   late ItemCardHelper data;
   bool isOpen = false;
   @override
@@ -97,7 +97,7 @@ class _ProfileMobileItemCardState extends State<ProfileMobileItemCard> {
                     DisplayService.getCardData(context, itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
                 return InkWell(
                   onTap: () {
-                    Provider.of<InspectProvider>(context, listen: false).setInspectItem(
+                    ref.read(inspectProvider.notifier).setInspectItem(
                         itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
                         item: item);
                     Navigator.pushNamed(context, routeInspectMobile);

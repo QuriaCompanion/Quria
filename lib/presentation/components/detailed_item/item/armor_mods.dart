@@ -28,9 +28,9 @@ class ArmorMods extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DestinyInventoryItemDefinition itemDef = Provider.of<InspectProvider>(context).itemDef!;
-    final DestinyItemComponent item = Provider.of<InspectProvider>(context).item!;
-    final String characterId = Provider.of<InventoryProvider>(context).getItemOwner(item.itemInstanceId!) ??
+    final DestinyInventoryItemDefinition itemDef = ref.watch(inspectProvider.select((value) => value?.item))Def!;
+    final DestinyItemComponent item = ref.watch(inspectProvider.select((value) => value?.item))!;
+    final String characterId = ref.watch(itemOwnerProvider(item.itemInstanceId)) ??
         Provider.of<CharactersProvider>(context).currentCharacter!.characterId!;
 
     final Map<int, DestinyItemSocketState> displayedSockets =

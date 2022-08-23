@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
@@ -13,27 +13,27 @@ import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mob
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_specimens.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_stats.dart';
 
-class InspectMobileWeaponStatistics extends StatefulWidget {
+class InspectMobileWeaponStatistics extends ConsumerStatefulWidget {
   final double width;
   const InspectMobileWeaponStatistics({Key? key, required this.width}) : super(key: key);
 
   @override
-  State<InspectMobileWeaponStatistics> createState() => _InspectMobileWeaponStatisticsState();
+  InspectMobileWeaponStatisticsState createState() => InspectMobileWeaponStatisticsState();
 }
 
-class _InspectMobileWeaponStatisticsState extends State<InspectMobileWeaponStatistics> {
+class InspectMobileWeaponStatisticsState extends ConsumerState<InspectMobileWeaponStatistics> {
   @override
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      Provider.of<InspectProvider>(context, listen: false).setWeaponStatus(null);
+      ref.read(inspectProvider.notifier).setWeaponStatus(null);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final itemDef = Provider.of<InspectProvider>(context).itemDef!;
-    final item = Provider.of<InspectProvider>(context).item;
+    final itemDef = ref.watch(inspectProvider.select((value) => value?.itemDef));
+    final item = ref.watch(inspectProvider.select((value) => value?.item));
     return Column(
       children: [
         if (isMobile(context))
@@ -70,7 +70,7 @@ class _InspectMobileWeaponStatisticsState extends State<InspectMobileWeaponStati
             width: widget.width,
           ),
         ),
-        if (Provider.of<InventoryProvider>(context).getAllSpecimens(item).isNotEmpty)
+        if (ref.watch(allSpecimensProvider(item)).isNotEmpty)
           mobileSection(
             context,
             title: AppLocalizations.of(context)!.other_specimens,
@@ -78,12 +78,12 @@ class _InspectMobileWeaponStatisticsState extends State<InspectMobileWeaponStati
               width: widget.width,
             ),
           ),
-        if (itemDef.collectibleHash != null)
+        if (itemDef?.collectibleHash != null)
           mobileSection(
             context,
             title: AppLocalizations.of(context)!.origin,
             child: InspectMobileOrigin(
-              collectionHash: itemDef.collectibleHash,
+              collectionHash: itemDef?.collectibleHash,
             ),
           ),
       ],

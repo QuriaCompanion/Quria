@@ -2,6 +2,7 @@ import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
@@ -19,16 +20,16 @@ import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/screens/collection/collection_item/collection_item_mobile_view.dart';
 import 'package:quria/presentation/screens/collection/components/collection_desktop_filter.dart';
 
-class CollectionDesktopView extends StatefulWidget {
+class CollectionDesktopView extends ConsumerStatefulWidget {
   final Iterable<DestinyInventoryItemDefinition> items;
 
   const CollectionDesktopView({required this.items, Key? key}) : super(key: key);
 
   @override
-  State<CollectionDesktopView> createState() => _CollectionDesktopViewState();
+  CollectionDesktopViewState createState() => CollectionDesktopViewState();
 }
 
-class _CollectionDesktopViewState extends State<CollectionDesktopView> {
+class CollectionDesktopViewState extends ConsumerState<CollectionDesktopView> {
   late Map<String, DestinyItemSubType> currentFilter;
   late DestinyItemSubType selectedSubType;
   late int selectedBucket;
@@ -57,7 +58,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
         .where((element) =>
             selectedSubType == element.itemSubType &&
             element.inventory?.tierType != TierType.Exotic &&
-            DisplayService.isItemItemActive(context, element))
+            DisplayService.isItemItemActive(ref, element))
         .toList();
     return SingleChildScrollView(
       child: Column(
@@ -162,8 +163,7 @@ class _CollectionDesktopViewState extends State<CollectionDesktopView> {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                Provider.of<InspectProvider>(context, listen: false)
-                                    .setInspectItem(itemDef: items[index]);
+                                ref.read(inspectProvider.notifier).setInspectItem(itemDef: items[index]);
                                 showDialog(
                                   context: context,
                                   builder: (context) {

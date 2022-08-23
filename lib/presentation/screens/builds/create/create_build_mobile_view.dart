@@ -96,7 +96,7 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                 onPressed: () async {
                   final inventory = Provider.of<InventoryProvider>(context, listen: false)
                       .getCharacterEquipment(
-                        Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
+                        ref.watch(charactersProvider).first.characterId!,
                       )
                       .where((element) => InventoryBucket.loadoutBucketHashes.contains(element.bucketHash));
                   final List<Item> newItems = [];

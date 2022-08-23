@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -10,17 +11,18 @@ import 'dart:math';
 
 import 'package:sliver_tools/sliver_tools.dart';
 
-class CollectionMobileItemSection extends StatefulWidget {
+class CollectionMobileItemSection extends ConsumerStatefulWidget {
   final String sectionName;
   final List<DestinyInventoryItemDefinition> items;
 
   const CollectionMobileItemSection({Key? key, required this.sectionName, required this.items}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _CollectionMobileItemSectionState();
+  CollectionMobileItemSectionState createState() => CollectionMobileItemSectionState();
 }
 
-class _CollectionMobileItemSectionState extends State<CollectionMobileItemSection> with TickerProviderStateMixin {
+class CollectionMobileItemSectionState extends ConsumerState<CollectionMobileItemSection>
+    with TickerProviderStateMixin {
   late bool dropDownActivated = true;
   late AnimationController controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 100));
   late Animation<double> animation;
@@ -112,8 +114,8 @@ class _CollectionMobileItemSectionState extends State<CollectionMobileItemSectio
                   delegate: SliverChildBuilderDelegate(((context, index) {
                     return InkWell(
                       onTap: () {
-                        Provider.of<InspectProvider>(context, listen: false)
-                            .setInspectItem(itemDef: widget.items[index]);
+                        ref.read(inspectProvider.notifier).setInspectItem(itemDef: widget.items[index]);
+
                         Navigator.pushNamed(context, routeCollectionItem, arguments: widget.items[index].hash);
                       },
                       child: Padding(

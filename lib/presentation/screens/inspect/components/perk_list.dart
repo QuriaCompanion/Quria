@@ -1,4 +1,4 @@
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
@@ -8,7 +8,7 @@ import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/loader.dart';
 import 'package:quria/presentation/screens/inspect/components/column_perk_display.dart';
 
-class PerkList extends StatefulWidget {
+class PerkList extends ConsumerStatefulWidget {
   const PerkList({
     required this.width,
     Key? key,
@@ -17,18 +17,17 @@ class PerkList extends StatefulWidget {
   final double width;
 
   @override
-  State<PerkList> createState() => _PerkListState();
+  PerkListState createState() => PerkListState();
 }
 
-class _PerkListState extends State<PerkList> {
+class PerkListState extends ConsumerState<PerkList> {
   late Future<void> _future;
   late DestinyInventoryItemDefinition itemDef;
 
   @override
   void initState() {
     super.initState();
-    itemDef = Provider.of<InspectProvider>(context, listen: false).itemDef!;
-
+    itemDef = ref.read(inspectProvider)!.itemDef;
     _future = DisplayService.getCollectionDefinitions(itemDef);
   }
 

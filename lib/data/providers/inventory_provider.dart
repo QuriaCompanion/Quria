@@ -20,9 +20,45 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:collection/collection.dart';
 
 class FilterNotifier extends StateNotifier<InventoryFiltersModel> {
-  FilterNotifier() : super(InventoryFiltersModel());
+  FilterNotifier()
+      : super(const InventoryFiltersModel(
+          itemType: DestinyItemType.Weapon,
+          rarity: {
+            TierType.Basic: false,
+            TierType.Common: false,
+            TierType.Rare: false,
+            TierType.Superior: false,
+            TierType.Exotic: false,
+          },
+          element: {
+            DamageType.Kinetic: false,
+            DamageType.Stasis: false,
+            DamageType.Thermal: false,
+            DamageType.Arc: false,
+            DamageType.Void: false,
+          },
+          type: {
+            DestinyItemSubType.AutoRifle: false,
+            DestinyItemSubType.Shotgun: false,
+            DestinyItemSubType.Machinegun: false,
+            DestinyItemSubType.HandCannon: false,
+            DestinyItemSubType.RocketLauncher: false,
+            DestinyItemSubType.FusionRifle: false,
+            DestinyItemSubType.SniperRifle: false,
+            DestinyItemSubType.PulseRifle: false,
+            DestinyItemSubType.ScoutRifle: false,
+            DestinyItemSubType.Sidearm: false,
+            DestinyItemSubType.Sword: false,
+            DestinyItemSubType.FusionRifleLine: false,
+            DestinyItemSubType.GrenadeLauncher: false,
+            DestinyItemSubType.SubmachineGun: false,
+            DestinyItemSubType.TraceRifle: false,
+            DestinyItemSubType.Bow: false,
+            DestinyItemSubType.Glaive: false,
+          },
+        ));
   void reset() {
-    state = InventoryFiltersModel();
+    state = const InventoryFiltersModel();
   }
 
   void changeFilter<T>(T item, bool value) {
@@ -58,6 +94,10 @@ class FilterNotifier extends StateNotifier<InventoryFiltersModel> {
         break;
     }
   }
+
+  changeType(DestinyItemType type) {
+    state = state.copyWith(itemType: type);
+  }
 }
 
 final filtersProvider = StateNotifierProvider<FilterNotifier, InventoryFiltersModel>((ref) => FilterNotifier());
@@ -92,13 +132,12 @@ class InventoryNotifier extends StateNotifier<InventoryModel> {
           ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.inventory?.bucketTypeHash);
   }
 
-  void moveItem(WidgetRef ref,
-      {required String instanceId,
-      String? newLocation,
-      bool equip = false,
-      String? previousLocation,
-      bool notify = true}) {
-    DestinyItemComponent? itemComponent = ref.watch(itemByInstanceIdProvider(instanceId));
+  void moveItem({
+    required DestinyItemComponent? itemComponent,
+    String? newLocation,
+    bool equip = false,
+    String? previousLocation,
+  }) {
     if (itemComponent == null) return;
     final previousItem = state.characterEquipment[newLocation]?.items?.firstWhere((element) =>
         ManifestService
@@ -161,7 +200,7 @@ final vaultDisplayedInventoryProvider =
   final List<DestinyItemComponent> inventory = [];
   inventory.addAll(ref.watch(vaultInventoryProvider));
   final characters = ref.watch(charactersProvider);
-  if (characters.length > 2) {
+  if (characters.length >= 2) {
     for (final character in characters.getRange(1, characters.length - 1)) {
       inventory.addAll(ref.watch(characterInventoryProvider(character.characterId)));
       inventory.addAll(ref.watch(characterEquipmentProvider(character.characterId)));
@@ -186,6 +225,7 @@ final vaultMobileFilteredInventory = StateProvider<List<DestinyItemComponent>>((
     final rarities = filters.rarityFilters;
     final types = filters.typeFilters;
     final elements = filters.elementFilters;
+
     if (rarities.isNotEmpty && !rarities.contains(item?.inventory?.tierType)) {
       return false;
     }
@@ -197,6 +237,15 @@ final vaultMobileFilteredInventory = StateProvider<List<DestinyItemComponent>>((
     }
     return true;
   }).toList();
+});
+final postmasterInventoryByCharacterProvider =
+    StateProviderFamily<List<DestinyItemComponent>, String?>((ref, String? characterId) {
+  if (characterId == null) return [];
+
+  return ref
+      .watch(characterInventoryProvider(characterId))
+      .where((element) => element.bucketHash == InventoryBucket.lostItems)
+      .toList();
 });
 
 final profileInventoryProvider = StateProviderFamily<List<DestinyItemComponent>, String?>((ref, String? characterId) {
@@ -223,7 +272,20 @@ final itemsByInstancesIdsProvider =
   results.addAll(items.where((item) => ids.contains(item.itemInstanceId)));
   return items.where((item) => ids.contains(item.itemInstanceId)).toList();
 });
+final subclassesForCharacterProvider =
+    StateProvider.family<List<DestinyItemComponent>, String?>((ref, String? characterId) {
+  final List<DestinyItemComponent> items = [];
+  items.addAll(ref.watch(characterInventoryProvider(characterId)));
+  items.addAll(ref.watch(characterEquipmentProvider(characterId)));
 
+  return items
+      .where((element) =>
+          ManifestService
+              .manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.equippingBlock?.equipmentSlotTypeHash ==
+          InventoryBucket.subclass)
+      .toSet()
+      .toList();
+});
 final characterInventoryByBucketProvider =
     StateProviderFamily<List<DestinyItemComponent>, ByCharacterAndBucket>((ref, ByCharacterAndBucket helper) {
   final inventory = ref.watch(characterInventoryProvider(helper.characterId));
@@ -358,13 +420,13 @@ final isItemEquippedProvider = StateProviderFamily<bool?, String?>((ref, String?
   return false;
 });
 
-final getAllSpecimensProvider =
+final allSpecimensProvider =
     StateProviderFamily<List<DestinyItemComponent>, DestinyItemComponent?>((ref, DestinyItemComponent? item) {
   if (item == null) return [];
   return ref.watch(fullInventoryProvider).where((element) => element.itemHash == item.itemHash).toList()..remove(item);
 });
 
-final getArmorForClassProvider =
+final armorForClassProvider =
     StateProviderFamily<List<DestinyItemComponent>, ArmorForGivenClass>((ref, ArmorForGivenClass helper) {
   if (helper.classType == null) return [];
   return ref.watch(fullInventoryProvider).where((item) {

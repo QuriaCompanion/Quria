@@ -2,6 +2,7 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
@@ -22,7 +23,7 @@ import 'package:quria/presentation/screens/builder/subclass_mods/talent_grid_mob
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ProfileMobileHeader extends StatelessWidget {
+class ProfileMobileHeader extends ConsumerWidget {
   final String characterId;
   final String characterSuper;
   final String subclassId;
@@ -41,7 +42,7 @@ class ProfileMobileHeader extends StatelessWidget {
     Key? key,
   }) : super(key: key);
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Padding(
       padding: EdgeInsets.only(bottom: globalPadding(context)),
       child: Row(
@@ -80,10 +81,10 @@ class ProfileMobileHeader extends StatelessWidget {
                           )
                               .then(
                             (value) {
-                              Provider.of<ItemProvider>(context).setNewSockets(
-                                subclassId,
-                                value?.response?.item?.sockets?.data?.sockets ?? [],
-                              );
+                              ref.read(itemProvider.notifier).setNewSockets(
+                                    subclassId,
+                                    value?.response?.item?.sockets?.data?.sockets ?? [],
+                                  );
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: textBodyMedium(
@@ -109,10 +110,9 @@ class ProfileMobileHeader extends StatelessWidget {
                       ),
                     );
                   }
-                  DestinyItemTalentGridComponent talentGridComponent =
-                      Provider.of<ItemProvider>(context).getTalentGrid(subclassId)!;
-                  DestinyItemComponent itemComponent =
-                      Provider.of<InventoryProvider>(context).getItemByInstanceId(subclassId)!;
+
+                  DestinyItemTalentGridComponent talentGridComponent = ref.read(itemTalentGridProvider(subclassId))!;
+                  DestinyItemComponent itemComponent = ref.read(itemByInstanceIdProvider(subclassId))!;
                   DestinyInventoryItemDefinition definition =
                       ManifestService.manifestParsed.destinyInventoryItemDefinition[itemComponent.itemHash]!;
                   return desktopSubclassModal(context,

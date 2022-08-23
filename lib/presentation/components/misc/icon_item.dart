@@ -35,7 +35,7 @@ class ItemIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     String? imageUrl;
     if (itemOwner != null && itemOwner != Provider.of<CharactersProvider>(context).currentCharacter?.characterId) {
-      final characters = Provider.of<CharactersProvider>(context).characters;
+      final characters = ref.watch(charactersProvider);
       final character = characters.firstWhere((c) => c.characterId == itemOwner);
       imageUrl = character.emblemPath;
     }

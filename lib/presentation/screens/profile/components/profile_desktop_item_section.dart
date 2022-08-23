@@ -1,13 +1,15 @@
 import 'package:bungie_api/enums/item_state.dart';
+import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
+import 'package:quria/data/models/providers/helpers.dart/inspect_helper.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
@@ -21,7 +23,7 @@ import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 import 'package:quria/presentation/screens/profile/components/draggable_inventory_item.dart';
 import 'package:quria/presentation/var/keys.dart';
 
-class ProfileDesktopItemSection extends StatefulWidget {
+class ProfileDesktopItemSection extends ConsumerWidget {
   final ProfileHelper data;
   final int bucket;
   const ProfileDesktopItemSection({
@@ -30,22 +32,24 @@ class ProfileDesktopItemSection extends StatefulWidget {
     Key? key,
   }) : super(key: key);
 
+  final double itemSize = 56;
   @override
-  State<ProfileDesktopItemSection> createState() => _ProfileDesktopItemSectionState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final List<DestinyItemComponent> characterInventory = ref.watch(characterInventoryByBucketProvider(
+      ByCharacterAndBucket(
+        characterId: data.selectedCharacter!.characterId!,
+        bucketHash: bucket,
+      ),
+    ));
 
-class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
-  @override
-  Widget build(BuildContext context) {
-    List<DestinyItemComponent> characterInventory = Provider.of<InventoryProvider>(context)
-        .getCharacterInventoryByBucket(widget.data.selectedCharacter!.characterId!, widget.bucket);
-
-    List<DestinyItemComponent> inventory = Provider.of<InventoryProvider>(context)
-        .getVaultInventoryForCharacterByBucket(context, widget.data.selectedCharacter!.characterId!, widget.bucket);
-
-    DestinyItemComponent equippedItem = Provider.of<InventoryProvider>(context)
-        .getCharacterEquipmentByBucket(widget.data.selectedCharacter!.characterId!, widget.bucket);
-    double itemSize = 56;
+    final List<DestinyItemComponent> inventory = ref
+        .watch(vaultDisplayedInventoryProvider(data.selectedCharacter!.characterId!))
+        .where((element) => element.bucketHash == bucket)
+        .toList();
+    final DestinyItemComponent equippedItem = ref
+        .watch(characterEquipmentProvider(data.selectedCharacter!.characterId!))
+        .firstWhere((element) => element.bucketHash == bucket);
+    final List<DestinyCharacterComponent> characters = ref.watch(charactersProvider);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,10 +102,11 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                     ) {
                       return InkWell(
                         onTap: () {
-                          Provider.of<InspectProvider>(context, listen: false).setInspectItem(
+                          ref.read(inspectProvider.notifier).setInspectItem(
                               itemDef:
                                   ManifestService.manifestParsed.destinyInventoryItemDefinition[equippedItem.itemHash]!,
                               item: equippedItem);
+
                           showDialog(
                               context: context,
                               barrierColor: const Color.fromARGB(110, 0, 0, 0),
@@ -117,11 +122,10 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                           imageSize: itemSize,
                           isMasterworked:
                               equippedItem.state == ItemState.Masterwork || equippedItem.state == const ItemState(5),
-                          element: Provider.of<ItemProvider>(context).getItemElement(equippedItem),
-                          isActive: DisplayService.isItemItemActive(context,
+                          element: ref.watch(itemElementProvider(equippedItem)),
+                          isActive: DisplayService.isItemItemActive(ref,
                               ManifestService.manifestParsed.destinyInventoryItemDefinition[equippedItem.itemHash]!),
-                          powerLevel:
-                              Provider.of<ItemProvider>(context).getItemPowerLevel(equippedItem.itemInstanceId!),
+                          powerLevel: ref.watch(itemPowerLevelProvider(equippedItem.itemInstanceId)),
                         ),
                       );
                     },
@@ -131,8 +135,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                             .equipItem(
                           context,
                           itemId: data.itemInstanceId!,
-                          characterId:
-                              Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!,
+                          characterId: characters.first.characterId!,
                           itemHash: data.itemHash!,
                         )
                             .then((_) {
@@ -180,12 +183,11 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                             }),
                       );
                     },
-                    onAccept: (DestinyItemComponent data) {
-                      if (Provider.of<InventoryProvider>(context, listen: false).getItemOwner(data.itemInstanceId!) !=
-                          widget.data.selectedCharacter?.characterId) {
+                    onAccept: (DestinyItemComponent newItem) {
+                      if (ref.read(itemOwnerProvider(newItem.itemInstanceId)) != data.selectedCharacter?.characterId) {
                         BungieActionsService()
-                            .transferItem(context, data.itemInstanceId!, widget.data.selectedCharacter?.characterId,
-                                itemHash: data.itemHash!, stackSize: 1)
+                            .transferItem(context, newItem.itemInstanceId!, data.selectedCharacter?.characterId,
+                                itemHash: newItem.itemHash!, stackSize: 1)
                             .then((_) {
                           ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
                             SnackBar(
@@ -217,9 +219,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
             ),
             Column(
               children: [
-                for (final character in Provider.of<CharactersProvider>(context)
-                    .characters
-                    .where((element) => element != widget.data.selectedCharacter))
+                for (final character in characters.where((element) => element != data.selectedCharacter))
                   DragTarget<DestinyItemComponent>(builder: (
                     BuildContext context,
                     List<dynamic> accepted,
@@ -239,8 +239,7 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                       ),
                     );
                   }, onAccept: (DestinyItemComponent data) {
-                    if (Provider.of<InventoryProvider>(context, listen: false).getItemOwner(data.itemInstanceId!) !=
-                        character.characterId) {
+                    if (ref.read(itemOwnerProvider(data.itemInstanceId)) != character.characterId) {
                       BungieActionsService()
                           .transferItem(context, data.itemInstanceId!, character.characterId,
                               itemHash: data.itemHash!, stackSize: 1)
@@ -300,13 +299,11 @@ class _ProfileDesktopItemSectionState extends State<ProfileDesktopItemSection> {
                         }),
                   );
                 },
-                onAccept: (DestinyItemComponent data) {
-                  if (Provider.of<InventoryProvider>(context, listen: false).getItemOwner(data.itemInstanceId!) !=
-                          null &&
-                      Provider.of<InventoryProvider>(context, listen: false).getItemOwner(data.itemInstanceId!) ==
-                          widget.data.selectedCharacter?.characterId) {
+                onAccept: (DestinyItemComponent newItem) {
+                  final itemOwner = ref.read(itemOwnerProvider(newItem.itemInstanceId));
+                  if (itemOwner != null && itemOwner == data.selectedCharacter?.characterId) {
                     BungieActionsService()
-                        .transferItem(context, data.itemInstanceId!, null, itemHash: data.itemHash!, stackSize: 1)
+                        .transferItem(context, newItem.itemInstanceId!, null, itemHash: newItem.itemHash!, stackSize: 1)
                         .then((_) {
                       ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                         content: textBodyMedium(

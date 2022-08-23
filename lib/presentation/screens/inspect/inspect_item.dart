@@ -1,21 +1,19 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
+import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
-import 'package:quria/data/models/RatedScore.model.dart';
-import 'package:quria/data/models/WeaponScore.model.model.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
-import 'package:quria/data/models/helpers/inspectHelper.model.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
-import 'package:quria/data/services/display/weapon_score.service.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_armor_info.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_info.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_header.dart';
 import 'package:quria/presentation/screens/inspect/weapon_rated_score_display.dart';
 
-class InspectItem extends StatelessWidget {
+class InspectItem extends ConsumerWidget {
   const InspectItem({
     Key? key,
     required this.width,
@@ -24,27 +22,22 @@ class InspectItem extends StatelessWidget {
   final double width;
 
   @override
-  Widget build(BuildContext context) {
-    String imageLink = Provider.of<InspectProvider>(context).getImageLink(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    DestinyItemComponent item = ref.watch(inspectProvider.select((value) => value!.item!));
+    String imageLink = ref.watch(inspectImageLink)!;
 
-    DestinyInventoryItemDefinition? itemDef = Provider.of<InspectProvider>(context).itemDef;
+    DestinyInventoryItemDefinition? itemDef = ref.watch(inspectProvider.select((value) => value?.itemDef));
 
-    String? elementIcon = Provider.of<InspectProvider>(context).getElementIcon(context);
+    String? elementIcon = ref.watch(itemElementProvider(item))!;
 
-    int? powerLevel = Provider.of<InspectProvider>(context).getPowerLevel(context);
-    final WeaponScore? weaponScore = Provider.of<InspectProvider>(context, listen: false).weaponScore;
-    final InspectWeaponStatus? weaponStatus = Provider.of<InspectProvider>(context, listen: false).weaponStatus;
-
-    RatedScore? ratedScore;
-    if (weaponScore != null && weaponStatus != null) {
-      ratedScore = WeaponScoreService().getRatedScoreCollection(context, weaponStatus, weaponScore);
-    }
+    int? powerLevel = ref.watch(itemPowerLevelProvider(item.itemInstanceId));
+    final currentFilter = ref.watch(subtabInspectProvider);
     return Container(
       color: black,
       child: Column(
         children: [
           SizedBox(
-            height: weaponStatus != null
+            height: currentFilter == InspectWeaponInfo.recommendations
                 ? isMobile(context)
                     ? vh(context) - (56 + globalPadding(context) * 2)
                     : vh(context) * 0.9 - (56 + globalPadding(context) * 2)
@@ -83,7 +76,7 @@ class InspectItem extends StatelessWidget {
               ),
             ),
           ),
-          if (weaponStatus != null) WeaponRatedScoreDisplay(ratedScore: ratedScore!)
+          if (currentFilter == InspectWeaponInfo.recommendations) const WeaponRatedScoreDisplay()
         ],
       ),
     );

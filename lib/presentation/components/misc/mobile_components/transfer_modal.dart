@@ -34,8 +34,7 @@ class _TransferModalState extends State<TransferModal> {
   @override
   Widget build(BuildContext context) {
     final owner = Provider.of<InventoryProvider>(context).getItemOwner(widget.instanceId);
-    final characters =
-        Provider.of<CharactersProvider>(context).characters.where((element) => element.characterId != owner);
+    final characters = ref.watch(charactersProvider).where((element) => element.characterId != owner);
 
     return SingleChildScrollView(
       child: Container(
@@ -125,7 +124,7 @@ class _TransferModalState extends State<TransferModal> {
                   ),
                 ),
               ),
-            if (characters.length < Provider.of<CharactersProvider>(context).characters.length)
+            if (characters.length < ref.watch(charactersProvider).length)
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: globalPadding(context) / 2,

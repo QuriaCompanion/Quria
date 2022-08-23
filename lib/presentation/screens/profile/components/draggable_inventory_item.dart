@@ -1,7 +1,7 @@
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
@@ -13,7 +13,7 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 
-class DraggableInventoryItem extends StatelessWidget {
+class DraggableInventoryItem extends ConsumerWidget {
   final DestinyItemComponent item;
   final double size;
   const DraggableInventoryItem({
@@ -23,10 +23,10 @@ class DraggableInventoryItem extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final DestinyInventoryItemDefinition itemDefintion =
         ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!;
-    final String? itemOwner = Provider.of<InventoryProvider>(context).getItemOwner(item.itemInstanceId!);
+    final String? itemOwner = ref.watch(itemOwnerProvider(item.itemInstanceId));
     return Draggable<DestinyItemComponent>(
       // Data is the value this Draggable stores.
       data: item,
@@ -35,13 +35,13 @@ class DraggableInventoryItem extends StatelessWidget {
         imageSize: size,
         itemOwner: itemOwner,
         isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
-        element: Provider.of<ItemProvider>(context).getItemElement(item),
-        powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
+        element: ref.watch(itemElementProvider(item)),
+        powerLevel: ref.watch(itemPowerLevelProvider(item.itemInstanceId)),
       ),
       childWhenDragging: const SizedBox(),
       child: InkWell(
         onTap: () {
-          Provider.of<InspectProvider>(context, listen: false).setInspectItem(itemDef: itemDefintion, item: item);
+          ref.read(inspectProvider.notifier).setInspectItem(itemDef: itemDefintion, item: item);
           showDialog(
             context: context,
             barrierColor: const Color.fromARGB(110, 0, 0, 0),
@@ -57,12 +57,12 @@ class DraggableInventoryItem extends StatelessWidget {
         },
         child: ItemIcon(
           displayHash: item.overrideStyleItemHash ?? item.itemHash!,
-          isActive: DisplayService.isItemItemActive(context, itemDefintion),
+          isActive: DisplayService.isItemItemActive(ref, itemDefintion),
           imageSize: size,
           isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
           itemOwner: itemOwner,
-          element: Provider.of<ItemProvider>(context).getItemElement(item),
-          powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
+          element: ref.watch(itemElementProvider(item)),
+          powerLevel: ref.watch(itemPowerLevelProvider(item.itemInstanceId)),
         ),
       ),
     );

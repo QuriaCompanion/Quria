@@ -1,4 +1,4 @@
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
@@ -12,7 +12,7 @@ import 'package:quria/presentation/components/detailed_item/item/mod_display.dar
 import 'package:quria/presentation/components/detailed_item/item/mod_with_type_name.dart';
 import 'package:quria/presentation/components/detailed_item/item/mod_modal.dart';
 
-class ArmorModsModal extends StatefulWidget {
+class ArmorModsModal extends ConsumerWidget {
   final DestinyInventoryItemDefinition socket;
   final void Function(int) onSocketChange;
   final int plugSetsHash;
@@ -27,20 +27,8 @@ class ArmorModsModal extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ArmorModsModal> createState() => _ArmorModsModalState();
-}
-
-class _ArmorModsModalState extends State<ArmorModsModal> {
-  late List<DestinyItemPlug>? plugs;
-  @override
-  void initState() {
-    super.initState();
-    plugs =
-        Provider.of<PlugsProvider>(context, listen: false).getPlugSets(context, widget.plugSetsHash).toSet().toList();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plugs = ref.watch(plugsSetsProvider(plugSetsHash)).toSet().toList();
     return SingleChildScrollView(
       child: Container(
         height: MediaQuery.of(context).size.height,
@@ -75,16 +63,16 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                   Column(
                     children: [
                       ModDisplay(
-                          width: vw(context) - globalPadding(context) * 3 - iconSize(context, widget.width),
+                          width: vw(context) - globalPadding(context) * 3 - iconSize(context, width),
                           padding: globalPadding(context),
-                          iconSize: iconSize(context, widget.width),
-                          item: widget.socket),
+                          iconSize: iconSize(context, width),
+                          item: socket),
                       const Divider(
                         color: blackLight,
                         height: 22,
                         thickness: 1,
                       ),
-                      for (DestinyItemPlug plug in plugs!)
+                      for (DestinyItemPlug plug in plugs)
                         Padding(
                           padding: EdgeInsets.only(bottom: globalPadding(context)),
                           child: InkWell(
@@ -99,14 +87,14 @@ class _ArmorModsModalState extends State<ArmorModsModal> {
                                           .manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!,
                                       onSocketChange: () {
                                         Navigator.pop(context);
-                                        widget.onSocketChange(plug.plugItemHash!);
+                                        onSocketChange(plug.plugItemHash!);
                                       },
-                                      width: widget.width,
+                                      width: width,
                                     );
                                   });
                             },
                             child: ModWithTypeName(
-                                iconSize: iconSize(context, widget.width),
+                                iconSize: iconSize(context, width),
                                 item:
                                     ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!),
                           ),

@@ -128,8 +128,8 @@ class BuilderInfoRow extends StatelessWidget {
                       displayHash: item.overrideStyleItemHash ?? item.itemHash!,
                       imageSize: vw(context) * .05,
                       isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
-                      element: Provider.of<ItemProvider>(context).getItemElement(item),
-                      powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
+                      element: ref.watch(itemElementProvider(item)),
+                      powerLevel: ref.watch(itemPowerLevelProvider(item.itemInstanceId)),
                     );
                   }),
                 textCaption(AppLocalizations.of(context)!.class_item, utf8: false)

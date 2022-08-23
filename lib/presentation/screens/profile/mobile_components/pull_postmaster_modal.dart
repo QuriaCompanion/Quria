@@ -1,8 +1,8 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/inspectData.model.dart';
@@ -19,7 +19,7 @@ import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/presentation/var/keys.dart';
 
-class PullPostmasterModal extends StatelessWidget {
+class PullPostmasterModal extends ConsumerWidget {
   final DestinyItemComponent item;
   final void Function(InspectData) onClick;
   const PullPostmasterModal({
@@ -29,7 +29,7 @@ class PullPostmasterModal extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     ItemCardHelper data =
         DisplayService.getCardData(context, itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
     return SingleChildScrollView(
@@ -125,8 +125,7 @@ class PullPostmasterModal extends StatelessWidget {
                       utf8: false,
                     ),
                     onPressed: () {
-                      final characterId =
-                          Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!;
+                      final characterId = ref.read(charactersProvider).first.characterId;
                       showMaterialModalBottomSheet(
                           backgroundColor: Colors.transparent,
                           context: context,
@@ -142,12 +141,12 @@ class PullPostmasterModal extends StatelessWidget {
                         itemHash: item.itemHash!,
                         stackSize: 1,
                         itemId: item.itemInstanceId!,
-                        characterId: characterId,
+                        characterId: characterId!,
                       )
                           .then((value) {
                         Navigator.pop(context);
                         Navigator.pop(context);
-                        Provider.of<InventoryProvider>(context, listen: false).pullFromPostmaster(item, characterId);
+                        ref.read(inventoryProvider.notifier).pullFromPostmaster(item, characterId);
                         ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                           content: textBodyMedium(
                             AppLocalizations.of(context)!.item_transfered,

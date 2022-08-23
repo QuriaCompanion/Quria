@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
@@ -16,7 +17,7 @@ import 'package:quria/presentation/var/routes.dart';
 import 'package:universal_io/io.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class SettingsMobileView extends StatelessWidget {
+class SettingsMobileView extends ConsumerWidget {
   final double height;
   const SettingsMobileView({
     required this.height,
@@ -24,7 +25,7 @@ class SettingsMobileView extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const divider = Divider(color: grey);
     return Column(
       children: [
@@ -119,7 +120,7 @@ class SettingsMobileView extends StatelessWidget {
                           onSelected: (membership) {
                             AccountService.saveMembership(AccountService.membershipData!, membership).then((_) {
                               DisplayService.isProfileUp = false;
-                              ProfileService.reset(context);
+                              ProfileService.reset(ref);
                               Navigator.pushReplacementNamed(context, routeProfile);
                             });
                           },
@@ -144,7 +145,7 @@ class SettingsMobileView extends StatelessWidget {
                                       AccountService.saveMembership(AccountService.membershipData!, membership)
                                           .then((_) {
                                         DisplayService.isProfileUp = false;
-                                        ProfileService.reset(context);
+                                        ProfileService.reset(ref);
                                         Navigator.pushReplacementNamed(context, routeProfile);
                                       });
                                     },
@@ -227,7 +228,7 @@ class SettingsMobileView extends StatelessWidget {
               ListTile(
                 onTap: () {
                   DisplayService.isProfileUp = false;
-                  ProfileService.reset(context);
+                  ProfileService.reset(ref);
                   AccountService.reset();
                   Navigator.pushNamed(context, routeLogin);
                 },

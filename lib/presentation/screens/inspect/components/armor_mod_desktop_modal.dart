@@ -1,7 +1,7 @@
 import 'package:bungie_api/models/destiny_item_plug.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/inspect/armor_mod_modal_provider.dart';
@@ -11,7 +11,7 @@ import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_
 import 'package:quria/presentation/components/detailed_item/item/mod_display.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 
-class ArmorModDesktopModal extends StatelessWidget {
+class ArmorModDesktopModal extends ConsumerWidget {
   final Future<void> Function(int) onSocketChange;
   final int plugSetsHash;
   const ArmorModDesktopModal({
@@ -21,9 +21,9 @@ class ArmorModDesktopModal extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    List<DestinyItemPlug> plugs =
-        Provider.of<PlugsProvider>(context, listen: false).getPlugSets(context, plugSetsHash).toSet().toList();
+  Widget build(BuildContext context, WidgetRef ref) {
+    final plugs = ref.watch(plugsSetsProvider(plugSetsHash)).toSet().toList();
+
     plugs.sort((a, b) {
       if (ManifestService.manifestParsed.destinyInventoryItemDefinition[a.plugItemHash]?.investmentStats != null &&
           ManifestService.manifestParsed.destinyInventoryItemDefinition[b.plugItemHash]?.investmentStats != null &&
@@ -64,7 +64,7 @@ class ArmorModDesktopModal extends StatelessWidget {
               width: vw(context) * 0.3,
               padding: globalPadding(context),
               iconSize: iconSize(context, vw(context) * 0.3),
-              item: Provider.of<ArmorModModalProvider>(context).armorMod!),
+              item: ref.watch(armorModModalProvider)!),
           const Divider(
             color: Colors.white,
             height: 22,
@@ -78,7 +78,7 @@ class ArmorModDesktopModal extends StatelessWidget {
                 Container(
                   width: 55,
                   height: 55,
-                  decoration: Provider.of<ArmorModModalProvider>(context).armorMod ==
+                  decoration: ref.watch(armorModModalProvider) ==
                           ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!
                       ? BoxDecoration(
                           border: Border.all(
@@ -89,8 +89,8 @@ class ArmorModDesktopModal extends StatelessWidget {
                       : null,
                   child: InkWell(
                     onTap: () {
-                      Provider.of<ArmorModModalProvider>(context, listen: false).setSelectedMod(
-                          ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]!);
+                      ref.read(armorModModalProvider.notifier).update(
+                          (state) => ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]);
                     },
                     child: ArmorModIconDisplay(
                       iconSize: 55,
@@ -109,7 +109,7 @@ class ArmorModDesktopModal extends StatelessWidget {
                 color: black,
               ),
               onPressed: () {
-                onSocketChange(Provider.of<ArmorModModalProvider>(context, listen: false).armorMod!.hash!).then(
+                onSocketChange(ref.read(armorModModalProvider)!.hash!).then(
                   (_) => Navigator.pop(context),
                 );
               })

@@ -85,7 +85,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
           children: [
             InkWell(
               onTap: () {
-                Provider.of<InspectProvider>(context, listen: false).setInspectItem(
+                ref.read(inspectProvider.notifier).setInspectItem(
                     itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.hash]!,
                     item: Provider.of<InventoryProvider>(context, listen: false)
                         .getItemByInstanceId(item.itemInstanceId));
@@ -111,7 +111,7 @@ class BuilderRecapMobileItem extends StatelessWidget {
                             const ItemState(5) ||
                         Provider.of<InventoryProvider>(context).getItemByInstanceId(item.itemInstanceId)?.state ==
                             ItemState.Masterwork,
-                powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId),
+                powerLevel: ref.watch(itemPowerLevelProvider(item.itemInstanceId)),
                 element: Provider.of<ItemProvider>(context)
                     .getItemElement(Provider.of<InventoryProvider>(context).getItemByInstanceId(item.itemInstanceId)!),
               ),

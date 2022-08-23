@@ -18,8 +18,6 @@ import 'package:quria/presentation/screens/profile/components/character_desktop_
 import 'package:quria/presentation/screens/settings/settings_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-import '../../../../data/providers/builder/builder_exotic_provider.dart';
-
 class AppbarDesktopSearch extends StatelessWidget {
   final String currentRoute;
   const AppbarDesktopSearch({Key? key, required this.currentRoute}) : super(key: key);

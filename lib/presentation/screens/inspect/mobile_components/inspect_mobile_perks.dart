@@ -1,5 +1,5 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/models/destiny_item_plug_base.dart';
@@ -14,7 +14,7 @@ import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/presentation/screens/inspect/mobile_components/inspect_mobile_perk_column.dart';
 
-class InspectMobilePerks extends StatefulWidget {
+class InspectMobilePerks extends ConsumerWidget {
   final double width;
   const InspectMobilePerks({
     required this.width,
@@ -22,26 +22,21 @@ class InspectMobilePerks extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<InspectMobilePerks> createState() => _InspectMobilePerksState();
-}
-
-class _InspectMobilePerksState extends State<InspectMobilePerks> {
-  @override
-  Widget build(BuildContext context) {
-    List<DestinyItemSocketState> sockets = Provider.of<InspectProvider>(context).getSockets(context);
-    Map<String, List<DestinyItemPlugBase>> plugs = Provider.of<InspectProvider>(context).getPlugs(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    DestinyItemComponent item = ref.watch(inspectProvider.select((value) => value?.item))!;
+    List<DestinyItemSocketState> sockets = ref.watch(itemSocketsProvider(item.itemInstanceId));
+    Map<String, List<DestinyItemPlugBase>> plugs = ref.watch(itemReusablePlugsProvider(item.itemInstanceId));
     List<List<DestinyInventoryItemDefinition>> perks = ProfileService().getItemPerksAsItemDef(plugs, sockets);
-    DestinyItemComponent item = Provider.of<InspectProvider>(context).item!;
 
-    String characterId = Provider.of<InventoryProvider>(context).getItemOwner(item.itemInstanceId!) ??
-        Provider.of<CharactersProvider>(context).currentCharacter!.characterId!;
+    String characterId =
+        ref.watch(itemOwnerProvider(item.itemInstanceId)) ?? ref.watch(charactersProvider).first.characterId!;
 
     return Column(
       children: [
         Container(
           padding: EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,
           decoration: const BoxDecoration(color: blackLight, borderRadius: BorderRadius.all(Radius.circular(8))),
-          width: widget.width,
+          width: width,
           child: Center(
             child: textCaption(
               AppLocalizations.of(context)!.builder_subclass_mods_caption,
@@ -56,9 +51,9 @@ class _InspectMobilePerksState extends State<InspectMobilePerks> {
             list.add(Padding(
               padding: i != perks.length - 1 ? EdgeInsets.only(right: globalPadding(context)) : EdgeInsets.zero,
               child: InspectMobilePerkColumn(
-                  width: widget.width,
+                  width: width,
                   onSocketsChanged: (newSockets) {
-                    Provider.of<ItemProvider>(context, listen: false).setNewSockets(item.itemInstanceId!, newSockets);
+                    ref.read(itemProvider.notifier).setNewSockets(item.itemInstanceId!, newSockets);
                   },
                   instanceId: item.itemInstanceId,
                   characterId: characterId,

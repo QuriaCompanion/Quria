@@ -1,7 +1,7 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
@@ -110,9 +110,9 @@ Widget desktopRegularModal(BuildContext context, {required Widget child}) {
   );
 }
 
-Widget desktopSubclassModal(BuildContext context, {required Widget child}) {
-  final characterId = Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!;
-  final subclasses = Provider.of<InventoryProvider>(context, listen: false).getSubclassesForCharacter(characterId);
+Widget desktopSubclassModal(BuildContext context, WidgetRef ref, {required Widget child}) {
+  final characterId = ref.watch(charactersProvider).first.characterId!;
+  final subclasses = ref.watch(subclassesForCharacterProvider(characterId));
   return Stack(
     children: [
       Center(
@@ -183,8 +183,8 @@ Widget desktopSubclassModal(BuildContext context, {required Widget child}) {
   );
 }
 
-Widget desktopPostmasterModal(BuildContext context, {required Widget child}) {
-  DestinyItemComponent item = Provider.of<InspectProvider>(context).item!;
+Widget desktopPostmasterModal(BuildContext context, WidgetRef ref, {required Widget child}) {
+  DestinyItemComponent item = ref.watch(inspectProvider.select((value) => value?.item))!;
   return Stack(
     children: [
       Center(
@@ -219,8 +219,7 @@ Widget desktopPostmasterModal(BuildContext context, {required Widget child}) {
               ModalButton(
                 text: AppLocalizations.of(context)!.equip,
                 callback: () {
-                  final characterId =
-                      Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!;
+                  final characterId = ref.watch(charactersProvider).first.characterId!;
                   showDialog(
                       context: context,
                       builder: ((context) {
@@ -245,7 +244,7 @@ Widget desktopPostmasterModal(BuildContext context, {required Widget child}) {
                       .then((value) {
                     Navigator.pop(context);
                     Navigator.pop(context);
-                    Provider.of<InventoryProvider>(context, listen: false).pullFromPostmaster(item, characterId);
+                    ref.read(inventoryProvider.notifier).pullFromPostmaster(item, characterId);
                     ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                       content: textBodyMedium(
                         AppLocalizations.of(context)!.item_transfered,
@@ -277,8 +276,8 @@ Widget desktopPostmasterModal(BuildContext context, {required Widget child}) {
   );
 }
 
-Widget desktopBuildModal(BuildContext context, {required Widget child}) {
-  Build data = Provider.of<InspectBuildProvider>(context, listen: false).build!;
+Widget desktopBuildModal(BuildContext context, WidgetRef ref, {required Widget child}) {
+  Build data = ref.watch(inspectBuildProvider)!;
   return Stack(
     children: [
       Center(
@@ -336,8 +335,8 @@ Widget desktopBuildModal(BuildContext context, {required Widget child}) {
   );
 }
 
-Widget desktopItemModal(BuildContext context, {required Widget child}) {
-  DestinyItemComponent item = Provider.of<InspectProvider>(context).item!;
+Widget desktopItemModal(BuildContext context, WidgetRef ref, {required Widget child}) {
+  DestinyItemComponent item = ref.watch(inspectProvider.select((value) => value?.item))!;
   return Stack(
     children: [
       Center(
@@ -439,7 +438,7 @@ Widget desktopItemModal(BuildContext context, {required Widget child}) {
                         return desktopCollectionModal(
                           context,
                           child: CollectionItemMobileView(
-                            data: Provider.of<InspectProvider>(context).itemDef!,
+                            data: ref.watch(inspectProvider.select((value) => value?.itemDef))!,
                             width: modalWidth(context),
                           ),
                         );

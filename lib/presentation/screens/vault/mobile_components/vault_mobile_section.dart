@@ -1,8 +1,8 @@
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
@@ -13,18 +13,14 @@ import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 import 'package:sliver_tools/sliver_tools.dart';
 
-class VaultMobileSection extends StatefulWidget {
+@immutable
+class VaultMobileSection extends ConsumerWidget {
   final List<DestinyItemComponent> vaultItems;
   final int bucketHash;
   const VaultMobileSection({required this.vaultItems, required this.bucketHash, Key? key}) : super(key: key);
 
   @override
-  State<VaultMobileSection> createState() => _VaultMobileSectionState();
-}
-
-class _VaultMobileSectionState extends State<VaultMobileSection> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return SliverCrossAxisPadded(
       paddingStart: globalPadding(context),
       paddingEnd: globalPadding(context),
@@ -36,7 +32,7 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
               decoration: const BoxDecoration(color: black),
               padding: EdgeInsets.symmetric(vertical: globalPadding(context)),
               child: textH2(ManifestService
-                      .manifestParsed.destinyInventoryBucketDefinition[widget.bucketHash]?.displayProperties?.name ??
+                      .manifestParsed.destinyInventoryBucketDefinition[bucketHash]?.displayProperties?.name ??
                   'error'),
             ),
           ),
@@ -48,7 +44,7 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
             ),
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                DestinyItemComponent item = widget.vaultItems[index];
+                DestinyItemComponent item = vaultItems[index];
                 return InkWell(
                   onTap: (() {
                     showMaterialModalBottomSheet(
@@ -59,10 +55,11 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                             width: vw(context),
                             item: item,
                             onClick: (inspect) {
-                              Provider.of<InspectProvider>(context, listen: false).setInspectItem(
-                                  itemDef:
-                                      ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
-                                  item: item);
+                              ref.read(inspectProvider.notifier).setInspectItem(
+                                    itemDef:
+                                        ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
+                                    item: item,
+                                  );
                               Navigator.pushNamed(context, routeInspectMobile, arguments: inspect);
                             },
                           );
@@ -72,12 +69,12 @@ class _VaultMobileSectionState extends State<VaultMobileSection> {
                     displayHash: item.overrideStyleItemHash ?? item.itemHash!,
                     imageSize: vw(context) * 0.148,
                     isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
-                    element: Provider.of<ItemProvider>(context).getItemElement(item),
-                    powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!),
+                    element: ref.watch(itemElementProvider(item)),
+                    powerLevel: ref.watch(itemPowerLevelProvider(item.itemInstanceId)),
                   ),
                 );
               },
-              childCount: widget.vaultItems.length,
+              childCount: vaultItems.length,
             ),
           ),
         ],

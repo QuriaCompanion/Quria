@@ -27,7 +27,7 @@ class EquipModal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<DestinyCharacterComponent> characters = Provider.of<CharactersProvider>(context).characters;
+    List<DestinyCharacterComponent> characters = ref.watch(charactersProvider);
     if (Provider.of<InventoryProvider>(context).isItemEquipped(instanceId)) {
       final owner = Provider.of<InventoryProvider>(context).getItemOwner(instanceId);
       characters = characters.where((element) => element.characterId != owner).toList();

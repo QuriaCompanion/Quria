@@ -55,7 +55,7 @@ class ForeignBuildSection extends StatelessWidget {
               perks: item?.mods ?? [],
               isSubclass: false,
               callback: () {
-                Provider.of<InspectProvider>(context, listen: false).setInspectItem(itemDef: itemDef);
+                ref.read(inspectProvider.notifier).setInspectItem(itemDef: itemDef);
                 if (isMobile(context)) {
                   Navigator.pushNamed(context, routeCollectionItem, arguments: itemDef.hash);
                 } else {

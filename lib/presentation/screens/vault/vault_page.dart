@@ -36,7 +36,6 @@ class _VaultPageState extends State<VaultPage> {
         future: _future,
         builder: (context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            VaultHelper data = DisplayService.getVault(context);
             if (isMobile(context)) {
               return Scaffold(
                 key: filterScaffoldKey,
@@ -57,9 +56,7 @@ class _VaultPageState extends State<VaultPage> {
                     width: 36,
                   ),
                 ),
-                body: VaultMobileView(
-                  data: data,
-                ),
+                body: const VaultMobileView(),
               );
             } else {
               ProfileHelper data = DisplayService.getProfileData(context);

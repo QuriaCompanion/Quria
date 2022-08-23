@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:bungie_api/models/destiny_plug_sets_component.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_plug.dart';
 import 'package:bungie_api/models/destiny_item_plug_base.dart';
@@ -102,7 +101,7 @@ class ProfileService {
   List<DestinyComponentType> updateComponents = ProfileComponentGroups.everything;
   DateTime? _lastUpdated;
   Future<void> fetchProfileData(
-    BuildContext context, {
+    WidgetRef ref, {
     List<DestinyComponentType>? components,
     bool force = false,
   }) async {
@@ -110,7 +109,7 @@ class ProfileService {
       if (!force && _lastUpdated != null && DateTime.now().difference(_lastUpdated!).inSeconds < 30) {
         return;
       }
-      await _updateProfileData(context, updateComponents);
+      await _updateProfileData(ref, updateComponents);
 
       return;
     } catch (e) {
@@ -127,7 +126,7 @@ class ProfileService {
     ref.read(builderQuriaProvider.notifier).reset();
   }
 
-  Future<void> _updateProfileData(BuildContext context, List<DestinyComponentType> components) async {
+  Future<void> _updateProfileData(WidgetRef ref, List<DestinyComponentType> components) async {
     await _api.getCurrentProfile(components).then((response) async {
       _lastUpdated = DateTime.now();
       final List<int> inventoryItemIds = [];
@@ -211,42 +210,37 @@ class ProfileService {
         3699676109,
         3253038666
       ]);
-      await StorageService.getDefinitions<DestinyInventoryItemDefinition>(inventoryItemIds)
-          .then((_) async => StorageService.getDefinitions<DestinyTalentGridDefinition>(talentIds).then((_) {
-                if (components.contains(DestinyComponentType.ProfileInventories)) {
-                  Provider.of<InventoryProvider>(context, listen: false)
-                      .setProfileInventory(response.profileInventory?.data?.items ?? []);
-                }
-                if (components.contains(DestinyComponentType.ItemPlugStates)) {
-                  Provider.of<PlugsProvider>(context, listen: false)
-                      .setProfilePlugSets(response.profilePlugSets?.data?.plugs ?? {});
-                  Provider.of<PlugsProvider>(context, listen: false)
-                      .setCharacterPlugSets(response.characterPlugSets?.data ?? {});
-                }
+      await StorageService.getDefinitions<DestinyInventoryItemDefinition>(inventoryItemIds).then((_) async =>
+          StorageService.getDefinitions<DestinyTalentGridDefinition>(talentIds).then((_) {
+            if (components.contains(DestinyComponentType.ProfileInventories)) {
+              ref.read(inventoryProvider.notifier).setProfileInventory(response.profileInventory?.data?.items ?? []);
+            }
+            if (components.contains(DestinyComponentType.ItemPlugStates)) {
+              ref.read(plugsProvider.notifier).setProfilePlugSets(response.profilePlugSets?.data?.plugs ?? {});
+              ref.read(plugsProvider.notifier).setCharacterPlugSets(response.characterPlugSets?.data ?? {});
+            }
 
-                if (components.contains(DestinyComponentType.Collectibles)) {
-                  Provider.of<CollectibleProvider>(context, listen: false)
-                      .setProfileCollectible(response.profileCollectibles?.data);
-                  Provider.of<CollectibleProvider>(context, listen: false)
-                      .setCharacterCollectible(response.characterCollectibles?.data ?? {});
-                }
-                if (components.contains(DestinyComponentType.Characters)) {
-                  Provider.of<CharactersProvider>(context, listen: false).init(response.characters?.data ?? {});
-                }
+            if (components.contains(DestinyComponentType.Collectibles)) {
+              ref.read(collectibleProvider.notifier).setProfileCollectible(response.profileCollectibles?.data);
+              ref
+                  .read(collectibleProvider.notifier)
+                  .setCharacterCollectible(response.characterCollectibles?.data ?? {});
+            }
+            if (components.contains(DestinyComponentType.Characters)) {
+              ref.read(charactersProvider.notifier).update((state) => response.characters?.data?.values.toList() ?? []);
+            }
 
-                if (components.contains(DestinyComponentType.CharacterInventories)) {
-                  Provider.of<InventoryProvider>(context, listen: false)
-                      .setCharacterInventories(response.characterInventories?.data ?? {});
-                }
-                if (components.contains(DestinyComponentType.CharacterEquipment)) {
-                  Provider.of<InventoryProvider>(context, listen: false)
-                      .setCharacterEquipment(response.characterEquipment?.data ?? {});
-                }
+            if (components.contains(DestinyComponentType.CharacterInventories)) {
+              ref.read(inventoryProvider.notifier).setCharacterInventories(response.characterInventories?.data ?? {});
+            }
+            if (components.contains(DestinyComponentType.CharacterEquipment)) {
+              ref.read(inventoryProvider.notifier).setCharacterEquipment(response.characterEquipment?.data ?? {});
+            }
 
-                if (components.contains(DestinyComponentType.ItemInstances)) {
-                  Provider.of<ItemProvider>(context, listen: false).init(response.itemComponents);
-                }
-              }));
+            if (components.contains(DestinyComponentType.ItemInstances)) {
+              ref.read(itemProvider.notifier).init(response.itemComponents);
+            }
+          }));
     });
   }
 

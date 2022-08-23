@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
+import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/bungie_api/enums/inventory_bucket_hash.dart';
@@ -12,7 +14,7 @@ import 'package:quria/presentation/screens/profile/components/postmaster_items_d
 import 'package:quria/presentation/screens/profile/components/profile_desktop_item_section.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/profile_mobile_header.dart';
 
-class ProfileDesktopView extends StatelessWidget {
+class ProfileDesktopView extends ConsumerWidget {
   final ProfileHelper data;
   const ProfileDesktopView({
     required this.data,
@@ -20,7 +22,7 @@ class ProfileDesktopView extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     const List<int> buckets = [
       InventoryBucket.kineticWeapons,
       InventoryBucket.energyWeapons,
@@ -49,8 +51,8 @@ class ProfileDesktopView extends StatelessWidget {
             subclass: data.selectedCharacterSubclass!,
           ),
         ),
-        if (Provider.of<InventoryProvider>(context)
-            .getPostmasterItemsForCharacter(Provider.of<CharactersProvider>(context).currentCharacter!.characterId!)
+        if (ref
+            .watch(postmasterInventoryByCharacterProvider(ref.watch(charactersProvider).first.characterId))
             .isNotEmpty)
           const PostmasterItemsDesktop(),
         ListView.builder(

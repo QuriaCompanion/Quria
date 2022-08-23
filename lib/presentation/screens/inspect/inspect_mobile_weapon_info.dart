@@ -1,11 +1,13 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_item.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_recommendations.dart';
 import 'package:quria/presentation/screens/inspect/inspect_mobile_weapon_statistics.dart';
 
-class InspectMobileWeaponInfo extends StatefulWidget {
+class InspectMobileWeaponInfo extends ConsumerWidget {
   final double width;
 
   const InspectMobileWeaponInfo({
@@ -14,18 +16,8 @@ class InspectMobileWeaponInfo extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<InspectMobileWeaponInfo> createState() => _InspectMobileWeaponInfoState();
-}
-
-enum InspectWeaponInfo {
-  statistics,
-  recommendations,
-}
-
-class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
-  InspectWeaponInfo weaponInfo = InspectWeaponInfo.statistics;
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentFilter = ref.watch(subtabInspectProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -39,31 +31,27 @@ class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
               children: [
                 InkWell(
                     onTap: () {
-                      if (weaponInfo != InspectWeaponInfo.statistics) {
-                        setState(
-                          () {
-                            weaponInfo = InspectWeaponInfo.statistics;
-                          },
-                        );
+                      if (currentFilter != InspectWeaponInfo.recommendations) {
+                        ref
+                            .read(subtabInspectProvider.notifier)
+                            .update((state) => state = InspectWeaponInfo.recommendations);
                       }
                     },
                     child: MobileNavItem(
-                      selected: weaponInfo == InspectWeaponInfo.statistics,
+                      selected: currentFilter == InspectWeaponInfo.statistics,
                       value: AppLocalizations.of(context)!.statistics,
                     )),
                 SizedBox(width: globalPadding(context)),
                 InkWell(
                   onTap: () {
-                    if (weaponInfo != InspectWeaponInfo.recommendations) {
-                      setState(
-                        () {
-                          weaponInfo = InspectWeaponInfo.recommendations;
-                        },
-                      );
+                    if (currentFilter != InspectWeaponInfo.recommendations) {
+                      ref
+                          .read(subtabInspectProvider.notifier)
+                          .update((state) => state = InspectWeaponInfo.recommendations);
                     }
                   },
                   child: MobileNavItem(
-                    selected: weaponInfo == InspectWeaponInfo.recommendations,
+                    selected: currentFilter == InspectWeaponInfo.recommendations,
                     value: AppLocalizations.of(context)!.recommendation_quria,
                   ),
                 ),
@@ -71,8 +59,8 @@ class _InspectMobileWeaponInfoState extends State<InspectMobileWeaponInfo> {
             ),
           ),
         ),
-        if (weaponInfo == InspectWeaponInfo.statistics) InspectMobileWeaponStatistics(width: widget.width),
-        if (weaponInfo == InspectWeaponInfo.recommendations) InspectMobileWeaponRecommendations(width: widget.width)
+        if (currentFilter == InspectWeaponInfo.statistics) InspectMobileWeaponStatistics(width: width),
+        if (currentFilter == InspectWeaponInfo.recommendations) InspectMobileWeaponRecommendations(width: width)
       ],
     );
   }

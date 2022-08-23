@@ -80,7 +80,7 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
                           choosingCharacter = !choosingCharacter;
                         });
                       },
-                      characters: Provider.of<CharactersProvider>(context).characters,
+                      characters: ref.watch(charactersProvider),
                     ),
                     const RefreshButton()
                   ],

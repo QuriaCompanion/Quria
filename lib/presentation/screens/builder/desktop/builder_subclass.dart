@@ -25,8 +25,7 @@ class BuilderSubclass extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<DestinyItemComponent> subclasses = Provider.of<InventoryProvider>(context, listen: false)
-        .getSubclassesForCharacter(
-            Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!);
+        .getSubclassesForCharacter(ref.watch(charactersProvider).first.characterId!);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

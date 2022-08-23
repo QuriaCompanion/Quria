@@ -55,8 +55,8 @@ class CreateBuildSection extends StatelessWidget {
   }
 
   onpenSubclassModal(BuildContext context) {
-    final data = Provider.of<InventoryProvider>(context, listen: false).getSubclassesForCharacter(
-        Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!);
+    final data = Provider.of<InventoryProvider>(context, listen: false)
+        .getSubclassesForCharacter(ref.watch(charactersProvider).first.characterId!);
     if (width < vw(context)) {
       return showDialog(
         context: context,

@@ -45,7 +45,7 @@ class DetailsBuildSection extends StatelessWidget {
               perks: item.mods,
               isSubclass: false,
               callback: () {
-                Provider.of<InspectProvider>(context, listen: false).setInspectItem(
+                ref.read(inspectProvider.notifier).setInspectItem(
                     itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
                     item: Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(item.instanceId));
                 if (isMobile(context)) {

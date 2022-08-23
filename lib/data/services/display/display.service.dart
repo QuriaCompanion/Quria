@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:isar/isar.dart';
 import 'package:bungie_api/enums/destiny_class.dart';
 import 'package:bungie_api/enums/destiny_item_type.dart';
@@ -69,7 +70,7 @@ class DisplayService {
   }
 
   static VaultHelper getVault(BuildContext context) {
-    final characters = Provider.of<CharactersProvider>(context).characters;
+    final characters = ref.watch(charactersProvider);
     final inventory = Provider.of<InventoryProvider>(context).profileInventory;
     return VaultHelper(characters: characters, vaultItems: inventory);
   }
@@ -399,4 +400,19 @@ class DisplayService {
     }
   }
 
-
+  static bool isItemItemActive(WidgetRef ref, DestinyInventoryItemDefinition item) {
+    final rarities = ref.watch(filtersProvider).rarityFilters;
+    final types = ref.watch(filtersProvider).typeFilters;
+    final elements = ref.watch(filtersProvider).elementFilters;
+    if (rarities.isNotEmpty && !rarities.contains(item.inventory?.tierType)) {
+      return false;
+    }
+    if (types.isNotEmpty && !types.contains(item.itemSubType)) {
+      return false;
+    }
+    if (elements.isNotEmpty && !elements.contains(item.damageTypes?[0])) {
+      return false;
+    }
+    return true;
+  }
+}

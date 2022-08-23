@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -11,15 +11,15 @@ import 'package:quria/presentation/components/misc/mobile_components/scaffold_bu
 import 'package:quria/presentation/screens/builder/subclass/subclass_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ChangeSubclassPage extends StatelessWidget {
+class ChangeSubclassPage extends ConsumerWidget {
   const ChangeSubclassPage({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final characterId = Provider.of<CharactersProvider>(context, listen: false).currentCharacter!.characterId!;
-    final subclasses = Provider.of<InventoryProvider>(context, listen: false).getSubclassesForCharacter(characterId);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final characterId = ref.watch(charactersProvider).first.characterId!;
+    final subclasses = ref.watch(subclassesForCharacterProvider(characterId));
     if (isMobile(context)) {
       return ScaffoldBurgerAndBackOption(
         width: vw(context),

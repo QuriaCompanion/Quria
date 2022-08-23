@@ -2,6 +2,7 @@ import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
@@ -17,7 +18,7 @@ import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 import 'package:quria/presentation/screens/profile/mobile_components/pull_postmaster_modal.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class PostmasterItems extends StatelessWidget {
+class PostmasterItems extends ConsumerWidget {
   const PostmasterItems({
     Key? key,
     required this.width,
@@ -26,9 +27,9 @@ class PostmasterItems extends StatelessWidget {
   final double width;
 
   @override
-  Widget build(BuildContext context) {
-    List<DestinyItemComponent> postmasterItems = Provider.of<InventoryProvider>(context)
-        .getPostmasterItemsForCharacter(Provider.of<CharactersProvider>(context).currentCharacter!.characterId!);
+  Widget build(BuildContext context, WidgetRef ref) {
+    List<DestinyItemComponent> postmasterItems =
+        ref.watch(postmasterInventoryByCharacterProvider(ref.watch(charactersProvider).first.characterId));
     return Wrap(
       alignment: WrapAlignment.start,
       runSpacing: 8,
@@ -39,10 +40,10 @@ class PostmasterItems extends StatelessWidget {
             onTap: () {
               final itemDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash];
               if (itemDef?.itemType == DestinyItemType.Weapon || itemDef?.itemType == DestinyItemType.Armor) {
-                Provider.of<InspectProvider>(context, listen: false).setInspectItem(
-                  itemDef: itemDef!,
-                  item: item,
-                );
+                ref.read(inspectProvider.notifier).setInspectItem(
+                      itemDef: itemDef!,
+                      item: item,
+                    );
                 if (width != vw(context)) {
                   showDialog(
                       context: context,
@@ -65,7 +66,7 @@ class PostmasterItems extends StatelessWidget {
                         return PullPostmasterModal(
                           item: item,
                           onClick: (inspect) {
-                            Provider.of<InspectProvider>(context, listen: false).setInspectItem(
+                            ref.read(inspectProvider.notifier).setInspectItem(
                                 itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
                                 item: item);
                             Navigator.pushNamed(context, routeInspectMobile, arguments: inspect);
@@ -79,10 +80,10 @@ class PostmasterItems extends StatelessWidget {
               displayHash: item.overrideStyleItemHash ?? item.itemHash!,
               imageSize: isMobile(context) ? itemSize(context, width) : 56,
               isMasterworked: item.state == ItemState.Masterwork || item.state == const ItemState(5),
-              element: Provider.of<ItemProvider>(context).getItemElement(item),
+              element: ref.watch(itemElementProvider(item)),
               isActive: DisplayService.isItemItemActive(
-                  context, ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!),
-              powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId),
+                  ref, ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!),
+              powerLevel: ref.watch(itemPowerLevelProvider(item.itemInstanceId)),
             ),
           )
       ],

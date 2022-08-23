@@ -1,5 +1,5 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_entry_plug_item_randomized_definition.dart';
@@ -13,7 +13,7 @@ import 'package:quria/presentation/components/detailed_item/item/perk_item_displ
 import 'package:quria/presentation/components/detailed_item/item/perk_modal.dart';
 
 @immutable
-class ColumnPerkDisplay extends StatelessWidget {
+class ColumnPerkDisplay extends ConsumerWidget {
   const ColumnPerkDisplay({
     required this.item,
     required this.index,
@@ -25,10 +25,10 @@ class ColumnPerkDisplay extends StatelessWidget {
   final double width;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final List<DestinyItemSocketEntryPlugItemRandomizedDefinition>? sockets = ManifestService.manifestParsed
         .destinyPlugSetDefinition[item.sockets!.socketEntries?[index].randomizedPlugSetHash]?.reusablePlugItems;
-    final InspectWeaponStatus? status = Provider.of<InspectProvider>(context).weaponStatus;
+    final InspectWeaponStatus? status = ref.watch(inspectProvider.select((value) => value?.weaponStatus));
     return Column(
       children: [
         if (item.sockets?.socketEntries?[index].randomizedPlugSetHash != null)
@@ -53,24 +53,19 @@ class ColumnPerkDisplay extends StatelessWidget {
                               final newPerk = Perk(itemHash: sockets[i].plugItemHash!);
                               switch (index) {
                                 case 1:
-                                  Provider.of<InspectProvider>(context, listen: false)
-                                      .setWeaponStatus(status?..firstColumn = newPerk);
+                                  ref.read(inspectProvider.notifier).setWeaponStatus(status?..firstColumn = newPerk);
                                   break;
                                 case 2:
-                                  Provider.of<InspectProvider>(context, listen: false)
-                                      .setWeaponStatus(status?..secondColumn = newPerk);
+                                  ref.read(inspectProvider.notifier).setWeaponStatus(status?..secondColumn = newPerk);
                                   break;
                                 case 3:
-                                  Provider.of<InspectProvider>(context, listen: false)
-                                      .setWeaponStatus(status?..thirdColumn = newPerk);
+                                  ref.read(inspectProvider.notifier).setWeaponStatus(status?..thirdColumn = newPerk);
                                   break;
                                 case 4:
-                                  Provider.of<InspectProvider>(context, listen: false)
-                                      .setWeaponStatus(status?..fourthColumn = newPerk);
+                                  ref.read(inspectProvider.notifier).setWeaponStatus(status?..fourthColumn = newPerk);
                                   break;
                                 case 5:
-                                  Provider.of<InspectProvider>(context, listen: false)
-                                      .setWeaponStatus(status?..fifthColumn = newPerk);
+                                  ref.read(inspectProvider.notifier).setWeaponStatus(status?..fifthColumn = newPerk);
                                   break;
                               }
                             },
@@ -94,24 +89,19 @@ class ColumnPerkDisplay extends StatelessWidget {
                                 final newPerk = Perk(itemHash: sockets[i].plugItemHash!);
                                 switch (index) {
                                   case 1:
-                                    Provider.of<InspectProvider>(context, listen: false)
-                                        .setWeaponStatus(status?..firstColumn = newPerk);
+                                    ref.read(inspectProvider.notifier).setWeaponStatus(status?..firstColumn = newPerk);
                                     break;
                                   case 2:
-                                    Provider.of<InspectProvider>(context, listen: false)
-                                        .setWeaponStatus(status?..secondColumn = newPerk);
+                                    ref.read(inspectProvider.notifier).setWeaponStatus(status?..secondColumn = newPerk);
                                     break;
                                   case 3:
-                                    Provider.of<InspectProvider>(context, listen: false)
-                                        .setWeaponStatus(status?..thirdColumn = newPerk);
+                                    ref.read(inspectProvider.notifier).setWeaponStatus(status?..thirdColumn = newPerk);
                                     break;
                                   case 4:
-                                    Provider.of<InspectProvider>(context, listen: false)
-                                        .setWeaponStatus(status?..fourthColumn = newPerk);
+                                    ref.read(inspectProvider.notifier).setWeaponStatus(status?..fourthColumn = newPerk);
                                     break;
                                   case 5:
-                                    Provider.of<InspectProvider>(context, listen: false)
-                                        .setWeaponStatus(status?..fifthColumn = newPerk);
+                                    ref.read(inspectProvider.notifier).setWeaponStatus(status?..fifthColumn = newPerk);
                                     break;
                                 }
                               },

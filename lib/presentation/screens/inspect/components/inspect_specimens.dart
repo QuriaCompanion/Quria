@@ -5,13 +5,11 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/RatedScore.model.dart';
-import 'package:quria/data/models/WeaponScore.model.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
-import 'package:quria/data/providers/inspect/inspect_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
@@ -19,8 +17,9 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/weapon_score.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_component_display_perks_build.dart';
+import 'package:quria/presentation/components/misc/loader.dart';
 
-class InspectSpecimens extends StatelessWidget {
+class InspectSpecimens extends ConsumerWidget {
   const InspectSpecimens({
     required this.item,
     required this.width,
@@ -31,12 +30,10 @@ class InspectSpecimens extends StatelessWidget {
   final double width;
 
   @override
-  Widget build(BuildContext context) {
-    final owner = Provider.of<InventoryProvider>(context).getItemOwner(item.itemInstanceId!);
-    final character =
-        Provider.of<CharactersProvider>(context).characters.firstWhereOrNull((element) => element.characterId == owner);
-    List<DestinyItemSocketState> sockets =
-        Provider.of<ItemProvider>(context, listen: false).getItemSockets(item.itemInstanceId!);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final owner = ref.watch(itemOwnerProvider(item.itemInstanceId));
+    final character = ref.watch(charactersProvider).firstWhereOrNull((element) => element.characterId == owner);
+    List<DestinyItemSocketState> sockets = ref.watch(itemSocketsProvider(item.itemInstanceId));
 
     final List<int> mods = sockets
         .where((element) => ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.itemType ==
@@ -46,11 +43,7 @@ class InspectSpecimens extends StatelessWidget {
         .where((element) => element.plugHash != null)
         .map((element) => element.plugHash!)
         .toList();
-    final WeaponScore? weaponScore = Provider.of<InspectProvider>(context, listen: false).weaponScore;
-    RatedScore? ratedScore;
-    if (weaponScore != null) {
-      ratedScore = WeaponScoreService().getRatedScore(context, item, weaponScore);
-    }
+    AsyncValue<RatedScore?> weaponScore = ref.watch(ratedScoreProvider(item));
     return Container(
       decoration: BoxDecoration(
         color: blackLight,
@@ -67,8 +60,8 @@ class InspectSpecimens extends StatelessWidget {
               filterQuality: FilterQuality.high,
               image: CachedNetworkImageProvider(DestinyData.bungieLink +
                   (character?.emblemPath != null
-                      ? '${character!.emblemPath!}?t={${BungieApiService.randomUserInt}}123456'
-                      : "/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png?t={${BungieApiService.randomUserInt}}123456")),
+                      ? '${character!.emblemPath!}?t={${BungieApiService.randomUserInt}}'
+                      : "/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png?t={${BungieApiService.randomUserInt}}")),
             ),
           ),
           SizedBox(
@@ -81,7 +74,7 @@ class InspectSpecimens extends StatelessWidget {
               mainAxisSize: MainAxisSize.max,
               children: [
                 textBodyBold(character != null
-                    ? ManifestService.manifestParsed.destinyClassDefinition[character.itemSubType]!
+                    ? ManifestService.manifestParsed.destinyClassDefinition[character.classHash]!
                         .genderedClassNamesByGenderHash![character.genderHash.toString()]!
                     : AppLocalizations.of(context)!.vault),
                 SizedBox(
@@ -107,22 +100,26 @@ class InspectSpecimens extends StatelessWidget {
                     filterQuality: FilterQuality.high,
                     width: itemSize(context, width) / 4,
                     image: CachedNetworkImageProvider(
-                        '${DestinyData.bungieLink}${Provider.of<ItemProvider>(context).getItemElement(item)}?t={${BungieApiService.randomUserInt}}123456'),
+                        '${DestinyData.bungieLink}${ref.watch(itemElementProvider(item))}?t={${BungieApiService.randomUserInt}}123456'),
                   ),
-                  textH3(Provider.of<ItemProvider>(context).getItemPowerLevel(item.itemInstanceId!).toString()),
+                  textH3(ref.watch(itemPowerLevelProvider(item.itemInstanceId)).toString()),
                 ],
               ),
               SizedBox(
                 height: globalPadding(context),
               ),
-              Column(
-                children: [
-                  if (ratedScore != null) ...[
-                    textH3('PVE: ${ratedScore.scorePve.round()}/100'),
-                    textH3('PVP: ${ratedScore.scorePvp.round()}/100'),
+              weaponScore.when(data: (weaponScore) {
+                return Column(
+                  children: [
+                    textH3('PVE: ${weaponScore?.scorePve.round()}/100'),
+                    textH3('PVP: ${weaponScore?.scorePvp.round()}/100'),
                   ],
-                ],
-              )
+                );
+              }, error: (_, __) {
+                return Container();
+              }, loading: () {
+                return const Loader();
+              }),
             ],
           ),
         ],

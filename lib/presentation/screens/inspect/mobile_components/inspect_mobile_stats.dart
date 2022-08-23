@@ -1,15 +1,16 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_stat.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/stat_no_bar.dart';
 import 'package:quria/presentation/components/detailed_item/item/stat_progress_bar.dart';
 
-class InspectMobileStats extends StatelessWidget {
+class InspectMobileStats extends ConsumerWidget {
   final double width;
   final Map<int, int>? bonusStats;
   const InspectMobileStats({
@@ -19,9 +20,11 @@ class InspectMobileStats extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    DestinyInventoryItemDefinition itemDef = Provider.of<InspectProvider>(context).itemDef!;
-    Map<String, DestinyStat> stats = Provider.of<InspectProvider>(context).getItemStats(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    DestinyInventoryItemDefinition itemDef = ref.watch(inspectProvider.select((value) => value!.itemDef))!;
+    String instanceId = ref.watch(inspectProvider.select((value) => value!.item!.itemInstanceId))!;
+
+    Map<String, DestinyStat> stats = ref.watch(itemPrecalculatedStatsProvider(instanceId));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

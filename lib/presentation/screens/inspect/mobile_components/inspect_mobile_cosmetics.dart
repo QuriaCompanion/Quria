@@ -1,12 +1,13 @@
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/inspect/inspect_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/detailed_item/item/item_with_type_name.dart';
 
-class MobileInspectCosmetics extends StatelessWidget {
+class MobileInspectCosmetics extends ConsumerWidget {
   final double width;
   const MobileInspectCosmetics({
     required this.width,
@@ -14,8 +15,12 @@ class MobileInspectCosmetics extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    List<DestinyItemSocketState> cosmetics = Provider.of<InspectProvider>(context).getCosmeticSockets(context);
+  Widget build(BuildContext context, WidgetRef ref) {
+    List<DestinyItemSocketState> cosmetics = ref.watch(
+      cosmeticSocketsProvider(
+        ref.watch(inspectProvider.select((value) => value?.item)),
+      ),
+    );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

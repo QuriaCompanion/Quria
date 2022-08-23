@@ -1,6 +1,6 @@
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
@@ -15,16 +15,16 @@ import 'package:quria/presentation/screens/profile/profile_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
 @immutable
-class ProfileWidget extends StatefulWidget {
+class ProfileWidget extends ConsumerStatefulWidget {
   const ProfileWidget({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<ProfileWidget> createState() => _ProfileWidgetState();
+  ProfileWidgetState createState() => ProfileWidgetState();
 }
 
-class _ProfileWidgetState extends State<ProfileWidget> {
+class ProfileWidgetState extends ConsumerState<ProfileWidget> {
   final display = DisplayService();
   late Future _future;
   DestinyItemType currentFilter = DestinyItemType.Weapon;
@@ -40,7 +40,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       future: _future,
       builder: ((context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
-          final characters = Provider.of<CharactersProvider>(context).characters;
+          final characters = ref.watch(charactersProvider);
           if (characters.isEmpty) {
             return Column(
               children: [
