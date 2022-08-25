@@ -20,45 +20,9 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:collection/collection.dart';
 
 class FilterNotifier extends StateNotifier<InventoryFiltersModel> {
-  FilterNotifier()
-      : super(const InventoryFiltersModel(
-          itemType: DestinyItemType.Weapon,
-          rarity: {
-            TierType.Basic: false,
-            TierType.Common: false,
-            TierType.Rare: false,
-            TierType.Superior: false,
-            TierType.Exotic: false,
-          },
-          element: {
-            DamageType.Kinetic: false,
-            DamageType.Stasis: false,
-            DamageType.Thermal: false,
-            DamageType.Arc: false,
-            DamageType.Void: false,
-          },
-          type: {
-            DestinyItemSubType.AutoRifle: false,
-            DestinyItemSubType.Shotgun: false,
-            DestinyItemSubType.Machinegun: false,
-            DestinyItemSubType.HandCannon: false,
-            DestinyItemSubType.RocketLauncher: false,
-            DestinyItemSubType.FusionRifle: false,
-            DestinyItemSubType.SniperRifle: false,
-            DestinyItemSubType.PulseRifle: false,
-            DestinyItemSubType.ScoutRifle: false,
-            DestinyItemSubType.Sidearm: false,
-            DestinyItemSubType.Sword: false,
-            DestinyItemSubType.FusionRifleLine: false,
-            DestinyItemSubType.GrenadeLauncher: false,
-            DestinyItemSubType.SubmachineGun: false,
-            DestinyItemSubType.TraceRifle: false,
-            DestinyItemSubType.Bow: false,
-            DestinyItemSubType.Glaive: false,
-          },
-        ));
+  FilterNotifier() : super(InventoryFiltersModel(itemType: DestinyItemType.Weapon));
   void reset() {
-    state = const InventoryFiltersModel();
+    state = InventoryFiltersModel();
   }
 
   void changeFilter<T>(T item, bool value) {
@@ -393,6 +357,7 @@ final currentSuperByCharacterProvider = StateProviderFamily<int?, String?>((ref,
   }
   return null;
 });
+
 final itemOwnerProvider = StateProviderFamily<String?, String?>((ref, String? itemInstanceId) {
   for (final character in ref.watch(inventoryProvider.select((value) => value.characterEquipment.entries))) {
     bool has = character.value.items!.any((item) => item.itemInstanceId == itemInstanceId);
@@ -410,7 +375,7 @@ final itemOwnerProvider = StateProviderFamily<String?, String?>((ref, String? it
   return null;
 });
 
-final isItemEquippedProvider = StateProviderFamily<bool?, String?>((ref, String? itemInstanceId) {
+final isItemEquippedProvider = StateProviderFamily<bool, String?>((ref, String? itemInstanceId) {
   for (final character in ref.watch(inventoryProvider.select((value) => value.characterEquipment.entries))) {
     bool has = character.value.items!.any((item) => item.itemInstanceId == itemInstanceId);
     if (has) {
@@ -443,6 +408,16 @@ final armorForClassProvider =
                 ManifestService
                     .manifestParsed.destinyInventoryItemDefinition[item.itemHash]?.quality?.versions?[0].powerCapHash));
   }).toList();
+});
+
+final superHashSubclassProvider = StateProviderFamily<int?, DestinyItemComponent?>((ref, subclass) {
+  List<DestinyItemSocketState>? sockets = ref.watch(itemSocketsProvider(subclass?.itemInstanceId));
+  DestinyItemSocketState? newSuper = sockets?.firstWhereOrNull((element) =>
+      ManifestService.manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryIdentifier
+          ?.contains("super") ??
+      false);
+
+  return ManifestService.manifestParsed.destinyInventoryItemDefinition[newSuper?.plugHash]?.hash;
 });
 
 final cosmeticSocketsProvider =

@@ -31,7 +31,7 @@ class PullPostmasterModal extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ItemCardHelper data =
-        DisplayService.getCardData(context, itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
+        DisplayService.getCardData(ref, itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
     return SingleChildScrollView(
         child: Container(
       decoration: const BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(24)), color: black),

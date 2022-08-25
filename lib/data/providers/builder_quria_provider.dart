@@ -11,7 +11,9 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 class BuilderQuriaNotifier extends StateNotifier<BuilderQuriaModel> {
   BuilderQuriaNotifier() : super(BuilderQuriaModel());
   void init() {
-    state = state.copyWith(mods: defaultMods);
+    if (state.mods.isEmpty) {
+      state.mods.addAll(defaultMods);
+    }
   }
 
   void reset() {

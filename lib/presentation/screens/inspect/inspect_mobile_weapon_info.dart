@@ -31,10 +31,10 @@ class InspectMobileWeaponInfo extends ConsumerWidget {
               children: [
                 InkWell(
                     onTap: () {
-                      if (currentFilter != InspectWeaponInfo.recommendations) {
+                      if (currentFilter != InspectWeaponInfo.statistics) {
                         ref
                             .read(subtabInspectProvider.notifier)
-                            .update((state) => state = InspectWeaponInfo.recommendations);
+                            .update((state) => state = InspectWeaponInfo.statistics);
                       }
                     },
                     child: MobileNavItem(

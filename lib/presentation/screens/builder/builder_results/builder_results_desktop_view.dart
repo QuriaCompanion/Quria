@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -9,12 +9,12 @@ import 'package:quria/data/providers/inspect/inspect_build_provider.dart';
 import 'package:quria/presentation/screens/builder/build_recap/builder_recap_mobile_view.dart';
 import 'package:quria/presentation/screens/builder/builder_results/builder_results_desktop_item.dart';
 
-class BuilderResultsDesktopView extends StatelessWidget {
+class BuilderResultsDesktopView extends ConsumerWidget {
   final List<Build> buildResults;
   const BuilderResultsDesktopView({Key? key, required this.buildResults}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         desktopHeader(context,
@@ -42,12 +42,13 @@ class BuilderResultsDesktopView extends StatelessWidget {
             itemBuilder: (context, index) {
               return InkWell(
                   onTap: () {
-                    Provider.of<InspectBuildProvider>(context, listen: false).setSelectedBuild(buildResults[index]);
+                    ref.read(inspectBuildProvider.notifier).update((state) => state = buildResults[index]);
                     showDialog(
                         context: context,
                         builder: (context) {
                           return desktopBuildModal(
                             context,
+                            ref,
                             child: BuilderRecapMobileView(
                               width: modalWidth(context),
                               data: buildResults[index],

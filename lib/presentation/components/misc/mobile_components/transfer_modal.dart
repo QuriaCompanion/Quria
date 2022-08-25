@@ -1,6 +1,7 @@
+import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/characters_provider.dart';
@@ -13,7 +14,7 @@ import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
 import 'package:quria/presentation/var/keys.dart';
 
-class TransferModal extends StatefulWidget {
+class TransferModal extends ConsumerWidget {
   final String instanceId;
   final int itemHash;
   final double? width;
@@ -27,13 +28,8 @@ class TransferModal extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<TransferModal> createState() => _TransferModalState();
-}
-
-class _TransferModalState extends State<TransferModal> {
-  @override
-  Widget build(BuildContext context) {
-    final owner = Provider.of<InventoryProvider>(context).getItemOwner(widget.instanceId);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final owner = ref.watch(itemOwnerProvider(instanceId));
     final characters = ref.watch(charactersProvider).where((element) => element.characterId != owner);
 
     return SingleChildScrollView(
@@ -76,7 +72,7 @@ class _TransferModalState extends State<TransferModal> {
               height: globalPadding(context),
               thickness: 1,
             ),
-            for (final character in characters)
+            for (final DestinyCharacterComponent character in characters)
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: globalPadding(context) / 2,
@@ -86,11 +82,11 @@ class _TransferModalState extends State<TransferModal> {
                   onTap: () async {
                     await BungieActionsService()
                         .transferItem(
-                      context,
-                      widget.instanceId,
+                      ref,
+                      instanceId,
                       character.characterId!,
                       stackSize: 1,
-                      itemHash: widget.itemHash,
+                      itemHash: itemHash,
                     )
                         .then((_) {
                       Navigator.pop(context);
@@ -102,8 +98,8 @@ class _TransferModalState extends State<TransferModal> {
                         ),
                         backgroundColor: Colors.green,
                       ));
-                      if (widget.onTransfer != null) {
-                        widget.onTransfer!();
+                      if (onTransfer != null) {
+                        onTransfer!();
                       }
                     }, onError: (_) {
                       showDialog(
@@ -114,10 +110,10 @@ class _TransferModalState extends State<TransferModal> {
                     });
                   },
                   child: CharacterTransferItem(
-                    width: widget.width ?? vw(context),
+                    width: width ?? vw(context),
                     imageLink:
                         '${DestinyData.bungieLink}${character.emblemPath!}?t={${BungieApiService.randomUserInt}}123456',
-                    name: ManifestService.manifestParsed.destinyClassDefinition[character.itemSubType]!
+                    name: ManifestService.manifestParsed.destinyClassDefinition[character.classType]!
                         .genderedClassNamesByGenderHash![character.genderHash.toString()]!,
                     icon: "assets/icons/Transfer.svg",
                     powerLevel: character.light,
@@ -134,11 +130,11 @@ class _TransferModalState extends State<TransferModal> {
                   onTap: () async {
                     await BungieActionsService()
                         .transferItem(
-                      context,
-                      widget.instanceId,
+                      ref,
+                      instanceId,
                       null,
                       stackSize: 1,
-                      itemHash: widget.itemHash,
+                      itemHash: itemHash,
                     )
                         .then((_) {
                       Navigator.pop(context);
@@ -159,7 +155,7 @@ class _TransferModalState extends State<TransferModal> {
                     });
                   },
                   child: CharacterTransferItem(
-                    width: widget.width ?? vw(context),
+                    width: width ?? vw(context),
                     imageLink:
                         "https://www.bungie.net/common/destiny2_content/icons/b46b0f14f56805d4927f8a5ec15734c5.png",
                     name: AppLocalizations.of(context)!.vault,

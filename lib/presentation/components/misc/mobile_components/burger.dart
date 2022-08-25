@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
@@ -11,21 +12,11 @@ import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class Burger extends StatefulWidget {
+class Burger extends ConsumerWidget {
   const Burger({Key? key}) : super(key: key);
 
   @override
-  State<Burger> createState() => _BurgerState();
-}
-
-class _BurgerState extends State<Burger> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       decoration: const BoxDecoration(color: black),
       child: Column(
@@ -170,7 +161,7 @@ class _BurgerState extends State<Burger> {
                   child: InkWell(
                     onTap: () {
                       DisplayService.isProfileUp = false;
-                      ProfileService.reset(context);
+                      ProfileService.reset(ref);
                       AccountService.reset();
                       Navigator.pushNamed(context, routeLogin);
                     },

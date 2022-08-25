@@ -1,5 +1,5 @@
 import 'package:bungie_api/enums/item_state.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -16,12 +16,12 @@ import 'package:quria/presentation/components/misc/mobile_components/loading_mod
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
 
-class BuilderResultsMobileItem extends StatelessWidget {
+class BuilderResultsMobileItem extends ConsumerWidget {
   final Build buildResult;
   const BuilderResultsMobileItem({required this.buildResult, Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Map<String, int> finalStats = {
       StatsStringHash.mobility: 0,
       StatsStringHash.resilience: 0,
@@ -55,7 +55,7 @@ class BuilderResultsMobileItem extends StatelessWidget {
                 ),
                 CharacterStatsListing(
                     stats: finalStats,
-                    characterId: Provider.of<CharactersProvider>(context).currentCharacter!.characterId!,
+                    characterId: ref.watch(charactersProvider).first.characterId!,
                     width: vw(context) * 0.5,
                     direction: Axis.horizontal),
               ],
@@ -75,14 +75,11 @@ class BuilderResultsMobileItem extends StatelessWidget {
                   child: ItemIcon(
                     displayHash: buildResult.equipement[i].displayHash,
                     imageSize: (vw(context) - (globalPadding(context) * 8)) / 5,
-                    isMasterworked: Provider.of<InventoryProvider>(context)
-                                .getItemByInstanceId(buildResult.equipement[i].itemInstanceId)
-                                ?.state ==
-                            const ItemState(5) ||
-                        Provider.of<InventoryProvider>(context)
-                                .getItemByInstanceId(buildResult.equipement[i].itemInstanceId)
-                                ?.state ==
-                            ItemState.Masterwork,
+                    isMasterworked:
+                        ref.watch(itemByInstanceIdProvider(buildResult.equipement[i].itemInstanceId))?.state ==
+                                const ItemState(5) ||
+                            ref.watch(itemByInstanceIdProvider(buildResult.equipement[i].itemInstanceId))?.state ==
+                                ItemState.Masterwork,
                   ),
                 ),
             ],
@@ -108,9 +105,9 @@ class BuilderResultsMobileItem extends StatelessWidget {
                           text2: AppLocalizations.of(context)!.please_wait,
                         );
                       });
-                  final items = BuilderService().changeBuildToListOfItems(context, data: buildResult);
+                  final items = BuilderService().changeBuildToListOfItems(ref, data: buildResult);
                   BungieActionsService()
-                      .equipStoredBuild(context, items: items)
+                      .equipStoredBuild(ref, items: items)
                       .then((_) => Navigator.pop(context))
                       .then((value) => Navigator.pop(context));
                 },
@@ -119,7 +116,7 @@ class BuilderResultsMobileItem extends StatelessWidget {
               RoundedButton(
                 text: textBodyMedium(AppLocalizations.of(context)!.save, color: Colors.white),
                 onPressed: () {
-                  BuilderService().redirectToBuildSaving(context, data: buildResult);
+                  BuilderService().redirectToBuildSaving(context, ref, data: buildResult);
                 },
                 textColor: Colors.white,
                 buttonColor: grey,

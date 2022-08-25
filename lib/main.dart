@@ -31,7 +31,7 @@ void main() async {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
-    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    FirebaseAnalytics.instance;
   }
 
   runApp(ProviderScope(child: QuriaApp(router: AppRouter(), lang: lang)));

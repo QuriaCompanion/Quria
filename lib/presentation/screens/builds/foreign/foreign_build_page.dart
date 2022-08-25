@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
@@ -8,21 +9,21 @@ import 'package:quria/presentation/components/misc/mobile_components/scaffold_ch
 import 'package:quria/presentation/screens/builds/foreign/foreign_build_desktop_view.dart';
 import 'package:quria/presentation/screens/builds/foreign/foreign_build_mobile_view.dart';
 
-class ForeignBuildPage extends StatefulWidget {
+class ForeignBuildPage extends ConsumerStatefulWidget {
   final String id;
   const ForeignBuildPage({Key? key, required this.id}) : super(key: key);
 
   @override
-  State<ForeignBuildPage> createState() => _ForeignBuildPageState();
+  ForeignBuildPageState createState() => ForeignBuildPageState();
 }
 
-class _ForeignBuildPageState extends State<ForeignBuildPage> {
+class ForeignBuildPageState extends ConsumerState<ForeignBuildPage> {
   late Future<BuildStored?> _future;
 
   @override
   void initState() {
     super.initState();
-    _future = DisplayService.loadBuild(context, widget.id);
+    _future = DisplayService.loadBuild(ref, widget.id);
   }
 
   @override

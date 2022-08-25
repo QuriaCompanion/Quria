@@ -161,7 +161,7 @@ Widget desktopSubclassModal(BuildContext context, WidgetRef ref, {required Widge
                               onSelect: (newSubclass) {
                                 BungieActionsService()
                                     .equipItem(
-                                      context,
+                                      ref,
                                       itemId: newSubclass.itemInstanceId!,
                                       characterId: characterId,
                                       itemHash: newSubclass.itemHash!,
@@ -312,8 +312,8 @@ Widget desktopBuildModal(BuildContext context, WidgetRef ref, {required Widget c
               ModalButton(
                 text: AppLocalizations.of(context)!.equip,
                 callback: () {
-                  final items = BuilderService().changeBuildToListOfItems(context, data: data);
-                  BungieActionsService().equipStoredBuild(context, items: items).then((_) => Navigator.pop(context));
+                  final items = BuilderService().changeBuildToListOfItems(ref, data: data);
+                  BungieActionsService().equipStoredBuild(ref, items: items).then((_) => Navigator.pop(context));
                 },
                 icon: 'assets/icons/equipDesktop.svg',
               ),
@@ -323,7 +323,7 @@ Widget desktopBuildModal(BuildContext context, WidgetRef ref, {required Widget c
               ModalButton(
                 text: AppLocalizations.of(context)!.save,
                 callback: () {
-                  BuilderService().redirectToBuildSaving(context, data: data);
+                  BuilderService().redirectToBuildSaving(context, ref, data: data);
                 },
                 icon: 'assets/icons/saveDesktop.svg',
               ),

@@ -9,11 +9,10 @@ import 'package:bungie_api/enums/tier_type.dart';
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_investment_stat_definition.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
-import 'package:bungie_api/models/destiny_item_sockets_component.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_share/flutter_share.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
@@ -28,6 +27,12 @@ import 'package:flutter/foundation.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
 import 'package:quria/data/models/helpers/filterHelper.model.dart';
+import 'package:quria/data/models/providers/helpers.dart/inspect_helper.dart';
+import 'package:quria/data/providers/builder_quria_provider.dart';
+import 'package:quria/data/providers/characters_provider.dart';
+import 'package:quria/data/providers/create_build_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
+import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/account.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:http/http.dart' as http;
@@ -41,47 +46,32 @@ import 'package:universal_io/io.dart';
 
 class BuilderService {
   final String _backendURl = 'https://quria-companion-back-end.herokuapp.com/';
-  BuilderHelper buildPreparation(BuildContext context) {
-    DestinyCharacterComponent character = Provider.of<CharactersProvider>(context, listen: false).currentCharacter!;
-    bool includeSunset = Provider.of<BuilderCustomInfoProvider>(context, listen: false).includeSunset;
+  BuilderHelper buildPreparation(WidgetRef ref) {
+    final build = ref.read(builderQuriaProvider);
+    final character = ref.read(charactersProvider).first;
 
-    List<DestinyItemComponent> armors = Provider.of<InventoryProvider>(context, listen: false)
-        .getArmorForClass(character.classType as DestinyClass, includeSunset: includeSunset);
-
-    List<DestinyInventoryItemDefinition> subclassMods =
-        Provider.of<BuilderSubclassModsProvider>(context, listen: false).subclassMods;
-
-    List<ModSlots> armorMods = Provider.of<BuilderModsProvider>(context, listen: false).mods;
-
-    List<int> statOrder =
-        Provider.of<BuilderStatsFilterProvider>(context, listen: false).filters.map((e) => e.value).toList();
-
-    StatWeighing statWeighing = Provider.of<BuilderStatsFilterProvider>(context, listen: false).statWeighing;
-
-    bool considerMasterwork = Provider.of<BuilderCustomInfoProvider>(context, listen: false).considerMasterwork;
-
-    DestinyInventoryItemDefinition? exotic = Provider.of<BuilderExoticProvider>(context, listen: false).exotic;
-
-    DestinyItemComponent classItem = Provider.of<BuilderCustomInfoProvider>(context, listen: false).classItem!;
-
-    Map<String, DestinyItemSocketsComponent> sockets = Provider.of<ItemProvider>(context, listen: false).sockets;
+    List<DestinyItemComponent> armors = ref.read(
+      armorForClassProvider(
+        ArmorForGivenClass(classType: character.classType, includeSunset: build.includeSunset),
+      ),
+    );
 
     return BuilderHelper(
-      statOrder: statOrder,
+      statOrder: build.filters.map((e) => e.value).toList(),
       armors: armors,
-      sockets: sockets,
+      sockets: ref.read(itemProvider).sockets,
       manifest: ManifestService.manifestParsed.destinyInventoryItemDefinition,
-      subclassMods: subclassMods,
-      armorMods: armorMods,
-      classItem: classItem,
-      statWeighing: statWeighing,
-      considerMasterwork: considerMasterwork,
-      exotic: exotic,
+      subclassMods: build.subclassMods,
+      armorMods: build.mods,
+      classItem: build.classItem!,
+      statWeighing: build.statWeighing,
+      considerMasterwork: build.considerMasterwork,
+      exotic: build.exotic,
     );
   }
 
-  Future<void> createBuild(BuildContext context, String name, {Preset? preset}) async {
-    final build = Provider.of<CreateBuildProvider>(context, listen: false).items;
+  Future<void> createBuild(WidgetRef ref, String name, {Preset? preset}) async {
+    final build = ref.read(createBuildProvider).items;
 
     await http.post(Uri.parse("${_backendURl}build"),
         headers: {"Content-Type": "application/json"},
@@ -90,23 +80,23 @@ class BuilderService {
           "bungieName": AccountService.currentMembership?.membershipId,
           "items": build.map((e) => e.toJson()).toList(),
           "usedTimes": 0,
-          "className": Provider.of<CharactersProvider>(context, listen: false).currentCharacter?.classType?.value,
-          "preset": preset != null ? preset.toJson() : calculatePreset(context, data: build).toJson(),
+          "className": ref.read(charactersProvider).first.classType?.value,
+          "preset": preset != null ? preset.toJson() : calculatePreset(ref, data: build).toJson(),
         }));
     return;
   }
 
-  void useForeignBuild(BuildContext context, BuildStored foreignBuild) async {
-    List<DestinyCharacterComponent> characters = Provider.of<CharactersProvider>(context, listen: false).characters;
+  void useForeignBuild(BuildContext context, WidgetRef ref, BuildStored foreignBuild) async {
+    List<DestinyCharacterComponent> characters = ref.read(charactersProvider);
     int? characterIndex;
     for (int index = 0; index < characters.length; index++) {
       if (characters[index].classType == foreignBuild.className) {
         characterIndex = index;
-        Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(index);
+        setCurrentCharacter(index, ref);
       }
     }
     if (characterIndex != null) {
-      Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(characterIndex);
+      setCurrentCharacter(characterIndex, ref);
     } else {
       ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
         content: textBodyMedium(
@@ -119,7 +109,7 @@ class BuilderService {
       return;
     }
 
-    await DisplayService.getExotics(context, characters[characterIndex].classType!).then((exotics) {
+    await DisplayService.getExotics(ref, characters[characterIndex].classType!).then((exotics) {
       final exoticItem = foreignBuild.items.firstWhereOrNull((element) {
         return InventoryBucket.armorBucketHashes.contains(element.bucketHash) &&
             ManifestService.manifestParsed.destinyInventoryItemDefinition[element.itemHash]?.inventory?.tierType ==
@@ -138,12 +128,13 @@ class BuilderService {
         return;
       }
 
-      Provider.of<BuilderExoticProvider>(context, listen: false).setExoticHash(
-          ManifestService.manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.exoticHash]);
+      ref
+          .read(builderQuriaProvider.notifier)
+          .setExotic(ManifestService.manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.exoticHash]);
       final List<ModSlots> armorMods = [
         // helmet
         ModSlots(
-            title: AppLocalizations.of(context)!.helmet,
+            slotHash: InventoryBucket.helmet,
             elementSocketEntries:
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[3473581026]!.sockets!.socketEntries!,
             items: [
@@ -154,7 +145,7 @@ class BuilderService {
             ]),
         // gauntlets
         ModSlots(
-            title: AppLocalizations.of(context)!.gauntlets,
+            slotHash: InventoryBucket.gauntlets,
             elementSocketEntries:
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[2771648715]!.sockets!.socketEntries!,
             items: [
@@ -165,7 +156,7 @@ class BuilderService {
             ]),
         // chest
         ModSlots(
-            title: AppLocalizations.of(context)!.chest,
+            slotHash: InventoryBucket.chestArmor,
             elementSocketEntries:
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[549825413]!.sockets!.socketEntries!,
             items: [
@@ -176,7 +167,7 @@ class BuilderService {
             ]),
         // legs
         ModSlots(
-            title: AppLocalizations.of(context)!.legs,
+            slotHash: InventoryBucket.legArmor,
             elementSocketEntries:
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[4287863773]!.sockets!.socketEntries!,
             items: [
@@ -187,7 +178,7 @@ class BuilderService {
             ]),
         // class items
         ModSlots(
-            title: AppLocalizations.of(context)!.class_item,
+            slotHash: InventoryBucket.classArmor,
             elementSocketEntries:
                 ManifestService.manifestParsed.destinyInventoryItemDefinition[3500810712]!.sockets!.socketEntries!,
             items: [
@@ -197,26 +188,27 @@ class BuilderService {
                     .manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.armorMods["classItem"]?[index]],
             ]),
       ];
-      Provider.of<BuilderModsProvider>(context, listen: false).setMods(armorMods);
+      ref.read(builderQuriaProvider.notifier).setMods(armorMods);
       final filters = [
-        for (int value in foreignBuild.preset!.statOrder)
-          FilterHelper(name: fromIntToName(context, value), icon: fromIntToIcon(value), value: value),
+        for (int value in foreignBuild.preset!.statOrder) FilterHelper(icon: fromIntToIcon(value), value: value),
       ];
-      Provider.of<BuilderStatsFilterProvider>(context, listen: false).setNewStatsFilters(filters);
-      Provider.of<BuilderSubclassProvider>(context, listen: false).setSubclass(
-        foreignBuild.items.firstWhereOrNull((element) => element.bucketHash == InventoryBucket.subclass)?.instanceId,
-        ManifestService.manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.subclassHash],
-      );
-      Provider.of<BuilderSubclassModsProvider>(context, listen: false).setSubclassMods(
-        foreignBuild.preset!.subclassMods
-            .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)
-            .toList(),
-      );
+      ref.read(builderQuriaProvider.notifier).setNewStatsFilters(filters);
+      ref.read(builderQuriaProvider.notifier).setSubclass(
+            foreignBuild.items
+                .firstWhereOrNull((element) => element.bucketHash == InventoryBucket.subclass)
+                ?.instanceId,
+            ManifestService.manifestParsed.destinyInventoryItemDefinition[foreignBuild.preset!.subclassHash],
+          );
+      ref.read(builderQuriaProvider.notifier).setSubclassMods(
+            foreignBuild.preset!.subclassMods
+                .map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!)
+                .toList(),
+          );
       Navigator.pushNamed(context, routeClassItemChoice);
     });
   }
 
-  Map<String, int> statCalculator(BuildContext context, {required DestinyItemComponent item}) {
+  Map<String, int> statCalculator(WidgetRef ref, {required DestinyItemComponent item}) {
     // instanciate stats
     Map<String, int> investmentStats = {
       StatsStringHash.mobility: 0,
@@ -237,8 +229,7 @@ class BuilderService {
       };
     }
     // get sockets for the item
-    List<DestinyItemSocketState>? sockets =
-        Provider.of<ItemProvider>(context, listen: false).getItemSockets(item.itemInstanceId);
+    List<DestinyItemSocketState> sockets = ref.read(itemSocketsProvider(item.itemInstanceId)) ?? [];
     // get only the sockets that actually contain stats
     Iterable<DestinyItemSocketState> plugs = sockets.where(((element) => element.isVisible == false));
     // get the inventory def for given sockets
@@ -257,7 +248,7 @@ class BuilderService {
     return investmentStats;
   }
 
-  Map<String, int> buildStatCalculator(BuildContext context, {required List<Item> items}) {
+  Map<String, int> buildStatCalculator(WidgetRef ref, {required List<Item> items}) {
     Map<String, int> stats = {
       StatsStringHash.mobility: 0,
       StatsStringHash.resilience: 0,
@@ -269,7 +260,7 @@ class BuilderService {
     for (Item item in items.where((element) =>
         InventoryBucket.armorBucketHashes.contains(element.bucketHash) ||
         element.bucketHash == InventoryBucket.subclass)) {
-      final itemComponent = Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(item.instanceId);
+      final itemComponent = ref.read(itemByInstanceIdProvider(item.instanceId));
 
       // loops through the mods in this armor
       for (int? modHash in item.mods) {
@@ -291,7 +282,7 @@ class BuilderService {
         }
       }
       if (itemComponent == null) continue;
-      for (final newStats in statCalculator(context, item: itemComponent).entries) {
+      for (final newStats in statCalculator(ref, item: itemComponent).entries) {
         stats[newStats.key] = stats[newStats.key]! + newStats.value;
       }
     }
@@ -299,14 +290,15 @@ class BuilderService {
     return stats;
   }
 
-  List<Item> changeBuildToListOfItems(BuildContext context, {required Build data}) {
+  List<Item> changeBuildToListOfItems(WidgetRef ref, {required Build data}) {
     List<Item> items = [];
     for (int i = 0; i < data.equipement.length; i++) {
       List<int> mods = [];
       if (data.equipement[i].mod != null) {
         mods.add(data.equipement[i].mod!.hash!);
       }
-      mods.addAll(Provider.of<BuilderModsProvider>(context, listen: false)
+      mods.addAll(ref
+          .read(builderQuriaProvider)
           .mods[i]
           .items
           .where((element) => element?.hash != null)
@@ -322,16 +314,17 @@ class BuilderService {
             mods: mods),
       );
     }
-    if (Provider.of<BuilderSubclassProvider>(context, listen: false).subclassId != null) {
-      final List<int> subclassMods = Provider.of<BuilderSubclassModsProvider>(context, listen: false)
+    if (ref.read(builderQuriaProvider).subclassId != null) {
+      final List<int> subclassMods = ref
+          .read(builderQuriaProvider)
           .subclassMods
           .where((element) => element.hash != null)
           .map((e) => e.hash!)
           .toList();
       items.add(
         Item(
-            instanceId: Provider.of<BuilderSubclassProvider>(context, listen: false).subclassId!,
-            itemHash: Provider.of<BuilderSubclassProvider>(context, listen: false).subclass!.hash!,
+            instanceId: ref.read(builderQuriaProvider).subclassId!,
+            itemHash: ref.read(builderQuriaProvider).subclass!.hash!,
             isEquipped: true,
             bucketHash: InventoryBucket.subclass,
             mods: subclassMods),
@@ -340,19 +333,18 @@ class BuilderService {
     return items;
   }
 
-  void redirectToBuildSaving(BuildContext context, {required Build data}) {
-    Provider.of<CreateBuildProvider>(context, listen: false).clear();
-    final items = changeBuildToListOfItems(context, data: data);
-    Provider.of<CreateBuildProvider>(context, listen: false).setBuild(items);
+  void redirectToBuildSaving(BuildContext context, WidgetRef ref, {required Build data}) {
+    ref.read(createBuildProvider.notifier).clear();
+    final items = changeBuildToListOfItems(ref, data: data);
+    ref.read(createBuildProvider.notifier).setBuild(items);
     Navigator.pushNamed(context, routeCreateBuild);
   }
 
-  Preset calculatePreset(BuildContext context, {required List<Item> data}) {
+  Preset calculatePreset(WidgetRef ref, {required List<Item> data}) {
     List<String> stats = [];
-    List<int> filters =
-        Provider.of<BuilderStatsFilterProvider>(context, listen: false).filters.map((e) => e.value).toList();
+    List<int> filters = ref.read(builderQuriaProvider).filters.map((e) => e.value).toList();
     if (filters.isEmpty) {
-      final mapStats = BuilderService().buildStatCalculator(context, items: data);
+      final mapStats = BuilderService().buildStatCalculator(ref, items: data);
       stats = mapStats.keys.toList(growable: false)..sort((k1, k2) => mapStats[k2]!.compareTo(mapStats[k1]!));
     }
     final armor = data.where((element) =>
@@ -391,16 +383,16 @@ class BuilderService {
     List<int> subclassMods = subclass != null ? subclass.mods : [];
     return Preset(
         statOrder: filters.isEmpty ? stats.map((e) => int.parse(e)).toList() : filters,
-        statWeighing: Provider.of<BuilderStatsFilterProvider>(context, listen: false).statWeighing,
+        statWeighing: ref.read(builderQuriaProvider).statWeighing,
         exoticHash: exoticHash,
         armorMods: armorMods,
         subclassMods: subclassMods,
         subclassHash: subclass?.itemHash);
   }
 
-  Future<void> updateBuild(BuildContext context, String name) async {
-    final build = Provider.of<CreateBuildProvider>(context, listen: false).items;
-    final id = Provider.of<CreateBuildProvider>(context, listen: false).id;
+  Future<void> updateBuild(WidgetRef ref, String name) async {
+    final build = ref.read(createBuildProvider).items;
+    final id = ref.read(createBuildProvider).id;
 
     await http.put(Uri.parse("${_backendURl}build"),
         headers: {"Content-Type": "application/json"},
@@ -410,8 +402,8 @@ class BuilderService {
           "bungieName": AccountService.currentMembership?.membershipId,
           "items": build.map((e) => e.toJson()).toList(),
           "usedTimes": 0,
-          "className": Provider.of<CharactersProvider>(context, listen: false).currentCharacter?.classType?.value,
-          "preset": calculatePreset(context, data: build).toJson(),
+          "className": ref.read(charactersProvider).first.classType?.value,
+          "preset": calculatePreset(ref, data: build).toJson(),
         }));
     return;
   }
@@ -426,7 +418,7 @@ class BuilderService {
     return [];
   }
 
-  Future<void> shareBuild(BuildContext context, {required String id}) async {
+  Future<void> shareBuild(BuildContext context, WidgetRef ref, {required String id}) async {
     if (kIsWeb || Platform.isWindows) {
       Clipboard.setData(ClipboardData(text: "https://quriacompanion.app/build?buildId=$id"));
       ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(

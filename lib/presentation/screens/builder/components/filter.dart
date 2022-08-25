@@ -1,29 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/helpers/filterHelper.model.dart';
-import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
+import 'package:quria/data/providers/builder_quria_provider.dart';
 
-class FilterWidget extends StatelessWidget {
+class FilterWidget extends ConsumerWidget {
   final Color color;
   const FilterWidget({Key? key, this.color = blackLight}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    Provider.of<BuilderStatsFilterProvider>(context, listen: false).init(context);
-    List<FilterHelper> filters = Provider.of<BuilderStatsFilterProvider>(context).filters;
+  Widget build(BuildContext context, WidgetRef ref) {
+    List<FilterHelper> filters = ref.watch(builderQuriaProvider).filters;
 
     return ReorderableListView(
       padding: EdgeInsets.zero,
       onReorder: (int oldIndex, int newIndex) {
-        Provider.of<BuilderStatsFilterProvider>(context, listen: false).setStatsFilter(oldIndex, newIndex);
+        ref.read(builderQuriaProvider.notifier).setStatsFilter(oldIndex, newIndex);
       },
       children: [
         for (int index = 0; index < filters.length; index++)
           Container(
-            key: ValueKey(filters[index].name),
+            key: ValueKey(fromIntToName(context, filters[index].value)),
             padding: EdgeInsets.zero,
             decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(4)),
             margin: const EdgeInsets.only(bottom: 8),
@@ -47,7 +46,7 @@ class FilterWidget extends StatelessWidget {
                   title: Padding(
                     padding: const EdgeInsets.only(left: 8, top: 0, bottom: 0),
                     child: textBodyBold(
-                      filters[index].name,
+                      fromIntToName(context, filters[index].value),
                       utf8: false,
                     ),
                   ),

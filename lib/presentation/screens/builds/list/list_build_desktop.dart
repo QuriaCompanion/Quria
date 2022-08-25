@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/constants/web_widgets.dart';
@@ -10,12 +10,12 @@ import 'package:quria/presentation/components/misc/mobile_components/mobile_nav_
 import 'package:quria/presentation/screens/builds/list/build_card.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ListBuildDesktop extends StatelessWidget {
+class ListBuildDesktop extends ConsumerWidget {
   final List<BuildStored> builds;
   const ListBuildDesktop({Key? key, required this.builds}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         webHeader(
@@ -36,7 +36,7 @@ class ListBuildDesktop extends StatelessWidget {
                 ),
                 InkWell(
                     onTap: () {
-                      Provider.of<CreateBuildProvider>(context, listen: false).clear();
+                      ref.read(createBuildProvider.notifier).clear();
                       Navigator.pushNamed(context, routeCreateBuild);
                     },
                     child: MobileNavItem(

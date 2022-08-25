@@ -2,6 +2,7 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
 import 'package:quria/data/models/helpers/builderHelper.model.dart';
@@ -14,7 +15,7 @@ import 'package:quria/presentation/screens/builder/builder_results/builder_resul
 import 'package:quria/presentation/screens/builder/builder_results/builder_results_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class BuilderResultsPage extends StatefulWidget {
+class BuilderResultsPage extends ConsumerStatefulWidget {
   const BuilderResultsPage({
     Key? key,
   }) : super(key: key);
@@ -23,14 +24,14 @@ class BuilderResultsPage extends StatefulWidget {
   BuilderResultsPageState createState() => BuilderResultsPageState();
 }
 
-class BuilderResultsPageState extends State<BuilderResultsPage> {
+class BuilderResultsPageState extends ConsumerState<BuilderResultsPage> {
   late Future<List<Build>> _future;
   late BuilderHelper data;
   final manifest = ManifestService();
   @override
   void initState() {
     super.initState();
-    data = BuilderService().buildPreparation(context);
+    data = BuilderService().buildPreparation(ref);
     _future = BuilderService().calculateBuilds(
       data: data,
     );

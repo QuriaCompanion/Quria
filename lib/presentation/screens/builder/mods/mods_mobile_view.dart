@@ -37,7 +37,7 @@ class ModsMobileView extends StatelessWidget {
             children: [
               for (var mods in armorMods.asMap().entries)
                 mobileSectionInverted(context,
-                    title: mods.value.title,
+                    title: ModSlots.fromIntToName(context, mods.value.slotHash),
                     child: ModsMobileSection(
                         width: vw(context),
                         items: mods.value.items,

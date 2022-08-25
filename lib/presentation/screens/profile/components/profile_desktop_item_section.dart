@@ -43,7 +43,7 @@ class ProfileDesktopItemSection extends ConsumerWidget {
     ));
 
     final List<DestinyItemComponent> inventory = ref
-        .watch(vaultDisplayedInventoryProvider(data.selectedCharacter!.characterId!))
+        .watch(vaultDisplayedInventoryProvider(ref.watch(charactersProvider).first.characterId))
         .where((element) => element.bucketHash == bucket)
         .toList();
     final DestinyItemComponent equippedItem = ref
@@ -111,7 +111,7 @@ class ProfileDesktopItemSection extends ConsumerWidget {
                               context: context,
                               barrierColor: const Color.fromARGB(110, 0, 0, 0),
                               builder: (context) {
-                                return desktopItemModal(context,
+                                return desktopItemModal(context, ref,
                                     child: InspectItem(
                                       width: modalWidth(context),
                                     ));
@@ -133,7 +133,7 @@ class ProfileDesktopItemSection extends ConsumerWidget {
                       if (data != equippedItem) {
                         BungieActionsService()
                             .equipItem(
-                          context,
+                          ref,
                           itemId: data.itemInstanceId!,
                           characterId: characters.first.characterId!,
                           itemHash: data.itemHash!,
@@ -186,7 +186,7 @@ class ProfileDesktopItemSection extends ConsumerWidget {
                     onAccept: (DestinyItemComponent newItem) {
                       if (ref.read(itemOwnerProvider(newItem.itemInstanceId)) != data.selectedCharacter?.characterId) {
                         BungieActionsService()
-                            .transferItem(context, newItem.itemInstanceId!, data.selectedCharacter?.characterId,
+                            .transferItem(ref, newItem.itemInstanceId!, data.selectedCharacter?.characterId,
                                 itemHash: newItem.itemHash!, stackSize: 1)
                             .then((_) {
                           ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
@@ -241,7 +241,7 @@ class ProfileDesktopItemSection extends ConsumerWidget {
                   }, onAccept: (DestinyItemComponent data) {
                     if (ref.read(itemOwnerProvider(data.itemInstanceId)) != character.characterId) {
                       BungieActionsService()
-                          .transferItem(context, data.itemInstanceId!, character.characterId,
+                          .transferItem(ref, data.itemInstanceId!, character.characterId,
                               itemHash: data.itemHash!, stackSize: 1)
                           .then((_) {
                         ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
@@ -303,7 +303,7 @@ class ProfileDesktopItemSection extends ConsumerWidget {
                   final itemOwner = ref.read(itemOwnerProvider(newItem.itemInstanceId));
                   if (itemOwner != null && itemOwner == data.selectedCharacter?.characterId) {
                     BungieActionsService()
-                        .transferItem(context, newItem.itemInstanceId!, null, itemHash: newItem.itemHash!, stackSize: 1)
+                        .transferItem(ref, newItem.itemInstanceId!, null, itemHash: newItem.itemHash!, stackSize: 1)
                         .then((_) {
                       ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                         content: textBodyMedium(

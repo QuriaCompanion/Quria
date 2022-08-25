@@ -1,7 +1,7 @@
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildResponse.model.dart';
@@ -16,12 +16,12 @@ import 'package:quria/presentation/components/misc/mobile_components/loading_mod
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
 
-class BuilderResultsDesktopItem extends StatelessWidget {
+class BuilderResultsDesktopItem extends ConsumerWidget {
   final Build buildResult;
   const BuilderResultsDesktopItem({Key? key, required this.buildResult}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Map<String, int> finalStats = {
       StatsStringHash.mobility: 0,
       StatsStringHash.resilience: 0,
@@ -58,7 +58,7 @@ class BuilderResultsDesktopItem extends StatelessWidget {
                 ),
                 CharacterStatsListing(
                     stats: finalStats,
-                    characterId: Provider.of<CharactersProvider>(context).currentCharacter!.characterId!,
+                    characterId: ref.watch(charactersProvider).first.characterId!,
                     width: 220,
                     direction: Axis.horizontal),
               ],
@@ -75,18 +75,19 @@ class BuilderResultsDesktopItem extends StatelessWidget {
                     child: ItemIcon(
                       displayHash: buildResult.equipement[i].displayHash,
                       imageSize: 62,
-                      isMasterworked: Provider.of<InventoryProvider>(context)
-                                  .getItemByInstanceId(buildResult.equipement[i].itemInstanceId)
-                                  ?.state ==
-                              const ItemState(5) ||
-                          Provider.of<InventoryProvider>(context)
-                                  .getItemByInstanceId(buildResult.equipement[i].itemInstanceId)
-                                  ?.state ==
-                              ItemState.Masterwork,
-                      powerLevel: Provider.of<ItemProvider>(context)
-                          .getItemPowerLevel(buildResult.equipement[i].itemInstanceId),
-                      element: Provider.of<ItemProvider>(context).getItemElement(Provider.of<InventoryProvider>(context)
-                          .getItemByInstanceId(buildResult.equipement[i].itemInstanceId)!),
+                      isMasterworked:
+                          ref.watch(itemByInstanceIdProvider(buildResult.equipement[i].itemInstanceId))?.state ==
+                                  const ItemState(5) ||
+                              ref.watch(itemByInstanceIdProvider(buildResult.equipement[i].itemInstanceId))?.state ==
+                                  ItemState.Masterwork,
+                      powerLevel: ref.watch(itemPowerLevelProvider(buildResult.equipement[i].itemInstanceId)),
+                      element: ref.watch(
+                        itemElementProvider(
+                          ref.watch(
+                            itemByInstanceIdProvider(buildResult.equipement[i].itemInstanceId),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
               ],
@@ -113,15 +114,15 @@ class BuilderResultsDesktopItem extends StatelessWidget {
                         );
                       });
 
-                  final items = BuilderService().changeBuildToListOfItems(context, data: buildResult);
-                  BungieActionsService().equipStoredBuild(context, items: items).then((_) => Navigator.pop(context));
+                  final items = BuilderService().changeBuildToListOfItems(ref, data: buildResult);
+                  BungieActionsService().equipStoredBuild(ref, items: items).then((_) => Navigator.pop(context));
                 },
                 width: 185,
               ),
               RoundedButton(
                 text: textBodyMedium(AppLocalizations.of(context)!.save, color: Colors.white),
                 onPressed: () {
-                  BuilderService().redirectToBuildSaving(context, data: buildResult);
+                  BuilderService().redirectToBuildSaving(context, ref, data: buildResult);
                 },
                 textColor: Colors.white,
                 buttonColor: grey,

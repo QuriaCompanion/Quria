@@ -8,14 +8,21 @@ import 'package:quria/data/models/helpers/filterHelper.model.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 
 class BuilderQuriaModel {
-  final List<FilterHelper> filters;
+  final List<FilterHelper> filters = [
+    const FilterHelper(icon: "mobility.svg", value: StatsHash.mobility),
+    const FilterHelper(icon: "resilience.svg", value: StatsHash.resilience),
+    const FilterHelper(icon: "recovery.svg", value: StatsHash.recovery),
+    const FilterHelper(icon: "discipline.svg", value: StatsHash.discipline),
+    const FilterHelper(icon: "intellect.svg", value: StatsHash.intellect),
+    const FilterHelper(icon: "strength.svg", value: StatsHash.strength),
+  ];
   final StatWeighing statWeighing;
   final bool considerMasterwork;
   final bool includeSunset;
   final DestinyInventoryItemDefinition? exotic;
   final DestinyItemComponent? classItem;
-  final List<ModSlots> mods;
-  final List<DestinyInventoryItemDefinition> subclassMods;
+  final List<ModSlots> mods = [];
+  final List<DestinyInventoryItemDefinition> subclassMods = [];
   final String? subclassId;
   final DestinyInventoryItemDefinition? subclass;
 
@@ -24,17 +31,7 @@ class BuilderQuriaModel {
     this.classItem,
     this.subclassId,
     this.subclass,
-    this.subclassMods = const [],
-    this.mods = const [],
     this.statWeighing = StatWeighing.allTiers,
-    this.filters = const [
-      FilterHelper(icon: "mobility.svg", value: StatsHash.mobility),
-      FilterHelper(icon: "resilience.svg", value: StatsHash.resilience),
-      FilterHelper(icon: "recovery.svg", value: StatsHash.recovery),
-      FilterHelper(icon: "discipline.svg", value: StatsHash.discipline),
-      FilterHelper(icon: "intellect.svg", value: StatsHash.intellect),
-      FilterHelper(icon: "strength.svg", value: StatsHash.strength),
-    ],
     this.considerMasterwork = true,
     this.includeSunset = true,
   });
@@ -52,14 +49,11 @@ class BuilderQuriaModel {
     DestinyInventoryItemDefinition? subclass,
   }) {
     return BuilderQuriaModel(
-      filters: filters ?? this.filters,
       statWeighing: statWeighing ?? this.statWeighing,
       considerMasterwork: considerMasterwork ?? this.considerMasterwork,
       includeSunset: includeSunset ?? this.includeSunset,
       exotic: exotic ?? this.exotic,
       classItem: classItem ?? this.classItem,
-      mods: mods ?? this.mods,
-      subclassMods: subclassMods ?? this.subclassMods,
       subclassId: subclassId ?? this.subclassId,
       subclass: subclass ?? this.subclass,
     );

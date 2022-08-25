@@ -15,9 +15,9 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
 class ItemNotifier extends StateNotifier<ItemModel> {
-  ItemNotifier() : super(const ItemModel());
+  ItemNotifier() : super(ItemModel());
   void reset() {
-    state = const ItemModel();
+    state = ItemModel();
   }
 
   void init(DestinyItemComponentSetOfint64? item) {

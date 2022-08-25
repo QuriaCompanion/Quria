@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/data/services/bungie_api/profile.service.dart';
 import 'package:simple_animations/simple_animations.dart';
 import 'dart:math' as math;
 
-class RefreshButton extends StatefulWidget {
+class RefreshButton extends ConsumerStatefulWidget {
   const RefreshButton({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<RefreshButton> createState() => _RefreshButtonState();
+  RefreshButtonState createState() => RefreshButtonState();
 }
 
-class _RefreshButtonState extends State<RefreshButton> with AnimationMixin {
+class RefreshButtonState extends ConsumerState<RefreshButton> with AnimationMixin {
   late AnimationController angleController;
   late Animation<double> angle;
   static const duration = Duration(milliseconds: 500);
@@ -29,7 +30,7 @@ class _RefreshButtonState extends State<RefreshButton> with AnimationMixin {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        ProfileService().fetchProfileData(context);
+        ProfileService().fetchProfileData(ref);
         await angleController.forward();
         angleController.reset();
       },

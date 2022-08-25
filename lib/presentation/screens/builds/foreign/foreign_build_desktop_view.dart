@@ -5,7 +5,7 @@ import 'dart:math' as math;
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -26,7 +26,7 @@ import 'package:quria/presentation/screens/builds/foreign/foreign_build_section.
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
 import 'package:quria/presentation/var/keys.dart';
 
-class ForeignBuildDesktopView extends StatefulWidget {
+class ForeignBuildDesktopView extends ConsumerStatefulWidget {
   final BuildStored foreignBuild;
   const ForeignBuildDesktopView({
     required this.foreignBuild,
@@ -34,10 +34,10 @@ class ForeignBuildDesktopView extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ForeignBuildDesktopView> createState() => _ForeignBuildDesktopViewState();
+  ForeignBuildDesktopViewState createState() => ForeignBuildDesktopViewState();
 }
 
-class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
+class ForeignBuildDesktopViewState extends ConsumerState<ForeignBuildDesktopView> {
   DestinyInventoryItemDefinition? subclassDef;
   DestinyItemComponent? subclassComponent;
   Item? subclassItem;
@@ -47,8 +47,7 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
     subclassItem = widget.foreignBuild.items
         .firstWhereOrNull((item) => item.isEquipped && item.bucketHash == InventoryBucket.subclass);
     subclassDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[subclassItem?.itemHash];
-    subclassComponent =
-        Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(subclassItem?.instanceId ?? "");
+    subclassComponent = ref.read(itemByInstanceIdProvider(subclassItem?.instanceId ?? ""));
   }
 
   @override
@@ -136,8 +135,8 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
                           height: globalPadding(context),
                         ),
                         CharacterStatsListing(
-                          stats: BuilderService().buildStatCalculator(context, items: widget.foreignBuild.items),
-                          characterId: Provider.of<CharactersProvider>(context).currentCharacter!.characterId!,
+                          stats: BuilderService().buildStatCalculator(ref, items: widget.foreignBuild.items),
+                          characterId: ref.watch(charactersProvider).first.characterId!,
                           direction: Axis.horizontal,
                           width: 300,
                         ),
@@ -154,7 +153,7 @@ class _ForeignBuildDesktopViewState extends State<ForeignBuildDesktopView> {
                           text: AppLocalizations.of(context)!.save,
                           callback: () {
                             if (widget.foreignBuild.preset != null) {
-                              BuilderService().useForeignBuild(context, widget.foreignBuild);
+                              BuilderService().useForeignBuild(context, ref, widget.foreignBuild);
                               return;
                             }
                             ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(

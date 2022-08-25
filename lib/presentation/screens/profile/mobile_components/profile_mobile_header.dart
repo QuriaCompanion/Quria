@@ -3,7 +3,6 @@ import 'package:bungie_api/models/destiny_item_talent_grid_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -63,10 +62,11 @@ class ProfileMobileHeader extends ConsumerWidget {
               showDialog(
                 context: context,
                 builder: (context) {
-                  SocketsHelper sockets = DisplayService.getSubclassMods(context, subclassId);
+                  SocketsHelper sockets = DisplayService.getSubclassMods(ref, subclassId);
                   if (isNewSubclass) {
                     return desktopSubclassModal(
                       context,
+                      ref,
                       child: SubclassModsMobileView(
                         width: modalWidth(context),
                         displayedSockets: sockets.displayedSockets,
@@ -115,7 +115,7 @@ class ProfileMobileHeader extends ConsumerWidget {
                   DestinyItemComponent itemComponent = ref.read(itemByInstanceIdProvider(subclassId))!;
                   DestinyInventoryItemDefinition definition =
                       ManifestService.manifestParsed.destinyInventoryItemDefinition[itemComponent.itemHash]!;
-                  return desktopSubclassModal(context,
+                  return desktopSubclassModal(context, ref,
                       child: Container(
                         color: black,
                         child: TalentGridMobileView(
@@ -141,7 +141,7 @@ class ProfileMobileHeader extends ConsumerWidget {
                   ),
                 ),
                 Image.network(
-                  '${DestinyData.bungieLink}$characterSuper?t={${BungieApiService.randomUserInt}}123456',
+                  '${DestinyData.bungieLink}$characterSuper?t=${BungieApiService.randomUserInt}123456',
                   height: width * 0.17,
                   width: width * 0.17,
                   filterQuality: FilterQuality.high,

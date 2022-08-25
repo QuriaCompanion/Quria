@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/Item.model.dart';
@@ -11,7 +11,7 @@ import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_b
 import 'package:quria/presentation/screens/collection/collection_item/collection_item_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ForeignBuildSection extends StatelessWidget {
+class ForeignBuildSection extends ConsumerWidget {
   final double width;
   final Item? item;
   const ForeignBuildSection({
@@ -21,7 +21,7 @@ class ForeignBuildSection extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final itemDef = ManifestService.manifestParsed.destinyInventoryItemDefinition[item?.itemHash];
     return SizedBox(
       width: width,

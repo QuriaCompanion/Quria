@@ -1,8 +1,7 @@
-import 'package:bungie_api/destiny2.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/Item.model.dart';
@@ -18,7 +17,7 @@ import 'package:quria/presentation/screens/builder/subclass/subclass_mobile_view
 import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_mobile_view.dart';
 import 'package:quria/presentation/screens/builds/create/choose_item_modal.dart';
 
-class CreateBuildSection extends StatelessWidget {
+class CreateBuildSection extends ConsumerWidget {
   const CreateBuildSection({
     Key? key,
     required this.bucketHash,
@@ -54,9 +53,8 @@ class CreateBuildSection extends StatelessWidget {
     );
   }
 
-  onpenSubclassModal(BuildContext context) {
-    final data = Provider.of<InventoryProvider>(context, listen: false)
-        .getSubclassesForCharacter(ref.watch(charactersProvider).first.characterId!);
+  onpenSubclassModal(BuildContext context, WidgetRef ref) {
+    final data = ref.read(subclassesForCharacterProvider(ref.watch(charactersProvider).first.characterId!));
     if (width < vw(context)) {
       return showDialog(
         context: context,
@@ -71,9 +69,8 @@ class CreateBuildSection extends StatelessWidget {
                 subclasses: data,
                 onSelect: (subclass) {
                   Navigator.pop(context);
-                  final sockets = DisplayService.getSubclassMods(context, subclass.itemInstanceId!);
-                  final item =
-                      Provider.of<CreateBuildProvider>(context, listen: false).getEquippedItemByBucket(bucketHash);
+                  final sockets = DisplayService.getSubclassMods(ref, subclass.itemInstanceId!);
+                  final item = ref.read(createBuildEquippedItemByBucketProvider(bucketHash));
                   final newItem = Item(
                       itemHash: subclass.itemHash!,
                       instanceId: subclass.itemInstanceId!,
@@ -81,15 +78,12 @@ class CreateBuildSection extends StatelessWidget {
                       bucketHash: bucketHash,
                       mods: sockets.sockets.where((e) => e.plugHash != null).map((e) => e.plugHash!).toList());
                   if (item != null) {
-                    Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem);
+                    ref.read(createBuildProvider.notifier).replaceItem(item, newItem);
                   } else {
-                    Provider.of<CreateBuildProvider>(context, listen: false).addItem(newItem);
+                    ref.read(createBuildProvider.notifier).addItem(newItem);
                   }
-                  if (ManifestService.manifestParsed.destinyInventoryItemDefinition[
-                          Provider.of<InventoryProvider>(context, listen: false).getSuperHashForSubclass(
-                              context,
-                              Provider.of<InventoryProvider>(context, listen: false)
-                                  .getItemByInstanceId(subclass.itemInstanceId!)!)] ==
+                  if (ManifestService.manifestParsed
+                          .destinyInventoryItemDefinition[ref.read(superHashSubclassProvider(subclass))!] ==
                       null) {
                     return;
                   }
@@ -111,7 +105,7 @@ class CreateBuildSection extends StatelessWidget {
                                     subclass: ManifestService
                                         .manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
                                     onChange: (newSockets, i) async {
-                                      Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(
+                                      ref.read(createBuildProvider.notifier).replaceItem(
                                           newItem,
                                           newItem
                                             ..mods =
@@ -168,9 +162,8 @@ class CreateBuildSection extends StatelessWidget {
               subclasses: data,
               onSelect: (subclass) {
                 Navigator.pop(context);
-                final sockets = DisplayService.getSubclassMods(context, subclass.itemInstanceId!);
-                final item =
-                    Provider.of<CreateBuildProvider>(context, listen: false).getEquippedItemByBucket(bucketHash);
+                final sockets = DisplayService.getSubclassMods(ref, subclass.itemInstanceId!);
+                final item = ref.read(createBuildEquippedItemByBucketProvider(bucketHash));
                 final newItem = Item(
                     itemHash: subclass.itemHash!,
                     instanceId: subclass.itemInstanceId!,
@@ -178,15 +171,12 @@ class CreateBuildSection extends StatelessWidget {
                     bucketHash: bucketHash,
                     mods: sockets.sockets.where((e) => e.plugHash != null).map((e) => e.plugHash!).toList());
                 if (item != null) {
-                  Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem);
+                  ref.read(createBuildProvider.notifier).replaceItem(item, newItem);
                 } else {
-                  Provider.of<CreateBuildProvider>(context, listen: false).addItem(newItem);
+                  ref.read(createBuildProvider.notifier).addItem(newItem);
                 }
-                if (ManifestService.manifestParsed.destinyInventoryItemDefinition[
-                        Provider.of<InventoryProvider>(context, listen: false).getSuperHashForSubclass(
-                            context,
-                            Provider.of<InventoryProvider>(context, listen: false)
-                                .getItemByInstanceId(subclass.itemInstanceId!)!)] ==
+                if (ManifestService.manifestParsed
+                        .destinyInventoryItemDefinition[ref.read(superHashSubclassProvider(subclass))!] ==
                     null) {
                   return;
                 }
@@ -196,9 +186,8 @@ class CreateBuildSection extends StatelessWidget {
                   expand: true,
                   context: context,
                   builder: (context) {
-                    final displayedSockets = Provider.of<CreateBuildProvider>(context)
-                        .getEquippedItemByBucket(InventoryBucket.subclass)!
-                        .mods;
+                    final displayedSockets =
+                        ref.watch(createBuildEquippedItemByBucketProvider(InventoryBucket.subclass))?.mods ?? [];
                     return SingleChildScrollView(
                       child: Container(
                         color: black,
@@ -214,7 +203,7 @@ class CreateBuildSection extends StatelessWidget {
                               subclass:
                                   ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
                               onChange: (newSockets, i) async {
-                                Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(
+                                ref.read(createBuildProvider.notifier).replaceItem(
                                     newItem,
                                     newItem
                                       ..mods = newSockets.where((e) => e.hash != null).map((e) => e.hash!).toList());
@@ -247,11 +236,9 @@ class CreateBuildSection extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
-    DestinyItemComponent? itemComponent;
-
-    final item = Provider.of<CreateBuildProvider>(context).getEquippedItemByBucket(bucketHash);
-    itemComponent = Provider.of<InventoryProvider>(context).getItemByInstanceId(item?.instanceId ?? "undefined");
+  Widget build(BuildContext context, WidgetRef ref) {
+    final item = ref.watch(createBuildEquippedItemByBucketProvider(bucketHash));
+    final itemComponent = ref.watch(itemByInstanceIdProvider(item?.instanceId));
     return SizedBox(
       width: width,
       child: Row(
@@ -270,7 +257,7 @@ class CreateBuildSection extends StatelessWidget {
           else if (itemComponent == null && item != null && bucketHash != InventoryBucket.subclass)
             InkWell(
               onTap: () {
-                bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context);
+                bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context, ref);
               },
               child: SizedBox(
                 width: width == vw(context) ? itemSize(context, width) : 80,
@@ -289,13 +276,13 @@ class CreateBuildSection extends StatelessWidget {
               perks: item.mods,
               isSubclass: true,
               callback: () {
-                onpenSubclassModal(context);
+                onpenSubclassModal(context, ref);
               },
             )
           else
             InkWell(
               onTap: () {
-                bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context);
+                bucketHash != InventoryBucket.subclass ? openModal(context) : onpenSubclassModal(context, ref);
               },
               child: SizedBox(
                 width: width == vw(context) ? itemSize(context, width) : 80,

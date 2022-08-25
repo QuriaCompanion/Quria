@@ -1,5 +1,5 @@
 import 'package:bungie_api/enums/item_state.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_instance_component.dart';
@@ -16,7 +16,7 @@ import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class BuilderRecapMobileItem extends StatelessWidget {
+class BuilderRecapMobileItem extends ConsumerWidget {
   final Armor item;
   final List<DestinyInventoryItemDefinition?> mods;
   final double width;
@@ -28,9 +28,8 @@ class BuilderRecapMobileItem extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    DestinyItemInstanceComponent instanceInfo =
-        Provider.of<ItemProvider>(context).getInstanceInfo(item.itemInstanceId)!;
+  Widget build(BuildContext context, WidgetRef ref) {
+    DestinyItemInstanceComponent instanceInfo = ref.watch(instanceInfoProvider(item.itemInstanceId))!;
     //instanciate armor mod space (starts at 10 points for each armor assuming everything is masterworked)
     int armorModspace = 0;
     // loops through the mods in this armor
@@ -86,19 +85,24 @@ class BuilderRecapMobileItem extends StatelessWidget {
             InkWell(
               onTap: () {
                 ref.read(inspectProvider.notifier).setInspectItem(
-                    itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.hash]!,
-                    item: Provider.of<InventoryProvider>(context, listen: false)
-                        .getItemByInstanceId(item.itemInstanceId));
+                      itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.hash]!,
+                      item: ref.read(
+                        itemByInstanceIdProvider(item.itemInstanceId),
+                      ),
+                    );
                 if (vw(context) == width) {
                   Navigator.pushNamed(context, routeInspectMobile);
                 } else {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return desktopItemModal(context,
-                          child: InspectItem(
-                            width: modalWidth(context),
-                          ));
+                      return desktopItemModal(
+                        context,
+                        ref,
+                        child: InspectItem(
+                          width: modalWidth(context),
+                        ),
+                      );
                     },
                   );
                 }
@@ -106,14 +110,16 @@ class BuilderRecapMobileItem extends StatelessWidget {
               child: ItemIcon(
                 displayHash: item.displayHash,
                 imageSize: width == vw(context) ? width * 0.192 : 100,
-                isMasterworked:
-                    Provider.of<InventoryProvider>(context).getItemByInstanceId(item.itemInstanceId)?.state ==
-                            const ItemState(5) ||
-                        Provider.of<InventoryProvider>(context).getItemByInstanceId(item.itemInstanceId)?.state ==
-                            ItemState.Masterwork,
+                isMasterworked: ref.watch(itemByInstanceIdProvider(item.itemInstanceId))?.state == const ItemState(5) ||
+                    ref.watch(itemByInstanceIdProvider(item.itemInstanceId))?.state == ItemState.Masterwork,
                 powerLevel: ref.watch(itemPowerLevelProvider(item.itemInstanceId)),
-                element: Provider.of<ItemProvider>(context)
-                    .getItemElement(Provider.of<InventoryProvider>(context).getItemByInstanceId(item.itemInstanceId)!),
+                element: ref.watch(
+                  itemElementProvider(
+                    ref.watch(
+                      itemByInstanceIdProvider(item.itemInstanceId),
+                    ),
+                  ),
+                ),
               ),
             ),
             Padding(

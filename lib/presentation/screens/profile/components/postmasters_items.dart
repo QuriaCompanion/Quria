@@ -4,7 +4,6 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
@@ -51,6 +50,7 @@ class PostmasterItems extends ConsumerWidget {
                       builder: (context) {
                         return desktopPostmasterModal(
                           context,
+                          ref,
                           child: InspectItem(
                             width: modalWidth(context),
                           ),

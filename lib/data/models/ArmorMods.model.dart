@@ -15,7 +15,7 @@ class ModSlots {
     required this.elementSocketEntries,
     required this.items,
   });
-  String fromIntToName(BuildContext context, int value) {
+  static String fromIntToName(BuildContext context, int value) {
     switch (value) {
       case InventoryBucket.helmet:
         return AppLocalizations.of(context)!.helmet;

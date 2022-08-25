@@ -48,6 +48,7 @@ class DraggableInventoryItem extends ConsumerWidget {
             builder: (context) {
               return desktopItemModal(
                 context,
+                ref,
                 child: InspectItem(
                   width: modalWidth(context),
                 ),

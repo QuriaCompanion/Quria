@@ -66,7 +66,7 @@ final inspectBonusStatProvider = StateProvider<Map<int, int>>((ref) {
 final inspectImageLink = StateProvider<String?>((ref) {
   final DestinyInventoryItemDefinition? itemDef = ref.watch(inspectProvider.select((state) => state?.itemDef));
   return itemDef?.screenshot != null
-      ? '${DestinyData.bungieLink}${itemDef!.screenshot!}?t={${BungieApiService.randomUserInt}}'
+      ? '${DestinyData.bungieLink}${itemDef!.screenshot!}?t=${BungieApiService.randomUserInt}'
       : "${DestinyData.bungieLink}/common/destiny2_content/screenshots/2345794502.jpg?t={${BungieApiService.randomUserInt}}";
 });
 

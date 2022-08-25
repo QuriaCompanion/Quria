@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -31,7 +33,7 @@ class ProfileWidgetState extends ConsumerState<ProfileWidget> {
   @override
   void initState() {
     super.initState();
-    _future = DisplayService.loadManifestAndProfile(context);
+    _future = DisplayService.loadManifestAndProfile(ref);
   }
 
   @override
@@ -41,6 +43,8 @@ class ProfileWidgetState extends ConsumerState<ProfileWidget> {
       builder: ((context, AsyncSnapshot snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           final characters = ref.watch(charactersProvider);
+          inspect(characters);
+
           if (characters.isEmpty) {
             return Column(
               children: [
@@ -58,7 +62,7 @@ class ProfileWidgetState extends ConsumerState<ProfileWidget> {
               ],
             );
           }
-          ProfileHelper data = DisplayService.getProfileData(context);
+          ProfileHelper data = DisplayService.getProfileData(ref);
           if (vw(context) > 1000) {
             return ScaffoldSearchbarDesktop(
                 currentRoute: routeProfile,

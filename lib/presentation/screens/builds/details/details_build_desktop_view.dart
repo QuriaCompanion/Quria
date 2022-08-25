@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -30,25 +30,24 @@ import 'package:quria/presentation/screens/profile/components/character_stats_li
 import 'package:quria/presentation/var/keys.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class DetailsBuildDesktopView extends StatefulWidget {
+class DetailsBuildDesktopView extends ConsumerStatefulWidget {
   const DetailsBuildDesktopView({Key? key}) : super(key: key);
 
   @override
-  State<DetailsBuildDesktopView> createState() => _DetailsBuildDesktopViewState();
+  DetailsBuildDesktopViewState createState() => DetailsBuildDesktopViewState();
 }
 
-class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
+class DetailsBuildDesktopViewState extends ConsumerState<DetailsBuildDesktopView> {
   late final BuildStored _build;
   late final Item? subclassItem;
   DestinyItemComponent? _subclass;
   @override
   void initState() {
     super.initState();
-    _build = Provider.of<DetailsBuildProvider>(context, listen: false).buildStored!;
-    subclassItem =
-        Provider.of<DetailsBuildProvider>(context, listen: false).getEquippedItemByBucket(InventoryBucket.subclass);
+    _build = ref.read(detailsBuildProvider)!;
+    subclassItem = ref.read(createBuildEquippedItemByBucketProvider(InventoryBucket.subclass));
     if (subclassItem != null) {
-      _subclass = Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(subclassItem!.instanceId);
+      _subclass = ref.read(itemByInstanceIdProvider(subclassItem?.instanceId));
     }
   }
 
@@ -127,8 +126,8 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                           height: globalPadding(context),
                         ),
                         CharacterStatsListing(
-                          stats: BuilderService().buildStatCalculator(context, items: _build.items),
-                          characterId: Provider.of<CharactersProvider>(context).currentCharacter!.characterId!,
+                          stats: BuilderService().buildStatCalculator(ref, items: _build.items),
+                          characterId: ref.watch(charactersProvider).first.characterId!,
                           direction: Axis.horizontal,
                           width: 300,
                         ),
@@ -144,7 +143,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                         ModalButton(
                           text: AppLocalizations.of(context)!.equip,
                           callback: () {
-                            BungieActionsService().equipStoredBuild(context, items: _build.items);
+                            BungieActionsService().equipStoredBuild(ref, items: _build.items);
                           },
                           width: 50,
                           icon: 'assets/icons/equipDesktop.svg',
@@ -152,7 +151,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                         ModalButton(
                           text: AppLocalizations.of(context)!.share,
                           callback: () {
-                            BuilderService().shareBuild(context, id: _build.id);
+                            BuilderService().shareBuild(context, ref, id: _build.id);
                           },
                           width: 50,
                           icon: 'assets/icons/shareDesktop.svg',
@@ -160,7 +159,7 @@ class _DetailsBuildDesktopViewState extends State<DetailsBuildDesktopView> {
                         ModalButton(
                           text: AppLocalizations.of(context)!.modify,
                           callback: () {
-                            Provider.of<CreateBuildProvider>(context, listen: false).modifyBuild(_build);
+                            ref.read(createBuildProvider.notifier).modifyBuild(_build);
                             Navigator.of(context).pushNamed(routeCreateBuild);
                           },
                           width: 50,

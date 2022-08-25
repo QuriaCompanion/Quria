@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -16,7 +16,7 @@ import 'package:quria/presentation/screens/builder/subclass_mods/mobile_componen
 import 'package:quria/presentation/screens/inspect/components/armor_mod_desktop_modal.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
-class SubclassModsMobileView extends StatelessWidget {
+class SubclassModsMobileView extends ConsumerWidget {
   final List<DestinyInventoryItemDefinition> displayedSockets;
   final DestinyInventoryItemDefinition subclass;
   final Future<void> Function(List<DestinyInventoryItemDefinition>, int) onChange;
@@ -30,7 +30,7 @@ class SubclassModsMobileView extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     int aspectOne = displayedSockets[5].investmentStats?.firstWhereIndexedOrNull((i, _) {
           return i == 0;
         })?.value ??
@@ -167,8 +167,9 @@ class SubclassModsMobileView extends StatelessWidget {
                                 showDialog(
                                     context: context,
                                     builder: (context) {
-                                      Provider.of<ArmorModModalProvider>(context, listen: false)
-                                          .init(displayedSockets[7 + i]);
+                                      ref
+                                          .read(armorModModalProvider.notifier)
+                                          .update((state) => state = displayedSockets[7 + i]);
                                       return Center(
                                         child: SizedBox(
                                             width: vw(context) * 0.4,

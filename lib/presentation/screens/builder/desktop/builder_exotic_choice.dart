@@ -1,28 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
-import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
+import 'package:quria/data/providers/builder_quria_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
 
-class BuilderExoticChoice extends StatefulWidget {
+class BuilderExoticChoice extends ConsumerWidget {
   const BuilderExoticChoice({Key? key}) : super(key: key);
 
   @override
-  State<BuilderExoticChoice> createState() => _BuilderExoticChoiceState();
-}
-
-class _BuilderExoticChoiceState extends State<BuilderExoticChoice> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     Future<List<DestinyInventoryItemDefinition>> exotics =
-        DisplayService.getExotics(context, Provider.of<CharactersProvider>(context).currentCharacter!.classType!);
+        DisplayService.getExotics(ref, ref.watch(charactersProvider).first.classType!);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -50,7 +45,7 @@ class _BuilderExoticChoiceState extends State<BuilderExoticChoice> {
                     ),
                     itemBuilder: (context, index) {
                       return Container(
-                        decoration: Provider.of<BuilderExoticProvider>(context).exotic == exotics[index]
+                        decoration: ref.watch(builderQuriaProvider.select((value) => value.exotic)) == exotics[index]
                             ? BoxDecoration(
                                 border: Border.all(
                                   color: vanguard,
@@ -60,11 +55,11 @@ class _BuilderExoticChoiceState extends State<BuilderExoticChoice> {
                             : null,
                         child: InkWell(
                           onTap: () {
-                            if (Provider.of<BuilderExoticProvider>(context, listen: false).exotic == exotics[index]) {
-                              Provider.of<BuilderExoticProvider>(context, listen: false).setExoticHash(null);
+                            if (ref.read(builderQuriaProvider).exotic == exotics[index]) {
+                              ref.read(builderQuriaProvider.notifier).setExotic(null);
                               return;
                             }
-                            Provider.of<BuilderExoticProvider>(context, listen: false).setExoticHash(exotics[index]);
+                            ref.read(builderQuriaProvider.notifier).setExotic(exotics[index]);
                           },
                           child: Container(
                             width: 80,

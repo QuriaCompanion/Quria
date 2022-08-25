@@ -1,25 +1,19 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/presentation/components/Header/mobile_components/mobile_character_choice.dart';
 import 'package:quria/presentation/components/misc/mobile_components/burger.dart';
 import 'package:quria/presentation/components/misc/refresh_button.dart';
 
-class ScaffoldCharacters extends StatefulWidget {
+class ScaffoldCharacters extends ConsumerWidget {
   final Widget body;
   const ScaffoldCharacters({required this.body, Key? key}) : super(key: key);
 
   @override
-  State<ScaffoldCharacters> createState() => _ScaffoldCharactersState();
-}
-
-class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
-  bool choosingCharacter = false;
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       backgroundColor: black,
       drawer: const Burger(),
@@ -47,13 +41,13 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
             );
           },
         ),
-        toolbarHeight: choosingCharacter
+        toolbarHeight: ref.watch(choosingCharacterProvider)
             ? ((globalPadding(context) * 4) + (appBarItem(context)) * 3)
             : (globalPadding(context) * 2) + appBarItem(context),
         backgroundColor: Colors.transparent,
         flexibleSpace: SizedBox(
           width: vw(context),
-          height: choosingCharacter
+          height: ref.watch(choosingCharacterProvider)
               ? MediaQuery.of(context).padding.top + (globalPadding(context) * 4) + (appBarItem(context)) * 3
               : appBarHeight(context),
           child: ClipRect(
@@ -69,17 +63,6 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
                       width: 56,
                     ),
                     MobileCharacterChoice(
-                      callback: (newIndex) {
-                        Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(newIndex);
-                        setState(() {
-                          choosingCharacter = !choosingCharacter;
-                        });
-                      },
-                      choosingCharacter: () {
-                        setState(() {
-                          choosingCharacter = !choosingCharacter;
-                        });
-                      },
                       characters: ref.watch(charactersProvider),
                     ),
                     const RefreshButton()
@@ -93,7 +76,7 @@ class _ScaffoldCharactersState extends State<ScaffoldCharacters> {
       body: Container(
         decoration: blackBackground,
         child: SingleChildScrollView(
-          child: widget.body,
+          child: body,
         ),
       ),
     );

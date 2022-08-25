@@ -3,10 +3,11 @@ import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/providers/helpers.dart/inspect_helper.dart';
 import 'package:quria/data/providers/builder_quria_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
@@ -14,15 +15,15 @@ import 'package:quria/presentation/components/detailed_item/item/item_component_
 import 'package:quria/presentation/components/misc/custom_checkbox.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ClassItemChoiceMobileView extends StatelessWidget {
+class ClassItemChoiceMobileView extends ConsumerWidget {
   const ClassItemChoiceMobileView({Key? key}) : super(key: key);
   @override
-  Widget build(BuildContext context) {
-    DestinyCharacterComponent character = Provider.of<CharactersProvider>(context, listen: false).currentCharacter!;
-    List<DestinyItemComponent> classItems = Provider.of<InventoryProvider>(context, listen: false).getArmorForClass(
-      character.classType!,
+  Widget build(BuildContext context, WidgetRef ref) {
+    DestinyCharacterComponent character = ref.watch(charactersProvider).first;
+    List<DestinyItemComponent> classItems = ref.watch(armorForClassProvider(ArmorForGivenClass(
+      classType: character.classType,
       itemSubType: DestinyItemSubType.ClassArmor,
-    );
+    )));
     return Column(
       children: [
         mobileHeader(
@@ -56,19 +57,19 @@ class ClassItemChoiceMobileView extends StatelessWidget {
                       padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
                       child: CustomCheckbox(
                         text: AppLocalizations.of(context)!.builder_class_item_keep_sunset,
-                        value: Provider.of<BuilderCustomInfoProvider>(context).includeSunset,
-                        onChanged: (newValue) =>
-                            Provider.of<BuilderCustomInfoProvider>(context, listen: false).setRemoveSunset(newValue),
+                        value: ref.watch(builderQuriaProvider.select((value) => value.includeSunset)),
+                        onChanged: (newValue) => ref.read(builderQuriaProvider.notifier).setRemoveSunset(newValue),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: globalPadding(context) / 2),
                       child: CustomCheckbox(
-                          text: AppLocalizations.of(context)!.builder_class_item_assume_masterwork,
-                          value: Provider.of<BuilderCustomInfoProvider>(context).considerMasterwork,
-                          onChanged: (newValue) => Provider.of<BuilderCustomInfoProvider>(context, listen: false)
-                              .setConsiderMasterwork(newValue)),
-                    ),
+                        text: AppLocalizations.of(context)!.builder_class_item_assume_masterwork,
+                        value: ref.watch(builderQuriaProvider.select((value) => value.includeSunset)),
+                        onChanged: (newValue) =>
+                            ref.read(builderQuriaProvider.notifier).setConsiderMasterwork(newValue),
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -82,7 +83,7 @@ class ClassItemChoiceMobileView extends StatelessWidget {
                         children: [
                           InkWell(
                               onTap: () {
-                                Provider.of<BuilderCustomInfoProvider>(context, listen: false).setClassItem(item);
+                                ref.watch(builderQuriaProvider.notifier).setClassItem(item);
                                 Navigator.pushNamed(context, routeBuilder);
                               },
                               child: ItemComponentSmart(width: vw(context), item: item)),

@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/ArmorMods.model.dart';
-import 'package:quria/data/providers/builder/builder_mods_provider.dart';
+import 'package:quria/data/providers/builder_quria_provider.dart';
 import 'package:quria/presentation/screens/builder/mods/mobile_components/mod_mobile_section.dart';
 
-class BuilderArmorMods extends StatelessWidget {
+class BuilderArmorMods extends ConsumerWidget {
   const BuilderArmorMods({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    Provider.of<BuilderModsProvider>(context, listen: false).init(context);
-    List<ModSlots> armorMods = Provider.of<BuilderModsProvider>(context).mods;
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.read(builderQuriaProvider.notifier).init();
+    final List<ModSlots> armorMods = ref.watch(builderQuriaProvider).mods;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -36,7 +36,7 @@ class BuilderArmorMods extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  textH3(mods.value.title),
+                  textH3(ModSlots.fromIntToName(context, mods.value.slotHash)),
                   SizedBox(
                     width: vw(context) * 0.22,
                     child: ModsMobileSection(
@@ -45,7 +45,7 @@ class BuilderArmorMods extends StatelessWidget {
                         scoketEntries: mods.value.elementSocketEntries,
                         onChange: (modSlots, index) {
                           armorMods[mods.key].items[index] = modSlots;
-                          Provider.of<BuilderModsProvider>(context, listen: false).setMods(armorMods);
+                          ref.read(builderQuriaProvider.notifier).setMods(armorMods);
                         }),
                   ),
                 ],

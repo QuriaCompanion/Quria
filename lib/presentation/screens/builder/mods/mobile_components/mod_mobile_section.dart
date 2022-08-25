@@ -1,5 +1,5 @@
 import 'package:bungie_api/models/destiny_item_socket_entry_definition.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -10,7 +10,7 @@ import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_
 import 'package:quria/presentation/screens/inspect/components/armor_mod_desktop_modal.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
-class ModsMobileSection extends StatelessWidget {
+class ModsMobileSection extends ConsumerWidget {
   final List<DestinyInventoryItemDefinition?> items;
   final List<DestinyItemSocketEntryDefinition> scoketEntries;
   final void Function(DestinyInventoryItemDefinition, int) onChange;
@@ -24,7 +24,7 @@ class ModsMobileSection extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       children: [
         for (var item in items.asMap().entries)
@@ -57,7 +57,7 @@ class ModsMobileSection extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        Provider.of<ArmorModModalProvider>(context, listen: false).init(item.value!);
+                        ref.read(armorModModalProvider.notifier).update((state) => state = item.value);
                         return Center(
                           child: SizedBox(
                               width: vw(context) * 0.5,

@@ -45,7 +45,7 @@ class CreateBuildNotifier extends StateNotifier<CreateBuildModel> {
 final createBuildProvider =
     StateNotifierProvider<CreateBuildNotifier, CreateBuildModel>((ref) => CreateBuildNotifier());
 
-final getEquippedItemByBucketProvider = StateProviderFamily<Item?, int>((ref, bucketHash) {
+final createBuildEquippedItemByBucketProvider = StateProviderFamily<Item?, int>((ref, bucketHash) {
   return ref
       .watch(createBuildProvider.select((value) => value.items))
       .firstWhereOrNull((element) => element.bucketHash == bucketHash);

@@ -1,6 +1,5 @@
-import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/providers/details_build_provider.dart';
@@ -15,7 +14,7 @@ import 'package:quria/presentation/screens/builder/subclass_mods/subclass_mods_b
 import 'package:quria/presentation/screens/inspect/inspect_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class DetailsBuildSection extends StatelessWidget {
+class DetailsBuildSection extends ConsumerWidget {
   const DetailsBuildSection({
     required this.bucketHash,
     required this.width,
@@ -26,28 +25,26 @@ class DetailsBuildSection extends StatelessWidget {
   final double width;
 
   @override
-  Widget build(BuildContext context) {
-    DestinyItemComponent? itemComponent;
-
-    final item = Provider.of<DetailsBuildProvider>(context).getEquippedItemByBucket(bucketHash);
-    itemComponent = Provider.of<InventoryProvider>(context).getItemByInstanceId(item?.instanceId ?? "undefined");
+  Widget build(BuildContext context, WidgetRef ref) {
+    final item = ref.watch(detailBuildEquippedItemProvider(bucketHash));
+    final itemComponent = ref.watch(itemByInstanceIdProvider(item?.instanceId));
     return SizedBox(
       width: width,
       child: Row(
         children: [
           if (itemComponent != null && item != null && bucketHash != InventoryBucket.subclass)
             ItemComponentDisplayBuild(
-              item: Provider.of<InventoryProvider>(context).getItemByInstanceId(item.instanceId)!,
+              item: itemComponent,
               itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
-              elementIcon: Provider.of<ItemProvider>(context).getItemElement(itemComponent),
-              powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.instanceId),
+              elementIcon: ref.watch(itemElementProvider(itemComponent)),
+              powerLevel: ref.watch(itemPowerLevelProvider(item.instanceId)),
               width: width,
               perks: item.mods,
               isSubclass: false,
               callback: () {
                 ref.read(inspectProvider.notifier).setInspectItem(
                     itemDef: ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!,
-                    item: Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(item.instanceId));
+                    item: itemComponent);
                 if (isMobile(context)) {
                   Navigator.pushNamed(context, routeInspectMobile);
                 } else {
@@ -55,7 +52,7 @@ class DetailsBuildSection extends StatelessWidget {
                       context: context,
                       barrierColor: const Color.fromARGB(110, 0, 0, 0),
                       builder: (context) {
-                        return desktopItemModal(context,
+                        return desktopItemModal(context, ref,
                             child: InspectItem(
                               width: modalWidth(context),
                             ));

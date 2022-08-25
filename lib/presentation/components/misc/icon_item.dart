@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/characters_provider.dart';
@@ -8,7 +8,7 @@ import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 
-class ItemIcon extends StatelessWidget {
+class ItemIcon extends ConsumerWidget {
   final int displayHash;
   final double imageSize;
   final bool isMasterworked;
@@ -32,9 +32,9 @@ class ItemIcon extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     String? imageUrl;
-    if (itemOwner != null && itemOwner != Provider.of<CharactersProvider>(context).currentCharacter?.characterId) {
+    if (itemOwner != null && itemOwner != ref.watch(charactersProvider).first.characterId) {
       final characters = ref.watch(charactersProvider);
       final character = characters.firstWhere((c) => c.characterId == itemOwner);
       imageUrl = character.emblemPath;

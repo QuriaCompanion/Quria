@@ -1,5 +1,5 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_
 import 'package:quria/presentation/screens/inspect/components/armor_mod_desktop_modal.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
-class ArmorMods extends StatelessWidget {
+class ArmorMods extends ConsumerWidget {
   final double width;
   const ArmorMods({
     required this.width,
@@ -27,18 +27,18 @@ class ArmorMods extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final DestinyInventoryItemDefinition itemDef = ref.watch(inspectProvider.select((value) => value?.item))Def!;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final DestinyInventoryItemDefinition itemDef = ref.watch(inspectProvider.select((value) => value?.itemDef))!;
     final DestinyItemComponent item = ref.watch(inspectProvider.select((value) => value?.item))!;
-    final String characterId = ref.watch(itemOwnerProvider(item.itemInstanceId)) ??
-        Provider.of<CharactersProvider>(context).currentCharacter!.characterId!;
+    final String characterId =
+        ref.watch(itemOwnerProvider(item.itemInstanceId)) ?? ref.watch(charactersProvider).first.characterId!;
 
     final Map<int, DestinyItemSocketState> displayedSockets =
-        Provider.of<InspectProvider>(context).getArmorSockets(context);
+        ref.watch(armorSocketsProvider(item.itemInstanceId)).asMap();
 
-    final List<DestinyItemSocketState> sockets = Provider.of<InspectProvider>(context).getSockets(context);
-    final String afinityIcon = Provider.of<InspectProvider>(context).getAfinityIcon(context)!;
-    final int remaining = Provider.of<InspectProvider>(context).getRemainingPoints(context);
+    final List<DestinyItemSocketState> sockets = ref.watch(itemSocketsProvider(item.itemInstanceId));
+    final String afinityIcon = ref.watch(afinityIconProvider(item.itemInstanceId))!;
+    final int remaining = ref.watch(inspectRemainingPointsProvider);
     return Column(children: [
       ArmorAfinity(
           width: width,
@@ -91,7 +91,7 @@ class ArmorMods extends StatelessWidget {
                                 BungieApiService()
                                     .insertSocketPlugFree(item.itemInstanceId!, itemHash, socket.key, characterId)
                                     .then((value) {
-                                  Provider.of<ItemProvider>(context, listen: false).setNewSockets(
+                                  ref.read(itemProvider.notifier).setNewSockets(
                                       item.itemInstanceId!, value!.response!.item!.sockets!.data!.sockets!);
                                 });
                               },
@@ -99,8 +99,8 @@ class ArmorMods extends StatelessWidget {
                           });
                       return;
                     }
-                    Provider.of<ArmorModModalProvider>(context, listen: false)
-                        .init(ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!);
+                    ref.read(armorModModalProvider.notifier).update((state) =>
+                        state = ManifestService.manifestParsed.destinyInventoryItemDefinition[socket.value.plugHash]!);
                     showDialog(
                       context: context,
                       builder: (context) => Center(
@@ -112,7 +112,7 @@ class ArmorMods extends StatelessWidget {
                               await BungieApiService()
                                   .insertSocketPlugFree(item.itemInstanceId!, itemHash, socket.key, characterId)
                                   .then((value) {
-                                Provider.of<ItemProvider>(context, listen: false).setNewSockets(
+                                ref.read(itemProvider.notifier).setNewSockets(
                                     item.itemInstanceId!, value!.response!.item!.sockets!.data!.sockets!);
                               });
                               return;

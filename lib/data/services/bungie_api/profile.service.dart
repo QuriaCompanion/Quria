@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:bungie_api/models/destiny_plug_sets_component.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -212,6 +213,8 @@ class ProfileService {
       ]);
       await StorageService.getDefinitions<DestinyInventoryItemDefinition>(inventoryItemIds).then((_) async =>
           StorageService.getDefinitions<DestinyTalentGridDefinition>(talentIds).then((_) {
+            inspect(ManifestService.manifestParsed.destinyInventoryItemDefinition[235827225]);
+            inspect(response);
             if (components.contains(DestinyComponentType.ProfileInventories)) {
               ref.read(inventoryProvider.notifier).setProfileInventory(response.profileInventory?.data?.items ?? []);
             }
@@ -227,7 +230,9 @@ class ProfileService {
                   .setCharacterCollectible(response.characterCollectibles?.data ?? {});
             }
             if (components.contains(DestinyComponentType.Characters)) {
-              ref.read(charactersProvider.notifier).update((state) => response.characters?.data?.values.toList() ?? []);
+              ref
+                  .read(charactersProvider.notifier)
+                  .update((state) => state = response.characters?.data?.values.toList() ?? []);
             }
 
             if (components.contains(DestinyComponentType.CharacterInventories)) {

@@ -2,13 +2,11 @@ import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/builder_quria_provider.dart';
-import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
@@ -18,12 +16,12 @@ import 'package:quria/presentation/screens/profile/components/character_desktop_
 import 'package:quria/presentation/screens/settings/settings_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class AppbarDesktopDefault extends StatelessWidget {
+class AppbarDesktopDefault extends ConsumerWidget {
   final String currentRoute;
   const AppbarDesktopDefault({Key? key, required this.currentRoute}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       width: vw(context),
       padding: EdgeInsets.symmetric(horizontal: globalPadding(context) / 2),
@@ -69,8 +67,7 @@ class AppbarDesktopDefault extends StatelessWidget {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      List<DestinyCharacterComponent> characters =
-                          Provider.of<CharactersProvider>(context, listen: false).characters;
+                      List<DestinyCharacterComponent> characters = ref.watch(charactersProvider);
                       return Center(
                         child: Container(
                           width: vw(context) * 0.4,
@@ -102,13 +99,8 @@ class AppbarDesktopDefault extends StatelessWidget {
                                     padding: const EdgeInsets.only(top: 16),
                                     child: InkWell(
                                       onTap: () {
-                                        if (character.value !=
-                                            Provider.of<CharactersProvider>(context, listen: false).currentCharacter) {
-                                          Provider.of<CharactersProvider>(context, listen: false)
-                                              .setCurrentCharacter(character.key);
-                                          Provider.of<BuilderCustomInfoProvider>(context, listen: false).reset();
-                                          Provider.of<BuilderExoticProvider>(context, listen: false).reset();
-                                          Provider.of<BuilderSubclassProvider>(context, listen: false).reset();
+                                        if (character.value != characters.first) {
+                                          ref.read(builderQuriaProvider.notifier).reset();
                                         }
                                         Navigator.pop(context);
                                       },
@@ -156,7 +148,7 @@ class AppbarDesktopDefault extends StatelessWidget {
                   );
                 },
                 child: CharacterDesktopBannerInfo(
-                  character: Provider.of<CharactersProvider>(context).currentCharacter!,
+                  character: ref.watch(charactersProvider).first,
                 ),
               ),
               InkWell(

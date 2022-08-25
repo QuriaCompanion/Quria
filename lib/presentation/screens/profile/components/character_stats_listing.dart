@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/statistic_display.dart';
 
-class CharacterStatsListing extends StatefulWidget {
+class CharacterStatsListing extends ConsumerStatefulWidget {
   final Map<String, int> stats;
   final String characterId;
   final double fontSize;
@@ -22,18 +23,18 @@ class CharacterStatsListing extends StatefulWidget {
   CharacterStatsListingState createState() => CharacterStatsListingState();
 }
 
-class CharacterStatsListingState extends State<CharacterStatsListing> {
+class CharacterStatsListingState extends ConsumerState<CharacterStatsListing> {
   late Map<String, String> data;
   @override
   initState() {
     super.initState();
-    data = DisplayService.getStatsListing(context, widget.characterId, widget.stats);
+    data = DisplayService.getStatsListing(ref, widget.characterId, widget.stats);
   }
 
   @override
   void didUpdateWidget(covariant CharacterStatsListing oldWidget) {
     super.didUpdateWidget(oldWidget);
-    data = DisplayService.getStatsListing(context, widget.characterId, widget.stats);
+    data = DisplayService.getStatsListing(ref, widget.characterId, widget.stats);
   }
 
   @override

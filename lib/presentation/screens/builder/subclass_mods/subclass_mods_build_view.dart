@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -15,7 +15,7 @@ import 'package:quria/presentation/screens/builder/subclass_mods/mobile_componen
 import 'package:quria/presentation/screens/inspect/components/armor_mod_desktop_modal.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
 
-class SubclassModsBuildView extends StatefulWidget {
+class SubclassModsBuildView extends ConsumerWidget {
   final List<int> sockets;
   final DestinyInventoryItemDefinition subclass;
   final double width;
@@ -23,20 +23,9 @@ class SubclassModsBuildView extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<SubclassModsBuildView> createState() => _SubclassModsBuildViewState();
-}
-
-class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
-  late final List<DestinyInventoryItemDefinition> displayedSockets;
-  @override
-  void initState() {
-    super.initState();
-    displayedSockets =
-        widget.sockets.map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!).toList();
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final List<DestinyInventoryItemDefinition> displayedSockets =
+        sockets.map((e) => ManifestService.manifestParsed.destinyInventoryItemDefinition[e]!).toList();
     return Container(
         color: black,
         child: Column(
@@ -44,14 +33,14 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
             mobileHeader(
               context,
               image: CachedNetworkImageProvider(
-                  '${DestinyData.bungieLink}${widget.subclass.screenshot!}?t={${BungieApiService.randomUserInt}}12345456'),
-              width: widget.width,
+                  '${DestinyData.bungieLink}${subclass.screenshot!}?t={${BungieApiService.randomUserInt}}12345456'),
+              width: width,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   textH1(
-                    widget.subclass.displayProperties?.name ?? "error",
+                    subclass.displayProperties?.name ?? "error",
                   ),
                 ],
               ),
@@ -77,7 +66,7 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
                     mobileSectionInverted(context,
                         title: displayedSockets[i].itemTypeDisplayName ?? "error",
                         child: SubclassMobileItems(
-                          width: widget.width,
+                          width: width,
                           item: displayedSockets[i],
                           onSocketChange: (newSocket) {},
                         )),
@@ -87,15 +76,14 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
                     child: Column(
                       children: [
                         SubclassMobileItems(
-                          width: widget.width,
+                          width: width,
                           item: displayedSockets[5],
                           onSocketChange: (newSocket) {},
                         ),
                         SizedBox(
                           height: globalPadding(context) / 2,
                         ),
-                        SubclassMobileItems(
-                            width: widget.width, item: displayedSockets[6], onSocketChange: (newSocket) {}),
+                        SubclassMobileItems(width: width, item: displayedSockets[6], onSocketChange: (newSocket) {}),
                       ],
                     ),
                   ),
@@ -108,17 +96,16 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
                               padding: i != 4 ? EdgeInsets.only(right: globalPadding(context)) : EdgeInsets.zero,
                               child: InkWell(
                                 onTap: () {
-                                  if (widget.width == vw(context)) {
+                                  if (width == vw(context)) {
                                     showMaterialModalBottomSheet(
                                         backgroundColor: Colors.transparent,
                                         expand: true,
                                         context: context,
                                         builder: (context) {
                                           return ArmorModsModal(
-                                            width: widget.width,
+                                            width: width,
                                             socket: displayedSockets[7 + i],
-                                            plugSetsHash:
-                                                widget.subclass.sockets!.socketEntries![7 + i].reusablePlugSetHash!,
+                                            plugSetsHash: subclass.sockets!.socketEntries![7 + i].reusablePlugSetHash!,
                                             onSocketChange: (itemHash) {},
                                           );
                                         });
@@ -127,14 +114,15 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
                                   showDialog(
                                       context: context,
                                       builder: (context) {
-                                        Provider.of<ArmorModModalProvider>(context, listen: false)
-                                            .init(displayedSockets[7 + i]);
+                                        ref
+                                            .read(armorModModalProvider.notifier)
+                                            .update((state) => state = displayedSockets[7 + i]);
                                         return Center(
                                           child: SizedBox(
                                               width: vw(context) * 0.4,
                                               child: ArmorModDesktopModal(
                                                 plugSetsHash:
-                                                    widget.subclass.sockets!.socketEntries![7 + i].reusablePlugSetHash!,
+                                                    subclass.sockets!.socketEntries![7 + i].reusablePlugSetHash!,
                                                 onSocketChange: (itemHash) async {},
                                               )),
                                         );
@@ -143,7 +131,7 @@ class _SubclassModsBuildViewState extends State<SubclassModsBuildView> {
                                 child: pictureBordered(
                                   image:
                                       '${DestinyData.bungieLink}${displayedSockets[7 + i].displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}12345456',
-                                  size: widget.width == vw(context) ? itemSize(context, widget.width) : 80,
+                                  size: width == vw(context) ? itemSize(context, width) : 80,
                                 ),
                               ),
                             ),

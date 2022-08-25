@@ -2,7 +2,8 @@ import 'package:bungie_api/enums/destiny_item_type.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -21,31 +22,14 @@ import 'package:quria/presentation/screens/builds/create/create_build_section.da
 import 'package:quria/presentation/var/keys.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class CreateBuildMobileView extends StatefulWidget {
+@immutable
+class CreateBuildMobileView extends ConsumerWidget {
   const CreateBuildMobileView({Key? key}) : super(key: key);
 
   @override
-  State<CreateBuildMobileView> createState() => _CreateBuildMobileViewState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final TextEditingController controller = useTextEditingController(text: '');
 
-class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
-  late TextEditingController _controller;
-  final String _text = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController()..text = Provider.of<CreateBuildProvider>(context, listen: false).name ?? '';
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Column(
       children: [
         mobileHeader(
@@ -71,10 +55,9 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
           child: Column(
             children: [
               TextField(
-                controller: _controller,
+                controller: controller,
                 autofocus: false,
                 maxLength: 45,
-                onChanged: (text) => setState(() => _text),
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                     border: const OutlineInputBorder(
@@ -94,15 +77,12 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                   color: Colors.white,
                 ),
                 onPressed: () async {
-                  final inventory = Provider.of<InventoryProvider>(context, listen: false)
-                      .getCharacterEquipment(
-                        ref.watch(charactersProvider).first.characterId!,
-                      )
+                  final inventory = ref
+                      .read(characterEquipmentProvider(ref.read(charactersProvider).first.characterId!))
                       .where((element) => InventoryBucket.loadoutBucketHashes.contains(element.bucketHash));
                   final List<Item> newItems = [];
                   for (var itemComponent in inventory) {
-                    List<DestinyItemSocketState> sockets =
-                        Provider.of<ItemProvider>(context, listen: false).getItemSockets(itemComponent.itemInstanceId!);
+                    List<DestinyItemSocketState> sockets = ref.read(itemSocketsProvider(itemComponent.itemInstanceId));
 
                     final mods = sockets
                         .where((element) {
@@ -124,7 +104,7 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                         bucketHash: itemComponent.bucketHash!,
                         mods: mods));
                   }
-                  Provider.of<CreateBuildProvider>(context, listen: false).replaceItems(newItems);
+                  ref.read(createBuildProvider.notifier).replaceItems(newItems);
                 },
               ),
               for (final bucket in InventoryBucket.loadoutBucketHashes)
@@ -138,19 +118,19 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                     width: vw(context),
                   ),
                 ),
-              if (_controller.value.text.isEmpty)
+              if (controller.value.text.isEmpty)
                 textBodyBold(AppLocalizations.of(context)!.build_no_name, color: crucible, utf8: false),
-              if (Conditions.isBuildValid(Provider.of<CreateBuildProvider>(context).items))
+              if (Conditions.isBuildValid(ref.watch(createBuildProvider.select((value) => value.items))))
                 textBodyBold(AppLocalizations.of(context)!.build_too_many_exotic, color: crucible, utf8: false),
               RoundedButton(
                   width: vw(context),
-                  isDisabled: _controller.value.text.isEmpty ||
-                      Conditions.isBuildValid(Provider.of<CreateBuildProvider>(context).items),
+                  isDisabled: controller.value.text.isEmpty ||
+                      Conditions.isBuildValid(ref.watch(createBuildProvider.select((value) => value.items))),
                   text: textBodyMedium(AppLocalizations.of(context)!.save, utf8: false, color: black),
                   onPressed: () async {
                     try {
-                      if (Provider.of<CreateBuildProvider>(context, listen: false).id != null) {
-                        await BuilderService().updateBuild(context, _controller.text).then((value) {
+                      if (ref.read(createBuildProvider).id != null) {
+                        await BuilderService().updateBuild(ref, controller.text).then((value) {
                           ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                             content: textBodyMedium(
                               AppLocalizations.of(context)!.build_update_success,
@@ -159,11 +139,11 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                             ),
                             backgroundColor: Colors.green,
                           ));
-                          Provider.of<CreateBuildProvider>(context, listen: false).clear();
+                          ref.read(createBuildProvider.notifier).clear();
                           Navigator.pushNamed(context, routeListBuilds);
                         });
                       } else {
-                        await BuilderService().createBuild(context, _controller.text).then((value) {
+                        await BuilderService().createBuild(ref, controller.text).then((value) {
                           ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                             content: textBodyMedium(
                               AppLocalizations.of(context)!.build_created_success,
@@ -172,7 +152,7 @@ class _CreateBuildMobileViewState extends State<CreateBuildMobileView> {
                             ),
                             backgroundColor: Colors.green,
                           ));
-                          Provider.of<CreateBuildProvider>(context, listen: false).clear();
+                          ref.read(createBuildProvider.notifier).clear();
                           Navigator.pushNamed(context, routeListBuilds);
                         });
                       }

@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
@@ -14,39 +14,23 @@ import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/screens/builds/details/details_build_mobile_actions.dart';
 import 'package:quria/presentation/screens/builds/details/details_build_section.dart';
 
-class DetailsBuildMobileView extends StatefulWidget {
+class DetailsBuildMobileView extends ConsumerWidget {
   const DetailsBuildMobileView({Key? key}) : super(key: key);
 
   @override
-  State<DetailsBuildMobileView> createState() => _DetailsBuildMobileViewState();
-}
-
-class _DetailsBuildMobileViewState extends State<DetailsBuildMobileView> {
-  late final BuildStored _build;
-  @override
-  void initState() {
-    super.initState();
-    _build = Provider.of<DetailsBuildProvider>(context, listen: false).buildStored!;
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final BuildStored buildStored = ref.watch(detailsBuildProvider)!;
+    final subclassHash = ref.watch(detailBuildEquippedItemProvider(InventoryBucket.subclass))?.itemHash;
     return Column(
       children: [
         mobileHeader(
           context,
-          image: ManifestService
-                      .manifestParsed
-                      .destinyInventoryItemDefinition[Provider.of<DetailsBuildProvider>(context, listen: false)
-                          .getEquippedItemByBucket(InventoryBucket.subclass)
-                          ?.itemHash]
-                      ?.screenshot !=
-                  null
+          image: ManifestService.manifestParsed.destinyInventoryItemDefinition[subclassHash]?.screenshot != null
               ? CachedNetworkImageProvider(
-                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<DetailsBuildProvider>(context, listen: false).getEquippedItemByBucket(InventoryBucket.subclass)!.itemHash]!.screenshot!}?t={${BungieApiService.randomUserInt}}12345456')
+                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[subclassHash]!.screenshot!}?t={${BungieApiService.randomUserInt}}12345456')
               : ghostBuild,
           child: textH1(
-            _build.name,
+            buildStored.name,
             utf8: false,
           ),
         ),

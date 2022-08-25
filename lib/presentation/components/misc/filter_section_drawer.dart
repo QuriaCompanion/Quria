@@ -3,21 +3,21 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:bungie_api/enums/destiny_item_sub_type.dart';
 import 'package:bungie_api/enums/tier_type.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
-import 'package:quria/data/providers/filters_provider.dart';
+import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/presentation/components/misc/custom_close_button.dart';
 import 'package:quria/presentation/components/misc/filter_badge.dart';
 import 'package:quria/presentation/components/misc/filter_badge_element.dart';
 import 'package:quria/presentation/components/misc/filter_badge_rarity.dart';
 import 'package:quria/presentation/components/misc/filter_section_card.dart';
 
-class FilterSectionDrawer extends StatelessWidget {
+class FilterSectionDrawer extends ConsumerWidget {
   const FilterSectionDrawer({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       color: black,
       height: isMobile(context) ? null : vh(context),
@@ -52,11 +52,11 @@ class FilterSectionDrawer extends StatelessWidget {
                     FilterSectionCard(
                       title: AppLocalizations.of(context)!.rarity,
                       children: [
-                        for (MapEntry<TierType, bool> item in Provider.of<FiltersProvider>(context).rarity.entries)
+                        for (MapEntry<TierType, bool> item
+                            in ref.watch(filtersProvider.select((value) => value.rarity)).entries)
                           InkWell(
                             onTap: () {
-                              Provider.of<FiltersProvider>(context, listen: false)
-                                  .changeFilter<TierType>(item.key, !item.value);
+                              ref.read(filtersProvider.notifier).changeFilter<TierType>(item.key, !item.value);
                             },
                             child: FilterBadgeText(item: item),
                           ),
@@ -66,11 +66,11 @@ class FilterSectionDrawer extends StatelessWidget {
                     FilterSectionCard(
                       title: AppLocalizations.of(context)!.damage_type,
                       children: [
-                        for (MapEntry<DamageType, bool> item in Provider.of<FiltersProvider>(context).element.entries)
+                        for (MapEntry<DamageType, bool> item
+                            in ref.watch(filtersProvider.select((value) => value.element.entries)))
                           InkWell(
                             onTap: () {
-                              Provider.of<FiltersProvider>(context, listen: false)
-                                  .changeFilter<DamageType>(item.key, !item.value);
+                              ref.read(filtersProvider.notifier).changeFilter<DamageType>(item.key, !item.value);
                             },
                             child: FilterBadgeElement(item: item),
                           ),
@@ -81,10 +81,11 @@ class FilterSectionDrawer extends StatelessWidget {
                       title: AppLocalizations.of(context)!.weapon_type,
                       children: [
                         for (MapEntry<DestinyItemSubType, bool> item
-                            in Provider.of<FiltersProvider>(context).type.entries)
+                            in ref.watch(filtersProvider.select((value) => value.type.entries)))
                           InkWell(
                             onTap: () {
-                              Provider.of<FiltersProvider>(context, listen: false)
+                              ref
+                                  .read(filtersProvider.notifier)
                                   .changeFilter<DestinyItemSubType>(item.key, !item.value);
                             },
                             child: FilterBadge<DestinyItemSubType>(item: item),

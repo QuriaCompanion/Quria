@@ -17,7 +17,7 @@ class ChooseLanguage extends ConsumerWidget {
     ref.read(languageProvider.notifier).setLanguage(Locale.fromSubtags(languageCode: lang));
     DisplayService.isProfileUp = false;
     DisplayService.isManifestUp = false;
-    ProfileService.reset(context);
+    ProfileService.reset(ref);
     StorageService.setLocalStorage('lang', lang).then((value) => {Navigator.pushNamed(context, routeProfile)});
   }
 

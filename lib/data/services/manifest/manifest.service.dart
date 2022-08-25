@@ -29,7 +29,7 @@ class ManifestService {
   final BungieApiService api = BungieApiService();
   static DestinyManifest? _manifestInfo;
   static String language = "en";
-  static const AllDestinyManifestComponents manifestParsed = AllDestinyManifestComponents();
+  static final AllDestinyManifestComponents manifestParsed = AllDestinyManifestComponents();
   final StorageService storage = StorageService();
   static final ManifestService _singleton = ManifestService._internal();
 

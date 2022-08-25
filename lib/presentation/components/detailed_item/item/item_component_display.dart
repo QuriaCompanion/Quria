@@ -1,6 +1,6 @@
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_socket_state.dart';
@@ -15,7 +15,7 @@ import 'package:quria/presentation/components/detailed_item/item/item_component_
 import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ItemComponentDisplay extends StatefulWidget {
+class ItemComponentDisplay extends ConsumerStatefulWidget {
   final DestinyItemComponent item;
   final DestinyInventoryItemDefinition itemDef;
   final String characterId;
@@ -40,10 +40,10 @@ class ItemComponentDisplay extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<ItemComponentDisplay> createState() => _ItemComponentDisplayState();
+  ItemComponentDisplayState createState() => ItemComponentDisplayState();
 }
 
-class _ItemComponentDisplayState extends State<ItemComponentDisplay> with TickerProviderStateMixin {
+class ItemComponentDisplayState extends ConsumerState<ItemComponentDisplay> with TickerProviderStateMixin {
   late bool dropDownActivated = true;
   late AnimationController controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 100));
   late Animation<double> animation;
@@ -71,8 +71,7 @@ class _ItemComponentDisplayState extends State<ItemComponentDisplay> with Ticker
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
           InkWell(
             onTap: () {
-              Provider.of<InspectProvider>(context, listen: false)
-                  .setInspectItem(itemDef: widget.itemDef, item: widget.item);
+              ref.read(inspectProvider.notifier).setInspectItem(itemDef: widget.itemDef, item: widget.item);
               Navigator.pushNamed(context, routeInspectMobile);
             },
             child: Row(

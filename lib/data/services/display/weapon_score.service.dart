@@ -24,7 +24,7 @@ final futureWeaponScoreProvider = FutureProvider<WeaponScore>((ref) async {
   }
   throw Exception('Failed to load weapon score');
 });
-final ratedScoreProvider = FutureProviderFamily<RatedScore, DestinyItemComponent?>((ref, itemComponent) async {
+final ratedScoreProvider = FutureProviderFamily<RatedScore?, DestinyItemComponent?>((ref, itemComponent) async {
   try {
     final weaponScore = await ref.watch(futureWeaponScoreProvider.future);
 
@@ -93,7 +93,7 @@ final ratedScoreProvider = FutureProviderFamily<RatedScore, DestinyItemComponent
     );
     ref.read(inspectProvider.notifier).setWeaponStatus(initStatus);
 
-    return RatedScore(scorePve: pveScore, scorePvp: pvpScore);
+    return RatedScore(scorePve: pveScore / weaponScore.ratioPve, scorePvp: pvpScore / weaponScore.ratioPvp);
   } catch (e) {
     final List<Perk> sockets = [];
     final itemDef = ref.watch(inspectProvider.select((value) => value?.itemDef));
@@ -115,6 +115,6 @@ final ratedScoreProvider = FutureProviderFamily<RatedScore, DestinyItemComponent
       fifthColumn: socketMap.containsKey(4) ? socketMap[4] : null,
     );
     ref.read(inspectProvider.notifier).setWeaponStatus(initStatus);
-    rethrow;
+    return null;
   }
 });

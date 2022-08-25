@@ -1,10 +1,12 @@
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
+import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/presentation/components/Header/mobile_components/mobile_character_choice.dart';
 
-class MobileNavBarCharacterChoice extends StatefulWidget {
+class MobileNavBarCharacterChoice extends ConsumerWidget {
   final Function(int) onCharacterChange;
   final int index;
   final List<DestinyCharacterComponent> characters;
@@ -13,13 +15,7 @@ class MobileNavBarCharacterChoice extends StatefulWidget {
       : super(key: key);
 
   @override
-  State<MobileNavBarCharacterChoice> createState() => _MobileNavBarCharacterChoiceState();
-}
-
-class _MobileNavBarCharacterChoiceState extends State<MobileNavBarCharacterChoice> {
-  bool choosingCharacter = false;
-  @override
-  AppBar build(BuildContext context) {
+  AppBar build(BuildContext context, WidgetRef ref) {
     return AppBar(
       leading: Builder(
         builder: (context) {
@@ -42,21 +38,9 @@ class _MobileNavBarCharacterChoiceState extends State<MobileNavBarCharacterChoic
           );
         },
       ),
-      toolbarHeight: choosingCharacter ? 130 : 56,
+      toolbarHeight: ref.watch(choosingCharacterProvider) ? 130 : 56,
       backgroundColor: Colors.transparent,
-      flexibleSpace: MobileCharacterChoice(
-          callback: (newIndex) {
-            setState(() {
-              widget.onCharacterChange(newIndex);
-              choosingCharacter = !choosingCharacter;
-            });
-          },
-          choosingCharacter: () {
-            setState(() {
-              choosingCharacter = !choosingCharacter;
-            });
-          },
-          characters: widget.characters),
+      flexibleSpace: MobileCharacterChoice(characters: characters),
     );
   }
 }

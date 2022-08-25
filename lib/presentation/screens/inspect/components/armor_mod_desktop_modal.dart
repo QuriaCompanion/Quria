@@ -89,8 +89,8 @@ class ArmorModDesktopModal extends ConsumerWidget {
                       : null,
                   child: InkWell(
                     onTap: () {
-                      ref.read(armorModModalProvider.notifier).update(
-                          (state) => ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]);
+                      ref.read(armorModModalProvider.notifier).update((state) =>
+                          state = ManifestService.manifestParsed.destinyInventoryItemDefinition[plug.plugItemHash]);
                     },
                     child: ArmorModIconDisplay(
                       iconSize: 55,

@@ -4,10 +4,11 @@ import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
+import 'package:quria/data/models/providers/helpers.dart/inspect_helper.dart';
 import 'package:quria/data/providers/builder_quria_provider.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/inventory_provider.dart';
@@ -15,18 +16,16 @@ import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/presentation/components/misc/custom_checkbox.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 
-class BuilderCustomInfo extends StatelessWidget {
+class BuilderCustomInfo extends ConsumerWidget {
   const BuilderCustomInfo({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    DestinyCharacterComponent character = Provider.of<CharactersProvider>(context).currentCharacter!;
-    List<DestinyItemComponent> classItems = Provider.of<InventoryProvider>(context).getArmorForClass(
-      character.classType!,
-      itemSubType: DestinyItemSubType.ClassArmor,
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    DestinyCharacterComponent character = ref.watch(charactersProvider).first;
+    List<DestinyItemComponent> classItems = ref.watch(armorForClassProvider(
+        ArmorForGivenClass(classType: character.classType!, itemSubType: DestinyItemSubType.ClassArmor)));
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -49,9 +48,8 @@ class BuilderCustomInfo extends StatelessWidget {
                 child: CustomCheckbox(
                   color: grey,
                   text: AppLocalizations.of(context)!.builder_class_item_keep_sunset,
-                  value: Provider.of<BuilderCustomInfoProvider>(context).includeSunset,
-                  onChanged: (newValue) =>
-                      Provider.of<BuilderCustomInfoProvider>(context, listen: false).setRemoveSunset(newValue),
+                  value: ref.watch(builderQuriaProvider.select((value) => value.includeSunset)),
+                  onChanged: (newValue) => ref.read(builderQuriaProvider.notifier).setRemoveSunset(newValue),
                   tooltip: AppLocalizations.of(context)!.builder_custom_sunset_tooltip,
                 ),
               ),
@@ -60,11 +58,11 @@ class BuilderCustomInfo extends StatelessWidget {
               ),
               Expanded(
                 child: CustomCheckbox(
-                    color: grey,
-                    text: AppLocalizations.of(context)!.builder_class_item_assume_masterwork,
-                    value: Provider.of<BuilderCustomInfoProvider>(context).considerMasterwork,
-                    onChanged: (newValue) =>
-                        Provider.of<BuilderCustomInfoProvider>(context, listen: false).setConsiderMasterwork(newValue)),
+                  color: grey,
+                  text: AppLocalizations.of(context)!.builder_class_item_assume_masterwork,
+                  value: ref.watch(builderQuriaProvider.select((value) => value.includeSunset)),
+                  onChanged: (newValue) => ref.read(builderQuriaProvider.notifier).setConsiderMasterwork(newValue),
+                ),
               ),
             ],
           ),
@@ -80,7 +78,7 @@ class BuilderCustomInfo extends StatelessWidget {
                   Container(
                     width: 80,
                     height: 80,
-                    decoration: Provider.of<BuilderCustomInfoProvider>(context).classItem == item
+                    decoration: ref.watch(builderQuriaProvider.select((value) => value.classItem)) == item
                         ? BoxDecoration(
                             border: Border.all(
                               color: vanguard,
@@ -90,11 +88,11 @@ class BuilderCustomInfo extends StatelessWidget {
                         : null,
                     child: InkWell(
                       onTap: () {
-                        if (Provider.of<BuilderCustomInfoProvider>(context, listen: false).classItem == item) {
-                          Provider.of<BuilderCustomInfoProvider>(context, listen: false).setClassItem(null);
+                        if (ref.read(builderQuriaProvider).classItem == item) {
+                          ref.read(builderQuriaProvider.notifier).setClassItem(null);
                           return;
                         }
-                        Provider.of<BuilderCustomInfoProvider>(context, listen: false).setClassItem(item);
+                        ref.read(builderQuriaProvider.notifier).setClassItem(item);
                       },
                       child: ItemIcon(
                         displayHash: item.overrideStyleItemHash ?? item.itemHash!,

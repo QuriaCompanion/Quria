@@ -3,14 +3,11 @@ import 'package:bungie_api/models/destiny_item_component.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/builder_quria_provider.dart';
-import 'package:quria/data/providers/builder/builder_exotic_provider.dart';
-import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
-import 'package:quria/data/providers/builder/builder_subclass_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
@@ -18,13 +15,13 @@ import 'package:quria/presentation/components/misc/icon_item.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class BuilderInfoRow extends StatelessWidget {
+class BuilderInfoRow extends ConsumerWidget {
   const BuilderInfoRow({
     Key? key,
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -42,7 +39,7 @@ class BuilderInfoRow extends StatelessWidget {
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   child: Image.network(
-                    '${DestinyData.bungieLink}${Provider.of<BuilderExoticProvider>(context).exotic?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t={${BungieApiService.randomUserInt}}123456',
+                    '${DestinyData.bungieLink}${ref.watch(builderQuriaProvider.select((value) => value.exotic))?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t={${BungieApiService.randomUserInt}}123456',
                     height: vw(context) * .05,
                     width: vw(context) * .05,
                     colorBlendMode: BlendMode.clear,
@@ -61,7 +58,7 @@ class BuilderInfoRow extends StatelessWidget {
             Column(
               children: [
                 SvgPicture.asset(
-                  "assets/icons/${Provider.of<BuilderStatsFilterProvider>(context).filters[0].icon}",
+                  "assets/icons/${ref.watch(builderQuriaProvider.select((value) => value.filters[0].icon))}",
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   color: Colors.white,
@@ -77,7 +74,7 @@ class BuilderInfoRow extends StatelessWidget {
             Column(
               children: [
                 Image.network(
-                  '${DestinyData.bungieLink}${Provider.of<BuilderSubclassProvider>(context).subclass?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t={${BungieApiService.randomUserInt}}123456',
+                  '${DestinyData.bungieLink}${ref.watch(builderQuriaProvider.select((value) => value.subclass))?.displayProperties?.icon ?? DestinyData.exoticArmorLogo}?t={${BungieApiService.randomUserInt}}123456',
                   height: vw(context) * .05,
                   width: vw(context) * .05,
                   colorBlendMode: BlendMode.clear,
@@ -112,7 +109,7 @@ class BuilderInfoRow extends StatelessWidget {
             ),
             Column(
               children: [
-                if (Provider.of<BuilderCustomInfoProvider>(context).classItem == null)
+                if (ref.watch(builderQuriaProvider.select((value) => value.classItem)) == null)
                   Image.network(
                     '${DestinyData.bungieLink}${DestinyData.classItemLogo}?t={${BungieApiService.randomUserInt}}123456',
                     height: vw(context) * .05,
@@ -121,9 +118,9 @@ class BuilderInfoRow extends StatelessWidget {
                     filterQuality: FilterQuality.high,
                     fit: BoxFit.fill,
                   ),
-                if (Provider.of<BuilderCustomInfoProvider>(context).classItem != null)
+                if (ref.watch(builderQuriaProvider.select((value) => value.classItem)) != null)
                   Builder(builder: (context) {
-                    DestinyItemComponent item = Provider.of<BuilderCustomInfoProvider>(context).classItem!;
+                    DestinyItemComponent item = ref.watch(builderQuriaProvider.select((value) => value.classItem))!;
                     return ItemIcon(
                       displayHash: item.overrideStyleItemHash ?? item.itemHash!,
                       imageSize: vw(context) * .05,
@@ -139,7 +136,7 @@ class BuilderInfoRow extends StatelessWidget {
         ),
         RoundedButton(
             buttonColor: yellow,
-            isDisabled: Provider.of<BuilderCustomInfoProvider>(context).classItem == null,
+            isDisabled: ref.watch(builderQuriaProvider.select((value) => value.classItem)) == null,
             text: textBodyBold(
               AppLocalizations.of(context)!.see_builds,
               color: black,

@@ -36,7 +36,7 @@ class ProfileMobileItemCardState extends ConsumerState<ProfileMobileItemCard> {
   void initState() {
     super.initState();
     data = DisplayService.getCardData(
-      context,
+      ref,
       itemInstanceId: widget.item.itemInstanceId!,
       itemHash: widget.item.itemHash,
     );
@@ -46,7 +46,7 @@ class ProfileMobileItemCardState extends ConsumerState<ProfileMobileItemCard> {
   void didUpdateWidget(covariant ProfileMobileItemCard oldWidget) {
     super.didUpdateWidget(oldWidget);
     data = DisplayService.getCardData(
-      context,
+      ref,
       itemInstanceId: widget.item.itemInstanceId!,
       itemHash: widget.item.itemHash,
     );
@@ -94,7 +94,7 @@ class ProfileMobileItemCardState extends ConsumerState<ProfileMobileItemCard> {
             for (final item in widget.inventory)
               Builder(builder: (context) {
                 final dataItem =
-                    DisplayService.getCardData(context, itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
+                    DisplayService.getCardData(ref, itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
                 return InkWell(
                   onTap: () {
                     ref.read(inspectProvider.notifier).setInspectItem(

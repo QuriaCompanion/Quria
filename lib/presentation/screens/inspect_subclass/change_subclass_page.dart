@@ -38,7 +38,7 @@ class ChangeSubclassPage extends ConsumerWidget {
                 });
             BungieActionsService()
                 .equipItem(
-                  context,
+                  ref,
                   itemId: newSubclass.itemInstanceId!,
                   characterId: characterId,
                   itemHash: newSubclass.itemHash!,

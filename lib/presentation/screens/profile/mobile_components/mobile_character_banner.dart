@@ -3,22 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/presentation/screens/profile/components/character_banner_info.dart';
 
-class MobileCharacterBanner extends StatefulWidget {
-  final List<DestinyCharacterComponent> characters;
+class MobileCharacterBanner extends StatelessWidget {
+  final DestinyCharacterComponent character;
   final int characterIndex;
   final Function chooseCharacter;
   const MobileCharacterBanner({
     Key? key,
-    required this.characters,
+    required this.character,
     required this.characterIndex,
     required this.chooseCharacter,
   }) : super(key: key);
 
-  @override
-  State<MobileCharacterBanner> createState() => _MobileCharacterBannerState();
-}
-
-class _MobileCharacterBannerState extends State<MobileCharacterBanner> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -26,12 +21,10 @@ class _MobileCharacterBannerState extends State<MobileCharacterBanner> {
       children: [
         InkWell(
           onTap: () {
-            setState(() {
-              widget.chooseCharacter();
-            });
+            chooseCharacter();
           },
           child: CharacterBannerInfo(
-            character: widget.characters[widget.characterIndex],
+            character: character,
           ),
         ),
         IconButton(
@@ -42,9 +35,7 @@ class _MobileCharacterBannerState extends State<MobileCharacterBanner> {
           iconSize: vw(context) * 0.064,
           color: greyLight,
           onPressed: () {
-            setState(() {
-              widget.chooseCharacter();
-            });
+            chooseCharacter();
           },
         ),
       ],

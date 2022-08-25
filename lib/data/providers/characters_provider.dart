@@ -19,4 +19,6 @@ void init(Map<String, DestinyCharacterComponent>? characters, WidgetRef ref) {
   ref.read(charactersProvider.notifier).update((state) => state..replaceRange(0, state.length, list));
 }
 
+final choosingCharacterProvider = StateProvider<bool>((ref) => false);
+
 final charactersProvider = StateProvider<List<DestinyCharacterComponent>>((ref) => []);

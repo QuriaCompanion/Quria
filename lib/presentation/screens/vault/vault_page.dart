@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/helpers/profileHelper.model.dart';
-import 'package:quria/data/models/helpers/vaultHelper.model.dart';
 import 'package:quria/data/services/display/display.service.dart';
 import 'package:quria/presentation/components/misc/desktop_components/scaffold_searchbar_desktop.dart';
 import 'package:quria/presentation/components/misc/filter_section_drawer.dart';
@@ -13,20 +13,20 @@ import 'package:quria/presentation/screens/profile/profile_desktop_view.dart';
 import 'package:quria/presentation/screens/vault/vault_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class VaultPage extends StatefulWidget {
+class VaultPage extends ConsumerStatefulWidget {
   const VaultPage({Key? key}) : super(key: key);
 
   @override
-  State<VaultPage> createState() => _VaultPageState();
+  VaultPageState createState() => VaultPageState();
 }
 
-class _VaultPageState extends State<VaultPage> {
+class VaultPageState extends ConsumerState<VaultPage> {
   late Future<void> _future;
 
   @override
   void initState() {
     super.initState();
-    _future = DisplayService.loadManifestAndProfile(context);
+    _future = DisplayService.loadManifestAndProfile(ref);
   }
 
   @override
@@ -59,7 +59,7 @@ class _VaultPageState extends State<VaultPage> {
                 body: const VaultMobileView(),
               );
             } else {
-              ProfileHelper data = DisplayService.getProfileData(context);
+              ProfileHelper data = DisplayService.getProfileData(ref);
               return ScaffoldSearchbarDesktop(
                 currentRoute: routeProfile,
                 body: ProfileDesktopView(

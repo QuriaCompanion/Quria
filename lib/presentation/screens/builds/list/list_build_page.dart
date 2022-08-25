@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
@@ -11,14 +11,14 @@ import 'package:quria/presentation/screens/builds/list/list_build_desktop.dart';
 import 'package:quria/presentation/screens/builds/list/list_build_mobile.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ListBuildPage extends StatefulWidget {
+class ListBuildPage extends ConsumerStatefulWidget {
   const ListBuildPage({Key? key}) : super(key: key);
 
   @override
-  State<ListBuildPage> createState() => _ListBuildPageState();
+  ListBuildPageState createState() => ListBuildPageState();
 }
 
-class _ListBuildPageState extends State<ListBuildPage> {
+class ListBuildPageState extends ConsumerState<ListBuildPage> {
   late Future<List<BuildStored>> _future;
   @override
   void initState() {
@@ -34,10 +34,8 @@ class _ListBuildPageState extends State<ListBuildPage> {
         if (snapshot.connectionState == ConnectionState.done) {
           List<BuildStored> builds = snapshot.data ?? [];
           builds.sort((a, b) => b.date.compareTo(a.date));
-          builds = builds
-              .where((element) =>
-                  element.className == Provider.of<CharactersProvider>(context).currentCharacter?.classType)
-              .toList();
+          builds =
+              builds.where((element) => element.className == ref.watch(charactersProvider).first.classType).toList();
           if (isMobile(context)) {
             return ScaffoldCharacters(
                 body: ListBuildMobile(

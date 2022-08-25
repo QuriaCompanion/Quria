@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:provider/provider.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
@@ -15,7 +15,7 @@ import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:quria/presentation/var/keys.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class DetailsBuildMobileActions extends StatelessWidget {
+class DetailsBuildMobileActions extends ConsumerWidget {
   final double width;
   const DetailsBuildMobileActions({
     required this.width,
@@ -23,8 +23,8 @@ class DetailsBuildMobileActions extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    BuildStored build = Provider.of<DetailsBuildProvider>(context, listen: false).buildStored!;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final BuildStored buildStored = ref.watch(detailsBuildProvider)!;
     return Padding(
       padding: EdgeInsets.only(top: globalPadding(context) / 2),
       child: Row(
@@ -35,21 +35,21 @@ class DetailsBuildMobileActions extends StatelessWidget {
               title: AppLocalizations.of(context)!.equip,
               width: width,
               onTap: () {
-                BungieActionsService().equipStoredBuild(context, items: build.items);
+                BungieActionsService().equipStoredBuild(ref, items: buildStored.items);
               }),
           QuickAction(
               icon: "assets/icons/Share.svg",
               title: AppLocalizations.of(context)!.share,
               width: width,
               onTap: () {
-                BuilderService().shareBuild(context, id: build.id);
+                BuilderService().shareBuild(context, ref, id: buildStored.id);
               }),
           QuickAction(
               icon: "assets/icons/Save.svg",
               title: AppLocalizations.of(context)!.modify,
               width: width,
               onTap: () {
-                Provider.of<CreateBuildProvider>(context, listen: false).modifyBuild(build);
+                ref.read(createBuildProvider.notifier).setBuild(buildStored.items);
                 Navigator.of(context).pushNamed(routeCreateBuild);
               }),
           QuickAction(
@@ -66,7 +66,7 @@ class DetailsBuildMobileActions extends StatelessWidget {
                         width: width,
                         onDelete: () async {
                           try {
-                            await BuilderService().deleteBuild(build.id).then((_) {
+                            await BuilderService().deleteBuild(buildStored.id).then((_) {
                               ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(
                                 content: textBodyMedium(
                                   AppLocalizations.of(context)!.build_delete_success,

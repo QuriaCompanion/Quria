@@ -1,6 +1,6 @@
 import 'package:bungie_api/enums/item_state.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +12,7 @@ import 'package:quria/data/services/bungie_api/enums/destiny_data.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
 import 'package:quria/presentation/components/misc/icon_item.dart';
 
-class ItemComponentSmart extends StatelessWidget {
+class ItemComponentSmart extends ConsumerWidget {
   final DestinyItemComponent item;
   final double width;
   const ItemComponentSmart({
@@ -22,8 +22,8 @@ class ItemComponentSmart extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final instanceInfo = Provider.of<ItemProvider>(context).getInstanceInfo(item.itemInstanceId!);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final instanceInfo = ref.watch(instanceInfoProvider(item.itemInstanceId));
     final DestinyInventoryItemDefinition itemDef =
         ManifestService.manifestParsed.destinyInventoryItemDefinition[item.itemHash]!;
     final String? elementIcon = ManifestService

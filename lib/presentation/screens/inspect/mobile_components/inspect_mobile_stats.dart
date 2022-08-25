@@ -21,8 +21,8 @@ class InspectMobileStats extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    DestinyInventoryItemDefinition itemDef = ref.watch(inspectProvider.select((value) => value!.itemDef))!;
-    String instanceId = ref.watch(inspectProvider.select((value) => value!.item!.itemInstanceId))!;
+    DestinyInventoryItemDefinition itemDef = ref.watch(inspectProvider.select((value) => value?.itemDef))!;
+    String? instanceId = ref.watch(inspectProvider.select((value) => value?.item?.itemInstanceId));
 
     Map<String, DestinyStat> stats = ref.watch(itemPrecalculatedStatsProvider(instanceId));
     return Column(

@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/mobile_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/StatWeighing.enum.dart';
-import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
+import 'package:quria/data/providers/builder_quria_provider.dart';
 import 'package:quria/presentation/screens/builder/components/filter.dart';
 
-class StatsFilterMobileView extends StatefulWidget {
+class StatsFilterMobileView extends ConsumerWidget {
   const StatsFilterMobileView({Key? key}) : super(key: key);
 
   @override
-  State<StatsFilterMobileView> createState() => _StatsFilterMobileViewState();
-}
-
-class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Column(
       children: [
         mobileHeader(context,
@@ -49,13 +44,13 @@ class _StatsFilterMobileViewState extends State<StatsFilterMobileView> {
               isExpanded: true,
               icon: SvgPicture.asset("assets/icons/DropIcon.svg"),
               dropdownColor: blackLight,
-              value: Provider.of<BuilderStatsFilterProvider>(context).statWeighing,
+              value: ref.watch(builderQuriaProvider.select((value) => value.statWeighing)),
               items: StatWeighing.values.map((StatWeighing classType) {
                 return DropdownMenuItem<StatWeighing>(value: classType, child: getStatText(context, classType));
               }).toList(),
               onChanged: (StatWeighing? value) {
                 if (value != null) {
-                  Provider.of<BuilderStatsFilterProvider>(context, listen: false).setStatWeighing(value);
+                  ref.read(builderQuriaProvider.notifier).setStatWeighing(value);
                 }
               }),
         ),

@@ -1,7 +1,7 @@
 import 'package:bungie_api/models/destiny_character_component.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/characters_provider.dart';
@@ -13,7 +13,7 @@ import 'package:quria/presentation/components/misc/error_dialog.dart';
 import 'package:quria/presentation/components/misc/mobile_components/character_transfer_item.dart';
 import 'package:quria/presentation/var/keys.dart';
 
-class EquipModal extends StatelessWidget {
+class EquipModal extends ConsumerWidget {
   final String instanceId;
   final int itemHash;
   final double? width;
@@ -26,10 +26,10 @@ class EquipModal extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     List<DestinyCharacterComponent> characters = ref.watch(charactersProvider);
-    if (Provider.of<InventoryProvider>(context).isItemEquipped(instanceId)) {
-      final owner = Provider.of<InventoryProvider>(context).getItemOwner(instanceId);
+    if (ref.watch(isItemEquippedProvider(instanceId))) {
+      final owner = ref.watch(itemOwnerProvider(instanceId));
       characters = characters.where((element) => element.characterId != owner).toList();
     }
 
@@ -76,7 +76,7 @@ class EquipModal extends StatelessWidget {
                 child: InkWell(
                   onTap: () async {
                     await BungieActionsService()
-                        .equipItem(context, itemId: instanceId, characterId: character.characterId!, itemHash: itemHash)
+                        .equipItem(ref, itemId: instanceId, characterId: character.characterId!, itemHash: itemHash)
                         .then((_) {
                       Navigator.pop(context);
                       ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(SnackBar(

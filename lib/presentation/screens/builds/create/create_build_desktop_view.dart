@@ -1,7 +1,8 @@
 import 'package:bungie_api/destiny2.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/desktop_widgets.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -28,32 +29,11 @@ import 'package:quria/presentation/screens/profile/components/character_stats_li
 import 'package:quria/presentation/var/keys.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class CreateBuildDesktopView extends StatefulWidget {
+class CreateBuildDesktopView extends ConsumerWidget {
   const CreateBuildDesktopView({Key? key}) : super(key: key);
 
-  @override
-  State<CreateBuildDesktopView> createState() => _CreateBuildDesktopViewState();
-}
-
-class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
-  late TextEditingController _controller;
-  final String _text = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController()..text = Provider.of<CreateBuildProvider>(context, listen: false).name ?? '';
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  onpenSubclassModal(BuildContext context) {
-    final data = Provider.of<InventoryProvider>(context, listen: false)
-        .getSubclassesForCharacter(ref.watch(charactersProvider).first.characterId!);
+  onpenSubclassModal(BuildContext context, WidgetRef ref) {
+    final data = ref.watch(subclassesForCharacterProvider(ref.watch(charactersProvider).first.characterId!));
 
     return showDialog(
       context: context,
@@ -66,9 +46,8 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
             subclasses: data,
             onSelect: (subclass) {
               Navigator.pop(context);
-              final sockets = DisplayService.getSubclassMods(context, subclass.itemInstanceId!);
-              final item = Provider.of<CreateBuildProvider>(context, listen: false)
-                  .getEquippedItemByBucket(InventoryBucket.subclass);
+              final sockets = DisplayService.getSubclassMods(ref, subclass.itemInstanceId!);
+              final item = ref.read(createBuildEquippedItemByBucketProvider(InventoryBucket.subclass));
               final newItem = Item(
                   itemHash: subclass.itemHash!,
                   instanceId: subclass.itemInstanceId!,
@@ -76,17 +55,14 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                   bucketHash: InventoryBucket.subclass,
                   mods: sockets.sockets.where((e) => e.plugHash != null).map((e) => e.plugHash!).toList());
               if (item != null && item.itemHash != newItem.itemHash) {
-                Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem);
+                ref.read(createBuildProvider.notifier).replaceItem(item, newItem);
               } else if (item != null) {
-                Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(item, newItem..mods = item.mods);
+                ref.read(createBuildProvider.notifier).replaceItem(item, newItem..mods = item.mods);
               } else {
-                Provider.of<CreateBuildProvider>(context, listen: false).addItem(newItem);
+                ref.read(createBuildProvider.notifier).addItem(newItem);
               }
-              if (ManifestService.manifestParsed.destinyInventoryItemDefinition[
-                      Provider.of<InventoryProvider>(context, listen: false).getSuperHashForSubclass(
-                          context,
-                          Provider.of<InventoryProvider>(context, listen: false)
-                              .getItemByInstanceId(subclass.itemInstanceId!)!)] ==
+              if (ManifestService
+                      .manifestParsed.destinyInventoryItemDefinition[ref.read(superHashSubclassProvider(subclass))!] ==
                   null) {
                 return;
               }
@@ -94,7 +70,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                 context: context,
                 builder: (context) {
                   final displayedSockets =
-                      Provider.of<CreateBuildProvider>(context).getEquippedItemByBucket(InventoryBucket.subclass)!.mods;
+                      ref.watch(createBuildEquippedItemByBucketProvider(InventoryBucket.subclass))?.mods ?? [];
                   return desktopRegularModal(
                     context,
                     child: Container(
@@ -109,7 +85,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                                 .toList(),
                             subclass: ManifestService.manifestParsed.destinyInventoryItemDefinition[subclass.itemHash]!,
                             onChange: (newSockets, i) async {
-                              Provider.of<CreateBuildProvider>(context, listen: false).replaceItem(newItem,
+                              ref.read(createBuildProvider.notifier).replaceItem(newItem,
                                   newItem..mods = newSockets.where((e) => e.hash != null).map((e) => e.hash!).toList());
                             },
                           ),
@@ -139,14 +115,15 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final controller = useTextEditingController(text: '');
     return Column(
       children: [
         webHeader(
           context,
           image: ghostBuild,
           child: textDesktopTitle(
-            Provider.of<CreateBuildProvider>(context).id == null
+            ref.watch(createBuildProvider.select((value) => value.id)) == null
                 ? AppLocalizations.of(context)!.create_build
                 : AppLocalizations.of(context)!.update_build,
             utf8: false,
@@ -168,12 +145,10 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                     ),
                     child: Column(
                       children: [
-                        if (Provider.of<CreateBuildProvider>(context)
-                                .getEquippedItemByBucket(InventoryBucket.subclass) !=
-                            null)
+                        if (ref.watch(createBuildEquippedItemByBucketProvider(InventoryBucket.subclass)) != null)
                           InkWell(
                             onTap: () {
-                              onpenSubclassModal(context);
+                              onpenSubclassModal(context, ref);
                             },
                             child: Stack(
                               alignment: Alignment.center,
@@ -187,7 +162,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                                   ),
                                 ),
                                 Image.network(
-                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[Provider.of<CreateBuildProvider>(context).items.where((element) => element.bucketHash == InventoryBucket.subclass).first.itemHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456',
+                                  '${DestinyData.bungieLink}${ManifestService.manifestParsed.destinyInventoryItemDefinition[ref.watch(createBuildEquippedItemByBucketProvider(InventoryBucket.subclass))!.itemHash]!.displayProperties!.icon!}?t={${BungieApiService.randomUserInt}}123456',
                                   height: 75,
                                   width: 75,
                                   filterQuality: FilterQuality.high,
@@ -199,7 +174,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                         else
                           InkWell(
                             onTap: () {
-                              onpenSubclassModal(context);
+                              onpenSubclassModal(context, ref);
                             },
                             child: const SizedBox(
                               width: 80,
@@ -212,18 +187,17 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                           ),
                         const SizedBox(height: 16),
                         CharacterStatsListing(
-                          stats: BuilderService()
-                              .buildStatCalculator(context, items: Provider.of<CreateBuildProvider>(context).items),
-                          characterId: Provider.of<CharactersProvider>(context).currentCharacter!.characterId!,
+                          stats: BuilderService().buildStatCalculator(ref,
+                              items: ref.watch(createBuildProvider.select((value) => value.items))),
+                          characterId: ref.watch(charactersProvider).first.characterId!,
                           direction: Axis.horizontal,
                           width: 300,
                         ),
                         const SizedBox(height: 16),
                         TextField(
-                          controller: _controller,
+                          controller: controller,
                           autofocus: false,
                           maxLength: 45,
-                          onChanged: (text) => setState(() => _text),
                           style: const TextStyle(color: Colors.white),
                           decoration: InputDecoration(
                               border: const OutlineInputBorder(
@@ -235,13 +209,13 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                         const SizedBox(
                           height: 16,
                         ),
-                        if (_controller.value.text.isEmpty)
+                        if (controller.value.text.isEmpty)
                           textBodyBold(
                             AppLocalizations.of(context)!.build_no_name,
                             color: crucible,
                             utf8: false,
                           ),
-                        if (Conditions.isBuildValid(Provider.of<CreateBuildProvider>(context).items))
+                        if (Conditions.isBuildValid(ref.watch(createBuildProvider.select((value) => value.items))))
                           textBodyBold(
                             AppLocalizations.of(context)!.build_too_many_exotic,
                             color: crucible,
@@ -250,13 +224,13 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                         RoundedButton(
                             width: vw(context),
                             disabledColor: Colors.white,
-                            isDisabled: _controller.value.text.isEmpty ||
-                                Conditions.isBuildValid(Provider.of<CreateBuildProvider>(context).items),
+                            isDisabled: controller.value.text.isEmpty ||
+                                Conditions.isBuildValid(ref.watch(createBuildProvider.select((value) => value.items))),
                             text: textBodyMedium(AppLocalizations.of(context)!.save, utf8: false, color: black),
                             onPressed: () async {
                               try {
-                                if (Provider.of<CreateBuildProvider>(context, listen: false).id != null) {
-                                  await BuilderService().updateBuild(context, _controller.text).then((value) {
+                                if (ref.watch(createBuildProvider.select((value) => value.id)) != null) {
+                                  await BuilderService().updateBuild(ref, controller.text).then((value) {
                                     ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
                                       SnackBar(
                                         content: textBodyMedium(
@@ -267,11 +241,11 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                                         backgroundColor: Colors.green,
                                       ),
                                     );
-                                    Provider.of<CreateBuildProvider>(context, listen: false).clear();
+                                    ref.read(createBuildProvider.notifier).clear();
                                     Navigator.pushNamed(context, routeListBuilds);
                                   });
                                 } else {
-                                  await BuilderService().createBuild(context, _controller.text).then((value) {
+                                  await BuilderService().createBuild(ref, controller.text).then((value) {
                                     ScaffoldMessenger.of(scaffoldKey.currentContext!).showSnackBar(
                                       SnackBar(
                                         content: textBodyMedium(
@@ -282,7 +256,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                                         backgroundColor: Colors.green,
                                       ),
                                     );
-                                    Provider.of<CreateBuildProvider>(context, listen: false).clear();
+                                    ref.read(createBuildProvider.notifier).clear();
                                     Navigator.pushNamed(context, routeListBuilds);
                                   });
                                 }
@@ -302,17 +276,13 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                             color: Colors.white,
                           ),
                           onPressed: () async {
-                            final inventory = Provider.of<InventoryProvider>(context, listen: false)
-                                .getCharacterEquipment(
-                                  Provider.of<CharactersProvider>(context, listen: false)
-                                      .currentCharacter!
-                                      .characterId!,
-                                )
+                            final inventory = ref
+                                .read(characterEquipmentProvider(ref.read(charactersProvider).first.characterId!))
                                 .where((element) => InventoryBucket.loadoutBucketHashes.contains(element.bucketHash));
                             final List<Item> newItems = [];
                             for (var itemComponent in inventory) {
-                              List<DestinyItemSocketState> sockets = Provider.of<ItemProvider>(context, listen: false)
-                                  .getItemSockets(itemComponent.itemInstanceId!);
+                              List<DestinyItemSocketState> sockets =
+                                  ref.read(itemSocketsProvider(itemComponent.itemInstanceId!));
 
                               final mods = sockets
                                   .where((element) {
@@ -334,7 +304,7 @@ class _CreateBuildDesktopViewState extends State<CreateBuildDesktopView> {
                                   bucketHash: itemComponent.bucketHash!,
                                   mods: mods));
                             }
-                            Provider.of<CreateBuildProvider>(context, listen: false).replaceItems(newItems);
+                            ref.read(createBuildProvider.notifier).replaceItems(newItems);
                           },
                         ),
                       ],

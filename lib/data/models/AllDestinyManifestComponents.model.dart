@@ -56,116 +56,115 @@ import 'package:quria/data/models/bungie_api_dart/destiny_sandbox_perk_definitio
 import 'package:quria/data/models/bungie_api_dart/destiny_stat_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_talent_grid_definition.dart';
 
-@immutable
 class AllDestinyManifestComponents {
-  const AllDestinyManifestComponents();
+  AllDestinyManifestComponents();
 
   @JsonKey(name: 'DestinyPlaceDefinition')
-  final Map<int, DestinyPlaceDefinition> destinyPlaceDefinition = const {};
+  final Map<int, DestinyPlaceDefinition> destinyPlaceDefinition = {};
   @JsonKey(name: 'DestinyActivityDefinition')
-  final Map<int, DestinyActivityDefinition> destinyActivityDefinition = const {};
+  final Map<int, DestinyActivityDefinition> destinyActivityDefinition = {};
   @JsonKey(name: 'DestinyActivityTypeDefinition')
-  final Map<int, DestinyActivityTypeDefinition> destinyActivityTypeDefinition = const {};
+  final Map<int, DestinyActivityTypeDefinition> destinyActivityTypeDefinition = {};
   @JsonKey(name: 'DestinyClassDefinition')
-  final Map<int, DestinyClassDefinition> destinyClassDefinition = const {};
+  final Map<int, DestinyClassDefinition> destinyClassDefinition = {};
   @JsonKey(name: 'DestinyGenderDefinition')
-  final Map<int, DestinyGenderDefinition> destinyGenderDefinition = const {};
+  final Map<int, DestinyGenderDefinition> destinyGenderDefinition = {};
   @JsonKey(name: 'DestinyInventoryBucketDefinition')
-  final Map<int, DestinyInventoryBucketDefinition> destinyInventoryBucketDefinition = const {};
+  final Map<int, DestinyInventoryBucketDefinition> destinyInventoryBucketDefinition = {};
   @JsonKey(name: 'DestinyRaceDefinition')
-  final Map<int, DestinyRaceDefinition> destinyRaceDefinition = const {};
+  final Map<int, DestinyRaceDefinition> destinyRaceDefinition = {};
   @JsonKey(name: 'DestinyTalentGridDefinition')
-  final Map<int, DestinyTalentGridDefinition> destinyTalentGridDefinition = const {};
+  final Map<int, DestinyTalentGridDefinition> destinyTalentGridDefinition = {};
   @JsonKey(name: 'DestinyUnlockDefinition')
-  final Map<int, DestinyUnlockDefinition> destinyUnlockDefinition = const {};
+  final Map<int, DestinyUnlockDefinition> destinyUnlockDefinition = {};
   @JsonKey(name: 'DestinyMaterialRequirementSetDefinition')
-  final Map<int, DestinyMaterialRequirementSetDefinition> destinyMaterialRequirementSetDefinition = const {};
+  final Map<int, DestinyMaterialRequirementSetDefinition> destinyMaterialRequirementSetDefinition = {};
   @JsonKey(name: 'DestinySandboxPerkDefinition')
-  final Map<int, DestinySandboxPerkDefinition> destinySandboxPerkDefinition = const {};
+  final Map<int, DestinySandboxPerkDefinition> destinySandboxPerkDefinition = {};
   @JsonKey(name: 'DestinyStatGroupDefinition')
-  final Map<int, DestinyStatGroupDefinition> destinyStatGroupDefinition = const {};
+  final Map<int, DestinyStatGroupDefinition> destinyStatGroupDefinition = {};
   @JsonKey(name: 'DestinyProgressionMappingDefinition')
-  final Map<int, DestinyProgressionMappingDefinition> destinyProgressionMappingDefinition = const {};
+  final Map<int, DestinyProgressionMappingDefinition> destinyProgressionMappingDefinition = {};
   @JsonKey(name: 'DestinyFactionDefinition')
-  final Map<int, DestinyFactionDefinition> destinyFactionDefinition = const {};
+  final Map<int, DestinyFactionDefinition> destinyFactionDefinition = {};
   @JsonKey(name: 'DestinyVendorGroupDefinition')
-  final Map<int, DestinyVendorGroupDefinition> destinyVendorGroupDefinition = const {};
+  final Map<int, DestinyVendorGroupDefinition> destinyVendorGroupDefinition = {};
   @JsonKey(name: 'DestinyRewardSourceDefinition')
-  final Map<int, DestinyRewardSourceDefinition> destinyRewardSourceDefinition = const {};
+  final Map<int, DestinyRewardSourceDefinition> destinyRewardSourceDefinition = {};
   @JsonKey(name: 'DestinyUnlockValueDefinition')
-  final Map<int, DestinyUnlockValueDefinition> destinyUnlockValueDefinition = const {};
+  final Map<int, DestinyUnlockValueDefinition> destinyUnlockValueDefinition = {};
   @JsonKey(name: 'DestinyItemCategoryDefinition')
-  final Map<int, DestinyItemCategoryDefinition> destinyItemCategoryDefinition = const {};
+  final Map<int, DestinyItemCategoryDefinition> destinyItemCategoryDefinition = {};
   @JsonKey(name: 'DestinyDamageTypeDefinition')
-  final Map<int, DestinyDamageTypeDefinition> destinyDamageTypeDefinition = const {};
+  final Map<int, DestinyDamageTypeDefinition> destinyDamageTypeDefinition = {};
   @JsonKey(name: 'DestinyActivityModeDefinition')
-  final Map<int, DestinyActivityModeDefinition> destinyActivityModeDefinition = const {};
+  final Map<int, DestinyActivityModeDefinition> destinyActivityModeDefinition = {};
   @JsonKey(name: 'DestinyActivityGraphDefinition')
-  final Map<int, DestinyActivityGraphDefinition> destinyActivityGraphDefinition = const {};
+  final Map<int, DestinyActivityGraphDefinition> destinyActivityGraphDefinition = {};
   @JsonKey(name: 'DestinyCollectibleDefinition')
-  final Map<int, DestinyCollectibleDefinition> destinyCollectibleDefinition = const {};
+  final Map<int, DestinyCollectibleDefinition> destinyCollectibleDefinition = {};
   @JsonKey(name: 'DestinyDestinationDefinition')
-  final Map<int, DestinyDestinationDefinition> destinyDestinationDefinition = const {};
+  final Map<int, DestinyDestinationDefinition> destinyDestinationDefinition = {};
   @JsonKey(name: 'DestinyEquipmentSlotDefinition')
-  final Map<int, DestinyEquipmentSlotDefinition> destinyEquipmentSlotDefinition = const {};
+  final Map<int, DestinyEquipmentSlotDefinition> destinyEquipmentSlotDefinition = {};
   @JsonKey(name: 'DestinyStatDefinition')
-  final Map<int, DestinyStatDefinition> destinyStatDefinition = const {};
+  final Map<int, DestinyStatDefinition> destinyStatDefinition = {};
   @JsonKey(name: 'DestinyInventoryItemDefinition')
-  final Map<int, DestinyInventoryItemDefinition> destinyInventoryItemDefinition = const {};
+  final Map<int, DestinyInventoryItemDefinition> destinyInventoryItemDefinition = {};
   @JsonKey(name: 'DestinyItemTierTypeDefinition')
-  final Map<int, DestinyItemTierTypeDefinition> destinyItemTierTypeDefinition = const {};
+  final Map<int, DestinyItemTierTypeDefinition> destinyItemTierTypeDefinition = {};
   @JsonKey(name: 'DestinyLocationDefinition')
-  final Map<int, DestinyLocationDefinition> destinyLocationDefinition = const {};
+  final Map<int, DestinyLocationDefinition> destinyLocationDefinition = {};
   @JsonKey(name: 'DestinyLoreDefinition')
-  final Map<int, DestinyLoreDefinition> destinyLoreDefinition = const {};
+  final Map<int, DestinyLoreDefinition> destinyLoreDefinition = {};
   @JsonKey(name: 'DestinyMetricDefinition')
-  final Map<int, DestinyMetricDefinition> destinyMetricDefinition = const {};
+  final Map<int, DestinyMetricDefinition> destinyMetricDefinition = {};
   @JsonKey(name: 'DestinyObjectiveDefinition')
-  final Map<int, DestinyObjectiveDefinition> destinyObjectiveDefinition = const {};
+  final Map<int, DestinyObjectiveDefinition> destinyObjectiveDefinition = {};
   @JsonKey(name: 'DestinyPlugSetDefinition')
-  final Map<int, DestinyPlugSetDefinition> destinyPlugSetDefinition = const {};
+  final Map<int, DestinyPlugSetDefinition> destinyPlugSetDefinition = {};
   @JsonKey(name: 'DestinyPowerCapDefinition')
-  final Map<int, DestinyPowerCapDefinition> destinyPowerCapDefinition = const {};
+  final Map<int, DestinyPowerCapDefinition> destinyPowerCapDefinition = {};
   @JsonKey(name: 'DestinyPresentationNodeDefinition')
-  final Map<int, DestinyPresentationNodeDefinition> destinyPresentationNodeDefinition = const {};
+  final Map<int, DestinyPresentationNodeDefinition> destinyPresentationNodeDefinition = {};
   @JsonKey(name: 'DestinyProgressionDefinition')
-  final Map<int, DestinyProgressionDefinition> destinyProgressionDefinition = const {};
+  final Map<int, DestinyProgressionDefinition> destinyProgressionDefinition = {};
   @JsonKey(name: 'DestinyProgressionLevelRequirementDefinition')
-  final Map<int, DestinyProgressionLevelRequirementDefinition> destinyProgressionLevelRequirementDefinition = const {};
+  final Map<int, DestinyProgressionLevelRequirementDefinition> destinyProgressionLevelRequirementDefinition = {};
   @JsonKey(name: 'DestinyRecordDefinition')
-  final Map<int, DestinyRecordDefinition> destinyRecordDefinition = const {};
+  final Map<int, DestinyRecordDefinition> destinyRecordDefinition = {};
   @JsonKey(name: 'DestinySeasonDefinition')
-  final Map<int, DestinySeasonDefinition> destinySeasonDefinition = const {};
+  final Map<int, DestinySeasonDefinition> destinySeasonDefinition = {};
   @JsonKey(name: 'DestinySeasonPassDefinition')
-  final Map<int, DestinySeasonPassDefinition> destinySeasonPassDefinition = const {};
+  final Map<int, DestinySeasonPassDefinition> destinySeasonPassDefinition = {};
   @JsonKey(name: 'DestinySocketCategoryDefinition')
-  final Map<int, DestinySocketCategoryDefinition> destinySocketCategoryDefinition = const {};
+  final Map<int, DestinySocketCategoryDefinition> destinySocketCategoryDefinition = {};
   @JsonKey(name: 'DestinySocketTypeDefinition')
-  final Map<int, DestinySocketTypeDefinition> destinySocketTypeDefinition = const {};
+  final Map<int, DestinySocketTypeDefinition> destinySocketTypeDefinition = {};
   @JsonKey(name: 'DestinyTraitDefinition')
-  final Map<int, DestinyTraitDefinition> destinyTraitDefinition = const {};
+  final Map<int, DestinyTraitDefinition> destinyTraitDefinition = {};
   @JsonKey(name: 'DestinyTraitCategoryDefinition')
-  final Map<int, DestinyTraitCategoryDefinition> destinyTraitCategoryDefinition = const {};
+  final Map<int, DestinyTraitCategoryDefinition> destinyTraitCategoryDefinition = {};
   @JsonKey(name: 'DestinyVendorDefinition')
-  final Map<int, DestinyVendorDefinition> destinyVendorDefinition = const {};
+  final Map<int, DestinyVendorDefinition> destinyVendorDefinition = {};
   @JsonKey(name: 'DestinyMilestoneDefinition')
-  final Map<int, DestinyMilestoneDefinition> destinyMilestoneDefinition = const {};
+  final Map<int, DestinyMilestoneDefinition> destinyMilestoneDefinition = {};
   @JsonKey(name: 'DestinyActivityModifierDefinition')
-  final Map<int, DestinyActivityModifierDefinition> destinyActivityModifierDefinition = const {};
+  final Map<int, DestinyActivityModifierDefinition> destinyActivityModifierDefinition = {};
   @JsonKey(name: 'DestinyReportReasonCategoryDefinition')
-  final Map<int, DestinyReportReasonCategoryDefinition> destinyReportReasonCategoryDefinition = const {};
+  final Map<int, DestinyReportReasonCategoryDefinition> destinyReportReasonCategoryDefinition = {};
   @JsonKey(name: 'DestinyArtifactDefinition')
-  final Map<int, DestinyArtifactDefinition> destinyArtifactDefinition = const {};
+  final Map<int, DestinyArtifactDefinition> destinyArtifactDefinition = {};
   @JsonKey(name: 'DestinyBreakerTypeDefinition')
-  final Map<int, DestinyBreakerTypeDefinition> destinyBreakerTypeDefinition = const {};
+  final Map<int, DestinyBreakerTypeDefinition> destinyBreakerTypeDefinition = {};
   @JsonKey(name: 'DestinyChecklistDefinition')
-  final Map<int, DestinyChecklistDefinition> destinyChecklistDefinition = const {};
+  final Map<int, DestinyChecklistDefinition> destinyChecklistDefinition = {};
   @JsonKey(name: 'DestinyHistoricalStatsDefinition')
-  final Map<int, DestinyHistoricalStatsDefinition> destinyHistoricalStatsDefinition = const {};
+  final Map<int, DestinyHistoricalStatsDefinition> destinyHistoricalStatsDefinition = {};
   @JsonKey(name: 'DestinyMilestoneRewardEntryDefinition')
-  final Map<int, DestinyMilestoneRewardEntryDefinition> destinyMilestoneRewardEntryDefinition = const {};
+  final Map<int, DestinyMilestoneRewardEntryDefinition> destinyMilestoneRewardEntryDefinition = {};
   @JsonKey(name: 'DestinyEnergyTypeDefinition')
-  final Map<int, DestinyEnergyTypeDefinition> destinyEnergyTypeDefinition = const {};
+  final Map<int, DestinyEnergyTypeDefinition> destinyEnergyTypeDefinition = {};
   static void setField<T>(int hash, T field) {
     switch (T) {
       case DestinyPlaceDefinition:

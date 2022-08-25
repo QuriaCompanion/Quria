@@ -2,16 +2,16 @@ import 'package:bungie_api/enums/item_state.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:quria/data/models/BuildStored.model.dart';
 import 'package:quria/data/providers/characters_provider.dart';
 import 'package:quria/data/providers/create_build_provider.dart';
 import 'package:quria/data/providers/details_build_provider.dart';
-import 'dart:math' as math;
 import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
+import 'dart:math' as math;
 import 'package:quria/data/services/builder.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_actions.service.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
@@ -24,7 +24,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/presentation/screens/profile/components/character_stats_listing.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class BuildCard extends StatelessWidget {
+class BuildCard extends ConsumerWidget {
   final BuildStored buildStored;
   final double width;
   const BuildCard({
@@ -34,10 +34,10 @@ class BuildCard extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return InkWell(
       onTap: () {
-        Provider.of<DetailsBuildProvider>(context, listen: false).inspectBuild(buildStored);
+        ref.read(detailsBuildProvider.notifier).inspectBuild(buildStored);
         Navigator.pushNamed(context, routeDetailsBuild);
       },
       child: Stack(
@@ -79,8 +79,8 @@ class BuildCard extends StatelessWidget {
                     children: [
                       const SizedBox(height: 16),
                       CharacterStatsListing(
-                        stats: BuilderService().buildStatCalculator(context, items: buildStored.items),
-                        characterId: Provider.of<CharactersProvider>(context).currentCharacter!.characterId!,
+                        stats: BuilderService().buildStatCalculator(ref, items: buildStored.items),
+                        characterId: ref.watch(charactersProvider).first.characterId!,
                         direction: Axis.horizontal,
                         width: isMobile(context) ? width * 0.6 : 300,
                       ),
@@ -132,7 +132,7 @@ class BuildCard extends StatelessWidget {
                             child: RoundedButton(
                               text: textBodyMedium(AppLocalizations.of(context)!.equip, color: black, utf8: false),
                               onPressed: () {
-                                BungieActionsService().equipStoredBuild(context, items: buildStored.items);
+                                BungieActionsService().equipStoredBuild(ref, items: buildStored.items);
                               },
                             ),
                           ),
@@ -145,7 +145,7 @@ class BuildCard extends StatelessWidget {
                                   color: Colors.white, utf8: false),
                               buttonColor: grey,
                               onPressed: () {
-                                Provider.of<CreateBuildProvider>(context, listen: false).modifyBuild(buildStored);
+                                ref.watch(createBuildProvider.notifier).modifyBuild(buildStored);
                                 Navigator.pushNamed(context, routeCreateBuild);
                               },
                             ),
@@ -189,7 +189,7 @@ class BuildCard extends StatelessWidget {
   }
 }
 
-class BuildCardItem extends StatelessWidget {
+class BuildCardItem extends ConsumerWidget {
   const BuildCardItem({
     Key? key,
     required this.buildStored,
@@ -202,10 +202,10 @@ class BuildCardItem extends StatelessWidget {
   final double width;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Builder(builder: (context) {
       final item = buildStored.items.firstWhere((element) => element.bucketHash == bucket && element.isEquipped);
-      final instancedItem = Provider.of<InventoryProvider>(context, listen: false).getItemByInstanceId(item.instanceId);
+      final instancedItem = ref.watch(itemByInstanceIdProvider(item.instanceId));
       if (instancedItem == null) {
         return SizedBox(
           width: width / 8,
@@ -223,8 +223,8 @@ class BuildCardItem extends StatelessWidget {
               buildStored.items.firstWhere((element) => element.bucketHash == bucket && element.isEquipped).itemHash,
           imageSize: width / 8,
           isMasterworked: instancedItem.state == ItemState.Masterwork || instancedItem.state == const ItemState(5),
-          element: Provider.of<ItemProvider>(context, listen: false).getItemElement(instancedItem),
-          powerLevel: Provider.of<ItemProvider>(context).getItemPowerLevel(item.instanceId),
+          element: ref.watch(itemElementProvider(instancedItem)),
+          powerLevel: ref.watch(itemPowerLevelProvider(item.instanceId)),
         ),
       );
     });

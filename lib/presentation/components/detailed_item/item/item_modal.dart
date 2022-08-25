@@ -1,6 +1,7 @@
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:quria/constants/styles.dart';
 import 'package:quria/constants/texts.dart';
@@ -15,7 +16,7 @@ import 'package:quria/presentation/components/misc/mobile_components/transfer_mo
 import 'package:quria/presentation/components/misc/rounded_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class ItemModal extends StatelessWidget {
+class ItemModal extends ConsumerWidget {
   final DestinyItemComponent item;
   final void Function(InspectData) onClick;
   final double width;
@@ -27,9 +28,9 @@ class ItemModal extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     ItemCardHelper data =
-        DisplayService.getCardData(context, itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
+        DisplayService.getCardData(ref, itemInstanceId: item.itemInstanceId!, itemHash: item.itemHash);
     return SingleChildScrollView(
         child: Container(
       decoration: const BoxDecoration(borderRadius: BorderRadius.vertical(top: Radius.circular(24)), color: black),

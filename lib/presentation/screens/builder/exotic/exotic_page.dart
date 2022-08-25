@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bungie_api/models/destiny_character_component.dart';
-import 'package:provider/provider.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:quria/constants/texts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
@@ -17,14 +17,14 @@ import 'package:quria/presentation/screens/builder/desktop/builder_desktop_view.
 import 'package:quria/presentation/screens/builder/exotic/exotic_mobile_view.dart';
 import 'package:quria/presentation/var/routes.dart';
 
-class ExoticWidget extends StatefulWidget {
+class ExoticWidget extends ConsumerStatefulWidget {
   const ExoticWidget({Key? key}) : super(key: key);
 
   @override
   ExoticWidgetState createState() => ExoticWidgetState();
 }
 
-class ExoticWidgetState extends State<ExoticWidget> {
+class ExoticWidgetState extends ConsumerState<ExoticWidget> {
   late DestinyCharacterComponent currentCharacter;
   late Future<List<DestinyInventoryItemDefinition>> _future;
   bool isLoading = true;
@@ -32,9 +32,8 @@ class ExoticWidgetState extends State<ExoticWidget> {
   @override
   void initState() {
     super.initState();
-    currentCharacter =
-        Provider.of<CharactersProvider>(context, listen: false).currentCharacter as DestinyCharacterComponent;
-    _future = DisplayService.getExotics(context, currentCharacter.classType!);
+    currentCharacter = ref.read(charactersProvider).first;
+    _future = DisplayService.getExotics(ref, currentCharacter.classType!);
   }
 
   @override
@@ -54,7 +53,7 @@ class ExoticWidgetState extends State<ExoticWidget> {
                 characterId: currentCharacter.characterId!,
                 exotics: snapshot.data!,
                 onCharacterChange: (newIndex) {
-                  Provider.of<CharactersProvider>(context, listen: false).setCurrentCharacter(newIndex);
+                  setCurrentCharacter(newIndex, ref);
                   Navigator.popAndPushNamed(context, routeExotic);
                 },
               ),
