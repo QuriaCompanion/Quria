@@ -23,6 +23,8 @@ class ChooseMembership extends StatelessWidget {
         return 'Steam';
       case BungieMembershipType.TigerStadia:
         return 'Stadia';
+      case BungieMembershipType.TigerEgs:
+        return 'Epic Games';
       default:
         return 'Iconnue';
     }

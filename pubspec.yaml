@@ -27,7 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
-  bungie_api: ^13.14.0
+  bungie_api: ^13.16.0
   uni_links_desktop: ^0.1.2
   universal_io: ^2.0.4
   lottie: ^1.4.1
