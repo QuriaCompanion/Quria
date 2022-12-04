@@ -1,6 +1,5 @@
 import 'package:bungie_api/models/destiny_historical_stats_definition.dart';
 import 'package:bungie_api/models/destiny_milestone_reward_entry_definition.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:bungie_api/models/destiny_activity_definition.dart';
 import 'package:bungie_api/models/destiny_activity_graph_definition.dart';

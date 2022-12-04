@@ -88,8 +88,8 @@ class LoginWidgetState extends State<LoginWidget> {
             ),
             onPressed: () {
               loadingModal();
-              // authorizeClick(context);
-              yannisooLogin();
+              authorizeClick(context);
+              // yannisooLogin();
             },
             width: 250.0,
             height: 60),
@@ -170,8 +170,8 @@ class LoginWidgetState extends State<LoginWidget> {
   }
 
   void authorizeClick(BuildContext context) async {
-    final Uri? uri = await getInitialUri();
-    await StorageService.setLocalStorage("initUri", uri.toString());
+    // final Uri? uri = await getInitialUri();
+    // await StorageService.setLocalStorage("initUri", uri.toString());
     if (!mounted) return;
     try {
       try {
