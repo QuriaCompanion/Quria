@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: >-
-          sudo snap install flutter --classic && flutter channel beta && flutter
+          sudo snap install flutter --classic && flutter channel stable && flutter
           config --enable-web && flutter build web --release
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
