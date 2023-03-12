@@ -14,7 +14,6 @@ import 'package:quria/data/providers/inventory_provider.dart';
 import 'package:quria/data/providers/item_provider.dart';
 import 'package:quria/data/services/bungie_api/bungie_api.service.dart';
 import 'package:quria/data/services/manifest/manifest.service.dart';
-import 'package:quria/presentation/components/detailed_item/item/armor_afinity.dart';
 import 'package:quria/presentation/components/detailed_item/item/armor_mod_icon_display.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_desktop_modal.dart';
 import 'package:quria/presentation/screens/inspect/components/armor_mod_modal.dart';
@@ -36,25 +35,7 @@ class ArmorMods extends StatelessWidget {
     final Map<int, DestinyItemSocketState> displayedSockets =
         Provider.of<InspectProvider>(context).getArmorSockets(context);
 
-    final List<DestinyItemSocketState> sockets = Provider.of<InspectProvider>(context).getSockets(context);
-    final String afinityIcon = Provider.of<InspectProvider>(context).getAfinityIcon(context)!;
-    final int remaining = Provider.of<InspectProvider>(context).getRemainingPoints(context);
     return Column(children: [
-      ArmorAfinity(
-          width: width,
-          afinityIcon: afinityIcon,
-          remaining: remaining,
-          pointsAvailable: ManifestService
-              .manifestParsed
-              .destinyInventoryItemDefinition[sockets
-                  .firstWhere((element) =>
-                      ManifestService
-                          .manifestParsed.destinyInventoryItemDefinition[element.plugHash]?.plug?.plugCategoryIdentifier
-                          ?.contains('masterworks.stat') ==
-                      true)
-                  .plugHash]!
-              .investmentStats![0]
-              .value!),
       SizedBox(height: globalPadding(context)),
       Container(
           padding: EdgeInsets.symmetric(vertical: globalPadding(context)) * 0.875,

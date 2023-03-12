@@ -36,7 +36,6 @@ import 'package:bungie_api/models/destiny_season_pass_definition.dart';
 import 'package:bungie_api/models/destiny_socket_category_definition.dart';
 import 'package:bungie_api/models/destiny_socket_type_definition.dart';
 import 'package:bungie_api/models/destiny_stat_group_definition.dart';
-import 'package:bungie_api/models/destiny_trait_category_definition.dart';
 import 'package:bungie_api/models/destiny_trait_definition.dart';
 import 'package:bungie_api/models/destiny_unlock_definition.dart';
 import 'package:bungie_api/models/destiny_unlock_value_definition.dart';
@@ -142,8 +141,7 @@ class AllDestinyManifestComponents {
   Map<int, DestinySocketTypeDefinition> destinySocketTypeDefinition = {};
   @JsonKey(name: 'DestinyTraitDefinition')
   Map<int, DestinyTraitDefinition> destinyTraitDefinition = {};
-  @JsonKey(name: 'DestinyTraitCategoryDefinition')
-  Map<int, DestinyTraitCategoryDefinition> destinyTraitCategoryDefinition = {};
+
   @JsonKey(name: 'DestinyVendorDefinition')
   Map<int, DestinyVendorDefinition> destinyVendorDefinition = {};
   @JsonKey(name: 'DestinyMilestoneDefinition')

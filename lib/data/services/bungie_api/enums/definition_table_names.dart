@@ -43,13 +43,11 @@ import 'package:quria/data/models/bungie_api_dart/destiny_collectible_definition
 import 'package:quria/data/models/bungie_api_dart/destiny_presentation_node_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_equipment_slot_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_plug_set_definition.dart';
-import 'package:json_annotation/json_annotation.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_class_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_damage_type_definition.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:quria/data/services/storage/storage.service.dart';
 
-@JsonSerializable()
 class DefinitionTableNames {
   static Map<Type, Function> getDefinitions = {
     DestinyClassDefinition: (ids) async => await StorageService.isar.destinyClassDefinitions.getAll(ids),

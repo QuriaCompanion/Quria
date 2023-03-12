@@ -22,7 +22,7 @@ class SubclassModsPage extends StatelessWidget {
     if (isMobile(context)) {
       return ScaffoldSteps(
           actionText: AppLocalizations.of(context)!.next,
-          route: routeMod,
+          route: routeClassItemChoice,
           body: SubclassModsMobileView(
             displayedSockets: chosenSockets,
             subclass: subclass,

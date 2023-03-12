@@ -9852,7 +9852,7 @@ Map<String, dynamic> _$DestinyInventoryItemDefinitionToJson(
       'equippable': instance.equippable,
       'damageTypeHashes': instance.damageTypeHashes,
       'damageTypes':
-          instance.damageTypes?.map((e) => _$DamageTypeEnumMap[e]).toList(),
+          instance.damageTypes?.map((e) => _$DamageTypeEnumMap[e]!).toList(),
       'defaultDamageType': encodeDamageType(instance.defaultDamageType),
       'defaultDamageTypeHash': instance.defaultDamageTypeHash,
       'seasonHash': instance.seasonHash,
@@ -9872,5 +9872,6 @@ const _$DamageTypeEnumMap = {
   DamageType.Void: 4,
   DamageType.Raid: 5,
   DamageType.Stasis: 6,
+  DamageType.Strand: 7,
   DamageType.ProtectedInvalidEnumValue: 999999999,
 };
