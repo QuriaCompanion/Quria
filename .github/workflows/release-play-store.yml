@@ -12,7 +12,7 @@ jobs:
       - name: Clone Flutter repository with master channel
         uses: subosito/flutter-action@5e1529bc12adae5b26f30f0a4046ac743d6f0c5d
         with:
-          channel: master
+          channel: stable
       - run: flutter doctor -v
 
       # Checkout gallery code and get packages.

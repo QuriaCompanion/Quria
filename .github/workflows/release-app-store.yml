@@ -33,7 +33,7 @@ jobs:
    - name: Install and set Flutter version
      uses: subosito/flutter-action@5e1529bc12adae5b26f30f0a4046ac743d6f0c5d
      with:
-          channel: master
+          channel: stable
    
    - name: Restore packages
      run: flutter pub get
