@@ -108,16 +108,12 @@ class ProfileService {
     List<DestinyComponentType>? components,
     bool force = false,
   }) async {
-    try {
-      if (!force && _lastUpdated != null && DateTime.now().difference(_lastUpdated!).inSeconds < 30) {
-        return;
-      }
-      await _updateProfileData(context, updateComponents);
-
+    if (!force && _lastUpdated != null && DateTime.now().difference(_lastUpdated!).inSeconds < 30) {
       return;
-    } catch (e) {
-      throw ErrorDescription("Failed to load profile data");
     }
+    await _updateProfileData(context, updateComponents);
+
+    return;
   }
 
   static reset(BuildContext context) {

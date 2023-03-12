@@ -2,7 +2,6 @@ import 'package:quria/data/models/StatWeighing.enum.dart';
 import 'package:quria/data/models/bungie_api_dart/destiny_inventory_item_definition.dart';
 import 'package:bungie_api/models/destiny_item_component.dart';
 import 'package:bungie_api/models/destiny_item_sockets_component.dart';
-import 'package:quria/data/models/ArmorMods.model.dart';
 
 class BuilderHelper {
   List<int> statOrder;
@@ -10,7 +9,6 @@ class BuilderHelper {
   List<DestinyItemComponent> armors;
   Map<String, DestinyItemSocketsComponent> sockets;
   DestinyInventoryItemDefinition? exotic;
-  List<ModSlots> armorMods;
   List<DestinyInventoryItemDefinition> subclassMods;
   Map<int, DestinyInventoryItemDefinition> manifest;
   DestinyItemComponent classItem;
@@ -22,7 +20,6 @@ class BuilderHelper {
     required this.sockets,
     required this.manifest,
     required this.subclassMods,
-    required this.armorMods,
     required this.classItem,
     required this.statWeighing,
     required this.considerMasterwork,

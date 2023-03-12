@@ -7,7 +7,6 @@ import 'package:quria/constants/texts.dart';
 import 'package:quria/data/providers/builder/builder_custom_info_provider.dart';
 import 'package:quria/data/providers/builder/builder_stats_filter_provider.dart';
 import 'package:quria/presentation/components/misc/rounded_button.dart';
-import 'package:quria/presentation/screens/builder/desktop/builder_armor_mods.dart';
 import 'package:quria/presentation/screens/builder/desktop/builder_custom_info.dart';
 import 'package:quria/presentation/screens/builder/desktop/builder_exotic_choice.dart';
 import 'package:quria/presentation/screens/builder/desktop/builder_info_row.dart';
@@ -51,10 +50,6 @@ class BuilderDesktopView extends StatelessWidget {
           height: globalPadding(context),
         ),
         builderContainer(context, child: const BuilderSubclass()),
-        SizedBox(
-          height: globalPadding(context),
-        ),
-        builderContainer(context, child: const BuilderArmorMods()),
         SizedBox(
           height: globalPadding(context),
         ),

@@ -234,45 +234,30 @@ class DestinyInventoryItemDefinition {
   List<int>? itemCategoryHashes;
 
   /// In Destiny 1, we identified some items as having particular categories that we'd like to know about for various internal logic purposes. These are defined in SpecialItemType, and while these days the itemCategoryHashes are the preferred way of identifying types, we have retained this enum for its convenience.
-  @JsonKey(
-      name: 'specialItemType',
-      fromJson: decodeSpecialItemType,
-      toJson: encodeSpecialItemType)
+  @JsonKey(name: 'specialItemType', fromJson: decodeSpecialItemType, toJson: encodeSpecialItemType)
   @SpecialItemTypeConverter()
   SpecialItemType? specialItemType;
 
   /// A value indicating the "base" the of the item. This enum is a useful but dramatic oversimplification of what it means for an item to have a "Type". Still, it's handy in many situations.
   /// itemCategoryHashes are the preferred way of identifying types, we have retained this enum for its convenience.
-  @JsonKey(
-      name: 'itemType',
-      fromJson: decodeDestinyItemType,
-      toJson: encodeDestinyItemType)
+  @JsonKey(name: 'itemType', fromJson: decodeDestinyItemType, toJson: encodeDestinyItemType)
   @DestinyItemTypeConverter()
   DestinyItemType? itemType;
 
   /// A value indicating the "sub-type" of the item. For instance, where an item might have an itemType value "Weapon", this will be something more specific like "Auto Rifle".
   /// itemCategoryHashes are the preferred way of identifying types, we have retained this enum for its convenience.
-  @JsonKey(
-      name: 'itemSubType',
-      fromJson: decodeDestinyItemSubType,
-      toJson: encodeDestinyItemSubType)
+  @JsonKey(name: 'itemSubType', fromJson: decodeDestinyItemSubType, toJson: encodeDestinyItemSubType)
   @DestinyItemSubTypeConverter()
   DestinyItemSubType? itemSubType;
 
   /// We run a similarly weak-sauce algorithm to try and determine whether an item is restricted to a specific class. If we find it to be restricted in such a way, we set this classType property to match the class' enumeration value so that users can easily identify class restricted items.
   /// If you see a mis-classed item, please inform the developers in the Bungie API forum.
-  @JsonKey(
-      name: 'classType',
-      fromJson: decodeDestinyClass,
-      toJson: encodeDestinyClass)
+  @JsonKey(name: 'classType', fromJson: decodeDestinyClass, toJson: encodeDestinyClass)
   @DestinyClassConverter()
   DestinyClass? classType;
 
   /// Some weapons and plugs can have a "Breaker Type": a special ability that works sort of like damage type vulnerabilities. This is (almost?) always set on items by plugs.
-  @JsonKey(
-      name: 'breakerType',
-      fromJson: decodeDestinyBreakerType,
-      toJson: encodeDestinyBreakerType)
+  @JsonKey(name: 'breakerType', fromJson: decodeDestinyBreakerType, toJson: encodeDestinyBreakerType)
   @DestinyBreakerTypeConverter()
   DestinyBreakerType? breakerType;
 
@@ -300,10 +285,7 @@ class DestinyInventoryItemDefinition {
 
   /// If the item has a damage type that could be considered to be default, it will be populated here.
   /// For various upsetting reasons, it's surprisingly cumbersome to figure this out. I hope you're happy.
-  @JsonKey(
-      name: 'defaultDamageType',
-      fromJson: decodeDamageType,
-      toJson: encodeDamageType)
+  @JsonKey(name: 'defaultDamageType', fromJson: decodeDamageType, toJson: encodeDamageType)
   @DamageTypeConverter()
   DamageType? defaultDamageType;
 

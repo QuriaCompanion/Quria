@@ -61,8 +61,6 @@ class BuilderService {
     List<DestinyInventoryItemDefinition> subclassMods =
         Provider.of<BuilderSubclassModsProvider>(context, listen: false).subclassMods;
 
-    List<ModSlots> armorMods = Provider.of<BuilderModsProvider>(context, listen: false).mods;
-
     List<int> statOrder =
         Provider.of<BuilderStatsFilterProvider>(context, listen: false).filters.map((e) => e.value).toList();
 
@@ -82,7 +80,6 @@ class BuilderService {
       sockets: sockets,
       manifest: ManifestService.manifestParsed.destinyInventoryItemDefinition,
       subclassMods: subclassMods,
-      armorMods: armorMods,
       classItem: classItem,
       statWeighing: statWeighing,
       considerMasterwork: considerMasterwork,
@@ -481,7 +478,7 @@ class BuilderService {
     if (kIsWeb) {
       await Future.delayed(const Duration(milliseconds: 200));
     }
-    return await compute(_armorLoop, data);
+    return await _armorLoop(data);
   }
 
   Future<List<Build>> _armorLoop(BuilderHelper builderHelper) async {
@@ -535,44 +532,44 @@ class BuilderService {
       final List<DestinyInventoryItemDefinition?> modSelected = [];
 
       // this is every mods that can be used for each stat
-      Map<int, Map<bool, DestinyInventoryItemDefinition>> armordModValues = {
-        StatsHash.mobility: {false: manifest[204137529]!, true: manifest[3961599962]!},
-        StatsHash.resilience: {false: manifest[3682186345]!, true: manifest[2850583378]!},
-        StatsHash.recovery: {false: manifest[555005975]!, true: manifest[2645858828]!},
-        StatsHash.intellect: {false: manifest[1227870362]!, true: manifest[3355995799]!},
-        StatsHash.discipline: {false: manifest[2623485440]!, true: manifest[4048838440]!},
-        StatsHash.strength: {false: manifest[3699676109]!, true: manifest[3253038666]!},
-      };
+      // Map<int, Map<bool, DestinyInventoryItemDefinition>> armordModValues = {
+      //   StatsHash.mobility: {false: manifest[204137529]!, true: manifest[3961599962]!},
+      //   StatsHash.resilience: {false: manifest[3682186345]!, true: manifest[2850583378]!},
+      //   StatsHash.recovery: {false: manifest[555005975]!, true: manifest[2645858828]!},
+      //   StatsHash.intellect: {false: manifest[1227870362]!, true: manifest[3355995799]!},
+      //   StatsHash.discipline: {false: manifest[2623485440]!, true: manifest[4048838440]!},
+      //   StatsHash.strength: {false: manifest[3699676109]!, true: manifest[3253038666]!},
+      // };
       // remaining points that are not yet used for each armor slot
-      for (int i = 0; i < armorModspace.length; i++) {
-        // if there are still some points available
-        if (armorModspace[i] > 0) {
-          // then we loop through the stat by priority order
-          for (var statHash in statOrder) {
-            // check if the stat is not already maxed out
-            if (statistics[statHash]! < 100) {
-              // check what kind of mod is required based on how many points are required to go to the next tier
-              // ex: if the stat is at 55 you only need a minor mod (+5 to reach next tier)
-              // also check if the cost of the mod is not higher than the remaining points
-              if ((statistics[statHash]! % 10) > 5 &&
-                  armorModspace[i] >= armordModValues[statHash]![false]!.investmentStats![0].value!) {
-                modSelected.add(armordModValues[statHash]![false]!);
-                statistics[statHash] =
-                    statistics[statHash]! + armordModValues[statHash]![false]!.investmentStats![1].value!;
-                break;
-              }
-              // if a regular mod is required it checks if the cost of the mod is not higher than the remaining points
-              if (armorModspace[i] >= armordModValues[statHash]![true]!.investmentStats![0].value!) {
-                modSelected.add(armordModValues[statHash]![true]!);
-                statistics[statHash] =
-                    statistics[statHash]! + armordModValues[statHash]![true]!.investmentStats![1].value!;
-                break;
-              }
-            }
-          }
-        }
-        if (modSelected.length < i + 1) modSelected.add(null);
-      }
+      // for (int i = 0; i < armorModspace.length; i++) {
+      //   // if there are still some points available
+      //   if (armorModspace[i] > 0) {
+      //     // then we loop through the stat by priority order
+      //     for (var statHash in statOrder) {
+      //       // check if the stat is not already maxed out
+      //       if (statistics[statHash]! < 100) {
+      //         // check what kind of mod is required based on how many points are required to go to the next tier
+      //         // ex: if the stat is at 55 you only need a minor mod (+5 to reach next tier)
+      //         // also check if the cost of the mod is not higher than the remaining points
+      //         if ((statistics[statHash]! % 10) > 5 &&
+      //             armorModspace[i] >= armordModValues[statHash]![false]!.investmentStats![0].value!) {
+      //           modSelected.add(armordModValues[statHash]![false]!);
+      //           statistics[statHash] =
+      //               statistics[statHash]! + armordModValues[statHash]![false]!.investmentStats![1].value!;
+      //           break;
+      //         }
+      //         // if a regular mod is required it checks if the cost of the mod is not higher than the remaining points
+      //         if (armorModspace[i] >= armordModValues[statHash]![true]!.investmentStats![0].value!) {
+      //           modSelected.add(armordModValues[statHash]![true]!);
+      //           statistics[statHash] =
+      //               statistics[statHash]! + armordModValues[statHash]![true]!.investmentStats![1].value!;
+      //           break;
+      //         }
+      //       }
+      //     }
+      //   }
+      //   if (modSelected.length < i + 1) modSelected.add(null);
+      // }
       // return selecterd mods and the new stat values
       return BuilderOptionalMods(modSelected: modSelected, statValues: statistics);
     }
@@ -607,41 +604,41 @@ class BuilderService {
     }
     //instanciate armor mod space (starts at 10 points for each armor assuming everything is masterworked)
     List<int> armorModspace = [10, 10, 10, 10, 10];
-    // loops through the armor mods
-    for (int i = 0; i < builderHelper.armorMods.length; i++) {
-      // check if there is an armor in this slot
-      if (builderHelper.armorMods[i].items.isNotEmpty) {
-        // loops through the mods in this armor
-        for (DestinyInventoryItemDefinition? mod in builderHelper.armorMods[i].items) {
-          // check if the mod has bonus stats
-          if (mod != null && mod.investmentStats != null && mod.investmentStats!.isNotEmpty) {
-            // loops through the bonus stats
-            for (var stat in mod.investmentStats!) {
-              // if it gives a bonus to stat it adds it to the correct stat
-              if (stat.statTypeHash == StatsHash.mobility ||
-                  stat.statTypeHash == StatsHash.resilience ||
-                  stat.statTypeHash == StatsHash.recovery ||
-                  stat.statTypeHash == StatsHash.discipline ||
-                  stat.statTypeHash == StatsHash.intellect ||
-                  stat.statTypeHash == StatsHash.strength) {
-                modBonus[stat.statTypeHash!] = modBonus[stat.statTypeHash]! + stat.value!;
-              }
-              // if it has a cost to the armor it reduces the armor mod space
-              if (stat.statTypeHash == 3779394102 ||
-                  stat.statTypeHash == 3344745325 ||
-                  stat.statTypeHash == 107977982 ||
-                  stat.statTypeHash == 3950461274 ||
-                  stat.statTypeHash == 998798867 ||
-                  stat.statTypeHash == 2399985800 ||
-                  stat.statTypeHash == 3176563510 ||
-                  stat.statTypeHash == 3578062600) {
-                armorModspace[i] -= stat.value!;
-              }
-            }
-          }
-        }
-      }
-    }
+    // // loops through the armor mods
+    // for (int i = 0; i < builderHelper.armorMods.length; i++) {
+    //   // check if there is an armor in this slot
+    //   if (builderHelper.armorMods[i].items.isNotEmpty) {
+    //     // loops through the mods in this armor
+    //     for (DestinyInventoryItemDefinition? mod in builderHelper.armorMods[i].items) {
+    //       // check if the mod has bonus stats
+    //       if (mod != null && mod.investmentStats != null && mod.investmentStats!.isNotEmpty) {
+    //         // loops through the bonus stats
+    //         for (var stat in mod.investmentStats!) {
+    //           // if it gives a bonus to stat it adds it to the correct stat
+    //           if (stat.statTypeHash == StatsHash.mobility ||
+    //               stat.statTypeHash == StatsHash.resilience ||
+    //               stat.statTypeHash == StatsHash.recovery ||
+    //               stat.statTypeHash == StatsHash.discipline ||
+    //               stat.statTypeHash == StatsHash.intellect ||
+    //               stat.statTypeHash == StatsHash.strength) {
+    //             modBonus[stat.statTypeHash!] = modBonus[stat.statTypeHash]! + stat.value!;
+    //           }
+    //           // if it has a cost to the armor it reduces the armor mod space
+    //           if (stat.statTypeHash == 3779394102 ||
+    //               stat.statTypeHash == 3344745325 ||
+    //               stat.statTypeHash == 107977982 ||
+    //               stat.statTypeHash == 3950461274 ||
+    //               stat.statTypeHash == 998798867 ||
+    //               stat.statTypeHash == 2399985800 ||
+    //               stat.statTypeHash == 3176563510 ||
+    //               stat.statTypeHash == 3578062600) {
+    //             armorModspace[i] -= stat.value!;
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // }
     // find every armor
     final List<DestinyItemComponent> armors = builderHelper.armors.where((element) {
       if (element.itemHash == builderHelper.exotic?.hash) {
@@ -799,31 +796,26 @@ class BuilderService {
                   hash: helmet.itemHash!,
                   displayHash: helmet.overrideStyleItemHash ?? helmet.itemHash!,
                   itemInstanceId: helmet.itemInstanceId!,
-                  mod: optionalModsResult.modSelected[0],
                   type: 0),
               Armor(
                   hash: gauntlet.itemHash!,
                   displayHash: gauntlet.overrideStyleItemHash ?? gauntlet.itemHash!,
                   itemInstanceId: gauntlet.itemInstanceId!,
-                  mod: optionalModsResult.modSelected[1],
                   type: 1),
               Armor(
                   hash: chest.itemHash!,
                   displayHash: chest.overrideStyleItemHash ?? chest.itemHash!,
                   itemInstanceId: chest.itemInstanceId!,
-                  mod: optionalModsResult.modSelected[2],
                   type: 2),
               Armor(
                   hash: leg.itemHash!,
                   displayHash: leg.overrideStyleItemHash ?? leg.itemHash!,
                   itemInstanceId: leg.itemInstanceId!,
-                  mod: optionalModsResult.modSelected[3],
                   type: 3),
               Armor(
                   hash: builderHelper.classItem.itemHash!,
                   displayHash: builderHelper.classItem.overrideStyleItemHash ?? builderHelper.classItem.itemHash!,
                   itemInstanceId: builderHelper.classItem.itemInstanceId!,
-                  mod: optionalModsResult.modSelected[4],
                   type: 4)
             ];
             builds.add(Build(

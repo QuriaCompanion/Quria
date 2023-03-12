@@ -38,7 +38,7 @@ class _SubclassPageState extends State<SubclassPage> {
     if (isMobile(context)) {
       return ScaffoldSteps(
         actionText: AppLocalizations.of(context)!.next,
-        route: routeMod,
+        route: routeClassItemChoice,
         body: SubclassMobileView(
           width: vw(context),
           subclasses: data,
